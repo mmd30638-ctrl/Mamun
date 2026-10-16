@@ -12,15 +12,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Get latest code
+        uses: actions/checkout@v4
 
-      - name: Sync files via FTP
+      - name: Sync files to Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.HOSTINGER_FTP_SERVER }}
           username: ${{ secrets.HOSTINGER_FTP_USER }}
           password: ${{ secrets.HOSTINGER_FTP_PASS }}
           server-dir: ./domains/${{ github.event.inputs.site_domain }}/public_html/
-          port: 21
+          protocol: ftp
           
