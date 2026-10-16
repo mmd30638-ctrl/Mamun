@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       site_domain:
-        description: 'কোন ডোমেইনে কোড আপলোড করতে চান? (যেমন: immamun.com, aponshop.site)'
+        description: 'কোন ডোমেইনে কোড আপলোড করতে চান? (যেমন: darkgrey-falcon-910368.hostingersite.com)'
         required: true
         type: string
 
@@ -15,8 +15,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Deploy to the specific Hostinger folder
-        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      - name: Sync files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.HOSTINGER_FTP_SERVER }}
           username: ${{ secrets.HOSTINGER_FTP_USER }}
