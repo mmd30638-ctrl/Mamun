@@ -4,22 +4,23 @@ on:
   workflow_dispatch:
     inputs:
       site_domain:
-        description: 'কোন ডোমেইনে কোড আপলোড করতে চান? (যেমন: immamun.com, aponshop.site অথবা যেকোনো temp ডোমেইনের নাম)'
+        description: 'কোন ডোমেইনে কোড আপলোড করতে চান? (যেমন: immamun.com, aponshop.site)'
         required: true
-        type: string # ড্রপডাউনের বদলে এখন আপনি টাইপ করে যেকোনো ডোমেইন দিতে পারবেন
+        type: string
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Deploy to the specific Hostinger folder
-      uses: SamKirkland/FTP-Deploy-Action@4.3.0
-      with:
-        server: ${{ secrets.HOSTINGER_FTP_SERVER }} # হোস্টিংগারের মূল FTP সার্ভার IP
-        username: ${{ secrets.HOSTINGER_FTP_USER }} # আপনার হোস্টিংগারের মূল FTP ইউজারনেম
-        password: ${{ secrets.HOSTINGER_FTP_PASS }} # আপনার হোস্টিংগারের মূল FTP পাসওয়ার্ড
-        server-dir: ./domains/${{ github.event.inputs.site_domain }}/public_html/ # ডাইনামিক ফোল্ডার পাথ
-        
+      - name: Deploy to the specific Hostinger folder
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ${{ secrets.HOSTINGER_FTP_SERVER }}
+          username: ${{ secrets.HOSTINGER_FTP_USER }}
+          password: ${{ secrets.HOSTINGER_FTP_PASS }}
+          server-dir: ./domains/${{ github.event.inputs.site_domain }}/public_html/
+          port: 21
+          
