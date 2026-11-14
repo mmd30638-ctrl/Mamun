@@ -201,6 +201,38 @@ try {
         );
     }
 
+    $confirmRapid = !empty($data['confirm_rapid_resubmit']) || !empty($data['confirm_repeat']);
+    if (!$confirmRapid && $draft_id <= 0) {
+        if (function_exists('ame_sale_rapid_service_warnings') && $service_lines !== []) {
+            $rapidServices = ame_sale_rapid_service_warnings($db, $user_id, $service_lines, 6);
+            if ($rapidServices !== []) {
+                $respond(
+                    'confirm',
+                    ame_sale_rapid_service_message($rapidServices[0], $is_english, 6),
+                    [
+                        'needs_confirm' => true,
+                        'code' => 'AME_SALE_RAPID_SERVICE',
+                        'warnings' => $rapidServices,
+                    ]
+                );
+            }
+        }
+        if (function_exists('ame_sale_rapid_product_warnings')) {
+            $rapidProducts = ame_sale_rapid_product_warnings($db, $user_id, $data['cart'] ?? [], 6);
+            if ($rapidProducts !== []) {
+                $respond(
+                    'confirm',
+                    ame_sale_rapid_confirm_message($rapidProducts[0], $is_english, 6),
+                    [
+                        'needs_confirm' => true,
+                        'code' => 'AME_SALE_RAPID_PRODUCT',
+                        'warnings' => $rapidProducts,
+                    ]
+                );
+            }
+        }
+    }
+
     ame_sale_assert_service_engineers(
         $db,
         $service_lines,

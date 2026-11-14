@@ -1259,7 +1259,7 @@ function ame_emp_hub_commission_counts_on_day(mysqli $db, int $empId, string $da
     ];
 }
 
-function ame_emp_hub_find_same_manual_work(
+function ame_emp_hub_find_recent_manual_work(
     mysqli $db,
     int $empId,
     string $date,
@@ -1267,24 +1267,57 @@ function ame_emp_hub_find_same_manual_work(
     string $custName,
     string $vehicleNo,
     string $service,
-    int $exceptId = 0
+    int $exceptId = 0,
+    int $windowSeconds = 6
 ): ?array {
+    if ($windowSeconds < 1) {
+        return null;
+    }
     $recent = @$db->prepare(
-        "SELECT id FROM employee_works
+        "SELECT id, created_at, work_value, service_type
+         FROM employee_works
          WHERE employee_id = ? AND id <> ? AND work_date = ?
            AND ABS(work_value - ?) < 0.009
            AND customer_name = ? AND vehicle_no = ? AND service_type = ?
+           AND created_at >= (NOW() - INTERVAL ? SECOND)
          ORDER BY id DESC LIMIT 1"
     );
     if (!$recent) {
         return null;
     }
-    $recent->bind_param('iisdsss', $empId, $exceptId, $date, $value, $custName, $vehicleNo, $service);
+    $recent->bind_param('iisdsssi', $empId, $exceptId, $date, $value, $custName, $vehicleNo, $service, $windowSeconds);
     $recent->execute();
     $duplicate = $recent->get_result()->fetch_assoc();
     $recent->close();
 
     return $duplicate ?: null;
+}
+
+function ame_emp_hub_work_rapid_confirm_message(
+    array $emp,
+    string $service,
+    float $value,
+    array $prior,
+    int $windowSeconds = 6
+): string {
+    $name = trim((string)($emp['name'] ?? 'কর্মী'));
+    $svc = $service !== '' ? $service : 'কাজের বিল';
+    $amt = number_format($value, 2);
+    $at = (string)($prior['created_at'] ?? '');
+    $sec = $windowSeconds;
+    if ($at !== '') {
+        $ts = strtotime($at);
+        if ($ts > 0) {
+            $sec = max(0, time() - $ts);
+        }
+    }
+
+    return "⚠️ দ্রুত দ্বিতীয় সাবমিট (প্রায় {$sec} সেকেন্ড আগে)\n"
+        . "কর্মী: {$name}\n"
+        . "কাজ: «{$svc}»\n"
+        . "টাকা: ৳{$amt}\n"
+        . "আগের এন্ট্রি #" . (int)($prior['id'] ?? 0) . " ইতিমধ্যে জমা হয়েছে।\n\n"
+        . "এখন আবার সাবমিট করবেন নাকি বাতিল করবেন?";
 }
 
 function ame_emp_hub_list(mysqli $db, array $filters): array
@@ -1627,9 +1660,22 @@ function ame_emp_hub_save_work(mysqli $db, array $in): array
             }
         }
     } elseif (!$existing) {
-        $duplicate = ame_emp_hub_find_same_manual_work($db, $empId, $date, $value, $custName, $vehicleNo, $service, 0);
-        if ($duplicate) {
-            throw new Exception('এই কর্মীর আজ একই কাজের লাইন আগেই আছে। ডাবল এন্ট্রি রাখা হয়নি।');
+        $confirmRepeat = !empty($in['confirm_repeat']) || !empty($in['confirm_rapid_resubmit']);
+        $rapid = ame_emp_hub_find_recent_manual_work($db, $empId, $date, $value, $custName, $vehicleNo, $service, 0, 6);
+        if ($rapid && !$confirmRepeat) {
+            return [
+                'ok' => false,
+                'needs_confirm' => true,
+                'code' => 'AME_WORK_RAPID_REPEAT',
+                'message' => ame_emp_hub_work_rapid_confirm_message($emp, $service, $value, $rapid, 6),
+                'preview' => [
+                    'worker_name' => $name,
+                    'service_type' => $service,
+                    'work_value' => $value,
+                    'prior_id' => (int)($rapid['id'] ?? 0),
+                    'prior_at' => (string)($rapid['created_at'] ?? ''),
+                ],
+            ];
         }
     }
 

@@ -1,3 +1,8 @@
+# 10.98.889 — ৬ সেকেন্ডে ডুপ্লিকেট হলে সুন্দর কনফার্ম (পণ্য/কাজ), হার্ড ব্লক নয়
+assets/js/employee-hub.js
+assets/js/pos-payment.js
+assets/js/offline-queue.js
+modules/hrm/hub_api.php
 # 10.98.888 — কর্মী কার্ড: আজকের ব্যালেন্স; কমিশন তারিখ; সময়ভিত্তিক ডাবল বন্ধ
 modules/hrm/employee_list.php
 # 10.98.887 — বিক্রয় কমপ্লিটের পর নিচের শেয়ার শিট বন্ধ (ক্যাশ বাটন থেকে share=1 নয়)

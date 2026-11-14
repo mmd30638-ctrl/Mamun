@@ -608,3 +608,197 @@ function ame_sale_replace_services($db, $sale_id, $lines)
     }
     return $stored;
 }
+
+/**
+ * কার্টের পণ্য নাম যেগুলো গত কয়েক সেকেন্ডে একই ব্যবহারকারী আবার বিক্রি করেছে।
+ *
+ * @return list<array{product_name:string,amount:float,qty:float,sale_id:int,invoice_number:string,seconds_ago:int}>
+ */
+function ame_sale_rapid_product_warnings(mysqli $db, int $userId, array $cart, int $windowSeconds = 6): array
+{
+    if ($userId <= 0 || $windowSeconds < 1) {
+        return [];
+    }
+    $cart = is_array($cart) ? $cart : [];
+    $names = [];
+    foreach ($cart as $row) {
+        if (!is_array($row)) {
+            continue;
+        }
+        $name = trim((string)($row['name'] ?? $row['item_name'] ?? ''));
+        if ($name === '') {
+            continue;
+        }
+        $key = mb_strtolower($name);
+        if (isset($names[$key])) {
+            continue;
+        }
+        $names[$key] = [
+            'product_name' => $name,
+            'amount' => round((float)($row['price'] ?? $row['unit_price'] ?? $row['sell_price'] ?? 0), 2),
+            'qty' => round((float)($row['qty'] ?? $row['quantity'] ?? 1), 3),
+        ];
+    }
+    if ($names === []) {
+        return [];
+    }
+    $warnings = [];
+    $stmt = @$db->prepare(
+        "SELECT s.id AS sale_id, s.invoice_number, s.completed_at,
+                COALESCE(NULLIF(TRIM(si.item_name), ''), p.name, '') AS product_name,
+                si.unit_price, si.quantity
+         FROM sales s
+         INNER JOIN sale_items si ON si.sale_id = s.id
+         LEFT JOIN products p ON p.id = si.product_id
+         WHERE s.created_by = ? AND s.status = 'completed'
+           AND s.completed_at >= (NOW() - INTERVAL ? SECOND)
+         ORDER BY s.id DESC, si.id ASC"
+    );
+    if (!$stmt) {
+        return [];
+    }
+    $stmt->bind_param('ii', $userId, $windowSeconds);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $seen = [];
+    while ($res && ($r = $res->fetch_assoc())) {
+        $pname = trim((string)($r['product_name'] ?? ''));
+        $key = mb_strtolower($pname);
+        if ($pname === '' || !isset($names[$key]) || isset($seen[$key])) {
+            continue;
+        }
+        $seen[$key] = true;
+        $completed = strtotime((string)($r['completed_at'] ?? '')) ?: time();
+        $warnings[] = [
+            'product_name' => $names[$key]['product_name'],
+            'amount' => round((float)($r['unit_price'] ?? $names[$key]['amount']), 2),
+            'qty' => round((float)($r['quantity'] ?? $names[$key]['qty']), 3),
+            'sale_id' => (int)($r['sale_id'] ?? 0),
+            'invoice_number' => (string)($r['invoice_number'] ?? ''),
+            'seconds_ago' => max(0, time() - $completed),
+        ];
+    }
+    $stmt->close();
+
+    return $warnings;
+}
+
+/**
+ * @param list<array<string,mixed>> $lines
+ * @return list<array{engineer_id:int,worker_name:string,service_type:string,amount:float,sale_id:int,invoice_number:string,seconds_ago:int}>
+ */
+function ame_sale_rapid_service_warnings(mysqli $db, int $userId, array $lines, int $windowSeconds = 6): array
+{
+    if ($userId <= 0 || $windowSeconds < 1 || $lines === []) {
+        return [];
+    }
+    $want = [];
+    foreach ($lines as $line) {
+        if (!is_array($line)) {
+            continue;
+        }
+        $eng = (int)($line['engineer_id'] ?? 0);
+        $amt = round((float)($line['amount'] ?? 0), 2);
+        $stype = trim((string)($line['service_type'] ?? ''));
+        if ($eng <= 0 || $amt <= 0.009) {
+            continue;
+        }
+        $want[] = ['engineer_id' => $eng, 'amount' => $amt, 'service_type' => $stype !== '' ? $stype : 'কাজের বিল'];
+    }
+    if ($want === []) {
+        return [];
+    }
+    $stmt = @$db->prepare(
+        "SELECT s.id AS sale_id, s.invoice_number, s.completed_at, ss.engineer_id,
+                ss.service_type, ss.amount, e.name AS engineer_name
+         FROM sales s
+         INNER JOIN sale_services ss ON ss.sale_id = s.id
+         LEFT JOIN engineers e ON e.id = ss.engineer_id
+         WHERE s.created_by = ? AND s.status = 'completed'
+           AND s.completed_at >= (NOW() - INTERVAL ? SECOND)
+         ORDER BY s.id DESC"
+    );
+    if (!$stmt) {
+        return [];
+    }
+    $stmt->bind_param('ii', $userId, $windowSeconds);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $warnings = [];
+    while ($res && ($r = $res->fetch_assoc())) {
+        foreach ($want as $w) {
+            if ((int)$r['engineer_id'] !== $w['engineer_id']) {
+                continue;
+            }
+            if (abs((float)$r['amount'] - $w['amount']) > 0.009) {
+                continue;
+            }
+            $rType = trim((string)($r['service_type'] ?? ''));
+            $wType = $w['service_type'];
+            if (mb_strtolower($rType) !== mb_strtolower($wType)) {
+                continue;
+            }
+            $completed = strtotime((string)($r['completed_at'] ?? '')) ?: time();
+            $warnings[] = [
+                'engineer_id' => (int)$r['engineer_id'],
+                'worker_name' => trim((string)($r['engineer_name'] ?? 'ইঞ্জিনিয়ার')),
+                'service_type' => $wType,
+                'amount' => $w['amount'],
+                'sale_id' => (int)($r['sale_id'] ?? 0),
+                'invoice_number' => (string)($r['invoice_number'] ?? ''),
+                'seconds_ago' => max(0, time() - $completed),
+            ];
+            break 2;
+        }
+    }
+    $stmt->close();
+
+    return $warnings;
+}
+
+function ame_sale_rapid_service_message(array $warning, bool $isEnglish, int $windowSeconds = 6): string
+{
+    $name = (string)($warning['worker_name'] ?? 'কর্মী');
+    $svc = (string)($warning['service_type'] ?? 'কাজের বিল');
+    $amt = number_format((float)($warning['amount'] ?? 0), 2);
+    $memo = trim((string)($warning['invoice_number'] ?? ''));
+    if ($memo === '' && (int)($warning['sale_id'] ?? 0) > 0) {
+        $memo = '#' . (int)$warning['sale_id'];
+    }
+    $sec = (int)($warning['seconds_ago'] ?? $windowSeconds);
+    if ($isEnglish) {
+        return "⚠️ Rapid resubmit ({$sec}s ago)\nWorker: {$name}\nWork: «{$svc}» · ৳{$amt}\nMemo {$memo}\n\nSubmit again, or Cancel?";
+    }
+
+    return "⚠️ দ্রুত দ্বিতীয় সাবমিট (প্রায় {$sec} সেকেন্ড আগে)\n"
+        . "কর্মী/ইঞ্জিনিয়ার: {$name}\n"
+        . "কাজ: «{$svc}»\n"
+        . "টাকা: ৳{$amt}\n"
+        . "আগের বিক্রয়: মেমো {$memo}\n\n"
+        . "এখন আবার সাবমিট করবেন নাকি বাতিল করবেন?";
+}
+
+function ame_sale_rapid_confirm_message(array $warning, bool $isEnglish, int $windowSeconds = 6): string
+{
+    $name = (string)($warning['product_name'] ?? 'পণ্য');
+    $amt = number_format((float)($warning['amount'] ?? 0), 2);
+    $qty = (float)($warning['qty'] ?? 1);
+    $memo = trim((string)($warning['invoice_number'] ?? ''));
+    if ($memo === '' && (int)($warning['sale_id'] ?? 0) > 0) {
+        $memo = '#' . (int)$warning['sale_id'];
+    }
+  $sec = (int)($warning['seconds_ago'] ?? $windowSeconds);
+    if ($sec < 1) {
+        $sec = $windowSeconds;
+    }
+    if ($isEnglish) {
+        return "⚠️ Rapid resubmit ({$sec}s ago)\nProduct: «{$name}»\nAmount: ৳{$amt}" . ($qty > 0 ? " × {$qty}" : '')
+            . "\nAlready sold on memo {$memo}.\n\nSubmit this sale again, or Cancel?";
+    }
+
+    return "⚠️ দ্রুত দ্বিতীয় সাবমিট (প্রায় {$sec} সেকেন্ড আগে)\n"
+        . "পণ্য: «{$name}»\n"
+        . "টাকা: ৳{$amt}" . ($qty > 0 ? " × {$qty}" : '') . "\n"
+        . "আগের বিক্রয়: মেমো {$memo}\n\n"
+        . "এখন আবার সাবমিট করবেন নাকি বাতিল করবেন?";
+}
