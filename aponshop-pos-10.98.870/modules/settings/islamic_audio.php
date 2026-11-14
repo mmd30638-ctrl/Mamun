@@ -63,11 +63,13 @@ include dirname(__DIR__, 2) . '/partials/header.php';
     </section>
 
     <section class="ia-admin-card ia-admin-card-yt">
-      <h2>▶ YouTube ভিডিও / প্লেলিস্ট</h2>
+      <h2>▶ YouTube ভিডিও / চ্যানেল / প্লেলিস্ট</h2>
       <form id="iaFormYt" class="ia-upload-form">
-        <label>YouTube ভিডিও বা প্লেলিস্ট লিংক</label>
-        <input type="url" name="youtube_url" required placeholder="https://youtu.be/... বা youtube.com/watch?v=..." autocomplete="off">
-        <p class="ia-yt-hint">সার্ভারে <strong>yt-dlp</strong> থাকতে হবে। প্লেলিস্টে সর্বোচ্চ ২৫টি ভিডিও একসাথে ইম্পোর্ট হয়।</p>
+        <label>YouTube লিংক (ভিডিও, @চ্যানেল, বা প্লেলিস্ট)</label>
+        <input type="url" name="youtube_url" required placeholder="https://youtube.com/@channel ... বা youtu.be/..." autocomplete="off">
+        <p class="ia-yt-hint">চ্যানেল লিংক (যেমন <code>@shamim7912</code>) দিলে স্বয়ংক্রিয়ভাবে সেই চ্যানেলের <strong>Videos</strong> তালিকা থেকে অডিও নামাবে। সার্ভারে <strong>yt-dlp</strong> + <strong>ffmpeg</strong> লাগবে।</p>
+        <label>একবারে কয়টি ভিডিও (চ্যানেল/প্লেলিস্ট)</label>
+        <input type="number" name="max_items" min="1" max="50" value="25" style="width:120px">
         <label>শিরোনাম (ঐচ্ছিক — এক ভিডিও হলে; না দিলে YouTube শিরোনাম)</label>
         <input type="text" name="title" maxlength="255" placeholder="অডিওর নাম">
         <label>বক্তা / চ্যানেল</label>

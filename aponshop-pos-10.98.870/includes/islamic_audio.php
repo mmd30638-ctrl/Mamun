@@ -313,6 +313,48 @@ function ame_islamic_audio_youtube_is_playlist(string $url): bool
     return (bool)preg_match('/[?&]list=([a-zA-Z0-9_-]+)/', $url);
 }
 
+function ame_islamic_audio_youtube_is_channel(string $url): bool
+{
+    $path = strtolower((string)(parse_url($url, PHP_URL_PATH) ?? ''));
+    if ($path === '') {
+        return false;
+    }
+    if (preg_match('#/@([a-zA-Z0-9._-]+)(/|$)#', $path)) {
+        return true;
+    }
+    if (preg_match('#/(channel|c|user)/[^/]+#', $path)) {
+        return true;
+    }
+    return false;
+}
+
+/** চ্যানেল হোম লিংক → /videos ট্যাব (ওয়াজ/গজল/Videos তালিকা) */
+function ame_islamic_audio_youtube_resolve_feed_url(string $url): string
+{
+    $url = ame_islamic_audio_youtube_url_allowed($url);
+    $parts = parse_url($url);
+    $path = (string)($parts['path'] ?? '');
+    $base = ($parts['scheme'] ?? 'https') . '://' . ($parts['host'] ?? 'www.youtube.com') . $path;
+    if (preg_match('#/@([a-zA-Z0-9._-]+)(/(videos|streams|shorts|playlists))?#i', $path, $m)) {
+        if (empty($m[2])) {
+            return rtrim($base, '/') . '/videos';
+        }
+        return $base;
+    }
+    if (preg_match('#/(channel|c|user)/([^/]+)#i', $path) && !str_ends_with(strtolower($path), '/videos')) {
+        return rtrim($base, '/') . '/videos';
+    }
+    return $url;
+}
+
+function ame_islamic_audio_youtube_default_speaker(string $url): string
+{
+    if (preg_match('#/@([a-zA-Z0-9._-]+)#', $url, $m)) {
+        return '@' . $m[1];
+    }
+    return '';
+}
+
 function ame_islamic_audio_ytdlp_bin(): ?string
 {
     static $bin = null;
@@ -359,15 +401,19 @@ function ame_islamic_audio_ytdlp_bin(): ?string
 /**
  * @return array<int, array{id:string,title:string,webpage_url:string}>
  */
-function ame_islamic_audio_youtube_list_entries(string $url): array
+function ame_islamic_audio_youtube_list_entries(string $url, int $maxItems = 25): array
 {
     $ytdlp = ame_islamic_audio_ytdlp_bin();
     if ($ytdlp === null) {
         throw new RuntimeException('সার্ভারে yt-dlp নেই। হোস্টিংয়ে yt-dlp বা python3 -m yt_dlp ইনস্টল করুন।');
     }
-    $url = ame_islamic_audio_youtube_url_allowed($url);
-    $isPl = ame_islamic_audio_youtube_is_playlist($url);
-    $args = $isPl
+    $raw = ame_islamic_audio_youtube_url_allowed($url);
+    $maxItems = max(1, min(50, $maxItems));
+    $isChannel = ame_islamic_audio_youtube_is_channel($raw);
+    $isPl = ame_islamic_audio_youtube_is_playlist($raw);
+    $url = ($isChannel || $isPl) ? ame_islamic_audio_youtube_resolve_feed_url($raw) : $raw;
+    $useFlat = $isPl || $isChannel;
+    $args = $useFlat
         ? ['--flat-playlist', '--print', '%(id)s\t%(title)s\t%(webpage_url)s', $url]
         : ['--no-playlist', '--print', '%(id)s\t%(title)s\t%(webpage_url)s', $url];
     $cmd = ame_islamic_audio_ytdlp_cmd($args);
@@ -392,10 +438,10 @@ function ame_islamic_audio_youtube_list_entries(string $url): array
             'title' => $parts[1] !== '' ? $parts[1] : ('YouTube ' . $parts[0]),
             'webpage_url' => $parts[2] ?? ('https://www.youtube.com/watch?v=' . $parts[0]),
         ];
-        if (!$isPl) {
+        if (!$useFlat) {
             break;
         }
-        if (count($entries) >= 25) {
+        if (count($entries) >= $maxItems) {
             break;
         }
     }
@@ -463,8 +509,12 @@ function ame_islamic_audio_ingest_youtube(mysqli $db, array $meta): array
     @set_time_limit(600);
     $url = trim((string)($meta['youtube_url'] ?? $meta['audio_url'] ?? ''));
     $url = ame_islamic_audio_youtube_url_allowed($url);
-    $entries = ame_islamic_audio_youtube_list_entries($url);
+    $maxItems = max(1, min(50, (int)($meta['max_items'] ?? 25)));
+    $entries = ame_islamic_audio_youtube_list_entries($url, $maxItems);
     $speaker = trim((string)($meta['speaker'] ?? ''));
+    if ($speaker === '' && ame_islamic_audio_youtube_is_channel($url)) {
+        $speaker = ame_islamic_audio_youtube_default_speaker($url);
+    }
     $category = trim((string)($meta['category'] ?? 'general'));
     $published = !array_key_exists('is_published', $meta) || !empty($meta['is_published']);
     $fallbackTitle = trim((string)($meta['title'] ?? ''));

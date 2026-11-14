@@ -74,6 +74,7 @@ try {
             'title' => (string)($_POST['title'] ?? ''),
             'speaker' => (string)($_POST['speaker'] ?? ''),
             'category' => (string)($_POST['category'] ?? 'general'),
+            'max_items' => (int)($_POST['max_items'] ?? 25),
             'is_published' => !isset($_POST['is_published']) || (string)$_POST['is_published'] !== '0',
         ];
         $out(ame_islamic_audio_ingest_youtube($db, $meta));
