@@ -303,6 +303,7 @@ window.EH_BOOT = <?php echo json_encode([
     'canDelete' => $canDel,
 ], JSON_UNESCAPED_UNICODE); ?>;
 </script>
+<script>window.AME_RAPID_WINDOW_SEC=15;window.AME_RAPID_WINDOW_MS=15000;</script>
 <script src="/assets/js/ame-resubmit-guard.js?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '1', ENT_QUOTES, 'UTF-8'); ?>" defer></script>
 <script src="/assets/js/employee-hub.js?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '1', ENT_QUOTES, 'UTF-8'); ?>" defer></script>
 <?php include '../../partials/footer.php'; ?>

@@ -203,12 +203,13 @@ try {
 
     $confirmRapid = !empty($data['confirm_rapid_resubmit']) || !empty($data['confirm_repeat']);
     if (!$confirmRapid && $draft_id <= 0) {
+        $rapidWin = ame_rapid_resubmit_window_seconds();
         if (function_exists('ame_sale_rapid_service_warnings') && $service_lines !== []) {
-            $rapidServices = ame_sale_rapid_service_warnings($db, $user_id, $service_lines, 6);
+            $rapidServices = ame_sale_rapid_service_warnings($db, $user_id, $service_lines, $rapidWin);
             if ($rapidServices !== []) {
                 $respond(
                     'confirm',
-                    ame_sale_rapid_service_message($rapidServices[0], $is_english, 6),
+                    ame_sale_rapid_service_message($rapidServices[0], $is_english, $rapidWin),
                     [
                         'needs_confirm' => true,
                         'code' => 'AME_SALE_RAPID_SERVICE',
@@ -218,11 +219,11 @@ try {
             }
         }
         if (function_exists('ame_sale_rapid_product_warnings')) {
-            $rapidProducts = ame_sale_rapid_product_warnings($db, $user_id, $data['cart'] ?? [], 6);
+            $rapidProducts = ame_sale_rapid_product_warnings($db, $user_id, $data['cart'] ?? [], $rapidWin);
             if ($rapidProducts !== []) {
                 $respond(
                     'confirm',
-                    ame_sale_rapid_confirm_message($rapidProducts[0], $is_english, 6),
+                    ame_sale_rapid_confirm_message($rapidProducts[0], $is_english, $rapidWin),
                     [
                         'needs_confirm' => true,
                         'code' => 'AME_SALE_RAPID_PRODUCT',

@@ -141,7 +141,9 @@ if (typeof document !== 'undefined') {
 
     let submitting = false;
 
-    var AME_POS_RAPID_MS = 6000;
+    var AME_POS_RAPID_MS = (window.AME_RAPID_WINDOW_MS && window.AME_RAPID_WINDOW_MS > 0)
+        ? window.AME_RAPID_WINDOW_MS
+        : 15000;
     var AME_POS_RAPID_KEY = 'ame_pos_rapid_sale_v1';
 
     function amePosSaleRapidFingerprint(data) {
@@ -265,13 +267,13 @@ if (typeof document !== 'undefined') {
                 amount: prev.amount || 0,
                 invoice_number: prev.invoice_number || '',
                 sale_id: prev.sale_id || 0,
-                seconds_ago: Math.max(1, Math.min(6, Math.round((Date.now() - prev.at) / 1000)))
+                seconds_ago: Math.max(1, Math.min(15, Math.round((Date.now() - prev.at) / 1000)))
             }]
         };
         if (window.AmeResubmitGuard && typeof AmeResubmitGuard.askFromServer === 'function') {
             return AmeResubmitGuard.askFromServer(res);
         }
-        return Promise.resolve(window.confirm(res.message || '৬ সেকেন্ডের মধ্যে আবার সাবমিট করবেন?'));
+        return Promise.resolve(window.confirm(res.message || '১৫ সেকেন্ডের মধ্যে আবার সাবমিট করবেন?'));
     }
 
     function element(id) {

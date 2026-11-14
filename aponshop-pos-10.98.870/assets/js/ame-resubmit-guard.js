@@ -2,6 +2,10 @@
 (function (global) {
   'use strict';
 
+  var RAPID_WINDOW_SEC = (global.AME_RAPID_WINDOW_SEC && global.AME_RAPID_WINDOW_SEC > 0)
+    ? parseInt(global.AME_RAPID_WINDOW_SEC, 10)
+    : 15;
+
   var STYLE_ID = 'ame-resubmit-guard-style';
 
   function ensureStyles() {
@@ -21,7 +25,7 @@
 
   function formatSeconds(sec) {
     sec = Math.max(0, parseInt(sec, 10) || 0);
-    if (sec > 6) return 'কিছুক্ষণ আগে';
+    if (sec > RAPID_WINDOW_SEC) return 'কিছুক্ষণ আগে';
     if (sec < 2) return 'এইমাত্র';
     return sec + ' সেকেন্ড আগে';
   }
@@ -89,7 +93,7 @@
         '<header class="ame-rsg-head">' +
         '<span class="ame-rsg-icon" aria-hidden="true">⚡</span>' +
         '<div><h2 id="ame-rsg-title">দ্রুত দ্বিতীয় সাবমিট</h2>' +
-        '<p class="ame-rsg-sub">৬ সেকেন্ডের মধ্যে একই তথ্য পুনরায় পাঠানো হয়েছে</p></div>' +
+        '<p class="ame-rsg-sub">' + RAPID_WINDOW_SEC + ' সেকেন্ডের মধ্যে একই তথ্য পুনরায় পাঠানো হয়েছে</p></div>' +
         '</header>' +
         '<div class="ame-rsg-body">' + buildBody(message, meta || {}) + '</div>' +
         '<div class="ame-rsg-actions">' +

@@ -22,6 +22,7 @@ $ame_load_resubmit_guard = str_contains($ame_script_name, '/modules/sales/')
     || str_contains($ame_script_name, '/modules/hrm/');
 if ($ame_load_resubmit_guard):
 ?>
+<script>window.AME_RAPID_WINDOW_SEC=15;window.AME_RAPID_WINDOW_MS=15000;</script>
 <link rel="stylesheet" href="/assets/css/ame-resubmit-guard.css?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>">
 <script src="/assets/js/ame-resubmit-guard.js?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>" defer></script>
 <?php endif; ?>

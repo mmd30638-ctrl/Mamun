@@ -609,6 +609,12 @@ function ame_sale_replace_services($db, $sale_id, $lines)
     return $stored;
 }
 
+/** দ্রুত ডুপ্লিকেট সাবমিট কনফার্ম উইন্ডো (সেকেন্ড) */
+function ame_rapid_resubmit_window_seconds(): int
+{
+    return 15;
+}
+
 function ame_sale_norm_service_type(string $type): string
 {
     $t = mb_strtolower(trim($type));
@@ -651,8 +657,11 @@ function ame_sale_rapid_event_seconds(string $dt): int
  *
  * @return list<array{product_name:string,amount:float,qty:float,sale_id:int,invoice_number:string,seconds_ago:int}>
  */
-function ame_sale_rapid_product_warnings(mysqli $db, int $userId, array $cart, int $windowSeconds = 6): array
+function ame_sale_rapid_product_warnings(mysqli $db, int $userId, array $cart, ?int $windowSeconds = null): array
 {
+    if ($windowSeconds === null) {
+        $windowSeconds = ame_rapid_resubmit_window_seconds();
+    }
     if ($userId <= 0 || $windowSeconds < 1) {
         return [];
     }
@@ -729,8 +738,11 @@ function ame_sale_rapid_product_warnings(mysqli $db, int $userId, array $cart, i
  * @param list<array<string,mixed>> $lines
  * @return list<array{engineer_id:int,worker_name:string,service_type:string,amount:float,sale_id:int,invoice_number:string,seconds_ago:int}>
  */
-function ame_sale_rapid_service_warnings(mysqli $db, int $userId, array $lines, int $windowSeconds = 6): array
+function ame_sale_rapid_service_warnings(mysqli $db, int $userId, array $lines, ?int $windowSeconds = null): array
 {
+    if ($windowSeconds === null) {
+        $windowSeconds = ame_rapid_resubmit_window_seconds();
+    }
     if ($userId <= 0 || $windowSeconds < 1 || $lines === []) {
         return [];
     }
@@ -803,8 +815,11 @@ function ame_sale_rapid_service_warnings(mysqli $db, int $userId, array $lines, 
     }));
 }
 
-function ame_sale_rapid_service_message(array $warning, bool $isEnglish, int $windowSeconds = 6): string
+function ame_sale_rapid_service_message(array $warning, bool $isEnglish, ?int $windowSeconds = null): string
 {
+    if ($windowSeconds === null) {
+        $windowSeconds = ame_rapid_resubmit_window_seconds();
+    }
     $name = (string)($warning['worker_name'] ?? 'কর্মী');
     $svc = (string)($warning['service_type'] ?? 'কাজের বিল');
     $amt = number_format((float)($warning['amount'] ?? 0), 2);
@@ -828,8 +843,11 @@ function ame_sale_rapid_service_message(array $warning, bool $isEnglish, int $wi
         . "এখন আবার সাবমিট করবেন নাকি বাতিল করবেন?";
 }
 
-function ame_sale_rapid_confirm_message(array $warning, bool $isEnglish, int $windowSeconds = 6): string
+function ame_sale_rapid_confirm_message(array $warning, bool $isEnglish, ?int $windowSeconds = null): string
 {
+    if ($windowSeconds === null) {
+        $windowSeconds = ame_rapid_resubmit_window_seconds();
+    }
     $name = (string)($warning['product_name'] ?? 'পণ্য');
     $amt = number_format((float)($warning['amount'] ?? 0), 2);
     $qty = (float)($warning['qty'] ?? 1);

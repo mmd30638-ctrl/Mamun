@@ -1307,8 +1307,13 @@ function ame_emp_hub_find_recent_manual_work(
     string $vehicleNo,
     string $service,
     int $exceptId = 0,
-    int $windowSeconds = 6
+    ?int $windowSeconds = null
 ): ?array {
+    if ($windowSeconds === null) {
+        $windowSeconds = function_exists('ame_rapid_resubmit_window_seconds')
+            ? ame_rapid_resubmit_window_seconds()
+            : 15;
+    }
     if ($windowSeconds < 1) {
         return null;
     }
@@ -1338,8 +1343,13 @@ function ame_emp_hub_work_rapid_confirm_message(
     string $service,
     float $value,
     array $prior,
-    int $windowSeconds = 6
+    ?int $windowSeconds = null
 ): string {
+    if ($windowSeconds === null) {
+        $windowSeconds = function_exists('ame_rapid_resubmit_window_seconds')
+            ? ame_rapid_resubmit_window_seconds()
+            : 15;
+    }
     $name = trim((string)($emp['name'] ?? 'কর্মী'));
     $svc = $service !== '' ? $service : 'কাজের বিল';
     $amt = number_format($value, 2);
@@ -1711,13 +1721,16 @@ function ame_emp_hub_save_work(mysqli $db, array $in): array
         }
     } elseif (!$existing) {
         $confirmRepeat = !empty($in['confirm_repeat']) || !empty($in['confirm_rapid_resubmit']);
-        $rapid = ame_emp_hub_find_recent_manual_work($db, $empId, $date, $value, $custName, $vehicleNo, $service, 0, 6);
+        $rapidWin = function_exists('ame_rapid_resubmit_window_seconds')
+            ? ame_rapid_resubmit_window_seconds()
+            : 15;
+        $rapid = ame_emp_hub_find_recent_manual_work($db, $empId, $date, $value, $custName, $vehicleNo, $service, 0, $rapidWin);
         if ($rapid && !$confirmRepeat) {
             return [
                 'ok' => false,
                 'needs_confirm' => true,
                 'code' => 'AME_WORK_RAPID_REPEAT',
-                'message' => ame_emp_hub_work_rapid_confirm_message($emp, $service, $value, $rapid, 6),
+                'message' => ame_emp_hub_work_rapid_confirm_message($emp, $service, $value, $rapid, $rapidWin),
                 'preview' => [
                     'worker_name' => $name,
                     'service_type' => $service,
