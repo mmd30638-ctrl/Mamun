@@ -242,10 +242,15 @@
     });
   }
 
+  var ytAuto = root.getAttribute('data-yt-auto') === '1';
   var formYt = document.getElementById('iaFormYt');
   if (formYt) {
     formYt.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (!ytAuto || formYt.getAttribute('data-disabled') === '1') {
+        say('শেয়ারড হোস্টিং: PC তে MP3 নামিয়ে「ফাইল আপলোড」ব্যবহার করুন। OFFLINE_YOUTUBE_BN.txt দেখুন।');
+        return;
+      }
       if (!window.confirm('YouTube থেকে অডিও ডাউনলোড ও কম্প্রেস করতে কয়েক মিনিট লাগতে পারে। চালাবেন?')) {
         return;
       }

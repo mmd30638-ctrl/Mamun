@@ -13,7 +13,7 @@ $iaHostTicket = ame_islamic_audio_hosting_support_message($iaHost);
 include dirname(__DIR__, 2) . '/partials/header.php';
 ?>
 <link rel="stylesheet" href="/assets/css/islamic-audio-admin.css?v=<?php echo htmlspecialchars($ver, ENT_QUOTES, 'UTF-8'); ?>">
-<div class="ia-admin" id="iaAdmin" data-csrf="<?php echo $cs; ?>">
+<div class="ia-admin" id="iaAdmin" data-csrf="<?php echo $cs; ?>" data-yt-auto="<?php echo $iaYtAuto ? '1' : '0'; ?>">
   <header class="ia-admin-head">
     <h1>🕌 ইসলামিক অডিও লাইব্রেরি</h1>
     <p class="ia-admin-sub">ফাইল আপলোড, MP3 লিংক, বা YouTube — অটো কম্প্রেশন ও সাউন্ড অপ্টিমাইজেশন</p>
@@ -21,12 +21,13 @@ include dirname(__DIR__, 2) . '/partials/header.php';
     $ytOk = $iaTools['ytdlp'] !== null;
     $ffOk = $iaTools['ffmpeg'] !== null;
     $exOk = $iaTools['exec_ok'];
+    $iaYtAuto = $ytOk && $exOk;
     ?>
     <div class="ia-server-bar <?php echo $ytOk && $exOk ? 'ia-server-bar--ok' : 'ia-server-bar--warn'; ?>">
       <?php if (!$exOk): ?>
       <strong>PHP exec বন্ধ</strong> — YouTube ইম্পোর্ট চলবে না। হোস্টার থেকে exec/shell_exec চালু করুন।
       <?php elseif (!$ytOk): ?>
-      <strong>yt-dlp নেই</strong> — একবার SSH এ <code>bash tools/install_yt_dlp_cpanel.sh</code> চালান (public_html এর ভিতর)।
+      <strong>সার্ভার YouTube অটো-ইম্পোর্ট সমর্থন করে না</strong> (Hostinger Premium ইত্যাদি শেয়ারড হোস্টিং) — নিচের <em>অফলাইন উপায়</em> বা VPS দেখুন।
       <?php else: ?>
       <strong>yt-dlp:</strong> <code><?php echo htmlspecialchars($iaTools['ytdlp'], ENT_QUOTES, 'UTF-8'); ?></code>
       <?php endif; ?>
@@ -95,7 +96,19 @@ include dirname(__DIR__, 2) . '/partials/header.php';
 
     <section class="ia-admin-card ia-admin-card-yt">
       <h2>▶ YouTube ভিডিও / চ্যানেল / প্লেলিস্ট</h2>
-      <form id="iaFormYt" class="ia-upload-form">
+      <?php if (!$iaYtAuto): ?>
+      <div class="ia-yt-shared">
+        <p><strong>Premium / শেয়ারড হোস্টিং:</strong> হোস্টার yt-dlp ও ffmpeg দিতে পারে না — তাই বোতামটি বন্ধ। ওয়াজ/গজল যোগ করতে:</p>
+        <ol class="ia-yt-shared-steps">
+          <li>নিজের PC-তে <strong>yt-dlp</strong> দিয়ে MP3 নামান (নিচের গাইড)</li>
+          <li>বাম পাশের <strong>「ফাইল আপলোড」</strong> দিয়ে MP3 দিন — হোমপেজ প্লেয়ারে চলবে</li>
+          <li>অথবা MP3 অন্য হোস্টে রেখে <strong>「অডিও URL」</strong> ফিল্ড ব্যবহার করুন</li>
+          <li>পুরো অটো YouTube চাইলে <strong>VPS</strong> (root + yt-dlp + ffmpeg) লাগবে</li>
+        </ol>
+        <p class="ia-yt-shared-ref">বিস্তারিত ফাইল: <code>OFFLINE_YOUTUBE_BN.txt</code></p>
+      </div>
+      <?php endif; ?>
+      <form id="iaFormYt" class="ia-upload-form" <?php echo $iaYtAuto ? '' : 'data-disabled="1"'; ?>>
         <label>YouTube লিংক (ভিডিও, @চ্যানেল, বা প্লেলিস্ট)</label>
         <input type="url" name="youtube_url" required placeholder="https://youtube.com/@channel ... বা youtu.be/..." autocomplete="off">
         <p class="ia-yt-hint">চ্যানেল লিংক (যেমন <code>@shamim7912</code>) দিলে স্বয়ংক্রিয়ভাবে সেই চ্যানেলের <strong>Videos</strong> তালিকা থেকে অডিও নামাবে। সার্ভারে <strong>yt-dlp</strong> + <strong>ffmpeg</strong> লাগবে।</p>
@@ -112,7 +125,7 @@ include dirname(__DIR__, 2) . '/partials/header.php';
           <?php endforeach; ?>
         </select>
         <label class="ia-check"><input type="checkbox" name="is_published" value="1" checked> হোমপেজে প্রকাশ</label>
-        <button type="submit" class="ia-btn ia-btn-primary ia-btn-yt">YouTube থেকে অডিও নিন</button>
+        <button type="submit" class="ia-btn ia-btn-primary ia-btn-yt" id="iaYtSubmit" <?php echo $iaYtAuto ? '' : 'disabled title="শেয়ারড হোস্টিং — PC আপলোড ব্যবহার করুন"'; ?>>YouTube থেকে অডিও নিন</button>
       </form>
     </section>
   </div>

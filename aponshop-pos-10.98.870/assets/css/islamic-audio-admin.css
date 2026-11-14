@@ -112,6 +112,33 @@
   line-height: 1.45;
 }
 
+.ia-yt-shared {
+  margin: 0 0 14px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #7f1d1d;
+}
+
+.ia-yt-shared-steps {
+  margin: 8px 0 8px 18px;
+  padding: 0;
+}
+
+.ia-yt-shared-ref {
+  margin: 0;
+  font-size: 12px;
+  color: #991b1b;
+}
+
+form[data-disabled="1"] .ia-btn-yt:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 .ia-btn-yt {
   background: linear-gradient(135deg, #991b1b, #dc2626) !important;
 }
