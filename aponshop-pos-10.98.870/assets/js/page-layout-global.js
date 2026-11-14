@@ -17,38 +17,18 @@
     }
 
     function hideSalesDesigner() {
-        if (cfg.canEdit && isSalesDesk()) {
-            document.body && document.body.classList.add('ame-pos-layout-can-edit');
-            document.querySelectorAll('#ameDeskBarDesigner, a.ame-desk-tool-designer').forEach(function (el) {
-                el.hidden = false;
-                el.style.removeProperty('display');
-                el.style.removeProperty('visibility');
-                if (el.tagName === 'A') {
-                    el.setAttribute('href', '/modules/settings/layout_designer.php?page=sales/pos');
-                }
-            });
-        }
         document.querySelectorAll(
-            '#ameLayoutFab, .ame-layout-fab'
+            '#ameDeskBarDesigner, .ame-desk-tool-designer, a.ame-desk-tool-designer, #ameLayoutFab, .ame-layout-fab'
         ).forEach(function (el) {
-            if (isSalesDesk()) {
+            if (isSalesDesk() || el.id === 'ameDeskBarDesigner' || el.classList.contains('ame-desk-tool-designer')) {
                 el.hidden = true;
                 el.style.setProperty('display', 'none', 'important');
             }
         });
-        if (isSalesDesk() && !cfg.canEdit) {
-            document.querySelectorAll(
-                '#ameDeskBarDesigner, .ame-desk-tool-designer, a.ame-desk-tool-designer'
-            ).forEach(function (el) {
-                el.hidden = true;
-                el.style.setProperty('display', 'none', 'important');
-            });
-        }
         if (isSalesDesk()) {
             document.querySelectorAll(
-                '.ame-sale-desk a[href*="layout_designer"]:not(#ameDeskBarDesigner):not(.ame-desk-tool-designer), ' +
-                '.ame-pos-terminal-page a[href*="layout_designer.php"]:not(#ameDeskBarDesigner):not(.ame-desk-tool-designer), ' +
-                '.ame-layout-fab'
+                '.ame-sale-desk a[href*="layout_designer"], .ame-sale-desk button[title*="লেআউট"], ' +
+                '.ame-pos-terminal-page a[href*="layout_designer.php"], .ame-layout-fab, .ame-pos-layout-studio'
             ).forEach(function (el) {
                 el.hidden = true;
                 el.style.setProperty('display', 'none', 'important');

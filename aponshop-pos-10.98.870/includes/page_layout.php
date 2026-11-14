@@ -252,9 +252,6 @@ function ame_page_layout_boot(): void
     echo '<script src="/assets/js/page-layout-global.js?v=' . htmlspecialchars((string) $ver, ENT_QUOTES, 'UTF-8') . '" defer></script>' . "\n";
     if ($page === 'sales/pos') {
         echo '<link rel="stylesheet" href="/assets/css/page-layout-pos-override.css?v=' . htmlspecialchars((string) $ver, ENT_QUOTES, 'UTF-8') . '">' . "\n";
-        if ($can) {
-            echo '<script src="/assets/js/pos-layout-studio.js?v=' . htmlspecialchars((string) $ver, ENT_QUOTES, 'UTF-8') . '" defer></script>' . "\n";
-        }
     }
     echo '<script>document.body && document.body.setAttribute("data-ame-layout-page",' . json_encode($page) . ');</script>' . "\n";
 }
