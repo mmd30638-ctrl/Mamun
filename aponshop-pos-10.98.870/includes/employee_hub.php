@@ -1105,29 +1105,30 @@ function ame_emp_hub_today_work(mysqli $db, int $empId, string $day): array
     $snack = 0.0;
     $other = 0.0;
     $shop = 0.0;
+    $commissionFps = ame_emp_hub_commission_fingerprints($db, $empId);
     $stmt = @$db->prepare(
-        'SELECT COALESCE(SUM(work_value),0) w, COALESCE(SUM(employee_amount),0) p,
-                COALESCE(SUM(bonus_amount),0) b, COALESCE(SUM(snack),0) k, COALESCE(SUM(other_cost),0) o, COALESCE(SUM(shop_contribution),0) h
+        'SELECT invoice_ref, memo_no, service_type, work_value, employee_amount, bonus_amount, snack, other_cost, shop_contribution,
+                source_type, source_id
          FROM employee_works WHERE employee_id = ? AND work_date = ?'
     );
-    if (!$stmt) {
-        $stmt = @$db->prepare(
-            'SELECT COALESCE(SUM(work_value),0) w, COALESCE(SUM(employee_amount),0) p,
-                    COALESCE(SUM(bonus_amount),0) b, COALESCE(SUM(other_cost),0) o, COALESCE(SUM(shop_contribution),0) h
-             FROM employee_works WHERE employee_id = ? AND work_date = ?'
-        );
-    }
     if ($stmt) {
         $stmt->bind_param('is', $empId, $day);
         $stmt->execute();
-        $r = $stmt->get_result()->fetch_assoc();
+        $res = $stmt->get_result();
+        if ($res) {
+            while ($r = $res->fetch_assoc()) {
+                if (ame_emp_hub_manual_work_is_commission_duplicate($r, $commissionFps)) {
+                    continue;
+                }
+                $work += (float)($r['work_value'] ?? 0);
+                $pay += (float)($r['employee_amount'] ?? 0);
+                $bonus += (float)($r['bonus_amount'] ?? 0);
+                $snack += (float)($r['snack'] ?? 0);
+                $other += (float)($r['other_cost'] ?? 0);
+                $shop += (float)($r['shop_contribution'] ?? 0);
+            }
+        }
         $stmt->close();
-        $work += (float)($r['w'] ?? 0);
-        $pay += (float)($r['p'] ?? 0);
-        $bonus += (float)($r['b'] ?? 0);
-        $snack += (float)($r['k'] ?? 0);
-        $other += (float)($r['o'] ?? 0);
-        $shop += (float)($r['h'] ?? 0);
     }
     $sc = @$db->prepare(
         "SELECT COALESCE(SUM(service_amount),0) w, COALESCE(SUM(commission_amount),0) p, COALESCE(SUM(shop_amount),0) h
@@ -2414,14 +2415,18 @@ function ame_emp_hub_ledger(mysqli $db, int $empId, string $from, string $to): a
         $sal->close();
     }
 
+    $commissionFps = ame_emp_hub_commission_fingerprints($db, $empId);
     $wk = @$db->prepare('SELECT work_date, customer_name, customer_phone, vehicle_no, service_type, invoice_ref, memo_no, imei_serial,
-                                work_value, employee_amount, bonus_amount
+                                work_value, employee_amount, bonus_amount, source_type, source_id
                          FROM employee_works WHERE employee_id = ? AND work_date BETWEEN ? AND ? ORDER BY id ASC');
     if ($wk) {
         $wk->bind_param('iss', $empId, $from, $to);
         $wk->execute();
         $res = $wk->get_result();
         while ($r = $res->fetch_assoc()) {
+            if (ame_emp_hub_manual_work_is_commission_duplicate($r, $commissionFps)) {
+                continue;
+            }
             $refs = implode(' · ', array_filter([
                 (string)($r['invoice_ref'] ?? ''),
                 (string)($r['memo_no'] ?? ''),
@@ -2766,6 +2771,62 @@ function ame_emp_hub_work_fingerprint(array $row): string
         return 'sc:' . (int)$row['id'];
     }
     return $invKey . '|' . $job . '|' . $bill;
+}
+
+/**
+ * বিক্রয়/মেরামত থেকে যে কমিশন লাইন স্বয়ংক্রিয় আছে — ম্যানুয়াল employee_works ডুপ চেকের জন্য।
+ *
+ * @return array<string, true>
+ */
+function ame_emp_hub_commission_fingerprints(mysqli $db, int $empId): array
+{
+    $fps = [];
+    if ($empId <= 0) {
+        return $fps;
+    }
+    $stmt = @$db->prepare(
+        "SELECT sc.id, sc.service_type, sc.service_amount, sc.source_type, sc.source_id,
+                s.invoice_number, w.job_no
+         FROM service_commissions sc
+         LEFT JOIN sales s ON s.id = sc.sale_id
+         LEFT JOIN workshop_jobs w ON sc.source_type = 'workshop_job' AND w.id = sc.source_id
+         WHERE sc.employee_id = ?
+         ORDER BY sc.id ASC"
+    );
+    if (!$stmt) {
+        return $fps;
+    }
+    $stmt->bind_param('i', $empId);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    if ($res) {
+        while ($r = $res->fetch_assoc()) {
+            $isWorkshop = (string)($r['source_type'] ?? '') === 'workshop_job';
+            $row = [
+                'id' => (int)$r['id'],
+                'editable' => 0,
+                'invoice_ref' => $isWorkshop ? (string)($r['job_no'] ?? '') : (string)($r['invoice_number'] ?? ''),
+                'memo_no' => '',
+                'service_type' => (string)($r['service_type'] ?? ''),
+                'work_value' => (float)($r['service_amount'] ?? 0),
+                'source_type' => (string)($r['source_type'] ?? ''),
+                'source_id' => (int)($r['source_id'] ?? 0),
+            ];
+            $fps[ame_emp_hub_work_fingerprint($row)] = true;
+        }
+    }
+    $stmt->close();
+
+    return $fps;
+}
+
+function ame_emp_hub_manual_work_is_commission_duplicate(array $workRow, array $commissionFps): bool
+{
+    if ($commissionFps === []) {
+        return false;
+    }
+
+    return isset($commissionFps[ame_emp_hub_work_fingerprint($workRow)]);
 }
 
 /**

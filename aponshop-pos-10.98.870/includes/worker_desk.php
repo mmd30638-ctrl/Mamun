@@ -240,13 +240,24 @@ function ame_worker_desk_statement(mysqli $db, int $empId): array
         ];
     };
 
+    $commissionFps = function_exists('ame_emp_hub_commission_fingerprints')
+        ? ame_emp_hub_commission_fingerprints($db, $empId)
+        : [];
     if (in_array($mode, ['percentage', 'work', 'mixed'], true) && ame_worker_table($db, 'employee_works')) {
-        $wk = @$db->prepare('SELECT work_date, customer_name, vehicle_no, service_type, invoice_ref, employee_amount, bonus_amount FROM employee_works WHERE employee_id = ? ORDER BY work_date ASC, id ASC');
+        $wk = @$db->prepare(
+            'SELECT work_date, customer_name, vehicle_no, service_type, invoice_ref, memo_no, work_value,
+                    employee_amount, bonus_amount, source_type, source_id
+             FROM employee_works WHERE employee_id = ? ORDER BY work_date ASC, id ASC'
+        );
         if ($wk) {
             $wk->bind_param('i', $empId);
             $wk->execute();
             $res = $wk->get_result();
             while ($r = $res->fetch_assoc()) {
+                if (function_exists('ame_emp_hub_manual_work_is_commission_duplicate')
+                    && ame_emp_hub_manual_work_is_commission_duplicate($r, $commissionFps)) {
+                    continue;
+                }
                 $label = trim((string)($r['service_type'] ?? 'কাজ') . ' · ' . (string)($r['customer_name'] ?? '') . ' ' . (string)($r['vehicle_no'] ?? '') . ' ' . (string)($r['invoice_ref'] ?? ''));
                 $push((string)$r['work_date'], trim($label), 0, (float)$r['employee_amount']);
                 $push((string)$r['work_date'], 'কাজের বোনাস', 0, (float)($r['bonus_amount'] ?? 0));
