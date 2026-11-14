@@ -1,3 +1,8 @@
+# 10.98.904 — Android POS: এক কলাম গ্রিড, পেমেন্ট ডক full-width, overflow clamp
+assets/css/ame-sale-desk-lock.css
+assets/css/ame-android-universal.css
+assets/css/pos-pay-dock.css
+assets/js/responsive-fix.js
 # 10.98.903 — ইসলামিক অডিও: YouTube yt-dlp ইম্পোর্ট + প্লেলিস্ট (২৫)
 includes/islamic_audio.php
 modules/settings/islamic_audio.php

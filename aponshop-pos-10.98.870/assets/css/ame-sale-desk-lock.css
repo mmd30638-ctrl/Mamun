@@ -866,11 +866,26 @@ body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell {
   background: #f4f4f4 !important;
 }
 
-body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1.75fr) minmax(280px, 0.85fr) !important;
-  gap: 12px !important;
-  align-items: start !important;
+@media (min-width: 1000px) {
+  body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.75fr) minmax(280px, 0.85fr) !important;
+    gap: 12px !important;
+    align-items: start !important;
+  }
+}
+
+@media (max-width: 999.98px) {
+  body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    gap: 10px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    align-items: stretch !important;
+  }
 }
 
 body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-legacy-pos-head {
@@ -899,14 +914,33 @@ body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
   box-shadow: none !important;
 }
 
-body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-bar {
-  display: grid !important;
-  grid-template-columns: minmax(180px, 1fr) minmax(220px, 1.35fr) minmax(140px, 0.7fr) !important;
-  gap: 8px !important;
-  padding: 10px !important;
-  background: #f7f7f7 !important;
-  border: 1px solid #e3e3e3 !important;
-  border-radius: 4px !important;
+@media (min-width: 1000px) {
+  body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-bar {
+    display: grid !important;
+    grid-template-columns: minmax(180px, 1fr) minmax(220px, 1.35fr) minmax(140px, 0.7fr) !important;
+    gap: 8px !important;
+    padding: 10px !important;
+    background: #f7f7f7 !important;
+    border: 1px solid #e3e3e3 !important;
+    border-radius: 4px !important;
+  }
+}
+
+@media (max-width: 999.98px) {
+  body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-bar {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    gap: 10px !important;
+    padding: 10px !important;
+    background: #f7f7f7 !important;
+    border: 1px solid #e3e3e3 !important;
+    border-radius: 8px !important;
+  }
 }
 
 body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search { order: 1 !important; }

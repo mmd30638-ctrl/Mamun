@@ -1,4 +1,4 @@
-/* 10.98.902 — Android / ছোট স্ক্রিন: সব মডিউলে টাচ-ফ্রেন্ডলি + কাটা পড়া বন্ধ
+/* 10.98.904 — Android / ছোট স্ক্রিন: সব মডিউলে টাচ-ফ্রেন্ডলি + কাটা পড়া বন্ধ
    শেষে লোড হয় (footer.php) — !important দিয়ে পুরনো nowrap ও গ্রিড ঠিক করে। */
 
 :root {
@@ -6,7 +6,15 @@
   --ame-pad-x: max(10px, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
 }
 
-@media (max-width: 900px) {
+@media (hover: none) and (pointer: coarse), (max-width: 900px) {
+  html,
+  body {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+}
+
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
   #main-content {
     padding-left: max(10px, env(safe-area-inset-left)) !important;
     padding-right: max(10px, env(safe-area-inset-right)) !important;
@@ -66,6 +74,49 @@
 
   .custom-sidebar {
     max-width: min(92vw, 320px) !important;
+  }
+}
+
+body.ame-mobile-clamp.ame-pos-terminal-page #main-content,
+body.ame-screen-phone.ame-pos-terminal-page #main-content {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+}
+
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-controls {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-action-row {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-action-row > * {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk button,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-customer-add,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk [class*="customer"] button {
+    max-width: 100% !important;
+    white-space: normal !important;
+    text-align: center !important;
   }
 }
 

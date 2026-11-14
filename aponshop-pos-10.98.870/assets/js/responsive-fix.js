@@ -269,8 +269,20 @@
             || body.classList.contains('ame-customer-payment-page');
     }
 
+    function clampHorizontalOverflow() {
+        var doc = document.documentElement;
+        var body = document.body;
+        if (!body) {
+            return;
+        }
+        var vw = window.innerWidth || doc.clientWidth || 0;
+        var wide = doc.scrollWidth > vw + 2;
+        body.classList.toggle('ame-mobile-clamp', wide);
+    }
+
     function runAll() {
         setViewportState();
+        clampHorizontalOverflow();
         if (skipHeavyFit()) {
             return;
         }
