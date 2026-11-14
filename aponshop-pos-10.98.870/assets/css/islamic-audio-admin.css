@@ -44,6 +44,55 @@
   color: #9a3412;
 }
 
+.ia-host-ticket {
+  margin-top: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 8px 12px 12px;
+  background: #f8fafc;
+}
+
+.ia-host-ticket summary {
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.ia-host-ticket-hint {
+  margin: 8px 0 6px;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.ia-host-ticket-ta {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  resize: vertical;
+  min-height: 200px;
+}
+
+.ia-host-ticket-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.ia-host-copy-done {
+  font-size: 13px;
+  font-weight: 700;
+  color: #059669;
+}
+
 .ia-admin-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

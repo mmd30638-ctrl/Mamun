@@ -8,6 +8,8 @@ $ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.900';
 $cs = htmlspecialchars((string)($_SESSION['csrf_token'] ?? ''), ENT_QUOTES, 'UTF-8');
 $categories = ame_islamic_audio_categories();
 $iaTools = ame_islamic_audio_server_tools();
+$iaHost = preg_replace('/[^a-zA-Z0-9._-]/', '', (string)($_SERVER['HTTP_HOST'] ?? 'mavo12.online'));
+$iaHostTicket = ame_islamic_audio_hosting_support_message($iaHost);
 include dirname(__DIR__, 2) . '/partials/header.php';
 ?>
 <link rel="stylesheet" href="/assets/css/islamic-audio-admin.css?v=<?php echo htmlspecialchars($ver, ENT_QUOTES, 'UTF-8'); ?>">
@@ -34,6 +36,15 @@ include dirname(__DIR__, 2) . '/partials/header.php';
       · <strong>ffmpeg নেই</strong> — ইম্পোর্ট হবে কিন্তু কম্প্রেশন সীমিত।
       <?php endif; ?>
     </div>
+    <details class="ia-host-ticket" id="iaHostTicketBox" <?php echo (!$ytOk || !$exOk) ? 'open' : ''; ?>>
+      <summary>📋 হোস্টার / cPanel প্রতিনিধিকে পাঠানোর মেসেজ</summary>
+      <p class="ia-host-ticket-hint">নিচে সম্পাদনা করে <strong>কপি করুন</strong> — টিকেটে পেস্ট করে পাঠান।</p>
+      <textarea class="ia-host-ticket-ta" id="iaHostTicket" rows="14" spellcheck="false"><?php echo htmlspecialchars($iaHostTicket, ENT_NOQUOTES, 'UTF-8'); ?></textarea>
+      <div class="ia-host-ticket-actions">
+        <button type="button" class="ia-btn ia-btn-primary" id="iaHostCopy">📋 মেসেজ কপি করুন</button>
+        <span class="ia-host-copy-done" id="iaHostCopyDone" hidden>কপি হয়েছে — এখন টিকেটে পেস্ট করুন</span>
+      </div>
+    </details>
   </header>
 
   <div class="ia-admin-grid">

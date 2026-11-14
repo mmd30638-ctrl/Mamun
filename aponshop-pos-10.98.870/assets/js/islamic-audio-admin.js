@@ -263,5 +263,38 @@
     });
   }
 
+  var copyBtn = document.getElementById('iaHostCopy');
+  var copyDone = document.getElementById('iaHostCopyDone');
+  var ticketTa = document.getElementById('iaHostTicket');
+  if (copyBtn && ticketTa) {
+    copyBtn.addEventListener('click', function () {
+      var text = ticketTa.value;
+      function done() {
+        if (copyDone) {
+          copyDone.hidden = false;
+          setTimeout(function () {
+            copyDone.hidden = true;
+          }, 4000);
+        }
+        say('হোস্টিং মেসেজ কপি হয়েছে — সাপোর্ট টিকেটে পেস্ট করুন');
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(fallback);
+      } else {
+        fallback();
+      }
+      function fallback() {
+        ticketTa.focus();
+        ticketTa.select();
+        try {
+          document.execCommand('copy');
+          done();
+        } catch (e) {
+          say('অটো কপি ব্যর্থ — মাউস দিয়ে টেক্সট সিলেক্ট করে কপি করুন');
+        }
+      }
+    });
+  }
+
   load();
 })();
