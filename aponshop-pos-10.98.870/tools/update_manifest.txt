@@ -1,3 +1,15 @@
+# 10.98.900 — হোমপেজ ইসলামিক অডিও + URL ডাউনলোড + অটো কম্প্রেশন
+includes/islamic_audio.php
+index.php
+ISLAMIC_AUDIO_BN.txt
+assets/css/islamic-audio.css
+assets/css/islamic-audio-admin.css
+assets/js/islamic-audio.js
+assets/js/islamic-audio-admin.js
+modules/settings/islamic_audio.php
+modules/settings/islamic_audio_api.php
+modules/settings/tools.php
+tools/test_islamic_audio.php
 # 10.98.899 — ডুপ্লিকেট মেমো হার্ড ব্লক + ইঞ্জিনিয়ার/সার্ভিস কোর লক
 includes/engineer_bill_lock.php
 ENGINEER_SERVICE_PROTECTED_BN.txt

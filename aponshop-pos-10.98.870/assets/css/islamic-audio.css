@@ -1,0 +1,223 @@
+/* Home — premium minimal Islamic audio (white + dark type) */
+.ia-home {
+  position: relative;
+  z-index: 120;
+  max-width: 720px;
+  margin: 18px auto 0;
+  padding: 0 12px 24px;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.ia-fab {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  color: #0b1220;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-weight: 800;
+  font-size: 15px;
+  box-shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+
+.ia-fab:hover {
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+  transform: translateY(-1px);
+}
+
+.ia-fab-ic {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #0f172a, #1e3a5f);
+  color: #fff;
+  font-size: 16px;
+}
+
+.ia-panel {
+  margin-top: 14px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 16px 16px 12px;
+  box-shadow: 0 16px 48px rgba(2, 6, 23, 0.1);
+  color: #0f172a;
+}
+
+.ia-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ia-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.ia-close {
+  border: 0;
+  background: #f1f5f9;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  color: #334155;
+}
+
+.ia-player {
+  background: #f8fafc;
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.ia-now-title {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ia-now-meta {
+  margin: 0 0 10px;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.ia-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ia-play {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 0;
+  background: #0f172a;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.ia-wave {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 28px;
+  flex: 1;
+}
+
+.ia-wave span {
+  width: 4px;
+  background: #cbd5e1;
+  border-radius: 2px;
+  height: 8px;
+  transition: height 0.15s;
+}
+
+.ia-wave.is-playing span {
+  background: #0f172a;
+  animation: iaBar 0.9s ease-in-out infinite;
+}
+
+.ia-wave.is-playing span:nth-child(2) { animation-delay: 0.1s; }
+.ia-wave.is-playing span:nth-child(3) { animation-delay: 0.2s; }
+.ia-wave.is-playing span:nth-child(4) { animation-delay: 0.15s; }
+.ia-wave.is-playing span:nth-child(5) { animation-delay: 0.25s; }
+.ia-wave.is-playing span:nth-child(6) { animation-delay: 0.05s; }
+.ia-wave.is-playing span:nth-child(7) { animation-delay: 0.18s; }
+
+@keyframes iaBar {
+  0%, 100% { height: 8px; }
+  50% { height: 26px; }
+}
+
+.ia-time {
+  font-size: 11px;
+  font-weight: 700;
+  color: #475569;
+  min-width: 72px;
+  text-align: right;
+}
+
+.ia-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.ia-track {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.ia-track:hover {
+  background: #f8fafc;
+}
+
+.ia-track.is-active {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+
+.ia-serial {
+  font-size: 12px;
+  font-weight: 900;
+  color: #1e293b;
+  text-align: center;
+}
+
+.ia-track-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ia-track-sub {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.ia-mini-play {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .ia-fab-txt { font-size: 14px; }
+  .ia-list { max-height: 240px; }
+}
