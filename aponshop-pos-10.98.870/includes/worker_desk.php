@@ -279,15 +279,32 @@ function ame_worker_desk_statement(mysqli $db, int $empId): array
         ame_engineer_statement_sync($db, $empId);
     }
     if (ame_worker_table($db, 'service_commissions')) {
-        $sc = @$db->prepare('SELECT created_at, service_type, commission_amount, service_amount FROM service_commissions WHERE employee_id = ? ORDER BY id ASC');
-        if (!$sc) {
-            $sc = @$db->prepare('SELECT created_at, service_type, commission_amount FROM service_commissions WHERE employee_id = ? ORDER BY id ASC');
-        }
+        $sc = @$db->prepare(
+            'SELECT sc.created_at, sc.service_type, sc.commission_amount, sc.service_amount, s.invoice_number
+             FROM service_commissions sc
+             LEFT JOIN sales s ON s.id = sc.sale_id
+             WHERE sc.employee_id = ? ORDER BY sc.id ASC'
+        );
         if ($sc) {
             $sc->bind_param('i', $empId);
             $sc->execute();
             $res = $sc->get_result();
+            $scLogicalSeen = [];
             while ($r = $res->fetch_assoc()) {
+                if (function_exists('ame_emp_hub_work_logical_key')) {
+                    $lk = ame_emp_hub_work_logical_key([
+                        'invoice_ref' => (string)($r['invoice_number'] ?? ''),
+                        'memo_no' => '',
+                        'service_type' => (string)($r['service_type'] ?? ''),
+                        'work_value' => (float)($r['service_amount'] ?? 0),
+                    ]);
+                    if ($lk !== '' && isset($scLogicalSeen[$lk])) {
+                        continue;
+                    }
+                    if ($lk !== '') {
+                        $scLogicalSeen[$lk] = true;
+                    }
+                }
                 $workDate = substr((string)($r['created_at'] ?? ''), 0, 10);
                 if ($workDate === '') {
                     $workDate = date('Y-m-d');
@@ -483,8 +500,8 @@ function ame_worker_desk_statement(mysqli $db, int $empId): array
 
 function ame_worker_history_row_key(array $work): string
 {
-    if (function_exists('ame_emp_hub_work_fingerprint')) {
-        return ame_emp_hub_work_fingerprint($work);
+    if (function_exists('ame_emp_hub_work_logical_key')) {
+        return ame_emp_hub_work_logical_key($work);
     }
     $invKey = function_exists('ame_emp_hub_work_invoice_key')
         ? ame_emp_hub_work_invoice_key(
@@ -492,7 +509,7 @@ function ame_worker_history_row_key(array $work): string
             (string)($work['memo_no'] ?? '')
         )
         : strtoupper(trim((string)($work['invoice_ref'] ?? $work['memo_no'] ?? '')));
-    $job = trim((string)($work['service_type'] ?? ''));
+    $job = mb_strtolower(trim((string)($work['service_type'] ?? '')));
     $bill = number_format(round((float)($work['work_value'] ?? 0), 2), 2, '.', '');
 
     return $invKey . '|' . $job . '|' . $bill;
@@ -522,57 +539,6 @@ function ame_worker_history(mysqli $db, int $empId, string $from, string $to): a
         ];
         $rows[] = $row;
     }
-    if (!ame_worker_table($db, 'sale_services') || !ame_worker_table($db, 'sales')) {
-        return $rows;
-    }
-    $name = '';
-    $emp = ame_emp_hub_row($db, $empId, true);
-    if ($emp) {
-        $name = trim((string)($emp['name'] ?? ''));
-    }
-    $sql = "SELECT DATE(s.created_at) AS work_date, s.invoice_number, s.vehicle_no,
-                   COALESCE(NULLIF(cu.name,''), NULLIF(s.guest_customer_name,''), '') AS customer_name,
-                   ss.service_type, ss.amount, ss.engineer_name
-            FROM sale_services ss
-            INNER JOIN sales s ON s.id = ss.sale_id
-            LEFT JOIN customers cu ON cu.id = s.customer_id
-            LEFT JOIN engineers en ON en.id = ss.engineer_id
-            WHERE DATE(s.created_at) BETWEEN ? AND ?
-              AND (en.employee_id = ? OR ss.engineer_id IN (SELECT id FROM engineers WHERE employee_id = ?) OR (ss.engineer_name <> '' AND ss.engineer_name = ?))
-            ORDER BY s.created_at ASC, ss.id ASC";
-    $stmt = @$db->prepare($sql);
-    if (!$stmt) {
-        return $rows;
-    }
-    $stmt->bind_param('ssiis', $from, $to, $empId, $empId, $name);
-    if ($stmt->execute()) {
-        $res = $stmt->get_result();
-        if ($res) {
-            while ($r = $res->fetch_assoc()) {
-                $invoice = trim((string)($r['invoice_number'] ?? ''));
-                $job = trim((string)($r['service_type'] ?? ''));
-                $bill = round((float)($r['amount'] ?? 0), 2);
-                $invKey = function_exists('ame_emp_hub_work_invoice_key')
-                    ? ame_emp_hub_work_invoice_key($invoice, '')
-                    : strtoupper($invoice);
-                $key = $invKey . '|' . $job . '|' . number_format($bill, 2, '.', '');
-                if (isset($seen[$key])) {
-                    continue;
-                }
-                $seen[$key] = true;
-                $rows[] = [
-                    'date' => (string)($r['work_date'] ?? ''),
-                    'customer' => (string)($r['customer_name'] ?? ''),
-                    'vehicle' => (string)($r['vehicle_no'] ?? ''),
-                    'invoice' => $invoice,
-                    'job' => $job,
-                    'bill' => $bill,
-                    'earn' => 0.0,
-                ];
-            }
-        }
-    }
-    $stmt->close();
     usort($rows, static function ($a, $b) {
         return strcmp((string)$b['date'], (string)$a['date']);
     });

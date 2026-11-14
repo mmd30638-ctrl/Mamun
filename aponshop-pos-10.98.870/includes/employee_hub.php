@@ -2161,10 +2161,12 @@ function ame_emp_hub_pending_service_pay(mysqli $db, array $emp, int $empId, str
 {
     $empty = ['ids' => [], 'amount' => 0.0, 'service_value' => 0.0];
     $cmp = $onlyDay ? '=' : '<=';
-    $sql = "SELECT id, commission_amount, service_amount, DATE(created_at) AS work_date
-            FROM service_commissions
-            WHERE employee_id = ? AND status = 'pending' AND DATE(created_at) {$cmp} ?
-            ORDER BY id ASC";
+    $sql = "SELECT sc.id, sc.commission_amount, sc.service_amount, sc.service_type,
+                   DATE(sc.created_at) AS work_date, s.invoice_number
+            FROM service_commissions sc
+            LEFT JOIN sales s ON s.id = sc.sale_id
+            WHERE sc.employee_id = ? AND sc.status = 'pending' AND DATE(sc.created_at) {$cmp} ?
+            ORDER BY sc.id ASC";
     if ($lock) {
         $sql .= ' FOR UPDATE';
     }
@@ -2178,7 +2180,20 @@ function ame_emp_hub_pending_service_pay(mysqli $db, array $emp, int $empId, str
     $ids = [];
     $amount = 0.0;
     $value = 0.0;
+    $seenLogical = [];
     while ($row = $rows->fetch_assoc()) {
+        $logical = ame_emp_hub_work_logical_key([
+            'invoice_ref' => (string)($row['invoice_number'] ?? ''),
+            'memo_no' => '',
+            'service_type' => (string)($row['service_type'] ?? ''),
+            'work_value' => (float)($row['service_amount'] ?? 0),
+        ]);
+        if ($logical !== '' && isset($seenLogical[$logical])) {
+            continue;
+        }
+        if ($logical !== '') {
+            $seenLogical[$logical] = true;
+        }
         $ids[] = (int)$row['id'];
         $rule = ame_emp_hub_pay_rule_on($db, $emp, (string)($row['work_date'] ?? $throughDate));
         $mode = ame_emp_hub_valid_pay_mode((string)$rule['payment_type']);
@@ -2824,6 +2839,21 @@ function ame_emp_hub_work_invoice_key(string $invoiceRef, string $memoNo = ''): 
     return $raw;
 }
 
+/**
+ * একই ইনভয়েসের একই কাজের লাইন — ডুপ্লিকেট কমিশন (২টি sc.id) ধরার চাবি।
+ */
+function ame_emp_hub_work_logical_key(array $row): string
+{
+    $invKey = ame_emp_hub_work_invoice_key(
+        (string)($row['invoice_ref'] ?? ''),
+        (string)($row['memo_no'] ?? '')
+    );
+    $job = mb_strtolower(trim(preg_replace('/\s+/u', ' ', (string)($row['service_type'] ?? ''))));
+    $bill = number_format(round((float)($row['work_value'] ?? 0), 2), 2, '.', '');
+
+    return $invKey . '|' . $job . '|' . $bill;
+}
+
 function ame_emp_hub_work_fingerprint(array $row): string
 {
     $invKey = ame_emp_hub_work_invoice_key(
@@ -2882,7 +2912,7 @@ function ame_emp_hub_commission_fingerprints(mysqli $db, int $empId): array
                 'source_type' => (string)($r['source_type'] ?? ''),
                 'source_id' => (int)($r['source_id'] ?? 0),
             ];
-            $fps[ame_emp_hub_work_fingerprint($row)] = true;
+            $fps[ame_emp_hub_work_logical_key($row)] = true;
         }
     }
     $stmt->close();
@@ -2896,7 +2926,7 @@ function ame_emp_hub_manual_work_is_commission_duplicate(array $workRow, array $
         return false;
     }
 
-    return isset($commissionFps[ame_emp_hub_work_fingerprint($workRow)]);
+    return isset($commissionFps[ame_emp_hub_work_logical_key($workRow)]);
 }
 
 /**
@@ -2904,27 +2934,34 @@ function ame_emp_hub_manual_work_is_commission_duplicate(array $workRow, array $
  */
 function ame_emp_hub_works_dedupe(array $rows): array
 {
-    $autoKeys = [];
+    $best = [];
     foreach ($rows as $row) {
-        if ((int)($row['editable'] ?? 1) === 0) {
-            $autoKeys[ame_emp_hub_work_fingerprint($row)] = true;
+        $logical = ame_emp_hub_work_logical_key($row);
+        $invOnly = ame_emp_hub_work_invoice_key(
+            (string)($row['invoice_ref'] ?? ''),
+            (string)($row['memo_no'] ?? '')
+        );
+        $jobOnly = mb_strtolower(trim((string)($row['service_type'] ?? '')));
+        if ($invOnly === '' && $jobOnly === '' && (float)($row['work_value'] ?? 0) < 0.009) {
+            $logical = 'row:' . (int)($row['id'] ?? 0) . ':' . (int)($row['editable'] ?? 1);
         }
-    }
-    $seen = [];
-    $out = [];
-    foreach ($rows as $row) {
-        $fp = ame_emp_hub_work_fingerprint($row);
-        $isManual = (int)($row['editable'] ?? 1) === 1;
-        if ($isManual && isset($autoKeys[$fp])) {
+        $isAuto = (int)($row['editable'] ?? 1) === 0;
+        if (!isset($best[$logical])) {
+            $best[$logical] = $row;
             continue;
         }
-        if (isset($seen[$fp])) {
-            continue;
+        $cur = $best[$logical];
+        $curAuto = (int)($cur['editable'] ?? 1) === 0;
+        if ($isAuto && !$curAuto) {
+            $best[$logical] = $row;
+        } elseif ($isAuto && $curAuto) {
+            if ((int)($row['id'] ?? 0) < (int)($cur['id'] ?? 0)) {
+                $best[$logical] = $row;
+            }
         }
-        $seen[$fp] = true;
-        $out[] = $row;
     }
-    return $out;
+
+    return array_values($best);
 }
 
 function ame_emp_hub_works(mysqli $db, int $empId, string $from, string $to): array
