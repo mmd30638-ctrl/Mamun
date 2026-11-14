@@ -650,10 +650,13 @@
       bar.classList.add('is-pos-dock');
     }
     bar.hidden = true;
-    var salesHint = isSalesDesk()
-      ? ' <small style="font-weight:700;opacity:.9">(নীল বক্স বা «সরান» ধরে টানুন · কোণে ⤡ ছোট-বড় · সেভ ও লক → পেজ সাজান বন্ধ → বিক্রয় সম্পন্ন)</small>'
-      : '';
-    bar.innerHTML = '<strong>এই পেজ সাজান</strong>' + salesHint + '<span><button type="button" class="ame-fit-reset">আগের মতো</button> <button type="button" class="ame-fit-lock">সেভ ও লক</button></span>';
+    var fitHint = isSalesDesk()
+      ? ' <small class="ame-fit-hint">(নীল বক্স টেনে সরান · ⤡ ছোট-বড় · শেষে <b>ডিজাইন সম্পন্ন</b> — তারপর বিক্রয় সম্পন্ন)</small>'
+      : ' <small class="ame-fit-hint">(বক্স/আইকন সাজিয়ে শেষে <b>ডিজাইন সম্পন্ন</b> চাপুন)</small>';
+    bar.innerHTML = '<strong>এই পেজ সাজান</strong>' + fitHint
+      + '<span class="ame-fit-actions"><button type="button" class="ame-fit-reset">আগের মতো</button>'
+      + '<button type="button" class="ame-fit-lock">সেভ ও লক</button>'
+      + '<button type="button" class="ame-fit-done">✅ ডিজাইন সম্পন্ন</button></span>';
     document.body.appendChild(bar);
     var launch = null;
     function setTool(on) {
@@ -704,14 +707,62 @@
         setTool(!toolOn());
       });
     }
-    bar.querySelector('.ame-fit-lock').addEventListener('click', function () {
+    function persistLayout(doneBtn, onDone) {
+      if (editing) {
+        freeze();
+        handles(true);
+      }
       var items = collect();
       remember(items);
+      api('POST', { path: location.pathname, items: items, complete: !!(onDone && onDone.complete) })
+        .then(function (data) {
+          if (doneBtn) {
+            doneBtn.disabled = false;
+          }
+          if (onDone && typeof onDone.after === 'function') {
+            onDone.after(data);
+          }
+        });
+    }
+
+    bar.querySelector('.ame-fit-lock').addEventListener('click', function () {
       var btn = bar.querySelector('.ame-fit-lock');
       btn.disabled = true;
-      api('POST', { path: location.pathname, items: items }).then(function (data) {
-        btn.disabled = false;
-        btn.textContent = data && data.ok ? 'সেভ হয়েছে' : 'সেভ ও লক';
+      persistLayout(btn, {
+        after: function (data) {
+          btn.textContent = data && data.ok ? 'সেভ হয়েছে' : 'সেভ ও লক';
+          window.setTimeout(function () {
+            btn.textContent = 'সেভ ও লক';
+          }, 1800);
+        }
+      });
+    });
+    bar.querySelector('.ame-fit-done').addEventListener('click', function () {
+      var btn = bar.querySelector('.ame-fit-done');
+      btn.disabled = true;
+      btn.textContent = 'সম্পন্ন হচ্ছে...';
+      persistLayout(btn, {
+        complete: true,
+        after: function (data) {
+          if (data && data.ok) {
+            btn.textContent = '✅ সম্পন্ন হয়েছে!';
+            handles(false);
+            setTool(false);
+            var toggle = document.getElementById('amePageFitToggle');
+            if (toggle) {
+              var sidebar = document.getElementById('mySidebar');
+              var backdrop = document.getElementById('sidebarBackdrop');
+              if (sidebar) sidebar.classList.remove('active');
+              if (backdrop) backdrop.classList.remove('active');
+            }
+            window.setTimeout(function () {
+              btn.textContent = '✅ ডিজাইন সম্পন্ন';
+            }, 2200);
+          } else {
+            btn.textContent = '✅ ডিজাইন সম্পন্ন';
+            alert('সংরক্ষণ হয়নি — আবার চেষ্টা করুন।');
+          }
+        }
       });
     });
     bar.querySelector('.ame-fit-reset').addEventListener('click', function () {

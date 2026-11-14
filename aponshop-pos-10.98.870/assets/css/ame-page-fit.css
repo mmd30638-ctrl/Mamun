@@ -146,6 +146,7 @@ html body .master-header-fixed .hdr-icon-btn.hdr-i-fit.is-on {
   top: auto;
   z-index: 90;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
@@ -184,8 +185,32 @@ html body .master-header-fixed .hdr-icon-btn.hdr-i-fit.is-on {
   font-weight: 800;
   cursor: pointer;
 }
-.ame-fit-lock { background: #047857; color: #fff; }
+.ame-fit-lock { background: #0369a1; color: #fff; }
 .ame-fit-reset { background: #9F1239; color: #fff; }
+.ame-fit-done {
+  background: linear-gradient(120deg, #047857, #059669);
+  color: #fff;
+  min-width: 132px;
+  box-shadow: 0 6px 16px rgba(4, 120, 87, 0.35);
+}
+.ame-fit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
+.ame-fit-hint {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #334155;
+}
+.ame-fit-bar.is-pos-dock .ame-fit-done {
+  flex: 1 1 auto;
+}
 body.ame-fit-on [data-ame-fit="1"] {
   outline: 2px dashed #1D4ED8;
   outline-offset: 2px;
