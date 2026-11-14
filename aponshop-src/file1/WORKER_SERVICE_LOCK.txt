@@ -16,4 +16,6 @@ WORKER SERVICE LOCK (AME_WORKER_WORK_LOCK_REV 10.98.886)
 
 9. POS কার্ট EMP-#### পণ্য (কাজের বিল): ame_sale_merge_cart_work_bills + ameCollectServices — প্যানেল ছাড়া কমিশন।
 
-প্যাচ: Aponshop_10.98.886_PATCH.zip | DB restore টিক করবেন না।
+10. 10.98.887: বিক্রয় কমপ্লিটে অটো শেয়ার শিট বন্ধ (pos-cash-paid + invoice.php)।
+
+প্যাচ: Aponshop_10.98.887_PATCH.zip | DB restore টিক করবেন না।

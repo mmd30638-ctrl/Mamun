@@ -1,3 +1,6 @@
+# 10.98.887 — বিক্রয় কমপ্লিটের পর নিচের শেয়ার শিট বন্ধ (ক্যাশ বাটন থেকে share=1 নয়)
+assets/js/pos-cash-paid.js
+modules/sales/invoice.php
 # 10.98.886 — POS কার্টে EMP-#### কাজের বিল → sale_services + কর্মী স্টেটমেন্ট
 includes/sales/sale_finance.php
 modules/sales/pos_workspace.php
