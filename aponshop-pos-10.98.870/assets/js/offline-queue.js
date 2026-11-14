@@ -245,7 +245,9 @@
                 return {
                     needs_confirm: true,
                     message: pack.data.message || 'আবার সাবমিট করবেন?',
-                    warnings: pack.data.warnings || []
+                    code: pack.data.code || '',
+                    warnings: pack.data.warnings || [],
+                    preview: pack.data.preview || null
                 };
             }
             if (pack.data && pack.data.status === 'error') {

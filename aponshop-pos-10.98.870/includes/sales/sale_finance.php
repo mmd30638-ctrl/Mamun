@@ -609,6 +609,43 @@ function ame_sale_replace_services($db, $sale_id, $lines)
     return $stored;
 }
 
+function ame_sale_norm_service_type(string $type): string
+{
+    $t = mb_strtolower(trim($type));
+    if ($t === '' || $t === 'কাজের বিল' || $t === 'work bill') {
+        return '__work__';
+    }
+    $t = preg_replace('/\s+/u', ' ', $t) ?? $t;
+
+    return $t;
+}
+
+function ame_sale_service_types_match(string $a, string $b): bool
+{
+    $na = ame_sale_norm_service_type($a);
+    $nb = ame_sale_norm_service_type($b);
+    if ($na === $nb) {
+        return true;
+    }
+    if ($na === '__work__' || $nb === '__work__') {
+        return $na === '__work__' && $nb === '__work__';
+    }
+
+    return $na === $nb
+        || str_contains($na, $nb)
+        || str_contains($nb, $na);
+}
+
+function ame_sale_rapid_event_seconds(string $dt): int
+{
+    $ts = strtotime($dt);
+    if ($ts === false || $ts <= 0) {
+        return 999;
+    }
+
+    return max(0, time() - $ts);
+}
+
 /**
  * কার্টের পণ্য নাম যেগুলো গত কয়েক সেকেন্ডে একই ব্যবহারকারী আবার বিক্রি করেছে।
  *
@@ -645,14 +682,16 @@ function ame_sale_rapid_product_warnings(mysqli $db, int $userId, array $cart, i
     $warnings = [];
     $winSql = function_exists('ame_sql_interval_seconds') ? ame_sql_interval_seconds($windowSeconds) : max(1, min(3600, (int)$windowSeconds));
     $stmt = @$db->prepare(
-        "SELECT s.id AS sale_id, s.invoice_number, s.completed_at,
+        "SELECT s.id AS sale_id, s.invoice_number,
+                COALESCE(NULLIF(s.completed_at, '0000-00-00 00:00:00'), s.created_at) AS event_at,
                 COALESCE(NULLIF(TRIM(si.item_name), ''), p.name, '') AS product_name,
                 si.unit_price, si.quantity
          FROM sales s
          INNER JOIN sale_items si ON si.sale_id = s.id
          LEFT JOIN products p ON p.id = si.product_id
          WHERE s.created_by = ? AND s.status = 'completed'
-           AND s.completed_at >= (NOW() - INTERVAL {$winSql} SECOND)
+           AND COALESCE(NULLIF(s.completed_at, '0000-00-00 00:00:00'), s.created_at)
+               >= (NOW() - INTERVAL {$winSql} SECOND)
          ORDER BY s.id DESC, si.id ASC"
     );
     if (!$stmt) {
@@ -669,14 +708,14 @@ function ame_sale_rapid_product_warnings(mysqli $db, int $userId, array $cart, i
             continue;
         }
         $seen[$key] = true;
-        $completed = strtotime((string)($r['completed_at'] ?? '')) ?: time();
+        $sec = ame_sale_rapid_event_seconds((string)($r['event_at'] ?? ''));
         $warnings[] = [
             'product_name' => $names[$key]['product_name'],
             'amount' => round((float)($r['unit_price'] ?? $names[$key]['amount']), 2),
             'qty' => round((float)($r['quantity'] ?? $names[$key]['qty']), 3),
             'sale_id' => (int)($r['sale_id'] ?? 0),
             'invoice_number' => (string)($r['invoice_number'] ?? ''),
-            'seconds_ago' => max(0, time() - $completed),
+            'seconds_ago' => $sec,
         ];
     }
     $stmt->close();
@@ -713,13 +752,15 @@ function ame_sale_rapid_service_warnings(mysqli $db, int $userId, array $lines, 
     }
     $winSql = function_exists('ame_sql_interval_seconds') ? ame_sql_interval_seconds($windowSeconds) : max(1, min(3600, (int)$windowSeconds));
     $stmt = @$db->prepare(
-        "SELECT s.id AS sale_id, s.invoice_number, s.completed_at, ss.engineer_id,
-                ss.service_type, ss.amount, e.name AS engineer_name
+        "SELECT s.id AS sale_id, s.invoice_number,
+                COALESCE(NULLIF(s.completed_at, '0000-00-00 00:00:00'), s.created_at) AS event_at,
+                ss.engineer_id, ss.service_type, ss.amount, e.name AS engineer_name
          FROM sales s
          INNER JOIN sale_services ss ON ss.sale_id = s.id
          LEFT JOIN engineers e ON e.id = ss.engineer_id
          WHERE s.created_by = ? AND s.status = 'completed'
-           AND s.completed_at >= (NOW() - INTERVAL {$winSql} SECOND)
+           AND COALESCE(NULLIF(s.completed_at, '0000-00-00 00:00:00'), s.created_at)
+               >= (NOW() - INTERVAL {$winSql} SECOND)
          ORDER BY s.id DESC"
     );
     if (!$stmt) {
@@ -739,18 +780,18 @@ function ame_sale_rapid_service_warnings(mysqli $db, int $userId, array $lines, 
             }
             $rType = trim((string)($r['service_type'] ?? ''));
             $wType = $w['service_type'];
-            if (mb_strtolower($rType) !== mb_strtolower($wType)) {
+            if (!ame_sale_service_types_match($rType, $wType)) {
                 continue;
             }
-            $completed = strtotime((string)($r['completed_at'] ?? '')) ?: time();
+            $sec = ame_sale_rapid_event_seconds((string)($r['event_at'] ?? ''));
             $warnings[] = [
                 'engineer_id' => (int)$r['engineer_id'],
                 'worker_name' => trim((string)($r['engineer_name'] ?? 'ইঞ্জিনিয়ার')),
-                'service_type' => $wType,
+                'service_type' => $wType !== '' ? $wType : ($rType !== '' ? $rType : 'কাজের বিল'),
                 'amount' => $w['amount'],
                 'sale_id' => (int)($r['sale_id'] ?? 0),
                 'invoice_number' => (string)($r['invoice_number'] ?? ''),
-                'seconds_ago' => max(0, time() - $completed),
+                'seconds_ago' => $sec,
             ];
             break 2;
         }

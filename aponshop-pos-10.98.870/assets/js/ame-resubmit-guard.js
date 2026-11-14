@@ -45,7 +45,11 @@
       html += '</dl>';
       html += '<p class="ame-rsg-meta">আগের মেমো: <strong>' + esc(w.invoice_number || ('#' + (w.sale_id || ''))) + '</strong></p>';
       html += '<p class="ame-rsg-when">⏱ ' + esc(formatSeconds(w.seconds_ago)) + '</p>';
-    } else if (meta.kind === 'sale_service' || meta.code === 'AME_SALE_RAPID_SERVICE') {
+    } else if (
+      meta.kind === 'sale_service'
+      || meta.code === 'AME_SALE_RAPID_SERVICE'
+      || (meta.warnings && meta.warnings[0] && (meta.warnings[0].worker_name || meta.warnings[0].engineer_id))
+    ) {
       var s = (meta.warnings && meta.warnings[0]) || {};
       html += '<div class="ame-rsg-pill ame-rsg-pill--work">কাজের বিল</div>';
       html += '<p class="ame-rsg-lead">' + esc(s.worker_name || 'কর্মী') + '</p>';
