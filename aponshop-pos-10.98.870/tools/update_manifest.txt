@@ -1,3 +1,4 @@
+# 10.98.890 — employee_list.php সিনট্যাক্স (বন্ধনী) ফিক্স
 # 10.98.889 — ৬ সেকেন্ডে ডুপ্লিকেট হলে সুন্দর কনফার্ম (পণ্য/কাজ), হার্ড ব্লক নয়
 assets/js/employee-hub.js
 assets/js/pos-payment.js

@@ -1,9 +1,9 @@
 ═══════════════════════════════════════════════════════
   APONSHOP — কর্মী মডিউল একত্রিত PATCH (শুধু একটি ZIP)
-  সংস্করণ: 10.98.889
+  সংস্করণ: 10.98.890
 ═══════════════════════════════════════════════════════
 
-ফাইল: Aponshop_10.98.889_PATCH.zip
+ফাইল: Aponshop_10.98.890_PATCH.zip
 
 আগের 878–888 — আলাদা লাগানোর দরকার নেই।
 
@@ -22,4 +22,4 @@
   6. টেস্ট: EMP কাজের বিল বিক্রি → কর্মী তালিকা → আজকের কাজ/বেতন/ব্যালেন্স আপডেট
 
 GitHub raw:
-https://github.com/mmd30638-ctrl/Mamun/raw/cursor/worker-today-display-4fcc/aponshop-pos-10.98.870/deliverables/Aponshop_10.98.889_PATCH.zip
+https://github.com/mmd30638-ctrl/Mamun/raw/cursor/worker-today-display-4fcc/aponshop-pos-10.98.870/deliverables/Aponshop_10.98.890_PATCH.zip

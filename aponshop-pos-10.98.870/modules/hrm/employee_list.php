@@ -218,7 +218,7 @@ $chip = static function (string $key, string $val, string $label) use ($filters)
                     echo '<span>' . $label . '</span><b>৳' . number_format($num, 2) . '</b></div>';
                 };
                 $ehBox('work', 'আজকের কাজ', $p['today_work']);
-                $ehBox('salary', 'আজকের বেতন', (float) ($p['today_pay'] ?? ((float) ($p['today_salary'] ?? 0) + (float) ($p['today_snack'] ?? 0)));
+                $ehBox('salary', 'আজকের বেতন', (float) ($p['today_pay'] ?? ((float) ($p['today_salary'] ?? 0) + (float) ($p['today_snack'] ?? 0))));
                 ?>
                 <div><span>হাজিরা</span><b><?php echo $p['present'] ? 'চালু' : 'বন্ধ'; ?></b></div>
                 <?php
