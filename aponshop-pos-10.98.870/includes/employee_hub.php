@@ -2840,6 +2840,43 @@ function ame_emp_hub_work_invoice_key(string $invoiceRef, string $memoNo = ''): 
 }
 
 /**
+ * ডিডাপের জন্য মোট কাজের বিল (৫০% ভাগ শেয়ার হিসেবে সেভ থাকলে গ্রসে ফেরত)।
+ */
+function ame_emp_hub_work_bill_gross(array $row): float
+{
+    $gross = round((float)($row['work_value'] ?? 0), 2);
+    $earn = round((float)($row['employee_amount'] ?? 0), 2);
+    $pct = round((float)($row['employee_percent'] ?? 0), 2);
+    if ($gross > 0.009 && $earn > 0.009) {
+        if ($gross < $earn - 0.02) {
+            return $earn;
+        }
+        if ($earn < $gross - 0.02) {
+            $ratio = $earn / $gross;
+            if ($ratio >= 0.45 && $ratio <= 0.55) {
+                return $gross;
+            }
+        }
+        if (abs($gross - $earn) < 0.03 || ($pct >= 45 && $pct <= 55 && $earn < $gross + 0.02)) {
+            if ($pct >= 10 && $pct <= 90) {
+                return round($earn / ($pct / 100), 2);
+            }
+
+            return round($earn * 2, 2);
+        }
+    }
+    if ($gross < 0.01 && $earn > 0.01) {
+        if ($pct >= 10 && $pct <= 90) {
+            return round($earn / ($pct / 100), 2);
+        }
+
+        return round($earn * 2, 2);
+    }
+
+    return $gross;
+}
+
+/**
  * একই ইনভয়েসের একই কাজের লাইন — ডুপ্লিকেট কমিশন (২টি sc.id) ধরার চাবি।
  */
 function ame_emp_hub_work_logical_key(array $row): string
@@ -2848,10 +2885,60 @@ function ame_emp_hub_work_logical_key(array $row): string
         (string)($row['invoice_ref'] ?? ''),
         (string)($row['memo_no'] ?? '')
     );
+    if ($invKey === '' && (int)($row['sale_id'] ?? 0) > 0) {
+        $invKey = 'S' . (int)$row['sale_id'];
+    }
     $job = mb_strtolower(trim(preg_replace('/\s+/u', ' ', (string)($row['service_type'] ?? ''))));
-    $bill = number_format(round((float)($row['work_value'] ?? 0), 2), 2, '.', '');
+    $bill = number_format(ame_emp_hub_work_bill_gross($row), 2, '.', '');
 
     return $invKey . '|' . $job . '|' . $bill;
+}
+
+/**
+ * 062240 ধরনের ডাবল: ইনভয়েস+কাজ এক, টাকা গ্রস/নেট/অর্ধেক আলাদা হলেও এক লাইন।
+ */
+function ame_emp_hub_work_same_job_line(array $a, array $b): bool
+{
+    $ia = ame_emp_hub_work_invoice_key((string)($a['invoice_ref'] ?? ''), (string)($a['memo_no'] ?? ''));
+    $ib = ame_emp_hub_work_invoice_key((string)($b['invoice_ref'] ?? ''), (string)($b['memo_no'] ?? ''));
+    if ($ia === '' && (int)($a['sale_id'] ?? 0) > 0) {
+        $ia = 'S' . (int)$a['sale_id'];
+    }
+    if ($ib === '' && (int)($b['sale_id'] ?? 0) > 0) {
+        $ib = 'S' . (int)$b['sale_id'];
+    }
+    if ($ia !== '' && $ib !== '' && $ia !== $ib) {
+        return false;
+    }
+    $ja = mb_strtolower(trim(preg_replace('/\s+/u', ' ', (string)($a['service_type'] ?? ''))));
+    $jb = mb_strtolower(trim(preg_replace('/\s+/u', ' ', (string)($b['service_type'] ?? ''))));
+    if ($ja !== $jb) {
+        return false;
+    }
+    if ($ja === '') {
+        return false;
+    }
+    $amounts = static function (array $r): array {
+        $vals = [
+            round((float)($r['work_value'] ?? 0), 2),
+            round((float)($r['employee_amount'] ?? 0), 2),
+            ame_emp_hub_work_bill_gross($r),
+            round((float)($r['employee_amount'] ?? 0) * 2, 2),
+        ];
+
+        return array_values(array_unique(array_filter($vals, static fn($v) => $v > 0.008)));
+    };
+    $aa = $amounts($a);
+    $bb = $amounts($b);
+    foreach ($aa as $x) {
+        foreach ($bb as $y) {
+            if (abs($x - $y) < 0.02) {
+                return true;
+            }
+        }
+    }
+
+    return ame_emp_hub_work_logical_key($a) === ame_emp_hub_work_logical_key($b);
 }
 
 function ame_emp_hub_work_fingerprint(array $row): string
@@ -2876,7 +2963,7 @@ function ame_emp_hub_work_fingerprint(array $row): string
 /**
  * বিক্রয়/মেরামত থেকে যে কমিশন লাইন স্বয়ংক্রিয় আছে — ম্যানুয়াল employee_works ডুপ চেকের জন্য।
  *
- * @return array<string, true>
+ * @return list<array<string,mixed>>
  */
 function ame_emp_hub_commission_fingerprints(mysqli $db, int $empId): array
 {
@@ -2885,7 +2972,8 @@ function ame_emp_hub_commission_fingerprints(mysqli $db, int $empId): array
         return $fps;
     }
     $stmt = @$db->prepare(
-        "SELECT sc.id, sc.service_type, sc.service_amount, sc.source_type, sc.source_id,
+        "SELECT sc.id, sc.sale_id, sc.service_type, sc.service_amount, sc.commission_amount,
+                sc.commission_rate, sc.source_type, sc.source_id,
                 s.invoice_number, w.job_no
          FROM service_commissions sc
          LEFT JOIN sales s ON s.id = sc.sale_id
@@ -2902,17 +2990,19 @@ function ame_emp_hub_commission_fingerprints(mysqli $db, int $empId): array
     if ($res) {
         while ($r = $res->fetch_assoc()) {
             $isWorkshop = (string)($r['source_type'] ?? '') === 'workshop_job';
-            $row = [
+            $fps[] = [
                 'id' => (int)$r['id'],
+                'sale_id' => (int)($r['sale_id'] ?? 0),
                 'editable' => 0,
                 'invoice_ref' => $isWorkshop ? (string)($r['job_no'] ?? '') : (string)($r['invoice_number'] ?? ''),
                 'memo_no' => '',
                 'service_type' => (string)($r['service_type'] ?? ''),
                 'work_value' => (float)($r['service_amount'] ?? 0),
+                'employee_amount' => (float)($r['commission_amount'] ?? 0),
+                'employee_percent' => (float)($r['commission_rate'] ?? 0),
                 'source_type' => (string)($r['source_type'] ?? ''),
                 'source_id' => (int)($r['source_id'] ?? 0),
             ];
-            $fps[ame_emp_hub_work_logical_key($row)] = true;
         }
     }
     $stmt->close();
@@ -2925,8 +3015,16 @@ function ame_emp_hub_manual_work_is_commission_duplicate(array $workRow, array $
     if ($commissionFps === []) {
         return false;
     }
+    foreach ($commissionFps as $cr) {
+        if (!is_array($cr)) {
+            continue;
+        }
+        if (ame_emp_hub_work_same_job_line($workRow, $cr)) {
+            return true;
+        }
+    }
 
-    return isset($commissionFps[ame_emp_hub_work_logical_key($workRow)]);
+    return false;
 }
 
 /**
@@ -2934,34 +3032,29 @@ function ame_emp_hub_manual_work_is_commission_duplicate(array $workRow, array $
  */
 function ame_emp_hub_works_dedupe(array $rows): array
 {
-    $best = [];
+    $out = [];
     foreach ($rows as $row) {
-        $logical = ame_emp_hub_work_logical_key($row);
-        $invOnly = ame_emp_hub_work_invoice_key(
-            (string)($row['invoice_ref'] ?? ''),
-            (string)($row['memo_no'] ?? '')
-        );
-        $jobOnly = mb_strtolower(trim((string)($row['service_type'] ?? '')));
-        if ($invOnly === '' && $jobOnly === '' && (float)($row['work_value'] ?? 0) < 0.009) {
-            $logical = 'row:' . (int)($row['id'] ?? 0) . ':' . (int)($row['editable'] ?? 1);
+        $hit = -1;
+        foreach ($out as $idx => $existing) {
+            if (ame_emp_hub_work_same_job_line($row, $existing)) {
+                $hit = $idx;
+                break;
+            }
         }
-        $isAuto = (int)($row['editable'] ?? 1) === 0;
-        if (!isset($best[$logical])) {
-            $best[$logical] = $row;
+        if ($hit < 0) {
+            $out[] = $row;
             continue;
         }
-        $cur = $best[$logical];
-        $curAuto = (int)($cur['editable'] ?? 1) === 0;
+        $isAuto = (int)($row['editable'] ?? 1) === 0;
+        $curAuto = (int)($out[$hit]['editable'] ?? 1) === 0;
         if ($isAuto && !$curAuto) {
-            $best[$logical] = $row;
-        } elseif ($isAuto && $curAuto) {
-            if ((int)($row['id'] ?? 0) < (int)($cur['id'] ?? 0)) {
-                $best[$logical] = $row;
-            }
+            $out[$hit] = $row;
+        } elseif ($isAuto && $curAuto && (int)($row['id'] ?? 0) < (int)($out[$hit]['id'] ?? 0)) {
+            $out[$hit] = $row;
         }
     }
 
-    return array_values($best);
+    return $out;
 }
 
 function ame_emp_hub_works(mysqli $db, int $empId, string $from, string $to): array
@@ -3008,6 +3101,7 @@ function ame_emp_hub_works(mysqli $db, int $empId, string $from, string $to): ar
             }
             $rows[] = [
                 'id' => (int)$r['id'],
+                'sale_id' => (int)($r['sale_id'] ?? 0),
                 'employee_id' => $empId,
                 'work_date' => substr((string)$r['created_at'], 0, 10),
                 'work_time' => substr((string)$r['created_at'], 11, 8),

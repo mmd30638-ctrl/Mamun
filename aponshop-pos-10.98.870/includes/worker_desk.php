@@ -289,21 +289,28 @@ function ame_worker_desk_statement(mysqli $db, int $empId): array
             $sc->bind_param('i', $empId);
             $sc->execute();
             $res = $sc->get_result();
-            $scLogicalSeen = [];
+            $scLogicalRows = [];
             while ($r = $res->fetch_assoc()) {
-                if (function_exists('ame_emp_hub_work_logical_key')) {
-                    $lk = ame_emp_hub_work_logical_key([
-                        'invoice_ref' => (string)($r['invoice_number'] ?? ''),
-                        'memo_no' => '',
-                        'service_type' => (string)($r['service_type'] ?? ''),
-                        'work_value' => (float)($r['service_amount'] ?? 0),
-                    ]);
-                    if ($lk !== '' && isset($scLogicalSeen[$lk])) {
+                $scRow = [
+                    'invoice_ref' => (string)($r['invoice_number'] ?? ''),
+                    'memo_no' => '',
+                    'service_type' => (string)($r['service_type'] ?? ''),
+                    'work_value' => (float)($r['service_amount'] ?? 0),
+                    'employee_amount' => (float)($r['commission_amount'] ?? 0),
+                    'editable' => 0,
+                ];
+                if (function_exists('ame_emp_hub_work_same_job_line')) {
+                    $dup = false;
+                    foreach ($scLogicalRows as $prev) {
+                        if (ame_emp_hub_work_same_job_line($scRow, $prev)) {
+                            $dup = true;
+                            break;
+                        }
+                    }
+                    if ($dup) {
                         continue;
                     }
-                    if ($lk !== '') {
-                        $scLogicalSeen[$lk] = true;
-                    }
+                    $scLogicalRows[] = $scRow;
                 }
                 $workDate = substr((string)($r['created_at'] ?? ''), 0, 10);
                 if ($workDate === '') {
