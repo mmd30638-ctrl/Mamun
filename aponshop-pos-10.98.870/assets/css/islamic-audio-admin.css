@@ -195,6 +195,32 @@
   margin-top: 12px;
 }
 
+.ia-btn--loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+
+.ia-btn--loading::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 3px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ia-admin-spin 0.7s linear infinite;
+}
+
+@keyframes ia-admin-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .ia-btn-ghost {
   background: #fff;
   border: 1px solid #cbd5e1;

@@ -337,6 +337,12 @@
   if (formUrl) {
     formUrl.addEventListener('submit', function (e) {
       e.preventDefault();
+      var btn = formUrl.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.classList.add('ia-btn--loading');
+        btn.disabled = true;
+      }
+      say('ডাউনলোড ও অপ্টিমাইজ…');
       var fd = new FormData(formUrl);
       post('import_url', fd)
         .then(function () {
@@ -344,6 +350,12 @@
         })
         .catch(function (err) {
           say(err.message);
+        })
+        .finally(function () {
+          if (btn) {
+            btn.classList.remove('ia-btn--loading');
+            btn.disabled = false;
+          }
         });
     });
   }

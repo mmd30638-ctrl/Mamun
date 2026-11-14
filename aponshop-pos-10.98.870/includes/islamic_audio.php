@@ -68,6 +68,11 @@ function ame_islamic_audio_public_url(string $fileName): string
     return '/uploads/islamic_audio/' . rawurlencode($fn);
 }
 
+function ame_islamic_audio_stream_url(int $id): string
+{
+    return '/modules/islamic_audio_stream.php?id=' . max(1, $id);
+}
+
 function ame_islamic_audio_ensure_upload_dir(): void
 {
     $dir = ame_islamic_audio_upload_dir();
@@ -204,6 +209,10 @@ function ame_islamic_audio_process_file(string $srcPath, int $trackId): array
             $ext = 'mp3';
         } elseif (str_contains($mime, 'ogg')) {
             $ext = 'ogg';
+        } elseif (str_contains($mime, 'mp4') || str_contains($mime, 'm4a') || str_contains($mime, 'aac')) {
+            $ext = 'm4a';
+        } elseif (str_contains($mime, 'webm')) {
+            $ext = 'webm';
         }
         $outMp3 = $dir . $base . '.' . $ext;
         if (!@copy($srcPath, $outMp3)) {
@@ -213,12 +222,20 @@ function ame_islamic_audio_process_file(string $srcPath, int $trackId): array
 
     $bytes = (int)filesize($outMp3);
     $duration = ame_islamic_audio_probe_duration($outMp3);
-  return [
+    $outExt = strtolower(pathinfo($outMp3, PATHINFO_EXTENSION));
+    $mimeOut = match ($outExt) {
+        'm4a', 'mp4' => 'audio/mp4',
+        'wav' => 'audio/wav',
+        'ogg' => 'audio/ogg',
+        'webm' => 'audio/webm',
+        default => 'audio/mpeg',
+    };
+    return [
         'file_name' => basename($outMp3),
         'bytes' => $bytes,
         'orig' => $orig,
         'duration' => $duration,
-        'mime' => 'audio/mpeg',
+        'mime' => $mimeOut,
     ];
 }
 
@@ -626,7 +643,8 @@ function ame_islamic_audio_row_to_public(array $row): array
         'speaker' => (string)$row['speaker'],
         'category' => (string)$row['category'],
         'category_label' => ame_islamic_audio_categories()[(string)$row['category']] ?? (string)$row['category'],
-        'url' => ame_islamic_audio_public_url((string)$row['file_name']),
+        'url' => ame_islamic_audio_stream_url((int)$row['id']),
+        'file_url' => ame_islamic_audio_public_url((string)$row['file_name']),
         'duration' => round((float)$row['duration_sec'], 1),
         'size_mb' => round(((int)$row['file_size_bytes']) / 1048576, 2),
         'published' => (int)$row['is_published'] === 1,
