@@ -9,15 +9,19 @@
   } catch (e) {
     tracks = [];
   }
-  if (!tracks.length) {
-    return;
-  }
-
   var fab = document.getElementById('iaFab');
   var panel = document.getElementById('iaPanel');
   var closeBtn = document.getElementById('iaClose');
   var listEl = document.getElementById('iaList');
   var playerHost = document.getElementById('iaPlayerHost');
+  var emptyEl = document.getElementById('iaEmpty');
+  var hasTracks = tracks.length > 0;
+  if (!hasTracks && emptyEl) {
+    emptyEl.hidden = false;
+  }
+  if (!hasTracks && playerHost) {
+    playerHost.hidden = true;
+  }
   var audio = new Audio();
   audio.preload = 'metadata';
   var currentId = 0;
@@ -91,6 +95,9 @@
   }
 
   function renderList() {
+    if (!listEl) {
+      return;
+    }
     listEl.innerHTML = '';
     tracks.forEach(function (t) {
       var li = document.createElement('li');
@@ -139,19 +146,25 @@
     fab.setAttribute('aria-expanded', 'false');
   }
 
-  fab.addEventListener('click', function () {
-    if (panel.hidden) {
-      openPanel();
-      if (!currentId && tracks[0]) {
-        playTrack(tracks[0].id);
+  if (fab && panel) {
+    fab.addEventListener('click', function () {
+      if (panel.hidden) {
+        openPanel();
+        if (hasTracks && !currentId && tracks[0]) {
+          playTrack(tracks[0].id);
+        }
+      } else {
+        closePanel();
       }
-    } else {
+    });
+  }
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function () {
       closePanel();
-    }
-  });
-  closeBtn.addEventListener('click', function () {
-    closePanel();
-  });
+    });
+  }
 
-  renderList();
+  if (hasTracks) {
+    renderList();
+  }
 })();

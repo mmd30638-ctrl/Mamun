@@ -394,6 +394,11 @@ html body .hm-gallery-cap {
 <?php if (str_contains($ame_hrm_script ?? '', '/modules/purchase/returns/')): ?>
 <link rel="stylesheet" href="/assets/css/purchase-return-desk.css?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : ($sys_version ?? '1'), ENT_QUOTES, 'UTF-8'); ?>" id="purchase-return-desk">
 <?php endif; ?>
+<?php
+if (!empty($_SESSION['user_id']) && isset($db) && $db instanceof mysqli && function_exists('ame_islamic_audio_render_widget')) {
+    ame_islamic_audio_render_widget($db, true);
+}
+?>
 <?php include __DIR__ . '/confirm_actions.php'; ?>
 </body>
 </html>

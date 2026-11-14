@@ -979,25 +979,40 @@ function ame_islamic_audio_can_admin(): bool
     return in_array($role, ['admin', 'super_admin', 'superadmin', 'owner'], true);
 }
 
-function ame_islamic_audio_render_home(mysqli $db): void
+/** হোম/সব পেজ — লগইন ইউজারে অডিও FAB (ট্র্যাক না থাকলেও আইকন দেখায়) */
+function ame_islamic_audio_render_widget(mysqli $db, bool $floating = true): void
 {
     if (empty($_SESSION['user_id'])) {
         return;
     }
-    $tracks = ame_islamic_audio_list_published($db);
-    if ($tracks === []) {
+    static $rendered = false;
+    if ($rendered) {
         return;
     }
+    $rendered = true;
+    $tracks = ame_islamic_audio_list_published($db);
     $json = htmlspecialchars(json_encode($tracks, JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8');
     $ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.900';
-    echo '<section class="ia-home" id="iaHome" data-ia-tracks="' . $json . '" aria-label="ইসলামিক অডিও">';
+    $dock = $floating ? ' ia-home--dock' : '';
+    $admin = ame_islamic_audio_can_admin();
+    echo '<section class="ia-home' . $dock . '" id="iaHome" data-ia-tracks="' . $json . '" aria-label="ইসলামিক অডিও">';
     echo '<button type="button" class="ia-fab" id="iaFab" aria-expanded="false" aria-controls="iaPanel">';
-    echo '<span class="ia-fab-ic" aria-hidden="true">🔊</span><span class="ia-fab-txt">অডিও শুনুন</span></button>';
+    echo '<span class="ia-fab-ic" aria-hidden="true">🎧</span><span class="ia-fab-txt">অডিও</span></button>';
     echo '<div class="ia-panel" id="iaPanel" hidden>';
     echo '<header class="ia-head"><h2 class="ia-title">ইসলামিক অডিও</h2>';
     echo '<button type="button" class="ia-close" id="iaClose" aria-label="বন্ধ">×</button></header>';
     echo '<div class="ia-player" id="iaPlayerHost"></div>';
+  echo '<p class="ia-empty" id="iaEmpty" hidden>এখনো প্রকাশিত অডিও নেই।' . ($admin ? ' ইঞ্জিন থেকে আপলোড করুন।' : '') . '</p>';
+    if ($admin) {
+        echo '<p class="ia-admin-cta" id="iaAdminCta"><a href="/modules/settings/islamic_audio.php">+ অডিও যোগ / ম্যানেজ</a></p>';
+    }
     echo '<ul class="ia-list" id="iaList" role="list"></ul></div></section>';
     echo '<link rel="stylesheet" href="/assets/css/islamic-audio.css?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '">';
     echo '<script src="/assets/js/islamic-audio.js?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '" defer></script>';
+}
+
+/** @deprecated alias */
+function ame_islamic_audio_render_home(mysqli $db): void
+{
+    ame_islamic_audio_render_widget($db, false);
 }

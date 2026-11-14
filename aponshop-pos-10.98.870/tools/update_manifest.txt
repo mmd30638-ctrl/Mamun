@@ -1,3 +1,9 @@
+# 10.98.911 — অডিও FAB সব পেজে (ট্র্যাক ছাড়াও); ফুটার ডক
+includes/islamic_audio.php
+partials/footer.php
+index.php
+assets/css/islamic-audio.css
+assets/js/islamic-audio.js
 # 10.98.910 — আপলোড-কেন্দ্রিক UI; YouTube/হোস্টার মেসেজ সরানো
 modules/settings/islamic_audio.php
 modules/settings/islamic_audio_api.php

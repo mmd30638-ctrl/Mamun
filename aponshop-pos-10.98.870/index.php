@@ -96,15 +96,6 @@ $banner_count = count($banner_rows);
     </figure>
 </div>
 
-<?php
-if (isset($db) && $db instanceof mysqli) {
-    if (is_file(__DIR__ . '/includes/islamic_audio.php')) {
-        require_once __DIR__ . '/includes/islamic_audio.php';
-        ame_islamic_audio_render_home($db);
-    }
-}
-?>
-
 <div id="hrDraw" class="hr-draw" hidden>
     <div id="hrPanel" class="hr-panel" role="dialog" aria-modal="true" aria-labelledby="hrTitle">
         <button type="button" id="hrClose" data-hr-close aria-label="বন্ধ">×</button>

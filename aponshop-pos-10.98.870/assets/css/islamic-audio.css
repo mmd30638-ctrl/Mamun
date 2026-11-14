@@ -8,6 +8,53 @@
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
+.ia-home--dock {
+  position: fixed;
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  left: auto;
+  z-index: 10080;
+  max-width: min(380px, calc(100vw - 20px));
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
+.ia-home--dock .ia-fab,
+.ia-home--dock .ia-panel {
+  pointer-events: auto;
+}
+
+.ia-home--dock .ia-panel {
+  margin-top: 10px;
+  max-height: min(70vh, 520px);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ia-empty {
+  margin: 8px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.ia-admin-cta {
+  margin: 6px 0 10px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.ia-admin-cta a {
+  color: #059669;
+  text-decoration: none;
+}
+
+.ia-admin-cta a:hover {
+  text-decoration: underline;
+}
+
 .ia-fab {
   display: inline-flex;
   align-items: center;
