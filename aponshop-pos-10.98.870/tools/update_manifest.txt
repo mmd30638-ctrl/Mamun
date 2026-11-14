@@ -1,4 +1,12 @@
-# 10.98.901 — বিক্রয় ইতিহাস: completed_at তারিখ+সময় (sale_date এক দিন পিছিয়ে ফিক্স)
+# 10.98.902 — Android/মোবাইল: সব পেজ রেসপন্সিভ (POS রেডিও, হেডার, টেবিল)
+assets/css/responsive-fix.css
+assets/css/ame-responsive-pro.css
+assets/css/ame-android-universal.css
+assets/js/responsive-fix.js
+includes/responsive_boot.php
+ANDROID_RESPONSIVE_BN.txt
+partials/footer.php
+# 10.98.901 — বিক্রয় ইতিহাস: completed_at তারিখ+সময় (sale_date এক দিন পিছিয়ে ফিক
 includes/sales/sale_finance.php
 modules/sales/history.php
 modules/sales/history_query.php
