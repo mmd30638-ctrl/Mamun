@@ -1,3 +1,3 @@
-AME_ASSET_VERSION=10.98.870
-AME_APP_VERSION=10.98.870
-# APONSHOP 10.98.870 — POS: পণ্য তালিকায় মোট অ্যামাউন্ট; ডান পেমেন্ট প্যানেল স্ক্রল
+AME_ASSET_VERSION=10.98.871
+AME_APP_VERSION=10.98.871
+# APONSHOP 10.98.871 — /get/ সরাসরি ZIP; POS মোট অ্যামাউন্ট + পেমেন্ট স্ক্রল

@@ -1,4 +1,6 @@
-# 10.98.870 — POS মোট অ্যামাউন্ট + পেমেন্ট প্যানেল স্ক্রল
+# 10.98.871 — /get/ সরাসরি ZIP + POS ফিক্স
+get.php
+.htaccess
 modules/sales/pos_workspace.php
 assets/js/pos-cart.js
 assets/css/ame-sale-desk-lock.css
