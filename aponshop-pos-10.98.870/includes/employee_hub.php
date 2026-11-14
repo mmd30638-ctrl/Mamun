@@ -1102,45 +1102,49 @@ function ame_emp_hub_row(mysqli $db, int $id, bool $includeDeleted = false): ?ar
     return $row ? ame_emp_hub_enrich_person($db, $row) : null;
 }
 
+/**
+ * কাজের হিস্ট্রি ও কর্মী কার্ড একই ডেটা — dedupe করা works এর যোগফল।
+ *
+ * @return array{work_value:float,employee_amount:float,bonus:float,shop_contribution:float,lines:int}
+ */
+function ame_emp_hub_day_work_board_totals(mysqli $db, int $empId, string $day): array
+{
+    $empty = ['work_value' => 0.0, 'employee_amount' => 0.0, 'bonus' => 0.0, 'shop_contribution' => 0.0, 'lines' => 0];
+    if ($empId <= 0 || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $day)) {
+        return $empty;
+    }
+    $rows = ame_emp_hub_works_dedupe(ame_emp_hub_works($db, $empId, $day, $day));
+    $work = 0.0;
+    $pay = 0.0;
+    $bonus = 0.0;
+    $shop = 0.0;
+    foreach ($rows as $r) {
+        $work += (float)($r['work_value'] ?? 0);
+        $pay += (float)($r['employee_amount'] ?? 0);
+        $bonus += (float)($r['bonus_amount'] ?? 0);
+        $shop += (float)($r['shop_contribution'] ?? 0);
+    }
+
+    return [
+        'work_value' => round($work, 2),
+        'employee_amount' => round($pay, 2),
+        'bonus' => round($bonus, 2),
+        'shop_contribution' => round($shop, 2),
+        'lines' => count($rows),
+    ];
+}
+
 function ame_emp_hub_today_work(mysqli $db, int $empId, string $day): array
 {
     ame_emp_hub_ensure_snack_columns($db);
     ame_emp_hub_sync_work_snacks($db, $empId);
-    $work = 0.0;
-    $pay = 0.0;
-    $bonus = 0.0;
+    $board = ame_emp_hub_day_work_board_totals($db, $empId, $day);
+    $work = (float)($board['work_value'] ?? 0);
+    $pay = (float)($board['employee_amount'] ?? 0);
+    $bonus = (float)($board['bonus'] ?? 0);
     $snack = 0.0;
     $other = 0.0;
-    $shop = 0.0;
-    $commissionFps = ame_emp_hub_commission_fingerprints($db, $empId);
-    $stmt = @$db->prepare(
-        'SELECT invoice_ref, memo_no, service_type, work_value, employee_amount, bonus_amount, snack, other_cost, shop_contribution,
-                source_type, source_id
-         FROM employee_works WHERE employee_id = ? AND work_date = ?'
-    );
-    if ($stmt) {
-        $stmt->bind_param('is', $empId, $day);
-        $stmt->execute();
-        $res = $stmt->get_result();
-        if ($res) {
-            while ($r = $res->fetch_assoc()) {
-                if (ame_emp_hub_manual_work_is_commission_duplicate($r, $commissionFps)) {
-                    continue;
-                }
-                $work += (float)($r['work_value'] ?? 0);
-                $pay += (float)($r['employee_amount'] ?? 0);
-                $bonus += (float)($r['bonus_amount'] ?? 0);
-                $snack += (float)($r['snack'] ?? 0);
-                $other += (float)($r['other_cost'] ?? 0);
-                $shop += (float)($r['shop_contribution'] ?? 0);
-            }
-        }
-        $stmt->close();
-    }
-    $scDay = ame_emp_hub_commission_counts_on_day($db, $empId, $day);
-    $work += (float)($scDay['work_value'] ?? 0);
-    $pay += (float)($scDay['employee_amount'] ?? 0);
-    $shop += (float)($scDay['shop_contribution'] ?? 0);
+    $shop = (float)($board['shop_contribution'] ?? 0);
     $sn = @$db->prepare(
         "SELECT COALESCE(SUM(amount),0) s FROM employee_snacks
          WHERE employee_id = ? AND snack_date = ?
@@ -1277,42 +1281,12 @@ function ame_emp_hub_commission_in_range(array $r, string $from, string $to): bo
  */
 function ame_emp_hub_commission_counts_on_day(mysqli $db, int $empId, string $day): array
 {
-    $empty = ['work_value' => 0.0, 'employee_amount' => 0.0, 'shop_contribution' => 0.0];
-    if ($empId <= 0 || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $day)) {
-        return $empty;
-    }
-    $sql = "SELECT sc.service_amount, sc.commission_amount, sc.shop_amount, sc.source_type,
-                   s.completed_at, s.sale_date, w.job_date, sc.created_at
-            FROM service_commissions sc
-            LEFT JOIN sales s ON s.id = sc.sale_id
-            LEFT JOIN workshop_jobs w ON sc.source_type = 'workshop_job' AND w.id = sc.source_id
-            WHERE sc.employee_id = ?";
-    $stmt = @$db->prepare($sql);
-    if (!$stmt) {
-        return $empty;
-    }
-    $stmt->bind_param('i', $empId);
-    $stmt->execute();
-    $res = $stmt->get_result();
-    $work = 0.0;
-    $pay = 0.0;
-    $shop = 0.0;
-    if ($res) {
-        while ($r = $res->fetch_assoc()) {
-            if (!ame_emp_hub_commission_on_day($r, $day)) {
-                continue;
-            }
-            $work += (float)($r['service_amount'] ?? 0);
-            $pay += (float)($r['commission_amount'] ?? 0);
-            $shop += (float)($r['shop_amount'] ?? 0);
-        }
-    }
-    $stmt->close();
+    $board = ame_emp_hub_day_work_board_totals($db, $empId, $day);
 
     return [
-        'work_value' => round($work, 2),
-        'employee_amount' => round($pay, 2),
-        'shop_contribution' => round($shop, 2),
+        'work_value' => (float)($board['work_value'] ?? 0),
+        'employee_amount' => (float)($board['employee_amount'] ?? 0),
+        'shop_contribution' => (float)($board['shop_contribution'] ?? 0),
     ];
 }
 
@@ -2340,13 +2314,16 @@ function ame_emp_hub_pending_snack_pay(mysqli $db, int $empId, string $throughDa
 function ame_emp_hub_pending_service_pay(mysqli $db, array $emp, int $empId, string $throughDate, bool $onlyDay = false, bool $lock = false): array
 {
     $empty = ['ids' => [], 'amount' => 0.0, 'service_value' => 0.0];
-    $cmp = $onlyDay ? '=' : '<=';
-    $sql = "SELECT sc.id, sc.commission_amount, sc.service_amount, sc.service_type,
-                   DATE(sc.created_at) AS work_date, s.invoice_number
+    $sql = "SELECT sc.id, sc.commission_amount, sc.service_amount, sc.service_type, sc.created_at,
+                   sc.source_type, s.invoice_number, s.completed_at, s.sale_date
             FROM service_commissions sc
             LEFT JOIN sales s ON s.id = sc.sale_id
-            WHERE sc.employee_id = ? AND sc.status = 'pending' AND DATE(sc.created_at) {$cmp} ?
-            ORDER BY sc.id ASC";
+            WHERE sc.employee_id = ?
+              AND (sc.status IS NULL OR sc.status = '' OR LOWER(sc.status) = 'pending')";
+    if (!$onlyDay) {
+        $sql .= ' AND DATE(sc.created_at) <= ?';
+    }
+    $sql .= ' ORDER BY sc.id ASC';
     if ($lock) {
         $sql .= ' FOR UPDATE';
     }
@@ -2354,7 +2331,11 @@ function ame_emp_hub_pending_service_pay(mysqli $db, array $emp, int $empId, str
     if (!$stmt) {
         return $empty;
     }
-    $stmt->bind_param('is', $empId, $throughDate);
+    if ($onlyDay) {
+        $stmt->bind_param('i', $empId);
+    } else {
+        $stmt->bind_param('is', $empId, $throughDate);
+    }
     $stmt->execute();
     $rows = $stmt->get_result();
     $ids = [];
@@ -2362,6 +2343,13 @@ function ame_emp_hub_pending_service_pay(mysqli $db, array $emp, int $empId, str
     $value = 0.0;
     $seenLogical = [];
     while ($row = $rows->fetch_assoc()) {
+        if ($onlyDay && !ame_emp_hub_commission_on_day($row, $throughDate)) {
+            continue;
+        }
+        $workDate = ame_emp_hub_commission_accrual_day($row);
+        if ($workDate === '') {
+            $workDate = $throughDate;
+        }
         $logical = ame_emp_hub_work_logical_key([
             'invoice_ref' => (string)($row['invoice_number'] ?? ''),
             'memo_no' => '',
@@ -2375,7 +2363,7 @@ function ame_emp_hub_pending_service_pay(mysqli $db, array $emp, int $empId, str
             $seenLogical[$logical] = true;
         }
         $ids[] = (int)$row['id'];
-        $rule = ame_emp_hub_pay_rule_on($db, $emp, (string)($row['work_date'] ?? $throughDate));
+        $rule = ame_emp_hub_pay_rule_on($db, $emp, $workDate);
         $mode = ame_emp_hub_valid_pay_mode((string)$rule['payment_type']);
         if (in_array($mode, ['percentage', 'work', 'mixed'], true)) {
             $amount += (float)($row['commission_amount'] ?? 0);
@@ -2522,6 +2510,12 @@ function ame_emp_hub_pending_pay_preview(mysqli $db, int $empId, string $date): 
     $mode = ame_emp_hub_valid_pay_mode((string)$rule['payment_type']);
     $periodJobShare = ame_emp_hub_pending_job_share($db, $emp, $empId, $date, $mode === 'daily', false);
     $todayJobShare = ame_emp_hub_pending_job_share($db, $emp, $empId, $date, true, false);
+    $boardToday = ame_emp_hub_day_work_board_totals($db, $empId, $date);
+    if ((float)$todayJobShare['share'] <= 0.009 && (float)$boardToday['employee_amount'] > 0.009) {
+        $todayJobShare['share'] = (float)$boardToday['employee_amount'];
+        $todayJobShare['work_value'] = (float)$boardToday['work_value'];
+        $todayJobShare['service_share'] = (float)$boardToday['employee_amount'];
+    }
     $snackPay = ame_emp_hub_pending_snack_pay($db, $empId, $date, $mode === 'daily', false);
     $todaySnackPay = ame_emp_hub_pending_snack_pay($db, $empId, $date, true, false);
     $present = true;

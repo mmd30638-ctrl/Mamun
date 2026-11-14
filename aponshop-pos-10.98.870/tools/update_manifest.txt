@@ -1,3 +1,5 @@
+# 10.98.893 — কার্ড/পেমেন্ট = কাজের হিস্ট্রি একই যোগ; worker_pay employee_hub; pending তারিখ
+modules/hrm/worker_pay.php
 # 10.98.892 — কমিশন তারিখ লেজার+বিক্রয় (কার্ড/হিস্ট্রি খালি ফিক্স); staff_duty; হিস্ট্রি কোয়েরি ফলব্যাক
 includes/staff_duty.php
 tools/test_commission_day_logic.php

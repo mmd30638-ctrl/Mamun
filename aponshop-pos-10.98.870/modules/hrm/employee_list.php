@@ -209,7 +209,8 @@ $chip = static function (string $key, string $val, string $label) use ($filters)
             ?>
             <div class="eh-stats">
                 <?php
-                $todayBal = isset($p['today_balance']) ? (float)$p['today_balance'] : (float) ($p['today_pay'] ?? ((float) ($p['today_salary'] ?? 0) + (float) ($p['today_snack'] ?? 0)));
+                $todayEarn = (float) ($p['today_commission'] ?? $p['today_salary'] ?? 0);
+                $todayBal = isset($p['today_balance']) ? (float)$p['today_balance'] : round($todayEarn + (float) ($p['today_bonus'] ?? 0) + (float) ($p['today_snack'] ?? 0), 2);
                 $ehBox = static function (string $box, string $label, $amount) use ($p): void {
                     $id = (int)$p['id'];
                     $name = htmlspecialchars((string)$p['name'], ENT_QUOTES, 'UTF-8');
