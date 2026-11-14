@@ -1,3 +1,5 @@
+# 10.98.882 — বেতন process_salary + প্রিভিউ: ame_emp_hub_pending_job_share (ডাবল SUM বন্ধ)
+modules/hrm/process_salary.php
 # 10.98.881 — কর্মী সার্ভিস লক (পারসেন্ট/নির্ধারিত, ডাবল ভাগ বন্ধ, কমিশন একবার)
 includes/worker_work_lock.php
 WORKER_SERVICE_LOCK.txt

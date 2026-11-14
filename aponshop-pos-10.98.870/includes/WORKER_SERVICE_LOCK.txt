@@ -1,4 +1,4 @@
-WORKER SERVICE LOCK (AME_WORKER_WORK_LOCK_REV 10.98.881)
+WORKER SERVICE LOCK (AME_WORKER_WORK_LOCK_REV 10.98.882)
 =========================================================
 
 নিয়ম (কোডে লক):
@@ -8,4 +8,6 @@ WORKER SERVICE LOCK (AME_WORKER_WORK_LOCK_REV 10.98.881)
 4. process_sale: কমিশন একবার (replace_services → post_stored)।
 5. লেজার, বেতন প্রিভিউ, হিস্ট্রি — একই fingerprint ডিডাপ।
 
-প্যাচ: Aponshop_10.98.881_PATCH.zip | DB restore টিক করবেন না।
+6. বেতন/প্রিভিউ: ame_emp_hub_pending_job_share() — এক অ্যামাউন্ট, ডাবল SUM নয়।
+
+প্যাচ: Aponshop_10.98.882_PATCH.zip | DB restore টিক করবেন না।

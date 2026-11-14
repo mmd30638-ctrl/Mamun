@@ -2196,6 +2196,61 @@ function ame_emp_hub_pending_service_pay(mysqli $db, array $emp, int $empId, str
 }
 
 /**
+ * অপরিশোধিত কাজের ভাগ — ম্যানুয়াল (কমিশন-ডুপ বাদ) + service_commissions।
+ * বেতন ও প্রিভিউ একই API (WORKER_WORK_LOCK)।
+ *
+ * @return array{work_ids:list<int>,commission_ids:list<int>,share:float,work_value:float,bonus:float,manual_share:float,service_share:float}
+ */
+function ame_emp_hub_pending_job_share(
+    mysqli $db,
+    array $emp,
+    int $empId,
+    string $throughDate,
+    bool $onlyDay,
+    bool $lock = false
+): array {
+    $rule = ame_emp_hub_pay_rule_on($db, $emp, $throughDate);
+    $mode = ame_emp_hub_valid_pay_mode((string)($rule['payment_type'] ?? ''));
+    if (function_exists('ame_worker_mode_uses_sale_commission')) {
+        if (!ame_worker_mode_uses_sale_commission($mode)) {
+            return [
+                'work_ids' => [],
+                'commission_ids' => [],
+                'share' => 0.0,
+                'work_value' => 0.0,
+                'bonus' => 0.0,
+                'manual_share' => 0.0,
+                'service_share' => 0.0,
+            ];
+        }
+    } elseif (!in_array($mode, ['percentage', 'work', 'mixed'], true)) {
+        return [
+            'work_ids' => [],
+            'commission_ids' => [],
+            'share' => 0.0,
+            'work_value' => 0.0,
+            'bonus' => 0.0,
+            'manual_share' => 0.0,
+            'service_share' => 0.0,
+        ];
+    }
+    $work = ame_emp_hub_pending_work_pay($db, $empId, $throughDate, $onlyDay, $lock);
+    $service = ame_emp_hub_pending_service_pay($db, $emp, $empId, $throughDate, $onlyDay, $lock);
+    $manual = round((float)($work['commission'] ?? 0), 2);
+    $auto = round((float)($service['amount'] ?? 0), 2);
+
+    return [
+        'work_ids' => $work['ids'] ?? [],
+        'commission_ids' => $service['ids'] ?? [],
+        'share' => round($manual + $auto, 2),
+        'work_value' => round((float)($work['work_value'] ?? 0) + (float)($service['service_value'] ?? 0), 2),
+        'bonus' => round((float)($work['bonus'] ?? 0), 2),
+        'manual_share' => $manual,
+        'service_share' => $auto,
+    ];
+}
+
+/**
  * সাবেক পাওনা = আজকের আগে পর্যন্ত কর্মীর কাছে দোকানের অগ্রিম পাওনা।
  * বর্তমান অগ্রিম ব্যালেন্স থেকে আজকের পোস্টেড লেনদেনের নিট (দেওয়া − ফেরত − বেতনে সমন্বয়) বাদ দিয়ে হিসাব —
  * ব্যালেন্স বা কোনো লেনদেন বদলায় না, শুধু দেখার হিসাব। ড্রাফট ধরা হয় না (ড্রাফটে ব্যালেন্স নড়ে না)।
@@ -2270,16 +2325,8 @@ function ame_emp_hub_pending_pay_preview(mysqli $db, int $empId, string $date): 
     }
     $rule = ame_emp_hub_pay_rule_on($db, $emp, $date);
     $mode = ame_emp_hub_valid_pay_mode((string)$rule['payment_type']);
-    $work = ame_emp_hub_pending_work_pay($db, $empId, $date, $mode === 'daily', false);
-    $servicePack = in_array($mode, ['percentage', 'work', 'mixed'], true)
-        ? ame_emp_hub_pending_service_pay($db, $emp, $empId, $date, false, false)
-        : ['amount' => 0.0, 'service_value' => 0.0];
-    $serviceAmount = (float)$servicePack['amount'];
-    $serviceValue = (float)$servicePack['service_value'];
-    $todayWorkPay = ame_emp_hub_pending_work_pay($db, $empId, $date, true, false);
-    $todayService = in_array($mode, ['percentage', 'work', 'mixed'], true)
-        ? ame_emp_hub_pending_service_pay($db, $emp, $empId, $date, true, false)
-        : ['amount' => 0.0, 'service_value' => 0.0];
+    $periodJobShare = ame_emp_hub_pending_job_share($db, $emp, $empId, $date, $mode === 'daily', false);
+    $todayJobShare = ame_emp_hub_pending_job_share($db, $emp, $empId, $date, true, false);
     $snackPay = ame_emp_hub_pending_snack_pay($db, $empId, $date, $mode === 'daily', false);
     $todaySnackPay = ame_emp_hub_pending_snack_pay($db, $empId, $date, true, false);
     $present = true;
@@ -2296,23 +2343,20 @@ function ame_emp_hub_pending_pay_preview(mysqli $db, int $empId, string $date): 
     } elseif (in_array($mode, ['monthly', 'mixed'], true)) {
         $base = round((float)($rule['monthly_salary'] ?? $emp['salary'] ?? 0), 2);
     }
-    $share = in_array($mode, ['percentage', 'work', 'mixed'], true)
-        ? round((float)$work['commission'] + $serviceAmount, 2)
-        : 0.0;
-    $workBonus = round((float)$work['bonus'], 2);
+    $share = round((float)$periodJobShare['share'], 2);
+    $workBonus = round((float)$periodJobShare['bonus'], 2);
+    $serviceValue = round((float)$periodJobShare['work_value'], 2);
     $snackDue = round((float)$snackPay['amount'], 2);
-    $todayShare = in_array($mode, ['percentage', 'work', 'mixed'], true)
-        ? round((float)$todayWorkPay['commission'] + (float)$todayService['amount'], 2)
-        : 0.0;
+    $todayShare = round((float)$todayJobShare['share'], 2);
     $todayBase = ($mode === 'daily' && $present) ? round((float)($rule['daily_rate'] ?? 0), 2) : 0.0;
-    $todayBonus = round((float)$todayWorkPay['bonus'], 2);
+    $todayBonus = round((float)$todayJobShare['bonus'], 2);
     $todayWork = ame_emp_hub_today_work($db, $empId, $date);
     $workSnack = round((float) ($todayWork['snack'] ?? 0), 2);
     $todaySnack = round(max((float) $todaySnackPay['amount'], $workSnack), 2);
     $snackDue = round(max($snackDue, $todaySnack), 2);
     $payable = round($base + $share + $workBonus + $snackDue, 2);
     $todayPayable = round($todayBase + $todayShare + $todayBonus + $todaySnack, 2);
-    $todayWorkValue = round((float)$todayWorkPay['work_value'] + (float)$todayService['service_value'], 2);
+    $todayWorkValue = round((float)$todayJobShare['work_value'], 2);
     $todaySalary = ame_emp_hub_today_salary($db, $emp, $present, $todayWork, $date);
     $note = '';
     if ($mode === 'daily' && !$present) {
@@ -2327,7 +2371,7 @@ function ame_emp_hub_pending_pay_preview(mysqli $db, int $empId, string $date): 
     return [
         'pay_mode' => $mode,
         'pay_label' => ame_emp_hub_pay_label($mode),
-        'work_value' => round((float)$work['work_value'] + $serviceValue, 2),
+        'work_value' => $serviceValue,
         'share' => $share,
         'base' => $base,
         'work_bonus' => $workBonus,
