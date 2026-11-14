@@ -1238,6 +1238,40 @@ function ame_emp_hub_commission_work_time(array $r): string
     return strlen($ca) >= 19 ? substr($ca, 11, 8) : '00:00:00';
 }
 
+/** লেজারে কমিশন লাইন যে তারিখে বসে (created_at) */
+function ame_emp_hub_commission_accrual_day(array $r): string
+{
+    $d = substr((string)($r['created_at'] ?? ''), 0, 10);
+    return preg_match('/^\d{4}-\d{2}-\d{2}$/', $d) ? $d : '';
+}
+
+/** আজকের কার্ড/সামারি: লেজার তারিখ অথবা বিক্রয়ের কাজের তারিখ — যেকোনো একটাই মিললে গণনা */
+function ame_emp_hub_commission_on_day(array $r, string $day): bool
+{
+    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $day)) {
+        return false;
+    }
+    if (ame_emp_hub_commission_accrual_day($r) === $day) {
+        return true;
+    }
+
+    return ame_emp_hub_commission_work_day($r) === $day;
+}
+
+function ame_emp_hub_commission_in_range(array $r, string $from, string $to): bool
+{
+    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $from) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $to)) {
+        return false;
+    }
+    foreach ([ame_emp_hub_commission_accrual_day($r), ame_emp_hub_commission_work_day($r)] as $d) {
+        if ($d !== '' && $d >= $from && $d <= $to) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 /**
  * service_commissions কোন ক্যালেন্ডার দিনের «আজকের কাজ» — বিক্রয়ের completed_at/sale_date, না হলে created_at।
  */
@@ -1265,7 +1299,7 @@ function ame_emp_hub_commission_counts_on_day(mysqli $db, int $empId, string $da
     $shop = 0.0;
     if ($res) {
         while ($r = $res->fetch_assoc()) {
-            if (ame_emp_hub_commission_work_day($r) !== $day) {
+            if (!ame_emp_hub_commission_on_day($r, $day)) {
                 continue;
             }
             $work += (float)($r['service_amount'] ?? 0);
@@ -3221,35 +3255,63 @@ function ame_emp_hub_works(mysqli $db, int $empId, string $from, string $to): ar
         $stmt->close();
     }
 
-    $commissions = @$db->prepare(
-        "SELECT sc.id, sc.sale_id, sc.service_amount, sc.commission_rate, sc.commission_amount,
+    $commissionSql = "SELECT sc.id, sc.sale_id, sc.service_amount, sc.commission_rate, sc.commission_amount,
                 sc.shop_amount, sc.service_type, sc.status AS payout_status, sc.created_at,
                 COALESCE(NULLIF(sc.source_type, ''), 'sale_service') source_type, sc.source_id,
                 s.invoice_number, s.completed_at, s.sale_date, s.vehicle_no AS sale_vehicle_no,
                 s.guest_customer_name, s.guest_customer_phone,
                 c.name AS customer_name, c.phone AS customer_phone,
-                w.job_no, w.item_name, w.serial_no, w.phone AS workshop_phone, w.status AS workshop_status, w.job_date
+                w.job_no, w.item_name, w.serial_no, w.phone AS workshop_phone, w.status AS workshop_status";
+    $haveJobDate = false;
+    $colCheck = @$db->query("SHOW COLUMNS FROM workshop_jobs LIKE 'job_date'");
+    if ($colCheck && $colCheck->num_rows > 0) {
+        $haveJobDate = true;
+        $commissionSql .= ", w.job_date";
+    }
+    $commissionSql .= "
          FROM service_commissions sc
          LEFT JOIN sales s ON s.id = sc.sale_id
          LEFT JOIN customers c ON c.id = s.customer_id
          LEFT JOIN workshop_jobs w ON sc.source_type = 'workshop_job' AND w.id = sc.source_id
          WHERE sc.employee_id = ?
            AND (
-                (s.id IS NOT NULL AND DATE(COALESCE(
-                    NULLIF(s.completed_at, '0000-00-00 00:00:00'),
-                    NULLIF(CONCAT(s.sale_date, ' 00:00:00'), '0000-00-00 00:00:00'),
-                    sc.created_at
-                )) BETWEEN ? AND ?)
-                OR (w.id IS NOT NULL AND w.job_date BETWEEN ? AND ?)
-                OR (s.id IS NULL AND w.id IS NULL AND DATE(sc.created_at) BETWEEN ? AND ?)
+                DATE(sc.created_at) BETWEEN ? AND ?
+                OR (
+                    s.id IS NOT NULL
+                    AND s.completed_at IS NOT NULL
+                    AND s.completed_at <> '0000-00-00 00:00:00'
+                    AND DATE(s.completed_at) BETWEEN ? AND ?
+                )
            )
-         ORDER BY sc.created_at DESC, sc.id DESC"
-    );
+         ORDER BY sc.created_at DESC, sc.id DESC";
+    $commissions = @$db->prepare($commissionSql);
+    if (!$commissions) {
+        $commissionSql = "SELECT sc.id, sc.sale_id, sc.service_amount, sc.commission_rate, sc.commission_amount,
+                sc.shop_amount, sc.service_type, sc.status AS payout_status, sc.created_at,
+                COALESCE(NULLIF(sc.source_type, ''), 'sale_service') source_type, sc.source_id,
+                s.invoice_number, s.completed_at, s.sale_date, s.vehicle_no AS sale_vehicle_no,
+                s.guest_customer_name, s.guest_customer_phone,
+                c.name AS customer_name, c.phone AS customer_phone
+         FROM service_commissions sc
+         LEFT JOIN sales s ON s.id = sc.sale_id
+         LEFT JOIN customers c ON c.id = s.customer_id
+         WHERE sc.employee_id = ? AND DATE(sc.created_at) BETWEEN ? AND ?
+         ORDER BY sc.created_at DESC, sc.id DESC";
+        $commissions = @$db->prepare($commissionSql);
+        $haveJobDate = false;
+    }
     if ($commissions) {
-        $commissions->bind_param('issssss', $empId, $from, $to, $from, $to, $from, $to);
+        if (strpos($commissionSql, 'DATE(s.completed_at)') !== false) {
+            $commissions->bind_param('issss', $empId, $from, $to, $from, $to);
+        } else {
+            $commissions->bind_param('iss', $empId, $from, $to);
+        }
         $commissions->execute();
         $res = $commissions->get_result();
         while ($r = $res->fetch_assoc()) {
+            if (!ame_emp_hub_commission_in_range($r, $from, $to)) {
+                continue;
+            }
             $isWorkshop = (string)($r['source_type'] ?? '') === 'workshop_job';
             $customer = trim((string)($r['customer_name'] ?? ''));
             if ($customer === '') {
