@@ -1,4 +1,7 @@
 <?php
+if (is_file(dirname(__DIR__, 2) . '/includes/engineer_bill_lock.php')) {
+    require_once dirname(__DIR__, 2) . '/includes/engineer_bill_lock.php';
+}
 /* 10.98.694 */
 require_once '../../includes/config.php';
 require_once '../../includes/hrm_functions.php';

@@ -389,7 +389,15 @@ function ame_easy_update_apply_zip(string $zipPath, string $targetRoot, ?mysqli 
     if ($stats['deleted'] > 0) {
         $message .= ' manifest অনুযায়ী ' . $stats['deleted'] . 'টি অকেজো ফাইল সরানো হয়েছে।';
     }
-    $message .= ' ' . $stats['skipped'] . 'টি সুরক্ষিত ফাইল এড়িয়ে গেছে (.env, uploads, logs, খাতা লক)। Preflight-এ ' . (int)$preflight['checked_php'] . 'টি PHP ফাইল ঠিক পাওয়া গেছে।';
+    $message .= ' ' . $stats['skipped'] . 'টি সুরক্ষিত ফাইল এড়িয়ে গেছে (.env, uploads, logs, খাতা/ইঞ্জিনিয়ার লক)। Preflight-এ ' . (int)$preflight['checked_php'] . 'টি PHP ফাইল ঠিক পাওয়া গেছে।';
+    if (!empty($stats['protected_blocked'])) {
+        $blocked = (array)$stats['protected_blocked'];
+        if (function_exists('ame_engineer_bill_lock_notify_zip_blocked')) {
+            ame_engineer_bill_lock_notify_zip_blocked($blocked, $targetRoot);
+        }
+        $message .= ' ইঞ্জিনিয়ার/সার্ভিস লক: ' . count($blocked)
+            . 'টি কোর ফাইল অননুমোদিত বদল থেকে ব্লক — অ্যাডমিন নোটিফিকেশন দেখুন।';
+    }
     if ($patched) {
         $message .= ' CSS/JS ক্যাশ ভার্সন আপডেট হয়েছে।';
     }
@@ -543,6 +551,19 @@ function ame_easy_update_copy_tree(string $source, string $targetRoot, string $r
         $dest = $targetRoot . '/' . $childRel;
 
         if (ame_easy_update_is_protected($childRel, $targetRoot)) {
+            if (is_file($src) && is_file($dest)) {
+                $srcHash = @hash_file('sha256', $src);
+                $destHash = @hash_file('sha256', $dest);
+                if (is_string($srcHash) && is_string($destHash) && !hash_equals($destHash, $srcHash)) {
+                    if (!isset($stats['protected_blocked'])) {
+                        $stats['protected_blocked'] = [];
+                    }
+                    $stats['protected_blocked'][] = $childRel;
+                    if (function_exists('ame_engineer_bill_lock_notify_zip_blocked')) {
+                        ame_engineer_bill_lock_notify_zip_blocked([$childRel], $targetRoot);
+                    }
+                }
+            }
             $stats['skipped']++;
             continue;
         }

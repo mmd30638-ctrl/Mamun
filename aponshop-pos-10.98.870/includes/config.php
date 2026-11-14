@@ -199,6 +199,12 @@ if (isset($db) && $db instanceof mysqli) {
     if (function_exists('ame_ledger_lock_boot')) {
         ame_ledger_lock_boot($db);
     }
+    if (is_file(__DIR__ . '/engineer_bill_lock.php')) {
+        require_once __DIR__ . '/engineer_bill_lock.php';
+        if (function_exists('ame_engineer_bill_lock_boot')) {
+            ame_engineer_bill_lock_boot(dirname(__DIR__));
+        }
+    }
     require_once __DIR__ . '/schema_sync.php';
     if (!ame_schema_version_ready($db)) {
         ame_ensure_auth_session_schema($db);

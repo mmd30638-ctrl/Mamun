@@ -1,3 +1,10 @@
+# 10.98.899 — ডুপ্লিকেট মেমো হার্ড ব্লক + ইঞ্জিনিয়ার/সার্ভিস কোর লক
+includes/engineer_bill_lock.php
+ENGINEER_SERVICE_PROTECTED_BN.txt
+tools/engineer_bill_lock_manifest.sha256
+tools/pin_engineer_bill_lock.php
+tools/test_sale_submit_guard.php
+includes/config.php
 # 10.98.898 — দ্রুত ডুপ্লিকেট কনফার্ম উইন্ডো ১৫ সেকেন্ড (৬→১৫)
 # 10.98.897 — POS ৬ সেক: দ্রুত ডুপ্লিকেট কনফার্ম মোডাল (সার্ভার+ফোন মেমরি)
 # 10.98.896 — আজকের বেতন বক্স = কার্ড (নাস্তা ৮০ টাকার মতো ফাঁক ফিক্স, জিরো ২৪৫→০)

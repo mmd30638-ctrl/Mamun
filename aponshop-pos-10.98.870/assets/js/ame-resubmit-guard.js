@@ -52,6 +52,7 @@
     } else if (
       meta.kind === 'sale_service'
       || meta.code === 'AME_SALE_RAPID_SERVICE'
+      || meta.code === 'AME_SALE_DUPLICATE_MEMO'
       || (meta.warnings && meta.warnings[0] && (meta.warnings[0].worker_name || meta.warnings[0].engineer_id))
     ) {
       var s = (meta.warnings && meta.warnings[0]) || {};

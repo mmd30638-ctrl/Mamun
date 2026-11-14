@@ -1160,6 +1160,9 @@ window.ameSetCart = function (items) {
 window.ameClearPosSale = function () {
     cart = [];
     ameMarkedBlankRows.clear();
+    try {
+        sessionStorage.removeItem('ame_pos_sale_client_ref');
+    } catch (eRef) { /* ignore */ }
 
     var search = posElement('p-search');
     if (search) {

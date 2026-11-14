@@ -246,6 +246,23 @@ if (typeof document !== 'undefined') {
         } catch (e2) { /* ignore */ }
     }
 
+    function amePosStableSaleClientRef() {
+        var key = 'ame_pos_sale_client_ref';
+        try {
+            var existing = sessionStorage.getItem(key);
+            if (existing && String(existing).length >= 8) {
+                return String(existing);
+            }
+            var ref = (window.AmeOfflineQueue && typeof AmeOfflineQueue.makeRef === 'function')
+                ? AmeOfflineQueue.makeRef()
+                : ('POS-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8));
+            sessionStorage.setItem(key, ref);
+            return ref;
+        } catch (e) {
+            return 'POS-' + Date.now();
+        }
+    }
+
     function amePosClientRapidConfirm(data) {
         if (data.confirm_rapid_resubmit || data.confirm_repeat) {
             return Promise.resolve(true);
@@ -870,9 +887,7 @@ if (typeof document !== 'undefined') {
 
             // নিরাপত্তা ফিক্স: process_sale.php এখন CSRF টোকেন যাচাই করে
             csrf_token: window.AME_CSRF_TOKEN || '',
-            offline_client_ref: (window.AmeOfflineQueue && window.AmeOfflineQueue.makeRef)
-                ? window.AmeOfflineQueue.makeRef()
-                : ('OFF-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10))
+            offline_client_ref: amePosStableSaleClientRef()
         };
 
         function goCompletedInvoice(saleId) {

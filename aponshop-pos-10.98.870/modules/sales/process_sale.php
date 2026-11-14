@@ -202,6 +202,37 @@ try {
     }
 
     $confirmRapid = !empty($data['confirm_rapid_resubmit']) || !empty($data['confirm_repeat']);
+    $saleFingerprint = function_exists('ame_sale_submit_fingerprint')
+        ? ame_sale_submit_fingerprint($data)
+        : '';
+    if (!$confirmRapid && $draft_id <= 0 && $saleFingerprint !== '') {
+        $rapidWin = ame_rapid_resubmit_window_seconds();
+        $dupGuard = ame_sale_guard_find_recent($db, $user_id, $saleFingerprint, $rapidWin);
+        if ($dupGuard !== null) {
+            $memo = $dupGuard['invoice_number'] !== ''
+                ? $dupGuard['invoice_number']
+                : ('INV-' . (int)$dupGuard['id']);
+            $respond(
+                'confirm',
+                ame_sale_duplicate_block_message($dupGuard, $is_english, $rapidWin),
+                [
+                    'needs_confirm' => true,
+                    'blocked_duplicate' => true,
+                    'code' => 'AME_SALE_DUPLICATE_MEMO',
+                    'sale_id' => (int)$dupGuard['id'],
+                    'invoice_number' => $memo,
+                    'warnings' => [[
+                        'worker_name' => 'বিক্রয়',
+                        'service_type' => 'একই মেমো',
+                        'amount' => 0,
+                        'invoice_number' => $memo,
+                        'sale_id' => (int)$dupGuard['id'],
+                        'seconds_ago' => (int)$dupGuard['seconds_ago'],
+                    ]],
+                ]
+            );
+        }
+    }
     if (!$confirmRapid && $draft_id <= 0) {
         $rapidWin = ame_rapid_resubmit_window_seconds();
         if (function_exists('ame_sale_rapid_service_warnings') && $service_lines !== []) {
@@ -863,6 +894,9 @@ try {
         ]);
     } catch (Throwable $e) {
         error_log('Sale provenance skipped: ' . $e->getMessage());
+    }
+    if ($saleFingerprint !== '' && !empty($sale_id) && function_exists('ame_sale_guard_record')) {
+        ame_sale_guard_record($db, $user_id, $saleFingerprint, (int)$sale_id, (string)$invoice_number);
     }
 
     $respond(

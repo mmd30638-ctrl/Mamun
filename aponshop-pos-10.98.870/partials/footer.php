@@ -5,6 +5,11 @@
  */
 ?>
 </div> <!-- #main-content ডিভ বন্ধ করা হলো যা header.php তে শুরু হয়েছিল -->
+<?php
+if (function_exists('ame_engineer_bill_lock_render_admin_banner')) {
+    echo ame_engineer_bill_lock_render_admin_banner();
+}
+?>
 
 <!-- ⭐ রেসপন্সিভ সেফটি-নেট — সব পেজের সব CSS/JS-এর পরে, একদম শেষে লোড হয় (এখানেই থাকতে
      হবে, কারণ responsive-fix.css-এর !important রুলগুলো আগে থেকে ছিল কিন্তু কোথাও

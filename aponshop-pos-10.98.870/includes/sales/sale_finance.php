@@ -873,3 +873,126 @@ function ame_sale_rapid_confirm_message(array $warning, bool $isEnglish, ?int $w
         . "আগের বিক্রয়: মেমো {$memo}\n\n"
         . "এখন আবার সাবমিট করবেন নাকি বাতিল করবেন?";
 }
+
+function ame_sale_guard_schema(mysqli $db): void
+{
+    @$db->query(
+        "CREATE TABLE IF NOT EXISTS sale_submit_guards (
+            id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            user_id INT UNSIGNED NOT NULL,
+            fingerprint CHAR(64) NOT NULL,
+            sale_id INT UNSIGNED NOT NULL,
+            invoice_number VARCHAR(64) NOT NULL DEFAULT '',
+            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            KEY idx_sale_guard_user_fp (user_id, fingerprint, created_at),
+            KEY idx_sale_guard_sale (sale_id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
+    );
+}
+
+function ame_sale_submit_fingerprint(array $data): string
+{
+    $cart = [];
+    foreach ((array)($data['cart'] ?? []) as $row) {
+        if (!is_array($row)) {
+            continue;
+        }
+        $cart[] = [
+            'sku' => strtoupper(trim((string)($row['sku'] ?? $row['product_code'] ?? ''))),
+            'name' => trim((string)($row['name'] ?? $row['item_name'] ?? '')),
+            'qty' => round((float)($row['qty'] ?? $row['quantity'] ?? 1), 3),
+            'price' => round((float)($row['current_price'] ?? $row['price'] ?? $row['unit_price'] ?? 0), 2),
+            'disc' => round((float)($row['discount_pct'] ?? 0), 2),
+        ];
+    }
+    usort($cart, static fn($a, $b) => strcmp($a['sku'] . $a['name'], $b['sku'] . $b['name']));
+    $services = [];
+    foreach ((array)($data['services'] ?? []) as $row) {
+        if (!is_array($row)) {
+            continue;
+        }
+        $services[] = [
+            'e' => (int)($row['engineer_id'] ?? 0),
+            't' => function_exists('mb_strtolower')
+                ? mb_strtolower(trim((string)($row['service_type'] ?? '')))
+                : strtolower(trim((string)($row['service_type'] ?? ''))),
+            'a' => round((float)($row['amount'] ?? 0), 2),
+        ];
+    }
+    usort($services, static fn($a, $b) => ($a['e'] <=> $b['e']) ?: strcmp($a['t'], $b['t']));
+    $payload = [
+        'c' => $cart,
+        's' => $services,
+        'cust' => (int)($data['customer_id'] ?? 0),
+        'veh' => trim((string)($data['vehicle_no'] ?? '')),
+    ];
+
+    return hash('sha256', json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+}
+
+/** @return array{id:int,invoice_number:string,seconds_ago:int}|null */
+function ame_sale_guard_find_recent(mysqli $db, int $userId, string $fingerprint, ?int $windowSeconds = null): ?array
+{
+    if ($userId <= 0 || strlen($fingerprint) !== 64) {
+        return null;
+    }
+    if ($windowSeconds === null) {
+        $windowSeconds = ame_rapid_resubmit_window_seconds();
+    }
+    ame_sale_guard_schema($db);
+    $winSql = function_exists('ame_sql_interval_seconds') ? ame_sql_interval_seconds($windowSeconds) : max(1, min(3600, $windowSeconds));
+    $st = @$db->prepare(
+        "SELECT g.sale_id, g.invoice_number, g.created_at
+         FROM sale_submit_guards g
+         INNER JOIN sales s ON s.id = g.sale_id AND s.status = 'completed'
+         WHERE g.user_id = ? AND g.fingerprint = ?
+           AND g.created_at >= (NOW() - INTERVAL {$winSql} SECOND)
+         ORDER BY g.id DESC LIMIT 1"
+    );
+    if (!$st) {
+        return null;
+    }
+    $st->bind_param('is', $userId, $fingerprint);
+    $st->execute();
+    $row = $st->get_result()->fetch_assoc();
+    $st->close();
+    if (!$row) {
+        return null;
+    }
+    $ts = strtotime((string)($row['created_at'] ?? '')) ?: time();
+
+    return [
+        'id' => (int)($row['sale_id'] ?? 0),
+        'invoice_number' => trim((string)($row['invoice_number'] ?? '')),
+        'seconds_ago' => max(0, time() - $ts),
+    ];
+}
+
+function ame_sale_guard_record(mysqli $db, int $userId, string $fingerprint, int $saleId, string $invoiceNumber): void
+{
+    if ($userId <= 0 || strlen($fingerprint) !== 64 || $saleId <= 0) {
+        return;
+    }
+    ame_sale_guard_schema($db);
+    $inv = substr(trim($invoiceNumber), 0, 64);
+    $st = @$db->prepare(
+        'INSERT INTO sale_submit_guards (user_id, fingerprint, sale_id, invoice_number) VALUES (?, ?, ?, ?)'
+    );
+    if (!$st) {
+        return;
+    }
+    $st->bind_param('isis', $userId, $fingerprint, $saleId, $inv);
+    $st->execute();
+    $st->close();
+}
+
+function ame_sale_duplicate_block_message(array $hit, bool $isEnglish, int $windowSeconds): string
+{
+    $memo = $hit['invoice_number'] !== '' ? $hit['invoice_number'] : ('#' . (int)$hit['id']);
+    $sec = (int)($hit['seconds_ago'] ?? $windowSeconds);
+    if ($isEnglish) {
+        return "Duplicate sale blocked\nMemo {$memo} was just created ({$sec}s ago).\n\nSame cart cannot be submitted twice without confirmation.";
+    }
+
+    return "ডুপ্লিকেট বিক্রয় আটকানো হয়েছে\nমেমো {$memo} ইতিমধ্যে তৈরি হয়েছে ({$sec} সেকেন্ড আগে)।\n\nএকই মেমো দ্বিতীয়বার সাবমিট করা যাবে না — কনফার্ম ছাড়া ব্লক।";
+}
