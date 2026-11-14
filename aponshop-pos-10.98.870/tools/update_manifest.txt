@@ -1,3 +1,6 @@
+# 10.98.886 — POS কার্টে EMP-#### কাজের বিল → sale_services + কর্মী স্টেটমেন্ট
+includes/sales/sale_finance.php
+modules/sales/pos_workspace.php
 # 10.98.885 — একত্রিত PATCH (878–884 সব কিছু; শুধু এটি ইন্সটল)
 deliverables/KORMI_EKTI_PATCH.txt
 # 10.98.884 — 062240: same_job_line ডিডাপ (ওয়েল্ডিং+কাজের বিল = ২ লাইন)

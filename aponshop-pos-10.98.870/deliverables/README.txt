@@ -1,8 +1,8 @@
-★ একমাত্র PATCH (878–884 সব একসাথে): Aponshop_10.98.885_PATCH.zip
-  আগের 883, 884, 880… আলাদা লাগাবেন না।
+★ একমাত্র PATCH (878–885 সব একসাথে + EMP কার্ট ফিক্স): Aponshop_10.98.886_PATCH.zip
+  আগের 885, 884, 883… আলাদা লাগাবেন না।
 
 GitHub (raw):
-https://github.com/mmd30638-ctrl/Mamun/raw/cursor/aponshop-pos-update-dc47/aponshop-pos-10.98.870/deliverables/Aponshop_10.98.885_PATCH.zip
+https://github.com/mmd30638-ctrl/Mamun/raw/cursor/aponshop-pos-update-dc47/aponshop-pos-10.98.870/deliverables/Aponshop_10.98.886_PATCH.zip
 
 বিস্তারিত: deliverables/KORMI_EKTI_PATCH.txt
 

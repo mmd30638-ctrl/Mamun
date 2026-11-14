@@ -184,7 +184,8 @@ try {
 
     $parsed_services = ame_sale_parse_services(
         $data,
-        $is_english
+        $is_english,
+        $db
     );
     $service_lines = $parsed_services['lines'];
     $service_amount = $parsed_services['total'];

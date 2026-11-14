@@ -1730,6 +1730,67 @@ function ameAddCustomItem() {
         }
     });
 
+    function cartEmpWorkBillServices() {
+        if (typeof cart === 'undefined' || !Array.isArray(cart)) {
+            return [];
+        }
+        var out = [];
+        cart.forEach(function (item) {
+            if (!item) {
+                return;
+            }
+            var sku = String(item.sku || '').trim().toUpperCase();
+            if (!/^EMP-\d+$/.test(sku)) {
+                return;
+            }
+            var eng = null;
+            engineerList.forEach(function (row) {
+                if (String(row.emp_code || '').trim().toUpperCase() === sku) {
+                    eng = row;
+                }
+            });
+            if (!eng || Number(eng.id) <= 0) {
+                return;
+            }
+            var price = number(item.current_price);
+            var qty = number(item.qty) || 1;
+            var pct = Math.min(100, Math.max(0, number(item.discount_pct)));
+            var gross = price * qty;
+            var amt = Math.round((gross - (gross * pct / 100)) * 100) / 100;
+            if (amt <= 0) {
+                return;
+            }
+            var desc = String(item.name || '').trim();
+            if (desc === '') {
+                desc = 'কাজের বিল';
+            }
+            out.push({
+                engineer_id: Number(eng.id),
+                service_type: desc,
+                amount: amt
+            });
+        });
+        return out;
+    }
+
+    function mergeServiceLines(primary, extra) {
+        var merged = primary.slice();
+        var seen = {};
+        merged.forEach(function (line) {
+            var key = String(line.engineer_id || 0) + ':' + number(line.amount).toFixed(2);
+            seen[key] = true;
+        });
+        extra.forEach(function (line) {
+            var key = String(line.engineer_id || 0) + ':' + number(line.amount).toFixed(2);
+            if (seen[key]) {
+                return;
+            }
+            seen[key] = true;
+            merged.push(line);
+        });
+        return merged;
+    }
+
     window.ameCollectServices = function (strict) {
         var services = [];
         var incomplete = false;
@@ -1751,7 +1812,7 @@ function ameAddCustomItem() {
         if (strict && incomplete) {
             throw new Error(incompleteMsg);
         }
-        return services;
+        return mergeServiceLines(services, cartEmpWorkBillServices());
     };
 
     window.ameSetServiceRows = function (services) {
