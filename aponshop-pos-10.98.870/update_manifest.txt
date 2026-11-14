@@ -1,9 +1,11 @@
-# 10.98.871 — /get/ সরাসরি ZIP + POS ফিক্স
+# 10.98.872 — ডেস্কটপ পেমেন্ট স্ক্রল + ভার্সন সিঙ্ক
+assets/css/pos-terminal-layout.css
+assets/css/ame-sale-desk-lock.css
+assets/js/pos-cart.js
+includes/easy_update_functions.php
+includes/config.php
+modules/sales/pos_workspace.php
 get.php
 .htaccess
-modules/sales/pos_workspace.php
-assets/js/pos-cart.js
-assets/css/ame-sale-desk-lock.css
-includes/config.php
 VERSION.txt
 APONSHOP_STACK_UPDATE.txt
