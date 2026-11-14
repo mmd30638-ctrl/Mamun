@@ -242,5 +242,26 @@
     });
   }
 
+  var formYt = document.getElementById('iaFormYt');
+  if (formYt) {
+    formYt.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!window.confirm('YouTube থেকে অডিও ডাউনলোড ও কম্প্রেস করতে কয়েক মিনিট লাগতে পারে। চালাবেন?')) {
+        return;
+      }
+      var fd = new FormData(formYt);
+      post('import_youtube', fd)
+        .then(function (data) {
+          formYt.reset();
+          if (data.imported) {
+            say(data.imported + 'টি YouTube অডিও যোগ হয়েছে');
+          }
+        })
+        .catch(function (err) {
+          say(err.message || 'YouTube ইম্পোর্ট ব্যর্থ');
+        });
+    });
+  }
+
   load();
 })();

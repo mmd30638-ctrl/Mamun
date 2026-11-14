@@ -66,6 +66,19 @@ try {
         $out(ame_islamic_audio_ingest_url($db, $meta) + ['tracks' => ame_islamic_audio_admin_list($db)]);
     }
 
+    if ($action === 'import_youtube') {
+        $needPost();
+        @set_time_limit(600);
+        $meta = [
+            'youtube_url' => (string)($_POST['youtube_url'] ?? $_POST['url'] ?? ''),
+            'title' => (string)($_POST['title'] ?? ''),
+            'speaker' => (string)($_POST['speaker'] ?? ''),
+            'category' => (string)($_POST['category'] ?? 'general'),
+            'is_published' => !isset($_POST['is_published']) || (string)$_POST['is_published'] !== '0',
+        ];
+        $out(ame_islamic_audio_ingest_youtube($db, $meta));
+    }
+
     if ($action === 'update') {
         $needPost();
         $id = (int)($_POST['id'] ?? 0);

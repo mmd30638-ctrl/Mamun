@@ -13,7 +13,7 @@ include dirname(__DIR__, 2) . '/partials/header.php';
 <div class="ia-admin" id="iaAdmin" data-csrf="<?php echo $cs; ?>">
   <header class="ia-admin-head">
     <h1>🕌 ইসলামিক অডিও লাইব্রেরি</h1>
-    <p class="ia-admin-sub">ফাইল আপলোড অথবা সরাসরি MP3 লিংক — অটো কম্প্রেশন ও সাউন্ড অপ্টিমাইজেশন</p>
+    <p class="ia-admin-sub">ফাইল আপলোড, MP3 লিংক, বা YouTube — অটো কম্প্রেশন ও সাউন্ড অপ্টিমাইজেশন</p>
   </header>
 
   <div class="ia-admin-grid">
@@ -59,6 +59,27 @@ include dirname(__DIR__, 2) . '/partials/header.php';
         </select>
         <label class="ia-check"><input type="checkbox" name="is_published" value="1" checked> হোমপেজে প্রকাশ</label>
         <button type="submit" class="ia-btn ia-btn-primary">লিংক ডাউনলোড + অপ্টিমাইজ</button>
+      </form>
+    </section>
+
+    <section class="ia-admin-card ia-admin-card-yt">
+      <h2>▶ YouTube ভিডিও / প্লেলিস্ট</h2>
+      <form id="iaFormYt" class="ia-upload-form">
+        <label>YouTube ভিডিও বা প্লেলিস্ট লিংক</label>
+        <input type="url" name="youtube_url" required placeholder="https://youtu.be/... বা youtube.com/watch?v=..." autocomplete="off">
+        <p class="ia-yt-hint">সার্ভারে <strong>yt-dlp</strong> থাকতে হবে। প্লেলিস্টে সর্বোচ্চ ২৫টি ভিডিও একসাথে ইম্পোর্ট হয়।</p>
+        <label>শিরোনাম (ঐচ্ছিক — এক ভিডিও হলে; না দিলে YouTube শিরোনাম)</label>
+        <input type="text" name="title" maxlength="255" placeholder="অডিওর নাম">
+        <label>বক্তা / চ্যানেল</label>
+        <input type="text" name="speaker" maxlength="200" placeholder="যেমন: চ্যানেলের নাম">
+        <label>ক্যাটাগরি</label>
+        <select name="category">
+          <?php foreach ($categories as $k => $label): ?>
+          <option value="<?php echo htmlspecialchars($k, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($label, ENT_QUOTES, 'UTF-8'); ?></option>
+          <?php endforeach; ?>
+        </select>
+        <label class="ia-check"><input type="checkbox" name="is_published" value="1" checked> হোমপেজে প্রকাশ</label>
+        <button type="submit" class="ia-btn ia-btn-primary ia-btn-yt">YouTube থেকে অডিও নিন</button>
       </form>
     </section>
   </div>
