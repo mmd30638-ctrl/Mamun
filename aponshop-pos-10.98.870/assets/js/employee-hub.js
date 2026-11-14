@@ -200,10 +200,10 @@
     if (act === 'salary') return openSalary();
     if (act === 'delete') return openDelete();
     if (act === 'money-del') return deleteMoney(t);
-    if (act === 'box' || act === 'box-edit') {
+    if (act === 'box' || act === 'box-edit' || act === 'box-zero') {
       ev.preventDefault();
-      if (act === 'box' && t.getAttribute('data-box') === 'salary') {
-        return openSalary();
+      if (act === 'box-zero') {
+        return submitBoxZero(t);
       }
       return openMoneyBox(t);
     }
@@ -410,6 +410,25 @@
   }
 
   var boxTitles = { work: 'আজকের কাজ', salary: 'আজকের বেতন', advance: 'অগ্রিম', deposit: 'জমা', balance: 'ব্যালেন্স' };
+
+  function submitBoxZero(btn) {
+    var box = btn.getAttribute('data-box') || 'work';
+    var id = parseInt(btn.getAttribute('data-id') || String(currentId), 10);
+    if (!id) return;
+    var label = boxTitles[box] || 'টাকা';
+    var ok = window.AmeResubmitGuard
+      ? AmeResubmitGuard.ask(label + ' ৳০.০০ করবেন?', { preview: { worker_name: currentName, service_type: label, work_value: 0 } })
+      : Promise.resolve(window.confirm(label + ' আজকের ঘর ০.০০ করবেন?'));
+    ok.then(function (yes) {
+      if (!yes) return;
+      post('adjust_box', { id: id, box: box, amount: '0', note: 'এডমিন জিরো' }).then(function (res) {
+        if (!res.ok) throw new Error(res.error || 'সমন্বয় হয়নি');
+        toastMsg(res.message || '০ করা হয়েছে');
+        location.reload();
+      }).catch(function (e) { toastMsg(e.message); });
+    });
+  }
+
   function openMoneyBox(btn) {
     var box = btn.getAttribute('data-box') || 'work';
     var editId = btn.getAttribute('data-entry') || '';
@@ -437,9 +456,11 @@
         + '<input type="hidden" name="entry_id" value="' + esc(editId) + '">'
         + '<input type="hidden" name="entry_kind" value="' + esc(editKind) + '">'
         + (cash ? '<label class="eh-field"><span>অ্যাকাউন্ট</span>' + accountSelectHtml(false) + '</label><p class="eh-meta">অ্যাকাউন্ট বাছলে ক্যাশ নড়বে। না বাছলে শুধু এই বক্সের হিসাব সমন্বয় হবে।</p>' : '')
-        + '<label class="eh-field"><span>সঠিক টাকা</span><input name="amount" type="number" step="0.01" value="' + esc(current) + '" required></label>'
+        + '<label class="eh-field"><span>সঠিক টাকা</span><input name="amount" type="number" step="0.01" min="0" value="' + esc(current) + '" required id="ehBoxAmt"></label>'
         + '<label class="eh-field"><span>নোট</span><input name="note" value="সমন্বয়"></label>'
-        + '<button class="eh-submit" type="submit">সমন্বয় রাখুন</button></form>'
+        + '<div class="eh-box-actions">'
+        + '<button type="button" class="eh-submit eh-submit--muted" data-eh="box-zero" data-box="' + esc(box) + '" data-id="' + currentId + '" data-name="' + esc(currentName) + '">৳০.০০ করুন</button>'
+        + '<button class="eh-submit" type="submit">সমন্বয় রাখুন</button></div></form>'
         + '<div class="eh-money"><h3>এই বক্সের এন্ট্রি</h3>' + (list || '<p class="eh-meta">আলাদা এন্ট্রি নেই। উপরে সঠিক টাকা লিখলে বক্সটাই বদলাবে।</p>') + '</div>');
       bindForm('ehBox', 'adjust_box');
     }).catch(function (e) {

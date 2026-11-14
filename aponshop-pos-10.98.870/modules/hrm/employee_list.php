@@ -89,6 +89,8 @@ $chip = static function (string $key, string $val, string $label) use ($filters)
 .eh-stats .eh-due.is-paid b { color: #0d9488; font-size: 0.82rem; line-height: 1.25; }
 .eh-stats .eh-due.is-paid small { display: block; color: #64748b; font-weight: 600; font-size: 0.78rem; }
 .eh-stats .eh-due.is-open b { color: #b45309; }
+.eh-stats [data-eh="box"] { cursor: pointer; }
+.eh-stats .eh-due[data-eh="box"] { cursor: pointer; }
 </style>
 
 <div class="eh">
@@ -216,11 +218,15 @@ $chip = static function (string $key, string $val, string $label) use ($filters)
                 <?php
                 $todayEarn = (float) ($p['today_commission'] ?? $p['today_salary'] ?? 0);
                 $todayBal = isset($p['today_balance']) ? (float)$p['today_balance'] : round($todayEarn + (float) ($p['today_bonus'] ?? 0) + (float) ($p['today_snack'] ?? 0), 2);
-                $ehBox = static function (string $box, string $label, $amount) use ($p): void {
+                $ehBox = static function (string $box, string $label, $amount) use ($p, $canFin): void {
                     $id = (int)$p['id'];
                     $name = htmlspecialchars((string)$p['name'], ENT_QUOTES, 'UTF-8');
                     $num = round((float)$amount, 2);
-                    echo '<div data-eh="box" data-box="' . $box . '" data-id="' . $id . '" data-name="' . $name . '" data-amount="' . htmlspecialchars((string)$num, ENT_QUOTES, 'UTF-8') . '" style="cursor:pointer;">';
+                    $tip = $canFin ? ' title="এডমিন: চাপলে সমন্বয় — ০ করা যায়"' : '';
+                    $attrs = $canFin
+                        ? ' data-eh="box" data-box="' . $box . '" data-id="' . $id . '" data-name="' . $name . '" data-amount="' . htmlspecialchars((string)$num, ENT_QUOTES, 'UTF-8') . '"'
+                        : '';
+                    echo '<div' . $attrs . $tip . '>';
                     echo '<span>' . $label . '</span><b>৳' . number_format($num, 2) . '</b></div>';
                 };
                 $ehBox('work', 'আজকের কাজ', $p['today_work']);
@@ -233,7 +239,11 @@ $chip = static function (string $key, string $val, string $label) use ($filters)
                 $ehBox('balance', 'ব্যালেন্স', $todayBal);
                 $dueAmt = (float)($p['today_due'] ?? 0);
                 $paidToday = !empty($p['salary_paid_today']);
-                echo '<div class="eh-due' . ($paidToday ? ' is-paid' : ' is-open') . '">';
+                $dueTip = $canFin ? ' title="এডমিন: চাপলে আজকের বেতন সমন্বয় (০ করা যায়)"' : '';
+                $dueAttrs = $canFin
+                    ? ' data-eh="box" data-box="salary" data-id="' . (int)$p['id'] . '" data-name="' . htmlspecialchars((string)$p['name'], ENT_QUOTES, 'UTF-8') . '" data-amount="' . htmlspecialchars((string)round($dueAmt, 2), ENT_QUOTES, 'UTF-8') . '"'
+                    : '';
+                echo '<div class="eh-due' . ($paidToday ? ' is-paid' : ' is-open') . '"' . $dueAttrs . $dueTip . '>';
                 echo '<span>আজকের পাওনা</span>';
                 if ($paidToday) {
                     echo '<b>বেতন দেওয়া হয়েছে</b><small>৳0.00</small>';

@@ -1485,7 +1485,9 @@ function ame_emp_hub_list(mysqli $db, array $filters): array
             'advance_previous' => $seeMoney ? ame_emp_hub_advance_split($db, (int)$e['id'], $today, $advance)['previous'] : null,
             'deposit' => $seeMoney ? $deposit : null,
             'balance' => $seeMoney ? ame_emp_hub_balance($e, $tw, $todaySalary) : null,
-            'today_balance' => $seeMoney ? ame_emp_hub_today_net($tw, $todaySalary) : null,
+            'today_balance' => $seeMoney
+                ? round(ame_emp_hub_today_net($tw, $todaySalary) + ame_emp_hub_box_sum($db, (int)$e['id'], 'balance'), 2)
+                : null,
             'today_paid' => $seeMoney ? (float)$payDue['paid'] : null,
             'today_due' => $seeMoney ? (float)$payDue['due'] : null,
             'salary_paid_today' => $seeMoney ? !empty($payDue['settled']) : false,
@@ -3940,8 +3942,9 @@ function ame_emp_hub_box_current(mysqli $db, array $emp, string $box): float
     if ($box === 'balance') {
         $present = function_exists('ame_staff_is_duty_active') ? ame_staff_is_duty_active($db, $id) : true;
         $workBal = ame_emp_hub_today_work($db, $id, $today);
+        $net = ame_emp_hub_today_net($workBal, ame_emp_hub_today_salary($db, $emp, $present, $workBal, $today));
 
-        return ame_emp_hub_today_net($workBal, ame_emp_hub_today_salary($db, $emp, $present, $workBal, $today));
+        return round($net + ame_emp_hub_box_sum($db, $id, 'balance'), 2);
     }
     $present = function_exists('ame_staff_is_duty_active') ? ame_staff_is_duty_active($db, $id) : true;
     $work = ame_emp_hub_today_work($db, $id, $today);
