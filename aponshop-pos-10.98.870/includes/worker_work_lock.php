@@ -6,7 +6,7 @@
 declare(strict_types=1);
 
 if (!defined('AME_WORKER_WORK_LOCK_REV')) {
-    define('AME_WORKER_WORK_LOCK_REV', '10.98.887');
+    define('AME_WORKER_WORK_LOCK_REV', '10.98.888');
 }
 
 /**

@@ -429,32 +429,10 @@ try {
 
     ame_lock($db, 'sale_user_' . $user_id);
     $GLOBALS['ame_finish_draft_stock'] = $draft_id > 0;
-    if ($draft_id > 0) {
-        $recent = null;
-    } else {
-    $recent = $db->prepare(
-        "SELECT id FROM sales
-         WHERE created_by = ? AND status = 'completed'
-           AND ABS(net_payable - ?) < 0.009
-           AND IFNULL(customer_id, 0) = ?
-           AND completed_at >= (NOW() - INTERVAL 12 SECOND)
-         ORDER BY id DESC LIMIT 1"
-    );
-    if ($recent) {
-        $cid = (int)$customer_id;
-        $recent->bind_param('idi', $user_id, $grand_total, $cid);
-        $recent->execute();
-        $hit = $recent->get_result()->fetch_assoc();
-        $recent->close();
-        if ($hit) {
-            $respond(
-                'success',
-                $is_english ? 'This sale was already saved.' : 'এই বিক্রয় আগেই সংরক্ষিত হয়েছে।',
-                ['sale_id' => (int)$hit['id'], 'replayed' => true]
-            );
-        }
-    }
-    }
+    /*
+     * দ্রুত একই পণ্যের বারবার বিক্রি বন্ধ করলে ব্যবসায় বাধা — শুধু offline_client_ref/idempotency
+     * একই রিকোয়েস্টের ডাবল সাবমিট ঠেকায়; সময়ভিত্তিক ব্লক তুলে দেওয়া হয়েছে।
+     */
 
     /*
      * Draft Completion অথবা নতুন Sale।

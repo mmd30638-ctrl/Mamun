@@ -1137,19 +1137,10 @@ function ame_emp_hub_today_work(mysqli $db, int $empId, string $day): array
         }
         $stmt->close();
     }
-    $sc = @$db->prepare(
-        "SELECT COALESCE(SUM(service_amount),0) w, COALESCE(SUM(commission_amount),0) p, COALESCE(SUM(shop_amount),0) h
-         FROM service_commissions WHERE employee_id = ? AND DATE(created_at) = ?"
-    );
-    if ($sc) {
-        $sc->bind_param('is', $empId, $day);
-        $sc->execute();
-        $r = $sc->get_result()->fetch_assoc();
-        $sc->close();
-        $work += (float)($r['w'] ?? 0);
-        $pay += (float)($r['p'] ?? 0);
-        $shop += (float)($r['h'] ?? 0);
-    }
+    $scDay = ame_emp_hub_commission_counts_on_day($db, $empId, $day);
+    $work += (float)($scDay['work_value'] ?? 0);
+    $pay += (float)($scDay['employee_amount'] ?? 0);
+    $shop += (float)($scDay['shop_contribution'] ?? 0);
     $sn = @$db->prepare(
         "SELECT COALESCE(SUM(amount),0) s FROM employee_snacks
          WHERE employee_id = ? AND snack_date = ?
@@ -1200,6 +1191,100 @@ function ame_emp_hub_balance(array $emp, array $todayWork, float $todaySalary): 
     $advance = round((float)($emp['advance_balance'] ?? 0), 2);
     $deposit = round((float)($emp['shop_deposit_balance'] ?? 0), 2);
     return round($todaySalary + (float)($todayWork['bonus'] ?? 0) + (float)($todayWork['snack'] ?? 0) - $advance + $deposit, 2);
+}
+
+/** কর্মী কার্ডে «ব্যালেন্স» = আজকের পাওনা (লেজার ক্লোজিং নয়) */
+function ame_emp_hub_today_net(array $todayWork, float $todaySalary): float
+{
+    return round($todaySalary + (float)($todayWork['bonus'] ?? 0) + (float)($todayWork['snack'] ?? 0), 2);
+}
+
+/**
+ * service_commissions কোন ক্যালেন্ডার দিনের «আজকের কাজ» — বিক্রয়ের completed_at/sale_date, না হলে created_at।
+ */
+function ame_emp_hub_commission_counts_on_day(mysqli $db, int $empId, string $day): array
+{
+    $empty = ['work_value' => 0.0, 'employee_amount' => 0.0, 'shop_contribution' => 0.0];
+    if ($empId <= 0 || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $day)) {
+        return $empty;
+    }
+    $sql = "SELECT sc.service_amount, sc.commission_amount, sc.shop_amount, sc.source_type,
+                   s.completed_at, s.sale_date, w.job_date, sc.created_at
+            FROM service_commissions sc
+            LEFT JOIN sales s ON sc.source_type = 'sale_service' AND s.id = sc.sale_id
+            LEFT JOIN workshop_jobs w ON sc.source_type = 'workshop_job' AND w.id = sc.source_id
+            WHERE sc.employee_id = ?";
+    $stmt = @$db->prepare($sql);
+    if (!$stmt) {
+        return $empty;
+    }
+    $stmt->bind_param('i', $empId);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $work = 0.0;
+    $pay = 0.0;
+    $shop = 0.0;
+    if ($res) {
+        while ($r = $res->fetch_assoc()) {
+            $src = (string)($r['source_type'] ?? '');
+            $workDay = substr((string)($r['created_at'] ?? ''), 0, 10);
+            if ($src === 'sale_service') {
+                $cAt = (string)($r['completed_at'] ?? '');
+                $sDate = (string)($r['sale_date'] ?? '');
+                if ($cAt !== '' && $cAt !== '0000-00-00 00:00:00') {
+                    $workDay = substr($cAt, 0, 10);
+                } elseif ($sDate !== '' && $sDate !== '0000-00-00') {
+                    $workDay = substr($sDate, 0, 10);
+                }
+            } elseif ($src === 'workshop_job') {
+                $jd = (string)($r['job_date'] ?? '');
+                if ($jd !== '' && $jd !== '0000-00-00') {
+                    $workDay = substr($jd, 0, 10);
+                }
+            }
+            if ($workDay !== $day) {
+                continue;
+            }
+            $work += (float)($r['service_amount'] ?? 0);
+            $pay += (float)($r['commission_amount'] ?? 0);
+            $shop += (float)($r['shop_amount'] ?? 0);
+        }
+    }
+    $stmt->close();
+
+    return [
+        'work_value' => round($work, 2),
+        'employee_amount' => round($pay, 2),
+        'shop_contribution' => round($shop, 2),
+    ];
+}
+
+function ame_emp_hub_find_same_manual_work(
+    mysqli $db,
+    int $empId,
+    string $date,
+    float $value,
+    string $custName,
+    string $vehicleNo,
+    string $service,
+    int $exceptId = 0
+): ?array {
+    $recent = @$db->prepare(
+        "SELECT id FROM employee_works
+         WHERE employee_id = ? AND id <> ? AND work_date = ?
+           AND ABS(work_value - ?) < 0.009
+           AND customer_name = ? AND vehicle_no = ? AND service_type = ?
+         ORDER BY id DESC LIMIT 1"
+    );
+    if (!$recent) {
+        return null;
+    }
+    $recent->bind_param('iisdsss', $empId, $exceptId, $date, $value, $custName, $vehicleNo, $service);
+    $recent->execute();
+    $duplicate = $recent->get_result()->fetch_assoc();
+    $recent->close();
+
+    return $duplicate ?: null;
 }
 
 function ame_emp_hub_list(mysqli $db, array $filters): array
@@ -1330,6 +1415,7 @@ function ame_emp_hub_list(mysqli $db, array $filters): array
             'advance_previous' => $seeMoney ? ame_emp_hub_advance_split($db, (int)$e['id'], $today, $advance)['previous'] : null,
             'deposit' => $seeMoney ? $deposit : null,
             'balance' => $seeMoney ? ame_emp_hub_balance($e, $tw, $todaySalary) : null,
+            'today_balance' => $seeMoney ? ame_emp_hub_today_net($tw, $todaySalary) : null,
             'login_name' => (string)($e['login_name'] ?? ''),
             'user_id' => (int)($e['user_id'] ?? 0),
             'status' => (string)($e['status'] ?? 'active'),
@@ -1541,22 +1627,9 @@ function ame_emp_hub_save_work(mysqli $db, array $in): array
             }
         }
     } elseif (!$existing) {
-        $recent = @$db->prepare(
-            "SELECT id FROM employee_works
-             WHERE employee_id = ? AND work_date = ?
-               AND ABS(work_value - ?) < 0.009
-               AND customer_name = ? AND vehicle_no = ? AND service_type = ?
-               AND created_at >= (NOW() - INTERVAL 60 SECOND)
-             ORDER BY id DESC LIMIT 1"
-        );
-        if ($recent) {
-            $recent->bind_param('isdsss', $empId, $date, $value, $custName, $vehicleNo, $service);
-            $recent->execute();
-            $duplicate = $recent->get_result()->fetch_assoc();
-            $recent->close();
-            if ($duplicate) {
-                throw new Exception('একই কাজ গত ১ মিনিটে রাখা হয়েছে। ডাবল সাবমিট গ্রহণ করা হয়নি।');
-            }
+        $duplicate = ame_emp_hub_find_same_manual_work($db, $empId, $date, $value, $custName, $vehicleNo, $service, 0);
+        if ($duplicate) {
+            throw new Exception('এই কর্মীর আজ একই কাজের লাইন আগেই আছে। ডাবল এন্ট্রি রাখা হয়নি।');
         }
     }
 
@@ -3679,11 +3752,10 @@ function ame_emp_hub_box_current(mysqli $db, array $emp, string $box): float
         return round((float)($emp['shop_deposit_balance'] ?? 0), 2);
     }
     if ($box === 'balance') {
-        if (!function_exists('ame_worker_desk_statement')) {
-            require_once __DIR__ . '/worker_desk.php';
-        }
-        $stmt = ame_worker_desk_statement($db, $id);
-        return round((float)($stmt['closing'] ?? 0), 2);
+        $present = function_exists('ame_staff_is_duty_active') ? ame_staff_is_duty_active($db, $id) : true;
+        $workBal = ame_emp_hub_today_work($db, $id, $today);
+
+        return ame_emp_hub_today_net($workBal, ame_emp_hub_today_salary($db, $emp, $present, $workBal, $today));
     }
     $present = function_exists('ame_staff_is_duty_active') ? ame_staff_is_duty_active($db, $id) : true;
     $work = ame_emp_hub_today_work($db, $id, $today);
