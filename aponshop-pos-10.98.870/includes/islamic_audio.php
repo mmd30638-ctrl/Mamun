@@ -100,37 +100,6 @@ function ame_islamic_audio_server_tools(): array
     ];
 }
 
-/** cPanel সাপোর্ট টিকেট — ইউজার এক ক্লিকে কপি করবে */
-function ame_islamic_audio_hosting_support_message(string $domain): string
-{
-    $domain = trim($domain) !== '' ? trim($domain) : 'example.com';
-    return <<<TXT
-বিষয়: YouTube অডিও ইম্পোর্টের জন্য yt-dlp, ffmpeg ও PHP exec চালু চাই
-
-আসসালামু আলাইকুম,
-
-আমার ওয়েবসাইট {$domain} (cPanel ইউজার: …………) এ PHP অ্যাপ চলছে। Islamic Audio মডিউল থেকে YouTube চ্যানেল/ভিডিও লিংক দিয়ে সার্ভারে অডিও ডাউনলোড করে MP3 সেভ করার ফিচার আছে।
-
-বর্তমানে অ্যাডমিনে এই ত্রুটি: “সার্ভারে yt-dlp নেই” / exec বন্ধ।
-
-অনুগ্রহ করে এই অ্যাকাউন্টে:
-
-১) yt-dlp (PATH-এ) অথবা python3 + pip দিয়ে yt-dlp প্যাকেজ
-২) ffmpeg PATH-এ
-৩) PHP exec ও shell_exec disable_functions থেকে সরিয়ে চালু
-৪) আউটবাউন্ড HTTPS: youtube.com, googlevideo.com
-৫) max_execution_time কমপক্ষে ৩০০–৬০০ সেকেন্ড
-
-টেস্ট:
-which yt-dlp || python3 -m yt_dlp --version
-which ffmpeg
-php -r "exec('echo ok', \$o); echo implode('', \$o);"
-
-শেষ হলে জানাবেন। ধন্যবাদ।
-নাম: ………… | ফোন/ইমেইল: …………
-TXT;
-}
-
 function ame_islamic_audio_ffmpeg_bin(): ?string
 {
     static $bin = null;
@@ -754,6 +723,66 @@ function ame_islamic_audio_insert_row(mysqli $db, array $fields): int
 /**
  * @param array{title:string,speaker?:string,category?:string,is_published?:bool,display_serial?:int} $meta
  */
+/** @return array<int, array<string, mixed>> */
+function ame_islamic_audio_normalize_upload_files(string $field): array
+{
+    if (empty($_FILES[$field])) {
+        return [];
+    }
+    $f = $_FILES[$field];
+    if (!is_array($f['name'] ?? null)) {
+        return [$f];
+    }
+    $out = [];
+    $n = count($f['name']);
+    for ($i = 0; $i < $n; $i++) {
+        $out[] = [
+            'name' => $f['name'][$i] ?? '',
+            'type' => $f['type'][$i] ?? '',
+            'tmp_name' => $f['tmp_name'][$i] ?? '',
+            'error' => $f['error'][$i] ?? UPLOAD_ERR_NO_FILE,
+            'size' => $f['size'][$i] ?? 0,
+        ];
+    }
+    return $out;
+}
+
+/**
+ * @param array<int, array> $files
+ * @param array{title?:string,speaker?:string,category?:string,is_published?:bool} $meta
+ * @return array{ok:bool,imported:int,failed:array<int,string>,ids:array<int,int>}
+ */
+function ame_islamic_audio_ingest_upload_many(mysqli $db, array $files, array $meta): array
+{
+    $max = 40;
+    if (count($files) > $max) {
+        throw new InvalidArgumentException('একবারে সর্বোচ্চ ' . $max . 'টি ফাইল।');
+    }
+  $ids = [];
+    $failed = [];
+    $sharedTitle = trim((string)($meta['title'] ?? ''));
+    $multi = count($files) > 1;
+    foreach ($files as $file) {
+        if (($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
+            continue;
+        }
+        $rowMeta = $meta;
+        if ($multi) {
+            $rowMeta['title'] = $sharedTitle !== '' ? $sharedTitle : '';
+        }
+        try {
+            $res = ame_islamic_audio_ingest_upload($db, $file, $rowMeta);
+            $ids[] = (int)$res['id'];
+        } catch (Throwable $e) {
+            $failed[] = (($file['name'] ?? 'ফাইল') . ': ' . $e->getMessage());
+        }
+    }
+    if ($ids === [] && $failed !== []) {
+        throw new RuntimeException(implode(' | ', $failed));
+    }
+    return ['ok' => true, 'imported' => count($ids), 'failed' => $failed, 'ids' => $ids];
+}
+
 function ame_islamic_audio_ingest_upload(mysqli $db, array $file, array $meta): array
 {
     ame_islamic_audio_schema($db);
@@ -795,8 +824,7 @@ function ame_islamic_audio_ingest_url(mysqli $db, array $meta): array
     ame_islamic_audio_schema($db);
     $url = trim((string)($meta['audio_url'] ?? ''));
     if (ame_islamic_audio_is_youtube_url($url)) {
-        $meta['youtube_url'] = $url;
-        return ame_islamic_audio_ingest_youtube($db, $meta);
+        throw new InvalidArgumentException('YouTube লিংক এখানে দেবেন না। PC/মোবাইল থেকে MP3 আপলোড করুন।');
     }
     $title = trim((string)($meta['title'] ?? ''));
     if ($title === '') {

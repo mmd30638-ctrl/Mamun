@@ -7,78 +7,58 @@ ame_islamic_audio_schema($db);
 $ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.900';
 $cs = htmlspecialchars((string)($_SESSION['csrf_token'] ?? ''), ENT_QUOTES, 'UTF-8');
 $categories = ame_islamic_audio_categories();
-$iaTools = ame_islamic_audio_server_tools();
-$iaHost = preg_replace('/[^a-zA-Z0-9._-]/', '', (string)($_SERVER['HTTP_HOST'] ?? 'mavo12.online'));
-$iaHostTicket = ame_islamic_audio_hosting_support_message($iaHost);
+$ffmpegOk = ame_islamic_audio_ffmpeg_bin() !== null;
 include dirname(__DIR__, 2) . '/partials/header.php';
 ?>
 <link rel="stylesheet" href="/assets/css/islamic-audio-admin.css?v=<?php echo htmlspecialchars($ver, ENT_QUOTES, 'UTF-8'); ?>">
-<div class="ia-admin" id="iaAdmin" data-csrf="<?php echo $cs; ?>" data-yt-auto="<?php echo $iaYtAuto ? '1' : '0'; ?>">
+<div class="ia-admin" id="iaAdmin" data-csrf="<?php echo $cs; ?>">
   <header class="ia-admin-head">
     <h1>🕌 ইসলামিক অডিও লাইব্রেরি</h1>
-    <p class="ia-admin-sub">ফাইল আপলোড, MP3 লিংক, বা YouTube — অটো কম্প্রেশন ও সাউন্ড অপ্টিমাইজেশন</p>
-    <?php
-    $ytOk = $iaTools['ytdlp'] !== null;
-    $ffOk = $iaTools['ffmpeg'] !== null;
-    $exOk = $iaTools['exec_ok'];
-    $iaYtAuto = $ytOk && $exOk;
-    ?>
-    <div class="ia-server-bar <?php echo $ytOk && $exOk ? 'ia-server-bar--ok' : 'ia-server-bar--warn'; ?>">
-      <?php if (!$exOk): ?>
-      <strong>PHP exec বন্ধ</strong> — YouTube ইম্পোর্ট চলবে না। হোস্টার থেকে exec/shell_exec চালু করুন।
-      <?php elseif (!$ytOk): ?>
-      <strong>সার্ভার YouTube অটো-ইম্পোর্ট সমর্থন করে না</strong> (Hostinger Premium ইত্যাদি শেয়ারড হোস্টিং) — নিচের <em>অফলাইন উপায়</em> বা VPS দেখুন।
-      <?php else: ?>
-      <strong>yt-dlp:</strong> <code><?php echo htmlspecialchars($iaTools['ytdlp'], ENT_QUOTES, 'UTF-8'); ?></code>
-      <?php endif; ?>
-      <?php if ($ffOk): ?>
-      · <strong>ffmpeg:</strong> <code><?php echo htmlspecialchars((string)$iaTools['ffmpeg'], ENT_QUOTES, 'UTF-8'); ?></code>
-      <?php else: ?>
-      · <strong>ffmpeg নেই</strong> — ইম্পোর্ট হবে কিন্তু কম্প্রেশন সীমিত।
-      <?php endif; ?>
-    </div>
-    <details class="ia-host-ticket" id="iaHostTicketBox" <?php echo (!$ytOk || !$exOk) ? 'open' : ''; ?>>
-      <summary>📋 হোস্টার / cPanel প্রতিনিধিকে পাঠানোর মেসেজ</summary>
-      <p class="ia-host-ticket-hint">নিচে সম্পাদনা করে <strong>কপি করুন</strong> — টিকেটে পেস্ট করে পাঠান।</p>
-      <textarea class="ia-host-ticket-ta" id="iaHostTicket" rows="14" spellcheck="false"><?php echo htmlspecialchars($iaHostTicket, ENT_NOQUOTES, 'UTF-8'); ?></textarea>
-      <div class="ia-host-ticket-actions">
-        <button type="button" class="ia-btn ia-btn-primary" id="iaHostCopy">📋 মেসেজ কপি করুন</button>
-        <span class="ia-host-copy-done" id="iaHostCopyDone" hidden>কপি হয়েছে — এখন টিকেটে পেস্ট করুন</span>
-      </div>
-    </details>
+    <p class="ia-admin-sub">PC ও মোবাইল থেকে অডিও আপলোড · অথবা Direct MP3 লিংক</p>
+    <?php if (!$ffmpegOk): ?>
+    <p class="ia-ffmpeg-note">নোট: সার্ভারে ffmpeg নেই — আপলোড হবে, কম্প্রেশন সীমিত থাকতে পারে।</p>
+    <?php endif; ?>
   </header>
 
   <div class="ia-admin-grid">
-    <section class="ia-admin-card">
-      <h2>📁 ফাইল আপলোড</h2>
+    <section class="ia-admin-card ia-upload-hero">
+      <h2>📲 PC ও মোবাইল — সরাসরি অডিও আপলোড</h2>
+      <p class="ia-upload-lead">যেমন PC-তে yt-dlp দিয়ে নামানো MP3, বা ফোনের গ্যালারি থেকে ওয়াজ/গজল — এখানে দিন।</p>
       <form id="iaFormUpload" class="ia-upload-form">
-        <div class="ia-drop" id="iaDrop" tabindex="0">
-          <input type="file" id="iaFile" name="audio" accept="audio/*,.mp3,.wav,.m4a,.ogg" hidden>
-          <p class="ia-drop-lead">ড্র্যাগ করে ফেলুন অথবা ব্রাউজ করুন</p>
-          <p class="ia-drop-hint">MP3, WAV — সর্বোচ্চ ১২০ MB</p>
-          <button type="button" class="ia-btn ia-btn-ghost" id="iaPick">ফাইল বাছুন</button>
-          <p class="ia-drop-name" id="iaFileName" hidden></p>
+        <input type="file" id="iaFile" name="audio[]" accept="audio/*,.mp3,.wav,.m4a,.ogg,.aac,.flac,.opus,.webm,video/mp4" multiple hidden>
+        <div class="ia-pick-row">
+          <button type="button" class="ia-btn ia-btn-mobile-pick" id="iaPickMobile">📂 মোবাইল / গ্যালারি থেকে বাছুন</button>
+          <button type="button" class="ia-btn ia-btn-ghost ia-pick-pc" id="iaPick">💻 PC — এক বা একাধিক ফাইল</button>
         </div>
-        <label>শিরোনাম</label>
-        <input type="text" name="title" id="iaTitle" maxlength="255" placeholder="অডিওর নাম">
-        <label>বক্তা</label>
-        <input type="text" name="speaker" maxlength="200" placeholder="বক্তার নাম">
+        <div class="ia-drop ia-drop-pc" id="iaDrop" tabindex="0">
+          <p class="ia-drop-lead">PC: এখানে ড্র্যাগ করে ফেলুন</p>
+          <p class="ia-drop-hint">MP3, M4A, WAV — প্রতি ফাইল সর্বোচ্চ ১২০ MB · একসাথে ৪০টি পর্যন্ত</p>
+        </div>
+        <ul class="ia-file-queue" id="iaFileQueue" hidden></ul>
+        <div class="ia-upload-progress" id="iaUploadProgress" hidden>
+          <div class="ia-upload-progress-bar" id="iaUploadBar"></div>
+          <span class="ia-upload-progress-txt" id="iaUploadTxt"></span>
+        </div>
+        <label>শিরোনাম (একটিমাত্র ফাইল হলে; একাধিক হলে ফাইলের নাম থেকে)</label>
+        <input type="text" name="title" id="iaTitle" maxlength="255" placeholder="ঐচ্ছিক">
+        <label>বক্তা / চ্যানেল (সব ফাইলে একই)</label>
+        <input type="text" name="speaker" id="iaSpeaker" maxlength="200" placeholder="যেমন: মাওলানা …">
         <label>ক্যাটাগরি</label>
-        <select name="category">
+        <select name="category" id="iaCategory">
           <?php foreach ($categories as $k => $label): ?>
           <option value="<?php echo htmlspecialchars($k, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($label, ENT_QUOTES, 'UTF-8'); ?></option>
           <?php endforeach; ?>
         </select>
         <label class="ia-check"><input type="checkbox" name="is_published" value="1" checked> হোমপেজে প্রকাশ</label>
-        <button type="submit" class="ia-btn ia-btn-primary">আপলোড ও অপ্টিমাইজ</button>
+        <button type="submit" class="ia-btn ia-btn-primary ia-btn-upload" id="iaUploadBtn" disabled>আপলোড ও অপ্টিমাইজ</button>
       </form>
     </section>
 
     <section class="ia-admin-card">
-      <h2>🔗 অডিও URL থেকে নিন</h2>
+      <h2>🔗 Direct MP3 লিংক</h2>
       <form id="iaFormUrl" class="ia-upload-form">
-        <label>Direct MP3 / Audio Link</label>
-        <input type="url" name="audio_url" required placeholder="https://example.com/audio.mp3" autocomplete="off">
+        <label>MP3 / অডিও ফাইলের সরাসরি URL (YouTube লিংক নয়)</label>
+        <input type="url" name="audio_url" required placeholder="https://example.com/path/audio.mp3" autocomplete="off">
         <label>শিরোনাম</label>
         <input type="text" name="title" maxlength="255" placeholder="অডিওর নাম">
         <label>বক্তা</label>
@@ -91,41 +71,6 @@ include dirname(__DIR__, 2) . '/partials/header.php';
         </select>
         <label class="ia-check"><input type="checkbox" name="is_published" value="1" checked> হোমপেজে প্রকাশ</label>
         <button type="submit" class="ia-btn ia-btn-primary">লিংক ডাউনলোড + অপ্টিমাইজ</button>
-      </form>
-    </section>
-
-    <section class="ia-admin-card ia-admin-card-yt">
-      <h2>▶ YouTube ভিডিও / চ্যানেল / প্লেলিস্ট</h2>
-      <?php if (!$iaYtAuto): ?>
-      <div class="ia-yt-shared">
-        <p><strong>Premium / শেয়ারড হোস্টিং:</strong> হোস্টার yt-dlp ও ffmpeg দিতে পারে না — তাই বোতামটি বন্ধ। ওয়াজ/গজল যোগ করতে:</p>
-        <ol class="ia-yt-shared-steps">
-          <li>নিজের PC-তে <strong>yt-dlp</strong> দিয়ে MP3 নামান (নিচের গাইড)</li>
-          <li>বাম পাশের <strong>「ফাইল আপলোড」</strong> দিয়ে MP3 দিন — হোমপেজ প্লেয়ারে চলবে</li>
-          <li>অথবা MP3 অন্য হোস্টে রেখে <strong>「অডিও URL」</strong> ফিল্ড ব্যবহার করুন</li>
-          <li>পুরো অটো YouTube চাইলে <strong>VPS</strong> (root + yt-dlp + ffmpeg) লাগবে</li>
-        </ol>
-        <p class="ia-yt-shared-ref">বিস্তারিত ফাইল: <code>OFFLINE_YOUTUBE_BN.txt</code></p>
-      </div>
-      <?php endif; ?>
-      <form id="iaFormYt" class="ia-upload-form" <?php echo $iaYtAuto ? '' : 'data-disabled="1"'; ?>>
-        <label>YouTube লিংক (ভিডিও, @চ্যানেল, বা প্লেলিস্ট)</label>
-        <input type="url" name="youtube_url" required placeholder="https://youtube.com/@channel ... বা youtu.be/..." autocomplete="off">
-        <p class="ia-yt-hint">চ্যানেল লিংক (যেমন <code>@shamim7912</code>) দিলে স্বয়ংক্রিয়ভাবে সেই চ্যানেলের <strong>Videos</strong> তালিকা থেকে অডিও নামাবে। সার্ভারে <strong>yt-dlp</strong> + <strong>ffmpeg</strong> লাগবে।</p>
-        <label>একবারে কয়টি ভিডিও (চ্যানেল/প্লেলিস্ট)</label>
-        <input type="number" name="max_items" min="1" max="50" value="25" style="width:120px">
-        <label>শিরোনাম (ঐচ্ছিক — এক ভিডিও হলে; না দিলে YouTube শিরোনাম)</label>
-        <input type="text" name="title" maxlength="255" placeholder="অডিওর নাম">
-        <label>বক্তা / চ্যানেল</label>
-        <input type="text" name="speaker" maxlength="200" placeholder="যেমন: চ্যানেলের নাম">
-        <label>ক্যাটাগরি</label>
-        <select name="category">
-          <?php foreach ($categories as $k => $label): ?>
-          <option value="<?php echo htmlspecialchars($k, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($label, ENT_QUOTES, 'UTF-8'); ?></option>
-          <?php endforeach; ?>
-        </select>
-        <label class="ia-check"><input type="checkbox" name="is_published" value="1" checked> হোমপেজে প্রকাশ</label>
-        <button type="submit" class="ia-btn ia-btn-primary ia-btn-yt" id="iaYtSubmit" <?php echo $iaYtAuto ? '' : 'disabled title="শেয়ারড হোস্টিং — PC আপলোড ব্যবহার করুন"'; ?>>YouTube থেকে অডিও নিন</button>
       </form>
     </section>
   </div>

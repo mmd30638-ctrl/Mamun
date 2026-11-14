@@ -37,10 +37,9 @@ try {
         $out(['ok' => true, 'tracks' => ame_islamic_audio_admin_list($db), 'categories' => ame_islamic_audio_categories()]);
     }
 
-    if ($action === 'upload') {
+    if ($action === 'upload' || $action === 'upload_many') {
         $needPost();
-        @set_time_limit(300);
-        $file = $_FILES['audio'] ?? $_FILES['audio_file'] ?? [];
+        @set_time_limit(600);
         $meta = [
             'title' => (string)($_POST['title'] ?? ''),
             'speaker' => (string)($_POST['speaker'] ?? ''),
@@ -50,7 +49,22 @@ try {
         if (isset($_POST['display_serial']) && (string)$_POST['display_serial'] !== '') {
             $meta['display_serial'] = (int)$_POST['display_serial'];
         }
-        $out(ame_islamic_audio_ingest_upload($db, $file, $meta) + ['tracks' => ame_islamic_audio_admin_list($db)]);
+        $many = ame_islamic_audio_normalize_upload_files('audio');
+        if ($many === []) {
+            $many = ame_islamic_audio_normalize_upload_files('audio_file');
+        }
+        if ($many === [] && $action === 'upload') {
+            $single = $_FILES['audio'] ?? $_FILES['audio_file'] ?? [];
+            $many = $single !== [] ? [$single] : [];
+        }
+        if ($many === []) {
+            $out(['ok' => false, 'error' => 'অডিও ফাইল বাছুন।'], 422);
+        }
+        if (count($many) > 1 || $action === 'upload_many') {
+            $batch = ame_islamic_audio_ingest_upload_many($db, $many, $meta);
+            $out($batch + ['tracks' => ame_islamic_audio_admin_list($db)]);
+        }
+        $out(ame_islamic_audio_ingest_upload($db, $many[0], $meta) + ['tracks' => ame_islamic_audio_admin_list($db)]);
     }
 
     if ($action === 'import_url') {
@@ -67,17 +81,7 @@ try {
     }
 
     if ($action === 'import_youtube') {
-        $needPost();
-        @set_time_limit(600);
-        $meta = [
-            'youtube_url' => (string)($_POST['youtube_url'] ?? $_POST['url'] ?? ''),
-            'title' => (string)($_POST['title'] ?? ''),
-            'speaker' => (string)($_POST['speaker'] ?? ''),
-            'category' => (string)($_POST['category'] ?? 'general'),
-            'max_items' => (int)($_POST['max_items'] ?? 25),
-            'is_published' => !isset($_POST['is_published']) || (string)$_POST['is_published'] !== '0',
-        ];
-        $out(ame_islamic_audio_ingest_youtube($db, $meta));
+        $out(['ok' => false, 'error' => 'YouTube অটো ইম্পোর্ট বন্ধ। PC/মোবাইল থেকে MP3 আপলোড করুন।'], 410);
     }
 
     if ($action === 'update') {

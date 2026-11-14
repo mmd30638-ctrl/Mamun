@@ -170,18 +170,49 @@
   var drop = document.getElementById('iaDrop');
   var fileInp = document.getElementById('iaFile');
   var pick = document.getElementById('iaPick');
-  var fileName = document.getElementById('iaFileName');
+  var pickMobile = document.getElementById('iaPickMobile');
+  var fileQueue = document.getElementById('iaFileQueue');
+  var uploadBtn = document.getElementById('iaUploadBtn');
+  var uploadProgress = document.getElementById('iaUploadProgress');
+  var uploadBar = document.getElementById('iaUploadBar');
+  var uploadTxt = document.getElementById('iaUploadTxt');
+  var uploading = false;
 
-  if (pick && fileInp) {
-    pick.addEventListener('click', function () {
+  function renderFileQueue() {
+    if (!fileInp || !fileQueue || !uploadBtn) {
+      return;
+    }
+    var files = fileInp.files ? Array.prototype.slice.call(fileInp.files) : [];
+    fileQueue.innerHTML = '';
+    if (files.length === 0) {
+      fileQueue.hidden = true;
+      uploadBtn.disabled = true;
+      return;
+    }
+    fileQueue.hidden = false;
+    uploadBtn.disabled = uploading;
+    files.forEach(function (f, i) {
+      var li = document.createElement('li');
+      li.textContent = (i + 1) + '. ' + f.name + ' (' + (f.size < 1048576 ? Math.round(f.size / 1024) + ' KB' : (f.size / 1048576).toFixed(1) + ' MB') + ')';
+      fileQueue.appendChild(li);
+    });
+    uploadBtn.textContent = files.length > 1 ? files.length + 'টি আপলোড ও অপ্টিমাইজ' : 'আপলোড ও অপ্টিমাইজ';
+  }
+
+  function openFilePicker() {
+    if (fileInp) {
       fileInp.click();
-    });
-    fileInp.addEventListener('change', function () {
-      if (fileInp.files && fileInp.files[0]) {
-        fileName.hidden = false;
-        fileName.textContent = fileInp.files[0].name;
-      }
-    });
+    }
+  }
+
+  if (pick) {
+    pick.addEventListener('click', openFilePicker);
+  }
+  if (pickMobile) {
+    pickMobile.addEventListener('click', openFilePicker);
+  }
+  if (fileInp) {
+    fileInp.addEventListener('change', renderFileQueue);
   }
 
   if (drop && fileInp) {
@@ -198,33 +229,108 @@
       });
     });
     drop.addEventListener('drop', function (e) {
-      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
-        fileInp.files = e.dataTransfer.files;
-        fileName.hidden = false;
-        fileName.textContent = e.dataTransfer.files[0].name;
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
+        try {
+          fileInp.files = e.dataTransfer.files;
+        } catch (err) {
+          say('একাধিক ফাইল ড্রপ করতে「PC ফাইল」বাটন ব্যবহার করুন');
+        }
+        renderFileQueue();
       }
+    });
+  }
+
+  function setProgress(pct, label) {
+    if (!uploadProgress || !uploadBar || !uploadTxt) {
+      return;
+    }
+    uploadProgress.hidden = false;
+    uploadBar.style.width = Math.min(100, Math.max(0, pct)) + '%';
+    uploadTxt.textContent = label;
+  }
+
+  function uploadOneFile(file, form, useMultiTitle) {
+    var fd = new FormData();
+    fd.append('action', 'upload');
+    fd.append('csrf_token', csrf);
+    fd.append('audio', file);
+    fd.append('speaker', form.speaker ? form.speaker.value : '');
+    fd.append('category', form.category ? form.category.value : 'general');
+    fd.append('is_published', form.is_published && form.is_published.checked ? '1' : '0');
+    if (!useMultiTitle && form.title && form.title.value.trim() !== '') {
+      fd.append('title', form.title.value.trim());
+    }
+    return fetch(api, { method: 'POST', body: fd, credentials: 'same-origin' }).then(function (r) {
+      return r.json();
     });
   }
 
   if (formUp) {
     formUp.addEventListener('submit', function (e) {
       e.preventDefault();
-      if (!fileInp || !fileInp.files || !fileInp.files[0]) {
+      if (uploading) {
+        return;
+      }
+      if (!fileInp || !fileInp.files || !fileInp.files.length) {
         say('ফাইল বাছুন');
         return;
       }
-      var fd = new FormData(formUp);
-      fd.append('audio', fileInp.files[0]);
-      post('upload', fd)
-        .then(function () {
-          formUp.reset();
-          if (fileName) {
-            fileName.hidden = true;
+      var files = Array.prototype.slice.call(fileInp.files);
+      if (files.length > 40) {
+        say('একবারে সর্বোচ্চ ৪০টি ফাইল');
+        return;
+      }
+      uploading = true;
+      uploadBtn.disabled = true;
+      var done = 0;
+      var okCount = 0;
+      var errs = [];
+      var multi = files.length > 1;
+
+      function next() {
+        if (done >= files.length) {
+          uploading = false;
+          if (uploadProgress) {
+            uploadProgress.hidden = true;
           }
-        })
-        .catch(function (err) {
-          say(err.message);
-        });
+          renderFileQueue();
+          if (okCount > 0) {
+            load().then(function () {
+              say(okCount + 'টি অডিও আপলোড হয়েছে' + (errs.length ? ' (' + errs.length + ' ব্যর্থ)' : ''));
+            });
+            formUp.reset();
+            if (fileInp) {
+              fileInp.value = '';
+            }
+            renderFileQueue();
+          } else {
+            say(errs[0] || 'আপলোড ব্যর্থ');
+          }
+          return;
+        }
+        var f = files[done];
+        var pct = Math.round((done / files.length) * 100);
+        setProgress(pct, (done + 1) + '/' + files.length + ' — ' + f.name);
+        say('আপলোড ' + (done + 1) + '/' + files.length + '…');
+        uploadOneFile(f, formUp, multi)
+          .then(function (data) {
+            if (!data.ok) {
+              throw new Error(data.error || 'ব্যর্থ');
+            }
+            okCount++;
+            if (data.tracks) {
+              render(data.tracks);
+            }
+          })
+          .catch(function (err) {
+            errs.push(f.name + ': ' + (err.message || 'ব্যর্থ'));
+          })
+          .finally(function () {
+            done++;
+            next();
+          });
+      }
+      next();
     });
   }
 
@@ -239,65 +345,6 @@
         .catch(function (err) {
           say(err.message);
         });
-    });
-  }
-
-  var ytAuto = root.getAttribute('data-yt-auto') === '1';
-  var formYt = document.getElementById('iaFormYt');
-  if (formYt) {
-    formYt.addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (!ytAuto || formYt.getAttribute('data-disabled') === '1') {
-        say('শেয়ারড হোস্টিং: PC তে MP3 নামিয়ে「ফাইল আপলোড」ব্যবহার করুন। OFFLINE_YOUTUBE_BN.txt দেখুন।');
-        return;
-      }
-      if (!window.confirm('YouTube থেকে অডিও ডাউনলোড ও কম্প্রেস করতে কয়েক মিনিট লাগতে পারে। চালাবেন?')) {
-        return;
-      }
-      var fd = new FormData(formYt);
-      post('import_youtube', fd)
-        .then(function (data) {
-          formYt.reset();
-          if (data.imported) {
-            say(data.imported + 'টি YouTube অডিও যোগ হয়েছে');
-          }
-        })
-        .catch(function (err) {
-          say(err.message || 'YouTube ইম্পোর্ট ব্যর্থ');
-        });
-    });
-  }
-
-  var copyBtn = document.getElementById('iaHostCopy');
-  var copyDone = document.getElementById('iaHostCopyDone');
-  var ticketTa = document.getElementById('iaHostTicket');
-  if (copyBtn && ticketTa) {
-    copyBtn.addEventListener('click', function () {
-      var text = ticketTa.value;
-      function done() {
-        if (copyDone) {
-          copyDone.hidden = false;
-          setTimeout(function () {
-            copyDone.hidden = true;
-          }, 4000);
-        }
-        say('হোস্টিং মেসেজ কপি হয়েছে — সাপোর্ট টিকেটে পেস্ট করুন');
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done).catch(fallback);
-      } else {
-        fallback();
-      }
-      function fallback() {
-        ticketTa.focus();
-        ticketTa.select();
-        try {
-          document.execCommand('copy');
-          done();
-        } catch (e) {
-          say('অটো কপি ব্যর্থ — মাউস দিয়ে টেক্সট সিলেক্ট করে কপি করুন');
-        }
-      }
     });
   }
 

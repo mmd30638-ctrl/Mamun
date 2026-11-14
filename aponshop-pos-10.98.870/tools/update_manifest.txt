@@ -1,9 +1,23 @@
+# 10.98.910 — আপলোড-কেন্দ্রিক UI; YouTube/হোস্টার মেসেজ সরানো
+modules/settings/islamic_audio.php
+modules/settings/islamic_audio_api.php
+modules/settings/tools.php
+includes/islamic_audio.php
+assets/css/islamic-audio-admin.css
+assets/js/islamic-audio-admin.js
+ISLAMIC_AUDIO_BN.txt
+# 10.98.909 — PC/মোবাইল একাধিক অডিও সরাসরি আপলোড
+includes/islamic_audio.php
+modules/settings/islamic_audio.php
+modules/settings/islamic_audio_api.php
+assets/css/islamic-audio-admin.css
+assets/js/islamic-audio-admin.js
+ISLAMIC_AUDIO_BN.txt
 # 10.98.908 — শেয়ারড হোস্টিং: YouTube অটো বন্ধ + অফলাইন গাইড
 modules/settings/islamic_audio.php
 assets/css/islamic-audio-admin.css
 assets/js/islamic-audio-admin.js
-OFFLINE_YOUTUBE_BN.txt
-# 10.98.907 — হোস্টার মেসেজ এক-ক্লিক কপি (ইসলামিক অডিও)
+# 10.98.907 — হোস্টার মেসেজ এক-ক্লিক কপি (ইসলামিক অড
 includes/islamic_audio.php
 modules/settings/islamic_audio.php
 assets/css/islamic-audio-admin.css
@@ -12,8 +26,6 @@ assets/js/islamic-audio-admin.js
 includes/islamic_audio.php
 modules/settings/islamic_audio.php
 assets/css/islamic-audio-admin.css
-tools/install_yt_dlp_cpanel.sh
-YT_DLP_HOSTING_BN.txt
 # 10.98.905 — YouTube চ্যানেল (@handle) থেকে Videos তালিকা ইম্পোর্ট
 includes/islamic_audio.php
 modules/settings/islamic_audio.php

@@ -121,7 +121,7 @@ $ame_upload_leftovers = function_exists('ame_uploads_legacy_code_scan') ? ame_up
     <div class="eng-grid">
         <div class="eng-mod purple">
             <h4>🕌 ইসলামিক অডিও লাইব্রেরি</h4>
-            <p>হোমপেজ অডিও, URL ডাউনলোড, অটো কম্প্রেশন ও সাউন্ড অপ্টিমাইজ।</p>
+            <p>হোমপেজ অডিও — PC/মোবাইল আপলোড, MP3 লিংক, কম্প্রেশন।</p>
             <a href="islamic_audio.php" class="eng-btn">🎧 অডিও ম্যানেজ করুন</a>
         </div>
         <div class="eng-mod green">
