@@ -537,6 +537,7 @@ function ame_worker_history(mysqli $db, int $empId, string $from, string $to): a
         $invoice = trim((string)($work['invoice_ref'] ?? $work['memo_no'] ?? ''));
         $row = [
             'date' => (string)($work['work_date'] ?? ''),
+            'time' => trim((string)($work['work_time'] ?? '')),
             'customer' => (string)($work['customer_name'] ?? ''),
             'vehicle' => trim((string)($work['vehicle_no'] ?? $work['vehicle'] ?? '')),
             'invoice' => $invoice,

@@ -1199,6 +1199,45 @@ function ame_emp_hub_today_net(array $todayWork, float $todaySalary): float
     return round($todaySalary + (float)($todayWork['bonus'] ?? 0) + (float)($todayWork['snack'] ?? 0), 2);
 }
 
+function ame_sql_interval_seconds(int $seconds): int
+{
+    return max(1, min(3600, (int)$seconds));
+}
+
+/** কমিশন লাইন কোন ক্যালেন্ডার দিনে গণনা হবে (লেজারের মতো sale_id জয়েন) */
+function ame_emp_hub_commission_work_day(array $r): string
+{
+    $src = (string)($r['source_type'] ?? '');
+    $workDay = substr((string)($r['created_at'] ?? ''), 0, 10);
+    if ($src === 'workshop_job') {
+        $jd = (string)($r['job_date'] ?? '');
+        if ($jd !== '' && $jd !== '0000-00-00') {
+            return substr($jd, 0, 10);
+        }
+        return $workDay;
+    }
+    $cAt = (string)($r['completed_at'] ?? '');
+    $sDate = (string)($r['sale_date'] ?? '');
+    if ($cAt !== '' && $cAt !== '0000-00-00 00:00:00') {
+        return substr($cAt, 0, 10);
+    }
+    if ($sDate !== '' && $sDate !== '0000-00-00') {
+        return substr($sDate, 0, 10);
+    }
+
+    return $workDay;
+}
+
+function ame_emp_hub_commission_work_time(array $r): string
+{
+    $cAt = (string)($r['completed_at'] ?? '');
+    if ($cAt !== '' && $cAt !== '0000-00-00 00:00:00' && strlen($cAt) >= 19) {
+        return substr($cAt, 11, 8);
+    }
+    $ca = (string)($r['created_at'] ?? '');
+    return strlen($ca) >= 19 ? substr($ca, 11, 8) : '00:00:00';
+}
+
 /**
  * service_commissions কোন ক্যালেন্ডার দিনের «আজকের কাজ» — বিক্রয়ের completed_at/sale_date, না হলে created_at।
  */
@@ -1211,7 +1250,7 @@ function ame_emp_hub_commission_counts_on_day(mysqli $db, int $empId, string $da
     $sql = "SELECT sc.service_amount, sc.commission_amount, sc.shop_amount, sc.source_type,
                    s.completed_at, s.sale_date, w.job_date, sc.created_at
             FROM service_commissions sc
-            LEFT JOIN sales s ON sc.source_type = 'sale_service' AND s.id = sc.sale_id
+            LEFT JOIN sales s ON s.id = sc.sale_id
             LEFT JOIN workshop_jobs w ON sc.source_type = 'workshop_job' AND w.id = sc.source_id
             WHERE sc.employee_id = ?";
     $stmt = @$db->prepare($sql);
@@ -1226,23 +1265,7 @@ function ame_emp_hub_commission_counts_on_day(mysqli $db, int $empId, string $da
     $shop = 0.0;
     if ($res) {
         while ($r = $res->fetch_assoc()) {
-            $src = (string)($r['source_type'] ?? '');
-            $workDay = substr((string)($r['created_at'] ?? ''), 0, 10);
-            if ($src === 'sale_service') {
-                $cAt = (string)($r['completed_at'] ?? '');
-                $sDate = (string)($r['sale_date'] ?? '');
-                if ($cAt !== '' && $cAt !== '0000-00-00 00:00:00') {
-                    $workDay = substr($cAt, 0, 10);
-                } elseif ($sDate !== '' && $sDate !== '0000-00-00') {
-                    $workDay = substr($sDate, 0, 10);
-                }
-            } elseif ($src === 'workshop_job') {
-                $jd = (string)($r['job_date'] ?? '');
-                if ($jd !== '' && $jd !== '0000-00-00') {
-                    $workDay = substr($jd, 0, 10);
-                }
-            }
-            if ($workDay !== $day) {
+            if (ame_emp_hub_commission_work_day($r) !== $day) {
                 continue;
             }
             $work += (float)($r['service_amount'] ?? 0);
@@ -1273,19 +1296,20 @@ function ame_emp_hub_find_recent_manual_work(
     if ($windowSeconds < 1) {
         return null;
     }
+    $winSql = ame_sql_interval_seconds($windowSeconds);
     $recent = @$db->prepare(
         "SELECT id, created_at, work_value, service_type
          FROM employee_works
          WHERE employee_id = ? AND id <> ? AND work_date = ?
            AND ABS(work_value - ?) < 0.009
            AND customer_name = ? AND vehicle_no = ? AND service_type = ?
-           AND created_at >= (NOW() - INTERVAL ? SECOND)
+           AND created_at >= (NOW() - INTERVAL {$winSql} SECOND)
          ORDER BY id DESC LIMIT 1"
     );
     if (!$recent) {
         return null;
     }
-    $recent->bind_param('iisdsssi', $empId, $exceptId, $date, $value, $custName, $vehicleNo, $service, $windowSeconds);
+    $recent->bind_param('iisdsss', $empId, $exceptId, $date, $value, $custName, $vehicleNo, $service);
     $recent->execute();
     $duplicate = $recent->get_result()->fetch_assoc();
     $recent->close();
@@ -1308,8 +1332,11 @@ function ame_emp_hub_work_rapid_confirm_message(
     if ($at !== '') {
         $ts = strtotime($at);
         if ($ts > 0) {
-            $sec = max(0, time() - $ts);
+            $sec = max(0, min($windowSeconds, time() - $ts));
         }
+    }
+    if ($sec > $windowSeconds) {
+        $sec = $windowSeconds;
     }
 
     return "⚠️ দ্রুত দ্বিতীয় সাবমিট (প্রায় {$sec} সেকেন্ড আগে)\n"
@@ -3198,18 +3225,28 @@ function ame_emp_hub_works(mysqli $db, int $empId, string $from, string $to): ar
         "SELECT sc.id, sc.sale_id, sc.service_amount, sc.commission_rate, sc.commission_amount,
                 sc.shop_amount, sc.service_type, sc.status AS payout_status, sc.created_at,
                 COALESCE(NULLIF(sc.source_type, ''), 'sale_service') source_type, sc.source_id,
-                s.invoice_number, s.vehicle_no AS sale_vehicle_no, s.guest_customer_name, s.guest_customer_phone,
+                s.invoice_number, s.completed_at, s.sale_date, s.vehicle_no AS sale_vehicle_no,
+                s.guest_customer_name, s.guest_customer_phone,
                 c.name AS customer_name, c.phone AS customer_phone,
-                w.job_no, w.item_name, w.serial_no, w.phone AS workshop_phone, w.status AS workshop_status
+                w.job_no, w.item_name, w.serial_no, w.phone AS workshop_phone, w.status AS workshop_status, w.job_date
          FROM service_commissions sc
          LEFT JOIN sales s ON s.id = sc.sale_id
          LEFT JOIN customers c ON c.id = s.customer_id
          LEFT JOIN workshop_jobs w ON sc.source_type = 'workshop_job' AND w.id = sc.source_id
-         WHERE sc.employee_id = ? AND DATE(sc.created_at) BETWEEN ? AND ?
+         WHERE sc.employee_id = ?
+           AND (
+                (s.id IS NOT NULL AND DATE(COALESCE(
+                    NULLIF(s.completed_at, '0000-00-00 00:00:00'),
+                    NULLIF(CONCAT(s.sale_date, ' 00:00:00'), '0000-00-00 00:00:00'),
+                    sc.created_at
+                )) BETWEEN ? AND ?)
+                OR (w.id IS NOT NULL AND w.job_date BETWEEN ? AND ?)
+                OR (s.id IS NULL AND w.id IS NULL AND DATE(sc.created_at) BETWEEN ? AND ?)
+           )
          ORDER BY sc.created_at DESC, sc.id DESC"
     );
     if ($commissions) {
-        $commissions->bind_param('iss', $empId, $from, $to);
+        $commissions->bind_param('issssss', $empId, $from, $to, $from, $to, $from, $to);
         $commissions->execute();
         $res = $commissions->get_result();
         while ($r = $res->fetch_assoc()) {
@@ -3218,12 +3255,13 @@ function ame_emp_hub_works(mysqli $db, int $empId, string $from, string $to): ar
             if ($customer === '') {
                 $customer = trim((string)($r['guest_customer_name'] ?? ''));
             }
+            $workDate = ame_emp_hub_commission_work_day($r);
             $rows[] = [
                 'id' => (int)$r['id'],
                 'sale_id' => (int)($r['sale_id'] ?? 0),
                 'employee_id' => $empId,
-                'work_date' => substr((string)$r['created_at'], 0, 10),
-                'work_time' => substr((string)$r['created_at'], 11, 8),
+                'work_date' => $workDate,
+                'work_time' => ame_emp_hub_commission_work_time($r),
                 'customer_name' => $customer,
                 'customer_phone' => (string)($r['customer_phone'] ?: ($r['guest_customer_phone'] ?: $r['workshop_phone'])),
                 'vehicle' => $isWorkshop ? (string)($r['item_name'] ?? '') : '',

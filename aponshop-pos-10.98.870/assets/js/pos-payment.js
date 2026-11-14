@@ -766,9 +766,20 @@ if (typeof document !== 'undefined') {
             if (window.AmeSubmitWait && window.AmeSubmitWait.follow) {
                 saleReq = AmeSubmitWait.follow(saleReq);
             }
+            function rapidSaleConfirm(res) {
+                if (window.AmeResubmitGuard && typeof AmeResubmitGuard.askFromServer === 'function') {
+                    return AmeResubmitGuard.askFromServer({
+                        message: res.message,
+                        code: res.code,
+                        warnings: res.warnings
+                    });
+                }
+                return Promise.resolve(window.confirm(res.message || 'আবার সাবমিট করবেন?'));
+            }
             function onSaleQueueResult(res) {
                 if (res && res.needs_confirm && res.message) {
-                    if (!window.confirm(res.message)) {
+                    return rapidSaleConfirm(res).then(function (proceed) {
+                    if (!proceed) {
                         submitting = false;
                         if (window.AmeSubmitWait) {
                             window.AmeSubmitWait.hide(submitButton);
@@ -783,6 +794,7 @@ if (typeof document !== 'undefined') {
                         retryReq = AmeSubmitWait.follow(retryReq);
                     }
                     return retryReq.then(onSaleQueueResult);
+                    });
                 }
                 if (res && res.ok && res.sale_id) {
                     if (typeof window.ameClearPosSale === 'function') {
@@ -856,18 +868,22 @@ if (typeof document !== 'undefined') {
             return postSaleOnce(payload).then(function (response) {
                 var result = response.result || {};
                 if (result.status === 'confirm' && result.needs_confirm) {
-                    var proceed = window.confirm(result.message || 'আবার সাবমিট করবেন?');
-                    if (!proceed) {
-                        submitting = false;
-                        if (window.AmeSubmitWait) {
-                            window.AmeSubmitWait.hide(submitButton);
-                        } else if (submitButton) {
-                            submitButton.disabled = false;
+                    var confirmCall = (window.AmeResubmitGuard && AmeResubmitGuard.askFromServer)
+                        ? AmeResubmitGuard.askFromServer(result)
+                        : Promise.resolve(window.confirm(result.message || 'আবার সাবমিট করবেন?'));
+                    return confirmCall.then(function (proceed) {
+                        if (!proceed) {
+                            submitting = false;
+                            if (window.AmeSubmitWait) {
+                                window.AmeSubmitWait.hide(submitButton);
+                            } else if (submitButton) {
+                                submitButton.disabled = false;
+                            }
+                            return;
                         }
-                        return;
-                    }
-                    payload.confirm_rapid_resubmit = true;
-                    return runSaleSubmit(payload);
+                        payload.confirm_rapid_resubmit = true;
+                        return runSaleSubmit(payload);
+                    });
                 }
                 deliverSaleResult(result);
             });

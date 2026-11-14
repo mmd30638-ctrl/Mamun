@@ -643,6 +643,7 @@ function ame_sale_rapid_product_warnings(mysqli $db, int $userId, array $cart, i
         return [];
     }
     $warnings = [];
+    $winSql = function_exists('ame_sql_interval_seconds') ? ame_sql_interval_seconds($windowSeconds) : max(1, min(3600, (int)$windowSeconds));
     $stmt = @$db->prepare(
         "SELECT s.id AS sale_id, s.invoice_number, s.completed_at,
                 COALESCE(NULLIF(TRIM(si.item_name), ''), p.name, '') AS product_name,
@@ -651,13 +652,13 @@ function ame_sale_rapid_product_warnings(mysqli $db, int $userId, array $cart, i
          INNER JOIN sale_items si ON si.sale_id = s.id
          LEFT JOIN products p ON p.id = si.product_id
          WHERE s.created_by = ? AND s.status = 'completed'
-           AND s.completed_at >= (NOW() - INTERVAL ? SECOND)
+           AND s.completed_at >= (NOW() - INTERVAL {$winSql} SECOND)
          ORDER BY s.id DESC, si.id ASC"
     );
     if (!$stmt) {
         return [];
     }
-    $stmt->bind_param('ii', $userId, $windowSeconds);
+    $stmt->bind_param('i', $userId);
     $stmt->execute();
     $res = $stmt->get_result();
     $seen = [];
@@ -680,7 +681,9 @@ function ame_sale_rapid_product_warnings(mysqli $db, int $userId, array $cart, i
     }
     $stmt->close();
 
-    return $warnings;
+    return array_values(array_filter($warnings, static function (array $w) use ($windowSeconds): bool {
+        return (int)($w['seconds_ago'] ?? 999) <= $windowSeconds;
+    }));
 }
 
 /**
@@ -708,6 +711,7 @@ function ame_sale_rapid_service_warnings(mysqli $db, int $userId, array $lines, 
     if ($want === []) {
         return [];
     }
+    $winSql = function_exists('ame_sql_interval_seconds') ? ame_sql_interval_seconds($windowSeconds) : max(1, min(3600, (int)$windowSeconds));
     $stmt = @$db->prepare(
         "SELECT s.id AS sale_id, s.invoice_number, s.completed_at, ss.engineer_id,
                 ss.service_type, ss.amount, e.name AS engineer_name
@@ -715,13 +719,13 @@ function ame_sale_rapid_service_warnings(mysqli $db, int $userId, array $lines, 
          INNER JOIN sale_services ss ON ss.sale_id = s.id
          LEFT JOIN engineers e ON e.id = ss.engineer_id
          WHERE s.created_by = ? AND s.status = 'completed'
-           AND s.completed_at >= (NOW() - INTERVAL ? SECOND)
+           AND s.completed_at >= (NOW() - INTERVAL {$winSql} SECOND)
          ORDER BY s.id DESC"
     );
     if (!$stmt) {
         return [];
     }
-    $stmt->bind_param('ii', $userId, $windowSeconds);
+    $stmt->bind_param('i', $userId);
     $stmt->execute();
     $res = $stmt->get_result();
     $warnings = [];
@@ -753,7 +757,9 @@ function ame_sale_rapid_service_warnings(mysqli $db, int $userId, array $lines, 
     }
     $stmt->close();
 
-    return $warnings;
+    return array_values(array_filter($warnings, static function (array $w) use ($windowSeconds): bool {
+        return (int)($w['seconds_ago'] ?? 999) <= $windowSeconds;
+    }));
 }
 
 function ame_sale_rapid_service_message(array $warning, bool $isEnglish, int $windowSeconds = 6): string
@@ -766,6 +772,9 @@ function ame_sale_rapid_service_message(array $warning, bool $isEnglish, int $wi
         $memo = '#' . (int)$warning['sale_id'];
     }
     $sec = (int)($warning['seconds_ago'] ?? $windowSeconds);
+    if ($sec > $windowSeconds) {
+        $sec = $windowSeconds;
+    }
     if ($isEnglish) {
         return "⚠️ Rapid resubmit ({$sec}s ago)\nWorker: {$name}\nWork: «{$svc}» · ৳{$amt}\nMemo {$memo}\n\nSubmit again, or Cancel?";
     }
@@ -787,9 +796,12 @@ function ame_sale_rapid_confirm_message(array $warning, bool $isEnglish, int $wi
     if ($memo === '' && (int)($warning['sale_id'] ?? 0) > 0) {
         $memo = '#' . (int)$warning['sale_id'];
     }
-  $sec = (int)($warning['seconds_ago'] ?? $windowSeconds);
-    if ($sec < 1) {
+    $sec = (int)($warning['seconds_ago'] ?? $windowSeconds);
+    if ($sec > $windowSeconds) {
         $sec = $windowSeconds;
+    }
+    if ($sec < 1) {
+        $sec = 1;
     }
     if ($isEnglish) {
         return "⚠️ Rapid resubmit ({$sec}s ago)\nProduct: «{$name}»\nAmount: ৳{$amt}" . ($qty > 0 ? " × {$qty}" : '')

@@ -1,3 +1,7 @@
+# 10.98.891 — কর্মী কার্ড আজকের কাজ ঠিক; হিস্ট্রিতে সময়; রঙিন দ্রুত-সাবমিট মোডাল; INTERVAL ফিক্স
+assets/js/ame-resubmit-guard.js
+assets/css/ame-resubmit-guard.css
+modules/hrm/worker_history.php
 # 10.98.890 — employee_list.php সিনট্যাক্স (বন্ধনী) ফিক্স
 # 10.98.889 — ৬ সেকেন্ডে ডুপ্লিকেট হলে সুন্দর কনফার্ম (পণ্য/কাজ), হার্ড ব্লক নয়
 assets/js/employee-hub.js

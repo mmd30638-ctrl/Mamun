@@ -16,6 +16,14 @@
 <link rel="stylesheet" href="/assets/css/pos-pay-dock.css?v=10.98.847">
 <link rel="stylesheet" href="/assets/css/design-system.css?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>">
 <link rel="stylesheet" href="/assets/css/line-hover.630.css?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>">
+<?php
+$ame_script_name = (string)($_SERVER['SCRIPT_NAME'] ?? '');
+$ame_load_resubmit_guard = str_contains($ame_script_name, '/modules/sales/')
+    || str_contains($ame_script_name, '/modules/hrm/');
+if ($ame_load_resubmit_guard):
+?>
+<script src="/assets/js/ame-resubmit-guard.js?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>" defer></script>
+<?php endif; ?>
 <script src="/assets/js/line-hover.630.js?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>" defer></script>
 <script src="/assets/js/ame-account-select.js?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>" defer></script>
 <script src="/assets/js/responsive-fix.js?v=<?php echo $sys_version ?? '1.0'; ?>" defer></script>

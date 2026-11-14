@@ -937,9 +937,15 @@
         toastMsg(res.message || (action === 'delete' ? 'প্রজেক্ট থেকে চিরতরে মুছে গেছে' : 'রাখা হয়েছে'));
         location.reload();
       }
+      function confirmRapid(res) {
+        if (window.AmeResubmitGuard && typeof AmeResubmitGuard.askFromServer === 'function') {
+          return AmeResubmitGuard.askFromServer(res);
+        }
+        return Promise.resolve(window.confirm((res && res.message) || 'আবার সাবমিট করবেন?'));
+      }
       function handleRes(res) {
         if (res && res.needs_confirm) {
-          var ok = window.confirm(res.message || 'আবার সাবমিট করবেন?');
+          return confirmRapid(res).then(function (ok) {
           if (!ok) {
             toastMsg('বাতিল করা হয়েছে।');
             return;
@@ -965,6 +971,7 @@
           });
           data2.confirm_repeat = '1';
           return post(action, data2).then(handleRes);
+          });
         }
         if (!res.ok) throw new Error(res.error || 'রাখা যায়নি');
         finishOk(res);
