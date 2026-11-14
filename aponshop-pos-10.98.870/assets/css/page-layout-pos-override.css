@@ -1,0 +1,91 @@
+/* লেআউট স্টুডিও ও সংরক্ষিত স্টাইল — ame-sale-desk-lock.css-এর পরে লোড */
+
+html body.ame-pos-terminal-page.ame-pos-layout-can-edit #ameDeskBarDesigner,
+html body.ame-pos-terminal-page.ame-pos-layout-can-edit a.ame-desk-tool-designer {
+  display: inline-flex !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosCompleteBtn,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-actions {
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 4 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  clip: auto !important;
+  clip-path: none !important;
+  min-height: 48px !important;
+  height: auto !important;
+  cursor: pointer !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-quick,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-quick-btn {
+  pointer-events: auto !important;
+}
+
+html body.ame-pos-terminal-page.ame-pos-layout-edit .ame-sale-desk .ame-desk-bar {
+  flex-wrap: wrap !important;
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 45px !important;
+  row-gap: 6px !important;
+}
+
+html body.ame-pos-terminal-page.ame-pos-layout-edit [data-ame-pos-layout-item] {
+  outline: 2px dashed #ca8a04 !important;
+  outline-offset: 2px;
+  cursor: grab !important;
+  touch-action: none !important;
+  z-index: 6 !important;
+  position: relative !important;
+}
+
+html body.ame-pos-terminal-page.ame-pos-layout-edit [data-ame-pos-layout-item].is-dragging {
+  cursor: grabbing !important;
+  opacity: 0.92 !important;
+}
+
+.ame-pos-layout-studio {
+  position: fixed;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  z-index: 2000015;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-width: min(420px, calc(100vw - 24px));
+  padding: 8px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.ame-pos-layout-studio button {
+  margin: 0;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.ame-pos-layout-studio .is-on {
+  background: #facc15;
+  color: #422006;
+}
+
+.ame-pos-layout-studio .is-save {
+  background: #04933A;
+  color: #fff;
+}
+
+.ame-pos-layout-studio .is-off {
+  background: #e2e8f0;
+  color: #0f172a;
+}

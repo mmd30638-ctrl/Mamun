@@ -464,7 +464,7 @@ if (isset($db) && $db instanceof mysqli) {
                 <a
                     id="ameDeskBarDesigner"
                     class="ame-desk-quick-btn"
-                    href="/modules/sales/layout_designer.php"
+                    href="/modules/settings/layout_designer.php?page=sales/pos"
                     title="<?php echo $ame_pos_english ? 'POS Layout Designer (Drag & Drop)' : 'বিক্রয় পেজ লেআউট ও বক্স এডিটর (ড্র্যাগ & ড্রপ)'; ?>"
                     aria-label="<?php echo $ame_pos_english ? 'POS Layout Designer' : 'বিক্রয় পেজ লেআউট ও বক্স এডিটর'; ?>"
                     style="background:#fef08a;color:#854d0e;border-color:#facc15;"
