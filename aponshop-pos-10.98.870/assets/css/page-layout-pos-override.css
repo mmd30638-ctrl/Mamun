@@ -13,12 +13,24 @@ html body.ame-pos-terminal-page:not(.ame-fit-on) #main-content .ame-sale-desk bu
   height: auto !important;
 }
 
+html body.ame-fit-on.ame-pos-terminal-page #main-content,
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk,
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell,
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid,
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main {
+  overflow: visible !important;
+}
+
 html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar {
   flex-wrap: wrap !important;
   overflow: visible !important;
   height: auto !important;
   max-height: none !important;
   min-height: 45px !important;
+}
+
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk [data-ame-fit="1"] {
+  overflow: visible !important;
 }
 
 html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk [data-ame-fit="1"] {

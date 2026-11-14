@@ -1,0 +1,325 @@
+@keyframes ame-tick-keep {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+html body #ameTickerBar,
+html body #ameTickerBar[data-ame-run-hid],
+html body #ameRunDock {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  margin: 0 !important;
+  padding: 0 10px !important;
+  line-height: 40px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  transform: none !important;
+  animation: none !important;
+  order: -10 !important;
+  flex: 1 0 100% !important;
+  z-index: 4 !important;
+  box-sizing: border-box !important;
+}
+html body #ameTickerBar,
+html body #ameTickerBar[data-ame-run-hid] {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 0 !important;
+}
+html body:has(#ameTickerBar) .master-header-fixed,
+html body:has(#ameRunDock):not(:has(#ameTickerBar)) .master-header-fixed {
+  top: 0 !important;
+  flex-wrap: wrap !important;
+  height: auto !important;
+}
+html body .master-header-fixed > #ameTickerBar,
+html body .master-header-fixed > #ameRunDock {
+  order: -10 !important;
+  flex: 1 0 100% !important;
+}
+html body .master-header-fixed > .hdr-brand-box {
+  margin-left: auto !important;
+}
+html body.ame-home-gallery #vdLaunch,
+html body.ame-home-gallery .vd-launch,
+html body.ame-home-gallery #ameLayoutFab,
+html body.ame-home-gallery .ame-layout-fab,
+html body[data-vd-page="home"] #vdLaunch,
+html body[data-vd-page="home"] .vd-launch,
+html body[data-vd-page="home"] #ameLayoutFab,
+html body[data-vd-page="home"] .ame-layout-fab {
+  display: none !important;
+}
+html body:has(#ameTickerBar) #ameRunDock { display: none !important; }
+html body #ameTickerBar .ame-tbar-track,
+html body #ameTickerBar .ame-tbar-track-wrap,
+html body #ameRunDock .ame-run-host,
+html body #ameRunDock .ame-run-line,
+html body #ameRunDock .ame-run-line span,
+html body #ameTickerBar .ame-tbar-item {
+  white-space: nowrap !important;
+  line-height: 40px !important;
+}
+html body #ameTickerBar .ame-tbar-icon {
+  flex: 0 0 26px !important;
+  width: 26px !important;
+  height: 26px !important;
+  margin: 0 8px 0 0 !important;
+  line-height: 0 !important;
+}
+html body #ameTickerBar .ame-tbar-track-wrap {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  height: 40px !important;
+  overflow: hidden !important;
+}
+html body #ameTickerBar .ame-tbar-track {
+  display: inline-flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  width: max-content !important;
+  height: 40px !important;
+}
+html body #ameTickerBar .ame-tbar-track.left,
+html body #ameTickerBar .ame-tbar-track:not(.right) {
+  animation: ame-tick-left var(--ame-tick-speed, 22s) linear infinite !important;
+}
+html body #ameTickerBar .ame-tbar-track.right {
+  animation: ame-tick-right var(--ame-tick-speed, 22s) linear infinite !important;
+}
+@keyframes ame-tick-left {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes ame-tick-right {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+html body #ameRunDock .ame-run-line {
+  display: inline-block !important;
+  width: max-content !important;
+  height: 40px !important;
+  vertical-align: top !important;
+  animation: none !important;
+}
+.ame-fit-ui { position: fixed; z-index: 80; font-family: "Noto Sans Bengali", "Segoe UI", sans-serif; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-fit {
+  background: linear-gradient(145deg, #e2e8f0, #94a3b8) !important;
+  color: #1e293b !important;
+  -webkit-text-fill-color: #1e293b !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-fit.is-on {
+  background: linear-gradient(145deg, #fbbf24, #d97706) !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #d97706 !important;
+}
+.ame-fit-launch {
+  position: fixed;
+  left: 12px;
+  bottom: 16px;
+  z-index: 82;
+  min-width: 72px;
+  height: 44px;
+  border: 0;
+  border-radius: 12px;
+  background: #0B3D91;
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+}
+.ame-fit-bar {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 16px;
+  top: auto;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: auto;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #DBEAFE;
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, .22);
+}
+.ame-fit-bar.is-center {
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  top: 50%;
+  width: min(420px, calc(100vw - 24px));
+  transform: translate(-50%, -50%);
+}
+.ame-fit-bar.is-pos-dock {
+  left: 8px;
+  right: 8px;
+  bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  top: auto;
+  transform: none;
+  flex-wrap: wrap;
+  z-index: 2000030;
+  pointer-events: auto;
+}
+.ame-fit-bar[hidden] { display: none !important; }
+.ame-fit-bar strong { color: #0B3D91; font-size: 14px; }
+.ame-fit-bar button {
+  min-height: 40px;
+  border: 0;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.ame-fit-lock { background: #047857; color: #fff; }
+.ame-fit-reset { background: #9F1239; color: #fff; }
+body.ame-fit-on [data-ame-fit="1"] {
+  outline: 2px dashed #1D4ED8;
+  outline-offset: 2px;
+  overflow: visible;
+}
+.ame-fit-move, .ame-fit-size, .ame-fit-pad {
+  position: absolute;
+  z-index: 2000040;
+  border: 0;
+  border-radius: 8px;
+  font-weight: 800;
+  cursor: grab;
+  touch-action: none;
+  pointer-events: auto;
+}
+.ame-fit-pad {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000038;
+  background: rgba(29, 78, 216, 0.12);
+  cursor: grab;
+  padding: 0;
+  margin: 0;
+}
+body.ame-fit-on [data-ame-fit="1"].is-dragging {
+  outline-color: #dc2626;
+  z-index: 2000045 !important;
+}
+.ame-fit-move {
+  left: 6px;
+  top: 6px;
+  z-index: 2000042;
+  background: #1D4ED8;
+  color: #fff;
+  min-height: 32px;
+  min-width: 52px;
+  padding: 4px 10px;
+  font-size: 12px;
+}
+.ame-fit-sheet-handle {
+  left: 50%;
+  top: 8px;
+  z-index: 40;
+  background: #0F172A;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.ame-fit-size {
+  right: 6px;
+  bottom: 6px;
+  width: 36px;
+  height: 36px;
+  background: #C2410C;
+  color: #fff;
+  font-size: 16px;
+  cursor: nwse-resize;
+}
+.ame-fit-edge {
+  top: 50%;
+  bottom: auto;
+  width: 22px;
+  height: 48px;
+  transform: translateY(-50%);
+  background: #0F172A;
+  cursor: ew-resize;
+  z-index: 45;
+}
+.ame-fit-edge-e { right: -10px; left: auto; }
+.ame-fit-edge-w { left: -10px; right: auto; }
+.ame-more-wrap { position: relative; display: inline-flex; }
+.ame-more-menu {
+  position: fixed;
+  z-index: 200;
+  min-width: 168px;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid #DBEAFE;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, .2);
+}
+.ame-more-menu[hidden] { display: none !important; }
+.ame-more-menu button {
+  width: 100%;
+  min-height: 42px;
+  border: 0;
+  border-radius: 10px;
+  background: #0B3D91;
+  color: #fff;
+  font-weight: 800;
+}
+.ame-more-menu button.is-on { background: #047857; }
+html body .custom-sidebar button#amePageFitToggle.direct-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+  cursor: pointer;
+}
+html body .custom-sidebar button#amePageFitToggle.direct-link.is-on,
+html body .custom-sidebar button#amePageFitToggle.direct-link.is-on .ame-fit-label {
+  background: #047857 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+/* বিক্রয় POS — সাইডবার «পেজ সাজান»; লক CSS-এর উপরে সাজানো মোড */
+body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-quick-btn,
+body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-tool,
+body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk a.ame-desk-tool {
+  touch-action: none;
+}
+body.ame-fit-on.ame-pos-terminal-page .ame-fit-bar {
+  max-width: min(96vw, 520px);
+  line-height: 1.35;
+}
+body.ame-fit-on.ame-pos-terminal-page .ame-fit-bar small {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+}
+@media print {
+  .ame-fit-ui, .ame-fit-move, .ame-fit-size { display: none !important; }
+  [data-ame-fit="1"] {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    left: auto !important;
+    top: auto !important;
+    margin: revert !important;
+  }
+}

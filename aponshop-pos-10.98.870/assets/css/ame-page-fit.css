@@ -164,6 +164,16 @@ html body .master-header-fixed .hdr-icon-btn.hdr-i-fit.is-on {
   width: min(420px, calc(100vw - 24px));
   transform: translate(-50%, -50%);
 }
+.ame-fit-bar.is-pos-dock {
+  left: 8px;
+  right: 8px;
+  bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  top: auto;
+  transform: none;
+  flex-wrap: wrap;
+  z-index: 2000030;
+  pointer-events: auto;
+}
 .ame-fit-bar[hidden] { display: none !important; }
 .ame-fit-bar strong { color: #0B3D91; font-size: 14px; }
 .ame-fit-bar button {
@@ -181,22 +191,41 @@ body.ame-fit-on [data-ame-fit="1"] {
   outline-offset: 2px;
   overflow: visible;
 }
-.ame-fit-move, .ame-fit-size {
+.ame-fit-move, .ame-fit-size, .ame-fit-pad {
   position: absolute;
-  z-index: 5;
+  z-index: 2000040;
   border: 0;
   border-radius: 8px;
   font-weight: 800;
   cursor: grab;
   touch-action: none;
+  pointer-events: auto;
+}
+.ame-fit-pad {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000038;
+  background: rgba(29, 78, 216, 0.12);
+  cursor: grab;
+  padding: 0;
+  margin: 0;
+}
+body.ame-fit-on [data-ame-fit="1"].is-dragging {
+  outline-color: #dc2626;
+  z-index: 2000045 !important;
 }
 .ame-fit-move {
   left: 6px;
   top: 6px;
+  z-index: 2000042;
   background: #1D4ED8;
   color: #fff;
-  min-height: 28px;
-  padding: 2px 8px;
+  min-height: 32px;
+  min-width: 52px;
+  padding: 4px 10px;
+  font-size: 12px;
 }
 .ame-fit-sheet-handle {
   left: 50%;
@@ -209,10 +238,11 @@ body.ame-fit-on [data-ame-fit="1"] {
 .ame-fit-size {
   right: 6px;
   bottom: 6px;
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   background: #C2410C;
   color: #fff;
+  font-size: 16px;
   cursor: nwse-resize;
 }
 .ame-fit-edge {

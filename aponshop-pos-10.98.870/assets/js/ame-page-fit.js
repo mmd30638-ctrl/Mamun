@@ -32,11 +32,23 @@
       'button.ame-desk-tool',
       'a.ame-desk-tool',
       '#amePosCompleteBtn',
+      '#amePosCashPaid',
+      '#amePosDraftComplete',
+      '#amePosRecentToggle',
       '.ame-desk-actions > button',
       '.ame-pos-term-actions button',
+      '.ame-pos-term-actions a',
+      'button#openQuickCustomer',
+      '#p-search',
+      '#posCustomerInfoField',
+      '.ame-desk-price-row .ame-pos-mode',
+      '.ame-pos-term-search',
+      '.ame-pos-term-top',
       '.ame-desk-box',
+      '.ame-pos-card.ame-pos-term-cart',
       '.ame-desk-bar .ame-desk-home',
-      '#ameDeskClock'
+      '#ameDeskClock',
+      '.ame-pos-title-line'
     ].join(',');
     return Array.prototype.slice.call(document.querySelectorAll(sel));
   }
@@ -313,6 +325,43 @@
     }
   }
 
+  function fitStyleNum(el, prop) {
+    var v = el.style.getPropertyValue(prop);
+    if (v) {
+      return parseFloat(v) || 0;
+    }
+    return parseFloat(el.style[prop]) || 0;
+  }
+
+  function fittedNodes() {
+    var nodes = root ? Array.prototype.slice.call(root.querySelectorAll('[data-ame-fit="1"]')) : [];
+    return nodes;
+  }
+
+  function loosenSalesShell() {
+    if (!isSalesDesk() || !root) {
+      return;
+    }
+    var chain = [
+      root,
+      root.querySelector('.ame-pos-shell'),
+      root.querySelector('.ame-pos-grid'),
+      root.querySelector('.ame-desk-bar'),
+      root.querySelector('.ame-desk-main'),
+      root.querySelector('.ame-pos-summary'),
+      document.getElementById('main-content')
+    ];
+    chain.forEach(function (node) {
+      if (!node) {
+        return;
+      }
+      node.style.setProperty('overflow', 'visible', 'important');
+      if (node === document.getElementById('main-content')) {
+        node.style.setProperty('overflow-x', 'hidden', 'important');
+      }
+    });
+  }
+
   function place(el, box) {
     if (isRunningText(el)) return;
     var parent = el.parentElement;
@@ -328,8 +377,14 @@
     setFitStyle(el, 'position', 'absolute');
     setFitStyle(el, 'left', snap(box.x) + 'px');
     setFitStyle(el, 'top', snap(box.y) + 'px');
-    setFitStyle(el, 'width', Math.max(bit ? 36 : 96, snap(box.w)) + 'px');
-    setFitStyle(el, 'height', Math.max(bit ? 16 : 28, snap(box.h)) + 'px');
+    var isPosChip = isSalesDesk() && el.matches('.ame-desk-quick-btn, .ame-desk-tool, a.ame-desk-tool, button.ame-desk-tool');
+    setFitStyle(el, 'width', Math.max(bit ? 36 : (isPosChip ? 40 : 96), snap(box.w)) + 'px');
+    if (isPosChip) {
+      setFitStyle(el, 'height', 'auto');
+      setFitStyle(el, 'min-height', Math.max(32, snap(box.h)) + 'px');
+    } else {
+      setFitStyle(el, 'height', Math.max(bit ? 16 : 28, snap(box.h)) + 'px');
+    }
     setFitStyle(el, 'max-width', 'none');
     setFitStyle(el, 'margin', '0');
     setFitStyle(el, 'box-sizing', 'border-box');
@@ -392,17 +447,27 @@
   }
 
   function drag(handle, el, mode) {
+    if (!handle || !el) {
+      return;
+    }
     handle.addEventListener('pointerdown', function (ev) {
       ev.preventDefault();
       ev.stopPropagation();
+      if (handle.setPointerCapture) {
+        try { handle.setPointerCapture(ev.pointerId); } catch (e) { /* ignore */ }
+      }
       var sx = ev.clientX;
       var sy = ev.clientY;
-      var ox = parseFloat(el.style.left) || 0;
-      var oy = parseFloat(el.style.top) || 0;
-      var ow = parseFloat(el.style.width) || el.offsetWidth;
-      var oh = parseFloat(el.style.height) || el.offsetHeight;
-      var minW = el.getAttribute('data-ame-bit') === '1' ? 36 : 96;
+      var ox = fitStyleNum(el, 'left');
+      var oy = fitStyleNum(el, 'top');
+      var ow = fitStyleNum(el, 'width') || el.offsetWidth;
+      var oh = fitStyleNum(el, 'height') || el.offsetHeight;
+      var minW = el.getAttribute('data-ame-bit') === '1' ? 36 : 40;
+      el.classList.add('is-dragging');
       function move(e) {
+        if (e.cancelable) {
+          e.preventDefault();
+        }
         var dx = e.clientX - sx;
         var dy = e.clientY - sy;
         if (mode === 'move') {
@@ -420,57 +485,85 @@
           }
           if (mode === 'se') {
             setFitStyle(el, 'height', Math.max(28, snap(oh + dy)) + 'px');
+            setFitStyle(el, 'min-height', Math.max(28, snap(oh + dy)) + 'px');
           }
         }
         grow();
       }
-      function up() {
+      function up(e) {
+        if (handle.releasePointerCapture && e && e.pointerId != null) {
+          try { handle.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+        }
+        el.classList.remove('is-dragging');
         window.removeEventListener('pointermove', move);
         window.removeEventListener('pointerup', up);
+        window.removeEventListener('pointercancel', up);
       }
-      window.addEventListener('pointermove', move);
+      window.addEventListener('pointermove', move, { passive: false });
       window.addEventListener('pointerup', up);
+      window.addEventListener('pointercancel', up);
+    }, { passive: false });
+  }
+
+  function attachHandles(el) {
+    if (!el || el.getAttribute('data-ame-fit') !== '1') {
+      return;
+    }
+    el.querySelectorAll('.ame-fit-move, .ame-fit-size, .ame-fit-pad').forEach(function (node) {
+      node.remove();
     });
+    var sheet = el.getAttribute('data-ame-sheet') === '1';
+    var pad = document.createElement('button');
+    pad.type = 'button';
+    pad.className = 'ame-fit-pad';
+    pad.setAttribute('aria-label', 'টেনে সরান');
+    pad.title = 'টেনে সরান';
+    var move = document.createElement('button');
+    move.type = 'button';
+    move.className = 'ame-fit-move' + (sheet ? ' ame-fit-sheet-handle' : '');
+    move.textContent = sheet ? 'সাদা অংশ' : 'সরান';
+    var size = document.createElement('button');
+    size.type = 'button';
+    size.className = 'ame-fit-size';
+    size.setAttribute('aria-label', 'ছোট বড়');
+    size.textContent = '⤡';
+    if (el.id === 'amePosCompleteBtn' || el.getAttribute('onclick')) {
+      move.style.top = '-38px';
+      move.style.left = '0';
+      size.style.right = '0';
+      size.style.bottom = '-38px';
+    }
+    el.appendChild(pad);
+    el.appendChild(move);
+    el.appendChild(size);
+    drag(pad, el, 'move');
+    drag(move, el, 'move');
+    drag(size, el, 'se');
+    if (el.getAttribute('data-ame-bit') === '1') {
+      drag(el, el, 'move');
+    }
+    if (sheet) {
+      ['e', 'w'].forEach(function (dir) {
+        var edge = document.createElement('button');
+        edge.type = 'button';
+        edge.className = 'ame-fit-size ame-fit-edge ame-fit-edge-' + dir;
+        edge.setAttribute('aria-label', dir === 'e' ? 'ডানে বড়' : 'বামে বড়');
+        edge.textContent = dir === 'e' ? '▶' : '◀';
+        el.appendChild(edge);
+        drag(edge, el, dir);
+      });
+    }
   }
 
   function handles(on) {
-    root.querySelectorAll('.ame-fit-move, .ame-fit-size').forEach(function (el) { el.remove(); });
-    if (!on) return;
-    blocks().forEach(function (el) {
-      if (el.getAttribute('data-ame-fit') !== '1') return;
-      var sheet = el.getAttribute('data-ame-sheet') === '1';
-      var move = document.createElement('button');
-      move.type = 'button';
-      move.className = 'ame-fit-move' + (sheet ? ' ame-fit-sheet-handle' : '');
-      move.textContent = sheet ? 'সাদা অংশ' : 'সরান';
-      var size = document.createElement('button');
-      size.type = 'button';
-      size.className = 'ame-fit-size';
-      size.setAttribute('aria-label', 'ছোট বড়');
-      size.textContent = '⤡';
-      if (el.id === 'amePosCompleteBtn' || el.getAttribute('onclick')) {
-        move.style.top = '-34px';
-        move.style.left = '0';
-        size.style.right = '0';
-        size.style.bottom = '-34px';
-      }
-      el.appendChild(move);
-      el.appendChild(size);
-      drag(move, el, 'move');
-      drag(size, el, 'se');
-      if (el.getAttribute('data-ame-bit') === '1') drag(el, el, 'move');
-      if (sheet) {
-        ['e', 'w'].forEach(function (dir) {
-          var edge = document.createElement('button');
-          edge.type = 'button';
-          edge.className = 'ame-fit-size ame-fit-edge ame-fit-edge-' + dir;
-          edge.setAttribute('aria-label', dir === 'e' ? 'ডানে বড়' : 'বামে বড়');
-          edge.textContent = dir === 'e' ? '▶' : '◀';
-          el.appendChild(edge);
-          drag(edge, el, dir);
-        });
-      }
-    });
+    if (!root) {
+      return;
+    }
+    root.querySelectorAll('.ame-fit-move, .ame-fit-size, .ame-fit-pad').forEach(function (el) { el.remove(); });
+    if (!on) {
+      return;
+    }
+    fittedNodes().forEach(attachHandles);
   }
 
   function wipeStyle(el) {
@@ -493,14 +586,13 @@
 
   function collect() {
     var items = [];
-    blocks().forEach(function (el) {
-      if (el.getAttribute('data-ame-fit') !== '1') return;
+    fittedNodes().forEach(function (el) {
       items.push({
         path: pathOf(el),
-        x: parseFloat(el.style.left) || 0,
-        y: parseFloat(el.style.top) || 0,
-        w: parseFloat(el.style.width) || el.offsetWidth,
-        h: parseFloat(el.style.height) || el.offsetHeight
+        x: fitStyleNum(el, 'left'),
+        y: fitStyleNum(el, 'top'),
+        w: fitStyleNum(el, 'width') || el.offsetWidth,
+        h: fitStyleNum(el, 'height') || el.offsetHeight
       });
     });
     return items;
@@ -551,10 +643,15 @@
   function ui() {
     var bar = document.createElement('div');
     bar.className = 'ame-fit-bar ame-fit-ui';
-    if (document.getElementById('amePageFitToggle')) bar.classList.add('is-center');
+    if (document.getElementById('amePageFitToggle') && !isSalesDesk()) {
+      bar.classList.add('is-center');
+    }
+    if (isSalesDesk()) {
+      bar.classList.add('is-pos-dock');
+    }
     bar.hidden = true;
     var salesHint = isSalesDesk()
-      ? ' <small style="font-weight:700;opacity:.9">(আইকন/বাটন টেনে সরান · ⤡ ছোট-বড় · সেভের পর বন্ধ করে বিক্রয় সম্পন্ন)</small>'
+      ? ' <small style="font-weight:700;opacity:.9">(নীল বক্স বা «সরান» ধরে টানুন · কোণে ⤡ ছোট-বড় · সেভ ও লক → পেজ সাজান বন্ধ → বিক্রয় সম্পন্ন)</small>'
       : '';
     bar.innerHTML = '<strong>এই পেজ সাজান</strong>' + salesHint + '<span><button type="button" class="ame-fit-reset">আগের মতো</button> <button type="button" class="ame-fit-lock">সেভ ও লক</button></span>';
     document.body.appendChild(bar);
@@ -576,8 +673,13 @@
       document.body.classList.toggle('ame-fit-on', on);
       bar.hidden = !on;
       if (on) {
+        loosenSalesShell();
         freeze();
         handles(true);
+        window.setTimeout(function () {
+          loosenSalesShell();
+          handles(true);
+        }, 120);
       } else {
         handles(false);
       }
