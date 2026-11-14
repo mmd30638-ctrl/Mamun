@@ -38,4 +38,9 @@ $row2 = [
 ];
 $assert(ame_emp_hub_commission_work_day($row2) === '2026-11-14', 'fallback work day to created_at');
 
+$due = ame_emp_hub_today_pay_due(115, 115);
+$assert($due['settled'] && $due['due'] <= 0.009, 'full pay settles today due');
+$due2 = ame_emp_hub_today_pay_due(115, 0);
+$assert(!$due2['settled'] && abs($due2['due'] - 115) < 0.01, 'unpaid shows full due');
+
 exit($fail > 0 ? 1 : 0);

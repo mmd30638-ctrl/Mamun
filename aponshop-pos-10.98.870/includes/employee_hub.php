@@ -1441,6 +1441,8 @@ function ame_emp_hub_list(mysqli $db, array $filters): array
         $todayRule = ame_emp_hub_pay_rule_on($db, $e, $today);
         $todaySalary = ame_emp_hub_today_salary($db, $e, $present, $tw, $today);
         $todayPay = round($todaySalary + (float) ($tw['snack'] ?? 0), 2);
+        $todayPaidOut = ame_emp_hub_today_salary_paid($db, (int)$e['id'], $today);
+        $payDue = ame_emp_hub_today_pay_due($todayPay, $todayPaidOut);
         $mode = ame_emp_hub_valid_pay_mode((string)$todayRule['payment_type']);
         $seeMoney = $canFin || $self === (int)$e['id'];
         $loginName = (string)($e['login_name'] ?? '');
@@ -1484,6 +1486,9 @@ function ame_emp_hub_list(mysqli $db, array $filters): array
             'deposit' => $seeMoney ? $deposit : null,
             'balance' => $seeMoney ? ame_emp_hub_balance($e, $tw, $todaySalary) : null,
             'today_balance' => $seeMoney ? ame_emp_hub_today_net($tw, $todaySalary) : null,
+            'today_paid' => $seeMoney ? (float)$payDue['paid'] : null,
+            'today_due' => $seeMoney ? (float)$payDue['due'] : null,
+            'salary_paid_today' => $seeMoney ? !empty($payDue['settled']) : false,
             'login_name' => (string)($e['login_name'] ?? ''),
             'user_id' => (int)($e['user_id'] ?? 0),
             'status' => (string)($e['status'] ?? 'active'),
@@ -2440,6 +2445,47 @@ function ame_emp_hub_pending_job_share(
  *
  * @return array{previous:float,today_given:float,today_settled:float,total:float}
  */
+/** আজকের তারিখে salaries থেকে ইতিমধ্যে দেওয়া বেতন (বাতিল ছাড়া) */
+function ame_emp_hub_today_salary_paid(mysqli $db, int $empId, string $day): float
+{
+    if ($empId <= 0 || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $day)) {
+        return 0.0;
+    }
+    $st = @$db->prepare(
+        "SELECT COALESCE(SUM(amount), 0) AS paid
+         FROM salaries
+         WHERE employee_id = ? AND payment_date = ?
+           AND (status IS NULL OR status = '' OR status NOT IN ('reversed', 'cancelled'))"
+    );
+    if (!$st) {
+        return 0.0;
+    }
+    $st->bind_param('is', $empId, $day);
+    $st->execute();
+    $paid = round((float)($st->get_result()->fetch_assoc()['paid'] ?? 0), 2);
+    $st->close();
+
+    return $paid;
+}
+
+/**
+ * @return array{due:float,paid:float,payable:float,settled:bool}
+ */
+function ame_emp_hub_today_pay_due(float $payable, float $paid): array
+{
+    $payable = round(max(0, $payable), 2);
+    $paid = round(max(0, $paid), 2);
+    $due = round(max(0, $payable - $paid), 2);
+    $settled = $payable > 0.009 && $due <= 0.009;
+
+    return [
+        'due' => $due,
+        'paid' => $paid,
+        'payable' => $payable,
+        'settled' => $settled,
+    ];
+}
+
 function ame_emp_hub_advance_split(mysqli $db, int $empId, string $date, float $balance): array
 {
     $given = 0.0;

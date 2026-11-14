@@ -85,6 +85,11 @@ $chip = static function (string $key, string $val, string $label) use ($filters)
 ?>
 <link rel="stylesheet" href="/assets/css/employee-hub.css?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '1', ENT_QUOTES, 'UTF-8'); ?>">
 <link rel="stylesheet" href="/assets/css/worker-desk.css?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '1', ENT_QUOTES, 'UTF-8'); ?>">
+<style>
+.eh-stats .eh-due.is-paid b { color: #0d9488; font-size: 0.82rem; line-height: 1.25; }
+.eh-stats .eh-due.is-paid small { display: block; color: #64748b; font-weight: 600; font-size: 0.78rem; }
+.eh-stats .eh-due.is-open b { color: #b45309; }
+</style>
 
 <div class="eh">
     <div class="eh-head">
@@ -226,6 +231,16 @@ $chip = static function (string $key, string $val, string $label) use ($filters)
                 $ehBox('advance', 'অগ্রিম', $p['advance']);
                 $ehBox('deposit', 'জমা', $p['deposit']);
                 $ehBox('balance', 'ব্যালেন্স', $todayBal);
+                $dueAmt = (float)($p['today_due'] ?? 0);
+                $paidToday = !empty($p['salary_paid_today']);
+                echo '<div class="eh-due' . ($paidToday ? ' is-paid' : ' is-open') . '">';
+                echo '<span>আজকের পাওনা</span>';
+                if ($paidToday) {
+                    echo '<b>বেতন দেওয়া হয়েছে</b><small>৳0.00</small>';
+                } else {
+                    echo '<b>৳' . number_format($dueAmt, 2) . '</b>';
+                }
+                echo '</div>';
                 if (isset($p['advance_previous']) && $p['advance_previous'] !== null) {
                     echo '<div class="eh-prev-due" title="আজকের আগে পর্যন্ত কর্মীর কাছে দোকানের পাওনা (অগ্রিম)"><span>সাবেক পাওনা</span><b>৳' . number_format((float)$p['advance_previous'], 2) . '</b></div>';
                 }
