@@ -1,3 +1,7 @@
+# 10.98.901 — বিক্রয় ইতিহাস: completed_at তারিখ+সময় (sale_date এক দিন পিছিয়ে ফিক্স)
+includes/sales/sale_finance.php
+modules/sales/history.php
+modules/sales/history_query.php
 # 10.98.900 — হোমপেজ ইসলামিক অডিও + URL ডাউনলোড + অটো কম্প্রেশন
 includes/islamic_audio.php
 index.php

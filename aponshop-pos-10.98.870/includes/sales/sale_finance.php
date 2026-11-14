@@ -986,6 +986,44 @@ function ame_sale_guard_record(mysqli $db, int $userId, string $fingerprint, int
     $st->close();
 }
 
+/**
+ * বিক্রয়ের প্রকৃত সময় — completed_at প্রাধান্য (ইনভয়েস/মেমোর সাথে মিল)।
+ */
+function ame_sale_effective_datetime(array $row): ?DateTimeImmutable
+{
+    $tz = new DateTimeZone('Asia/Dhaka');
+    foreach (['completed_at', 'created_at', 'sale_date'] as $key) {
+        $raw = trim((string)($row[$key] ?? ''));
+        if ($raw === '' || str_starts_with($raw, '0000-00-00') || str_starts_with($raw, '1000-01-01')) {
+            continue;
+        }
+        try {
+            if ($key === 'sale_date' && preg_match('/^\d{4}-\d{2}-\d{2}$/', $raw)) {
+                return new DateTimeImmutable($raw . ' 00:00:00', $tz);
+            }
+            return new DateTimeImmutable($raw, $tz);
+        } catch (Throwable $e) {
+            continue;
+        }
+    }
+    return null;
+}
+
+function ame_sale_history_datetime_label(array $row): string
+{
+    $dt = ame_sale_effective_datetime($row);
+    if ($dt === null) {
+        return '—';
+    }
+    return $dt->format('d-m-Y') . ' · ' . $dt->format('h:i A');
+}
+
+/** @return string SQL expression (sales alias `s`) */
+function ame_sale_history_effective_sql(): string
+{
+    return "COALESCE(NULLIF(s.completed_at, '0000-00-00 00:00:00'), s.created_at, TIMESTAMP(s.sale_date))";
+}
+
 function ame_sale_duplicate_block_message(array $hit, bool $isEnglish, int $windowSeconds): string
 {
     $memo = $hit['invoice_number'] !== '' ? $hit['invoice_number'] : ('#' . (int)$hit['id']);
