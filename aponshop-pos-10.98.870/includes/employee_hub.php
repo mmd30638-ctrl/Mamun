@@ -1168,6 +1168,14 @@ function ame_emp_hub_today_work(mysqli $db, int $empId, string $day): array
     ];
 }
 
+/** কার্ড «আজকের বেতন» = বেতন ভাগ + আজকের নাস্তা (বক্স সমন্বয়/জিরো একই সংখ্যা) */
+function ame_emp_hub_today_pay_amount(mysqli $db, array $emp, bool $present, array $todayWork, string $date = ''): float
+{
+    $salary = ame_emp_hub_today_salary($db, $emp, $present, $todayWork, $date);
+
+    return round($salary + (float) ($todayWork['snack'] ?? 0), 2);
+}
+
 function ame_emp_hub_today_salary(mysqli $db, array $emp, bool $present, array $todayWork, string $date = ''): float
 {
     $date = $date !== '' ? $date : ame_emp_hub_today();
@@ -1440,7 +1448,7 @@ function ame_emp_hub_list(mysqli $db, array $filters): array
         $tw = ame_emp_hub_today_work($db, (int)$e['id'], $today);
         $todayRule = ame_emp_hub_pay_rule_on($db, $e, $today);
         $todaySalary = ame_emp_hub_today_salary($db, $e, $present, $tw, $today);
-        $todayPay = round($todaySalary + (float) ($tw['snack'] ?? 0), 2);
+        $todayPay = ame_emp_hub_today_pay_amount($db, $e, $present, $tw, $today);
         $todayPaidOut = ame_emp_hub_today_salary_paid($db, (int)$e['id'], $today);
         $payDue = ame_emp_hub_today_pay_due($todayPay, $todayPaidOut);
         $mode = ame_emp_hub_valid_pay_mode((string)$todayRule['payment_type']);
@@ -3949,8 +3957,7 @@ function ame_emp_hub_box_current(mysqli $db, array $emp, string $box): float
     $present = function_exists('ame_staff_is_duty_active') ? ame_staff_is_duty_active($db, $id) : true;
     $work = ame_emp_hub_today_work($db, $id, $today);
     if ($box === 'salary') {
-        $snackDue = round((float) ame_emp_hub_pending_snack_pay($db, $id, $today, false, false)['amount'], 2);
-        return round(ame_emp_hub_today_salary($db, $emp, $present, $work, $today) + $snackDue, 2);
+        return ame_emp_hub_today_pay_amount($db, $emp, $present, $work, $today);
     }
     return round((float)($work['work_value'] ?? 0), 2);
 }

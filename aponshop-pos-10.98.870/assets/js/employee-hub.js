@@ -440,7 +440,14 @@
         openDraw((boxTitles[box] || 'টাকা') + ' · ' + currentName, '<p class="eh-warn">' + esc(res.error || 'বক্স খোলা যায়নি') + '</p>');
         return;
       }
+      var cardAmt = btn.getAttribute('data-amount');
       var current = editAmt !== null && editId ? editAmt : res.current;
+      if (!editId && cardAmt !== null && cardAmt !== '') {
+        var c = parseFloat(cardAmt);
+        if (!isNaN(c)) {
+          current = cardAmt;
+        }
+      }
       var cash = (box === 'advance' || box === 'deposit');
       var rows = res.entries || [];
       var list = '';
