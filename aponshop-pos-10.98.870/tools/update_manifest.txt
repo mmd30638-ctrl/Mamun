@@ -1,3 +1,6 @@
+# 10.98.879 — কর্মী কাজের হিস্ট্রি ডাবল মেমো (062240 ইত্যাদি) ঠিক + নতুন এন্ট্রি ব্লক
+includes/worker_desk.php
+includes/employee_hub.php
 # 10.98.876 — বিক্রয় পেজ «পেজ সাজান» (সাইডবার শর্টকাট)
 assets/js/ame-page-fit.js
 assets/css/ame-page-fit.css

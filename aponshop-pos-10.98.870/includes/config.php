@@ -110,7 +110,7 @@ date_default_timezone_set('Asia/Dhaka');
 // ফলে সবসময় ডিফল্ট মান '1.0' ব্যবহার হতো, অর্থাৎ CSS/JS বদলালেও পুরনো
 // ব্রাউজার-ক্যাশ ভাঙত না। এখন এখান থেকে কেন্দ্রীয়ভাবে সেট করা হচ্ছে —
 // ভবিষ্যতে CSS/JS বদলালে শুধু নিচের সংখ্যাটা বাড়ালেই যথেষ্ট।
-define('AME_ASSET_VERSION', '10.98.878');
+define('AME_ASSET_VERSION', '10.98.879');
 $sys_version = AME_ASSET_VERSION;
 
 // স্পিড লক: SPEED.txt মুছবেন না। সেটিংস → স্পিড সিস্টেম। docs/performance-standards.md
@@ -121,7 +121,7 @@ $sys_version = AME_ASSET_VERSION;
 
 if (!defined('AME_APP_VERSION')) {
     /* লিটারেল লাগে Easy Update preflight (পুরনো ame_easy_update_read_version_from_root)। */
-    define('AME_APP_VERSION', '10.98.878');
+    define('AME_APP_VERSION', '10.98.879');
 }
 if (function_exists('opcache_reset')) {
     $ameOpcMark = dirname(__DIR__) . '/storage/opc.ver';
