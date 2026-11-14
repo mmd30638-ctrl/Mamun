@@ -1,7 +1,7 @@
-সর্বশেষ PATCH: Aponshop_10.98.880_PATCH.zip
+সর্বশেষ PATCH: Aponshop_10.98.881_PATCH.zip (কর্মী সার্ভিস লক — 878/879/880 একসাথে)
 
 GitHub (raw — ব্রাঞ্চ cursor/aponshop-pos-update-dc47):
-https://github.com/mmd30638-ctrl/Mamun/raw/cursor/aponshop-pos-update-dc47/aponshop-pos-10.98.870/deliverables/Aponshop_10.98.880_PATCH.zip
+https://github.com/mmd30638-ctrl/Mamun/raw/cursor/aponshop-pos-update-dc47/aponshop-pos-10.98.870/deliverables/Aponshop_10.98.881_PATCH.zip
 
 লাইভ সাইটে ইঞ্জিন রুমে ZIP আপলোড করুন; DB restore টিক দেবেন না।
 

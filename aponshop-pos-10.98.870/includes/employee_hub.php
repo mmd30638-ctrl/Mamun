@@ -6,6 +6,10 @@
 
 function ame_emp_hub_schema(mysqli $db): void
 {
+    $lockFile = __DIR__ . '/worker_work_lock.php';
+    if (is_file($lockFile)) {
+        require_once $lockFile;
+    }
     static $done = false;
     if ($done) {
         return;
@@ -193,6 +197,9 @@ function ame_emp_hub_schema(mysqli $db): void
     ame_emp_hub_absorb_users($db);
     if (function_exists('ensure_employee_advance_schema')) {
         ensure_employee_advance_schema($db);
+    }
+    if (function_exists('ame_worker_work_lock_ensure_schema')) {
+        ame_worker_work_lock_ensure_schema($db);
     }
 }
 
@@ -1857,7 +1864,14 @@ function ame_emp_hub_duplicate(mysqli $db, string $phone, string $code, int $exc
 function ame_emp_hub_pending_work_pay(mysqli $db, int $empId, string $throughDate, bool $dailyOnly = false, bool $lock = true): array
 {
     $emp = ame_emp_hub_row($db, $empId, true);
-    $sql = "SELECT id, work_date, work_value, employee_amount, bonus_amount
+    $lockFile = __DIR__ . '/worker_work_lock.php';
+    if (is_file($lockFile)) {
+        require_once $lockFile;
+        ame_worker_work_lock_ensure_schema($db);
+    }
+    $commissionFps = ame_emp_hub_commission_fingerprints($db, $empId);
+    $sql = "SELECT id, work_date, work_value, employee_amount, bonus_amount,
+                   invoice_ref, memo_no, service_type, source_type, source_id
             FROM employee_works
             WHERE employee_id = ? AND payout_status = 'pending'";
     if ($dailyOnly) {
@@ -1881,10 +1895,22 @@ function ame_emp_hub_pending_work_pay(mysqli $db, int $empId, string $throughDat
     $bonus = 0.0;
     $workValue = 0.0;
     while ($row = $result->fetch_assoc()) {
+        if (ame_emp_hub_manual_work_is_commission_duplicate($row, $commissionFps)) {
+            continue;
+        }
         $ids[] = (int)$row['id'];
         $workMode = $emp
             ? ame_emp_hub_valid_pay_mode((string)ame_emp_hub_pay_rule_on($db, $emp, (string)$row['work_date'])['payment_type'])
             : 'percentage';
+        if (function_exists('ame_worker_mode_uses_manual_work')) {
+            if (!ame_worker_mode_uses_manual_work($workMode)) {
+                $bonus += (float)($row['bonus_amount'] ?? 0);
+                continue;
+            }
+        } elseif (!in_array($workMode, ['percentage', 'work', 'mixed'], true)) {
+            $bonus += (float)($row['bonus_amount'] ?? 0);
+            continue;
+        }
         if (in_array($workMode, ['percentage', 'work', 'mixed'], true)) {
             $commission += (float)($row['employee_amount'] ?? 0);
             $workValue += (float)($row['work_value'] ?? 0);

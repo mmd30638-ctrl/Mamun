@@ -198,6 +198,10 @@ function ame_worker_duty_open(mysqli $db): bool
 
 function ame_worker_load_hub(): void
 {
+    $lockFile = __DIR__ . '/worker_work_lock.php';
+    if (is_file($lockFile)) {
+        require_once $lockFile;
+    }
     if (!function_exists('ame_emp_hub_schema')) {
         require_once __DIR__ . '/employee_hub.php';
     }
@@ -284,20 +288,24 @@ function ame_worker_desk_statement(mysqli $db, int $empId): array
             $sc->execute();
             $res = $sc->get_result();
             while ($r = $res->fetch_assoc()) {
+                $workDate = substr((string)($r['created_at'] ?? ''), 0, 10);
+                if ($workDate === '') {
+                    $workDate = date('Y-m-d');
+                }
                 $serviceAmount = (float)($r['service_amount'] ?? 0);
                 $shareAmount = (float)($r['commission_amount'] ?? 0);
-                $view = function_exists('ame_engineer_statement_credit')
-                    ? ame_engineer_statement_credit($serviceAmount, $shareAmount)
-                    : ['show' => $shareAmount > 0.009, 'credit' => $shareAmount, 'label' => 'কাজের ভাগ'];
+                $stype = (string)($r['service_type'] ?? '');
+                if (function_exists('ame_worker_commission_ledger_view')) {
+                    $view = ame_worker_commission_ledger_view($db, $emp, $workDate, $serviceAmount, $shareAmount, $stype);
+                } else {
+                    $view = $shareAmount > 0.009
+                        ? ['show' => true, 'credit' => $shareAmount, 'label' => 'কাজের ভাগ · ' . $stype]
+                        : ['show' => false, 'credit' => 0.0, 'label' => ''];
+                }
                 if (empty($view['show'])) {
                     continue;
                 }
-                $push(
-                    substr((string)$r['created_at'], 0, 10),
-                    (string)$view['label'] . ' · ' . (string)($r['service_type'] ?? ''),
-                    0,
-                    (float)$view['credit']
-                );
+                $push($workDate, (string)$view['label'], 0, (float)$view['credit']);
             }
             $sc->close();
         }

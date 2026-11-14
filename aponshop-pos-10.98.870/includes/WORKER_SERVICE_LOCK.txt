@@ -1,0 +1,11 @@
+WORKER SERVICE LOCK (AME_WORKER_WORK_LOCK_REV 10.98.881)
+=========================================================
+
+নিয়ম (কোডে লক):
+1. বিক্রয় → service_commissions (uniq: source_type + source_id) = এক কাজের বিল এক লাইন।
+2. পার্সেন্টেজ / work / mixed → আয় কমিশন থেকে; ম্যানুয়াল employee_works শুধু যখন কমিশন নেই।
+3. দৈনিক / মাসিক → বিক্রয়ের পুরো বিল কর্মী লেজারে যায় না (শুধু বেতন/নাস্তা/অগ্রিম)।
+4. process_sale: কমিশন একবার (replace_services → post_stored)।
+5. লেজার, বেতন প্রিভিউ, হিস্ট্রি — একই fingerprint ডিডাপ।
+
+প্যাচ: Aponshop_10.98.881_PATCH.zip | DB restore টিক করবেন না।
