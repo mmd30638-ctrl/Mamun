@@ -84,13 +84,37 @@ function ame_islamic_audio_ensure_upload_dir(): void
     }
 }
 
+function ame_islamic_audio_php_can_exec(): bool
+{
+    $disabled = array_map('trim', explode(',', strtolower((string)ini_get('disable_functions'))));
+    return !in_array('exec', $disabled, true) && !in_array('shell_exec', $disabled, true);
+}
+
+/** @return array{ytdlp:?string,ffmpeg:?string,exec_ok:bool} */
+function ame_islamic_audio_server_tools(): array
+{
+    return [
+        'ytdlp' => ame_islamic_audio_ytdlp_bin(),
+        'ffmpeg' => ame_islamic_audio_ffmpeg_bin(),
+        'exec_ok' => ame_islamic_audio_php_can_exec(),
+    ];
+}
+
 function ame_islamic_audio_ffmpeg_bin(): ?string
 {
     static $bin = null;
     if ($bin !== null) {
         return $bin === '' ? null : $bin;
     }
+    if (defined('AME_FFMPEG_BIN') && (string)AME_FFMPEG_BIN !== '' && is_executable((string)AME_FFMPEG_BIN)) {
+        $bin = (string)AME_FFMPEG_BIN;
+        return $bin;
+    }
+    $home = (string)(getenv('HOME') ?: '');
     $candidates = ['ffmpeg', '/usr/bin/ffmpeg', '/usr/local/bin/ffmpeg'];
+    if ($home !== '') {
+        $candidates[] = $home . '/bin/ffmpeg';
+    }
     foreach ($candidates as $c) {
         if ($c === 'ffmpeg') {
             $out = [];
@@ -361,16 +385,35 @@ function ame_islamic_audio_ytdlp_bin(): ?string
     if ($bin !== null) {
         return $bin === '' ? null : $bin;
     }
+    if (defined('AME_YTDLP_BIN') && (string)AME_YTDLP_BIN !== '') {
+        $custom = trim((string)AME_YTDLP_BIN);
+        if ($custom === 'python3 -m yt_dlp' || $custom === 'python -m yt_dlp') {
+            $out = [];
+            $code = 1;
+            $mod = str_contains($custom, 'python3') ? 'python3' : 'python';
+            @exec($mod . ' -m yt_dlp --version 2>/dev/null', $out, $code);
+            if ($code === 0) {
+                $bin = $mod . ' -m yt_dlp';
+                return $bin;
+            }
+        } elseif (is_executable($custom)) {
+            $bin = $custom;
+            return $bin;
+        }
+    }
     $home = (string)(getenv('HOME') ?: '');
+    $root = dirname(__DIR__);
     $candidates = [];
     if ($home !== '') {
         $candidates[] = $home . '/.local/bin/yt-dlp';
+        $candidates[] = $home . '/bin/yt-dlp';
+        $candidates[] = $home . '/yt-dlp';
     }
+    $candidates[] = $root . '/tools/yt-dlp';
+    $candidates[] = $root . '/bin/yt-dlp';
     $candidates[] = 'yt-dlp';
     $candidates[] = '/usr/bin/yt-dlp';
     $candidates[] = '/usr/local/bin/yt-dlp';
-    $root = dirname(__DIR__);
-    $candidates[] = $root . '/tools/yt-dlp';
     foreach ($candidates as $c) {
         if ($c === 'yt-dlp') {
             $out = [];
@@ -387,12 +430,14 @@ function ame_islamic_audio_ytdlp_bin(): ?string
             return $bin;
         }
     }
-    $out = [];
-    $code = 1;
-    @exec('python3 -m yt_dlp --version 2>/dev/null', $out, $code);
-    if ($code === 0) {
-        $bin = 'python3 -m yt_dlp';
-        return $bin;
+    foreach (['python3', 'python'] as $py) {
+        $out = [];
+        $code = 1;
+        @exec($py . ' -m yt_dlp --version 2>/dev/null', $out, $code);
+        if ($code === 0) {
+            $bin = $py . ' -m yt_dlp';
+            return $bin;
+        }
     }
     $bin = '';
     return null;
@@ -404,8 +449,14 @@ function ame_islamic_audio_ytdlp_bin(): ?string
 function ame_islamic_audio_youtube_list_entries(string $url, int $maxItems = 25): array
 {
     $ytdlp = ame_islamic_audio_ytdlp_bin();
+    if (!ame_islamic_audio_php_can_exec()) {
+        throw new RuntimeException('PHP exec বন্ধ — হোস্টার exec/shell_exec চালু করুন, অথবা VPS ব্যবহার করুন।');
+    }
     if ($ytdlp === null) {
-        throw new RuntimeException('সার্ভারে yt-dlp নেই। হোস্টিংয়ে yt-dlp বা python3 -m yt_dlp ইনস্টল করুন।');
+        throw new RuntimeException(
+            'সার্ভারে yt-dlp নেই। SSH এ সাইটের tools/install_yt_dlp_cpanel.sh চালান, '
+            . 'অথবা includes/config.php তে AME_YTDLP_BIN পাথ দিন। বিস্তারিত: YT_DLP_HOSTING_BN.txt'
+        );
     }
     $raw = ame_islamic_audio_youtube_url_allowed($url);
     $maxItems = max(1, min(50, $maxItems));

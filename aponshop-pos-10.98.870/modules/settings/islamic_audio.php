@@ -7,6 +7,7 @@ ame_islamic_audio_schema($db);
 $ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.900';
 $cs = htmlspecialchars((string)($_SESSION['csrf_token'] ?? ''), ENT_QUOTES, 'UTF-8');
 $categories = ame_islamic_audio_categories();
+$iaTools = ame_islamic_audio_server_tools();
 include dirname(__DIR__, 2) . '/partials/header.php';
 ?>
 <link rel="stylesheet" href="/assets/css/islamic-audio-admin.css?v=<?php echo htmlspecialchars($ver, ENT_QUOTES, 'UTF-8'); ?>">
@@ -14,6 +15,25 @@ include dirname(__DIR__, 2) . '/partials/header.php';
   <header class="ia-admin-head">
     <h1>🕌 ইসলামিক অডিও লাইব্রেরি</h1>
     <p class="ia-admin-sub">ফাইল আপলোড, MP3 লিংক, বা YouTube — অটো কম্প্রেশন ও সাউন্ড অপ্টিমাইজেশন</p>
+    <?php
+    $ytOk = $iaTools['ytdlp'] !== null;
+    $ffOk = $iaTools['ffmpeg'] !== null;
+    $exOk = $iaTools['exec_ok'];
+    ?>
+    <div class="ia-server-bar <?php echo $ytOk && $exOk ? 'ia-server-bar--ok' : 'ia-server-bar--warn'; ?>">
+      <?php if (!$exOk): ?>
+      <strong>PHP exec বন্ধ</strong> — YouTube ইম্পোর্ট চলবে না। হোস্টার থেকে exec/shell_exec চালু করুন।
+      <?php elseif (!$ytOk): ?>
+      <strong>yt-dlp নেই</strong> — একবার SSH এ <code>bash tools/install_yt_dlp_cpanel.sh</code> চালান (public_html এর ভিতর)।
+      <?php else: ?>
+      <strong>yt-dlp:</strong> <code><?php echo htmlspecialchars($iaTools['ytdlp'], ENT_QUOTES, 'UTF-8'); ?></code>
+      <?php endif; ?>
+      <?php if ($ffOk): ?>
+      · <strong>ffmpeg:</strong> <code><?php echo htmlspecialchars((string)$iaTools['ffmpeg'], ENT_QUOTES, 'UTF-8'); ?></code>
+      <?php else: ?>
+      · <strong>ffmpeg নেই</strong> — ইম্পোর্ট হবে কিন্তু কম্প্রেশন সীমিত।
+      <?php endif; ?>
+    </div>
   </header>
 
   <div class="ia-admin-grid">
