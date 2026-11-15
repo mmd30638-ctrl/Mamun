@@ -99,6 +99,7 @@
   html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-radios label,
   html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-radios label {
     display: flex !important;
+    flex: 1 1 100% !important;
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
