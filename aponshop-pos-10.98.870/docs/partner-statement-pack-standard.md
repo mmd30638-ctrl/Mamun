@@ -2,7 +2,7 @@
 
 **Version:** `PA_STMT_PACK_VER` in `includes/partner_statement_pack.php` (10.98.936+)
 
-**Pagination:** `PA_STMT_ROWS_PER_PAGE = 15` — each list page shows up to 15 numbered rows (`pg` query); totals unchanged across pages.
+**Pagination:** `PA_STMT_DAYS_PER_PAGE = 15` — profit, outflow and ledger (with `partner_id`) paginate by **calendar day** (`pg` query), 15 days per screen/print chunk. Two partners: use **মাসিক সারাংশ** or partner link — one partner per summary page.
 
 ## Purpose
 

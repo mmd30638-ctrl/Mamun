@@ -18,13 +18,15 @@ $pa_pack_active = 'profit';
 
 $profit = ['lines' => [], 'total' => 0.0, 'computed' => 0.0, 'reconciled' => true, 'more' => false];
 $days = [];
-$lineSlice = ['items' => [], 'serial_start' => 1, 'page' => 1, 'pages' => 1, 'total' => 0, 'per' => pa_stmt_rows_per_page()];
+$daySlice = ['days' => [], 'page' => 1, 'pages' => 1, 'total' => 0, 'per' => pa_stmt_days_per_page(), 'unit' => 'day'];
+$allDays = [];
 $book = $ctx['book'];
 $partner = $ctx['partner'];
 if ($book && $partner) {
     $profit = pa_stmt_profit_for_partner($db, $partner, $bounds, $book);
-    $lineSlice = pa_stmt_page_slice($profit['lines'], $pg);
-    $days = pa_stmt_group_days($lineSlice['items'], 'profit_share');
+    $allDays = pa_stmt_group_days($profit['lines'], 'profit_share');
+    $daySlice = pa_stmt_page_slice_days($allDays, $pg);
+    $days = $daySlice['days'];
 }
 
 include '../../partials/header.php';
@@ -79,12 +81,12 @@ include '../../partials/header.php';
                 <div class="pa-alert no-print">২০০০+ লাইন — কিছু পুরনো লাইন লুকানো; মোট তারপরও সারাংশের মোট লাভের সমান।</div>
             <?php endif; ?>
 
-            <p class="pa-stmt-note">বামে ক্রমিক ও কাস্টমার, ডানে পণ্য ও লাভ। প্রতি পৃষ্ঠায় <strong><?php echo pa_stmt_rows_per_page(); ?></strong> সারি।</p>
+            <p class="pa-stmt-note">লাভের হিসাব — প্রতি পৃষ্ঠায় <strong><?php echo pa_stmt_days_per_page(); ?> দিন</strong>। ক্রমিক + <strong class="pa-lbl-cust">কাস্টমার</strong> + <strong class="pa-lbl-prod">পণ্য</strong> + <strong class="pa-lbl-plus">লাভ</strong>।</p>
             <?php
-            $pa_slice = $lineSlice;
+            $pa_slice = $daySlice;
             $pa_pager_script = 'partner_accounting_profit.php';
             include '../../partials/partner_statement_pager.php';
-            $serial = $lineSlice['serial_start'];
+            $serial = pa_stmt_serial_base($allDays, $pg);
             ?>
 
             <?php if ($days === []): ?>

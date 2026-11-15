@@ -19,7 +19,7 @@ $tabs = [
         $href = pa_stmt_nav_href($file, $bounds_ym, $pa_partner_id);
         $on = $key === $pa_pack_active;
         ?>
-        <a class="pa-pack-tab<?php echo $on ? ' is-on' : ''; ?>" href="<?php echo htmlspecialchars($href, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($label); ?></a>
+        <a class="pa-pack-tab pa-live-link<?php echo $on ? ' is-on' : ''; ?>" href="<?php echo htmlspecialchars($href, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($label); ?></a>
     <?php endforeach; ?>
 </nav>
 <?php if ($pa_partner_id < 1 && !empty($dash['active'])): ?>
@@ -31,7 +31,7 @@ $tabs = [
                 $name = (string)($a['partner']['name'] ?? '');
                 $href = pa_stmt_nav_href(basename((string)($_SERVER['SCRIPT_NAME'] ?? 'partner_accounting_statement.php')), $bounds_ym, $pid);
                 ?>
-                <a class="pa-pack-pick-card" href="<?php echo htmlspecialchars($href, ENT_QUOTES, 'UTF-8'); ?>">
+                <a class="pa-pack-pick-card pa-live-link" href="<?php echo htmlspecialchars($href, ENT_QUOTES, 'UTF-8'); ?>">
                     <span><?php echo htmlspecialchars($name); ?></span>
                     <small>শেয়ার <?php echo number_format((float)($a['share_pct'] ?? 0), 2); ?>%</small>
                 </a>

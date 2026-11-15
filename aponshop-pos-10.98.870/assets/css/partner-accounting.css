@@ -367,3 +367,163 @@
         justify-self: end;
     }
 }
+
+/* Header — no clipped shop name (print + mobile) */
+.pa-stmt-head-clear {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    page-break-inside: avoid;
+}
+.pa-stmt-brand {
+    flex: 1 1 260px;
+    min-width: 0;
+}
+.pa-shop-title {
+    font-size: clamp(1.05rem, 4.2vw, 1.45rem);
+    line-height: 1.35;
+    font-weight: 800;
+    color: #0c4a6e;
+    margin: 0 0 6px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
+}
+.pa-shop-addr {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #475569;
+    overflow-wrap: anywhere;
+}
+.pa-stmt-kind {
+    font-size: 13px;
+    margin-top: 6px;
+    color: #64748b;
+    font-weight: 600;
+}
+.pa-stmt-meta {
+    font-size: 13px;
+    line-height: 1.45;
+}
+article.pa-stmt-partner-next {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 3px solid #0f766e;
+}
+.pa-stmt-switch {
+    font-size: 14px;
+    margin: 0 0 12px;
+    padding: 10px 12px;
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    border-radius: 10px;
+}
+.pa-stmt-switch .pa-live-link {
+    margin: 0 6px;
+}
+
+/* Live / clickable — bold + underline */
+a.pa-live-link,
+.pa-pager-link,
+.pa-pack-tab:not(.is-on) {
+    font-weight: 700 !important;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+a.pa-pack-tab.is-on {
+    font-weight: 800 !important;
+    text-decoration: none;
+}
+.pa-live-link {
+    color: #0f766e;
+}
+
+/* Semantic label colors (screen + mobile cards) */
+.pa-lbl-prev,
+.pa-table.pa-book td.pa-prev,
+.pa-table.pa-book td[data-label="সাবেক"] {
+    color: #0f766e !important;
+}
+.pa-lbl-plus,
+.pa-table.pa-book td.pa-plus {
+    color: #15803d !important;
+}
+.pa-lbl-minus,
+.pa-table.pa-book td.pa-minus {
+    color: #c2410c !important;
+}
+.pa-lbl-run,
+.pa-table.pa-book td.pa-run {
+    color: #111827 !important;
+    font-weight: 700;
+}
+.pa-lbl-cust {
+    color: #1d4ed8;
+}
+.pa-lbl-prod {
+    color: #4338ca;
+}
+@media (max-width: 1100px), ((hover: none) and (pointer: coarse)) {
+    .pa-table.pa-book td[data-label="তারিখ"]::before {
+        color: #1d4ed8;
+    }
+    .pa-table.pa-book td[data-label="বিবরণ"]::before {
+        color: #4338ca;
+    }
+    .pa-table.pa-book td[data-label="সাবেক"]::before {
+        color: #0f766e;
+    }
+    .pa-table.pa-book td[data-label="প্লাস"]::before {
+        color: #15803d;
+    }
+    .pa-table.pa-book td[data-label="মাইনাস"]::before {
+        color: #c2410c;
+    }
+    .pa-table.pa-book td[data-label="চলতি"]::before {
+        color: #111827;
+    }
+    .pa-table.pa-book td[data-label="মাইনাসের কারণ"]::before {
+        color: #b45309;
+    }
+    .pa-table.pa-book td[data-label="ক্রমিক"]::before {
+        color: #64748b;
+    }
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .pa-stmt,
+    .pa-stmt * {
+        visibility: visible;
+    }
+    .no-print,
+    header,
+    .sidebar,
+    .acc-share-bar,
+    nav,
+    .pa-pack-nav {
+        display: none !important;
+    }
+    .pa-stmt {
+        position: relative;
+        box-shadow: none;
+        page-break-after: always;
+        page-break-inside: avoid;
+    }
+    .pa-stmt-partner-next {
+        page-break-before: always;
+        margin-top: 0;
+        padding-top: 12px;
+        border-top: none;
+    }
+    .pa-stmt-head-clear {
+        margin-top: 8px;
+    }
+    .pa-shop-title {
+        font-size: 1.15rem;
+    }
+}

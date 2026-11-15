@@ -101,19 +101,41 @@ include '../../partials/header.php';
         </div>
     <?php endif; ?>
 
-    <?php foreach ($books as $book):
+    <?php foreach ($books as $bookIdx => $book):
         $linesAll = array_reverse($book['lines']);
-        $lineSlice = pa_stmt_page_slice($linesAll, $pg);
-        $lines = $lineSlice['items'];
-        $pa_slice = $lineSlice;
+        $dayGroupsAll = pa_stmt_book_lines_by_day($linesAll);
+        $useDayPg = $only > 0;
+        if ($useDayPg) {
+            $daySlice = pa_stmt_page_slice_days($dayGroupsAll, $pg);
+            $pa_slice = $daySlice;
+            $lines = [];
+            foreach ($daySlice['days'] as $dg) {
+                foreach ($dg['lines'] as $ln) {
+                    $lines[] = $ln;
+                }
+            }
+            $serial = pa_stmt_serial_base($dayGroupsAll, $pg);
+        } else {
+            $lines = $linesAll;
+            $pa_slice = ['pages' => 1, 'page' => 1, 'total' => count($dayGroupsAll), 'per' => pa_stmt_days_per_page(), 'unit' => 'day'];
+            $serial = 1;
+        }
         $pa_pager_script = 'partner_accounting_statement.php';
+        $pa_partner_id = (int)$book['partner_id'];
         ?>
-        <article class="pa-stmt" id="pa-book-<?php echo (int)$book['partner_id']; ?>">
-            <div class="pa-stmt-head">
-                <div>
-                    <h1><?php echo htmlspecialchars(shop_name()); ?></h1>
-                    <div><?php echo htmlspecialchars(shop_address()); ?></div>
-                    <div style="font-size:13px;margin-top:4px;">পার্টনার স্টেটমেন্ট · প্লাস মাইনাস</div>
+        <article class="pa-stmt<?php echo $bookIdx > 0 ? ' pa-stmt-partner-next' : ''; ?>" id="pa-book-<?php echo (int)$book['partner_id']; ?>">
+            <?php if ($only < 1 && count($books) > 1): ?>
+                <p class="pa-stmt-switch no-print"><strong class="pa-live-link">পার্টনার নির্বাচন:</strong>
+                    <?php foreach ($books as $b): ?>
+                        <a class="pa-live-link" href="<?php echo htmlspecialchars(pa_stmt_nav_href('partner_accounting_statement.php', $bounds['ym'], (int)$b['partner_id']), ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($b['name']); ?></a>
+                    <?php endforeach; ?>
+                </p>
+            <?php endif; ?>
+            <div class="pa-stmt-head pa-stmt-head-clear">
+                <div class="pa-stmt-brand">
+                    <h1 class="pa-shop-title"><?php echo htmlspecialchars(shop_name()); ?></h1>
+                    <div class="pa-shop-addr"><?php echo htmlspecialchars(shop_address()); ?></div>
+                    <div class="pa-stmt-kind">পার্টনার স্টেটমেন্ট · পূর্ণ লেজার</div>
                 </div>
                 <div class="pa-stmt-meta">
                     <div>সময়কাল: <?php echo htmlspecialchars($bounds['label']); ?></div>
@@ -138,8 +160,10 @@ include '../../partials/header.php';
                 এই পার্টনারের মোট লাভ <strong><?php echo pa_taka($book['plus']); ?></strong>
                 এবং মোট মাইনাস <strong><?php echo pa_taka($book['minus']); ?></strong> হয়েছে।
             </p>
-            <p class="pa-stmt-note">প্রতি সারিতে <strong>সাবেক</strong> = প্লাস/মাইনাসের আগের চলতি ব্যালেন্স, তারপর প্লাস·মাইনাস, শেষে নতুন চলতি। মাইনাসের কারণ আলাদা কলামে। প্রতি পৃষ্ঠায় সর্বোচ্চ <strong><?php echo pa_stmt_rows_per_page(); ?></strong>টি ক্রমিক সারি।</p>
-            <?php include '../../partials/partner_statement_pager.php'; ?>
+            <p class="pa-stmt-note">প্রতি সারিতে <strong class="pa-lbl-prev">সাবেক</strong> → <strong class="pa-lbl-plus">প্লাস</strong> / <strong class="pa-lbl-minus">মাইনাস</strong> → <strong class="pa-lbl-run">চলতি</strong>। এক পৃষ্ঠায় <strong><?php echo pa_stmt_days_per_page(); ?> দিনের</strong> হিসাব (বাকি «পরের ১৫ দিন»)। দুজন পার্টনার হলে <strong class="pa-live-link">উপরের লিংক</strong> দিয়ে আলাদা দেখুন বা মাসিক সারাংশ ট্যাব।</p>
+            <?php if ($useDayPg) {
+                include '../../partials/partner_statement_pager.php';
+            } ?>
             <div class="pa-table-wrap">
                 <table class="pa-table pa-book pa-rows-15">
                     <thead>
@@ -157,10 +181,9 @@ include '../../partials/header.php';
                     <tbody>
                         <?php if (!$lines): ?>
                             <tr><td colspan="8" data-label="">এই মাসে প্লাস বা মাইনাস নেই।</td></tr>
-                        <?php else: foreach ($lines as $i => $line):
+                        <?php else: foreach ($lines as $line):
                             $when = (string)$line['date'];
                             $show = preg_match('/^\d{4}-\d{2}-\d{2}$/', $when) ? date('d-m-Y', strtotime($when)) : '';
-                            $serial = $lineSlice['serial_start'] + $i;
                             ?>
                             <tr class="pa-stmt-row">
                                 <td class="num pa-serial" data-label="ক্রমিক"><?php echo htmlspecialchars(pa_stmt_serial_label($serial)); ?></td>
@@ -172,7 +195,7 @@ include '../../partials/header.php';
                                 <td data-label="মাইনাসের কারণ"><?php echo htmlspecialchars((string)($line['minus_reason'] ?? '')); ?></td>
                                 <td class="num pa-run" data-label="চলতি"><?php echo pa_taka($line['running']); ?></td>
                             </tr>
-                        <?php endforeach; endif; ?>
+                        <?php $serial++; endforeach; endif; ?>
                     </tbody>
                     <?php if ($lines): ?>
                     <tfoot>
@@ -189,7 +212,9 @@ include '../../partials/header.php';
                     <?php endif; ?>
                 </table>
             </div>
-            <?php include '../../partials/partner_statement_pager.php'; ?>
+            <?php if ($useDayPg) {
+                include '../../partials/partner_statement_pager.php';
+            } ?>
             <div class="box"><span>মোট এমাউন্ট</span><span><?php echo pa_taka($book['total']); ?></span></div>
             <p class="pa-stmt-note"><?php echo pa_taka($book['opening']); ?> + <?php echo pa_book_signed((float)$book['plus'], '+'); ?> − <?php echo pa_book_signed((float)$book['minus'], '-'); ?> = <?php echo pa_taka($book['total']); ?></p>
             <div class="signs">
@@ -217,12 +242,6 @@ include '../../partials/header.php';
 }
 .pa-table.pa-book .pa-prev {
     font-weight: 600;
-}
-@media print {
-    body * { visibility: hidden; }
-    .pa-stmt, .pa-stmt * { visibility: visible; }
-    .pa-stmt { position: relative; box-shadow: none; page-break-after: always; }
-    .no-print, header, .sidebar, .acc-share-bar, nav { display: none !important; }
 }
 </style>
 <?php include '../../partials/footer.php'; ?>

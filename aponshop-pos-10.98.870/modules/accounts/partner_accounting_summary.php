@@ -108,9 +108,9 @@ include '../../partials/header.php';
             <p class="pa-stmt-note pa-summary-formula"><?php echo $summary['formula']; ?></p>
 
             <div class="pa-summary-links no-print">
-                <a href="<?php echo htmlspecialchars(pa_stmt_nav_href('partner_accounting_profit.php', $bounds['ym'], $partnerId), ENT_QUOTES, 'UTF-8'); ?>">লাভ বিবরণী (<?php echo pa_book_signed($profitTotal, '+'); ?>)</a>
-                <a href="<?php echo htmlspecialchars(pa_stmt_nav_href('partner_accounting_outflow.php', $bounds['ym'], $partnerId), ENT_QUOTES, 'UTF-8'); ?>">খরচ ও মাইনাস বিবরণী</a>
-                <a href="<?php echo htmlspecialchars(pa_stmt_nav_href('partner_accounting_statement.php', $bounds['ym'], $partnerId), ENT_QUOTES, 'UTF-8'); ?>">পূর্ণ লেজার (সাবেক/চলতি)</a>
+                <a class="pa-live-link" href="<?php echo htmlspecialchars(pa_stmt_nav_href('partner_accounting_profit.php', $bounds['ym'], $partnerId), ENT_QUOTES, 'UTF-8'); ?>">লাভ বিবরণী (১৫ দিন/পৃষ্ঠা) — <?php echo pa_book_signed($profitTotal, '+'); ?></a>
+                <a class="pa-live-link" href="<?php echo htmlspecialchars(pa_stmt_nav_href('partner_accounting_outflow.php', $bounds['ym'], $partnerId), ENT_QUOTES, 'UTF-8'); ?>">খরচ ও উত্তোলন (১৫ দিন/পৃষ্ঠা)</a>
+                <a class="pa-live-link" href="<?php echo htmlspecialchars(pa_stmt_nav_href('partner_accounting_statement.php', $bounds['ym'], $partnerId), ENT_QUOTES, 'UTF-8'); ?>">পূর্ণ লেজার (সাবেক/চলতি)</a>
             </div>
             <?php if (!$summary['reconciled']): ?>
                 <div class="pa-alert bad no-print">রিকনসাইল ব্যর্থ — ডেভেলপার চেক করুন।</div>

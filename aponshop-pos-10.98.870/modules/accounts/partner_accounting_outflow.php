@@ -18,13 +18,15 @@ $pa_pack_active = 'outflow';
 
 $outflow = ['lines' => [], 'total' => 0.0, 'by_type' => [], 'reconciled' => true];
 $days = [];
-$lineSlice = ['items' => [], 'serial_start' => 1, 'page' => 1, 'pages' => 1, 'total' => 0, 'per' => pa_stmt_rows_per_page()];
+$daySlice = ['days' => [], 'page' => 1, 'pages' => 1, 'total' => 0, 'per' => pa_stmt_days_per_page(), 'unit' => 'day'];
+$allDays = [];
 $book = $ctx['book'];
 $partner = $ctx['partner'];
 if ($book) {
     $outflow = pa_stmt_outflow_from_book($book);
-    $lineSlice = pa_stmt_page_slice($outflow['lines'], $pg);
-    $days = pa_stmt_group_days($lineSlice['items'], 'amount');
+    $allDays = pa_stmt_group_days($outflow['lines'], 'amount');
+    $daySlice = pa_stmt_page_slice_days($allDays, $pg);
+    $days = $daySlice['days'];
 }
 
 include '../../partials/header.php';
@@ -101,11 +103,12 @@ include '../../partials/header.php';
                 <?php endforeach; ?>
             </div>
 
+            <p class="pa-stmt-note">খরচ + উত্তোলন — প্রতি পৃষ্ঠায় <strong><?php echo pa_stmt_days_per_page(); ?> দিনের</strong> হিসাব। ট্যাগ রঙে ধরন চেনা যাবে।</p>
             <?php
-            $pa_slice = $lineSlice;
+            $pa_slice = $daySlice;
             $pa_pager_script = 'partner_accounting_outflow.php';
             include '../../partials/partner_statement_pager.php';
-            $serial = $lineSlice['serial_start'];
+            $serial = pa_stmt_serial_base($allDays, $pg);
             ?>
 
             <?php if ($days === []): ?>

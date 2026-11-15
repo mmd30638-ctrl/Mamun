@@ -6,8 +6,8 @@
 
 declare(strict_types=1);
 
-const PA_STMT_PACK_VER = '10.98.936';
-const PA_STMT_ROWS_PER_PAGE = 15;
+const PA_STMT_PACK_VER = '10.98.937';
+const PA_STMT_DAYS_PER_PAGE = 15;
 
 /**
  * @return array{ym:string,partner_id:int,bounds:array,dash:array,partner:array|null,book:array|null,error:string}
@@ -48,9 +48,15 @@ function pa_stmt_date_show(string $iso): string
     return date('d-m-Y', strtotime($iso));
 }
 
+function pa_stmt_days_per_page(): int
+{
+    return PA_STMT_DAYS_PER_PAGE;
+}
+
+/** @deprecated alias — pagination unit is **days**, not row count */
 function pa_stmt_rows_per_page(): int
 {
-    return PA_STMT_ROWS_PER_PAGE;
+    return PA_STMT_DAYS_PER_PAGE;
 }
 
 function pa_stmt_nav_href(string $script, string $ym, int $partnerId, int $page = 0): string
@@ -67,24 +73,63 @@ function pa_stmt_nav_href(string $script, string $ym, int $partnerId, int $page 
 }
 
 /**
- * @param list<mixed> $items
- * @return array{items:list<mixed>,page:int,pages:int,total:int,per:int,serial_start:int}
+ * Group ledger lines by calendar day (newest day first).
+ *
+ * @param list<array<string,mixed>> $lines
+ * @return list<array{day:string,show:string,lines:list<array<string,mixed>>}>
  */
-function pa_stmt_page_slice(array $items, int $page): array
+function pa_stmt_book_lines_by_day(array $lines): array
 {
-    $per = pa_stmt_rows_per_page();
-    $total = count($items);
+    $by = [];
+    foreach ($lines as $line) {
+        $day = (string)($line['date'] ?? '—');
+        $by[$day][] = $line;
+    }
+    krsort($by);
+    $out = [];
+    foreach ($by as $day => $dayLines) {
+        $out[] = [
+            'day' => $day,
+            'show' => pa_stmt_date_show($day),
+            'lines' => $dayLines,
+        ];
+    }
+    return $out;
+}
+
+/**
+ * Paginate **day groups** (15 days per page).
+ *
+ * @param list<array{day:string,show:string,lines:list<mixed>,subtotal?:float}> $dayGroups
+ * @return array{days:list<array>,page:int,pages:int,total:int,per:int,unit:string}
+ */
+function pa_stmt_page_slice_days(array $dayGroups, int $page): array
+{
+    $per = pa_stmt_days_per_page();
+    $total = count($dayGroups);
     $pages = max(1, (int)ceil($total / $per));
     $page = max(1, min($page, $pages));
     $offset = ($page - 1) * $per;
     return [
-        'items' => array_slice($items, $offset, $per),
+        'days' => array_slice($dayGroups, $offset, $per),
         'page' => $page,
         'pages' => $pages,
         'total' => $total,
         'per' => $per,
-        'serial_start' => $offset + 1,
+        'unit' => 'day',
     ];
+}
+
+/** Line serial number at start of a day-paginated page. */
+function pa_stmt_serial_base(array $allDayGroups, int $page): int
+{
+    $per = pa_stmt_days_per_page();
+    $skipDays = max(0, ($page - 1) * $per);
+    $serial = 1;
+    for ($d = 0; $d < $skipDays && $d < count($allDayGroups); $d++) {
+        $serial += count($allDayGroups[$d]['lines']);
+    }
+    return $serial;
 }
 
 function pa_stmt_serial_label(int $n): string
