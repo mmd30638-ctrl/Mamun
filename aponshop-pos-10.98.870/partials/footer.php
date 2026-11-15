@@ -25,6 +25,11 @@ if (function_exists('ame_engineer_bill_lock_render_admin_banner')) {
 <link rel="stylesheet" href="/assets/css/ame-android-universal.css?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : ($sys_version ?? '1.0'), ENT_QUOTES, 'UTF-8'); ?>" id="ame-android-universal">
 <link rel="stylesheet" href="/assets/css/ame-modules-universal-responsive.css?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : ($sys_version ?? '1.0'), ENT_QUOTES, 'UTF-8'); ?>" id="ame-modules-universal-responsive">
 <?php
+if (function_exists('ame_platform_contract_print_assets')) {
+    ame_platform_contract_print_assets();
+}
+?>
+<?php
 $ame_script_name = (string)($_SERVER['SCRIPT_NAME'] ?? '');
 $ame_load_resubmit_guard = str_contains($ame_script_name, '/modules/sales/')
     || str_contains($ame_script_name, '/modules/hrm/');

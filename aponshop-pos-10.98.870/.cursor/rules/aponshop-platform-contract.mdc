@@ -1,0 +1,16 @@
+---
+description: APONSHOP mandatory quality — desktop, Android mobile, Chrome mobile desktop-site; intl-100 updates
+globs:
+  - aponshop-pos-10.98.870/**
+alwaysApply: true
+---
+
+Before any UI or module change in this repo:
+
+1. Read `includes/ame_platform_contract.php` and `docs/ame-platform-quality-standards.md`.
+2. Test targets: desktop browser, Android Chrome mobile view, Android Chrome **Request desktop site** (coarse pointer + wide viewport).
+3. Every deliverable must bump `AME_ASSET_VERSION` in `includes/config.php` and keep `ame-platform-contract` assets loaded via `partials/footer.php`.
+4. Never auto-change party balances on page load; use Party Amount Shield patterns.
+5. Supplier due display: only `supplier_due_ui.php` (orange payable, green credit).
+
+Minimum bar: **intl-100** — no shipping updates below this standard.
