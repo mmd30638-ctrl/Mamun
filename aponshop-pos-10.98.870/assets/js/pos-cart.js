@@ -91,6 +91,10 @@ function selectedCustomerType() {
 }
 
 function selectedPriceMode() {
+    if (window.ameCustomerForceWholesale) {
+        return 'wholesale';
+    }
+
     const selected = document.querySelector(
         'input[name="price_mode"]:checked'
     );
