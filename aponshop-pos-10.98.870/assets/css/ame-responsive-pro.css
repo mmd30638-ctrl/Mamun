@@ -1,0 +1,96 @@
+/* ame-responsive-pro 10.98.80 — additive professional responsive polish
+   DO NOT set html/body overflow:hidden globally.
+   DO NOT force svg stroke/fill to #fff. */
+:root {
+  --ame-pro-navy: #0B1E4D;
+  --ame-pro-accent: #1D9BF0;
+  --ame-pro-green: #0E8F52;
+  --ame-pro-gold: #C9A227;
+  --ame-pro-surface: #F8FAFC;
+  --ame-pro-card: #FFFFFF;
+  --ame-pro-text: #0F172A;
+  --ame-pro-muted: #64748B;
+  --ame-pro-radius: 14px;
+  --ame-pro-touch: 44px;
+}
+
+/* Main content readability on small screens */
+@media (max-width: 768px) {
+  #main-content {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .tls-wrap,
+  .eup-wrap,
+  .sh-wrap,
+  .sec-wrap,
+  .us-wrap,
+  .ic-wrap,
+  .mg {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+/* Header action group: flex wrap, touch-friendly without zeroing SVG */
+html body .master-header-fixed .hdr-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 640px) {
+  html body .master-header-fixed .hdr-icon-btn,
+  html body.ame-premium-ui .master-header-fixed .hdr-icon-btn,
+  html body.ame-saas-os .master-header-fixed .hdr-icon-btn {
+    min-width: var(--ame-pro-touch) !important;
+    min-height: var(--ame-pro-touch) !important;
+    width: var(--ame-pro-touch) !important;
+    height: var(--ame-pro-touch) !important;
+  }
+  html body .master-header-fixed .hdr-icon-btn svg {
+    width: 20px !important;
+    height: 20px !important;
+    /* keep currentColor from hdr-icons / kill-switch */
+  }
+}
+
+/* Cards / primary buttons: centered text where appropriate */
+.tls-backup-btn,
+.mae-import-go,
+.eup-btn,
+.sec-links a,
+.us-links a,
+.ic-links a,
+.mg-btns a {
+  text-align: center;
+}
+
+/* Sidebar overlay polish only (existing overlay behavior preserved) */
+@media (max-width: 900px) {
+  .custom-sidebar {
+    max-width: min(92vw, 320px);
+  }
+}
+
+/* Login / SMS light polish hooks */
+body.ame-lock-page .ame-lock-card,
+body.ame-sms-sim .card {
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: var(--ame-pro-radius);
+}
+
+body.ame-lock-page .enter,
+body.ame-sms-sim .btn {
+  min-height: var(--ame-pro-touch);
+}
+
+/* POS: light max-height on cart scroll only — no global overflow:hidden */
+body.ame-pos-terminal-page .ame-pos-term-cart {
+  max-height: min(62vh, 640px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}

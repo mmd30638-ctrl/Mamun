@@ -1,0 +1,242 @@
+/* 10.98.904 — Android / ছোট স্ক্রিন: সব মডিউলে টাচ-ফ্রেন্ডলি + কাটা পড়া বন্ধ
+   শেষে লোড হয় (footer.php) — !important দিয়ে পুরনো nowrap ও গ্রিড ঠিক করে। */
+
+:root {
+  --ame-touch: 44px;
+  --ame-pad-x: max(10px, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+}
+
+@media (hover: none) and (pointer: coarse), (max-width: 900px) {
+  html,
+  body {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+}
+
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+  #main-content {
+    padding-left: max(10px, env(safe-area-inset-left)) !important;
+    padding-right: max(10px, env(safe-area-inset-right)) !important;
+    padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  html body .master-header-fixed .hdr-btn-group {
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  html body .master-header-fixed .hdr-icon-btn {
+    min-width: var(--ame-touch) !important;
+    min-height: var(--ame-touch) !important;
+    width: var(--ame-touch) !important;
+    height: var(--ame-touch) !important;
+  }
+
+  html body .master-header-fixed .hdr-icon-btn svg {
+    width: 20px !important;
+    height: 20px !important;
+    max-width: none !important;
+  }
+
+  #main-content .card,
+  #main-content .shist-wrap,
+  #main-content .eng-console,
+  #main-content [class*="-wrap"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #main-content table:not(.table-pos):not(.memo-table):not(.main-table) {
+    width: max-content !important;
+    min-width: 100% !important;
+    font-size: 14px !important;
+  }
+
+  #spayMemo,
+  #invoiceBox,
+  #receiptCard,
+  .invoice-box,
+  #memo-container,
+  .memo-wrapper {
+    width: min(480px, 100%) !important;
+    max-width: 100% !important;
+    transform: none !important;
+  }
+
+  .memo-meta-item,
+  #spayMemo .meta-row,
+  #spayMemo .memo-meta-row {
+    display: grid !important;
+    grid-template-columns: minmax(38%, auto) 1fr !important;
+    gap: 8px !important;
+  }
+
+  #main-content .ame-auto-scroll-wrap {
+    margin-bottom: 8px !important;
+  }
+
+  #main-content button,
+  #main-content a.eng-btn,
+  #main-content a.ia-btn,
+  #main-content input[type="submit"],
+  #main-content .ame-calc-btn {
+    min-height: var(--ame-touch) !important;
+  }
+
+  .custom-sidebar {
+    max-width: min(92vw, 320px) !important;
+  }
+}
+
+body.ame-mobile-clamp.ame-pos-terminal-page #main-content,
+body.ame-screen-phone.ame-pos-terminal-page #main-content {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+}
+
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-controls {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-action-row {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-action-row > * {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk button,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-customer-add,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk [class*="customer"] button {
+    max-width: 100% !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 900px) {
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-bar {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-radios,
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-radios,
+  html body.ame-pos-terminal-page .ame-pos-term-radios,
+  html body.ame-pos-terminal-page .ame-pos-radios,
+  html body.ame-pos-terminal-page .ame-pos-term-price-radios,
+  html body.ame-pos-terminal-page .ame-pos-mode-extra,
+  body.ame-pos-terminal-page .ame-pos-heading,
+  .ame-pos-page .pos-customer-select-row {
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    gap: 8px 10px !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-radios label,
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-radios label {
+    flex: 1 1 calc(50% - 10px) !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 8px 6px !important;
+    font-size: 14px !important;
+    line-height: 1.25 !important;
+    min-height: var(--ame-touch) !important;
+  }
+
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions {
+    flex-wrap: wrap !important;
+    width: 100% !important;
+  }
+
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions button,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosCompleteBtn,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCashBtn {
+    min-height: 48px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  html body.ame-pos-terminal-page .ame-pos-table-wrap {
+    max-height: min(46dvh, 420px) !important;
+    min-height: 200px !important;
+    margin-bottom: 80px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  html body.ame-pos-terminal-page .ame-pos-table-wrap table.table-pos {
+    min-width: 520px !important;
+    font-size: 13px !important;
+  }
+
+  html body.ame-pos-terminal-page .ame-pos-table-wrap table.table-pos th,
+  html body.ame-pos-terminal-page .ame-pos-table-wrap table.table-pos td {
+    padding: 10px 8px !important;
+    line-height: 1.35 !important;
+    vertical-align: middle !important;
+  }
+
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerInfoField,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search input {
+    font-size: 16px !important;
+    min-height: var(--ame-touch) !important;
+    width: 100% !important;
+  }
+
+  .pos-pay-dock,
+  .ame-pay-dock {
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+  }
+}
+
+@media (max-width: 420px) {
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-radios label,
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-radios label {
+    flex: 1 1 100% !important;
+  }
+
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-legacy-pos-head {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameDeskClock {
+    font-size: 16px !important;
+    white-space: normal !important;
+  }
+}
