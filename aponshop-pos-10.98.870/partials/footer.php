@@ -385,6 +385,9 @@ html body .hm-gallery-cap {
 <?php if (!empty($ame_pay_list_white)): ?>
 <link rel="stylesheet" href="/assets/css/pay-list-white.css?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.538', ENT_QUOTES, 'UTF-8'); ?>" id="pay-list-white-538">
 <?php endif; ?>
+<?php if (function_exists('ame_if_is_home_page') && ame_if_is_home_page()): ?>
+<link rel="stylesheet" href="/assets/css/home-mobile-full.css?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : ($sys_version ?? '1'), ENT_QUOTES, 'UTF-8'); ?>" id="ameHomeMobileFull">
+<?php endif; ?>
 <?php if (!empty($_SESSION['user_id']) && function_exists('ame_if_is_home_page') && ame_if_is_home_page()): ?>
 <link rel="stylesheet" href="/assets/css/home-dash.css?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.545', ENT_QUOTES, 'UTF-8'); ?>">
 <script src="/assets/js/home-dash.js?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.545', ENT_QUOTES, 'UTF-8'); ?>" defer></script>

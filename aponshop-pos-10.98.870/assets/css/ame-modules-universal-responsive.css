@@ -9,9 +9,15 @@
 
 /* ----- সাধারণ: মূল কনটেইনার ও ফর্ম ----- */
 @media (max-width: 1099px) {
-  #main-content img:not(.ame-print-logo):not(.memo-logo) {
+  #main-content img:not(.ame-print-logo):not(.memo-logo):not(.hm-banner-slide img) {
     max-width: 100% !important;
     height: auto !important;
+  }
+
+  html body.ame-home-gallery .hm-gallery,
+  html body[data-vd-page="home"] .hm-gallery {
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   #main-content input:not([type="checkbox"]):not([type="radio"]),

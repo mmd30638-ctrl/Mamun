@@ -49,6 +49,7 @@ $banner_count = count($banner_rows);
 ?>
 
 <link rel="stylesheet" href="/assets/css/home-banner.css?v=<?php echo $ver; ?>">
+<link rel="stylesheet" href="/assets/css/home-mobile-full.css?v=<?php echo $ver; ?>">
 <div class="hm-gallery">
     <header class="hm-gallery-greet">
         <?php if ($tag !== ''): ?>
