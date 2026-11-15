@@ -68,6 +68,11 @@ function ame_islamic_audio_public_url(string $fileName): string
     return '/uploads/islamic_audio/' . rawurlencode($fn);
 }
 
+function ame_islamic_audio_stream_url(int $id): string
+{
+    return '/modules/islamic_audio_stream.php?id=' . max(1, $id);
+}
+
 function ame_islamic_audio_ensure_upload_dir(): void
 {
     $dir = ame_islamic_audio_upload_dir();
@@ -75,13 +80,41 @@ function ame_islamic_audio_ensure_upload_dir(): void
         @mkdir($dir, 0755, true);
     }
     $ht = $dir . '.htaccess';
+    $htBody = "<IfModule mod_authz_core.c>\nRequire all granted\n</IfModule>\n"
+        . "<IfModule mod_mime.c>\n"
+        . "  AddType audio/mpeg .mp3\n"
+        . "  AddType audio/mp4 .m4a .mp4\n"
+        . "  AddType audio/aac .aac\n"
+        . "  AddType audio/ogg .ogg\n"
+        . "  AddType audio/wav .wav\n"
+        . "</IfModule>\n"
+        . "<IfModule mod_headers.c>\n"
+        . "  Header set Accept-Ranges bytes\n"
+        . '  Header set Cache-Control "public, max-age=31536000, immutable"' . "\n"
+        . "</IfModule>\n";
     if (!is_file($ht)) {
-        @file_put_contents($ht, "<IfModule mod_authz_core.c>\nRequire all granted\n</IfModule>\n");
+        @file_put_contents($ht, $htBody);
     }
     $idx = $dir . 'index.html';
     if (!is_file($idx)) {
         @file_put_contents($idx, '');
     }
+}
+
+function ame_islamic_audio_php_can_exec(): bool
+{
+    $disabled = array_map('trim', explode(',', strtolower((string)ini_get('disable_functions'))));
+    return !in_array('exec', $disabled, true) && !in_array('shell_exec', $disabled, true);
+}
+
+/** @return array{ytdlp:?string,ffmpeg:?string,exec_ok:bool} */
+function ame_islamic_audio_server_tools(): array
+{
+    return [
+        'ytdlp' => ame_islamic_audio_ytdlp_bin(),
+        'ffmpeg' => ame_islamic_audio_ffmpeg_bin(),
+        'exec_ok' => ame_islamic_audio_php_can_exec(),
+    ];
 }
 
 function ame_islamic_audio_ffmpeg_bin(): ?string
@@ -90,7 +123,15 @@ function ame_islamic_audio_ffmpeg_bin(): ?string
     if ($bin !== null) {
         return $bin === '' ? null : $bin;
     }
+    if (defined('AME_FFMPEG_BIN') && (string)AME_FFMPEG_BIN !== '' && is_executable((string)AME_FFMPEG_BIN)) {
+        $bin = (string)AME_FFMPEG_BIN;
+        return $bin;
+    }
+    $home = (string)(getenv('HOME') ?: '');
     $candidates = ['ffmpeg', '/usr/bin/ffmpeg', '/usr/local/bin/ffmpeg'];
+    if ($home !== '') {
+        $candidates[] = $home . '/bin/ffmpeg';
+    }
     foreach ($candidates as $c) {
         if ($c === 'ffmpeg') {
             $out = [];
@@ -152,15 +193,25 @@ function ame_islamic_audio_process_file(string $srcPath, int $trackId): array
     $dir = ame_islamic_audio_upload_dir();
     $base = 'ia_' . max(1, $trackId) . '_' . time() . '_' . random_int(10000, 99999);
     $outMp3 = $dir . $base . '.mp3';
+    $srcExt = strtolower(pathinfo($srcPath, PATHINFO_EXTENSION));
 
     $ff = ame_islamic_audio_ffmpeg_bin();
     $ok = false;
-    if ($ff !== null) {
-        $af = 'loudnorm=I=-16:TP=-1.5:LRA=11,acompressor=threshold=-18dB:ratio=3:attack=5:release=50';
-        $cmd = $ff . ' -y -hide_banner -loglevel error -i ' . ame_islamic_audio_shell_quote($srcPath)
-            . ' -af ' . ame_islamic_audio_shell_quote($af)
-            . ' -codec:a libmp3lame -b:a 96k -ar 44100 -ac 2 '
-            . ame_islamic_audio_shell_quote($outMp3) . ' 2>&1';
+    if ($srcExt === 'mp3' && @copy($srcPath, $outMp3)) {
+        $ok = is_file($outMp3) && filesize($outMp3) > 0;
+    } elseif ($ff !== null) {
+        $lightAudio = in_array($srcExt, ['m4a', 'aac', 'ogg'], true);
+        if ($lightAudio) {
+            $cmd = $ff . ' -y -hide_banner -loglevel error -threads 0 -vn -i ' . ame_islamic_audio_shell_quote($srcPath)
+                . ' -codec:a libmp3lame -q:a 4 -ar 44100 -ac 2 '
+                . ame_islamic_audio_shell_quote($outMp3) . ' 2>&1';
+        } else {
+            $af = 'acompressor=threshold=-18dB:ratio=3:attack=5:release=50';
+            $cmd = $ff . ' -y -hide_banner -loglevel error -threads 0 -vn -i ' . ame_islamic_audio_shell_quote($srcPath)
+                . ' -af ' . ame_islamic_audio_shell_quote($af)
+                . ' -codec:a libmp3lame -b:a 128k -ar 44100 -ac 2 '
+                . ame_islamic_audio_shell_quote($outMp3) . ' 2>&1';
+        }
         $log = [];
         $code = 1;
         @exec($cmd, $log, $code);
@@ -180,6 +231,10 @@ function ame_islamic_audio_process_file(string $srcPath, int $trackId): array
             $ext = 'mp3';
         } elseif (str_contains($mime, 'ogg')) {
             $ext = 'ogg';
+        } elseif (str_contains($mime, 'mp4') || str_contains($mime, 'm4a') || str_contains($mime, 'aac')) {
+            $ext = 'm4a';
+        } elseif (str_contains($mime, 'webm')) {
+            $ext = 'webm';
         }
         $outMp3 = $dir . $base . '.' . $ext;
         if (!@copy($srcPath, $outMp3)) {
@@ -189,12 +244,20 @@ function ame_islamic_audio_process_file(string $srcPath, int $trackId): array
 
     $bytes = (int)filesize($outMp3);
     $duration = ame_islamic_audio_probe_duration($outMp3);
-  return [
+    $outExt = strtolower(pathinfo($outMp3, PATHINFO_EXTENSION));
+    $mimeOut = match ($outExt) {
+        'm4a', 'mp4' => 'audio/mp4',
+        'wav' => 'audio/wav',
+        'ogg' => 'audio/ogg',
+        'webm' => 'audio/webm',
+        default => 'audio/mpeg',
+    };
+    return [
         'file_name' => basename($outMp3),
         'bytes' => $bytes,
         'orig' => $orig,
         'duration' => $duration,
-        'mime' => 'audio/mpeg',
+        'mime' => $mimeOut,
     ];
 }
 
@@ -273,10 +336,342 @@ function ame_islamic_audio_download_url(string $url, string $destPath): int
     return $size;
 }
 
+function ame_islamic_audio_is_youtube_url(string $url): bool
+{
+    $url = trim($url);
+    if ($url === '') {
+        return false;
+    }
+    $host = strtolower((string)parse_url($url, PHP_URL_HOST));
+    if ($host === '') {
+        return false;
+    }
+    if ($host === 'youtu.be' || $host === 'www.youtu.be') {
+        return true;
+    }
+    if (str_ends_with($host, 'youtube.com') || $host === 'youtube.com') {
+        return true;
+    }
+    return false;
+}
+
+function ame_islamic_audio_youtube_url_allowed(string $url): string
+{
+    $url = trim($url);
+    if ($url === '' || !filter_var($url, FILTER_VALIDATE_URL)) {
+        throw new InvalidArgumentException('সঠিক YouTube লিংক দিন।');
+    }
+    if (!ame_islamic_audio_is_youtube_url($url)) {
+        throw new InvalidArgumentException('শুধু YouTube (youtu.be / youtube.com) লিংক চলবে।');
+    }
+    $scheme = strtolower((string)parse_url($url, PHP_URL_SCHEME));
+    if (!in_array($scheme, ['http', 'https'], true)) {
+        throw new InvalidArgumentException('শুধু https লিংক চলবে।');
+    }
+    return $url;
+}
+
+function ame_islamic_audio_youtube_is_playlist(string $url): bool
+{
+    return (bool)preg_match('/[?&]list=([a-zA-Z0-9_-]+)/', $url);
+}
+
+function ame_islamic_audio_youtube_is_channel(string $url): bool
+{
+    $path = strtolower((string)(parse_url($url, PHP_URL_PATH) ?? ''));
+    if ($path === '') {
+        return false;
+    }
+    if (preg_match('#/@([a-zA-Z0-9._-]+)(/|$)#', $path)) {
+        return true;
+    }
+    if (preg_match('#/(channel|c|user)/[^/]+#', $path)) {
+        return true;
+    }
+    return false;
+}
+
+/** চ্যানেল হোম লিংক → /videos ট্যাব (ওয়াজ/গজল/Videos তালিকা) */
+function ame_islamic_audio_youtube_resolve_feed_url(string $url): string
+{
+    $url = ame_islamic_audio_youtube_url_allowed($url);
+    $parts = parse_url($url);
+    $path = (string)($parts['path'] ?? '');
+    $base = ($parts['scheme'] ?? 'https') . '://' . ($parts['host'] ?? 'www.youtube.com') . $path;
+    if (preg_match('#/@([a-zA-Z0-9._-]+)(/(videos|streams|shorts|playlists))?#i', $path, $m)) {
+        if (empty($m[2])) {
+            return rtrim($base, '/') . '/videos';
+        }
+        return $base;
+    }
+    if (preg_match('#/(channel|c|user)/([^/]+)#i', $path) && !str_ends_with(strtolower($path), '/videos')) {
+        return rtrim($base, '/') . '/videos';
+    }
+    return $url;
+}
+
+function ame_islamic_audio_youtube_default_speaker(string $url): string
+{
+    if (preg_match('#/@([a-zA-Z0-9._-]+)#', $url, $m)) {
+        return '@' . $m[1];
+    }
+    return '';
+}
+
+function ame_islamic_audio_ytdlp_bin(): ?string
+{
+    static $bin = null;
+    if ($bin !== null) {
+        return $bin === '' ? null : $bin;
+    }
+    if (defined('AME_YTDLP_BIN') && (string)AME_YTDLP_BIN !== '') {
+        $custom = trim((string)AME_YTDLP_BIN);
+        if ($custom === 'python3 -m yt_dlp' || $custom === 'python -m yt_dlp') {
+            $out = [];
+            $code = 1;
+            $mod = str_contains($custom, 'python3') ? 'python3' : 'python';
+            @exec($mod . ' -m yt_dlp --version 2>/dev/null', $out, $code);
+            if ($code === 0) {
+                $bin = $mod . ' -m yt_dlp';
+                return $bin;
+            }
+        } elseif (is_executable($custom)) {
+            $bin = $custom;
+            return $bin;
+        }
+    }
+    $home = (string)(getenv('HOME') ?: '');
+    $root = dirname(__DIR__);
+    $candidates = [];
+    if ($home !== '') {
+        $candidates[] = $home . '/.local/bin/yt-dlp';
+        $candidates[] = $home . '/bin/yt-dlp';
+        $candidates[] = $home . '/yt-dlp';
+    }
+    $candidates[] = $root . '/tools/yt-dlp';
+    $candidates[] = $root . '/bin/yt-dlp';
+    $candidates[] = 'yt-dlp';
+    $candidates[] = '/usr/bin/yt-dlp';
+    $candidates[] = '/usr/local/bin/yt-dlp';
+    foreach ($candidates as $c) {
+        if ($c === 'yt-dlp') {
+            $out = [];
+            $code = 1;
+            @exec('command -v yt-dlp 2>/dev/null', $out, $code);
+            if ($code === 0 && !empty($out[0])) {
+                $bin = trim((string)$out[0]);
+                return $bin;
+            }
+            continue;
+        }
+        if (is_executable($c)) {
+            $bin = $c;
+            return $bin;
+        }
+    }
+    foreach (['python3', 'python'] as $py) {
+        $out = [];
+        $code = 1;
+        @exec($py . ' -m yt_dlp --version 2>/dev/null', $out, $code);
+        if ($code === 0) {
+            $bin = $py . ' -m yt_dlp';
+            return $bin;
+        }
+    }
+    $bin = '';
+    return null;
+}
+
+/**
+ * @return array<int, array{id:string,title:string,webpage_url:string}>
+ */
+function ame_islamic_audio_youtube_list_entries(string $url, int $maxItems = 25): array
+{
+    $ytdlp = ame_islamic_audio_ytdlp_bin();
+    if (!ame_islamic_audio_php_can_exec()) {
+        throw new RuntimeException('PHP exec বন্ধ — হোস্টার exec/shell_exec চালু করুন, অথবা VPS ব্যবহার করুন।');
+    }
+    if ($ytdlp === null) {
+        throw new RuntimeException(
+            'সার্ভারে yt-dlp নেই। SSH এ সাইটের tools/install_yt_dlp_cpanel.sh চালান, '
+            . 'অথবা includes/config.php তে AME_YTDLP_BIN পাথ দিন। বিস্তারিত: YT_DLP_HOSTING_BN.txt'
+        );
+    }
+    $raw = ame_islamic_audio_youtube_url_allowed($url);
+    $maxItems = max(1, min(50, $maxItems));
+    $isChannel = ame_islamic_audio_youtube_is_channel($raw);
+    $isPl = ame_islamic_audio_youtube_is_playlist($raw);
+    $url = ($isChannel || $isPl) ? ame_islamic_audio_youtube_resolve_feed_url($raw) : $raw;
+    $useFlat = $isPl || $isChannel;
+    $args = $useFlat
+        ? ['--flat-playlist', '--print', '%(id)s\t%(title)s\t%(webpage_url)s', $url]
+        : ['--no-playlist', '--print', '%(id)s\t%(title)s\t%(webpage_url)s', $url];
+    $cmd = ame_islamic_audio_ytdlp_cmd($args);
+    $out = [];
+    $code = 1;
+    @exec($cmd . ' 2>&1', $out, $code);
+    if ($code !== 0) {
+        throw new RuntimeException('YouTube তথ্য পড়া যায়নি: ' . implode(' ', array_slice($out, -3)));
+    }
+    $entries = [];
+    foreach ($out as $line) {
+        $line = trim((string)$line);
+        if ($line === '' || str_starts_with($line, '[')) {
+            continue;
+        }
+        $parts = explode("\t", $line, 3);
+        if (count($parts) < 2 || $parts[0] === '') {
+            continue;
+        }
+        $entries[] = [
+            'id' => $parts[0],
+            'title' => $parts[1] !== '' ? $parts[1] : ('YouTube ' . $parts[0]),
+            'webpage_url' => $parts[2] ?? ('https://www.youtube.com/watch?v=' . $parts[0]),
+        ];
+        if (!$useFlat) {
+            break;
+        }
+        if (count($entries) >= $maxItems) {
+            break;
+        }
+    }
+    if ($entries === []) {
+        throw new RuntimeException('YouTube থেকে কোনো ভিডিও খুঁজে পাওয়া যায়নি।');
+    }
+    return $entries;
+}
+
+function ame_islamic_audio_ytdlp_cmd(array $args): string
+{
+    $ytdlp = ame_islamic_audio_ytdlp_bin();
+    if ($ytdlp === null) {
+        throw new RuntimeException('yt-dlp উপলব্ধ নয়।');
+    }
+    $quoted = array_map(static fn ($a) => ame_islamic_audio_shell_quote((string)$a), $args);
+    if ($ytdlp === 'python3 -m yt_dlp') {
+        return 'python3 -m yt_dlp ' . implode(' ', $quoted);
+    }
+    return ame_islamic_audio_shell_quote($ytdlp) . ' ' . implode(' ', $quoted);
+}
+
+/**
+ * @return list<string> absolute paths to downloaded audio files
+ */
+function ame_islamic_audio_youtube_download_one(string $webpageUrl, string $dir, string $videoId): string
+{
+    if (!is_dir($dir) && !@mkdir($dir, 0700, true) && !is_dir($dir)) {
+        throw new RuntimeException('টেম্প ফোল্ডার তৈরি হয়নি।');
+    }
+    $template = $dir . '/' . preg_replace('/[^a-zA-Z0-9_-]/', '', $videoId) . '.%(ext)s';
+    $args = [
+        '--no-playlist',
+        '--no-warnings',
+        '--no-progress',
+        '-f', 'bestaudio/best',
+        '--extract-audio',
+        '--audio-format', 'm4a',
+        '--restrict-filenames',
+        '-o', $template,
+        $webpageUrl,
+    ];
+    $cmd = ame_islamic_audio_ytdlp_cmd($args);
+    $log = [];
+    $code = 1;
+    @exec($cmd . ' 2>&1', $log, $code);
+    if ($code !== 0) {
+        throw new RuntimeException('YouTube অডিও ডাউনলোড ব্যর্থ (' . $videoId . ').');
+    }
+    $glob = glob($dir . '/' . preg_replace('/[^a-zA-Z0-9_-]/', '', $videoId) . '.*') ?: [];
+    foreach ($glob as $path) {
+        if (is_file($path) && filesize($path) > 0) {
+            return $path;
+        }
+    }
+    throw new RuntimeException('ডাউনলোড ফাইল পাওয়া যায়নি (' . $videoId . ').');
+}
+
+/**
+ * @param array{title?:string,speaker?:string,category?:string,youtube_url?:string,is_published?:bool} $meta
+ */
+function ame_islamic_audio_ingest_youtube(mysqli $db, array $meta): array
+{
+    ame_islamic_audio_schema($db);
+    @set_time_limit(600);
+    $url = trim((string)($meta['youtube_url'] ?? $meta['audio_url'] ?? ''));
+    $url = ame_islamic_audio_youtube_url_allowed($url);
+    $maxItems = max(1, min(50, (int)($meta['max_items'] ?? 25)));
+    $entries = ame_islamic_audio_youtube_list_entries($url, $maxItems);
+    $speaker = trim((string)($meta['speaker'] ?? ''));
+    if ($speaker === '' && ame_islamic_audio_youtube_is_channel($url)) {
+        $speaker = ame_islamic_audio_youtube_default_speaker($url);
+    }
+    $category = trim((string)($meta['category'] ?? 'general'));
+    $published = !array_key_exists('is_published', $meta) || !empty($meta['is_published']);
+    $fallbackTitle = trim((string)($meta['title'] ?? ''));
+    $tmpdir = sys_get_temp_dir() . '/ia_yt_batch_' . bin2hex(random_bytes(4));
+    $ids = [];
+    try {
+        foreach ($entries as $entry) {
+            $title = $fallbackTitle !== '' && count($entries) === 1
+                ? $fallbackTitle
+                : (string)$entry['title'];
+            $title = mb_substr(trim($title), 0, 255);
+            $srcPath = ame_islamic_audio_youtube_download_one((string)$entry['webpage_url'], $tmpdir, (string)$entry['id']);
+            $orig = (int)filesize($srcPath);
+            $placeholderId = ame_islamic_audio_next_serial($db) + 100000;
+            $processed = ame_islamic_audio_process_file($srcPath, $placeholderId);
+            @unlink($srcPath);
+            $ids[] = ame_islamic_audio_insert_row($db, [
+                'title' => $title,
+                'speaker' => $speaker,
+                'category' => $category,
+                'file_name' => $processed['file_name'],
+                'duration_sec' => $processed['duration'],
+                'file_size_bytes' => $processed['bytes'],
+                'orig_size_bytes' => $orig,
+                'source_type' => 'youtube',
+                'source_url' => (string)$entry['webpage_url'],
+                'is_published' => $published,
+            ]);
+        }
+    } finally {
+        if (is_dir($tmpdir)) {
+            foreach (glob($tmpdir . '/*') ?: [] as $f) {
+                @unlink($f);
+            }
+            @rmdir($tmpdir);
+        }
+    }
+    return [
+        'ok' => true,
+        'imported' => count($ids),
+        'ids' => $ids,
+        'tracks' => ame_islamic_audio_admin_list($db),
+    ];
+}
+
 function ame_islamic_audio_next_serial(mysqli $db): int
 {
     $row = $db->query('SELECT COALESCE(MAX(display_serial), 0) + 1 AS n FROM islamic_audio_tracks')->fetch_assoc();
     return max(1, (int)($row['n'] ?? 1));
+}
+
+function ame_islamic_audio_playback_url(array $row): string
+{
+    $stream = ame_islamic_audio_stream_url((int)$row['id']);
+    if ((int)($row['is_published'] ?? 0) !== 1) {
+        return $stream;
+    }
+    $fn = basename((string)($row['file_name'] ?? ''));
+    if ($fn === '' || preg_match('/[^\w.\-]+/', $fn)) {
+        return $stream;
+    }
+    $disk = ame_islamic_audio_upload_dir() . $fn;
+    if (is_file($disk) && is_readable($disk)) {
+        return ame_islamic_audio_public_url($fn);
+    }
+
+    return $stream;
 }
 
 function ame_islamic_audio_row_to_public(array $row): array
@@ -288,7 +683,9 @@ function ame_islamic_audio_row_to_public(array $row): array
         'speaker' => (string)$row['speaker'],
         'category' => (string)$row['category'],
         'category_label' => ame_islamic_audio_categories()[(string)$row['category']] ?? (string)$row['category'],
-        'url' => ame_islamic_audio_public_url((string)$row['file_name']),
+        'url' => ame_islamic_audio_playback_url($row),
+        'file_url' => ame_islamic_audio_public_url((string)$row['file_name']),
+        'stream_url' => ame_islamic_audio_stream_url((int)$row['id']),
         'duration' => round((float)$row['duration_sec'], 1),
         'size_mb' => round(((int)$row['file_size_bytes']) / 1048576, 2),
         'published' => (int)$row['is_published'] === 1,
@@ -385,6 +782,66 @@ function ame_islamic_audio_insert_row(mysqli $db, array $fields): int
 /**
  * @param array{title:string,speaker?:string,category?:string,is_published?:bool,display_serial?:int} $meta
  */
+/** @return array<int, array<string, mixed>> */
+function ame_islamic_audio_normalize_upload_files(string $field): array
+{
+    if (empty($_FILES[$field])) {
+        return [];
+    }
+    $f = $_FILES[$field];
+    if (!is_array($f['name'] ?? null)) {
+        return [$f];
+    }
+    $out = [];
+    $n = count($f['name']);
+    for ($i = 0; $i < $n; $i++) {
+        $out[] = [
+            'name' => $f['name'][$i] ?? '',
+            'type' => $f['type'][$i] ?? '',
+            'tmp_name' => $f['tmp_name'][$i] ?? '',
+            'error' => $f['error'][$i] ?? UPLOAD_ERR_NO_FILE,
+            'size' => $f['size'][$i] ?? 0,
+        ];
+    }
+    return $out;
+}
+
+/**
+ * @param array<int, array> $files
+ * @param array{title?:string,speaker?:string,category?:string,is_published?:bool} $meta
+ * @return array{ok:bool,imported:int,failed:array<int,string>,ids:array<int,int>}
+ */
+function ame_islamic_audio_ingest_upload_many(mysqli $db, array $files, array $meta): array
+{
+    $max = 40;
+    if (count($files) > $max) {
+        throw new InvalidArgumentException('একবারে সর্বোচ্চ ' . $max . 'টি ফাইল।');
+    }
+  $ids = [];
+    $failed = [];
+    $sharedTitle = trim((string)($meta['title'] ?? ''));
+    $multi = count($files) > 1;
+    foreach ($files as $file) {
+        if (($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
+            continue;
+        }
+        $rowMeta = $meta;
+        if ($multi) {
+            $rowMeta['title'] = $sharedTitle !== '' ? $sharedTitle : '';
+        }
+        try {
+            $res = ame_islamic_audio_ingest_upload($db, $file, $rowMeta);
+            $ids[] = (int)$res['id'];
+        } catch (Throwable $e) {
+            $failed[] = (($file['name'] ?? 'ফাইল') . ': ' . $e->getMessage());
+        }
+    }
+    if ($ids === [] && $failed !== []) {
+        throw new RuntimeException(implode(' | ', $failed));
+    }
+    return ['ok' => true, 'imported' => count($ids), 'failed' => $failed, 'ids' => $ids];
+}
+
 function ame_islamic_audio_ingest_upload(mysqli $db, array $file, array $meta): array
 {
     ame_islamic_audio_schema($db);
@@ -425,6 +882,9 @@ function ame_islamic_audio_ingest_url(mysqli $db, array $meta): array
 {
     ame_islamic_audio_schema($db);
     $url = trim((string)($meta['audio_url'] ?? ''));
+    if (ame_islamic_audio_is_youtube_url($url)) {
+        throw new InvalidArgumentException('YouTube লিংক এখানে দেবেন না। PC/মোবাইল থেকে MP3 আপলোড করুন।');
+    }
     $title = trim((string)($meta['title'] ?? ''));
     if ($title === '') {
         $title = 'অডিও ' . date('Y-m-d H:i');
@@ -578,25 +1038,40 @@ function ame_islamic_audio_can_admin(): bool
     return in_array($role, ['admin', 'super_admin', 'superadmin', 'owner'], true);
 }
 
-function ame_islamic_audio_render_home(mysqli $db): void
+/** হোম/সব পেজ — লগইন ইউজারে অডিও FAB (ট্র্যাক না থাকলেও আইকন দেখায়) */
+function ame_islamic_audio_render_widget(mysqli $db, bool $floating = true): void
 {
     if (empty($_SESSION['user_id'])) {
         return;
     }
-    $tracks = ame_islamic_audio_list_published($db);
-    if ($tracks === []) {
+    static $rendered = false;
+    if ($rendered) {
         return;
     }
+    $rendered = true;
+    $tracks = ame_islamic_audio_list_published($db);
     $json = htmlspecialchars(json_encode($tracks, JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8');
     $ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.900';
-    echo '<section class="ia-home" id="iaHome" data-ia-tracks="' . $json . '" aria-label="ইসলামিক অডিও">';
+    $dock = $floating ? ' ia-home--dock' : '';
+    $admin = ame_islamic_audio_can_admin();
+    echo '<section class="ia-home' . $dock . '" id="iaHome" data-ia-tracks="' . $json . '" aria-label="ইসলামিক অডিও">';
     echo '<button type="button" class="ia-fab" id="iaFab" aria-expanded="false" aria-controls="iaPanel">';
-    echo '<span class="ia-fab-ic" aria-hidden="true">🔊</span><span class="ia-fab-txt">অডিও শুনুন</span></button>';
+    echo '<span class="ia-fab-ic" aria-hidden="true">🎧</span><span class="ia-fab-txt">অডিও</span></button>';
     echo '<div class="ia-panel" id="iaPanel" hidden>';
     echo '<header class="ia-head"><h2 class="ia-title">ইসলামিক অডিও</h2>';
     echo '<button type="button" class="ia-close" id="iaClose" aria-label="বন্ধ">×</button></header>';
     echo '<div class="ia-player" id="iaPlayerHost"></div>';
+  echo '<p class="ia-empty" id="iaEmpty" hidden>এখনো প্রকাশিত অডিও নেই।' . ($admin ? ' ইঞ্জিন থেকে আপলোড করুন।' : '') . '</p>';
+    if ($admin) {
+        echo '<p class="ia-admin-cta" id="iaAdminCta"><a href="/modules/settings/islamic_audio.php">+ অডিও যোগ / ম্যানেজ</a></p>';
+    }
     echo '<ul class="ia-list" id="iaList" role="list"></ul></div></section>';
     echo '<link rel="stylesheet" href="/assets/css/islamic-audio.css?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '">';
     echo '<script src="/assets/js/islamic-audio.js?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '" defer></script>';
+}
+
+/** @deprecated alias */
+function ame_islamic_audio_render_home(mysqli $db): void
+{
+    ame_islamic_audio_render_widget($db, false);
 }
