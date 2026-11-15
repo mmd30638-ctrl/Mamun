@@ -67,6 +67,7 @@ $ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.928';
 include '../../partials/header.php';
 ?>
 <link rel="stylesheet" href="/assets/css/ame-logo-spinner.css?v=<?php echo htmlspecialchars($ver, ENT_QUOTES, 'UTF-8'); ?>">
+<?php ame_supplier_due_print_assets(); ?>
 <link rel="stylesheet" href="/assets/css/supplier-list-pro.css?v=<?php echo htmlspecialchars($ver, ENT_QUOTES, 'UTF-8'); ?>">
 <style>
 .sup-list-pro .ame-wait-spin i {
@@ -87,16 +88,7 @@ include '../../partials/header.php';
             </div>
             <p class="sup-list-note">মোট বকেয়া = সাবেক + ক্রয় − পরিশোধ। সংখ্যা শুধু <strong>ক্রয়</strong>, <strong>সাপ্লায়ার পেমেন্ট</strong> বা <strong>অ্যাডমিন সংশোধন</strong> এ বদলায় — তালিকা খুললে নয়।</p>
             <p class="sup-list-shield" role="note">লক: Party Amount Shield — পেজ/আপডেট ZIP দিয়ে `total_due` স্বয়ংক্রিয় বদল হয় না।</p>
-            <div class="sup-due-legend" role="list" aria-label="বকেয়ার রঙ ব্যাখ্যা">
-                <span class="sup-due-legend-item" role="listitem">
-                    <span class="sup-due-swatch sup-due-swatch--payable" aria-hidden="true"></span>
-                    <span>কমলা · বকেয়া (দোকান দেবে)</span>
-                </span>
-                <span class="sup-due-legend-item" role="listitem">
-                    <span class="sup-due-swatch sup-due-swatch--credit" aria-hidden="true"></span>
-                    <span>সবুজ · অগ্রিম (দোকান পাবে)</span>
-                </span>
-            </div>
+            <?php echo ame_supplier_due_render_legend('full'); ?>
         </header>
 
         <div class="sup-kpi-row" aria-label="তালিকার সারাংশ">

@@ -359,6 +359,16 @@ if (str_contains($ame_purchase_lock, '/modules/suppliers/statement.php') || str_
     $ame_dlock_ver = htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : ($sys_version ?? '1.0'), ENT_QUOTES, 'UTF-8');
     echo '<link rel="stylesheet" href="/assets/css/supplier-statement.css?v=' . $ame_dlock_ver . '" id="ameSupplierStatementLock">' . "\n";
 }
+if (str_contains($ame_purchase_lock, '/modules/suppliers/')
+    && !preg_match('#/modules/suppliers/process_#', $ame_purchase_lock)) {
+    $ame_sup_due_boot = (defined('APP_ROOT') ? APP_ROOT : dirname(__DIR__)) . '/includes/supplier_due_ui.php';
+    if (is_file($ame_sup_due_boot)) {
+        require_once $ame_sup_due_boot;
+        if (function_exists('ame_supplier_due_print_assets')) {
+            ame_supplier_due_print_assets();
+        }
+    }
+}
 if (str_contains($ame_purchase_lock, '/modules/family/')) {
     $ame_flock_ver = htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : ($sys_version ?? '1.0'), ENT_QUOTES, 'UTF-8');
     echo '<link rel="stylesheet" href="/assets/css/family-desk.520.css?v=' . $ame_flock_ver . '" id="ameFamilyDeskLock">' . "\n";
