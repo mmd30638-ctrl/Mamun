@@ -25,7 +25,9 @@ function ame_responsive_inject($html)
     }
 
     $ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '5.20';
-    $css = '<link rel="stylesheet" href="/assets/css/responsive-fix.css?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '">';
+    $css = '<link rel="stylesheet" href="/assets/css/responsive-fix.css?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '">'
+        . '<link rel="stylesheet" href="/assets/css/ame-android-universal.css?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '">'
+        . '<link rel="stylesheet" href="/assets/css/ame-modules-universal-responsive.css?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '">';
     $js = '<script src="/assets/js/responsive-fix.js?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '" defer></script>';
     $error_js = '<script src="/assets/js/error-boundary.js?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '" defer></script>';
     $premium_css = '<link rel="stylesheet" href="/assets/css/premium-saas.css?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '">';

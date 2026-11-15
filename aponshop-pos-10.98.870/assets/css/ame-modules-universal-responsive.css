@@ -1,0 +1,251 @@
+/* 10.98.915 — সব মডিউলের সব পেজ: ফোন / ট্যাবলেট / ডেস্কটপ ফিট
+   footer.php-তে শেষের দিকে লোড (ame-android-universal-এর পরে) */
+
+:root {
+  --ame-mod-touch: 44px;
+  --ame-mod-gap: 10px;
+  --ame-mod-radius: 12px;
+}
+
+/* ----- সাধারণ: মূল কনটেইনার ও ফর্ম ----- */
+@media (max-width: 1099px) {
+  #main-content img:not(.ame-print-logo):not(.memo-logo) {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  #main-content input:not([type="checkbox"]):not([type="radio"]),
+  #main-content select,
+  #main-content textarea,
+  #main-content .pb-input,
+  #main-content .form-control {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    min-height: var(--ame-mod-touch) !important;
+    font-size: 16px !important;
+  }
+
+  #main-content .row,
+  #main-content .form-row,
+  #main-content .d-flex:not(.ame-pos-term-action-row),
+  #main-content .er-meta-grid,
+  #main-content .er-entry-grid,
+  #main-content .er-rate-grid,
+  #main-content .filter-row,
+  #main-content .toolbar,
+  #main-content .actions-row,
+  #main-content .btn-group,
+  #main-content .button-row,
+  #main-content [class*="-actions"]:not(.ame-pos-term-actions) {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: wrap !important;
+    align-items: stretch !important;
+    gap: var(--ame-mod-gap) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  #main-content .row > [class*="col-"],
+  #main-content .form-row > *,
+  #main-content .er-meta-grid > *,
+  #main-content .er-entry-grid > *,
+  #main-content .er-rate-grid > * {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  #main-content .btn-group .btn,
+  #main-content .btn-group a,
+  #main-content .toolbar button,
+  #main-content .toolbar a.eng-btn,
+  #main-content .actions-row button,
+  #main-content .actions-row a {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: var(--ame-mod-touch) !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 760px) {
+  #main-content fieldset,
+  #main-content .card,
+  #main-content .panel,
+  #main-content .box,
+  #main-content .er-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  #main-content h1,
+  #main-content .er-head h1 {
+    font-size: clamp(1.15rem, 5.5vw, 1.65rem) !important;
+    line-height: 1.3 !important;
+  }
+
+  #main-content .page-title-row,
+  #main-content .er-head,
+  #main-content .shist-head,
+  #main-content .list-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: var(--ame-mod-gap) !important;
+  }
+}
+
+/* ----- ক্রয় টার্মিনাল (POS-এর মতো) ----- */
+@media (max-width: 900px) {
+  body.ame-purchase-terminal-page #main-content,
+  body.ame-purchase-terminal-page #main-content > * {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  body.ame-purchase-terminal-page .pb-table-wrap,
+  body.ame-purchase-terminal-page .ame-pos-table-wrap,
+  body.ame-purchase-terminal-page .pc-table-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    max-width: 100% !important;
+  }
+
+  body.ame-purchase-terminal-page .er-head,
+  body.ame-purchase-terminal-page .er-meta-grid,
+  body.ame-purchase-terminal-page .er-entry-grid,
+  body.ame-purchase-terminal-page .er-rate-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  body.ame-purchase-terminal-page .er-head-pay,
+  body.ame-purchase-terminal-page #pbPayLaunch,
+  body.ame-purchase-terminal-page #amePcCompleteBtn,
+  body.ame-purchase-terminal-page .ame-opt-btn-complete {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 48px !important;
+  }
+
+  body.ame-purchase-terminal-page #pbPayCard,
+  body.ame-purchase-terminal-page .pb-pay-card,
+  body.ame-purchase-terminal-page dialog[open] {
+    max-width: min(96vw, 520px) !important;
+    width: 100% !important;
+    margin: auto !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ----- HRM / কর্মী / বেতন ----- */
+@media (max-width: 900px) {
+  body[class*="hrm"] #main-content .eh-desk,
+  body[class*="worker"] #main-content .eh-desk,
+  #main-content .eh-hub-grid,
+  #main-content .eh-pay-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: var(--ame-mod-gap) !important;
+  }
+
+  #main-content .eh-account,
+  #main-content select.ame-account-select {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* ----- ইনভেন্টরি / সাপ্লায়ার / অ্যাকাউন্ট / খরচ ----- */
+@media (max-width: 900px) {
+  #main-content .inventory-toolbar,
+  #main-content .supplier-toolbar,
+  #main-content .account-toolbar,
+  #main-content .expense-toolbar,
+  #main-content .search-bar,
+  #main-content .list-filters {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  #main-content .list-filters input,
+  #main-content .list-filters select,
+  #main-content .search-bar input {
+    width: 100% !important;
+  }
+}
+
+/* ----- কাস্টমার / লেজার তালিকা ----- */
+@media (max-width: 760px) {
+  body.ame-customer-directory #main-content .cust-grid,
+  body.ame-customer-directory #main-content .customer-cards {
+    grid-template-columns: 1fr !important;
+  }
+
+  #main-content .due-reminder-table-wrap,
+  #main-content .ledger-table-wrap {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    width: 100% !important;
+  }
+}
+
+/* ----- ওয়ার্কশপ / ধার / ফ্যামিলি ----- */
+@media (max-width: 900px) {
+  #main-content .ws-grid,
+  #main-content .bl-grid,
+  #main-content .fam-grid,
+  #main-content .loan-grid {
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+  }
+}
+
+/* ----- মোডাল / ড্রয়ার / ফিক্সড প্যানেল ----- */
+@media (max-width: 900px) {
+  #main-content .modal-content,
+  #main-content .modal-dialog,
+  #main-content .ame-overlay-card,
+  #main-content .desk-overlay-card,
+  #main-content [class*="drawer"].open {
+    width: min(96vw, 560px) !important;
+    max-width: 100% !important;
+    max-height: calc(var(--ame-vh, 1vh) * 92) !important;
+    overflow: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  #main-content .fixed-bottom-bar,
+  #main-content .sticky-actions {
+    left: max(8px, env(safe-area-inset-left)) !important;
+    right: max(8px, env(safe-area-inset-right)) !important;
+    width: auto !important;
+    max-width: 100% !important;
+  }
+}
+
+/* ----- ডেস্কটপ: খুব বড় স্ক্রিনে কেন্দ্রীয় প্রস্থ ----- */
+@media (min-width: 1400px) {
+  #main-content > .shist-wrap,
+  #main-content > .tls-wrap,
+  #main-content > .eng-console,
+  #main-content > main.card {
+    max-width: min(100%, 1920px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}

@@ -1,6 +1,9 @@
-অ্যান্ড্রয়েড / মোবাইল রেসপন্সিভ (v10.98.902)
-==========================================
-• responsive-fix.css + ame-android-universal.css সব পেজের একদম শেষে লোড।
-• POS: ক্রেতা/সাপ্লায়ার রেডিও wrap, এক কলাম, কার্ট টেবিল স্ক্রল + বড় টাচ।
-• হেডার আইকন ৪৪px, wrap — কাটা পড়ে না।
-• ট্যাবলেট/ফোন: #main-content safe-area প্যাডিং।
+অ্যান্ড্রয়েড / ট্যাবলেট / ডেস্কটপ — সব মডিউল (v10.98.915)
+==============================================================
+• responsive-fix.css + ame-responsive-pro.css + ame-android-universal.css
+  + ame-modules-universal-responsive.css — footer.php-তে শেষে লোড।
+• responsive-fix.js — টেবিল স্ক্রল/স্ট্যাক, ডায়ালগ ফিট, মডিউল ক্লাস ট্যাগ।
+• responsive_boot.php — হেডার/ফুটারবিহীন HTML-তেও CSS ইনজেক্ট।
+• পেমেন্ট ইনভয়েস: invoice-print-fix.css (ওভারল্যাপ ফিক্স)।
+
+টেস্ট (লোকাল): tools/responsive_smoke.html — ফোন 375px, ট্যাবলেট 768px, ডেস্কটপ 1280px।

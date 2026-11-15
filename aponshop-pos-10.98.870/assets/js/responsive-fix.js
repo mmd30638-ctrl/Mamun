@@ -11,6 +11,18 @@
     var runTimer = 0;
     var autoPagers = [];
 
+    function tagModuleFromPath() {
+        var body = document.body;
+        if (!body) {
+            return;
+        }
+        var path = String(location.pathname || '').toLowerCase();
+        var match = path.match(/\/modules\/([^/]+)/);
+        if (match && match[1]) {
+            body.classList.add('ame-module-' + match[1].replace(/[^a-z0-9_-]/g, ''));
+        }
+    }
+
     function setViewportState() {
         var root = document.documentElement;
         var width = Math.max(root.clientWidth || 0, window.innerWidth || 0);
@@ -267,13 +279,10 @@
             return false;
         }
         var path = String(location.pathname || '').toLowerCase();
-        if (/\/modules\/customers\//.test(path)) {
+        if (/\/modules\/customers\/(payment|collect|pay|receive|invoice)/.test(path)) {
             return true;
         }
-        return body.classList.contains('ame-customer-directory')
-            || body.classList.contains('ame-due-reminder-page')
-            || body.classList.contains('ame-pos-terminal-page')
-            || body.classList.contains('ame-customer-payment-page');
+        return body.classList.contains('ame-customer-payment-page');
     }
 
     function clampHorizontalOverflow() {
@@ -288,6 +297,7 @@
     }
 
     function runAll() {
+        tagModuleFromPath();
         setViewportState();
         clampHorizontalOverflow();
         if (skipHeavyFit()) {

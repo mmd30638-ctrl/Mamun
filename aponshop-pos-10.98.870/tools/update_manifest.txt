@@ -1,3 +1,15 @@
+# 10.98.915 — সব মডিউল সব পেজ রেসপন্সিভ (ফোন/ট্যাবলেট/ডেস্কটপ)
+assets/css/ame-modules-universal-responsive.css
+assets/css/ame-android-universal.css
+assets/css/ame-responsive-pro.css
+assets/css/responsive-fix.css
+assets/js/responsive-fix.js
+includes/responsive_boot.php
+partials/footer.php
+ANDROID_RESPONSIVE_BN.txt
+tools/responsive_smoke.html
+VERSION.txt
+includes/config.php
 # 10.98.913 — কাস্টমার পেমেন্ট ইনভয়েস লেআউট (ওভারল্যাপ ফিক্স)
 assets/css/invoice-print-fix.css
 assets/css/ame-android-universal.css
