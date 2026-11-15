@@ -659,6 +659,27 @@ body {
 </a>
 <?php endif; ?>
 
+<?php if ((int)($customer['is_customer'] ?? 1) === 1 && empty($is_purged)): ?>
+<?php
+$ws_on_top = !empty($always_wholesale);
+$ws_title_top = $ws_on_top
+    ? 'পাইকারি দাম চালু — বিক্রয়ে সব পণ্য পাইকারি রেটে (অ্যাডমিন বন্ধ না করা পর্যন্ত)'
+    : 'পাইকারি দাম বন্ধ — অ্যাডমিন চালু করলে বিক্রয়ে সবসময় পাইকারি রেট';
+?>
+<button
+    type="button"
+    class="btn ame-wholesale-price-badge ame-wholesale-price-toggle<?php echo $ws_on_top ? ' is-on' : ''; ?><?php echo empty($can_toggle_wholesale_price) ? ' is-readonly' : ''; ?>"
+    id="ameWholesalePriceToolbarBtn"
+    title="<?php echo h($ws_title_top); ?>"
+    data-customer-id="<?php echo (int)$customer_id; ?>"
+    data-on="<?php echo $ws_on_top ? '1' : '0'; ?>"
+    style="background:<?php echo $ws_on_top ? 'linear-gradient(135deg,#0ea5e9,#0369a1)' : '#e2e8f0'; ?>;color:<?php echo $ws_on_top ? '#fff' : '#334155'; ?>;font-weight:900;border:2px solid <?php echo $ws_on_top ? '#0284c7' : '#94a3b8'; ?>;"
+>
+    <span aria-hidden="true">P</span>
+    <?php echo $ws_on_top ? 'সবসময় পাইকারি (চালু)' : 'পাইকারি দাম মোড'; ?>
+</button>
+<?php endif; ?>
+
 <button
     type="button"
     onclick="window.print()"
@@ -757,7 +778,7 @@ body {
 
 <div>
 
-<?php if (!empty($customer['is_customer'])): ?>
+<?php if ((int)($customer['is_customer'] ?? 1) === 1): ?>
 
 <span class="role-badge bg-cus">
 ক্রেতা
@@ -789,7 +810,7 @@ body {
 
 <?php endif; ?>
 
-<?php if (!empty($customer['is_customer'])): ?>
+<?php if ((int)($customer['is_customer'] ?? 1) === 1): ?>
 <?php
 $ws_on = !empty($always_wholesale);
 $ws_title = $ws_on
@@ -798,7 +819,7 @@ $ws_title = $ws_on
 ?>
 <span
     id="ameWholesalePriceBadge"
-    class="role-badge ame-wholesale-price-badge<?php echo $ws_on ? ' is-on' : ''; ?><?php echo empty($can_toggle_wholesale_price) ? ' is-readonly' : ''; ?> no-print"
+    class="role-badge ame-wholesale-price-badge ame-wholesale-price-toggle<?php echo $ws_on ? ' is-on' : ''; ?><?php echo empty($can_toggle_wholesale_price) ? ' is-readonly' : ''; ?> no-print"
     title="<?php echo h($ws_title); ?>"
     data-customer-id="<?php echo (int)$customer_id; ?>"
     data-on="<?php echo $ws_on ? '1' : '0'; ?>"
@@ -1077,33 +1098,42 @@ function ameProfileCloseFeatureList() {
 }
 
 (function () {
-    var badge = document.getElementById('ameWholesalePriceBadge');
-    if (!badge || badge.classList.contains('is-readonly')) {
+    var toggles = Array.prototype.slice.call(document.querySelectorAll('.ame-wholesale-price-toggle:not(.is-readonly)'));
+    var badges = Array.prototype.slice.call(document.querySelectorAll('.ame-wholesale-price-badge'));
+    if (!toggles.length) {
         return;
     }
     var token = window.AME_CSRF_TOKEN || (document.querySelector('meta[name="csrf-token"]') || {}).content || '';
     var busy = false;
 
     function paint(on, msg) {
-        badge.classList.toggle('is-on', !!on);
-        badge.dataset.on = on ? '1' : '0';
-        badge.title = on
-            ? 'পাইকারি দাম চালু — বিক্রয় ডেস্কে সব পণ্য পাইকারি রেটে (অ্যাডমিন বন্ধ না করা পর্যন্ত)'
-            : 'পাইকারি দাম বন্ধ — ক্লিক করে চালু করলে বিক্রয়ে সবসময় পাইকারি রেট';
-        var text = badge.querySelector('.ame-wholesale-price-text');
-        if (text) {
-            text.textContent = on ? 'সবসময় পাইকারি' : 'পাইকারি দাম';
-        }
+        badges.forEach(function (badge) {
+            badge.classList.toggle('is-on', !!on);
+            badge.dataset.on = on ? '1' : '0';
+            badge.title = on
+                ? 'পাইকারি দাম চালু — বিক্রয় ডেস্কে সব পণ্য পাইকারি রেটে (অ্যাডমিন বন্ধ না করা পর্যন্ত)'
+                : 'পাইকারি দাম বন্ধ — ক্লিক করে চালু করলে বিক্রয়ে সবসময় পাইকারি রেট';
+            var text = badge.querySelector('.ame-wholesale-price-text');
+            if (text) {
+                text.textContent = on ? 'সবসময় পাইকারি' : 'পাইকারি দাম';
+            }
+            if (badge.id === 'ameWholesalePriceToolbarBtn') {
+                badge.style.background = on ? 'linear-gradient(135deg,#0ea5e9,#0369a1)' : '#e2e8f0';
+                badge.style.color = on ? '#fff' : '#334155';
+                badge.style.borderColor = on ? '#0284c7' : '#94a3b8';
+                badge.innerHTML = '<span aria-hidden="true">P</span> ' + (on ? 'সবসময় পাইকারি (চালু)' : 'পাইকারি দাম মোড');
+            }
+        });
         if (msg) {
             window.alert(msg);
         }
     }
 
-    function toggle() {
+    function toggleFrom(el) {
         if (busy) {
             return;
         }
-        var next = badge.dataset.on !== '1';
+        var next = el.dataset.on !== '1';
         var ok = window.confirm(
             next
                 ? 'এই কাস্টমারের জন্য «সবসময় পাইকারি» চালু করবেন?\n\nবিক্রয় ডেস্কে এই কাস্টমার নিলে সব পণ্য পাইকারি দামে বিক্রি হবে। কোনো টাকা/ব্যালেন্স বদলাবে না।'
@@ -1114,7 +1144,7 @@ function ameProfileCloseFeatureList() {
         }
         busy = true;
         var body = new URLSearchParams();
-        body.set('id', badge.dataset.customerId || '');
+        body.set('id', el.dataset.customerId || toggles[0].dataset.customerId || '');
         body.set('on', next ? '1' : '0');
         if (token) {
             body.set('csrf_token', token);
@@ -1138,12 +1168,14 @@ function ameProfileCloseFeatureList() {
         });
     }
 
-    badge.addEventListener('click', toggle);
-    badge.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            toggle();
-        }
+    toggles.forEach(function (el) {
+        el.addEventListener('click', function () { toggleFrom(el); });
+        el.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                toggleFrom(el);
+            }
+        });
     });
 })();
 </script>
