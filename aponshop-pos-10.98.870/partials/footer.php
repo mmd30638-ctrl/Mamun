@@ -128,6 +128,7 @@ if ($ame_is_pos && is_file(__DIR__ . '/../includes/page_layout.php')) {
 }
 if ($ame_is_pos) {
     echo '<link rel="stylesheet" href="/assets/css/ame-sale-desk-lock.css?v=' . $ame_lock_ver . '" id="ameSaleLock">' . "\n";
+    echo '<link rel="stylesheet" href="/assets/css/ame-pos-mobile-scroll.css?v=' . $ame_lock_ver . '" id="amePosMobileScroll">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/sale-charge-popups.css?v=' . $ame_lock_ver . '">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/pos-charge-line.css?v=' . $ame_lock_ver . '" id="amePosChargeLine">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/pos-round-hide.css?v=' . $ame_lock_ver . '" id="amePosRoundHide">' . "\n";
