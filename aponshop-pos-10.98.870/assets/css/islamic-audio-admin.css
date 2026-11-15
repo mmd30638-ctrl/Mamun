@@ -1,0 +1,197 @@
+.ia-admin {
+  max-width: 960px;
+  margin: 12px auto 32px;
+  padding: 0 12px;
+  color: #0f172a;
+}
+
+.ia-admin-head h1 {
+  margin: 0 0 6px;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.ia-admin-sub {
+  margin: 0 0 16px;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.ia-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.ia-admin-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+}
+
+.ia-admin-card h2 {
+  margin: 0 0 12px;
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.ia-upload-form label {
+  display: block;
+  margin: 10px 0 4px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #475569;
+}
+
+.ia-upload-form input[type='text'],
+.ia-upload-form input[type='url'],
+.ia-upload-form select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.ia-drop {
+  border: 2px dashed #94a3b8;
+  border-radius: 14px;
+  padding: 20px 14px;
+  text-align: center;
+  background: #f8fafc;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.ia-drop.is-drag {
+  border-color: #0f172a;
+  background: #eef2ff;
+}
+
+.ia-drop-lead {
+  margin: 0;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.ia-drop-hint {
+  margin: 4px 0 10px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.ia-drop-name {
+  margin: 8px 0 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ia-btn {
+  display: inline-block;
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 16px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.ia-btn-primary {
+  background: #0f172a;
+  color: #fff;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.ia-btn-ghost {
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+}
+
+.ia-check {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px !important;
+  font-weight: 700 !important;
+}
+
+.ia-admin-table-wrap { margin-top: 4px; }
+
+.ia-table-scroll { overflow-x: auto; }
+
+.ia-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.ia-table th,
+.ia-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+.ia-table th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+}
+
+.ia-pill {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.ia-pill.on { background: #dcfce7; color: #166534; }
+.ia-pill.off { background: #fee2e2; color: #991b1b; }
+
+.ia-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ia-row-actions button {
+  font-size: 11px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.ia-row-actions .danger {
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+
+.ia-admin-note {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.ia-back {
+  display: inline-block;
+  margin-top: 16px;
+  font-weight: 800;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+@media (max-width: 720px) {
+  .ia-admin-grid { grid-template-columns: 1fr; }
+}
