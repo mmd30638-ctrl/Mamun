@@ -179,6 +179,65 @@ if (!function_exists('ame_party_amount_authorize_request')) {
     }
 }
 
+if (!function_exists('ame_party_amount_drift_log_once')) {
+    function ame_party_amount_drift_log_once(array $check): void
+    {
+        $sig = sprintf(
+            's%.0f_e%.0f_c%.0f_ec%.0f',
+            $check['supplier'],
+            (float)$check['expected_supplier'],
+            $check['customer'],
+            (float)$check['expected_customer']
+        );
+        $dir = function_exists('ame_private_log_dir') ? ame_private_log_dir() : (dirname(__DIR__) . '/private_data/logs');
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0755, true);
+        }
+        $stamp = $dir . '/.party_drift_log_' . md5($sig);
+        if (is_file($stamp) && (time() - (int)@filemtime($stamp)) < 21600) {
+            return;
+        }
+        @touch($stamp);
+        error_log(sprintf(
+            'PARTY AMOUNT DRIFT: suppliers Σ=%.2f (expected %.2f), customers Σ=%.2f (expected %.2f)',
+            $check['supplier'],
+            (float)$check['expected_supplier'],
+            $check['customer'],
+            (float)$check['expected_customer']
+        ));
+    }
+}
+
+if (!function_exists('ame_party_amount_skip_drift_check')) {
+    function ame_party_amount_skip_drift_check(): bool
+    {
+        if (PHP_SAPI === 'cli') {
+            return true;
+        }
+        $meth = strtoupper((string)($_SERVER['REQUEST_METHOD'] ?? 'GET'));
+        if ($meth !== 'GET') {
+            return false;
+        }
+        if (strtolower((string)($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '')) === 'xmlhttprequest') {
+            return true;
+        }
+        $path = strtolower((string)(parse_url((string)($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH) ?: ''));
+        foreach ([
+            'pos_party_search.php',
+            'draft_api.php',
+            'append_api.php',
+            'customer_card.php',
+            'pulse',
+            'api.php',
+        ] as $frag) {
+            if (str_contains($path, $frag)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
 if (!function_exists('ame_party_amount_shield_boot')) {
     function ame_party_amount_shield_boot(?mysqli $db = null): void
     {
@@ -189,19 +248,56 @@ if (!function_exists('ame_party_amount_shield_boot')) {
             ame_party_amount_shield_install($db);
         }
         ame_party_amount_authorize_request($db);
+        if (ame_party_amount_skip_drift_check()) {
+            return;
+        }
         $check = ame_ledger_seal_verify_totals($db);
         if (!$check['ok'] && $check['expected_supplier'] !== null) {
-            error_log(sprintf(
-                'PARTY AMOUNT DRIFT: suppliers Σ=%.2f (expected %.2f), customers Σ=%.2f (expected %.2f)',
-                $check['supplier'],
-                (float)$check['expected_supplier'],
-                $check['customer'],
-                (float)$check['expected_customer']
-            ));
-            if (strtolower((string)($_SESSION['role'] ?? '')) === 'admin') {
+            $is_admin = (function_exists('ame_is_admin_like') && ame_is_admin_like())
+                || !empty($_SESSION['is_super_admin'])
+                || in_array(strtolower((string)($_SESSION['role'] ?? '')), ['admin', 'super_admin', 'superadmin', 'owner'], true);
+            if ($is_admin) {
                 $_SESSION['ame_party_amount_drift'] = $check;
             }
+            ame_party_amount_drift_log_once($check);
+        } elseif (isset($_SESSION['ame_party_amount_drift'])) {
+            unset($_SESSION['ame_party_amount_drift']);
         }
+    }
+}
+
+if (!function_exists('ame_ledger_seal_rebaseline_totals')) {
+    /**
+     * লক-টেবিলের প্রত্যাশিত যোগফল = বর্তমান DB যোগফল (টাকা বদলায় না, শুধু তুলনার বেসলাইন)।
+     * @return array{ok:bool,message:string}
+     */
+    function ame_ledger_seal_rebaseline_totals(mysqli $db): array
+    {
+        if (!@$db->query('SELECT 1 FROM ame_ledger_seal WHERE id = 1 LIMIT 1')) {
+            return ['ok' => false, 'message' => 'ame_ledger_seal টেবিল নেই।'];
+        }
+        $supSum = 0.0;
+        $cusSum = 0.0;
+        $sr = @$db->query('SELECT COALESCE(SUM(total_due),0) AS s FROM suppliers');
+        if ($sr && ($row = $sr->fetch_assoc())) {
+            $supSum = round((float)$row['s'], 2);
+        }
+        $cr = @$db->query('SELECT COALESCE(SUM(receivable_balance),0) AS s FROM customers');
+        if ($cr && ($row = $cr->fetch_assoc())) {
+            $cusSum = round((float)$row['s'], 2);
+        }
+        $stmt = @$db->prepare(
+            'UPDATE ame_ledger_seal SET supplier_due_sum = ?, customer_recv_sum = ?, sealed_at = NOW() WHERE id = 1'
+        );
+        if (!$stmt) {
+            return ['ok' => false, 'message' => 'সিল আপডেট প্রস্তুত হয়নি।'];
+        }
+        $stmt->bind_param('dd', $supSum, $cusSum);
+        $ok = $stmt->execute();
+        $stmt->close();
+        return $ok
+            ? ['ok' => true, 'message' => 'লেজার সিল বেসলাইন আপডেট হয়েছে (individual ব্যালেন্স অপরিবর্তিত)।']
+            : ['ok' => false, 'message' => 'সিল আপডেট ব্যর্থ।'];
     }
 }
 
