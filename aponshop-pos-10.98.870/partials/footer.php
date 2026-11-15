@@ -368,6 +368,10 @@ if (str_contains($ame_purchase_lock, '/modules/suppliers/')
             ame_supplier_due_print_assets();
         }
     }
+    if (str_contains($ame_purchase_lock, '/modules/suppliers/list.php')) {
+        $ame_slist_ver = htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : ($sys_version ?? '1.0'), ENT_QUOTES, 'UTF-8');
+        echo '<link rel="stylesheet" href="/assets/css/supplier-list-pro.css?v=' . $ame_slist_ver . '" id="ameSupplierListProLock">' . "\n";
+    }
 }
 if (str_contains($ame_purchase_lock, '/modules/family/')) {
     $ame_flock_ver = htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : ($sys_version ?? '1.0'), ENT_QUOTES, 'UTF-8');

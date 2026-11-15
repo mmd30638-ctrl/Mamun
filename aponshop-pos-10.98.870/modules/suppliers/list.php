@@ -64,7 +64,8 @@ foreach ($suppliers as $s) {
 }
 
 $ame_body_class = 'ame-supplier-list-pro';
-$ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.930';
+$ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.931';
+define('AME_SUPPLIER_LIST_UI_BUILD', '10.98.931-pro');
 include '../../partials/header.php';
 ?>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,6 +74,23 @@ include '../../partials/header.php';
 <link rel="stylesheet" href="/assets/css/ame-logo-spinner.css?v=<?php echo htmlspecialchars($ver, ENT_QUOTES, 'UTF-8'); ?>">
 <?php ame_supplier_due_print_assets(); ?>
 <link rel="stylesheet" href="/assets/css/supplier-list-pro.css?v=<?php echo htmlspecialchars($ver, ENT_QUOTES, 'UTF-8'); ?>">
+<style id="ame-sup-list-critical">
+/* ক্রিটিক্যাল — মোবাইল/ডেস্কটপ: বাহ্যিক CSS না লোড হলেও কমলা/সবুজ বকেয়া */
+html body #main-content .sup-list-pro .sup-due--payable .sup-due-amt{color:#ea580c!important;-webkit-text-fill-color:#ea580c!important}
+html body #main-content .sup-list-pro .sup-due--credit .sup-due-amt{color:#16a34a!important;-webkit-text-fill-color:#16a34a!important}
+html body #main-content .sup-list-pro .sup-name{font-weight:900!important;font-size:16px!important;color:#0c1222!important;-webkit-text-fill-color:#0c1222!important}
+@media (max-width:720px){
+  .sup-list-pro .sup-table thead{display:none!important}
+  .sup-list-pro .sup-table tbody tr{display:block!important;border-radius:14px;margin-bottom:12px;border:1px solid #dbe4f0;box-shadow:0 6px 18px rgba(15,23,42,.07)}
+  .sup-list-pro .sup-table td{display:flex!important;justify-content:space-between;align-items:center;padding:11px 16px!important}
+  .sup-list-pro .sup-table td::before{content:attr(data-label);font-weight:900;font-size:10px;text-transform:uppercase;color:#64748b}
+  .sup-list-pro .sup-td-name{flex-direction:column!important;align-items:flex-start!important}
+}
+@media (min-width:721px){
+  .sup-list-pro .sup-table-wrap{overflow-x:auto}
+  .sup-list-pro .sup-table{min-width:820px}
+}
+</style>
 <style>
 .sup-list-pro .ame-wait-spin i {
     width: 28px !important; height: 28px !important;
@@ -85,6 +103,7 @@ include '../../partials/header.php';
 <div class="sup-list-pro">
     <div class="card">
         <header class="sup-list-hero">
+            <p class="sup-ui-build" aria-hidden="true">UI <?php echo htmlspecialchars(AME_SUPPLIER_LIST_UI_BUILD, ENT_QUOTES, 'UTF-8'); ?></p>
             <h1>সাপ্লায়ার তালিকা</h1>
             <div class="sup-links">
                 <a href="statement.php">স্টেটমেন্ট</a>
@@ -137,8 +156,8 @@ include '../../partials/header.php';
                 <thead>
                     <tr>
                         <th>নাম্বার</th>
-                        <th>সাপ্লায়ার</th>
-                        <th>ধরন</th>
+                        <th>সাপ্লায়ারের নাম</th>
+                        <th>ব্যবসার ধরন</th>
                         <th>ফোন</th>
                         <th style="text-align:right;">মোট বকেয়া</th>
                         <th style="text-align:center;">স্ট্যাটাস</th>
