@@ -785,9 +785,24 @@
     });
   }
 
+  function skipCustomerPayFit() {
+    var path = (location.pathname || '').toLowerCase();
+    if (path.indexOf('/modules/customers/') >= 0) {
+      return true;
+    }
+    var body = document.body;
+    return !!(body && (
+      body.classList.contains('ame-customer-payment-page')
+      || body.classList.contains('ame-due-reminder-page')
+    ));
+  }
+
   function boot() {
     hideHomeTools();
     releaseRunningText();
+    if (skipCustomerPayFit()) {
+      return;
+    }
     root = rootEl();
     if (!root) return;
     applySaved();

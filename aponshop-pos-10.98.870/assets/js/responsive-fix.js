@@ -247,6 +247,9 @@
             return true;
         }
         return !!(document.getElementById('memo-container')
+            || document.getElementById('spayMemo')
+            || document.getElementById('invoiceBox')
+            || document.getElementById('receiptCard')
             || document.querySelector('.memo-wrapper, .invoice-box, img.ame-print-logo'));
     }
 
@@ -262,6 +265,10 @@
         var body = document.body;
         if (!body) {
             return false;
+        }
+        var path = String(location.pathname || '').toLowerCase();
+        if (/\/modules\/customers\//.test(path)) {
+            return true;
         }
         return body.classList.contains('ame-customer-directory')
             || body.classList.contains('ame-due-reminder-page')

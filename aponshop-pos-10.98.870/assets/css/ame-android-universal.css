@@ -60,6 +60,25 @@
     font-size: 14px !important;
   }
 
+  #spayMemo,
+  #invoiceBox,
+  #receiptCard,
+  .invoice-box,
+  #memo-container,
+  .memo-wrapper {
+    width: min(480px, 100%) !important;
+    max-width: 100% !important;
+    transform: none !important;
+  }
+
+  .memo-meta-item,
+  #spayMemo .meta-row,
+  #spayMemo .memo-meta-row {
+    display: grid !important;
+    grid-template-columns: minmax(38%, auto) 1fr !important;
+    gap: 8px !important;
+  }
+
   #main-content .ame-auto-scroll-wrap {
     margin-bottom: 8px !important;
   }

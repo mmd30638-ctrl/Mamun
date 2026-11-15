@@ -346,6 +346,13 @@ if (str_contains($ame_purchase_lock, '/modules/customers/ledger.php')) {
     $ame_dlock_ver = htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : ($sys_version ?? '1.0'), ENT_QUOTES, 'UTF-8');
     echo '<link rel="stylesheet" href="/assets/css/cust-desk.css?v=' . $ame_dlock_ver . '" id="ameCustomerLedgerLock">' . "\n";
 }
+if (preg_match('#/modules/customers/(payment|collect|pay|receive)#i', $ame_purchase_lock)
+    || str_contains($ame_purchase_lock, '/modules/customers/index.php')
+    || str_contains($ame_purchase_lock, '/modules/customers/ledger.php')
+    || str_contains($ame_purchase_lock, '/modules/customers/due-reminder.php')) {
+    $ame_inv_ver = htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : ($sys_version ?? '1.0'), ENT_QUOTES, 'UTF-8');
+    echo '<link rel="stylesheet" href="/assets/css/invoice-print-fix.css?v=' . $ame_inv_ver . '" id="ameCustomerPayInvoiceFix">' . "\n";
+}
 if (str_contains($ame_purchase_lock, '/modules/suppliers/statement.php') || str_contains($ame_purchase_lock, '/modules/suppliers/ledger.php')) {
     $ame_dlock_ver = htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : ($sys_version ?? '1.0'), ENT_QUOTES, 'UTF-8');
     echo '<link rel="stylesheet" href="/assets/css/supplier-statement.css?v=' . $ame_dlock_ver . '" id="ameSupplierStatementLock">' . "\n";
