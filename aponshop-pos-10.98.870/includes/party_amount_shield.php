@@ -65,7 +65,17 @@ if (!function_exists('ame_party_amount_request_is_ledger_write')) {
     {
         if (PHP_SAPI === 'cli') {
             $cli = getenv('AME_PARTY_LEDGER_CLI');
-            return $cli === '1' || strtolower((string)$cli) === 'true';
+            if ($cli === '1' || strtolower((string)$cli) === 'true') {
+                return true;
+            }
+            $script = strtolower((string)($_SERVER['SCRIPT_FILENAME'] ?? $_SERVER['argv'][0] ?? ''));
+            foreach (['hire_accrue.php', 'duty_midnight.php'] as $tail) {
+                if ($tail !== '' && str_ends_with($script, $tail)) {
+                    return true;
+                }
+            }
+
+            return false;
         }
         $uri = ame_party_amount_request_uri();
         $reqPath = strtolower((string)(parse_url((string)($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH) ?: ''));
@@ -97,6 +107,8 @@ if (!function_exists('ame_party_amount_request_is_ledger_write')) {
             '/set_supplier_previous.php',
             '/resolve_customer_supplier.php',
             '/create_invoice_return.php',
+            '/modules/customers/hire/accrue.php',
+            '/modules/customers/hire/actions.php',
         ];
         foreach ($needles as $n) {
             if (str_contains($uri, $n)) {

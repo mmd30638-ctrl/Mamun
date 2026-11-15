@@ -343,6 +343,9 @@ function accrue_rental_charges($db) {
     }
     try {
         if (function_exists('hire_accrue_all')) {
+            if (function_exists('ame_party_balance_write_enable')) {
+                ame_party_balance_write_enable($db);
+            }
             hire_accrue_all($db);
             return;
         }
