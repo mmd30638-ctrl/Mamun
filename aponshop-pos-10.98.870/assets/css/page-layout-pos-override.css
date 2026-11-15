@@ -1,0 +1,48 @@
+/* বিক্রয় পেজ — শুধু সাবমিট/ক্লিক নিশ্চিত (লেআউট = সাইডবার «পেজ সাজান») */
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosCompleteBtn,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-actions {
+  pointer-events: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  cursor: pointer !important;
+}
+
+html body.ame-pos-terminal-page:not(.ame-fit-on) #main-content .ame-sale-desk button#amePosCompleteBtn {
+  min-height: 48px !important;
+  height: auto !important;
+}
+
+html body.ame-fit-on.ame-pos-terminal-page #main-content,
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk,
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell,
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid,
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main {
+  overflow: visible !important;
+}
+
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar {
+  flex-wrap: wrap !important;
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 45px !important;
+}
+
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk [data-ame-fit="1"] {
+  overflow: visible !important;
+}
+
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk [data-ame-fit="1"] {
+  position: absolute !important;
+  pointer-events: auto !important;
+}
+
+html body.ame-fit-on.ame-pos-terminal-page .ame-fit-bar {
+  z-index: 2000030 !important;
+}
+
+html body.ame-fit-on.ame-pos-terminal-page .ame-fit-move,
+html body.ame-fit-on.ame-pos-terminal-page .ame-fit-size {
+  z-index: 2000035 !important;
+}
