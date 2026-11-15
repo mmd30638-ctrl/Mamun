@@ -5,6 +5,8 @@ require_once '../../includes/purchase_functions.php';
 require_once '../../includes/account_functions.php';
 require_once '../../includes/supplier_settlement.php';
 require_once '../../includes/supplier_due_ui.php';
+require_once '../../includes/supplier_module_guard.php';
+ame_supplier_module_view_boot();
 ame_spay_ensure($db);
 $spay = ame_spay_dashboard($db);
 $spay_limit = ame_spay_approval_limit($db);

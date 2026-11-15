@@ -180,6 +180,10 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && ($_POST['action'] ?? '') ==
             }
             $old_due = round((float)$cur['total_due'], 2);
             $new_due = round((float)$target['expect'], 2);
+            if (function_exists('ame_supplier_module_admin_write_boot')) {
+                require_once __DIR__ . '/../../includes/supplier_module_guard.php';
+                ame_supplier_module_admin_write_boot($db);
+            }
             $up = $db->prepare('UPDATE suppliers SET total_due = ? WHERE id = ?');
             $up->bind_param('di', $new_due, $psid);
             $up->execute();

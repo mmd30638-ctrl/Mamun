@@ -294,7 +294,7 @@ html body #main-content .sup-list-pro .sup-due--zero .sup-due-amt {
   .sup-actions { gap: 6px; }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 1100px) and (pointer: coarse), (max-width: 720px) {
   .sup-table thead { display: none; }
   .sup-table tbody tr {
     display: block;

@@ -3,6 +3,8 @@ if (!empty($_SERVER['DOCUMENT_ROOT']) && is_file($_SERVER['DOCUMENT_ROOT'] . '/a
 require_once '../../includes/config.php';
 require_once '../../includes/purchase_functions.php';
 require_once '../../includes/supplier_due_ui.php';
+require_once '../../includes/supplier_module_guard.php';
+ame_supplier_module_view_boot();
 ensure_purchase_schema($db);
 
 $sup_id = (int)($_GET['id'] ?? 0);

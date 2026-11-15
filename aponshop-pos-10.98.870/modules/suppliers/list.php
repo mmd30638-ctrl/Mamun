@@ -7,6 +7,8 @@ require_once '../../includes/supplier_functions.php';
 require_once '../../includes/purchase_functions.php';
 require_once '../../includes/party_purge.php';
 require_once '../../includes/supplier_due_ui.php';
+require_once '../../includes/supplier_module_guard.php';
+ame_supplier_module_view_boot();
 if (isset($db) && $db instanceof mysqli && function_exists('ame_super_admin_boot')) {
     ame_super_admin_boot($db);
 }
@@ -64,8 +66,8 @@ foreach ($suppliers as $s) {
 }
 
 $ame_body_class = 'ame-supplier-list-pro';
-$ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.931';
-define('AME_SUPPLIER_LIST_UI_BUILD', '10.98.931-pro');
+$ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.932';
+define('AME_SUPPLIER_LIST_UI_BUILD', '10.98.932-pro');
 include '../../partials/header.php';
 ?>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -79,7 +81,7 @@ include '../../partials/header.php';
 html body #main-content .sup-list-pro .sup-due--payable .sup-due-amt{color:#ea580c!important;-webkit-text-fill-color:#ea580c!important}
 html body #main-content .sup-list-pro .sup-due--credit .sup-due-amt{color:#16a34a!important;-webkit-text-fill-color:#16a34a!important}
 html body #main-content .sup-list-pro .sup-name{font-weight:900!important;font-size:16px!important;color:#0c1222!important;-webkit-text-fill-color:#0c1222!important}
-@media (max-width:720px){
+@media (max-width:1100px) and (pointer:coarse),(max-width:720px){
   .sup-list-pro .sup-table thead{display:none!important}
   .sup-list-pro .sup-table tbody tr{display:block!important;border-radius:14px;margin-bottom:12px;border:1px solid #dbe4f0;box-shadow:0 6px 18px rgba(15,23,42,.07)}
   .sup-list-pro .sup-table td{display:flex!important;justify-content:space-between;align-items:center;padding:11px 16px!important}
@@ -110,7 +112,7 @@ html body #main-content .sup-list-pro .sup-name{font-weight:900!important;font-s
                 <a href="dashboard.php">ড্যাশবোর্ড</a>
             </div>
             <p class="sup-list-note">মোট বকেয়া = সাবেক + ক্রয় − পরিশোধ। সংখ্যা শুধু <strong>ক্রয়</strong>, <strong>সাপ্লায়ার পেমেন্ট</strong> বা <strong>অ্যাডমিন সংশোধন</strong> এ বদলায় — তালিকা খুললে নয়।</p>
-            <p class="sup-list-shield" role="note">লক: Party Amount Shield — পেজ/আপডেট ZIP দিয়ে `total_due` স্বয়ংক্রিয় বদল হয় না।</p>
+            <?php echo ame_supplier_amount_policy_note(); ?>
             <?php echo ame_supplier_due_render_legend('full'); ?>
         </header>
 

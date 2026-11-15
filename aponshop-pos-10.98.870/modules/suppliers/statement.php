@@ -6,6 +6,8 @@ require_once '../../includes/config.php';
 require_once '../../includes/purchase_functions.php';
 require_once '../../includes/supplier_settlement.php';
 require_once '../../includes/supplier_due_ui.php';
+require_once '../../includes/supplier_module_guard.php';
+ame_supplier_module_view_boot();
 
 ensure_purchase_schema($db);
 

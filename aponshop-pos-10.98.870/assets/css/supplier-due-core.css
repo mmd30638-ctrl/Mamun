@@ -27,7 +27,8 @@
 .sup-due-swatch--payable { background: #ea580c; }
 .sup-due-swatch--credit { background: #16a34a; }
 .sup-due-swatch--zero { background: #94a3b8; }
-.sup-list-shield {
+.sup-list-shield,
+.sup-policy-lock {
   margin: 10px 0 0;
   padding: 10px 12px;
   border-radius: 10px;
@@ -37,6 +38,7 @@
   border: 1px solid #e2e8f0;
   line-height: 1.5;
 }
+.sup-policy-lock strong { color: #0f766e; font-weight: 800; }
 
 .sup-due-badge {
   font-size: 10px;

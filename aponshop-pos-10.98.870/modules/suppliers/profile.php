@@ -3,6 +3,8 @@ require_once '../../includes/config.php';
 require_once '../../includes/supplier_functions.php';
 require_once '../../includes/party_purge.php';
 require_once '../../includes/supplier_due_ui.php';
+require_once '../../includes/supplier_module_guard.php';
+ame_supplier_module_view_boot();
 if (isset($db) && $db instanceof mysqli && function_exists('ame_super_admin_boot')) {
     ame_super_admin_boot($db);
 }

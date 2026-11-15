@@ -143,6 +143,9 @@ if (!function_exists('ame_party_amount_request_is_admin_manual')) {
         $uri = ame_party_amount_request_uri();
         $needles = [
             '/balance_guard.php',
+            '/modules/suppliers/sign_check.php',
+            '/modules/suppliers/settlement_action.php',
+            '/modules/suppliers/process_save.php',
             '/process_correct_balance.php',
             '/process_edit_account.php',
             '/process_opening_balance.php',
