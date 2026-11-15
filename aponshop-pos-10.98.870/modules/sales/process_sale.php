@@ -5,6 +5,9 @@
  */
 
 require_once '../../includes/config.php';
+if (isset($db) && $db instanceof mysqli && function_exists('ame_party_balance_write_enable')) {
+    ame_party_balance_write_enable($db);
+}
 require_once '../../includes/account_functions.php';
 require_once '../../includes/hrm_functions.php';
 require_once '../../includes/lang_helper.php';

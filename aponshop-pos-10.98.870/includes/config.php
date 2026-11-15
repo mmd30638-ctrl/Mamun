@@ -110,7 +110,7 @@ date_default_timezone_set('Asia/Dhaka');
 // ফলে সবসময় ডিফল্ট মান '1.0' ব্যবহার হতো, অর্থাৎ CSS/JS বদলালেও পুরনো
 // ব্রাউজার-ক্যাশ ভাঙত না। এখন এখান থেকে কেন্দ্রীয়ভাবে সেট করা হচ্ছে —
 // ভবিষ্যতে CSS/JS বদলালে শুধু নিচের সংখ্যাটা বাড়ালেই যথেষ্ট।
-define('AME_ASSET_VERSION', '10.98.920');
+define('AME_ASSET_VERSION', '10.98.921');
 $sys_version = AME_ASSET_VERSION;
 
 // স্পিড লক: SPEED.txt মুছবেন না। সেটিংস → স্পিড সিস্টেম। docs/performance-standards.md
@@ -213,6 +213,12 @@ if (isset($db) && $db instanceof mysqli) {
     if (is_file(__DIR__ . '/balance_guard.php')) {
         require_once __DIR__ . '/balance_guard.php';
         ame_bg_context($db);
+    }
+    if (is_file(__DIR__ . '/party_amount_shield.php')) {
+        require_once __DIR__ . '/party_amount_shield.php';
+        if (function_exists('ame_party_amount_shield_boot')) {
+            ame_party_amount_shield_boot($db);
+        }
     }
     if (is_file(__DIR__ . '/perf_indexes.php')) {
         require_once __DIR__ . '/perf_indexes.php';
