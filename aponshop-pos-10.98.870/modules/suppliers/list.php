@@ -63,9 +63,13 @@ foreach ($suppliers as $s) {
     }
 }
 
-$ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.928';
+$ame_body_class = 'ame-supplier-list-pro';
+$ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.930';
 include '../../partials/header.php';
 ?>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/ame-logo-spinner.css?v=<?php echo htmlspecialchars($ver, ENT_QUOTES, 'UTF-8'); ?>">
 <?php ame_supplier_due_print_assets(); ?>
 <link rel="stylesheet" href="/assets/css/supplier-list-pro.css?v=<?php echo htmlspecialchars($ver, ENT_QUOTES, 'UTF-8'); ?>">
@@ -92,13 +96,13 @@ include '../../partials/header.php';
         </header>
 
         <div class="sup-kpi-row" aria-label="তালিকার সারাংশ">
-            <div class="sup-kpi">
+            <div class="sup-kpi sup-kpi--payable">
                 <small>মোট বকেয়া (এই তালিকা)</small>
-                <strong style="color:#ea580c;"><?php echo number_format($sum_payable, 2); ?> ৳</strong>
+                <strong><?php echo number_format($sum_payable, 2); ?> ৳</strong>
             </div>
-            <div class="sup-kpi">
+            <div class="sup-kpi sup-kpi--credit">
                 <small>মোট অগ্রিম (এই তালিকা)</small>
-                <strong style="color:#16a34a;"><?php echo number_format($sum_credit, 2); ?> ৳</strong>
+                <strong><?php echo number_format($sum_credit, 2); ?> ৳</strong>
             </div>
             <div class="sup-kpi">
                 <small>সাপ্লায়ার</small>
@@ -160,15 +164,15 @@ include '../../partials/header.php';
                         data-phone="<?php echo htmlspecialchars((string)($s['phone'] ?? ''), ENT_QUOTES, 'UTF-8'); ?>"
                         data-alt="<?php echo htmlspecialchars((string)($s['alt_phone'] ?? ''), ENT_QUOTES, 'UTF-8'); ?>"
                     >
-                        <td data-label="নাম্বার"><span class="sup-code"><?php echo htmlspecialchars($code, ENT_QUOTES, 'UTF-8'); ?></span></td>
-                        <td data-label="সাপ্লায়ার">
+                        <td class="sup-td sup-td-code" data-label="নাম্বার"><span class="sup-code"><?php echo htmlspecialchars($code, ENT_QUOTES, 'UTF-8'); ?></span></td>
+                        <td class="sup-td sup-td-name" data-label="সাপ্লায়ার">
                             <a href="profile.php?id=<?php echo (int)$s['id']; ?>" class="sup-name"><?php echo htmlspecialchars($s['name'] ?? ''); ?></a>
                             <?php if (!empty($s['business_name'])): ?><div class="sup-sub"><?php echo htmlspecialchars($s['business_name']); ?></div><?php endif; ?>
                         </td>
-                        <td data-label="ধরন"><?php echo htmlspecialchars(ame_supplier_business_type_label($s['business_type'] ?? null)); ?></td>
-                        <td data-label="ফোন"><?php echo htmlspecialchars($s['phone'] ?? ''); ?></td>
-                        <td data-label="মোট বকেয়া"><?php echo $due_cell; ?></td>
-                        <td data-label="স্ট্যাটাস" style="text-align:center;">
+                        <td class="sup-td sup-td-type" data-label="ধরন"><span class="sup-type"><?php echo htmlspecialchars(ame_supplier_business_type_label($s['business_type'] ?? null)); ?></span></td>
+                        <td class="sup-td sup-td-phone" data-label="ফোন"><span class="sup-phone"><?php echo htmlspecialchars($s['phone'] ?? ''); ?></span></td>
+                        <td class="sup-td sup-td-due" data-label="মোট বকেয়া"><?php echo $due_cell; ?></td>
+                        <td class="sup-td sup-td-status" data-label="স্ট্যাটাস" style="text-align:center;">
                             <?php if ($purged): ?>
                             <span class="sup-status off">মুছে যাওয়া</span>
                             <?php else: ?>
@@ -178,11 +182,11 @@ include '../../partials/header.php';
                             </span>
                             <?php endif; ?>
                         </td>
-                        <td data-label="অ্যাকশন" class="sup-actions">
+                        <td data-label="অ্যাকশন" class="sup-actions sup-td sup-td-act">
                             <a href="profile.php?id=<?php echo (int)$s['id']; ?>" class="sup-act-view">প্রোফাইল</a>
                             <a href="pay.php?id=<?php echo (int)$s['id']; ?>" class="sup-act-pay">পেমেন্ট</a>
-                            <a href="ledger.php?id=<?php echo (int)$s['id']; ?>">লেজার</a>
-                            <a href="statement.php?id=<?php echo (int)$s['id']; ?>">স্টেটমেন্ট</a>
+                            <a href="ledger.php?id=<?php echo (int)$s['id']; ?>" class="sup-act-ledger">লেজার</a>
+                            <a href="statement.php?id=<?php echo (int)$s['id']; ?>" class="sup-act-stmt">স্টেটমেন্ট</a>
                             <?php if (!$purged && $can_party_purge): ?>
                             <button type="button" class="sup-act-del" data-ame-party-purge="supplier" data-id="<?php echo (int)$s['id']; ?>" data-name="<?php echo htmlspecialchars((string)($s['name'] ?? ''), ENT_QUOTES, 'UTF-8'); ?>" data-action="process_purge.php">চিরতরে মুছুন</button>
                             <?php endif; ?>
