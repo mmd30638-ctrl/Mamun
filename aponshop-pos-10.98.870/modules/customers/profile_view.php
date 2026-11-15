@@ -625,6 +625,10 @@ body {
 </head>
 
 <body>
+<?php
+$ame_profile_csrf = function_exists('csrf_token') ? csrf_token() : (string)($_SESSION['csrf_token'] ?? '');
+?>
+<script>window.AME_CSRF_TOKEN = <?php echo json_encode($ame_profile_csrf, JSON_UNESCAPED_UNICODE); ?>;</script>
 
 <div class="container">
 
@@ -1103,7 +1107,10 @@ function ameProfileCloseFeatureList() {
     if (!toggles.length) {
         return;
     }
-    var token = window.AME_CSRF_TOKEN || (document.querySelector('meta[name="csrf-token"]') || {}).content || '';
+    var token = window.AME_CSRF_TOKEN
+        || (document.querySelector('input[name="csrf_token"]') || {}).value
+        || (document.querySelector('meta[name="csrf-token"]') || {}).content
+        || '';
     var busy = false;
 
     function paint(on, msg) {
@@ -1152,11 +1159,18 @@ function ameProfileCloseFeatureList() {
         fetch('actions/toggle_always_wholesale.php', {
             method: 'POST',
             credentials: 'same-origin',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-Token': token
+            },
             body: body.toString()
         }).then(function (res) {
             return res.json().then(function (data) {
                 if (!res.ok || !data.ok) {
+                    if (data && data.csrf_refresh) {
+                        window.AME_CSRF_TOKEN = data.csrf_refresh;
+                    }
                     throw new Error((data && data.message) ? data.message : 'সংরক্ষণ ব্যর্থ');
                 }
                 paint(!!data.always_wholesale, data.message || '');
@@ -1168,11 +1182,21 @@ function ameProfileCloseFeatureList() {
         });
     }
 
+    function readCsrfFromPage() {
+        return window.AME_CSRF_TOKEN
+            || (document.querySelector('input[name="csrf_token"]') || {}).value
+            || '';
+    }
+
     toggles.forEach(function (el) {
-        el.addEventListener('click', function () { toggleFrom(el); });
+        el.addEventListener('click', function () {
+            token = readCsrfFromPage();
+            toggleFrom(el);
+        });
         el.addEventListener('keydown', function (event) {
             if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
+                token = readCsrfFromPage();
                 toggleFrom(el);
             }
         });

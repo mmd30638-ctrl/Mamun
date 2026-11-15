@@ -4,7 +4,9 @@
  * শুধু customers.always_wholesale আপডেট করে; ব্যালেন্স/লেজার/পেমেন্ট স্পর্শ করে না।
  */
 require_once __DIR__ . '/../../../includes/config.php';
-require_once __DIR__ . '/../customer_schema.php';
+if (is_file(__DIR__ . '/../../../includes/customer_wholesale_col.php')) {
+    require_once __DIR__ . '/../../../includes/customer_wholesale_col.php';
+}
 
 header('Content-Type: application/json; charset=UTF-8');
 header('Cache-Control: no-store');
@@ -21,10 +23,18 @@ if (empty($_SESSION['user_id'])) {
     exit;
 }
 
-$csrf = (string)($_POST['csrf_token'] ?? $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '');
-if ($csrf === '' || !hash_equals((string)($_SESSION['csrf_token'] ?? ''), $csrf)) {
+if (function_exists('csrf_token')) {
+    csrf_token();
+}
+$submitted = (string)($_POST['csrf_token'] ?? $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '');
+$sessionTok = (string)($_SESSION['csrf_token'] ?? '');
+if ($sessionTok === '' || $submitted === '' || !hash_equals($sessionTok, $submitted)) {
     http_response_code(403);
-    echo json_encode(['ok' => false, 'message' => 'সেশন মেয়াদ শেষ — পেজ রিফ্রেশ করুন।'], JSON_UNESCAPED_UNICODE);
+    echo json_encode([
+        'ok' => false,
+        'message' => 'সেশন মেয়াদ শেষ — পেজ রিফ্রেশ করে আবার চেষ্টা করুন।',
+        'csrf_refresh' => function_exists('csrf_token') ? csrf_token() : '',
+    ], JSON_UNESCAPED_UNICODE);
     exit;
 }
 
@@ -48,7 +58,15 @@ if (!$is_admin) {
     exit;
 }
 
-ensure_customer_tables($db);
+if (!isset($db) || !($db instanceof mysqli)) {
+    http_response_code(500);
+    echo json_encode(['ok' => false, 'message' => 'ডাটাবেস সংযোগ নেই।'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+if (function_exists('ame_customer_wholesale_col_ready')) {
+    ame_customer_wholesale_col_ready($db);
+}
 
 $id = (int)($_POST['id'] ?? 0);
 if ($id <= 0) {
@@ -85,7 +103,7 @@ if (!$stmt) {
     exit;
 }
 $stmt->bind_param('ii', $flag, $id);
-if (!$stmt->execute() || $stmt->affected_rows < 0) {
+if (!$stmt->execute()) {
     $stmt->close();
     http_response_code(500);
     echo json_encode(['ok' => false, 'message' => 'সংরক্ষণ করা যায়নি।'], JSON_UNESCAPED_UNICODE);
