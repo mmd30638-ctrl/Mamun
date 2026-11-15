@@ -8,6 +8,7 @@ ensure_partner_accounting_schema($db);
 
 $ym = (string)($_GET['month'] ?? date('Y-m'));
 $only = (int)($_GET['partner_id'] ?? 0);
+$pg = max(1, (int)($_GET['pg'] ?? 1));
 $pa_pack_active = 'ledger';
 $pa_partner_id = $only;
 $bounds_ym = '';
@@ -101,7 +102,11 @@ include '../../partials/header.php';
     <?php endif; ?>
 
     <?php foreach ($books as $book):
-        $lines = array_reverse($book['lines']);
+        $linesAll = array_reverse($book['lines']);
+        $lineSlice = pa_stmt_page_slice($linesAll, $pg);
+        $lines = $lineSlice['items'];
+        $pa_slice = $lineSlice;
+        $pa_pager_script = 'partner_accounting_statement.php';
         ?>
         <article class="pa-stmt" id="pa-book-<?php echo (int)$book['partner_id']; ?>">
             <div class="pa-stmt-head">
@@ -133,11 +138,13 @@ include '../../partials/header.php';
                 এই পার্টনারের মোট লাভ <strong><?php echo pa_taka($book['plus']); ?></strong>
                 এবং মোট মাইনাস <strong><?php echo pa_taka($book['minus']); ?></strong> হয়েছে।
             </p>
-            <p class="pa-stmt-note">প্রতি সারিতে <strong>সাবেক</strong> = প্লাস/মাইনাসের আগের চলতি ব্যালেন্স, তারপর প্লাস·মাইনাস, শেষে নতুন চলতি। মাইনাসের কারণ আলাদা কলামে।</p>
+            <p class="pa-stmt-note">প্রতি সারিতে <strong>সাবেক</strong> = প্লাস/মাইনাসের আগের চলতি ব্যালেন্স, তারপর প্লাস·মাইনাস, শেষে নতুন চলতি। মাইনাসের কারণ আলাদা কলামে। প্রতি পৃষ্ঠায় সর্বোচ্চ <strong><?php echo pa_stmt_rows_per_page(); ?></strong>টি ক্রমিক সারি।</p>
+            <?php include '../../partials/partner_statement_pager.php'; ?>
             <div class="pa-table-wrap">
-                <table class="pa-table pa-book">
+                <table class="pa-table pa-book pa-rows-15">
                     <thead>
                         <tr>
+                            <th class="pa-th-serial">ক্রমিক</th>
                             <th>তারিখ</th>
                             <th>বিবরণ</th>
                             <th class="num pa-th-prev">সাবেক</th>
@@ -149,12 +156,14 @@ include '../../partials/header.php';
                     </thead>
                     <tbody>
                         <?php if (!$lines): ?>
-                            <tr><td colspan="7" data-label="">এই মাসে প্লাস বা মাইনাস নেই।</td></tr>
-                        <?php else: foreach ($lines as $line):
+                            <tr><td colspan="8" data-label="">এই মাসে প্লাস বা মাইনাস নেই।</td></tr>
+                        <?php else: foreach ($lines as $i => $line):
                             $when = (string)$line['date'];
                             $show = preg_match('/^\d{4}-\d{2}-\d{2}$/', $when) ? date('d-m-Y', strtotime($when)) : '';
+                            $serial = $lineSlice['serial_start'] + $i;
                             ?>
                             <tr class="pa-stmt-row">
+                                <td class="num pa-serial" data-label="ক্রমিক"><?php echo htmlspecialchars(pa_stmt_serial_label($serial)); ?></td>
                                 <td data-label="তারিখ"><?php echo htmlspecialchars($show); ?></td>
                                 <td data-label="বিবরণ"><?php echo htmlspecialchars($line['description']); ?></td>
                                 <td class="num pa-prev" data-label="সাবেক"><?php echo pa_taka((float)($line['previous'] ?? 0)); ?></td>
@@ -165,8 +174,10 @@ include '../../partials/header.php';
                             </tr>
                         <?php endforeach; endif; ?>
                     </tbody>
+                    <?php if ($lines): ?>
                     <tfoot>
                         <tr>
+                            <td data-label=""></td>
                             <td colspan="2" data-label="মোট">মোট</td>
                             <td class="num pa-prev" data-label="সাবেক"><?php echo pa_taka($book['opening']); ?></td>
                             <td class="num pa-plus" data-label="প্লাস"><?php echo pa_book_signed((float)$book['plus'], '+'); ?></td>
@@ -175,8 +186,10 @@ include '../../partials/header.php';
                             <td class="num pa-run" data-label="মোট এমাউন্ট"><?php echo pa_taka($book['total']); ?></td>
                         </tr>
                     </tfoot>
+                    <?php endif; ?>
                 </table>
             </div>
+            <?php include '../../partials/partner_statement_pager.php'; ?>
             <div class="box"><span>মোট এমাউন্ট</span><span><?php echo pa_taka($book['total']); ?></span></div>
             <p class="pa-stmt-note"><?php echo pa_taka($book['opening']); ?> + <?php echo pa_book_signed((float)$book['plus'], '+'); ?> − <?php echo pa_book_signed((float)$book['minus'], '-'); ?> = <?php echo pa_taka($book['total']); ?></p>
             <div class="signs">

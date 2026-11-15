@@ -6,7 +6,8 @@
 
 declare(strict_types=1);
 
-const PA_STMT_PACK_VER = '10.98.935';
+const PA_STMT_PACK_VER = '10.98.936';
+const PA_STMT_ROWS_PER_PAGE = 15;
 
 /**
  * @return array{ym:string,partner_id:int,bounds:array,dash:array,partner:array|null,book:array|null,error:string}
@@ -47,14 +48,48 @@ function pa_stmt_date_show(string $iso): string
     return date('d-m-Y', strtotime($iso));
 }
 
-function pa_stmt_nav_href(string $script, string $ym, int $partnerId): string
+function pa_stmt_rows_per_page(): int
 {
-  $base = basename($script);
-  $q = 'month=' . rawurlencode($ym);
-  if ($partnerId > 0) {
-      $q .= '&partner_id=' . $partnerId;
-  }
-  return $base . '?' . $q;
+    return PA_STMT_ROWS_PER_PAGE;
+}
+
+function pa_stmt_nav_href(string $script, string $ym, int $partnerId, int $page = 0): string
+{
+    $base = basename($script);
+    $q = 'month=' . rawurlencode($ym);
+    if ($partnerId > 0) {
+        $q .= '&partner_id=' . $partnerId;
+    }
+    if ($page > 1) {
+        $q .= '&pg=' . $page;
+    }
+    return $base . '?' . $q;
+}
+
+/**
+ * @param list<mixed> $items
+ * @return array{items:list<mixed>,page:int,pages:int,total:int,per:int,serial_start:int}
+ */
+function pa_stmt_page_slice(array $items, int $page): array
+{
+    $per = pa_stmt_rows_per_page();
+    $total = count($items);
+    $pages = max(1, (int)ceil($total / $per));
+    $page = max(1, min($page, $pages));
+    $offset = ($page - 1) * $per;
+    return [
+        'items' => array_slice($items, $offset, $per),
+        'page' => $page,
+        'pages' => $pages,
+        'total' => $total,
+        'per' => $per,
+        'serial_start' => $offset + 1,
+    ];
+}
+
+function pa_stmt_serial_label(int $n): string
+{
+    return (string)$n;
 }
 
 /**

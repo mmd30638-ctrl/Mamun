@@ -1,6 +1,8 @@
 # Partner statement pack (intl-100)
 
-**Version:** `PA_STMT_PACK_VER` in `includes/partner_statement_pack.php` (10.98.935+)
+**Version:** `PA_STMT_PACK_VER` in `includes/partner_statement_pack.php` (10.98.936+)
+
+**Pagination:** `PA_STMT_ROWS_PER_PAGE = 15` — each list page shows up to 15 numbered rows (`pg` query); totals unchanged across pages.
 
 ## Purpose
 

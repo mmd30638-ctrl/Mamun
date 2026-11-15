@@ -146,19 +146,65 @@
 .pa-day-lines {
     padding: 8px 12px 12px;
 }
+.pa-pager {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    font-size: 13px;
+}
+.pa-pager-btns {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.pa-pager-cur {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+.pa-serial,
+.pa-th-serial {
+    width: 2.5rem;
+    color: #64748b;
+    font-weight: 700;
+}
+.pa-serial-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 8px;
+    background: #e2e8f0;
+    color: #334155;
+    font-weight: 800;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+}
 .pa-profit-row {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: auto 1fr auto;
     gap: 6px 12px;
-    padding: 10px 0;
+    padding: 8px 0;
     border-bottom: 1px dashed #e5e7eb;
-    font-size: 14px;
+    font-size: 13px;
+}
+.pa-profit-row .pa-serial-badge {
+    grid-row: span 2;
+    align-self: start;
+    margin-top: 2px;
 }
 .pa-profit-row:last-child {
     border-bottom: 0;
 }
 .pa-profit-who {
-    grid-column: 1 / -1;
+    grid-column: 2;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -166,18 +212,49 @@
     font-weight: 600;
 }
 .pa-profit-prod {
+    grid-column: 2;
     color: #374151;
 }
 .pa-profit-amt {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    align-self: center;
     font-weight: 700;
 }
 .pa-outflow-row {
     display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 8px 10px;
+    grid-template-columns: auto auto 1fr auto;
+    gap: 6px 8px;
     align-items: start;
-    padding: 10px 0;
+    padding: 8px 0;
     border-bottom: 1px dashed #e5e7eb;
+    font-size: 13px;
+}
+.pa-table.pa-book.pa-rows-15 tbody tr.pa-stmt-row {
+    line-height: 1.35;
+}
+@media (max-width: 1100px), ((hover: none) and (pointer: coarse)) {
+    .pa-table.pa-book.pa-rows-15 tbody tr.pa-stmt-row,
+    .pa-table.pa-book.pa-rows-15 tfoot tr {
+        padding: 7px 10px;
+        margin-bottom: 8px;
+    }
+    .pa-table.pa-book.pa-rows-15 td {
+        padding: 4px 0;
+        font-size: 13px;
+    }
+    .pa-day-head {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+@media print {
+    .pa-table.pa-book.pa-rows-15 tbody tr.pa-stmt-row {
+        page-break-inside: avoid;
+    }
+    .pa-table.pa-book.pa-rows-15 tbody tr.pa-stmt-row:nth-child(15n) {
+        page-break-after: always;
+    }
 }
 .pa-outflow-row:last-child {
     border-bottom: 0;

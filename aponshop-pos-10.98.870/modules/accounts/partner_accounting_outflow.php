@@ -8,6 +8,7 @@ ensure_partner_accounting_schema($db);
 
 $ym = (string)($_GET['month'] ?? date('Y-m'));
 $partnerId = (int)($_GET['partner_id'] ?? 0);
+$pg = max(1, (int)($_GET['pg'] ?? 1));
 $ctx = pa_stmt_pack_context($db, $ym, $partnerId);
 $bounds = $ctx['bounds'];
 $dash = $ctx['dash'];
@@ -17,11 +18,13 @@ $pa_pack_active = 'outflow';
 
 $outflow = ['lines' => [], 'total' => 0.0, 'by_type' => [], 'reconciled' => true];
 $days = [];
+$lineSlice = ['items' => [], 'serial_start' => 1, 'page' => 1, 'pages' => 1, 'total' => 0, 'per' => pa_stmt_rows_per_page()];
 $book = $ctx['book'];
 $partner = $ctx['partner'];
 if ($book) {
     $outflow = pa_stmt_outflow_from_book($book);
-    $days = pa_stmt_group_days($outflow['lines'], 'amount');
+    $lineSlice = pa_stmt_page_slice($outflow['lines'], $pg);
+    $days = pa_stmt_group_days($lineSlice['items'], 'amount');
 }
 
 include '../../partials/header.php';
@@ -98,6 +101,13 @@ include '../../partials/header.php';
                 <?php endforeach; ?>
             </div>
 
+            <?php
+            $pa_slice = $lineSlice;
+            $pa_pager_script = 'partner_accounting_outflow.php';
+            include '../../partials/partner_statement_pager.php';
+            $serial = $lineSlice['serial_start'];
+            ?>
+
             <?php if ($days === []): ?>
                 <div class="pa-empty">এই মাসে কোনো মাইনাস নেই।</div>
             <?php else: ?>
@@ -110,6 +120,8 @@ include '../../partials/header.php';
                         <div class="pa-day-lines">
                             <?php foreach ($day['lines'] as $ln): ?>
                                 <div class="pa-outflow-row" data-type="<?php echo htmlspecialchars((string)$ln['type']); ?>">
+                                    <span class="pa-serial-badge"><?php echo htmlspecialchars(pa_stmt_serial_label($serial)); ?></span>
+                                    <?php $serial++; ?>
                                     <span class="pa-tag <?php echo htmlspecialchars((string)$ln['type']); ?>"><?php echo htmlspecialchars((string)$ln['type_label']); ?></span>
                                     <div class="pa-outflow-body">
                                         <div class="pa-outflow-desc"><?php echo htmlspecialchars((string)$ln['description']); ?></div>
@@ -125,6 +137,7 @@ include '../../partials/header.php';
                 <?php endforeach; ?>
             <?php endif; ?>
 
+            <?php include '../../partials/partner_statement_pager.php'; ?>
             <div class="box pa-pack-total">
                 <span>মাসের মোট মাইনাস (লেজার মিল)</span>
                 <span class="num pa-minus"><?php echo pa_book_signed((float)$outflow['total'], '-'); ?></span>
