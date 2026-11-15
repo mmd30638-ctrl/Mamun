@@ -126,13 +126,14 @@ include '../../partials/header.php';
                 এই পার্টনারের মোট লাভ <strong><?php echo pa_taka($book['plus']); ?></strong>
                 এবং মোট মাইনাস <strong><?php echo pa_taka($book['minus']); ?></strong> হয়েছে।
             </p>
-            <p class="pa-stmt-note">প্রথম ব্যালেন্স + প্লাস − মাইনাস = মোট এমাউন্ট। নতুন লাইন উপরে। মাইনাসের কারণ সংক্ষেপে আলাদা কলামে।</p>
+            <p class="pa-stmt-note">প্রতি সারিতে <strong>সাবেক</strong> = প্লাস/মাইনাসের আগের চলতি ব্যালেন্স, তারপর প্লাস·মাইনাস, শেষে নতুন চলতি। মাইনাসের কারণ আলাদা কলামে।</p>
             <div class="pa-table-wrap">
                 <table class="pa-table pa-book">
                     <thead>
                         <tr>
                             <th>তারিখ</th>
                             <th>বিবরণ</th>
+                            <th class="num pa-th-prev">সাবেক</th>
                             <th class="num">প্লাস</th>
                             <th class="num">মাইনাস</th>
                             <th>মাইনাসের কারণ</th>
@@ -141,28 +142,30 @@ include '../../partials/header.php';
                     </thead>
                     <tbody>
                         <?php if (!$lines): ?>
-                            <tr><td colspan="6" data-label="">এই মাসে প্লাস বা মাইনাস নেই।</td></tr>
+                            <tr><td colspan="7" data-label="">এই মাসে প্লাস বা মাইনাস নেই।</td></tr>
                         <?php else: foreach ($lines as $line):
                             $when = (string)$line['date'];
                             $show = preg_match('/^\d{4}-\d{2}-\d{2}$/', $when) ? date('d-m-Y', strtotime($when)) : '';
                             ?>
-                            <tr>
+                            <tr class="pa-stmt-row">
                                 <td data-label="তারিখ"><?php echo htmlspecialchars($show); ?></td>
                                 <td data-label="বিবরণ"><?php echo htmlspecialchars($line['description']); ?></td>
+                                <td class="num pa-prev" data-label="সাবেক"><?php echo pa_taka((float)($line['previous'] ?? 0)); ?></td>
                                 <td class="num pa-plus" data-label="প্লাস"><?php echo pa_book_signed((float)$line['plus'], '+'); ?></td>
                                 <td class="num pa-minus" data-label="মাইনাস"><?php echo pa_book_signed((float)$line['minus'], '-'); ?></td>
                                 <td data-label="মাইনাসের কারণ"><?php echo htmlspecialchars((string)($line['minus_reason'] ?? '')); ?></td>
-                                <td class="num" data-label="চলতি"><?php echo pa_taka($line['running']); ?></td>
+                                <td class="num pa-run" data-label="চলতি"><?php echo pa_taka($line['running']); ?></td>
                             </tr>
                         <?php endforeach; endif; ?>
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="2" data-label="মোট">মোট</td>
+                            <td class="num pa-prev" data-label="সাবেক"><?php echo pa_taka($book['opening']); ?></td>
                             <td class="num pa-plus" data-label="প্লাস"><?php echo pa_book_signed((float)$book['plus'], '+'); ?></td>
                             <td class="num pa-minus" data-label="মাইনাস"><?php echo pa_book_signed((float)$book['minus'], '-'); ?></td>
                             <td data-label=""></td>
-                            <td class="num" data-label="মোট এমাউন্ট"><?php echo pa_taka($book['total']); ?></td>
+                            <td class="num pa-run" data-label="মোট এমাউন্ট"><?php echo pa_taka($book['total']); ?></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -191,6 +194,9 @@ include '../../partials/header.php';
 .pa-table .pa-minus-reason {
     font-size: 13px;
     max-width: 220px;
+}
+.pa-table.pa-book .pa-prev {
+    font-weight: 600;
 }
 @media print {
     body * { visibility: hidden; }

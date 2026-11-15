@@ -1,0 +1,80 @@
+/* Partner accounting · statement book (intl-100, mobile + desktop-site) */
+.pa-table.pa-book .num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+.pa-table.pa-book .pa-prev,
+.pa-table.pa-book .pa-th-prev {
+    color: #0f4c5c;
+    font-weight: 600;
+}
+.pa-table.pa-book .pa-plus {
+    color: #15803d;
+}
+.pa-table.pa-book .pa-minus {
+    color: #b45309;
+}
+.pa-table.pa-book .pa-run {
+    font-weight: 700;
+    color: #111827;
+}
+.pa-stmt-note strong {
+    color: #0f4c5c;
+}
+
+/* Phone + Chrome “desktop site” (wide viewport, coarse pointer) */
+@media (max-width: 1100px), ((hover: none) and (pointer: coarse)) {
+    .pa-table-wrap {
+        overflow: visible;
+    }
+    .pa-table.pa-book thead {
+        display: none;
+    }
+    .pa-table.pa-book tbody tr.pa-stmt-row,
+    .pa-table.pa-book tfoot tr {
+        display: block;
+        margin: 0 0 12px;
+        padding: 10px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 1px 2px rgb(15 23 42 / 6%);
+    }
+    .pa-table.pa-book td {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 6px 0;
+        border: 0;
+        text-align: right;
+    }
+    .pa-table.pa-book td[data-label]:not([data-label=""])::before {
+        content: attr(data-label);
+        flex: 0 0 auto;
+        max-width: 42%;
+        text-align: left;
+        font-weight: 600;
+        color: #374151;
+        font-size: 13px;
+    }
+    .pa-table.pa-book td[data-label="বিবরণ"] {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: left;
+        padding-bottom: 8px;
+        margin-bottom: 4px;
+        border-bottom: 1px dashed #e5e7eb;
+    }
+    .pa-table.pa-book td[data-label="বিবরণ"]::before {
+        max-width: none;
+        margin-bottom: 4px;
+    }
+    .pa-table.pa-book td.pa-prev {
+        background: #ecfeff;
+        margin: 4px -4px;
+        padding: 8px 8px;
+        border-radius: 8px;
+    }
+}

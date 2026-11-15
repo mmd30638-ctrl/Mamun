@@ -1602,7 +1602,7 @@ function pa_ledger_rows($db, $partner, $ym)
  * Oldest-first plus/minus lines. Total = opening + plus − minus.
  *
  * @param list<array{date?:string,description?:string,plus?:float,minus?:float}> $events
- * @return array{opening:float,lines:list<array{date:string,description:string,plus:float,minus:float,running:float}>,plus:float,minus:float,total:float}
+ * @return array{opening:float,lines:list<array{date:string,description:string,plus:float,minus:float,previous:float,running:float}>,plus:float,minus:float,total:float}
  */
 /** মাইনাস লাইনের স্টেটমেন্টে দেখানোর কারণ (ক্যাটাগরি + বিবরণ/নোট) */
 function pa_stmt_minus_reason(string $kind, string $categoryLabel, string $desc, string $note, string $typeLabel = ''): string
@@ -1642,6 +1642,7 @@ function pa_book_apply(float $opening, array $events): array
     foreach ($events as $event) {
         $p = pa_money($event['plus'] ?? 0);
         $m = pa_money($event['minus'] ?? 0);
+        $previous = $running;
         $running = pa_money($running + $p - $m);
         $plus = pa_money($plus + $p);
         $minus = pa_money($minus + $m);
@@ -1651,6 +1652,7 @@ function pa_book_apply(float $opening, array $events): array
             'minus_reason' => $m > 0.009 ? (string)($event['minus_reason'] ?? '') : '',
             'plus' => $p,
             'minus' => $m,
+            'previous' => $previous,
             'running' => $running,
             'kind' => (string)($event['kind'] ?? ''),
             'sub' => (string)($event['sub'] ?? ''),
