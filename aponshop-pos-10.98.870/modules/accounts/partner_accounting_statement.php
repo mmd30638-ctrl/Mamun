@@ -80,7 +80,12 @@ include '../../partials/header.php';
     </section>
 
     <?php include '../../partials/customer_slip_share.php'; ?>
-    <div id="ame-slip">
+
+    <?php if ($only < 1 && count($dash['active']) > 0): ?>
+        <p class="pa-stmt-scroll-hint no-print">↓ নিচে <strong>লেজার স্টোরি</strong> (সাবেক / প্লাস / মাইনাস) — পার্টনার কার্ডে ক্লিক করলে একজনের লেজার + ১৫ দিন/পৃষ্ঠা।</p>
+    <?php endif; ?>
+
+    <div id="ame-slip" class="pa-slip-visible">
 
     <?php
     $books = [];

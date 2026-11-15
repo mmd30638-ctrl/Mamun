@@ -54,7 +54,7 @@ include '../../partials/header.php';
     ?>
 
     <?php if ($partner && $book && $summary): ?>
-        <article class="pa-stmt pa-pack-sheet pa-summary-sheet" id="ame-slip">
+        <article class="pa-stmt pa-pack-sheet pa-summary-sheet pa-slip-visible" id="ame-slip">
             <div class="pa-stmt-head">
                 <div>
                     <h1><?php echo htmlspecialchars($shop); ?></h1>

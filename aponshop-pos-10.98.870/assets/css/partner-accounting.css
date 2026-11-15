@@ -1,4 +1,57 @@
 /* Partner accounting · statement book (intl-100, mobile + desktop-site) */
+article.pa-stmt {
+    margin: 16px 0 20px;
+    padding: 14px 14px 18px;
+    border: 1px solid #94a3b8;
+    border-radius: 12px;
+    background: #fff;
+    color: #0f172a;
+    box-shadow: 0 2px 8px rgb(15 23 42 / 8%);
+}
+.pa-stmt-scroll-hint {
+    margin: 12px 0;
+    padding: 10px 12px;
+    background: #ecfdf5;
+    border: 1px solid #6ee7b7;
+    border-radius: 10px;
+    color: #065f46;
+    font-size: 14px;
+    line-height: 1.45;
+}
+.pa-slip-share {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0;
+}
+.pa-slip-btn {
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #fff;
+    color: #0f172a;
+    font-size: 13px;
+}
+.pa-slip-print {
+    color: #1d4ed8;
+    border-color: #93c5fd;
+    background: #eff6ff;
+}
+.pa-slip-pdf {
+    color: #b91c1c;
+    border-color: #fca5a5;
+    background: #fef2f2;
+}
+.pa-slip-img {
+    color: #1e3a8a;
+    background: #e0e7ff;
+}
+.pa-slip-btn-share {
+    color: #047857;
+    background: #d1fae5;
+    border-color: #6ee7b7;
+}
 .pa-table.pa-book .num {
     text-align: right;
     font-variant-numeric: tabular-nums;
@@ -100,10 +153,12 @@
     background: #fff;
     border: 1px solid #cbd5e1;
 }
-.pa-pack-tab.is-on {
-    color: #fff;
-    background: #0f766e;
-    border-color: #0f766e;
+.pa-pack-tab.is-on,
+a.pa-pack-tab.is-on.pa-live-link {
+    color: #fff !important;
+    background: #0f766e !important;
+    border-color: #0f766e !important;
+    text-decoration: none !important;
 }
 .pa-pack-pick-grid {
     display: grid;
@@ -434,10 +489,33 @@ a.pa-live-link,
 }
 a.pa-pack-tab.is-on {
     font-weight: 800 !important;
-    text-decoration: none;
 }
-.pa-live-link {
-    color: #0f766e;
+a.pa-pack-tab:not(.is-on).pa-live-link,
+a.pa-pack-pick-card.pa-live-link,
+a.pa-pager-link {
+    color: #0c4a6e !important;
+    background: #fff !important;
+}
+.pa-pack-pick-card.pa-live-link {
+    color: #0f172a !important;
+    background: #fff !important;
+    border: 2px solid #0f766e;
+}
+.pa-pack-pick-card.pa-live-link small {
+    color: #475569 !important;
+}
+.pa-panel.pa-pack-pick {
+    color: #0f172a;
+}
+.pa-btn.primary {
+    color: #fff !important;
+    background: #15803d !important;
+    border-color: #15803d !important;
+}
+.pa-btn.ghost {
+    color: #0f172a !important;
+    background: #f8fafc !important;
+    border: 1px solid #cbd5e1 !important;
 }
 
 /* Semantic label colors (screen + mobile cards) */

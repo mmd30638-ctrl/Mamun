@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-const PA_STMT_PACK_VER = '10.98.937';
+const PA_STMT_PACK_VER = '10.98.938';
 const PA_STMT_DAYS_PER_PAGE = 15;
 
 /**
