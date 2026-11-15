@@ -1,0 +1,11 @@
+# কাস্টমার/সাপ্লায়ার টাকার হিসাব — Easy Update ZIP এই ফাইলগুলো ওভাররাইট করবে না।
+# খুলতে হলে শুধু মালিক root-এ LEDGER_UNLOCK.txt রাখুন (আপডেটের সময় নয়)।
+
+- includes/ledger_lock.php
+- includes/running_ledger.php
+- includes/purchase_functions.php
+- includes/memo_functions.php
+- includes/party_amount_shield.php
+- includes/supplier_settlement.php
+- modules/customers/customer_ledger_functions.php
+- modules/customers/customer_schema.php
