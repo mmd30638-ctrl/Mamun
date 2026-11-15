@@ -1,0 +1,3303 @@
+/* Sales desk format lock.
+   Loaded last, after responsive-fix.css, design-system.css, and the
+   visual-design engine. Those sheets were resetting the sales page back
+   to the old two-column terminal: three-column search bar, square cards,
+   unstyled buttons, and a clipped table. This file puts the second-picture
+   format back on top. */
+
+/* Header applies `body * { flex-wrap: wrap }`. #main-content is a column
+   flex box the height of the screen, so the tall sales desk was wrapping
+   into a second column just off the right edge (blank white POS). */
+html body.ame-pos-terminal-page #main-content,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content,
+html body.ame-master-shell.ame-pos-terminal-page #main-content {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+html body.ame-pos-terminal-page #main-content > .ame-page-nav,
+html body.ame-pos-terminal-page #main-content > .ame-pos-page,
+html body.ame-pos-terminal-page #main-content > .ame-pos-page.ame-sale-desk {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+}
+html body.ame-pos-terminal-page #main-content .ame-desk-bar {
+  flex-wrap: nowrap !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell {
+  background: #F4F7FB !important;
+  color: #111827 !important;
+}
+
+/* The blank white band under the header (marked on the phone photo)
+   was page padding plus the running-text dock sitting at a fixed 60px
+   while the header was a different height. The blue bar starts flush
+   under that dock. Side and bottom padding stay. */
+body.ame-pos-terminal-page #main-content .ame-sale-desk,
+body.ame-pos-terminal-page #main-content .ame-pos-page.ame-sale-desk,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-colorbar,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-heading,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-phase,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-title-line,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-sale-brand,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-finder-link,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-pay-jump,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-row-note,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-add-row,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-custom-item-toggle,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-radios,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .pos-vehicle-box {
+  display: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #posPriceModeBar {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  width: auto !important;
+  margin: 0 0 8px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #priceModeToggle {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: #003F8F !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #extraPriceModes,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #extraPriceModes[hidden] {
+  display: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #extraPriceModes.is-open,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #extraPriceModes.show {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row .ame-pos-mode {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 64px !important;
+  height: 64px !important;
+  min-width: 64px !important;
+  min-height: 64px !important;
+  margin: 0 !important;
+  padding: 4px !important;
+  border: 2px solid #003F8F !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-weight: 800 !important;
+  font-size: 22px !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row .ame-pos-mode span {
+  display: block !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row .ame-pos-mode:has(input:checked) {
+  background: #003F8F !important;
+  border-color: #003F8F !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row .ame-pos-mode:has(input:checked) span {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row input[type="radio"] {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  grid-template-columns: none !important;
+  gap: 10px !important;
+  width: 100% !important;
+  align-items: stretch !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee-viewport,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee-track,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee-text {
+  display: flex !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  visibility: visible !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee {
+  flex: 1 1 auto !important;
+  min-width: 160px !important;
+  align-items: center !important;
+  gap: 8px !important;
+  overflow: hidden !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee-viewport {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee-track {
+  width: max-content !important;
+  gap: 48px !important;
+  animation: ameDeskMarquee 22s linear infinite !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee-text {
+  display: inline-block !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  white-space: nowrap !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 10px !important;
+  min-height: 48px !important;
+  margin: 0 !important;
+  padding: 6px 12px !important;
+  background: #003F8F !important;
+  color: #ffffff !important;
+  border-radius: 12px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-bar {
+  display: grid !important;
+  grid-template-columns: minmax(260px, 0.36fr) minmax(0, 1fr) !important;
+  gap: 12px !important;
+  align-items: stretch !important;
+  width: 100% !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-controls { order: 1 !important; }
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search { order: 2 !important; }
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head {
+  flex-wrap: nowrap !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head .ame-desk-price-row {
+  width: auto !important;
+  margin: 0 0 0 auto !important;
+  position: relative !important;
+  z-index: 6 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head #priceModeToggle {
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
+  background: #ffffff !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-size: 16px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head #extraPriceModes.is-open,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head #extraPriceModes.show {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  z-index: 40 !important;
+  padding: 8px !important;
+  background: #ffffff !important;
+  border-radius: 14px !important;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18) !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-controls,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box {
+  background: #ffffff !important;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05) !important;
+  overflow: hidden !important;
+  min-width: 0 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-controls,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerBox {
+  overflow: visible !important;
+  position: relative !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-controls,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search {
+  padding: 0 12px 12px !important;
+  min-height: 104px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box h3,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-head {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  background: #003F8F !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head {
+  margin: 0 -12px 10px !important;
+  padding: 8px 12px !important;
+  border-radius: 12px 12px 0 0 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-head {
+  justify-content: space-between !important;
+  min-height: 44px !important;
+  padding: 8px 12px !important;
+  border-radius: 12px 12px 0 0 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 8px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap {
+  min-height: 0 !important;
+  max-height: none !important;
+  height: auto !important;
+  overflow: visible !important;
+  border: 0 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos {
+  width: 100% !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos th {
+  background: #003F8F !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  text-align: center !important;
+  padding: 8px 4px !important;
+  border: 0 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos td,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos tbody tr,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos tbody tr:nth-child(even),
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos tbody tr:hover {
+  background: #ffffff !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos td {
+  height: 34px !important;
+  padding: 2px 6px !important;
+  text-align: center !important;
+  border-bottom: 1px solid #D7DEE8 !important;
+  font-size: 13px !important;
+  line-height: 1.3 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart {
+  width: 100% !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack .ame-pos-custom-item {
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  overflow: visible !important;
+  box-shadow: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-pay {
+  display: grid !important;
+  grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  align-items: stretch !important;
+  width: 100% !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-actions {
+  min-height: 168px !important;
+  box-sizing: border-box !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box {
+  padding: 0 10px 10px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box h3 {
+  margin: 0 -10px 8px !important;
+  padding: 8px 10px !important;
+  border-radius: 12px 12px 0 0 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields {
+  display: grid !important;
+  gap: 6px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields label {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 4px !important;
+  margin: 0 !important;
+  color: #667085 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields input,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields output,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box > select,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-date input,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-trigger {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 34px !important;
+  box-sizing: border-box !important;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 8px !important;
+  background: #F4F7FB !important;
+  color: #111827 !important;
+  text-align: center !important;
+  font-weight: 800 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-grand {
+  background: #003F8F !important;
+  color: #ffffff !important;
+  text-align: center !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-grand h3,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-grand strong {
+  background: transparent !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-grand strong {
+  display: block !important;
+  font-size: 26px !important;
+  line-height: 1.2 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-actions {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button#ameDeskMenuBtn,
+body.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-tool {
+  background: #ffffff !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  min-height: 34px !important;
+  padding: 6px 12px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  font-weight: 800 !important;
+  box-shadow: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-tool-eng,
+body.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-tool-add {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  white-space: nowrap !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-tool svg {
+  width: 16px !important;
+  height: 16px !important;
+  flex: 0 0 16px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-tool-add {
+  background: #EFE6D4 !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosCompleteBtn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  min-height: 48px !important;
+  padding: 10px 12px !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: #04933A !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  box-shadow: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-draft {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  min-height: 40px !important;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  color: #0057B8 !important;
+  -webkit-text-fill-color: #0057B8 !important;
+  font-weight: 800 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal {
+  display: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal:has(#posCustomerSearchList:not([hidden])),
+body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)),
+body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomItemBox:not([hidden]),
+body.ame-pos-terminal-page #main-content .ame-sale-desk #amePosServiceBox:not([hidden]) {
+  display: flex !important;
+  flex-direction: column !important;
+  position: fixed !important;
+  z-index: 1000002 !important;
+  left: 50% !important;
+  top: 12vh !important;
+  transform: translateX(-50%) !important;
+  width: min(720px, calc(100vw - 24px)) !important;
+  max-height: min(74vh, 640px) !important;
+  margin: 0 !important;
+  padding: 0 12px 12px !important;
+  overflow: auto !important;
+  flex-wrap: nowrap !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.28) !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomItemBox:not([hidden]) {
+  background: #EFE6D4 !important;
+  border-color: #D9CBB3 !important;
+}
+
+body.ame-pos-terminal-page #amePosOverlay:not([hidden]) {
+  display: block !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1000001 !important;
+  background: rgba(15, 23, 42, 0.45) !important;
+}
+
+body.ame-pos-terminal-page #amePosOverlay[hidden] {
+  display: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-modal-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+  margin: 0 -12px 10px !important;
+  padding: 10px 12px !important;
+  background: #003F8F !important;
+  color: #ffffff !important;
+  border-radius: 13px 13px 0 0 !important;
+  font-weight: 800 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-modal-bar strong {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-pos-modal-x {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #search-res,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #search-res:not(:empty) {
+  position: static !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  width: auto !important;
+  max-height: min(52vh, 460px) !important;
+  margin: 0 12px !important;
+  overflow: auto !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerSearchList,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerSearchList:not([hidden]) {
+  display: block !important;
+  position: static !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  z-index: auto !important;
+  max-height: min(52vh, 460px) !important;
+  overflow: auto !important;
+  margin: 0 8px !important;
+  padding: 4px !important;
+  list-style: none !important;
+  background: #ffffff !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerSearchList[hidden] {
+  display: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerSearchList button {
+  display: block !important;
+  width: 100% !important;
+  min-height: 36px !important;
+  margin: 0 !important;
+  padding: 8px 10px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  font-weight: 800 !important;
+  text-align: left !important;
+  cursor: pointer !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button#ameSavedCustomerBtn {
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: #003F8F !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button#openQuickCustomer {
+  width: 36px !important;
+  min-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  border: 1px solid #D4C4A8 !important;
+  border-radius: 8px !important;
+  background: #EFE6D4 !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  font-weight: 800 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
+  position: relative !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary > :not(.ame-desk-pay) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #p-search,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerInfoField {
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 12px 0 36px !important;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 8px !important;
+  background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='6.5' fill='none' stroke='%23667085' stroke-width='2'/%3E%3Cpath d='M16 16l4 4' stroke='%23667085' stroke-width='2'/%3E%3C/svg%3E") no-repeat 12px center !important;
+  color: #111827 !important;
+  box-shadow: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerInfoField {
+  padding-left: 12px !important;
+  background-image: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .is-nagad { background: #04933A !important; }
+body.ame-pos-terminal-page #main-content .ame-sale-desk .is-cash { background: #0057B8 !important; }
+body.ame-pos-terminal-page #main-content .ame-sale-desk .is-bkash { background: #E2136E !important; }
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-trigger {
+  display: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-list,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-list[hidden] {
+  position: static !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  max-height: 112px !important;
+  overflow: auto !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-method-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  width: 100% !important;
+  min-height: 30px !important;
+  padding: 4px 8px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: #F4F7FB !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  font-weight: 800 !important;
+  text-align: left !important;
+  box-shadow: none !important;
+}
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-item i,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-trigger i {
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-datepill {
+  background: #ffffff !important;
+  color: #111827 !important;
+  border-radius: 8px !important;
+  padding: 6px 10px !important;
+  font-weight: 800 !important;
+}
+
+@media (max-width: 1100px) {
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-pay {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar,
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-head {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-actions {
+    flex-wrap: nowrap !important;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-bar,
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-pay {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields-3,
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields-2 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Zip sales module: left product desk, right bill column. */
+body.ame-pos-terminal-page #main-content .ame-sale-desk,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell {
+  background: #f4f4f4 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.75fr) minmax(280px, 0.85fr) !important;
+  gap: 12px !important;
+  align-items: start !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-legacy-pos-head {
+  display: flex !important;
+  align-items: center !important;
+  min-height: 36px !important;
+  margin: 0 0 8px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-legacy-pos-head h2 {
+  margin: 0 !important;
+  color: #222222 !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar {
+  display: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-bar {
+  display: grid !important;
+  grid-template-columns: minmax(180px, 1fr) minmax(220px, 1.35fr) minmax(140px, 0.7fr) !important;
+  gap: 8px !important;
+  padding: 10px !important;
+  background: #f7f7f7 !important;
+  border: 1px solid #e3e3e3 !important;
+  border-radius: 4px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search { order: 1 !important; }
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-controls { order: 2 !important; }
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions {
+  display: flex !important;
+  order: 3 !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-controls,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search {
+  min-height: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head {
+  background: transparent !important;
+  color: #333333 !important;
+  -webkit-text-fill-color: #333333 !important;
+  margin: 0 0 6px !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-size: 13px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-radios {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  margin: 0 0 6px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head .ame-desk-price-row,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #extraPriceModes,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #extraPriceModes[hidden],
+body.ame-pos-terminal-page #main-content .ame-sale-desk #extraPriceModes.is-open,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #extraPriceModes.show {
+  display: flex !important;
+  position: static !important;
+  width: auto !important;
+  margin: 0 0 0 8px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #priceModeToggle {
+  display: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row .ame-pos-mode {
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  min-height: 28px !important;
+  padding: 2px 8px !important;
+  border-radius: 12px !important;
+  font-size: 12px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-input,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #p-search,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerInfoField {
+  height: 34px !important;
+  border: 1px solid #cccccc !important;
+  border-radius: 4px !important;
+  background: #ffffff !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-head,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos th {
+  background: #f7f7f7 !important;
+  color: #222222 !important;
+  -webkit-text-fill-color: #222222 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart {
+  margin-top: 8px !important;
+  background: #ffffff !important;
+  border: 1px solid #dddddd !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos th,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos td {
+  border: 1px solid #dddddd !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-tool-eng {
+  background: #ffffff !important;
+  color: #333333 !important;
+  -webkit-text-fill-color: #333333 !important;
+  border: 1px solid #cccccc !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
+  position: sticky !important;
+  top: 8px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-pay {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-actions {
+  min-height: 0 !important;
+  background: #f7f7f7 !important;
+  border: 1px solid #e3e3e3 !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box h3,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-grand,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-grand h3,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-grand strong {
+  background: transparent !important;
+  color: #222222 !important;
+  -webkit-text-fill-color: #222222 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosCompleteBtn {
+  background: #337ab7 !important;
+  border-radius: 4px !important;
+  min-height: 44px !important;
+  font-size: 18px !important;
+}
+
+@media (max-width: 900px) {
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid,
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-bar {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+  }
+}
+
+/* Running line, clock, round K/P/D, and large type for a fast readable desk. */
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar {
+  display: flex !important;
+  min-height: 52px !important;
+  margin: 0 0 8px !important;
+  background: #003F8F !important;
+  color: #ffffff !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee-text {
+  font-size: 22px !important;
+  font-weight: 800 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-legacy-pos-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  margin: 0 0 8px !important;
+  padding: 10px 14px !important;
+  background: #ffffff !important;
+  border: 1px solid #d7dee8 !important;
+  border-radius: 8px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-legacy-pos-head h2,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #ameDeskClock {
+  margin: 0 !important;
+  color: #111827 !important;
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #ameDeskClock {
+  color: #003F8F !important;
+  white-space: nowrap !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row {
+  display: flex !important;
+  align-items: center !important;
+  width: auto !important;
+  margin: 0 0 10px !important;
+  position: static !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #priceModeToggle {
+  display: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #extraPriceModes,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #extraPriceModes.is-open,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #extraPriceModes.show {
+  display: flex !important;
+  position: static !important;
+  gap: 12px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row .ame-pos-mode {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 72px !important;
+  height: 72px !important;
+  min-width: 72px !important;
+  min-height: 72px !important;
+  padding: 0 !important;
+  border: 3px solid #003F8F !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  color: #003F8F !important;
+  font-size: 28px !important;
+  font-weight: 800 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row .ame-pos-mode:has(input:checked) {
+  background: #003F8F !important;
+  color: #ffffff !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row .ame-pos-mode span {
+  color: inherit !important;
+  -webkit-text-fill-color: inherit !important;
+  font-size: 28px !important;
+  font-weight: 800 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box h3,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-head,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos th,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos td,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-input,
+body.ame-pos-terminal-page #main-content .ame-sale-desk select,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields label {
+  font-size: 18px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos td {
+  height: 42px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosCompleteBtn {
+  font-size: 24px !important;
+  min-height: 56px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-grand strong {
+  font-size: 32px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid > div {
+  display: contents !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart {
+  grid-column: 1 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+}
+
+/* One payment box. The arrow inside it opens the second account. */
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-paybox .ame-desk-payline {
+  display: flex !important;
+  align-items: flex-end !important;
+  gap: 8px !important;
+  margin: 0 0 8px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-paybox .ame-desk-payline label {
+  display: flex !important;
+  flex: 1 1 0 !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  margin: 0 !important;
+  color: #222222 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-paybox .ame-desk-payline select,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-paybox .ame-desk-payline input {
+  width: 100% !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  padding: 0 10px !important;
+  border: 1px solid #cccccc !important;
+  border-radius: 4px !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-pay-arrow {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 48px !important;
+  width: 48px !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 2px solid #003F8F !important;
+  border-radius: 8px !important;
+  background: #003F8F !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #deskPaySecond[hidden] {
+  display: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #deskPaySecond:not([hidden]) {
+  display: flex !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-due-line {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  color: #222222 !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-due-line output {
+  color: #003F8F !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+}
+
+/* PC desk matches the zip sales module: 8/4 split, Bootstrap control sizes.
+   Hidden nodes stay hidden so edit forms and scripts never paint as loose code. */
+body.ame-pos-terminal-page #main-content .ame-sale-desk style,
+body.ame-pos-terminal-page #main-content .ame-sale-desk script {
+  display: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid > div:not(.pos-draft-drawer) {
+  display: block !important;
+  min-width: 0 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid > div.ame-desk-stack {
+  display: contents !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid > [hidden],
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid > div[hidden],
+body.ame-pos-terminal-page #main-content .ame-sale-desk [hidden] {
+  display: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr) !important;
+  gap: 8px !important;
+  align-items: start !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack {
+  grid-column: 1 !important;
+  width: auto !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top { grid-row: 1 !important; }
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart { grid-row: 2 !important; }
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack { grid-row: 3 !important; }
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
+  grid-column: 2 !important;
+  grid-row: 1 / span 3 !important;
+  width: auto !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk {
+  color: #222222 !important;
+  font-family: "Noto Sans Bengali", "Noto Sans", "Segoe UI", sans-serif !important;
+  font-size: 14px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee-text {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-legacy-pos-head {
+  display: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: #003F8F !important;
+  color: #ffffff !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee {
+  flex: 1 1 140px !important;
+  min-width: 120px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-phrase,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-home,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #ameDeskClock {
+  flex: 0 1 auto !important;
+  margin: 0 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: transparent !important;
+  border: 0 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-pos-home {
+  display: none !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box h3,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-head,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields label,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-payline label,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-due-line,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-radios label,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos th,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos td,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-date span {
+  color: #222222 !important;
+  -webkit-text-fill-color: #222222 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head svg,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box h3 svg,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-head svg,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-tool svg,
+body.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosCompleteBtn svg {
+  width: 16px !important;
+  height: 16px !important;
+  flex: 0 0 16px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk input:not([type="radio"]):not([type="checkbox"]),
+body.ame-pos-terminal-page #main-content .ame-sale-desk select,
+body.ame-pos-terminal-page #main-content .ame-sale-desk textarea,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-input,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-line-input,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields output,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-payline input,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-payline select {
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 6px 12px !important;
+  background: #ffffff !important;
+  color: #222222 !important;
+  -webkit-text-fill-color: #222222 !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 1.428 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #p-search {
+  height: 55px !important;
+  min-height: 55px !important;
+  border: 3px solid #006400 !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerInfoField,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #deskPaid,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #deskDiscountPct,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #deskDiscountTaka,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-payline select {
+  height: 34px !important;
+  min-height: 34px !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos th,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos td {
+  height: auto !important;
+  padding: 1px 6px !important;
+  font-size: 14px !important;
+  vertical-align: middle !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row .ame-pos-mode {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
+  border-width: 1px !important;
+  font-size: 14px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row .ame-pos-mode span {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row .ame-pos-mode input {
+  width: 14px !important;
+  height: 14px !important;
+  min-height: 0 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-grand strong,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-due-line output {
+  color: #222222 !important;
+  -webkit-text-fill-color: #222222 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 34px !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosCompleteBtn {
+  width: 100% !important;
+  min-height: 34px !important;
+  height: 34px !important;
+  padding: 6px 12px !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-draft,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-tool,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-tool-eng,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions button,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions a {
+  min-height: 22px !important;
+  height: auto !important;
+  padding: 1px 5px !important;
+  color: #333333 !important;
+  -webkit-text-fill-color: #333333 !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-pay-arrow {
+  flex: 0 0 34px !important;
+  width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  font-size: 16px !important;
+}
+
+/* Closed drawers stay closed. A blanket display on grid divs was opening them. */
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .pos-draft-drawer:not(.open),
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid > .pos-draft-drawer:not(.open) {
+  display: none !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .pos-draft-drawer.open {
+  display: flex !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2000000 !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content > .ame-pos-page.ame-sale-desk,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* One full-width navy line. Phrase, home and clock sit inside it. */
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  grid-column: 1 / -1 !important;
+  grid-row: 1 !important;
+  width: auto !important;
+  height: 45px !important;
+  min-height: 45px !important;
+  max-height: 45px !important;
+  margin: 0 !important;
+  padding: 0 10px !important;
+  overflow: hidden !important;
+  background: #003F8F !important;
+  color: #ffffff !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar * {
+  flex-wrap: nowrap !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee-track {
+  display: flex !important;
+  flex-direction: row !important;
+  width: max-content !important;
+  height: 22px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee-viewport {
+  height: 22px !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart {
+  grid-column: 1 !important;
+  grid-row: 3 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack {
+  grid-column: 1 !important;
+  grid-row: 4 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
+  grid-column: 2 !important;
+  grid-row: 2 / span 3 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-pro.ame-sale-desk #p-search {
+  height: 55px !important;
+  min-height: 55px !important;
+  max-height: 55px !important;
+  padding: 6px 12px !important;
+  border: 3px solid #006400 !important;
+  border-radius: 4px !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  text-align: center !important;
+  text-align-last: center !important;
+}
+
+@media (max-width: 900px) {
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+  }
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar,
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top,
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack,
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: 100% !important;
+  }
+}
+
+/* Phrase above the product search, vehicle box, print and share. */
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir {
+  display: block !important;
+  margin: 0 0 4px !important;
+  padding: 0 !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  line-height: 1.3 !important;
+  text-align: left !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-vehicle {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 4px !important;
+  margin: 0 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-vehicle input {
+  width: 128px !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  padding: 2px 6px !important;
+  border: 1px solid #cccccc !important;
+  border-radius: 4px !important;
+  background: #ffffff !important;
+  font-size: 14px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-iconbtn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 28px !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 1px solid #003F8F !important;
+  border-radius: 6px !important;
+  background: #ffffff !important;
+  cursor: pointer !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-iconbtn svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-col-check,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .pos-line-check,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #posSelectAll {
+  width: 16px !important;
+  height: 16px !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  accent-color: #003F8F !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-date-input,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameNextPayDate {
+  display: block !important;
+  width: 100% !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  margin: 4px 0 0 !important;
+  padding: 4px 8px !important;
+  border: 1px solid #cccccc !important;
+  border-radius: 4px !important;
+  background: #ffffff !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  text-align-last: center !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-menu,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-menu-pop {
+  display: none !important;
+}
+
+/* Account icon under “your account”. Cash stays marked. The list opens on click. */
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-menu {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  width: auto !important;
+  margin: 4px 0 0 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-acct-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 1px solid #003F8F !important;
+  border-radius: 6px !important;
+  background: #ffffff !important;
+  cursor: pointer !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-acct-icon svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-list[hidden] {
+  display: none !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-list:not([hidden]) {
+  display: flex !important;
+  position: absolute !important;
+  z-index: 40 !important;
+  top: 32px !important;
+  left: 0 !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  width: max-content !important;
+  min-width: 180px !important;
+  max-height: 240px !important;
+  margin: 0 !important;
+  padding: 6px !important;
+  overflow: auto !important;
+  background: #ffffff !important;
+  border: 1px solid #cccccc !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18) !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-item.is-cash-fixed .ame-cash-tick {
+  margin-left: auto !important;
+  font-weight: 800 !important;
+}
+
+/* Registered-customer and search popups sit above the dark page cover. */
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .pos-customer-modal:not(.open) {
+  display: none !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top:has(.pos-customer-modal.open),
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top:has(#posCustomerSearchList:not([hidden])),
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top:has(#search-res:not(:empty)),
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack:has(#amePosServiceBox:not([hidden])),
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack:has(#ameCustomItemBox:not([hidden])) {
+  position: relative !important;
+  z-index: 1000005 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .pos-customer-modal.open {
+  display: flex !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1000010 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 12px !important;
+  background: rgba(17, 24, 39, 0.55) !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .pos-customer-modal.open .pos-customer-dialog {
+  display: block !important;
+  width: min(560px, calc(100vw - 24px)) !important;
+  max-height: 90vh !important;
+  overflow: auto !important;
+  background: #EFE6D4 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.32) !important;
+}
+
+/*
+  Font color only. Every sales-page word is a strong color, still
+  readable on its own background. Navy and blue controls keep white type.
+*/
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk * {
+  color: #1D4ED8 !important;
+  -webkit-text-fill-color: #1D4ED8 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk input::placeholder,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk textarea::placeholder {
+  color: #374151 !important;
+  -webkit-text-fill-color: #374151 !important;
+  opacity: 1 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-datepill,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-datepill * {
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosCompleteBtn,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosCompleteBtn *,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-pay-arrow,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button#ameSavedCustomerBtn,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #priceModeToggle,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-modal-bar,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-modal-bar *,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row .ame-pos-mode:has(input:checked),
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-price-row .ame-pos-mode:has(input:checked) *,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .pos-customer-dialog-header,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .pos-customer-dialog-header * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-pos-modal-x,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-item.is-cash-fixed .ame-cash-tick {
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-item.is-picked {
+  color: #6D28D9 !important;
+  -webkit-text-fill-color: #6D28D9 !important;
+  font-weight: 800 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head *,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box h3,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box h3 *,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-head,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-head strong,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos th {
+  color: #C2410C !important;
+  -webkit-text-fill-color: #C2410C !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields label,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-payline label,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-vehicle,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-vehicle span,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-due-line {
+  color: #6D28D9 !important;
+  -webkit-text-fill-color: #6D28D9 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields output,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-grand strong,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskGrand,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos td {
+  color: #047857 !important;
+  -webkit-text-fill-color: #047857 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-due-line output,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskDue {
+  color: #DC2626 !important;
+  -webkit-text-fill-color: #DC2626 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk input,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk select,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk textarea,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #p-search,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameNextPayDate {
+  color: #0F3D8C !important;
+  -webkit-text-fill-color: #0F3D8C !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar .ame-desk-marquee-text {
+  color: #FFE566 !important;
+  -webkit-text-fill-color: #FFE566 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar .ame-desk-phrase {
+  color: #B6FF6B !important;
+  -webkit-text-fill-color: #B6FF6B !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar .ame-desk-home {
+  color: #7DD3FC !important;
+  -webkit-text-fill-color: #7DD3FC !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar #ameDeskClock {
+  color: #FDE68A !important;
+  -webkit-text-fill-color: #FDE68A !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-datepill,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-datepill * {
+  color: #7C3AED !important;
+  -webkit-text-fill-color: #7C3AED !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk tr.ame-cart-service-row td {
+  white-space: nowrap !important;
+  vertical-align: middle !important;
+  word-break: keep-all !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk tr.ame-cart-service-row td:nth-child(4) {
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+  text-align: left !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerSearchList button .pos-customer-suggest-name {
+  display: block !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerSearchList button .pos-customer-suggest-phone {
+  display: block !important;
+  margin-top: 2px !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-tool-eng,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-iconbtn,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-acct-icon {
+  color: #1D4ED8 !important;
+  -webkit-text-fill-color: #1D4ED8 !important;
+}
+
+/* নাম লেখার সময় তালিকা কাস্টমার বক্সের নিচে। বক্সের লেখা ঢাকে না। */
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerBox {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal:has(#posCustomerSearchList:not([hidden])) {
+  display: flex !important;
+  flex-direction: column !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: calc(100% + 6px) !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  max-height: min(46vh, 380px) !important;
+  margin: 0 !important;
+  z-index: 80 !important;
+  overflow: auto !important;
+}
+
+/* পণ্য খোঁজার তালিকা পণ্য বক্সের নিচে। বক্সে কী লেখা হচ্ছে তা ঢাকে না। */
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search:has(#search-res:not(:empty)),
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-search {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)) {
+  display: flex !important;
+  flex-direction: column !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: calc(100% + 6px) !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  max-height: min(46vh, 380px) !important;
+  margin: 0 !important;
+  z-index: 80 !important;
+  overflow: auto !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-extra {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  margin-top: 8px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-extra[hidden] {
+  display: none !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-extra-modes {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-extra-modes label {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-weight: 800 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-extra-modes label[hidden],
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-extra p[hidden] {
+  display: none !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-extra p {
+  margin: 0 !important;
+  font-weight: 800 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameSaleDate {
+  color: #0F3D8C !important;
+  -webkit-text-fill-color: #0F3D8C !important;
+}
+
+/*
+  Right column only. Sale date sits above payment and uses the money-box
+  size. Amount is full width; the account box is the same size underneath.
+  Every control on this side shares one width and one height.
+*/
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-pay .ame-desk-fields-3,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-pay .ame-desk-fields-2 {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-paybox .ame-desk-payline {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  gap: 8px !important;
+  width: 100% !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-paybox .ame-desk-payline label {
+  display: flex !important;
+  flex: none !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-money-row {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: 44px !important;
+  min-height: 44px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-pay .ame-desk-fields input,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-pay .ame-desk-fields output,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-paybox .ame-desk-payline select,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-paybox .ame-desk-payline input,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskPaid,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskPaid2,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskDiscountPct,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskDiscountTaka,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskPayMethod,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskPayMethod2,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameSaleDate,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameNextPayDate,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-date-input {
+  box-sizing: border-box !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
+  margin: 0 !important;
+  padding: 0 10px !important;
+  border: 1px solid #cccccc !important;
+  border-radius: 4px !important;
+  background: #ffffff !important;
+  line-height: 42px !important;
+  text-align: center !important;
+  text-align-last: center !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-money-row #deskPaid {
+  padding-right: 52px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-money-row button.ame-desk-pay-arrow {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  flex: none !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  border-radius: 0 4px 4px 0 !important;
+}
+
+/* The search row stays only as tall as its own boxes, so the product
+   table sits up under the parts box. Grand total sits above the money box. */
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-bar {
+  align-items: start !important;
+  align-content: start !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-controls,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions {
+  align-self: start !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart {
+  margin-top: 8px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #search-res:empty {
+  display: none !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-paybox .ame-desk-grand {
+  margin: 0 0 8px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-paybox .ame-desk-grand h3 {
+  margin: 0 0 4px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-paybox .ame-desk-grand strong,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-paybox #deskGrand {
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
+  margin: 0 !important;
+  padding: 0 10px !important;
+  border: 1px solid #cccccc !important;
+  border-radius: 4px !important;
+  background: #ffffff !important;
+  font-size: 22px !important;
+  line-height: 1 !important;
+}
+
+/* Reload stays on this design. The head hides the desk until this file arrives. */
+html.ame-sale-wait body.ame-pos-terminal-page #main-content .ame-pos-page {
+  visibility: visible !important;
+}
+
+/* Invoice print stays unmarked. The printer opens only after the box is marked. */
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk label.ame-desk-print-mark {
+  display: inline-flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  width: auto !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  margin: 0 !important;
+  padding: 0 6px !important;
+  border: 1px solid #003F8F !important;
+  border-radius: 6px !important;
+  background: #ffffff !important;
+  color: #1D4ED8 !important;
+  -webkit-text-fill-color: #1D4ED8 !important;
+  cursor: pointer !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk label.ame-desk-print-mark input {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  accent-color: #003F8F !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk label.ame-desk-print-mark svg {
+  width: 16px !important;
+  height: 16px !important;
+  flex: 0 0 16px !important;
+}
+
+body.ame-pos-terminal-page .ame-sale-saved {
+  margin: 0 0 8px !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  background: #047857 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+}
+
+.ame-live-memo {
+  position: fixed !important;
+  left: -12000px !important;
+  top: 0 !important;
+  width: 420px !important;
+  padding: 16px !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+}
+.ame-live-memo h1,
+.ame-live-memo p,
+.ame-live-memo td,
+.ame-live-memo th {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  background: #ffffff !important;
+}
+.ame-live-memo table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+}
+.ame-live-memo th,
+.ame-live-memo td {
+  padding: 4px 0 !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  text-align: left !important;
+}
+.ame-live-memo .r { text-align: right !important; }
+.ame-live-memo .c { text-align: center !important; }
+.ame-live-memo .ame-live-grand {
+  font-size: 20px !important;
+  font-weight: 800 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameDeskCustBal[hidden] {
+  display: none !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskCustDeposit {
+  color: #047857 !important;
+  -webkit-text-fill-color: #047857 !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskCustDue {
+  color: #DC2626 !important;
+  -webkit-text-fill-color: #DC2626 !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+}
+
+@media print {
+  body.ame-printing * {
+    visibility: hidden !important;
+  }
+  body.ame-printing #ameLiveMemo,
+  body.ame-printing #ameLiveMemo * {
+    visibility: visible !important;
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+    background: #fff !important;
+  }
+  body.ame-printing #ameLiveMemo {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    right: auto !important;
+    width: 72mm !important;
+    max-width: 72mm !important;
+    padding: 2mm !important;
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+}
+
+/* The right column must not stretch the search row. Product list sits under the search. */
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
+  align-items: start !important;
+  align-content: start !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid > div.ame-desk-stack {
+  display: contents !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  align-self: start !important;
+  min-width: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-term-top,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-term-cart,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-fold-stack {
+  grid-row: auto !important;
+  grid-column: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin-top: 0 !important;
+  align-self: start !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-summary {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  align-self: start !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-actions {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+/* Right-side boxes are thinner. Change sits under the money box. */
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-box {
+  padding: 0 8px 6px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-box h3 {
+  margin: 0 -8px 4px !important;
+  padding: 4px 8px !important;
+  font-size: 13px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-fields {
+  gap: 4px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-paybox .ame-desk-payline {
+  gap: 4px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-money-row,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-fields input,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-fields output,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-payline select,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-payline input,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-payline output,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskPaid,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskPaid2,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskChange,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskDiscountPct,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskDiscountTaka,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskPayMethod,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskPayMethod2,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #ameSaleDate,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #ameNextPayDate,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-date-input,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-paybox #deskGrand,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskCustDeposit,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskCustDue,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskDue {
+  height: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+  line-height: 30px !important;
+  font-size: 16px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-money-row button.ame-desk-pay-arrow {
+  width: 32px !important;
+  height: 32px !important;
+  min-height: 32px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-money-row #deskPaid {
+  padding-right: 40px !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskChange {
+  display: flex !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 10px !important;
+  border: 1px solid #cccccc !important;
+  border-radius: 4px !important;
+  background: #ffffff !important;
+  color: #C2410C !important;
+  -webkit-text-fill-color: #C2410C !important;
+  font-weight: 800 !important;
+}
+
+/* Zikir above the parts box: a little smaller, three fixed colors. */
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 0 6px !important;
+  margin: 0 0 6px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1.3 !important;
+  text-align: left !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir .ame-zikir-w {
+  display: inline !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1.3 !important;
+  white-space: nowrap !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir .ame-zikir-1 {
+  color: #1D4ED8 !important;
+  -webkit-text-fill-color: #1D4ED8 !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir .ame-zikir-2 {
+  color: #C2410C !important;
+  -webkit-text-fill-color: #C2410C !important;
+}
+
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir .ame-zikir-3 {
+  color: #047857 !important;
+  -webkit-text-fill-color: #047857 !important;
+}
+
+
+/* Zikir flowing colors — লেখা স্থির, রং অটো বদলায় (তিন শব্দে ঢেউ)। */
+@keyframes ameZikirFlow {
+  to { background-position: 300% 0; }
+}
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir .ame-zikir-w {
+  background: linear-gradient(90deg, #1D4ED8, #0E8F52, #C2410C, #7C3AED, #1D4ED8) !important;
+  background-size: 300% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: ameZikirFlow 6s linear infinite !important;
+  transform: none !important;
+}
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir .ame-zikir-2 {
+  animation-delay: -2s !important;
+}
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir .ame-zikir-3 {
+  animation-delay: -4s !important;
+}
+/* উপরের বার (গাঢ় পটভূমি) — হালকা চলমান রং। */
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar .ame-desk-phrase {
+  background: linear-gradient(90deg, #B6FF6B, #7DD3FC, #FDE68A, #F9A8D4, #B6FF6B) !important;
+  background-size: 300% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: ameZikirFlow 7s linear infinite !important;
+}
+
+/* 10.98.290 — গাড়ির নম্বরের ছোট বক্স বিক্রয় পেজে দেখাবে। */
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameSavedCustomerBtn {
+  display: none !important;
+}
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-head > strong:first-child {
+  display: none !important;
+}
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-actions {
+  flex-wrap: wrap !important;
+}
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #posVehicleBox,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #posVehicleBox {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  gap: 4px !important;
+  margin: 0 !important;
+  padding: 0 2px 0 0 !important;
+  max-width: 210px !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #posVehicleBox span,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #posVehicleBox span {
+  display: inline !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  white-space: nowrap !important;
+}
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #posVehicleBox input,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #posVehicleNo {
+  display: inline-block !important;
+  width: 118px !important;
+  max-width: 118px !important;
+  height: 30px !important;
+  min-height: 30px !important;
+  padding: 2px 8px !important;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 6px !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+}
+
+/* Last-in: POS draft list stays compact inside the modal — no left/right drown. */
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid > .pos-draft-drawer.open,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .pos-draft-drawer.open {
+  display: flex !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  max-height: 100dvh !important;
+  z-index: 4000000 !important;
+  margin: 0 !important;
+  padding: 10px !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(17, 24, 39, 0.72) !important;
+}
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-draft-panel,
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-modal {
+  width: min(560px, 100%) !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-table-wrap {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-table {
+  table-layout: fixed !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-table th,
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-table td {
+  padding: 5px 4px !important;
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  box-sizing: border-box !important;
+}
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-table td.pos-recent-time,
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-table td.pos-recent-inv,
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-table td.pos-recent-cust {
+  max-width: 0 !important;
+}
+html body.ame-pos-terminal-page #main-content #draftDrawer .pos-recent-table td.pos-recent-cust {
+  max-width: none !important;
+  width: auto !important;
+}
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-table td.pos-recent-cust {
+  white-space: normal !important;
+}
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-cust-name,
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-cashier,
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-time-date,
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-time-clock,
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-inv {
+  display: block !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+/* 10.98.870 — ডান পেমেন্ট/হিসাব কলাম viewport-এ কেটে যায় না; ভিতরে স্ক্রল */
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
+  align-self: start !important;
+  max-height: calc(100dvh - 88px) !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-gutter: stable !important;
+  padding-bottom: max(12px, env(safe-area-inset-bottom, 0px)) !important;
+}
+
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-table td.pos-recent-actions {
+  overflow: visible !important;
+  white-space: nowrap !important;
+  max-width: none !important;
+  display: table-cell !important;
+  width: 112px !important;
+  text-align: right !important;
+  vertical-align: middle !important;
+  pointer-events: auto !important;
+}
+html body.ame-pos-terminal-page #main-content #draftDrawer .pos-recent-action-bar {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 4px !important;
+  pointer-events: auto !important;
+}
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-table .pos-recent-icon-btn {
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 26px !important;
+  padding: 0 !important;
+}
+
+/* Last-in: sales bar report / print / share icons */
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar .ame-desk-quick {
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  align-items: center !important;
+  gap: 4px !important;
+  margin: 0 4px 0 8px !important;
+}
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar .ame-desk-quick-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  min-height: 30px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.38) !important;
+  border-radius: 7px !important;
+  background: rgba(255, 255, 255, 0.14) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+}
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar #ameDeskBarDesigner {
+  background: #facc15 !important;
+  border-color: #ca8a04 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar #ameDeskBarDesigner svg {
+  stroke: #713f12 !important;
+}
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk a.ame-desk-tool-designer,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk a.ame-desk-tool-designer {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  min-height: 34px !important;
+  padding: 6px 12px !important;
+  border: 1.5px solid #eab308 !important;
+  border-radius: 8px !important;
+  background: #fef08a !important;
+  color: #854d0e !important;
+  -webkit-text-fill-color: #854d0e !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+}
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk a.ame-desk-tool-designer svg,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk a.ame-desk-tool-designer svg {
+  width: 16px !important;
+  height: 16px !important;
+  stroke: #854d0e !important;
+  fill: none !important;
+}
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar .ame-desk-quick-btn svg {
+  width: 16px !important;
+  height: 16px !important;
+  stroke: #ffffff !important;
+  fill: none !important;
+}
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-modal-footer .pos-draft-history-link {
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  background: #ffffff !important;
+}
+html body.ame-pos-terminal-page #main-content #completeDrawer {
+  display: none !important;
+}
+html body.ame-pos-terminal-page #main-content #draftDrawer .pos-recent-draft-row {
+  cursor: pointer !important;
+}
+html body.ame-pos-terminal-page #main-content #draftDrawer .pos-recent-table .pos-recent-icon-btn {
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* 10.98.301 last-in: sales boxes centered, extra-large type, matching desk colors */
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-box,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-controls,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-actions {
+  text-align: center !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-card-head *,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box h3,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-box h3 *,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-box h3,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-box h3 *,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-head,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-head strong {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  line-height: 1.3 !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-fields,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-payline,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-radios,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-radios {
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields label,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-fields label,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-payline label,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-payline label,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-due-line,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-sms,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-radios label,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-radios label {
+  align-items: center !important;
+  text-align: center !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields input,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields output,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-fields input,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-fields output,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-payline input,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-payline select,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-payline output,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-payline input,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-payline select,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-payline output,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-date-input,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-date-input,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskDiscountTaka,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskDiscountTaka,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskPaid,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskPaid,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskPaid2,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskPayMethod,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskPayMethod,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskPayMethod2,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameSaleDate,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #ameSaleDate,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameNextPayDate,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #ameNextPayDate,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerInfoField {
+  text-align: center !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  max-height: none !important;
+  line-height: 1.2 !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields output,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary .ame-desk-fields output,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskSubtotal,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskSubtotal,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskAfter,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskAfter,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskCustDeposit,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskChange,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskChange,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskGrand,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskGrand,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-grand strong {
+  color: #04933A !important;
+  -webkit-text-fill-color: #04933A !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-due-line output,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskDue,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary #deskDue,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskCustDue {
+  color: #DC2626 !important;
+  -webkit-text-fill-color: #DC2626 !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos th,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos td {
+  text-align: center !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-hist-box {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 56px !important;
+  margin: 0 !important;
+  padding: 8px 10px !important;
+  overflow: visible !important;
+  background: #ffffff !important;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05) !important;
+  box-sizing: border-box !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-hist-box .ame-pos-term-hist,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosTermHist {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  min-height: 48px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 10px 8px !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  line-height: 1.3 !important;
+  text-align: center !important;
+  cursor: pointer !important;
+}
+
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-modal-header h3,
+html body.ame-pos-terminal-page #main-content #draftDrawerTitle,
+html body.ame-pos-terminal-page #main-content #completeDrawerTitle {
+  display: block !important;
+  margin: 0 auto !important;
+  padding: 12px 14px !important;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 10px !important;
+  background: #F4F7FB !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+}
+
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-table {
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-table th,
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-table td {
+  padding: 12px 8px !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+}
+
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-cashier {
+  margin-top: 4px !important;
+  color: #667085 !important;
+  -webkit-text-fill-color: #667085 !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+}
+
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-cust-name {
+  display: block !important;
+  padding: 10px 8px !important;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 10px !important;
+  background: #F4F7FB !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+  white-space: normal !important;
+}
+
+html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-table td.pos-recent-actions {
+  text-align: center !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer .pos-recent-action-bar {
+  justify-content: center !important;
+}
+
+/* 307: Revert deskGrand & amePosCompleteBtn to former (সাবেক) state.
+   Enlarge the two boxes under সাম্প্রতিক বিক্রয় (submit checkmark button & recent mode toggle box). */
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions .ame-pos-term-action-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  margin-top: 8px !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions button#amePosDraftComplete,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosDraftComplete,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-draft-icon {
+  flex: 1 1 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  min-height: 48px !important;
+  height: 48px !important;
+  padding: 8px 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 12px !important;
+  background: #ECFDF5 !important;
+  border: 1.5px solid #10B981 !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15) !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions button#amePosRecentToggle,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosRecentToggle,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-pos-recent-select {
+  flex: 1 1 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  min-height: 48px !important;
+  height: 48px !important;
+  margin-top: 8px !important;
+  padding: 8px 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  border-radius: 12px !important;
+  background: #FFFFFF !important;
+  border: 1.5px solid #D7DEE8 !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05) !important;
+  box-sizing: border-box !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions button#amePosRecentToggle #amePosRecentCurrent,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosRecentToggle #amePosRecentCurrent {
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions button#amePosRecentToggle .ame-pos-recent-caret,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosRecentToggle .ame-pos-recent-caret {
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-recent-flyout {
+  border-radius: 12px !important;
+  border: 1.5px solid #D7DEE8 !important;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.16) !important;
+  overflow: hidden !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-recent-flyout .ame-pos-recent-option {
+  min-height: 44px !important;
+  padding: 10px 14px !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+}
+
+/* 10.98.308: সমস্ত বক্সের টেক্সট কেন্দ্রস্থ (centered text), নতুন কাস্টমার বাটন এবং গাড়ির নম্বর */
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk input,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk select,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk output,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk textarea,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-pro.ame-sale-desk #p-search,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #p-search,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-date-input,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields input,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-fields output,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-payline input,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-payline select,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-payline output,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-line-input,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerInfoField,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #posVehicleNo,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameSaleDate,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameNextPayDate,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameNextPayAmount,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskPaid,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskPaid2,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskPayMethod,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskPayMethod2,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskDiscountTaka,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskSubtotal,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskAfter,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskCustDeposit,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskCustDue,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskChange,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskDue,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #deskGrand {
+  text-align: center !important;
+  text-align-last: center !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #posVehicleBox {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #posVehicleBox span {
+  display: none !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #posVehicleNo {
+  text-align: center !important;
+  width: 140px !important;
+  max-width: 160px !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-print-mark,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameDeskPrint,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameDeskShare {
+  display: none !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-search-subline {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  margin-top: 6px !important;
+  width: 100% !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button#openQuickCustomer,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-pos-quick-cust-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  min-height: 36px !important;
+  height: 36px !important;
+  width: auto !important;
+  min-width: auto !important;
+  max-width: none !important;
+  padding: 6px 14px !important;
+  border: 1px solid #D4C4A8 !important;
+  border-radius: 8px !important;
+  background: #EFE6D4 !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  box-shadow: none !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-search-subline .ame-pos-finder-link {
+  margin: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* নতুন পণ্য / নতুন ক্রেতা — ওয়াইড অফ-কালার (ক্রিম) ব্যাকগ্রাউন্ড */
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomItemBox:not([hidden]),
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomItemBox:not([hidden]),
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #quickCustomerModal.open .pos-customer-dialog {
+  width: min(760px, calc(100vw - 24px)) !important;
+  background: #EFE6D4 !important;
+  background-color: #EFE6D4 !important;
+  border: 1px solid #D9CBB3 !important;
+  color: #1B2A4A !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomItemBox:not([hidden]) .ame-pos-input,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #quickCustomerModal.open .pos-customer-form input,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #quickCustomerModal.open .pos-customer-form select,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #quickCustomerModal.open .pos-customer-form textarea {
+  background: #FFFDF8 !important;
+  background-color: #FFFDF8 !important;
+}
+
+/* 10.98.400 — চলমান বারের ডান পাশের ছোট যিকির বাতিল */
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-phrase,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-phrase,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar .ame-desk-phrase {
+  display: none !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  animation: none !important;
+}
+
+/* 10.98.570 — যিকির দূর থেকে পড়া যায়: উচ্চ কনট্রাস্ট, আর অদৃশ্য হয় না */
+@keyframes ameZikirBurst {
+  0%, 100% {
+    transform: none;
+    opacity: 1;
+    filter: none;
+    color: #FFEE58;
+    -webkit-text-fill-color: #FFEE58;
+  }
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir,
+html body.ame-pos-terminal-page #main-content .ame-search-zikir {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  margin: 0 0 8px !important;
+  padding: 4px 2px !important;
+  background: transparent !important;
+  overflow: visible !important;
+  color: #FFEE58 !important;
+  -webkit-text-fill-color: #FFEE58 !important;
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0.01em !important;
+  text-shadow: 0 1px 0 #0B1E4D, 0 0 8px rgba(11, 30, 77, 0.5), 0 2px 0 rgba(0, 0, 0, 0.28) !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir .ame-zikir-stage {
+  display: inline-flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 0 8px !important;
+  padding: 2px 4px !important;
+  overflow: hidden !important;
+  border-radius: 14px !important;
+  background: radial-gradient(circle at 50% 120%, rgba(255, 255, 255, 0.55), transparent 62%) !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir .ame-zikir-w {
+  display: inline-block !important;
+  padding: 2px 0 !important;
+  border: 0 !important;
+  background: none !important;
+  background-image: none !important;
+  color: #FFEE58 !important;
+  -webkit-text-fill-color: #FFEE58 !important;
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.01em !important;
+  line-height: 1.3 !important;
+  white-space: nowrap !important;
+  transform: none !important;
+  animation: none !important;
+  text-shadow: 0 1px 0 #0B1E4D, 0 0 10px rgba(11, 30, 77, 0.55), 0 2px 0 rgba(0, 0, 0, 0.35) !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir .ame-zikir-1 {
+  animation-delay: 0s !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir .ame-zikir-2 {
+  animation-delay: -1.8s !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-search-zikir .ame-zikir-3 {
+  animation-delay: -3.6s !important;
+}
+
