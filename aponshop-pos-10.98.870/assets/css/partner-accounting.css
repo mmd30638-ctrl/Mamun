@@ -78,3 +78,215 @@
         border-radius: 8px;
     }
 }
+
+/* Statement pack — tabs, day blocks, outflow tags (intl-100) */
+.pa-pack-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 16px;
+    padding: 10px 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+.pa-pack-tab {
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #334155;
+    background: #fff;
+    border: 1px solid #cbd5e1;
+}
+.pa-pack-tab.is-on {
+    color: #fff;
+    background: #0f766e;
+    border-color: #0f766e;
+}
+.pa-pack-pick-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+.pa-pack-pick-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    text-decoration: none;
+    color: #111827;
+    font-weight: 600;
+}
+.pa-pack-pick-card small {
+    font-weight: 500;
+    color: #64748b;
+}
+.pa-day-block {
+    margin: 0 0 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+}
+.pa-day-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: #f1f5f9;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+.pa-day-lines {
+    padding: 8px 12px 12px;
+}
+.pa-profit-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px 12px;
+    padding: 10px 0;
+    border-bottom: 1px dashed #e5e7eb;
+    font-size: 14px;
+}
+.pa-profit-row:last-child {
+    border-bottom: 0;
+}
+.pa-profit-who {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: #0f4c5c;
+    font-weight: 600;
+}
+.pa-profit-prod {
+    color: #374151;
+}
+.pa-profit-amt {
+    font-weight: 700;
+}
+.pa-outflow-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 8px 10px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px dashed #e5e7eb;
+}
+.pa-outflow-row:last-child {
+    border-bottom: 0;
+}
+.pa-outflow-desc {
+    font-weight: 600;
+    color: #111827;
+}
+.pa-outflow-reason {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 4px;
+}
+.pa-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    padding: 4px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+}
+.pa-tag.expense {
+    background: #fff7ed;
+    color: #c2410c;
+}
+.pa-tag.withdrawal {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+.pa-tag.capital {
+    background: #f5f3ff;
+    color: #6d28d9;
+}
+.pa-tag.other {
+    background: #f3f4f6;
+    color: #374151;
+}
+.pa-outflow-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 8px 0 12px;
+}
+.pa-outflow-type-totals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+.pa-type-pill {
+    flex: 1 1 180px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    background: #fafafa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+}
+.pa-pack-total {
+    margin-top: 16px;
+    font-weight: 700;
+}
+.pa-summary-table {
+    width: 100%;
+    margin: 12px 0;
+}
+.pa-summary-table th,
+.pa-summary-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+.pa-summary-table td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+.pa-summary-grand th,
+.pa-summary-grand td {
+    font-size: 1.05rem;
+    font-weight: 700;
+    background: #ecfeff;
+}
+.pa-summary-formula {
+    font-variant-numeric: tabular-nums;
+}
+.pa-summary-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 12px 0;
+}
+.pa-summary-links a {
+    font-weight: 600;
+}
+.pa-pack-ok {
+    color: #047857;
+    font-weight: 600;
+    font-size: 14px;
+}
+@media (max-width: 1100px), ((hover: none) and (pointer: coarse)) {
+    .pa-outflow-row {
+        grid-template-columns: 1fr;
+    }
+    .pa-outflow-amt {
+        justify-self: end;
+    }
+}

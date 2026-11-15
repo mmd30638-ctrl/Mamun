@@ -2,13 +2,18 @@
 require_once '../../includes/config.php';
 require_once '../../includes/partnership_functions.php';
 require_once '../../includes/partner_accounting.php';
+require_once '../../includes/partner_statement_pack.php';
 pa_guard();
 ensure_partner_accounting_schema($db);
 
 $ym = (string)($_GET['month'] ?? date('Y-m'));
 $only = (int)($_GET['partner_id'] ?? 0);
+$pa_pack_active = 'ledger';
+$pa_partner_id = $only;
+$bounds_ym = '';
 $dash = pa_dashboard($db, $ym);
 $bounds = $dash['month']['bounds'];
+$bounds_ym = $bounds['ym'];
 $targets = $dash['active'];
 if ($only > 0) {
     $targets = array_values(array_filter($targets, static function ($a) use ($only) {
@@ -43,15 +48,17 @@ include '../../partials/header.php';
     <div class="pa-hero no-print">
         <div class="pa-hero-top">
             <div>
-                <div class="pa-kicker">পার্টনার স্টেটমেন্ট</div>
+                <div class="pa-kicker">পার্টনার স্টেটমেন্ট প্যাকেজ · পূর্ণ লেজার</div>
                 <h1><?php echo htmlspecialchars($bounds['label']); ?></h1>
-                <p>কাস্টমার স্টেটমেন্টের মতো। প্রথম ব্যালেন্স, তারপর প্লাস ও মাইনাস। শেষে মোট এমাউন্ট। দুজনের প্রথম ব্যালেন্স উপরে।</p>
+                <p>ক্রমিক লেজার — সাবেক, প্লাস, মাইনাস, চলতি। লাভ/খরচ/সারাংশ পৃথক ট্যাবে; এই পেজ অডিট ট্রেইল।</p>
             </div>
             <div class="pa-month-form">
                 <a class="pa-btn ghost" href="partner_accounting.php?month=<?php echo htmlspecialchars($bounds['ym']); ?>">← ড্যাশবোর্ড</a>
             </div>
         </div>
     </div>
+
+    <?php include '../../partials/partner_statement_pack_nav.php'; ?>
 
     <?php if ($ok === 'start'): ?>
         <div class="pa-alert ok">এই তারিখ থেকে খাতা শুরু। আগের সব এমাউন্ট শূন্য। এখন থেকে লাভ যোগ ও খরচ কাটা হবে।</div>
