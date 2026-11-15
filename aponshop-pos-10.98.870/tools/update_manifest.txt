@@ -1,12 +1,14 @@
-# 10.98.919 — কাস্টমার প্রোফাইলে «সবসময় পাইকারি» আইকন (Easy Update public_html)
+# 10.98.920 — বিক্রয়: রেজিস্টারড কাস্টমার সার্চ ফিক্স (pos_party_search)
 VERSION.txt
 includes/config.php
+includes/customer_wholesale_col.php
+modules/sales/pos_party_search.php
+# 10.98.919 — কাস্টমার প্রোফাইলে «সবসময় পাইকারি» আইকন (Easy Update public_html)
 CUSTOMER_WHOLESALE_BN.txt
 modules/customers/customer_schema.php
 modules/customers/profile.php
 modules/customers/profile_view.php
 modules/customers/actions/toggle_always_wholesale.php
-modules/sales/pos_party_search.php
 modules/sales/pos_customer_script.php
 assets/js/pos-cart.js
 # 10.98.915 — সব মডিউল সব পেজ রেসপন্সিভ (ফোন/ট্যাবলেট/ডেস্কটপ)

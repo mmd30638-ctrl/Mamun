@@ -5,11 +5,8 @@
 require_once __DIR__ . '/../../includes/config.php';
 require_once __DIR__ . '/../../includes/supplier_functions.php';
 require_once __DIR__ . '/../../includes/sales/sale_common.php';
-if (is_file(__DIR__ . '/../customers/customer_schema.php')) {
-    require_once __DIR__ . '/../customers/customer_schema.php';
-    if (isset($db) && $db instanceof mysqli) {
-        ensure_customer_tables($db);
-    }
+if (is_file(__DIR__ . '/../../includes/customer_wholesale_col.php')) {
+    require_once __DIR__ . '/../../includes/customer_wholesale_col.php';
 }
 if (is_file(__DIR__ . '/../../includes/party_purge.php')) {
     require_once __DIR__ . '/../../includes/party_purge.php';
@@ -22,6 +19,9 @@ if (!isset($db) || !($db instanceof mysqli)) {
     echo '[]';
     exit;
 }
+
+$wholesale_col = function_exists('ame_customer_wholesale_col_ready') && ame_customer_wholesale_col_ready($db);
+$wholesale_sel = $wholesale_col ? ', c.always_wholesale' : '';
 
 $q = trim((string)($_GET['q'] ?? ''));
 if (function_exists('mb_substr')) {
@@ -71,20 +71,35 @@ if ($q !== '') {
     $params = [$like, $like, $like, $like, $like, $like, $like, $tail];
 }
 
-$sql = 'SELECT c.id, c.name, c.phone, c.alt_phone, c.customer_code, c.receivable_balance, c.payable_balance, c.is_supplier, c.is_customer, c.credit_limit, c.always_wholesale
-        FROM customers c
+$base_select = 'SELECT c.id, c.name, c.phone, c.alt_phone, c.customer_code, c.receivable_balance, c.payable_balance, c.is_supplier, c.is_customer, c.credit_limit'
+    . $wholesale_sel
+    . ' FROM customers c
         LEFT JOIN suppliers s ON s.id = c.linked_supplier_id
         WHERE ' . implode(' AND ', $where) . '
         ORDER BY c.name ASC
         LIMIT 40';
 
+$sql = $base_select;
+
 $stmt = @$db->prepare($sql);
+if (!$stmt && $wholesale_col) {
+    $wholesale_col = false;
+    $wholesale_sel = '';
+    $sql = 'SELECT c.id, c.name, c.phone, c.alt_phone, c.customer_code, c.receivable_balance, c.payable_balance, c.is_supplier, c.is_customer, c.credit_limit
+        FROM customers c
+        LEFT JOIN suppliers s ON s.id = c.linked_supplier_id
+        WHERE ' . implode(' AND ', $where) . '
+        ORDER BY c.name ASC
+        LIMIT 40';
+    $stmt = @$db->prepare($sql);
+}
 if (!$stmt && $q !== '') {
     $where[count($where) - 1] = '(c.name LIKE ? OR c.phone LIKE ? OR c.customer_code LIKE ? OR CAST(c.id AS CHAR) LIKE ?)';
     $types = 'ssss';
     $params = array_slice($params, 0, 4);
-    $sql = 'SELECT c.id, c.name, c.phone, c.customer_code, c.receivable_balance, c.payable_balance, c.is_supplier, c.is_customer, c.credit_limit, c.always_wholesale
-            FROM customers c
+    $sql = 'SELECT c.id, c.name, c.phone, c.customer_code, c.receivable_balance, c.payable_balance, c.is_supplier, c.is_customer, c.credit_limit'
+        . $wholesale_sel
+        . ' FROM customers c
             LEFT JOIN suppliers s ON s.id = c.linked_supplier_id
             WHERE ' . implode(' AND ', $where) . '
             ORDER BY c.name ASC
@@ -135,7 +150,7 @@ if ($res) {
             'isCustomer' => $isCustomer,
             'due' => number_format($balance, 2, '.', ''),
             'credit' => number_format((float)($row['credit_limit'] ?? 0), 2, '.', ''),
-            'alwaysWholesale' => !empty($row['always_wholesale']),
+            'alwaysWholesale' => $wholesale_col && !empty($row['always_wholesale']),
         ];
     }
 }
