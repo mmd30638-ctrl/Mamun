@@ -38,25 +38,53 @@
             '.ame-pos-shell',
             '.ame-pos-grid',
             '.ame-desk-main',
+            '.ame-desk-stack',
+            '.ame-pos-term-top',
             '.ame-pos-term-cart',
+            '.ame-pos-summary',
             '#amePosCartTableWrap',
             '.ame-pos-term-cart .ame-pos-table-wrap',
             '.table-pos',
             '#cart-body'
+        ];
+        var inlineProps = [
+            'width',
+            'max-width',
+            'min-width',
+            'transform',
+            'scale',
+            'max-height',
+            'height',
+            'min-height',
+            'overflow',
+            'clip-path',
+            'left',
+            'top',
+            'right',
+            'bottom',
+            'margin-left',
+            'margin-right',
+            'grid-column',
+            'grid-row',
+            'position'
         ];
         selectors.forEach(function (sel) {
             document.querySelectorAll(sel).forEach(function (node) {
                 if (!node || !node.style) {
                     return;
                 }
-                node.style.removeProperty('width');
-                node.style.removeProperty('max-width');
-                node.style.removeProperty('transform');
-                node.style.removeProperty('scale');
-                node.style.removeProperty('max-height');
-                node.style.removeProperty('height');
-                node.style.removeProperty('overflow');
-                node.style.removeProperty('clip-path');
+                inlineProps.forEach(function (prop) {
+                    node.style.removeProperty(prop);
+                });
+            });
+        });
+
+        document.querySelectorAll('#main-content .ame-sale-desk [data-ame-fit="1"]').forEach(function (node) {
+            if (!node || !node.style) {
+                return;
+            }
+            inlineProps.forEach(function (prop) {
+                node.style.removeProperty(prop);
             });
         });
 

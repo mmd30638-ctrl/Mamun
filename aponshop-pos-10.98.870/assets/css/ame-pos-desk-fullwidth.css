@@ -1,0 +1,86 @@
+/* 10.98.923 — POS ডেস্ক পূর্ণ প্রস্থ (ড্রাফট লিস্ট বন্ধের পর অর্ধেক কার্ট বাগ)
+   pos-pay-dock = ১ কলাম, কিন্তু ame-sale-desk-lock এখনও সামারিকে grid-column:২ দেয় —
+   ফলে দ্বিতীয় খালি/সরু কলামে কার্ট ডানে চলে যায়। */
+
+@media (min-width: 1000px) {
+  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid,
+  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-pos-page.ame-sale-pro .ame-pos-shell .ame-pos-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    align-items: start !important;
+  }
+
+  html:not(.ame-pos-memo-editing) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar,
+  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  html:not(.ame-pos-memo-editing) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main,
+  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  html:not(.ame-pos-memo-editing) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-summary,
+  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+    width: 0 !important;
+    max-width: 0 !important;
+    min-width: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    border: 0 !important;
+    pointer-events: none !important;
+  }
+
+  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk #amePosPay {
+    pointer-events: auto !important;
+  }
+
+  html:not(.ame-pos-memo-editing) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-term-top,
+  html:not(.ame-pos-memo-editing) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-term-cart,
+  html:not(.ame-pos-memo-editing) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-fold-stack,
+  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top,
+  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack {
+    grid-column: unset !important;
+    grid-row: unset !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+html.ame-pos-draft-recover body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+html.ame-pos-draft-recover body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main,
+html.ame-pos-draft-recover body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+html.ame-pos-draft-recover body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  transform: none !important;
+}
+
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main:not(.is-dragging),
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart:not(.is-dragging) {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}

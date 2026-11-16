@@ -132,6 +132,8 @@ if ($ame_is_pos) {
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-cart-scroll.css?v=' . $ame_lock_ver . '" id="amePosCartScroll">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-draft-drawer.css?v=' . $ame_lock_ver . '" id="amePosDraftDrawer">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-memo-draft.css?v=' . $ame_lock_ver . '" id="amePosMemoDraft">' . "\n";
+    echo '<link rel="stylesheet" href="/assets/css/pos-terminal-layout.css?v=' . $ame_lock_ver . '" id="amePosTerminalLayout">' . "\n";
+    echo '<link rel="stylesheet" href="/assets/css/ame-pos-desk-fullwidth.css?v=' . $ame_lock_ver . '" id="amePosDeskFullwidth">' . "\n";
     echo '<script src="/assets/js/pos-draft-drawer.js?v=' . $ame_lock_ver . '" defer></script>' . "\n";
     echo '<script src="/assets/js/pos-memo-draft-layout.js?v=' . $ame_lock_ver . '" defer></script>' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/sale-charge-popups.css?v=' . $ame_lock_ver . '">' . "\n";
