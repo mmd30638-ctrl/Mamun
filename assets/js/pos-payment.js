@@ -885,6 +885,20 @@ if (typeof document !== 'undefined') {
             next_pay_date: (element('ameNextPayDate')?.value || '').trim(),
             next_pay_amount: (element('ameNextPayAmount')?.value || '').trim(),
 
+            partner_cost_discount: Math.max(
+                0,
+                Number(
+                    (element('partnerCostDiscountDesk')?.value)
+                    || (element('partnerCostDiscountMobile')?.value)
+                    || 0
+                )
+            ),
+            partner_cost_note: (
+                (element('partnerCostNoteDesk')?.value)
+                || (element('partnerCostNoteMobile')?.value)
+                || ''
+            ).trim(),
+
             // নিরাপত্তা ফিক্স: process_sale.php এখন CSRF টোকেন যাচাই করে
             csrf_token: window.AME_CSRF_TOKEN || '',
             offline_client_ref: amePosStableSaleClientRef()

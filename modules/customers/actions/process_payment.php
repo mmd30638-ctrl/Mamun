@@ -4,6 +4,7 @@
 require_once __DIR__ . '/../../../includes/config.php';
 require_once __DIR__ . '/../../../includes/account_functions.php';
 require_once __DIR__ . '/../../../includes/integrity_functions.php';
+require_once __DIR__ . '/../../../includes/partner_accounting.php';
 require_once __DIR__ . '/../customer_schema.php';
 ensure_integrity_schema($db);
 
@@ -120,6 +121,13 @@ $next_due_amount      = ($next_due_amount_raw !== '' && is_numeric($next_due_amo
 $due_note_raw       = trim($_POST['due_note'] ?? '');
 $due_note           = $due_note_raw !== '' ? $due_note_raw : null;
 $notify_off         = !empty($_POST['notify_off']) && (string)$_POST['notify_off'] !== '0';
+$partner_cost_discount = max(0, round((float)($_POST['partner_cost_discount'] ?? 0), 2));
+$partner_cost_note = trim((string)($_POST['partner_cost_note'] ?? ''));
+if (function_exists('mb_substr')) {
+    $partner_cost_note = mb_substr($partner_cost_note, 0, 255, 'UTF-8');
+} else {
+    $partner_cost_note = substr($partner_cost_note, 0, 255);
+}
 
 $token = substr(trim((string)($_POST['idempotency_token'] ?? '')), 0, 80);
 
@@ -232,6 +240,20 @@ try {
                 'discount' => (float)$discount,
             ]
         );
+    }
+    if ($partner_cost_discount > 0 && empty($taken['duplicate']) && empty($taken['replayed'])) {
+        $pex_desc = 'কাস্টমার পেমেন্ট · পার্টনার খরচ ডিসকাউন্ট';
+        if ($party_name !== '') {
+            $pex_desc .= ' — ' . $party_name;
+        }
+        pa_record_linked_module_expense($db, [
+            'amount' => $partner_cost_discount,
+            'expense_date' => $payment_date,
+            'description' => $pex_desc,
+            'note' => $partner_cost_note,
+            'reference' => $ref,
+            'idempotency_token' => 'pcx_pay:' . $payment_id,
+        ]);
     }
     $pay_ok((int)$payment_id);
 } catch (Throwable $e) {

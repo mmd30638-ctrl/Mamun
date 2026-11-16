@@ -1,0 +1,72 @@
+/* 10.98.946 — পেমেন্ট গ্রহণ ও POS: পার্টনার খরচ ডিসকাউন্ট বক্স */
+.ame-partner-cost-box {
+  margin-top: 0.35rem;
+  padding: 0.85rem 0.95rem 0.95rem;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--ame-brand, #1e6bd6) 22%, #cbd5e1);
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, #f0f7ff 92%, #fff) 0%,
+    #fff 55%
+  );
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04);
+}
+.ame-partner-cost-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+}
+.ame-partner-cost-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.35rem;
+  padding: 0.2rem 0.35rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border-radius: 6px;
+}
+.ame-partner-cost-title strong {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+}
+.ame-partner-cost-title small {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748b;
+  line-height: 1.35;
+}
+.ame-partner-cost-grid {
+  display: grid;
+  grid-template-columns: minmax(8rem, 9.5rem) 1fr;
+  gap: 0.65rem 0.85rem;
+  align-items: start;
+}
+.ame-partner-cost-field .cpd-input,
+.ame-partner-cost-field textarea.cpd-input {
+  width: 100%;
+}
+.ame-partner-cost-field--note textarea {
+  min-height: 2.65rem;
+  resize: vertical;
+}
+.ame-sale-desk .ame-partner-cost-box {
+  margin: 0.65rem 0 0.25rem;
+}
+.ame-pos-summary .ame-partner-cost-box {
+  margin-top: 0.5rem;
+}
+@media (max-width: 640px) {
+  .ame-partner-cost-grid {
+    grid-template-columns: 1fr;
+  }
+}

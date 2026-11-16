@@ -289,6 +289,7 @@ window.ameApplySaleDesktopViewport();
 <link rel="stylesheet" href="/assets/css/pos-add-boxes.css?v=<?php echo htmlspecialchars(AME_ASSET_VERSION, ENT_QUOTES, 'UTF-8'); ?>">
 <link rel="stylesheet" href="/assets/css/sale-cream.css?v=<?php echo htmlspecialchars(AME_ASSET_VERSION, ENT_QUOTES, 'UTF-8'); ?>">
 <link rel="stylesheet" href="/assets/css/pos-right-center.css?v=<?php echo htmlspecialchars(AME_ASSET_VERSION, ENT_QUOTES, 'UTF-8'); ?>">
+<link rel="stylesheet" href="/assets/css/partner-cost-discount-box.css?v=<?php echo htmlspecialchars(AME_ASSET_VERSION, ENT_QUOTES, 'UTF-8'); ?>">
 <?php if (!empty($_GET['sold'])): ?>
 <p class="ame-sale-saved"><?php echo $is_english ? 'Sale completed.' : 'বিক্রয় সম্পন্ন হয়েছে।'; ?></p>
 <?php endif; ?>

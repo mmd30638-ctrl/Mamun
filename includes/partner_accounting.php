@@ -990,6 +990,102 @@ function pa_expense_voucher_label($row)
     return $v !== '' ? $v : ('PEX-LEGACY-' . str_pad((string)(int)($row['id'] ?? 0), 5, '0', STR_PAD_LEFT));
 }
 
+/**
+ * কাস্টমার পেমেন্ট বা বিক্রয় থেকে পার্টনার খরচ রিপোর্টে স্বয়ংক্রিয় খরচ এন্ট্রি।
+ * amount > 0 না হলে কিছু করে না। লক হওয়া মাসে বা ডুপ্লিকেট টোকেনে 0 ফেরায় (পেমেন্ট/বিক্রয় বাতিল করে না)।
+ *
+ * @param array{amount?:float|int|string,expense_date?:string,description?:string,note?:string,reference?:string,idempotency_token?:string} $opts
+ */
+function pa_record_linked_module_expense($db, array $opts): int
+{
+    if (!$db instanceof mysqli) {
+        return 0;
+    }
+    $amount = pa_money($opts['amount'] ?? 0);
+    if ($amount <= 0) {
+        return 0;
+    }
+    ensure_partner_accounting_schema($db);
+    $cut = static function ($v, int $n): string {
+        $v = trim((string)$v);
+        return function_exists('mb_substr') ? mb_substr($v, 0, $n, 'UTF-8') : substr($v, 0, $n);
+    };
+    $date = $cut($opts['expense_date'] ?? date('Y-m-d'), 10);
+    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+        $date = date('Y-m-d');
+    }
+  if ($date > date('Y-m-d')) {
+        $date = date('Y-m-d');
+    }
+    $period = substr($date, 0, 7);
+    if (pa_month_locked($db, $period)) {
+        error_log('pa_record_linked_module_expense: month locked ' . $period);
+        return 0;
+    }
+    $token = substr(trim((string)($opts['idempotency_token'] ?? '')), 0, 80);
+    if ($token !== '') {
+        $dup = $db->prepare('SELECT id FROM partner_acct_expenses WHERE idempotency_token = ? LIMIT 1');
+        if ($dup) {
+            $dup->bind_param('s', $token);
+            $dup->execute();
+            $hit = $dup->get_result()->fetch_assoc();
+            $dup->close();
+            if ($hit) {
+                return (int)($hit['id'] ?? 0);
+            }
+        }
+    }
+    $desc = $cut($opts['description'] ?? 'পার্টনার খরচ · ডিসকাউন্ট', 255);
+    if ($desc === '') {
+        $desc = 'পার্টনার খরচ · ডিসকাউন্ট';
+    }
+    $reference = $cut($opts['reference'] ?? '', 80);
+    $note = $cut($opts['note'] ?? '', 255);
+    $cat = 'other';
+    $method = 'cash';
+    $uid = (int)($_SESSION['user_id'] ?? 0);
+    $voucher = pa_next_expense_voucher($db, $period);
+    $stmt = $db->prepare(
+        "INSERT INTO partner_acct_expenses (expense_date, category, description, amount, period_ym, reference, note, created_by, voucher_no, payee, payment_method, receipt_path, status, idempotency_token) VALUES (?,?,?,?,?,?,?,?,?,?,?,NULL,'active',?)"
+    );
+    if (!$stmt) {
+        error_log('pa_record_linked_module_expense: prepare failed');
+        return 0;
+    }
+    $payee = '';
+    $tokenOrNull = $token !== '' ? $token : null;
+    $stmt->bind_param(
+        'sssdsssissss',
+        $date,
+        $cat,
+        $desc,
+        $amount,
+        $period,
+        $reference,
+        $note,
+        $uid,
+        $voucher,
+        $payee,
+        $method,
+        $tokenOrNull
+    );
+    if (!$stmt->execute()) {
+        $stmt->close();
+        error_log('pa_record_linked_module_expense: insert failed');
+        return 0;
+    }
+    $eid = (int)$db->insert_id;
+    $stmt->close();
+    if (function_exists('pa_audit')) {
+        try {
+            pa_audit($db, 'create', 'expense', $eid, $period, $voucher . ' ' . $desc . ' ' . $amount);
+        } catch (Throwable $e) {
+            /* ignore */
+        }
+    }
+    return $eid;
+}
+
 /** PEX-YYYYMM-0001 — মাসভিত্তিক ক্রমিক ভাউচার নম্বর। */
 function pa_next_expense_voucher($db, $ym)
 {

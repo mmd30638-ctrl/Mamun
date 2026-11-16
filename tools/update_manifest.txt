@@ -1,3 +1,18 @@
+# 10.98.946 — পেমেন্ট গ্রহণ + POS: পার্টনার খরচ ডিসকাউন্ট বক্স
+includes/partner_accounting.php
+assets/css/partner-cost-discount-box.css
+modules/customers/payment-receive.php
+modules/customers/actions/process_payment.php
+modules/sales/pos.php
+modules/sales/pos_summary.php
+modules/sales/process_sale.php
+assets/js/pos-payment.js
+assets/js/pos-cart.js
+includes/config.php
+VERSION.txt
+APONSHOP_STACK_UPDATE.txt
+data/patch_get_fallback.json
+PARTNER_COST_DISCOUNT_946_BN.txt
 # 10.98.944 — উত্তোলন/পেমেন্ট মেমোতে শোরুম ১২% অফার লাইন (সার্ভার-সাইড)
 includes/helpers.php
 assets/js/ame-memo-file.js

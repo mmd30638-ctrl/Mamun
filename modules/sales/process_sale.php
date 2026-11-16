@@ -17,6 +17,7 @@ ensure_integrity_schema($db);
 require_once '../../includes/sales/sale_inventory.php';
 require_once '../../includes/sales/sale_finance.php';
 require_once '../../includes/sales/sale_draft.php';
+require_once '../../includes/partner_accounting.php';
 
 function ame_sale_store_next_pay(mysqli $db, int $saleId, int $customerId, string $raw, float $amount = 0.0): void
 {
@@ -287,6 +288,14 @@ try {
             2
         )
     );
+
+    $partner_cost_discount = max(0, round((float)($data['partner_cost_discount'] ?? 0), 2));
+    $partner_cost_note = trim((string)($data['partner_cost_note'] ?? ''));
+    if (function_exists('mb_substr')) {
+        $partner_cost_note = mb_substr($partner_cost_note, 0, 255, 'UTF-8');
+    } else {
+        $partner_cost_note = substr($partner_cost_note, 0, 255);
+    }
 
     $rounding = round(
         (float)($data['rounding'] ?? 0),
@@ -901,6 +910,22 @@ try {
     }
     if ($saleFingerprint !== '' && !empty($sale_id) && function_exists('ame_sale_guard_record')) {
         ame_sale_guard_record($db, $user_id, $saleFingerprint, (int)$sale_id, (string)$invoice_number);
+    }
+
+    if ($partner_cost_discount > 0 && !empty($sale_id)) {
+        $sale_expense_date = date('Y-m-d');
+        $raw_sale_date = trim((string)($data['sale_date'] ?? ''));
+        if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $raw_sale_date)) {
+            $sale_expense_date = $raw_sale_date;
+        }
+        pa_record_linked_module_expense($db, [
+            'amount' => $partner_cost_discount,
+            'expense_date' => $sale_expense_date,
+            'description' => 'বিক্রয় · পার্টনার খরচ ডিসকাউন্ট',
+            'note' => $partner_cost_note,
+            'reference' => (string)$invoice_number,
+            'idempotency_token' => 'pcx_sale:' . (int)$sale_id,
+        ]);
     }
 
     $respond(

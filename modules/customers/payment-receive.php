@@ -59,6 +59,7 @@ $cpay_ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.425';
 include __DIR__ . '/../../partials/header.php';
 ?>
 <link rel="stylesheet" href="/assets/css/customer-payment.css?v=<?php echo htmlspecialchars($cpay_ver, ENT_QUOTES, 'UTF-8'); ?>">
+<link rel="stylesheet" href="/assets/css/partner-cost-discount-box.css?v=<?php echo htmlspecialchars($cpay_ver, ENT_QUOTES, 'UTF-8'); ?>">
 <link rel="stylesheet" href="/assets/css/ame-pages-critical-responsive.css?v=<?php echo htmlspecialchars($cpay_ver, ENT_QUOTES, 'UTF-8'); ?>" id="ame-pages-critical-responsive">
 
 <div class="cpay-page cpay-page-wrap cpd" id="cpayPage">
@@ -110,6 +111,26 @@ include __DIR__ . '/../../partials/header.php';
                 <div class="cpd-field">
                 <label class="cpd-label cpd-c-orange" for="discountInput">ডিসকাউন্ট</label>
                 <input class="cpd-input" type="number" step="0.01" name="discount" min="0" placeholder="0" id="discountInput" value="0">
+                </div>
+
+                <div class="cpd-field cpd-span-2 ame-partner-cost-box" id="amePartnerCostPayBox">
+                    <div class="ame-partner-cost-head">
+                        <span class="ame-partner-cost-badge" aria-hidden="true">PEX</span>
+                        <div class="ame-partner-cost-title">
+                            <strong>পার্টনার খরচ রিপোর্ট</strong>
+                            <small>ডিসকাউন্ট এখানে দিলে খরচ বিভাগে স্বয়ংক্রিয় এন্ট্রি হবে</small>
+                        </div>
+                    </div>
+                    <div class="ame-partner-cost-grid">
+                        <div class="ame-partner-cost-field">
+                            <label class="cpd-label cpd-c-amber" for="partnerCostDiscountPay">পার্টনার খরচ · ডিসকাউন্ট (৳)</label>
+                            <input class="cpd-input" type="number" step="0.01" name="partner_cost_discount" min="0" placeholder="0" id="partnerCostDiscountPay" value="0" inputmode="decimal" autocomplete="off">
+                        </div>
+                        <div class="ame-partner-cost-field ame-partner-cost-field--note">
+                            <label class="cpd-label cpd-c-teal" for="partnerCostNotePay">পার্টনার খরচ · নোট</label>
+                            <textarea class="cpd-input" name="partner_cost_note" id="partnerCostNotePay" rows="2" maxlength="255" placeholder="খরচ রিপোর্টে দেখাবে (ঐচ্ছিক)" autocomplete="off"></textarea>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="cpd-field">

@@ -1302,6 +1302,18 @@ window.ameClearPosSale = function () {
     if (discount) {
         discount.value = '0';
     }
+    ['partnerCostDiscountDesk', 'partnerCostDiscountMobile'].forEach(function (id) {
+        var pcDisc = posElement(id);
+        if (pcDisc) {
+            pcDisc.value = '0';
+        }
+    });
+    ['partnerCostNoteDesk', 'partnerCostNoteMobile'].forEach(function (id) {
+        var pcNote = posElement(id);
+        if (pcNote) {
+            pcNote.value = '';
+        }
+    });
     var rounding = posElement('rounding');
     if (rounding) {
         rounding.value = '0';

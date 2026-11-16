@@ -111,6 +111,25 @@ if (function_exists('get_invoice_settings') && isset($db) && $db instanceof mysq
                 <p class="ame-desk-lock-note" id="deskDiscLockNote"><?php echo $escape($is_english ? '12% is subtracted from every sale automatically.' : 'প্রতি বিক্রয়ের মোট থেকে শতকরা ১২% অটো মাইনাস হয়।'); ?></p>
                 <?php endif; ?>
             </div>
+            <div class="ame-partner-cost-box" id="amePartnerCostSaleDesk">
+                <div class="ame-partner-cost-head">
+                    <span class="ame-partner-cost-badge" aria-hidden="true">PEX</span>
+                    <div class="ame-partner-cost-title">
+                        <strong><?php echo $escape($is_english ? 'Partner cost report' : 'পার্টনার খরচ রিপোর্ট'); ?></strong>
+                        <small><?php echo $escape($is_english ? 'Discount here posts to partner expenses automatically.' : 'ডিসকাউন্ট এখানে দিলে খরচ বিভাগে স্বয়ংক্রিয় এন্ট্রি হবে'); ?></small>
+                    </div>
+                </div>
+                <div class="ame-partner-cost-grid">
+                    <div class="ame-partner-cost-field">
+                        <label class="cpd-label cpd-c-amber" for="partnerCostDiscountDesk"><?php echo $escape($is_english ? 'Partner cost discount (৳)' : 'পার্টনার খরচ · ডিসকাউন্ট (৳)'); ?></label>
+                        <input class="cpd-input" type="number" step="0.01" min="0" value="0" placeholder="0" id="partnerCostDiscountDesk" inputmode="decimal" autocomplete="off">
+                    </div>
+                    <div class="ame-partner-cost-field ame-partner-cost-field--note">
+                        <label class="cpd-label cpd-c-teal" for="partnerCostNoteDesk"><?php echo $escape($is_english ? 'Partner cost note' : 'পার্টনার খরচ · নোট'); ?></label>
+                        <textarea class="cpd-input" id="partnerCostNoteDesk" rows="2" maxlength="255" placeholder="<?php echo $escape($is_english ? 'Shown in partner expense report (optional)' : 'খরচ রিপোর্টে দেখাবে (ঐচ্ছিক)'); ?>" autocomplete="off"></textarea>
+                    </div>
+                </div>
+            </div>
             <input id="deskDiscountAuto" type="hidden" value="<?php echo $ame_pos_disc_auto ? '1' : '0'; ?>">
             <div class="ame-pos-calc-row ame-pos-round-row">
                 <label for="rounding"><?php echo $escape($words['rounding']); ?></label>
@@ -258,6 +277,26 @@ if (function_exists('get_invoice_settings') && isset($db) && $db instanceof mysq
             step="0.01"
             oninput="calculateAll()"
         >
+    </div>
+
+    <div class="ame-partner-cost-box ame-pos-partner-cost" id="amePartnerCostSaleMobile">
+        <div class="ame-partner-cost-head">
+            <span class="ame-partner-cost-badge" aria-hidden="true">PEX</span>
+            <div class="ame-partner-cost-title">
+                <strong><?php echo $escape($is_english ? 'Partner cost report' : 'পার্টনার খরচ রিপোর্ট'); ?></strong>
+                <small><?php echo $escape($is_english ? 'Discount here posts to partner expenses automatically.' : 'ডিসকাউন্ট এখানে দিলে খরচ বিভাগে স্বয়ংক্রিয় এন্ট্রি হবে'); ?></small>
+            </div>
+        </div>
+        <div class="ame-partner-cost-grid">
+            <div class="ame-partner-cost-field">
+                <label for="partnerCostDiscountMobile"><?php echo $escape($is_english ? 'Partner cost discount (৳)' : 'পার্টনার খরচ · ডিসকাউন্ট (৳)'); ?></label>
+                <input type="number" step="0.01" min="0" value="0" placeholder="0" id="partnerCostDiscountMobile" inputmode="decimal" autocomplete="off">
+            </div>
+            <div class="ame-partner-cost-field ame-partner-cost-field--note">
+                <label for="partnerCostNoteMobile"><?php echo $escape($is_english ? 'Partner cost note' : 'পার্টনার খরচ · নোট'); ?></label>
+                <textarea id="partnerCostNoteMobile" rows="2" maxlength="255" placeholder="<?php echo $escape($is_english ? 'Shown in partner expense report (optional)' : 'খরচ রিপোর্টে দেখাবে (ঐচ্ছিক)'); ?>" autocomplete="off"></textarea>
+            </div>
+        </div>
     </div>
 
     <div class="ame-pos-total">
