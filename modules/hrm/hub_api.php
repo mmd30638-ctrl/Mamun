@@ -279,6 +279,16 @@ try {
         $out(ame_emp_hub_adjust_box($db, $_POST));
     }
 
+    if ($action === 'zero_advance_previous') {
+        $needPost();
+        if (!ame_emp_hub_can_finance($db) && !ame_emp_hub_can_advance($db)) {
+            $out(['ok' => false, 'error' => 'সাবেক পাওনা শূন্য করার অনুমতি নেই।'], 403);
+        }
+        $empId = (int)($_POST['id'] ?? 0);
+        $note = trim((string)($_POST['note'] ?? ''));
+        $out(ame_emp_hub_zero_advance_previous($db, $empId, $note));
+    }
+
     if ($action === 'money_entries') {
         $id = (int)($_GET['id'] ?? $_POST['id'] ?? 0);
         if (!ame_emp_hub_can_finance($db) && !ame_emp_hub_can_advance($db) && ame_emp_hub_self_id($db) !== $id) {

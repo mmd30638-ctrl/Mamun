@@ -909,6 +909,31 @@ html body.ame-emp-hub #ehDraw #ehPanel select.eh-account {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+  flex-wrap: wrap;
 }
 .eh-stats .eh-prev-due span { display: inline; font-size: 12px; }
 .eh-stats .eh-prev-due b { font-size: 14px; }
+.eh-stats .eh-prev-due--hold {
+  cursor: pointer;
+  touch-action: manipulation;
+  border-radius: 10px;
+  padding: 6px 8px;
+  margin: -4px -6px;
+  border: 1.5px dashed transparent;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.eh-stats .eh-prev-due--hold .eh-prev-hold-hint {
+  flex: 1 1 100%;
+  font-size: 10px;
+  font-weight: 700;
+  color: #64748b;
+  margin: 2px 0 0;
+}
+.eh-stats .eh-prev-due--hold.eh-prev-due--holding {
+  border-color: #f59e0b;
+  background: #fffbeb;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.25);
+}
+.eh-stats .eh-prev-due--hold.eh-prev-due--holding b {
+  color: #b45309 !important;
+}

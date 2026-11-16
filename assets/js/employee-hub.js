@@ -1043,6 +1043,89 @@
     };
   }
 
+  function submitPrevDueZero(el) {
+    if (!(window.EH_BOOT && (EH_BOOT.canFinance || EH_BOOT.canAdvance))) {
+      return;
+    }
+    var id = parseInt(el.getAttribute('data-id') || '0', 10);
+    var amt = parseFloat(el.getAttribute('data-amount') || '0');
+    if (!id || !(amt > 0.009)) {
+      return;
+    }
+    var name = el.getAttribute('data-name') || '';
+    var ask = 'সাবেক পাওনা ৳' + money2(amt) + ' শূন্য করবেন? (আজকের অগ্রিম যেমন আছে তেমন থাকবে)';
+    var okP = window.AmeResubmitGuard
+      ? AmeResubmitGuard.ask(ask, { preview: { worker_name: name, service_type: 'সাবেক পাওনা', work_value: 0 } })
+      : Promise.resolve(window.confirm(ask));
+    okP.then(function (yes) {
+      if (!yes) {
+        return;
+      }
+      post('zero_advance_previous', { id: String(id), note: 'লং প্রেস — সাবেক পাওনা শূন্য' }).then(function (res) {
+        if (!res.ok) {
+          throw new Error(res.error || 'শূন্য করা যায়নি');
+        }
+        toastMsg(res.message || 'সাবেক পাওনা শূন্য হয়েছে');
+        location.reload();
+      }).catch(function (e) {
+        toastMsg(e.message);
+      });
+    });
+  }
+
+  (function bindPrevDueHold() {
+    var HOLD_MS = 650;
+    var holdTimer = null;
+    var holdEl = null;
+    function clearHold() {
+      if (holdTimer) {
+        clearTimeout(holdTimer);
+        holdTimer = null;
+      }
+      if (holdEl) {
+        holdEl.classList.remove('eh-prev-due--holding');
+        holdEl = null;
+      }
+    }
+    document.addEventListener('pointerdown', function (ev) {
+      var el = ev.target.closest('.eh-prev-due[data-eh="prev-due-zero"]');
+      if (!el || ev.button > 0) {
+        return;
+      }
+      clearHold();
+      holdEl = el;
+      holdEl.classList.add('eh-prev-due--holding');
+      holdTimer = setTimeout(function () {
+        holdTimer = null;
+        if (!holdEl) {
+          return;
+        }
+        holdEl.classList.remove('eh-prev-due--holding');
+        if (navigator.vibrate) {
+          try {
+            navigator.vibrate(40);
+          } catch (eV) { /* ignore */ }
+        }
+        var node = holdEl;
+        holdEl = null;
+        submitPrevDueZero(node);
+      }, HOLD_MS);
+    }, { passive: true });
+    document.addEventListener('pointerup', clearHold);
+    document.addEventListener('pointercancel', clearHold);
+    document.addEventListener('pointermove', function (ev) {
+      if (!holdEl) {
+        return;
+      }
+      var box = holdEl.getBoundingClientRect();
+      var x = ev.clientX;
+      var y = ev.clientY;
+      if (x < box.left - 24 || x > box.right + 24 || y < box.top - 24 || y > box.bottom + 24) {
+        clearHold();
+      }
+    }, { passive: true });
+  })();
+
   var bootOpen = (window.EH_BOOT && EH_BOOT.open) || '';
   var bootEmp = (window.EH_BOOT && EH_BOOT.emp) || 0;
   if (bootOpen === 'new') {

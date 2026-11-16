@@ -1,3 +1,11 @@
+# 10.98.953 — কর্মী কার্ড: সাবেক পাওনায় লং প্রেস → ০ (আজকের অগ্রিম অপরিবর্তিত)
+includes/employee_hub.php
+modules/hrm/hub_api.php
+modules/hrm/employee_list.php
+assets/js/employee-hub.js
+assets/css/employee-hub.css
+includes/config.php
+VERSION.txt
 # 10.98.952 — SM40 হেডার: আলাদা আইকন + লগইনে ডিজিটাল লাইফ কালার
 assets/css/sm40-home-link.css
 assets/js/sm40-home-player.js
