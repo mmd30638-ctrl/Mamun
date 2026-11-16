@@ -126,6 +126,7 @@
   justify-content: space-between;
   gap: 8px;
   margin-bottom: 12px;
+  flex-wrap: wrap;
 }
 
 .ia-title {
@@ -133,6 +134,34 @@
   font-size: 18px;
   font-weight: 900;
   letter-spacing: -0.02em;
+}
+
+.ia-seq-hint {
+  margin: -6px 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+.ia-autoplay-toggle {
+  flex: 1 1 auto;
+  margin: 0 6px;
+  padding: 6px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  background: #f8fafc;
+  color: #334155;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  max-width: 46%;
+}
+.ia-autoplay-toggle.is-on {
+  border-color: #86efac;
+  background: #ecfdf5;
+  color: #047857;
 }
 
 .ia-close {

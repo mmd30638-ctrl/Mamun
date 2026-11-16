@@ -6,7 +6,7 @@
 declare(strict_types=1);
 
 if (!defined('AME_GLOBAL_RESPONSIVE_VERSION')) {
-    define('AME_GLOBAL_RESPONSIVE_VERSION', '10.98.940');
+    define('AME_GLOBAL_RESPONSIVE_VERSION', '10.98.941');
 }
 
 if (!defined('AME_VIEWPORT_META')) {

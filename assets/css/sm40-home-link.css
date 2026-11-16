@@ -72,8 +72,8 @@ html body.ame-home-gallery .hdr-home-duo .hdr-i-sm40 svg {
   }
 }
 
-/* হোমে — SM40 পপআপ চালু থাকলে ছোট রিমাইন্ডার */
-html body.ame-home-gallery .ame-sm40-listen-pill {
+/* সব পেজ — SM40 খোলা থাকলে ভাসমান শর্টকাট (ডেস্কটপ: নিচে মাঝখানে) */
+html body .ame-sm40-listen-pill {
   position: fixed;
   z-index: 10070;
   left: 50%;
@@ -83,10 +83,10 @@ html body.ame-home-gallery .ame-sm40-listen-pill {
   padding: 0;
   pointer-events: none;
 }
-html body.ame-home-gallery .ame-sm40-listen-pill[hidden] {
+html body .ame-sm40-listen-pill[hidden] {
   display: none !important;
 }
-html body.ame-home-gallery .ame-sm40-listen-btn {
+html body .ame-sm40-listen-btn {
   pointer-events: auto;
   width: 100%;
   display: flex;
@@ -101,12 +101,52 @@ html body.ame-home-gallery .ame-sm40-listen-btn {
   font-size: 14px;
   box-shadow: 0 10px 28px rgba(37, 99, 235, 0.18);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
-html body.ame-home-gallery .ame-sm40-listen-hint {
+html body .ame-sm40-listen-close {
+  pointer-events: auto;
+  position: absolute;
+  top: -10px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1.5px solid rgba(148, 163, 184, 0.5);
+  border-radius: 999px;
+  background: #fff;
+  color: #64748b;
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+  cursor: pointer;
+}
+html body .ame-sm40-listen-hint {
   pointer-events: none;
   margin: 6px 0 0;
   text-align: center;
   font-size: 11px;
   font-weight: 700;
   color: #475569;
+  line-height: 1.35;
+}
+
+/* মোবাইল — বাম নিচে কম্প্যাক্ট শর্টকাট (POS/পেমেন্টে কাজ করতে সুবিধা) */
+html body .ame-sm40-listen-pill--mobile {
+  left: max(12px, env(safe-area-inset-left));
+  bottom: max(72px, calc(18px + env(safe-area-inset-bottom)));
+  transform: none;
+  width: min(300px, calc(100vw - 24px));
+}
+html body .ame-sm40-listen-pill--mobile .ame-sm40-listen-hint {
+  display: none;
+}
+html body .ame-sm40-listen-pill--mobile .ame-sm40-listen-btn {
+  padding: 11px 14px;
+  font-size: 13px;
+  border-radius: 999px;
+}
+html body .ame-sm40-listen-pill--mobile .ame-sm40-listen-close {
+  top: -8px;
+  right: -4px;
 }

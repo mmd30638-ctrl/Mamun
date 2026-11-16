@@ -196,7 +196,7 @@ if (function_exists('ame_global_responsive_tier_script_echo')) {
             <tr>
                 <td class="tc" data-k="<?php echo htmlspecialchars(ame_l('নং', 'No.'), ENT_QUOTES, 'UTF-8'); ?>"><span class="cpay-val">1</span></td>
                 <td data-k="<?php echo htmlspecialchars(ame_l('বিবরণ', 'Description'), ENT_QUOTES, 'UTF-8'); ?>"><span class="cpay-val">
-                    <span style="font-weight:600;"><?php echo htmlspecialchars(ame_l('জমা উত্তোলন', 'Deposit payout'), ENT_QUOTES, 'UTF-8'); ?></span>
+                    <span style="font-weight:600;"><?php echo htmlspecialchars(ame_l('টাকা উত্তোলন', 'Cash payout'), ENT_QUOTES, 'UTF-8'); ?></span>
                     <?php if ($note !== ''): ?>
                     <span class="sku-text"><?php echo htmlspecialchars($note, ENT_QUOTES, 'UTF-8'); ?></span>
                     <?php endif; ?>

@@ -210,6 +210,14 @@ if (str_contains($ame_script_now, '/modules/customers/hire/')):
     <?php if (str_contains($ame_head_script, '/modules/customers/withdraw.php')): ?>
     <link rel="stylesheet" href="/assets/css/withdraw-desk.css?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>">
     <?php endif; ?>
+    <?php
+    if (!empty($_SESSION['user_id']) && is_file(__DIR__ . '/../includes/sm40_portal.php')) {
+        require_once __DIR__ . '/../includes/sm40_portal.php';
+        if (function_exists('ame_sm40_global_dock_assets')) {
+            ame_sm40_global_dock_assets();
+        }
+    }
+    ?>
     <!-- রেসপন্সিভ ফিট: responsive-fix.js (ফুটার / config boot) -->
 </head>
 <body<?php
@@ -319,7 +327,7 @@ html body .master-header-fixed .hdr-icon-btn .hdr-badge.hdr-badge-stock{backgrou
             data-sm40-url="<?php echo htmlspecialchars($ame_hdr_sm40_url, ENT_QUOTES, 'UTF-8'); ?>"
             target="_blank"
             rel="noopener noreferrer"
-            title="SM40 — পপআপ উইন্ডোতে খুলবে; লগইন করে অডিও চালু রেখে দোকান অ্যাপে কাজ করতে পারবেন"
+            title="SM40 — আলাদা উইন্ডো/ট্যাবে খুলবে; অডিও চালু রেখে বিক্রয়·পেমেন্ট পেজে কাজ করুন (নিচে শর্টকাট দেখা যাবে)"
         >
             <span class="hdr-i-sm40-label" aria-hidden="true">SM40</span>
         </a>

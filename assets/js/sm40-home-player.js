@@ -1,34 +1,76 @@
 /**
- * SM40 — আলাদা পপআপ উইন্ডোতে খোলে যাতে হোম/দোকান ট্যাবে কাজ করতে গিয়েও
- * SM40-এ চালু অডিও/ভিডিও ব্রাউজার সেই উইন্ডোতে চলতে পারে (same-origin সীমা বাইরে নিয়ন্ত্রণ নেই)।
+ * SM40 — নামযুক্ত উইন্ডো/ট্যাবে খোলে; দোকানের যেকোনো পেজে ভেসে থাকা শর্টকাট দিয়ে
+ * SM40-এ ফিরে যাওয়া যায় (ডেস্কটপ পপআপ + মোবাইল ট্যাব)।
  */
 (function () {
   'use strict';
 
   var WIN_NAME = 'ame_sm40_player';
-  var STORAGE_KEY = 'ame_sm40_popup_v1';
+  var SESSION_KEY = 'ame_sm40_popup_v1';
+  var LOCAL_KEY = 'ame_sm40_popup_v1';
   var popupRef = null;
+  var lastUrl = 'https://sm40.com/welcome?lang=bengali';
 
-  function isHome() {
-    return document.body && document.body.classList.contains('ame-home-gallery');
+  /** ফোন, ট্যাবলেট, টাচ ল্যাপটপ — কম্প্যাক্ট শর্টকাট; ডেস্কটপ/ল্যাপটপ মাউস — নিচে বড় বার */
+  function useCompactDock() {
+    try {
+      if (window.matchMedia('(max-width: 900px)').matches) {
+        return true;
+      }
+      if (window.matchMedia('(pointer: coarse)').matches) {
+        return true;
+      }
+      if (window.matchMedia('(hover: none)').matches) {
+        return true;
+      }
+    } catch (e) { /* ignore */ }
+    return false;
   }
 
   function entryUrl(link) {
     var u = link && link.getAttribute('data-sm40-url');
-    return u && String(u).indexOf('https://sm40.com') === 0 ? u : 'https://sm40.com/welcome?lang=bengali';
+    return u && String(u).indexOf('https://sm40.com') === 0 ? u : lastUrl;
   }
 
   function markOpened() {
+    var ts = String(Date.now());
     try {
-      sessionStorage.setItem(STORAGE_KEY, String(Date.now()));
+      sessionStorage.setItem(SESSION_KEY, ts);
     } catch (e) { /* ignore */ }
-    showPill();
+    try {
+      localStorage.setItem(LOCAL_KEY, ts);
+    } catch (e2) { /* ignore */ }
+    try {
+      document.body.classList.add('ame-sm40-dock-on');
+    } catch (e3) { /* ignore */ }
+    showDock();
+  }
+
+  function clearOpened() {
+    try {
+      sessionStorage.removeItem(SESSION_KEY);
+    } catch (e) { /* ignore */ }
+    try {
+      localStorage.removeItem(LOCAL_KEY);
+    } catch (e2) { /* ignore */ }
+    try {
+      document.body.classList.remove('ame-sm40-dock-on');
+    } catch (e3) { /* ignore */ }
+    var dock = document.getElementById('ameSm40ListenPill');
+    if (dock) {
+      dock.hidden = true;
+    }
   }
 
   function wasOpened() {
     try {
-      return sessionStorage.getItem(STORAGE_KEY) !== null;
-    } catch (e) {
+      if (sessionStorage.getItem(SESSION_KEY) !== null) {
+        return true;
+      }
+    } catch (e) { /* ignore */ }
+    try {
+      return localStorage.getItem(LOCAL_KEY) !== null;
+    } catch (e2) {
       return false;
     }
   }
@@ -42,19 +84,46 @@
   }
 
   function openSm40(url) {
-    url = url || 'https://sm40.com/welcome?lang=bengali';
-    try {
-      popupRef = window.open(url, WIN_NAME, popupFeatures());
-    } catch (e) {
-      popupRef = null;
+    url = url || lastUrl;
+    lastUrl = url;
+    var compact = useCompactDock();
+
+    if (compact) {
+      try {
+        popupRef = window.open(url, WIN_NAME);
+      } catch (e) {
+        popupRef = null;
+      }
+      if (!popupRef) {
+        try {
+          popupRef = window.open(url, '_blank');
+        } catch (e2) {
+          popupRef = null;
+        }
+      }
+    } else {
+      try {
+        popupRef = window.open(url, WIN_NAME, popupFeatures());
+      } catch (e3) {
+        popupRef = null;
+      }
+      if (!popupRef || popupRef.closed) {
+        try {
+          popupRef = window.open(url, WIN_NAME);
+        } catch (e4) {
+          popupRef = null;
+        }
+      }
     }
-    if (!popupRef || popupRef.closed) {
+
+    if (!popupRef) {
       window.open(url, '_blank');
+      markOpened();
       return false;
     }
     try {
       popupRef.focus();
-    } catch (e2) { /* ignore */ }
+    } catch (e5) { /* ignore */ }
     markOpened();
     return true;
   }
@@ -66,34 +135,67 @@
         return;
       } catch (e) { /* ignore */ }
     }
-    openSm40();
+    openSm40(lastUrl);
   }
 
-  function showPill() {
-    if (!isHome()) {
-      return;
+  function dockCopy() {
+    if (useCompactDock()) {
+      return {
+        title: 'SM40 শুনছেন',
+        btn: 'SM40-তে ফিরে যান',
+        hint: 'মোবাইল/ট্যাব/টাচ ডিভাইস: এই শর্টকাট থেকে SM40-এ ফিরুন। বিক্রয়·পেমেন্ট·অন্য পেজে কাজ চালিয়ে যান।'
+      };
     }
-    var pill = document.getElementById('ameSm40ListenPill');
-    if (!pill) {
-      pill = document.createElement('div');
-      pill.id = 'ameSm40ListenPill';
-      pill.className = 'ame-sm40-listen-pill';
-      pill.setAttribute('role', 'status');
-      pill.innerHTML =
-        '<button type="button" class="ame-sm40-listen-btn" id="ameSm40ListenBtn">'
+    return {
+      title: 'SM40 চালু',
+      btn: 'SM40 চালু — শুনতে উইন্ডোতে ফিরে যান',
+      hint: 'কম্পিউটার/ল্যাপটপ: অডিও আলাদা SM40 উইন্ডোতে চলবে; এখানে POS ও পেমেন্ট কাজ করুন।'
+    };
+  }
+
+  function showDock() {
+    var compact = useCompactDock();
+    var copy = dockCopy();
+    var dock = document.getElementById('ameSm40ListenPill');
+    if (!dock) {
+      dock = document.createElement('div');
+      dock.id = 'ameSm40ListenPill';
+      dock.className = 'ame-sm40-listen-pill' + (compact ? ' ame-sm40-listen-pill--mobile' : '');
+      dock.setAttribute('role', 'status');
+      dock.innerHTML =
+        '<button type="button" class="ame-sm40-listen-btn" id="ameSm40ListenBtn" title="' + copy.title + '">'
         + '<span class="ame-sm40-listen-ic" aria-hidden="true">🎵</span>'
-        + '<span class="ame-sm40-listen-txt">SM40 চালু — শুনতে উইন্ডোতে ফিরে যান</span>'
+        + '<span class="ame-sm40-listen-txt">' + copy.btn + '</span>'
         + '</button>'
-        + '<p class="ame-sm40-listen-hint">দোকান অ্যাপে কাজ চালিয়ে যান; অডিও SM40 উইন্ডোতে বাজবে</p>';
-      document.body.appendChild(pill);
+        + '<button type="button" class="ame-sm40-listen-close" id="ameSm40ListenClose" aria-label="শর্টকাট লুকান">×</button>'
+        + '<p class="ame-sm40-listen-hint">' + copy.hint + '</p>';
+      document.body.appendChild(dock);
       var btn = document.getElementById('ameSm40ListenBtn');
       if (btn) {
         btn.addEventListener('click', function () {
           focusSm40();
         });
       }
+      var closeBtn = document.getElementById('ameSm40ListenClose');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          clearOpened();
+        });
+      }
+    } else {
+      dock.classList.toggle('ame-sm40-listen-pill--mobile', compact);
+      var txt = dock.querySelector('.ame-sm40-listen-txt');
+      var hint = dock.querySelector('.ame-sm40-listen-hint');
+      if (txt) {
+        txt.textContent = copy.btn;
+      }
+      if (hint) {
+        hint.textContent = copy.hint;
+      }
     }
-    pill.hidden = false;
+    dock.hidden = false;
   }
 
   function bindLink() {
@@ -101,6 +203,7 @@
     if (!link) {
       return;
     }
+    lastUrl = entryUrl(link);
     link.addEventListener('click', function (ev) {
       if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey || ev.button === 1) {
         return;
@@ -110,10 +213,37 @@
     });
   }
 
+  function bindStorageSync() {
+    window.addEventListener('storage', function (ev) {
+      if (ev.key !== LOCAL_KEY) {
+        return;
+      }
+      if (ev.newValue) {
+        markOpened();
+      } else {
+        clearOpened();
+      }
+    });
+  }
+
+  function onLayoutChange() {
+    if (wasOpened()) {
+      showDock();
+    }
+  }
+
   function boot() {
     bindLink();
+    bindStorageSync();
+    window.addEventListener('resize', onLayoutChange);
+    try {
+      window.matchMedia('(max-width: 900px)').addEventListener('change', onLayoutChange);
+    } catch (e) { /* ignore */ }
     if (wasOpened()) {
-      showPill();
+      try {
+        document.body.classList.add('ame-sm40-dock-on');
+      } catch (e) { /* ignore */ }
+      showDock();
     }
   }
 

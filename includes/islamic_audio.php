@@ -1064,6 +1064,7 @@ function ame_islamic_audio_render_widget(mysqli $db, bool $floating = true): voi
     echo '<div class="ia-panel" id="iaPanel" hidden>';
     echo '<header class="ia-head"><h2 class="ia-title">ইসলামিক অডিও</h2>';
     echo '<button type="button" class="ia-close" id="iaClose" aria-label="বন্ধ">×</button></header>';
+    echo '<p class="ia-seq-hint">একটি শেষ হলে পরের অডিও স্বয়ংক্রিয় চলবে — বিক্রয়·পেমেন্ট পেজেও চালু থাকতে পারে</p>';
     echo '<div class="ia-player" id="iaPlayerHost"></div>';
   echo '<p class="ia-empty" id="iaEmpty" hidden>এখনো প্রকাশিত অডিও নেই।' . ($admin ? ' ইঞ্জিন থেকে আপলোড করুন।' : '') . '</p>';
     if ($admin) {
