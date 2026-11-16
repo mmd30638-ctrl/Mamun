@@ -1,3 +1,8 @@
+# 10.98.944 — উত্তোলন/পেমেন্ট মেমোতে শোরুম ১২% অফার লাইন (সার্ভার-সাইড)
+includes/helpers.php
+assets/js/ame-memo-file.js
+assets/css/memo-clear.css
+includes/config.php
 # 10.98.943 — সাইডবার রঙিন লেবেল + উত্তোলন রিপোর্ট থেকে রসিদ মেমো লিংক
 assets/css/sidebar-menu-label-colors.css
 assets/js/sidebar-label-colors.js

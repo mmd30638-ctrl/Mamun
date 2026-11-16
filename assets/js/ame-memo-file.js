@@ -75,8 +75,10 @@
                 side = document.createElement('div');
                 side.className = 'ame-memo-side';
                 side.setAttribute('aria-hidden', 'true');
+                side.textContent = ameMemoSideText();
+            } else if (!(side.textContent || '').trim()) {
+                side.textContent = ameMemoSideText();
             }
-            side.textContent = ameMemoSideText();
             var eid = box.querySelector('.ame-logo-eid');
             if (eid) {
                 eid.textContent = ameMemoEidText();

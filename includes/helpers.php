@@ -482,6 +482,22 @@ function ame_logo_eid_text(): string
     return "সাইয়্যিদু সাইয়্যিদিল আ'ইয়াদ শরীফ, মোবারক হো";
 }
 
+/** শোরুম অফার — প্রতি আরবি মাসের ১২ তারিখের ১২% ডিসকাউন্ট (সব কাস্টমার মেমোতে একই)। */
+function ame_memo_showroom_offer_text(): string
+{
+    if (function_exists('is_en') && is_en()) {
+        return '12% special discount on every product and service for 24 hours from Maghrib on the 12th of each Arabic month';
+    }
+    return 'প্রতি আরবি মাসের ১২ তারিখ মাগরিব থেকে ২৪ ঘন্টা ১২% বিশেষ ডিসকাউন্ট সমস্ত পণ্য ও সেবার উপর';
+}
+
+function ame_memo_showroom_offer_html(): string
+{
+    return '<p class="ame-memo-side" role="note">'
+        . htmlspecialchars(ame_memo_showroom_offer_text(), ENT_QUOTES, 'UTF-8')
+        . '</p>';
+}
+
 function shop_print_logo_tag(int $height = 56): string
 {
     $url = shop_logo_url('/assets/img/header-logo.png');
@@ -505,10 +521,16 @@ function shop_print_logo_tag(int $height = 56): string
             . 'animation:none !important;'
             . '-webkit-print-color-adjust:exact;print-color-adjust:exact;}'
             . '@media (max-width:420px){.ame-logo-eid{font-size:15px;letter-spacing:0;padding:10px 8px;}}'
-            . '@media print{.ame-logo-eid{animation:none !important;background:#ffffff !important;background-color:#ffffff !important;color:#C9A227 !important;-webkit-text-fill-color:#C9A227 !important;-webkit-text-stroke:0;paint-order:normal;text-shadow:1px 1px 0 #1a1204,2px 2px 0 #1a1204;font-size:18px;font-weight:900;white-space:normal;}}'
+            . '.ame-memo-side{display:block;width:100%;box-sizing:border-box;margin:0 0 8px;padding:0 12px 2px;'
+            . 'text-align:center;font-size:16px;font-weight:800;line-height:1.5;letter-spacing:0;white-space:normal;word-break:break-word;'
+            . 'color:#0B3A82 !important;-webkit-text-fill-color:#0B3A82 !important;text-shadow:none !important;'
+            . '-webkit-print-color-adjust:exact;print-color-adjust:exact;}'
+            . '@media print{.ame-logo-eid{animation:none !important;background:#ffffff !important;background-color:#ffffff !important;color:#C9A227 !important;-webkit-text-fill-color:#C9A227 !important;-webkit-text-stroke:0;paint-order:normal;text-shadow:1px 1px 0 #1a1204,2px 2px 0 #1a1204;font-size:18px;font-weight:900;white-space:normal;}'
+            . '.ame-memo-side{color:#0B3A82 !important;-webkit-text-fill-color:#0B3A82 !important;font-size:15px;font-weight:800;}}'
             . '</style>';
     }
-    return $css . '<div class="ame-print-brand"><p class="ame-logo-eid">' . $line . '</p>' . $img . '</div>';
+    $offer = function_exists('ame_memo_showroom_offer_html') ? ame_memo_showroom_offer_html() : '';
+    return $css . '<div class="ame-print-brand"><p class="ame-logo-eid">' . $line . '</p>' . $offer . $img . '</div>';
 }
 
 /* হোম-স্ক্রিন / PWA স্কয়ার আইকন — চওড়া shop_logo এখানে যাবে না */
