@@ -224,6 +224,9 @@ if (str_contains($ame_script_now, '/modules/customers/hire/')):
     $ame_body_class = trim((string)($ame_body_class ?? ''));
     $ame_current_script = strtolower(str_replace('\\', '/', (string)($_SERVER['SCRIPT_NAME'] ?? '')));
     $ame_body_class = trim('ame-premium-ui ' . $ame_body_class);
+    if (!empty($_SESSION['user_id'])) {
+        $ame_body_class = trim($ame_body_class . ' ame-user-logged-in');
+    }
     if (str_contains($ame_body_class, 'ame-purchase-desk') || str_contains($ame_body_class, 'ame-pos-terminal-page')) {
         $ame_body_class = trim($ame_body_class . ' ame-master-shell');
     }
@@ -312,9 +315,6 @@ html body .master-header-fixed .hdr-icon-btn .hdr-badge.hdr-badge-stock{backgrou
                 }
             }
         }
-        if ($ame_hdr_sm40) {
-            echo '<span class="hdr-home-duo">';
-        }
         ?>
         <button type="button" class="hdr-icon-btn hdr-i-home" onclick="window.location.href='/index.php'" title="<?php echo te('go_home'); ?>">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2 3.6 10.4h2.2V20h5.1v-5.4h2.2V20h5.1v-9.6h2.2L12 3.2z"/></svg>
@@ -323,15 +323,15 @@ html body .master-header-fixed .hdr-icon-btn .hdr-badge.hdr-badge-stock{backgrou
         <a
             id="ameSm40HomeLink"
             href="<?php echo htmlspecialchars($ame_hdr_sm40_url, ENT_QUOTES, 'UTF-8'); ?>"
-            class="hdr-icon-btn hdr-i-sm40"
+            class="hdr-icon-btn hdr-i-sm40 hdr-i-sm40--digital-life"
             data-sm40-url="<?php echo htmlspecialchars($ame_hdr_sm40_url, ENT_QUOTES, 'UTF-8'); ?>"
             target="_blank"
             rel="noopener noreferrer"
-            title="SM40 — আলাদা উইন্ডো/ট্যাবে খুলবে; অডিও চালু রেখে বিক্রয়·পেমেন্ট পেজে কাজ করুন (নিচে শর্টকাট দেখা যাবে)"
+            title="SM40 — আলাদা উইন্ডো/ট্যাবে খুলবে; অডিও চালু রেখে বিক্রয়·পেমেন্ট পেজে কাজ করুন"
         >
+            <span class="hdr-i-sm40-life-dot" aria-hidden="true"></span>
             <span class="hdr-i-sm40-label" aria-hidden="true">SM40</span>
         </a>
-        </span>
         <?php endif; ?>
 
         <?php if (!empty($_SESSION['user_id'])): ?>

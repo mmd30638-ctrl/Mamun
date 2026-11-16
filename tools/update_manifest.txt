@@ -1,3 +1,9 @@
+# 10.98.952 — SM40 হেডার: আলাদা আইকন + লগইনে ডিজিটাল লাইফ কালার
+assets/css/sm40-home-link.css
+assets/js/sm40-home-player.js
+partials/header.php
+includes/config.php
+VERSION.txt
 # 10.98.951 — PARTY DRIFT: সিল বেসলাইন ফাংশন + অটো-সিঙ্ক (PHP error_monitor শান্ত)
 includes/ledger_lock.php
 includes/party_amount_shield.php

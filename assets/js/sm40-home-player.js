@@ -44,6 +44,19 @@
       document.body.classList.add('ame-sm40-dock-on');
     } catch (e3) { /* ignore */ }
     showDock();
+    syncHdrLife();
+  }
+
+  function syncHdrLife() {
+    var link = document.getElementById('ameSm40HomeLink');
+    if (!link) {
+      return;
+    }
+    var on = false;
+    try {
+      on = sessionStorage.getItem(SESSION_KEY) !== null || localStorage.getItem(LOCAL_KEY) !== null;
+    } catch (e) { /* ignore */ }
+    link.classList.toggle('ame-sm40-icon-live', on);
   }
 
   function clearOpened() {
@@ -60,6 +73,7 @@
     if (dock) {
       dock.hidden = true;
     }
+    syncHdrLife();
   }
 
   function wasOpened() {
@@ -125,6 +139,7 @@
       popupRef.focus();
     } catch (e5) { /* ignore */ }
     markOpened();
+    syncHdrLife();
     return true;
   }
 
@@ -245,6 +260,7 @@
       } catch (e) { /* ignore */ }
       showDock();
     }
+    syncHdrLife();
   }
 
   if (document.readyState === 'loading') {
