@@ -110,7 +110,7 @@ date_default_timezone_set('Asia/Dhaka');
 // ফলে সবসময় ডিফল্ট মান '1.0' ব্যবহার হতো, অর্থাৎ CSS/JS বদলালেও পুরনো
 // ব্রাউজার-ক্যাশ ভাঙত না। এখন এখান থেকে কেন্দ্রীয়ভাবে সেট করা হচ্ছে —
 // ভবিষ্যতে CSS/JS বদলালে শুধু নিচের সংখ্যাটা বাড়ালেই যথেষ্ট।
-define('AME_ASSET_VERSION', '10.98.941');
+define('AME_ASSET_VERSION', '10.98.942');
 $sys_version = AME_ASSET_VERSION;
 
 // স্পিড লক: SPEED.txt মুছবেন না। সেটিংস → স্পিড সিস্টেম। docs/performance-standards.md
@@ -445,3 +445,8 @@ if (isset($_SESSION['user_id']) && !in_array($current_page, $public_pages, true)
 require_once __DIR__ . '/global_responsive_standard.php';
 require_once __DIR__ . '/responsive_boot.php';
 ame_responsive_boot();
+
+$amePageFitActions = __DIR__ . '/ame_page_fit_actions.php';
+if (is_file($amePageFitActions)) {
+    require_once $amePageFitActions;
+}

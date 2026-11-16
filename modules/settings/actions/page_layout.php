@@ -1,6 +1,20 @@
 <?php
 require_once __DIR__ . '/../../../includes/config.php';
 
+$amePageFitActions = __DIR__ . '/../../../includes/ame_page_fit_actions.php';
+if (is_file($amePageFitActions)) {
+    require_once $amePageFitActions;
+}
+if (!function_exists('ame_page_fit_items_for_path')) {
+    /**
+     * @return list<array{path:string,x:float,y:float,w:float,h:float}>
+     */
+    function ame_page_fit_items_for_path(string $path): array
+    {
+        return [];
+    }
+}
+
 header('Content-Type: application/json; charset=utf-8');
 
 function ame_layout_fail(int $code): void
@@ -80,6 +94,9 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET') {
     if ($row) {
         $decoded = json_decode((string) $row['layout_json'], true);
         $items = is_array($decoded) ? ame_layout_items($decoded) : [];
+    }
+    if ($items === []) {
+        $items = ame_page_fit_items_for_path($path);
     }
     echo json_encode(['ok' => true, 'items' => $items, 'locked' => $row ? ((int) $row['locked'] === 1) : false], JSON_UNESCAPED_UNICODE);
     exit;
