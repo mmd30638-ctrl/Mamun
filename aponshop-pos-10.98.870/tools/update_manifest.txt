@@ -163,6 +163,10 @@ modules/returns/v2/create_invoice_return.php
 assets/css/pos-terminal-layout.css
 assets/css/ame-pos-desk-fullwidth.css
 assets/css/ame-pos-pc-desktop-parity.css
+assets/css/sale-charge-popups.css
+assets/css/pos-charge-line.css
+assets/css/pos-round-hide.css
+assets/css/pos-cash-paid.css
 assets/css/ame-pos-memo-draft.css
 assets/css/ame-pos-draft-drawer.css
 assets/js/pos-draft-drawer.js

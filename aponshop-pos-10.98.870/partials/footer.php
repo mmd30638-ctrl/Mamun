@@ -135,8 +135,6 @@ if ($ame_is_pos) {
     echo '<link rel="stylesheet" href="/assets/css/pos-terminal-layout.css?v=' . $ame_lock_ver . '" id="amePosTerminalLayout">' . "\n";
     echo '<script src="/assets/js/pos-draft-drawer.js?v=' . $ame_lock_ver . '" defer></script>' . "\n";
     echo '<script src="/assets/js/pos-memo-draft-layout.js?v=' . $ame_lock_ver . '" defer></script>' . "\n";
-    echo '<link rel="stylesheet" href="/assets/css/sale-charge-popups.css?v=' . $ame_lock_ver . '">' . "\n";
-    echo '<link rel="stylesheet" href="/assets/css/pos-charge-line.css?v=' . $ame_lock_ver . '" id="amePosChargeLine">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/pos-round-hide.css?v=' . $ame_lock_ver . '" id="amePosRoundHide">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/pos-cash-paid.css?v=' . $ame_lock_ver . '" id="amePosCashPaidCss">' . "\n";
     if (function_exists('ame_page_layout_echo_styles_after_lock')) {
@@ -148,6 +146,9 @@ if ($ame_is_pos) {
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-pc-desktop-parity.css?v=' . $ame_lock_ver . '" id="amePosPcDesktopParity">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-cart-total-pinned.css?v=' . $ame_lock_ver . '" id="amePosCartTotalPinned">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-desk-100pct.css?v=' . $ame_lock_ver . '" id="amePosDesk100pct">' . "\n";
+    /* পণ্য/ক্রেতা চার্জ পপআপ — সব POS প্যাচের পরে, যাতে ৯৩৩ স্ক্রল CSS ওভাররাইড না করে */
+    echo '<link rel="stylesheet" href="/assets/css/sale-charge-popups.css?v=' . $ame_lock_ver . '" id="ameSaleChargePopups">' . "\n";
+    echo '<link rel="stylesheet" href="/assets/css/pos-charge-line.css?v=' . $ame_lock_ver . '" id="amePosChargeLine">' . "\n";
 }
 ?>
 <script>

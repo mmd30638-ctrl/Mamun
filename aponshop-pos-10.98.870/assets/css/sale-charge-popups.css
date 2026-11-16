@@ -1,0 +1,761 @@
+/* Sales desk product + customer charge: two cards per row, bold type, no empty stretch */
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal:has(#posCustomerSearchList:not([hidden])),
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal:has(#posCustomerSearchList:not([hidden])) {
+  display: flex !important;
+  flex-direction: column !important;
+  position: fixed !important;
+  left: 12px !important;
+  right: 12px !important;
+  top: var(--ame-customer-pop-top, 180px) !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  max-height: calc(100vh - var(--ame-customer-pop-top, 180px) - 16px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: 1000002 !important;
+  overflow: hidden !important;
+  background: #eef2f7 !important;
+  border: 1px solid #d7dee8 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.28) !important;
+}
+
+html body.ame-pos-page #search-res,
+html body.ame-pos-page #search-res:not(:empty),
+html body.ame-pos-terminal-page #search-res,
+html body.ame-pos-terminal-page #search-res:not(:empty),
+html body.ame-pos-terminal-page #ameProductSearchModal #search-res,
+html body.ame-pos-terminal-page #ameProductSearchModal #search-res:not(:empty),
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal #search-res,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal #search-res:not(:empty),
+html body.ame-pos-terminal-page #posCustomerSearchList,
+html body.ame-pos-terminal-page #posCustomerSearchList:not([hidden]),
+html body.ame-pos-terminal-page #ameCustomerSuggestModal #posCustomerSearchList,
+html body.ame-pos-terminal-page #ameCustomerSuggestModal #posCustomerSearchList:not([hidden]),
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerSearchList {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  align-content: start !important;
+  gap: 10px !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 12px !important;
+  max-height: min(68vh, 640px) !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  background: #eef2f7 !important;
+  box-sizing: border-box !important;
+}
+
+html body.ame-pos-terminal-page #ameCustomerSuggestModal li,
+html body.ame-pos-terminal-page #posCustomerSearchList li,
+html body.ame-pos-terminal-page #search-res li {
+  display: contents !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+html body.ame-pos-page #search-res .res-item,
+html body.ame-pos-terminal-page #search-res .res-item,
+html body.ame-pos-terminal-page #ameProductSearchModal #search-res .res-item,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal #search-res .res-item,
+html body.ame-pos-terminal-page #posCustomerSearchList button,
+html body.ame-pos-terminal-page #ameCustomerSuggestModal #posCustomerSearchList button,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #posCustomerSearchList button,
+html body.ame-pos-terminal-page #ameCustomerSuggestModal [data-customer-id],
+html body.ame-pos-terminal-page #ameCustomerSuggestModal .suggest-item {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  align-items: stretch !important;
+  gap: 8px !important;
+  width: auto !important;
+  max-width: none !important;
+  min-height: 128px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 14px 14px 12px !important;
+  border: 1px solid #d7dee8 !important;
+  border-left: 4px solid #003f8f !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06) !important;
+  box-sizing: border-box !important;
+}
+
+html body.ame-pos-page #search-res .res-item:hover,
+html body.ame-pos-page #search-res .res-item:focus-visible,
+html body.ame-pos-terminal-page #search-res .res-item:hover,
+html body.ame-pos-terminal-page #posCustomerSearchList button:hover,
+html body.ame-pos-terminal-page #ameCustomerSuggestModal [data-customer-id]:hover {
+  border-color: #003f8f !important;
+  background: #f4f8ff !important;
+  box-shadow: 0 8px 18px rgba(0, 63, 143, 0.12) !important;
+}
+
+html body.ame-pos-page #search-res .res-copy,
+html body.ame-pos-terminal-page #search-res .res-copy {
+  display: block !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  flex: 1 1 auto !important;
+}
+
+html body.ame-pos-page #search-res .res-name,
+html body.ame-pos-terminal-page #search-res .res-name,
+html body.ame-pos-terminal-page #ameProductSearchModal #search-res .res-name,
+html body.ame-pos-terminal-page #posCustomerSearchList button strong,
+html body.ame-pos-terminal-page #posCustomerSearchList .name,
+html body.ame-pos-terminal-page #posCustomerSearchList .cust-name,
+html body.ame-pos-terminal-page #ameCustomerSuggestModal strong,
+html body.ame-pos-terminal-page #ameCustomerSuggestModal .name,
+html body.ame-pos-terminal-page #ameCustomerSuggestModal .cust-name {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  font-size: 22px !important;
+  font-weight: 900 !important;
+  line-height: 1.25 !important;
+  color: #0f172a !important;
+}
+
+html body.ame-pos-page #search-res .res-meta,
+html body.ame-pos-terminal-page #search-res .res-meta,
+html body.ame-pos-terminal-page #posCustomerSearchList button small,
+html body.ame-pos-terminal-page #posCustomerSearchList .phone,
+html body.ame-pos-terminal-page #ameCustomerSuggestModal small,
+html body.ame-pos-terminal-page #ameCustomerSuggestModal .phone {
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+  margin-top: 4px !important;
+  color: #64748b !important;
+}
+
+html body.ame-pos-page #search-res .res-price,
+html body.ame-pos-terminal-page #search-res .res-price,
+html body.ame-pos-terminal-page #posCustomerSearchList button .due,
+html body.ame-pos-terminal-page #ameCustomerSuggestModal .due,
+html body.ame-pos-terminal-page #ameCustomerSuggestModal .balance {
+  display: block !important;
+  justify-self: end !important;
+  align-self: stretch !important;
+  margin-top: auto !important;
+  padding-top: 10px !important;
+  border-top: 1px solid #edf0f4 !important;
+  font-size: 22px !important;
+  font-weight: 900 !important;
+  line-height: 1.2 !important;
+  color: #047857 !important;
+  text-align: right !important;
+  white-space: nowrap !important;
+  font-variant-numeric: tabular-nums;
+}
+
+html body.ame-pos-terminal-page #ameDeskBarDesigner,
+html body.ame-pos-terminal-page .ame-desk-tool-designer,
+html body.ame-pos-terminal-page a.ame-desk-tool-designer,
+html body.ame-pos-terminal-page #ameLayoutFab,
+html body.ame-pos-terminal-page .ame-layout-fab,
+html body.ame-pos-terminal-page .ame-sale-desk a[href*="layout_designer"],
+html body.ame-pos-terminal-page a[href*="/modules/sales/layout_designer.php"],
+html body.ame-pos-terminal-page a[href*="/modules/sales/pos_layout_designer.php"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+@media (max-width: 640px) {
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal:has(#posCustomerSearchList:not([hidden])),
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal:has(#posCustomerSearchList:not([hidden])) {
+    left: 6px !important;
+    right: 6px !important;
+  }
+
+  html body.ame-pos-page #search-res .res-name,
+  html body.ame-pos-terminal-page #search-res .res-name,
+  html body.ame-pos-terminal-page #posCustomerSearchList button strong,
+  html body.ame-pos-terminal-page #ameCustomerSuggestModal strong,
+  html body.ame-pos-page #search-res .res-price,
+  html body.ame-pos-terminal-page #search-res .res-price {
+    font-size: 18px !important;
+    text-align: left !important;
+    white-space: normal !important;
+  }
+}
+
+/* Product charge list stays the full desk width and opens under the charge box. */
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)),
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)) {
+  display: flex !important;
+  flex-direction: column !important;
+  position: fixed !important;
+  left: 12px !important;
+  right: 12px !important;
+  top: var(--ame-product-pop-top, 180px) !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  max-height: calc(100vh - var(--ame-product-pop-top, 180px) - 16px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: 1000002 !important;
+  overflow: hidden !important;
+  background: #eef2f7 !important;
+  border: 1px solid #d7dee8 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.28) !important;
+}
+
+@media (max-width: 640px) {
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)),
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)) {
+    left: 6px !important;
+    right: 6px !important;
+  }
+}
+
+/* Customer charge list: same two-card rows as the product charge list. */
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList:not([hidden]),
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList:not([hidden]) {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  align-content: start !important;
+  gap: 10px !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 12px !important;
+  background: #eef2f7 !important;
+  box-sizing: border-box !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList li,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList li {
+  display: contents !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList li.pos-customer-suggest-empty,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList li.pos-customer-suggest-empty {
+  display: block !important;
+  grid-column: 1 / -1 !important;
+  padding: 16px !important;
+  font-weight: 800 !important;
+  color: #64748b !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList button.res-item,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList button.res-item {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  align-items: stretch !important;
+  width: auto !important;
+  max-width: none !important;
+  min-height: 128px !important;
+  margin: 0 !important;
+  padding: 14px 14px 12px !important;
+  border: 1px solid #d7dee8 !important;
+  border-left: 4px solid #003f8f !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  color: #0f172a !important;
+  text-align: left !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06) !important;
+  box-sizing: border-box !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList button .res-name,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList button .res-name {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  font-size: 22px !important;
+  font-weight: 900 !important;
+  line-height: 1.25 !important;
+  color: #0f172a !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList button .res-meta,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList button .res-meta {
+  display: block !important;
+  margin-top: 4px !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+  color: #64748b !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList button .res-price,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList button .res-price {
+  display: block !important;
+  margin-top: auto !important;
+  padding-top: 10px !important;
+  border-top: 1px solid #edf0f4 !important;
+  font-size: 22px !important;
+  font-weight: 900 !important;
+  line-height: 1.2 !important;
+  color: #047857 !important;
+  text-align: right !important;
+}
+
+@media (max-width: 640px) {
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList:not([hidden]),
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList:not([hidden]) {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList button .res-name,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList button .res-price {
+    font-size: 18px !important;
+  }
+}
+
+/*
+  10.98.510 — recent-sales customer popup.
+  A global flex-wrap was splitting the title and the name list into two columns.
+  One centered white card, names centered, long lists scroll or page inside it.
+*/
+html body.ame-pos-terminal-page #main-content #draftDrawer.open,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content #draftDrawer.open,
+html body.ame-pos-terminal-page #draftDrawer.open {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  margin: 0 !important;
+  padding: 12px !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  background: rgba(17, 24, 39, 0.72) !important;
+  z-index: 4000000 !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-modal,
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-draft-panel,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-modal {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  width: min(480px, calc(100vw - 24px)) !important;
+  max-width: calc(100vw - 24px) !important;
+  min-width: 0 !important;
+  max-height: min(86dvh, 720px) !important;
+  margin: 0 auto !important;
+  overflow: hidden !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.32) !important;
+  box-sizing: border-box !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-modal::before {
+  content: "" !important;
+  display: block !important;
+  flex: 0 0 3px !important;
+  width: 100% !important;
+  height: 3px !important;
+  background: #ffffff !important;
+  border-bottom: 3px solid #003f8f !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-modal-header,
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-table-wrap,
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-modal-footer {
+  display: block !important;
+  flex: 0 0 auto !important;
+  flex-wrap: nowrap !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-table-wrap {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  max-height: min(62dvh, 520px) !important;
+  background: #ffffff !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-modal-header h3,
+html body.ame-pos-terminal-page #main-content #draftDrawerTitle {
+  display: block !important;
+  width: auto !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+  background: #ffffff !important;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  border: 1.5px solid #003f8f !important;
+  border-radius: 12px !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-table,
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-table thead,
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-table tbody,
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-table tr {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  table-layout: auto !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-table thead th:nth-child(2) {
+  display: none !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-table th,
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-table td,
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-table td.pos-recent-cust,
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-table td.pos-recent-actions {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  text-align: center !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-table th {
+  background: #ffffff !important;
+  color: #067a32 !important;
+  -webkit-text-fill-color: #067a32 !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-cust-name {
+  display: block !important;
+  width: min(100%, 360px) !important;
+  margin: 6px auto !important;
+  padding: 10px 14px !important;
+  border-radius: 12px !important;
+  border: 1.5px solid #003f8f !important;
+  background: #ffffff !important;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+  text-align: center !important;
+  white-space: normal !important;
+  box-sizing: border-box !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-draft-row:nth-child(6n+2) .pos-recent-cust-name {
+  background: #ffffff !important;
+  border-color: #0f766e !important;
+  color: #0f766e !important;
+  -webkit-text-fill-color: #0f766e !important;
+}
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-draft-row:nth-child(6n+3) .pos-recent-cust-name {
+  background: #ffffff !important;
+  border-color: #04933a !important;
+  color: #067a32 !important;
+  -webkit-text-fill-color: #067a32 !important;
+}
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-draft-row:nth-child(6n+4) .pos-recent-cust-name {
+  background: #ffffff !important;
+  border-color: #db2777 !important;
+  color: #be185d !important;
+  -webkit-text-fill-color: #be185d !important;
+}
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-draft-row:nth-child(6n+5) .pos-recent-cust-name {
+  background: #ffffff !important;
+  border-color: #ea580c !important;
+  color: #c2410c !important;
+  -webkit-text-fill-color: #c2410c !important;
+}
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-draft-row:nth-child(6n+6) .pos-recent-cust-name {
+  background: #ffffff !important;
+  border-color: #7c3aed !important;
+  color: #6d28d9 !important;
+  -webkit-text-fill-color: #6d28d9 !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-action-bar {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  gap: 8px !important;
+  margin: 0 auto 8px !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-table .pos-recent-icon-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  border-radius: 10px !important;
+  border: 1.5px solid #003f8f !important;
+  background: #ffffff !important;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  text-decoration: none !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-table .pos-recent-icon-btn:nth-child(2) {
+  background: #ffffff !important;
+  border-color: #0f766e !important;
+  color: #0f766e !important;
+  -webkit-text-fill-color: #0f766e !important;
+}
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-table .pos-recent-icon-btn:nth-child(3) {
+  background: #ffffff !important;
+  border-color: #04933a !important;
+  color: #04933a !important;
+  -webkit-text-fill-color: #04933a !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-modal-footer {
+  display: flex !important;
+  flex: 0 0 auto !important;
+  position: relative !important;
+  z-index: 2 !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  margin: 0 !important;
+  padding: 12px 14px 14px !important;
+  border-top: 1px solid #d7dee8 !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-pager {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  margin-right: auto !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-pager[hidden] {
+  display: none !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-page-btn,
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-close-btn {
+  min-height: 38px !important;
+  padding: 8px 14px !important;
+  border: 1.5px solid #003f8f !important;
+  border-radius: 10px !important;
+  background: #ffffff !important;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-close-btn {
+  background: #ffffff !important;
+  border-color: #04933a !important;
+  color: #04933a !important;
+  -webkit-text-fill-color: #04933a !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-page-btn:disabled {
+  background: #ffffff !important;
+  border-color: #d7dee8 !important;
+  color: #667085 !important;
+  -webkit-text-fill-color: #667085 !important;
+  cursor: default !important;
+}
+
+html body.ame-pos-terminal-page #main-content #draftDrawer.open .pos-recent-page-label {
+  min-width: 52px !important;
+  text-align: center !important;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  font-weight: 800 !important;
+}
+
+/* Sales page and the phone account chooser. The native select and the
+   custom sheet render the same options; the sheet is the centered card. */
+html body.ame-pos-terminal-page,
+html body.ame-sales-pro.ame-pos-terminal-page,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+html body.ame-pos-terminal-page > .ame-desk-method-menu.is-open,
+html body.ame-sales-pro.ame-pos-terminal-page > .ame-desk-method-menu.is-open,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-menu.is-open {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 5000000 !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 16px !important;
+  background: rgba(17, 24, 39, 0.72) !important;
+}
+
+html body.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-acct-icon,
+html body.ame-sales-pro.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-acct-icon,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-menu.is-open .ame-desk-acct-icon {
+  display: none !important;
+}
+
+html body.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-list:not([hidden]),
+html body.ame-sales-pro.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-list:not([hidden]),
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-menu.is-open .ame-desk-method-list:not([hidden]) {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  gap: 8px !important;
+  width: min(420px, 100%) !important;
+  min-width: 0 !important;
+  max-height: min(78dvh, 560px) !important;
+  margin: 0 !important;
+  padding: 14px !important;
+  overflow: auto !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 0 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.32) !important;
+}
+
+html body.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-list::before,
+html body.ame-sales-pro.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-list::before,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-menu.is-open .ame-desk-method-list::before {
+  content: '' !important;
+  display: block !important;
+  height: 8px !important;
+  margin: -14px -14px 8px !important;
+  border-radius: 16px 16px 0 0 !important;
+  background: linear-gradient(90deg, #003f8f, #0f766e, #04933a, #d97706, #e2136e, #7c3aed) !important;
+}
+
+html body.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-title,
+html body.ame-sales-pro.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-title {
+  margin: 0 0 8px !important;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+}
+
+html body.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item,
+html body.ame-sales-pro.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 44px !important;
+  padding: 8px 36px !important;
+  border-radius: 12px !important;
+  border: 1px solid transparent !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+}
+
+html body.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-cash,
+html body.ame-sales-pro.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-cash,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-item.is-cash {
+  background: #eff6ff !important;
+  border-color: #2563eb !important;
+  color: #1d4ed8 !important;
+  -webkit-text-fill-color: #1d4ed8 !important;
+}
+html body.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-bank,
+html body.ame-sales-pro.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-bank,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-item.is-bank {
+  background: #ecfdf5 !important;
+  border-color: #059669 !important;
+  color: #047857 !important;
+  -webkit-text-fill-color: #047857 !important;
+}
+html body.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-bkash,
+html body.ame-sales-pro.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-bkash,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-item.is-bkash {
+  background: #fdf2f8 !important;
+  border-color: #e2136e !important;
+  color: #be185d !important;
+  -webkit-text-fill-color: #be185d !important;
+}
+html body.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-nagad,
+html body.ame-sales-pro.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-nagad,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-item.is-nagad {
+  background: #fff7ed !important;
+  border-color: #ea580c !important;
+  color: #c2410c !important;
+  -webkit-text-fill-color: #c2410c !important;
+}
+html body.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-rocket,
+html body.ame-sales-pro.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-rocket,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-item.is-rocket {
+  background: #f5f3ff !important;
+  border-color: #7c3aed !important;
+  color: #6d28d9 !important;
+  -webkit-text-fill-color: #6d28d9 !important;
+}
+html body.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-due,
+html body.ame-sales-pro.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-due,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-item.is-due {
+  background: #fef2f2 !important;
+  border-color: #dc2626 !important;
+  color: #b91c1c !important;
+  -webkit-text-fill-color: #b91c1c !important;
+}
+html body.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-other,
+html body.ame-sales-pro.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-other,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-item.is-other {
+  background: #f8fafc !important;
+  border-color: #003f8f !important;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+}
+html body.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-picked,
+html body.ame-sales-pro.ame-pos-terminal-page > .ame-desk-method-menu.is-open .ame-desk-method-item.is-picked,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-method-item.is-picked {
+  box-shadow: inset 0 0 0 2px currentColor !important;
+}
