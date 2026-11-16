@@ -1,3 +1,13 @@
+# 10.98.943 — সাইডবার রঙিন লেবেল + উত্তোলন রিপোর্ট থেকে রসিদ মেমো লিংক
+assets/css/sidebar-menu-label-colors.css
+assets/js/sidebar-label-colors.js
+assets/css/withdrawals-report-memo-link.css
+assets/js/withdrawals-report-memo.js
+partials/sidebar-icons.php
+partials/header.php
+partials/footer.php
+modules/customers/withdrawals_report.php
+includes/config.php
 # 10.98.942 — page_layout API: ame_page_fit_items_for_path() (HTTP 500 ফিক্স)
 includes/ame_page_fit_actions.php
 modules/settings/actions/page_layout.php

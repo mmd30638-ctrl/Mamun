@@ -125,9 +125,12 @@ $ame_slip = [
     ],
 ];
 
+$ame_body_class = trim(($ame_body_class ?? '') . ' ame-withdrawals-report-page');
 include __DIR__ . '/../../partials/header.php';
+$ame_ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.943';
 ?>
-<link rel="stylesheet" href="/assets/css/cust-desk.css?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.67', ENT_QUOTES, 'UTF-8'); ?>">
+<link rel="stylesheet" href="/assets/css/cust-desk.css?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>">
+<link rel="stylesheet" href="/assets/css/withdrawals-report-memo-link.css?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>">
 <div class="cdesk-wrap">
   <header class="cdesk-mast no-print">
     <p class="cdesk-kicker"><?php echo ame_pair('দোকানের জমা', 'Shop deposit'); ?></p>
@@ -240,16 +243,28 @@ include __DIR__ . '/../../partials/header.php';
               $method_bn = $method_map[$method][0] ?? $method;
               $method_en = $method_map[$method][1] ?? $method;
           ?>
-          <tr>
+          <?php
+              $wid = (int) ($r['id'] ?? 0);
+              $memo_url = 'withdraw_receipt.php?id=' . $wid;
+              $memo_hint = ame_l('রসিদ মেমো খুলুন', 'Open payout memo');
+          ?>
+          <tr class="wdr-memo-row" data-wdr-memo="<?php echo $wid; ?>">
             <td><?php echo htmlspecialchars((string) $r['withdraw_date'], ENT_QUOTES, 'UTF-8'); ?></td>
             <td>
               <?php echo htmlspecialchars($name !== '' ? $name : '—', ENT_QUOTES, 'UTF-8'); ?>
               <?php if ($code !== ''): ?><div class="cdesk-meta"><?php echo htmlspecialchars($code, ENT_QUOTES, 'UTF-8'); ?></div><?php endif; ?>
             </td>
-            <td><?php echo htmlspecialchars($ref, ENT_QUOTES, 'UTF-8'); ?></td>
+            <td class="wdr-ref-cell">
+              <a class="wdr-memo-link" href="<?php echo htmlspecialchars($memo_url, ENT_QUOTES, 'UTF-8'); ?>" title="<?php echo htmlspecialchars($memo_hint, ENT_QUOTES, 'UTF-8'); ?>">
+                <span class="wdr-memo-badge"><?php echo ame_pair('রসিদ', 'Memo'); ?></span>
+                <?php echo htmlspecialchars($ref, ENT_QUOTES, 'UTF-8'); ?>
+              </a>
+            </td>
             <td><?php echo htmlspecialchars((string) ($r['account_name'] ?? '—'), ENT_QUOTES, 'UTF-8'); ?></td>
             <td><?php echo ame_pair($method_bn, $method_en); ?></td>
-            <td class="num">৳<?php echo number_format((float) $r['amount'], 2); ?></td>
+            <td class="num">
+              <a class="wdr-memo-link wdr-memo-amt" href="<?php echo htmlspecialchars($memo_url, ENT_QUOTES, 'UTF-8'); ?>">৳<?php echo number_format((float) $r['amount'], 2); ?></a>
+            </td>
           </tr>
           <?php endforeach; endif; ?>
         </tbody>
@@ -266,4 +281,5 @@ include __DIR__ . '/../../partials/header.php';
     <div class="ame-slip-foot no-print"><?php echo ame_pair('এই রিপোর্ট ইলেকট্রনিকভাবে তৈরি।', 'This report was generated electronically.'); ?></div>
   </div>
 </div>
+<script src="/assets/js/withdrawals-report-memo.js?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>" defer></script>
 <?php include __DIR__ . '/../../partials/footer.php'; ?>

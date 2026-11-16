@@ -386,10 +386,10 @@ if (str_contains($ame_purchase_lock, '/modules/bloan/')) {
 ?>
 <style id="ame-ink-lock">
 html { --ame-ink: #111827 !important; --brand-black: #111827 !important; }
-html body .custom-sidebar a:not(.active),
-html body .direct-link:not(.active),
-html body .menu-list a:not(.active),
-html body .menu-head:not(.active) {
+html body .custom-sidebar a:not(.active):not(.sb-label-colored),
+html body .direct-link:not(.active):not(.sb-label-colored),
+html body .menu-list a:not(.active):not(.sb-label-colored),
+html body .menu-head:not(.active):not(.sb-label-colored) {
   color: #111827 !important;
   -webkit-text-fill-color: #111827 !important;
 }

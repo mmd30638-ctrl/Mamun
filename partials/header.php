@@ -176,6 +176,8 @@ if (str_contains($ame_script_now, '/modules/customers/hire/')):
     <?php if (function_exists('ame_overlay_head_tags')) { ame_overlay_head_tags(); } ?>
     <link rel="stylesheet" href="/assets/css/hdr-icons.css?v=<?php echo htmlspecialchars($sys_version ?? '10.94.0', ENT_QUOTES, 'UTF-8'); ?>">
     <link rel="stylesheet" href="/assets/css/sidebar-icons.css?v=<?php echo htmlspecialchars($sys_version ?? '10.94.0', ENT_QUOTES, 'UTF-8'); ?>">
+    <link rel="stylesheet" href="/assets/css/sidebar-menu-label-colors.css?v=<?php echo htmlspecialchars($sys_version ?? '10.94.0', ENT_QUOTES, 'UTF-8'); ?>">
+    <script src="/assets/js/sidebar-label-colors.js?v=<?php echo htmlspecialchars($sys_version ?? '10.94.0', ENT_QUOTES, 'UTF-8'); ?>" defer></script>
     <link rel="stylesheet" href="/assets/css/ame-confirm.css?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>">
     <script src="/assets/js/ame-confirm.js?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>" defer></script>
     <?php
