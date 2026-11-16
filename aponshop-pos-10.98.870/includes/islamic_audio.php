@@ -1059,7 +1059,7 @@ function ame_islamic_audio_render_widget(mysqli $db, bool $floating = true): voi
     $dock = $floating ? ' ia-home--dock' : '';
     $admin = ame_islamic_audio_can_admin();
     echo '<section class="ia-home' . $dock . '" id="iaHome" data-ia-tracks="' . $json . '" aria-label="ইসলামিক অডিও">';
-    echo '<button type="button" class="ia-fab" id="iaFab" aria-expanded="false" aria-controls="iaPanel">';
+    echo '<button type="button" class="ia-fab" id="iaFab" aria-expanded="false" aria-controls="iaPanel" title="টেনে সরান — ক্লিকে অডিও খুলুন">';
     echo '<span class="ia-fab-ic" aria-hidden="true">🎧</span><span class="ia-fab-txt">অডিও</span></button>';
     echo '<div class="ia-panel" id="iaPanel" hidden>';
     echo '<header class="ia-head"><h2 class="ia-title">ইসলামিক অডিও</h2>';

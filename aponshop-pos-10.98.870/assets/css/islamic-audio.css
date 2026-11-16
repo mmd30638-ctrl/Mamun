@@ -13,11 +13,17 @@
   right: max(12px, env(safe-area-inset-right));
   bottom: max(16px, env(safe-area-inset-bottom));
   left: auto;
+  top: auto;
   z-index: 10080;
   max-width: min(380px, calc(100vw - 20px));
   margin: 0;
   padding: 0;
   pointer-events: none;
+}
+
+.ia-home--dock.ia-home--moved {
+  right: auto !important;
+  bottom: auto !important;
 }
 
 .ia-home--dock .ia-fab,
@@ -67,13 +73,30 @@
   font-weight: 800;
   font-size: 15px;
   box-shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
-  cursor: pointer;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
   transition: box-shadow 0.2s, transform 0.15s;
+}
+
+.ia-home--dock .ia-fab {
+  cursor: grab;
+}
+
+.ia-fab.ia-fab--dragging {
+  cursor: grabbing;
+  transform: none;
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.16);
 }
 
 .ia-fab:hover {
   box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
   transform: translateY(-1px);
+}
+
+.ia-fab.ia-fab--dragging:hover {
+  transform: none;
 }
 
 .ia-fab-ic {

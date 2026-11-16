@@ -21,6 +21,8 @@ include dirname(__DIR__, 2) . '/partials/header.php';
         হোমপেজ ও সব পেজে ডান নিচের <strong>অডিও</strong> আইকন দেখান
       </label>
       <p class="ia-fab-pref-note">টিক বন্ধ করলে অডিও আইকন সরে যাবে; লাইব্রেরি ও আপলোড এখান থেকেই চলবে।</p>
+      <p class="ia-fab-pref-note">হোমপেজে অডিও বাটন <strong>ধরে টেনে</strong> যেকোনো জায়গায় রাখা যায় (ফোন/PC প্রতিটিতে আলাদা সেভ)।</p>
+      <button type="button" class="ia-btn ia-btn-ghost" id="iaResetFabPos">↺ অডিও বাটনের জায়গা ডিফল্ট</button>
     </section>
     <?php if (!$ffmpegOk): ?>
     <p class="ia-ffmpeg-note">নোট: সার্ভারে ffmpeg নেই — আপলোড হবে, কম্প্রেশন সীমিত থাকতে পারে।</p>

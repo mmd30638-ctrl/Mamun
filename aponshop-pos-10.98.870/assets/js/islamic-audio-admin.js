@@ -7,6 +7,7 @@
   var statusEl = document.getElementById('iaStatus');
   var bodyEl = document.getElementById('iaTableBody');
   var fabToggle = document.getElementById('iaShowHomeFab');
+  var fabPosReset = document.getElementById('iaResetFabPos');
   var api = '/modules/settings/islamic_audio_api.php';
 
   function say(msg) {
@@ -361,6 +362,15 @@
             btn.disabled = false;
           }
         });
+    });
+  }
+
+  if (fabPosReset) {
+    fabPosReset.addEventListener('click', function () {
+      try {
+        localStorage.removeItem('ame-ia-fab-pos-v1');
+      } catch (e) { /* ignore */ }
+      say('অডিও বাটনের জায়গা রিসেট — হোমপেজ রিফ্রেশ করুন');
     });
   }
 

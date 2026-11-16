@@ -258,8 +258,152 @@
     fab.setAttribute('aria-expanded', 'false');
   }
 
+  var POS_KEY = 'ame-ia-fab-pos-v1';
+  var fabDrag = {
+    active: false,
+    moved: false,
+    suppressClick: false,
+    startX: 0,
+    startY: 0,
+    originLeft: 0,
+    originTop: 0,
+    w: 0,
+    h: 0
+  };
+
+  function isDocked() {
+    return root.classList.contains('ia-home--dock');
+  }
+
+  function clamp(n, min, max) {
+    return Math.min(max, Math.max(min, n));
+  }
+
+  function applyFabPos(left, top) {
+    var pad = 8;
+    var vw = window.innerWidth || document.documentElement.clientWidth || 360;
+    var vh = window.innerHeight || document.documentElement.clientHeight || 640;
+    var w = fabDrag.w || (fab ? fab.offsetWidth : 120);
+    var h = fabDrag.h || (fab ? fab.offsetHeight : 48);
+    var x = clamp(left, pad, Math.max(pad, vw - w - pad));
+    var y = clamp(top, pad, Math.max(pad, vh - h - pad));
+    root.style.right = 'auto';
+    root.style.bottom = 'auto';
+    root.style.left = x + 'px';
+    root.style.top = y + 'px';
+    root.classList.add('ia-home--moved');
+    return { x: x, y: y };
+  }
+
+  function saveFabPos(x, y) {
+    try {
+      localStorage.setItem(POS_KEY, JSON.stringify({ x: x, y: y }));
+    } catch (e) { /* ignore */ }
+  }
+
+  function loadFabPos() {
+    if (!isDocked() || !fab) {
+      return;
+    }
+    try {
+      var raw = localStorage.getItem(POS_KEY);
+      if (!raw) {
+        return;
+      }
+      var p = JSON.parse(raw);
+      if (!p || typeof p.x !== 'number' || typeof p.y !== 'number') {
+        return;
+      }
+      var rect = fab.getBoundingClientRect();
+      fabDrag.w = rect.width;
+      fabDrag.h = rect.height;
+      applyFabPos(p.x, p.y);
+    } catch (e2) { /* ignore */ }
+  }
+
+  function onFabDragMove(clientX, clientY) {
+    if (!fabDrag.active) {
+      return;
+    }
+    var dx = clientX - fabDrag.startX;
+    var dy = clientY - fabDrag.startY;
+    if (!fabDrag.moved && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
+      fabDrag.moved = true;
+      fabDrag.suppressClick = true;
+      if (fab) {
+        fab.classList.add('ia-fab--dragging');
+        fab.setPointerCapture(fabDrag.pointerId);
+      }
+      if (panel && !panel.hidden) {
+        closePanel();
+      }
+    }
+    if (!fabDrag.moved) {
+      return;
+    }
+    var pos = applyFabPos(fabDrag.originLeft + dx, fabDrag.originTop + dy);
+    saveFabPos(pos.x, pos.y);
+  }
+
+  function endFabDrag() {
+    if (!fabDrag.active) {
+      return;
+    }
+    fabDrag.active = false;
+    if (fab) {
+      fab.classList.remove('ia-fab--dragging');
+      if (fab.hasPointerCapture && fab.hasPointerCapture(fabDrag.pointerId)) {
+        try {
+          fab.releasePointerCapture(fabDrag.pointerId);
+        } catch (e) { /* ignore */ }
+      }
+    }
+    fabDrag.pointerId = 0;
+  }
+
+  if (isDocked() && fab) {
+    loadFabPos();
+    fab.addEventListener('pointerdown', function (ev) {
+      if (ev.button !== 0 && ev.pointerType !== 'touch') {
+        return;
+      }
+      var rect = fab.getBoundingClientRect();
+      fabDrag.active = true;
+      fabDrag.moved = false;
+      fabDrag.startX = ev.clientX;
+      fabDrag.startY = ev.clientY;
+      fabDrag.originLeft = rect.left;
+      fabDrag.originTop = rect.top;
+      fabDrag.w = rect.width;
+      fabDrag.h = rect.height;
+      fabDrag.pointerId = ev.pointerId;
+    });
+    fab.addEventListener('pointermove', function (ev) {
+      onFabDragMove(ev.clientX, ev.clientY);
+    });
+    fab.addEventListener('pointerup', function () {
+      endFabDrag();
+    });
+    fab.addEventListener('pointercancel', function () {
+      endFabDrag();
+    });
+    window.addEventListener('resize', function () {
+      if (!root.classList.contains('ia-home--moved')) {
+        return;
+      }
+      var l = parseFloat(root.style.left) || 0;
+      var t = parseFloat(root.style.top) || 0;
+      var pos = applyFabPos(l, t);
+      saveFabPos(pos.x, pos.y);
+    });
+  }
+
   if (fab && panel) {
     fab.addEventListener('click', function () {
+      if (fabDrag.suppressClick) {
+        fabDrag.suppressClick = false;
+        return;
+      }
       if (panel.hidden) {
         openPanel();
         if (hasTracks && !currentId && tracks[0]) {
