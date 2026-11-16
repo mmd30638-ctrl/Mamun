@@ -65,9 +65,26 @@ if ($path === null && $file === 'Aponshop_POS_STACK_UPDATE.zip') {
 }
 
 if ($path === null) {
+    $fallbackFile = __DIR__ . '/data/patch_get_fallback.json';
+    $fallbackUrl = '';
+    if (is_file($fallbackFile)) {
+        $raw = file_get_contents($fallbackFile);
+        $map = is_string($raw) ? json_decode($raw, true) : null;
+        if (is_array($map) && isset($map[$file]) && is_string($map[$file])) {
+            $try = trim($map[$file]);
+            if (preg_match('#^https://raw\.githubusercontent\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/[A-Za-z0-9._/-]+/downloads/[A-Za-z0-9._-]+\.zip$#', $try)) {
+                $fallbackUrl = $try;
+            }
+        }
+    }
+    if ($fallbackUrl !== '') {
+        header('Location: ' . $fallbackUrl, true, 302);
+        header('Cache-Control: no-store');
+        exit;
+    }
     http_response_code(404);
     header('Content-Type: text/plain; charset=UTF-8');
-    echo '❌ ZIP এখনও সার্ভারে নেই। ডেভেলপারকে deliverables/ বা downloads/ এ রাখতে বলুন।';
+    echo '❌ ZIP এখনও সার্ভারে নেই। Hostinger ফাইল ম্যানেজারে public_html/downloads/' . $file . ' (≈৫৫ KB) আপলোড করুন।';
     exit;
 }
 

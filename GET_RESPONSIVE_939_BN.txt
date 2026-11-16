@@ -5,6 +5,10 @@ Hostinger ফোনে ৯ MB ZIP পোস্ট করবেন না। ন�
 === সরাসরি /get/ — চাপলেই ডাউনলোড (এক ক্লিকে) ===
 
 https://mavo12.online/get/Aponshop_10.98.939_PATCH.zip
+(সার্ভারে ZIP না থাকলে get.php GitHub থেকে রিডাইরেক্ট — data/patch_get_fallback.json লাগে)
+
+তাৎক্ষণিক বিকল্প (সার্ভার ছাড়াই এক ক্লিকে ডাউনলোড):
+https://raw.githubusercontent.com/mmd30638-ctrl/Mamun/cursor/global-responsive-architecture-ab1e/downloads/Aponshop_10.98.939_PATCH.zip
 
 (স্টেজিং/হোস্টিংগার টেম্প ডোমেনে একই পাথ: /get/Aponshop_10.98.939_PATCH.zip)
 
