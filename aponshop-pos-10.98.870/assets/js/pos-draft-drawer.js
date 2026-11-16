@@ -137,10 +137,8 @@
     }
 
     function ensurePcDeskParity() {
-        if (document.documentElement.classList.contains('ame-phone-desktop')) {
-            return;
-        }
-        if (Math.max(window.innerWidth || 0, document.documentElement.clientWidth || 0) < 1000) {
+        if (!document.body.classList.contains('ame-pos-tier-wide')
+            && Math.max(window.innerWidth || 0, document.documentElement.clientWidth || 0) < 1000) {
             return;
         }
         recoverDeskLayout();

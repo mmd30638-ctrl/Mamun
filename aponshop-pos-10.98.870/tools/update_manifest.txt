@@ -164,6 +164,9 @@ assets/css/pos-terminal-layout.css
 assets/css/ame-pos-desk-fullwidth.css
 assets/css/ame-pos-pc-desktop-parity.css
 assets/css/sale-charge-popups.css
+assets/css/ame-pos-charge-unified.css
+assets/css/ame-pos-device-tier.css
+assets/js/ame-pos-device-setup.js
 assets/css/pos-charge-line.css
 assets/css/pos-round-hide.css
 assets/css/pos-cash-paid.css

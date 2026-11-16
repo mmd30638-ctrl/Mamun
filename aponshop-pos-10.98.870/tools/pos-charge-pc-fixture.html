@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>POS charge PC fixture</title>
+  <link rel="stylesheet" href="../assets/css/ame-sale-desk-lock.css">
+  <link rel="stylesheet" href="../assets/css/ame-pos-desk-100pct.css">
+  <link rel="stylesheet" href="../assets/css/sale-charge-popups.css">
+  <link rel="stylesheet" href="../assets/css/pos-charge-line.css">
+  <link rel="stylesheet" href="../assets/css/ame-pos-charge-unified.css">
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; }
+    #main-content { padding: 8px; }
+  </style>
+</head>
+<body class="ame-sales-pro ame-pos-terminal-page ame-screen-desktop">
+<div id="main-content">
+  <div class="ame-sale-desk">
+    <div class="ame-pos-term-search">
+      <p class="ame-search-zikir">(পাস -আনফাস যিকির হচ্ছে কি?)</p>
+      <div class="ame-pos-search">
+        <input type="search" id="p-search" class="ame-pos-input" value="280" />
+        <div id="ameProductSearchModal" class="ame-pos-modal-panel">
+          <div class="ame-pos-modal-bar">
+            <strong id="ameProductSearchTitle">পণ্য খুঁজে বের করুন</strong>
+            <button type="button" class="ame-pos-modal-x">×</button>
+          </div>
+          <div id="search-res"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const products = [
+    { name: 'কারেন্ট তার', meta: '280/3 | স্টক: 27', price: '৳40.00' },
+    { name: '১০নং ব্যাটারী নাট', meta: '280.1 | স্টক: 0', price: '৳5.00' },
+    { name: '১২ নং দুই ইঞ্চি নাট W', meta: '280.2 | স্টক: 178', price: '৳15.00' },
+    { name: '১২ নং ব্যাটারী নাট', meta: '280.5 | স্টক: 44', price: '৳15.00' },
+    { name: '৩০ নং নাট 6205', meta: '280/8 | স্টক: 5', price: '৳30.00' },
+    { name: '৩০ নং নাট 6206', meta: '280/9 | স্টক: 3', price: '৳30.00' },
+    { name: 'ইস্টিক ক্রেপ নাট', meta: '280/X | স্টক: 12', price: '৳35.00' },
+    { name: 'এসপেন্ডেল নাট দামি HP', meta: '280/H | স্টক: 8', price: '৳40.00' }
+  ];
+  const box = document.getElementById('search-res');
+  products.forEach(function (p) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'res-item';
+    btn.innerHTML =
+      '<span class="res-copy"><span class="res-name"></span><span class="res-meta"></span></span>' +
+      '<span class="res-price"></span>';
+    btn.querySelector('.res-name').textContent = p.name;
+    btn.querySelector('.res-meta').textContent = p.meta;
+    btn.querySelector('.res-price').textContent = p.price;
+    box.appendChild(btn);
+  });
+  document.documentElement.style.setProperty('--ame-product-pop-top', '200px');
+</script>
+</body>
+</html>

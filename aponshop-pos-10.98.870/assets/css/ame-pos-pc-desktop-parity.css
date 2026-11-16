@@ -1,8 +1,8 @@
 /* 10.98.930 — আসল PC (≥1000px): মোবাইল Chrome «ডেস্কটপ সাইট»-এর মতো এক কলাম, পূর্ণ প্রস্থ, নিচ পর্যন্ত স্ক্রল */
 
 @media (min-width: 1000px) {
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content,
-  html:not(.ame-phone-desktop) body.ame-sales-pro.ame-pos-terminal-page #main-content {
+body.ame-pos-terminal-page #main-content,
+body.ame-sales-pro.ame-pos-terminal-page #main-content {
     overflow-x: hidden !important;
     overflow-y: auto !important;
     max-height: none !important;
@@ -10,17 +10,17 @@
     -webkit-overflow-scrolling: touch !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk,
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell,
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main {
+body.ame-pos-terminal-page #main-content .ame-sale-desk,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main {
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
     box-sizing: border-box !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid,
-  html:not(.ame-phone-desktop) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
     display: flex !important;
     flex-direction: column !important;
     grid-template-columns: none !important;
@@ -32,19 +32,19 @@
     align-content: flex-start !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid > div.ame-desk-stack {
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid > div.ame-desk-stack {
     display: block !important;
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar,
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top,
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack,
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main,
-  html:not(.ame-phone-desktop) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
     grid-column: auto !important;
     grid-row: auto !important;
     width: 100% !important;
@@ -59,14 +59,14 @@
     top: auto !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main {
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main {
     display: flex !important;
     flex-direction: column !important;
     gap: 8px !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap,
-  html:not(.ame-phone-desktop) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap {
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap {
     display: block !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -78,8 +78,8 @@
     scrollbar-gutter: stable both-edges !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos,
-  html:not(.ame-phone-desktop) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos {
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos {
     width: 100% !important;
     min-width: 100% !important;
     max-width: 100% !important;
@@ -89,7 +89,7 @@
 
 /* রানিং নিউজ / মার্কি — PC তে আরও পড়তে সুবিধা */
 @media (min-width: 1000px) {
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar {
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar {
     flex-wrap: wrap !important;
     overflow: visible !important;
     height: auto !important;
@@ -97,9 +97,9 @@
     min-height: 52px !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee-text,
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar .ame-tbar-track,
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar .ame-run-line {
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-marquee-text,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar .ame-tbar-track,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar .ame-run-line {
     font-size: 17px !important;
     font-weight: 700 !important;
     line-height: 1.5 !important;

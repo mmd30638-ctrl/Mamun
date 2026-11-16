@@ -1,20 +1,20 @@
 /* 10.98.933 — বিক্রয় ডেস্ক: ব্রাউজার ১০০% জুমে স্বাভাবিক সাইজ (অতিরিক্ত বড় টাইপ কমানো) */
 
 @media (min-width: 1000px) {
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk,
-  html:not(.ame-phone-desktop) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk {
+body.ame-pos-terminal-page #main-content .ame-sale-desk,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk {
     font-size: 14px !important;
     zoom: 1 !important;
     transform: none !important;
     scale: 1 !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos th {
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos th {
     font-size: 12px !important;
     padding: 6px 4px !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos td {
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos td {
     font-size: 14px !important;
     height: auto !important;
     min-height: 36px !important;
@@ -26,7 +26,7 @@
     line-height: 1.35 !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos td:nth-child(4) {
+body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos td:nth-child(4) {
     text-align: left !important;
     word-break: break-word !important;
     color: #0f172a !important;
@@ -34,23 +34,20 @@
     font-weight: 700 !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk input,
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk select,
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk textarea,
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-input,
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk label {
+body.ame-pos-terminal-page #main-content .ame-sale-desk input,
+body.ame-pos-terminal-page #main-content .ame-sale-desk select,
+body.ame-pos-terminal-page #main-content .ame-sale-desk textarea,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-input,
+body.ame-pos-terminal-page #main-content .ame-sale-desk label {
     font-size: 15px !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk #p-search {
+body.ame-pos-terminal-page #main-content .ame-sale-desk #p-search {
     font-size: 16px !important;
-    min-height: 40px !important;
-    max-height: 42px !important;
-    height: 40px !important;
     box-sizing: border-box !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search {
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search {
     font-size: 16px !important;
     height: auto !important;
     min-height: 0 !important;
@@ -58,23 +55,23 @@
     overflow: visible !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-quick-btn,
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions button,
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-actions button {
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-quick-btn,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions button,
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-table-actions button {
     font-size: 14px !important;
     min-height: 38px !important;
     padding-top: 4px !important;
     padding-bottom: 4px !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-grand strong,
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk #deskGrand {
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-grand strong,
+body.ame-pos-terminal-page #main-content .ame-sale-desk #deskGrand {
     font-size: 24px !important;
     min-height: 42px !important;
     height: 42px !important;
   }
 
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosCompleteBtn {
+body.ame-pos-terminal-page #main-content .ame-sale-desk button#amePosCompleteBtn {
     font-size: 18px !important;
     min-height: 48px !important;
   }

@@ -127,6 +127,7 @@ if ($ame_is_pos && is_file(__DIR__ . '/../includes/page_layout.php')) {
     require_once __DIR__ . '/../includes/page_layout.php';
 }
 if ($ame_is_pos) {
+    echo '<script src="/assets/js/ame-pos-device-setup.js?v=' . $ame_lock_ver . '"></script>' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/ame-sale-desk-lock.css?v=' . $ame_lock_ver . '" id="ameSaleLock">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-mobile-scroll.css?v=' . $ame_lock_ver . '" id="amePosMobileScroll">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-cart-scroll.css?v=' . $ame_lock_ver . '" id="amePosCartScroll">' . "\n";
@@ -149,6 +150,8 @@ if ($ame_is_pos) {
     /* পণ্য/ক্রেতা চার্জ পপআপ — সব POS প্যাচের পরে, যাতে ৯৩৩ স্ক্রল CSS ওভাররাইড না করে */
     echo '<link rel="stylesheet" href="/assets/css/sale-charge-popups.css?v=' . $ame_lock_ver . '" id="ameSaleChargePopups">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/pos-charge-line.css?v=' . $ame_lock_ver . '" id="amePosChargeLine">' . "\n";
+    echo '<link rel="stylesheet" href="/assets/css/ame-pos-charge-unified.css?v=' . $ame_lock_ver . '" id="amePosChargeUnified">' . "\n";
+    echo '<link rel="stylesheet" href="/assets/css/ame-pos-device-tier.css?v=' . $ame_lock_ver . '" id="amePosDeviceTier">' . "\n";
 }
 ?>
 <script>

@@ -25,20 +25,29 @@
 
     function setViewportState() {
         var root = document.documentElement;
-        var width = Math.max(root.clientWidth || 0, window.innerWidth || 0);
+        if (typeof window.AME_POS_DEVICE_APPLY === 'function') {
+            window.AME_POS_DEVICE_APPLY();
+        }
+        var width = Math.max(
+            parseFloat(root.style.getPropertyValue('--ame-layout-width')) || 0,
+            root.clientWidth || 0,
+            window.innerWidth || 0
+        );
+        if (window.AME_SALE_DESKTOP_SITE || root.classList.contains('ame-phone-desktop')) {
+            width = Math.max(width, 1366);
+        }
         var height = window.visualViewport
             ? window.visualViewport.height
             : Math.max(root.clientHeight || 0, window.innerHeight || 0);
         root.style.setProperty('--ame-viewport-width', width + 'px');
         root.style.setProperty('--ame-viewport-height', height + 'px');
         root.style.setProperty('--ame-vh', (height * 0.01) + 'px');
-        if (window.AME_SALE_DESKTOP_SITE || root.classList.contains('ame-phone-desktop')) {
-            width = Math.max(width, 1366);
-        }
-        if (document.body) {
+        if (document.body && typeof window.AME_POS_DEVICE_APPLY !== 'function') {
             document.body.classList.toggle('ame-screen-phone', width <= 760);
             document.body.classList.toggle('ame-screen-tablet', width > 760 && width < 1100);
             document.body.classList.toggle('ame-screen-desktop', width >= 1100);
+            var tier = width >= 1000 ? 'wide' : (width > 760 ? 'tablet' : 'phone');
+            root.setAttribute('data-ame-pos-tier', tier);
         }
     }
 
@@ -71,7 +80,8 @@
     }
 
     function stackWideTables() {
-        var narrow = !(window.AME_SALE_DESKTOP_SITE || document.documentElement.classList.contains('ame-phone-desktop')) && window.innerWidth <= 760;
+        var tier = document.documentElement.getAttribute('data-ame-pos-tier') || '';
+        var narrow = tier === 'phone' || (tier === '' && window.innerWidth <= 760);
         document.querySelectorAll('table').forEach(function (table) {
             if (isPosTable(table) || isInvoiceTable(table) || isInvoiceMemo() || skipCustomerAllRows(table)) {
                 return;

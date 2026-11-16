@@ -225,39 +225,6 @@ html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameP
   }
 }
 
-/* PC (≥1000px): চার্জ বক্স term-search-এর overflow/৪২px ক্যাপে ক্লিপ হয় না */
-@media (min-width: 1000px) {
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search:has(#search-res:not(:empty)),
-  html:not(.ame-phone-desktop) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search:has(#search-res:not(:empty)),
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-search:has(#search-res:not(:empty)),
-  html:not(.ame-phone-desktop) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-search:has(#search-res:not(:empty)) {
-    height: auto !important;
-    max-height: none !important;
-    min-height: 0 !important;
-    overflow: visible !important;
-  }
-
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)),
-  html:not(.ame-phone-desktop) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)) {
-    display: flex !important;
-    position: fixed !important;
-    left: 50% !important;
-    right: auto !important;
-    transform: translateX(-50%) !important;
-    width: min(1080px, calc(100vw - 24px)) !important;
-    max-width: min(1080px, calc(100vw - 24px)) !important;
-    top: var(--ame-product-pop-top, 180px) !important;
-    z-index: 1000002 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-  }
-
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)) #search-res,
-  html:not(.ame-phone-desktop) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)) #search-res {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    max-height: min(52vh, 520px) !important;
-  }
-}
 
 /* Customer charge list: same two-card rows as the product charge list. */
 html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomerSuggestModal #posCustomerSearchList:not([hidden]),
