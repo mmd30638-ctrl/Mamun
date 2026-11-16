@@ -700,14 +700,24 @@ function ameCartLinesNetTotal() {
 function amePaintCartLinesTotal() {
     const foot = document.getElementById('cart-lines-foot');
     const out = document.getElementById('cartLinesTotal');
-    if (!foot || !out) {
-        return;
-    }
+    const bar = document.getElementById('ameCartLinesTotalBar');
+    const barOut = document.getElementById('ameCartLinesTotalBarVal');
     const hasLines = cart.length > 0
         || document.querySelectorAll('#cart-body tr.ame-cart-service-row').length > 0;
     const total = ameCartLinesNetTotal();
-    out.textContent = total.toFixed(2);
-    foot.hidden = !hasLines;
+    const text = total.toFixed(2);
+    if (out) {
+        out.textContent = text;
+    }
+    if (foot) {
+        foot.hidden = !hasLines;
+    }
+    if (barOut) {
+        barOut.textContent = text;
+    }
+    if (bar) {
+        bar.hidden = !hasLines;
+    }
 }
 
 window.amePaintCartLinesTotal = amePaintCartLinesTotal;

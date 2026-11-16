@@ -1,4 +1,4 @@
-/* 10.98.929 — আসল PC (≥1000px): মোবাইল Chrome «ডেস্কটপ সাইট»-এর মতো এক কলাম, পূর্ণ প্রস্থ, নিচ পর্যন্ত স্ক্রল */
+/* 10.98.930 — আসল PC (≥1000px): মোবাইল Chrome «ডেস্কটপ সাইট»-এর মতো এক কলাম, পূর্ণ প্রস্থ, নিচ পর্যন্ত স্ক্রল */
 
 @media (min-width: 1000px) {
   html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content,
@@ -116,4 +116,43 @@ html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos
   top: auto !important;
   width: 100% !important;
   max-width: 100% !important;
+}
+
+/* PC: টেবিল স্ক্রলের বাইরে মোট অ্যামাউন্ট (মোবাইলে tfoot-ই থাকে) */
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-cart-total-bar {
+  display: none !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 10px 14px !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  background: #eef3fb !important;
+  color: #0b3a82 !important;
+  border: 2px solid #0b3d91 !important;
+  border-top: 0 !important;
+  font-weight: 800 !important;
+  font-size: 16px !important;
+  line-height: 1.35 !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-cart-total-bar .ame-pos-cart-total-val {
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.02em !important;
+}
+
+@media (min-width: 1000px) {
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-cart-total-bar:not([hidden]) {
+    display: flex !important;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos tfoot#cart-lines-foot:not([hidden]) tr.ame-pos-cart-total-row td {
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 2 !important;
+    box-shadow: 0 -6px 14px rgba(11, 61, 145, 0.14) !important;
+  }
 }

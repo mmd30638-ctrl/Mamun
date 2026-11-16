@@ -747,6 +747,10 @@ if (isset($db) && $db instanceof mysqli) {
                 <tbody id="ameExchangeBody"></tbody>
             </table>
         </div>
+        <div class="ame-pos-cart-total-bar" id="ameCartLinesTotalBar" hidden aria-live="polite">
+            <span class="ame-pos-cart-total-label"><?php echo $escape($words['cart_lines_total']); ?></span>
+            <strong id="ameCartLinesTotalBarVal" class="ame-pos-cart-total-val">0.00</strong>
+        </div>
         <p class="ame-pos-cart-scroll-hint" id="amePosCartScrollHint" hidden>
             <?php echo $ame_pos_english
                 ? '↓ Scroll inside the table for more lines (no row limit)'
