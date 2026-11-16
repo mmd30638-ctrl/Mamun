@@ -131,7 +131,9 @@ if ($ame_is_pos) {
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-mobile-scroll.css?v=' . $ame_lock_ver . '" id="amePosMobileScroll">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-cart-scroll.css?v=' . $ame_lock_ver . '" id="amePosCartScroll">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-draft-drawer.css?v=' . $ame_lock_ver . '" id="amePosDraftDrawer">' . "\n";
+    echo '<link rel="stylesheet" href="/assets/css/ame-pos-memo-draft.css?v=' . $ame_lock_ver . '" id="amePosMemoDraft">' . "\n";
     echo '<script src="/assets/js/pos-draft-drawer.js?v=' . $ame_lock_ver . '" defer></script>' . "\n";
+    echo '<script src="/assets/js/pos-memo-draft-layout.js?v=' . $ame_lock_ver . '" defer></script>' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/sale-charge-popups.css?v=' . $ame_lock_ver . '">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/pos-charge-line.css?v=' . $ame_lock_ver . '" id="amePosChargeLine">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/pos-round-hide.css?v=' . $ame_lock_ver . '" id="amePosRoundHide">' . "\n";

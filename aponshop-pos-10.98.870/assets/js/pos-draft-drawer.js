@@ -19,6 +19,9 @@
             drawer.dataset.ameDraftPortal = '1';
             document.body.appendChild(drawer);
         }
+        if (!open && typeof window.amePosMemoLayoutSync === 'function') {
+            window.amePosMemoLayoutSync();
+        }
     }
 
     function bind() {

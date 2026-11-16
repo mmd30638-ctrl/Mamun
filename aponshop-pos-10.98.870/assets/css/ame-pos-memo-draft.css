@@ -1,0 +1,97 @@
+/* 10.98.921 — ড্রাফট মেমো ওপেন/এডিট: পূর্ণ প্রস্থ (মোবাইল · Chrome ডেস্কটপ সাইট · PC) */
+
+html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content,
+html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-pos-page,
+html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk,
+html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell,
+html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid,
+html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+  scale: none !important;
+}
+
+html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top,
+html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack,
+html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+@media (min-width: 901px) {
+  html.ame-pos-memo-editing body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid,
+  html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 2.3fr) minmax(280px, 0.85fr) !important;
+    gap: 10px !important;
+    align-items: start !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top,
+  html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+  html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack,
+  html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+
+  html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
+    grid-column: 2 !important;
+    grid-row: 1 / span 4 !important;
+    align-self: start !important;
+  }
+}
+
+/* Chrome Android «Desktop site» */
+html.ame-phone-desktop.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 2.2fr) minmax(260px, 0.8fr) !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+}
+
+@media (max-width: 900px) {
+  html.ame-pos-memo-editing:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+html.ame-pos-memo-editing body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk [data-ame-fit="1"] {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  max-width: 100% !important;
+}
+
+html body.ame-pos-terminal-page #currentDraftLabel:not([hidden]) {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 4px 0 8px !important;
+  padding: 8px 12px !important;
+  border-radius: 10px !important;
+  background: #eef3fb !important;
+  color: #0b3a82 !important;
+  font-weight: 800 !important;
+  font-size: 14px !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+}
