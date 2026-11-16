@@ -1,0 +1,14 @@
+পার্টি অ্যামাউন্ট শিল্ড — লেনদেন অনুমোদন ঠিক (v10.98.917)
+============================================================
+লাইভ সমস্যা: বিক্রয় ও কাস্টমার বকেয়া আদায় — «কাস্টমারের ব্যালেন্স আপডেট করা যায়নি»।
+
+এই প্যাচে:
+• REQUEST_URI + payment-receive.php সহ সঠিক লেজার-রাইট শনাক্তকরণ
+• ame_party_balance_allow_write() — process_sale / draft_api / লেজার পোস্টে
+• modules/customers/ame_ledger_party_gate.php — প্রয়োজনে customer_ledger_functions.php-তে ame_party_ledger_begin($db)
+
+ইনস্টল: Easy Update 10.98.917, DB restore চেক করবেন না।
+
+যদি পেমেন্ট এখনও ব্যর্থ হয়: live customer_ledger_functions.php-এর ব্যালেন্স sync-এর শুরুতে এক লাইন —
+  require_once __DIR__ . '/ame_ledger_party_gate.php';
+  ame_party_ledger_begin($db);

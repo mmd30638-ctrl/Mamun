@@ -91,6 +91,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     );
 }
 
+if (function_exists('ame_party_balance_allow_write')) {
+    ame_party_balance_allow_write($db);
+}
+
 $data = json_decode(
     file_get_contents('php://input'),
     true

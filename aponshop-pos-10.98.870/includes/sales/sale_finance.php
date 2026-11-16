@@ -36,6 +36,10 @@ function ame_sale_customer_ledger(
         return;
     }
 
+    if ($db instanceof mysqli && function_exists('ame_party_balance_allow_write')) {
+        ame_party_balance_allow_write($db);
+    }
+
     $reference = 'SALE-' . $sale_id;
     $exchange_amount = round((float)$exchange_amount, 2);
     $cash_credit = round((float)$paid_for_sale, 2);

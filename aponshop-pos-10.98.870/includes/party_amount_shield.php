@@ -56,7 +56,23 @@ if (!function_exists('ame_party_amount_shield_install')) {
 if (!function_exists('ame_party_amount_request_uri')) {
     function ame_party_amount_request_uri(): string
     {
-        return strtolower((string)($_SERVER['SCRIPT_NAME'] ?? $_SERVER['PHP_SELF'] ?? ''));
+        $parts = [];
+        foreach (['SCRIPT_NAME', 'PHP_SELF', 'REQUEST_URI'] as $key) {
+            $raw = (string)($_SERVER[$key] ?? '');
+            if ($raw === '') {
+                continue;
+            }
+            $path = strtolower(strtok($raw, '?'));
+            $path = str_replace('\\', '/', $path);
+            if ($path !== '' && $path !== '/') {
+                $parts[] = $path;
+            }
+        }
+        if ($parts === []) {
+            return '';
+        }
+        usort($parts, static fn (string $a, string $b): int => strlen($b) <=> strlen($a));
+        return $parts[0];
     }
 }
 
@@ -73,9 +89,13 @@ if (!function_exists('ame_party_amount_request_is_ledger_write')) {
         }
         $needles = [
             '/process_sale.php',
+            '/draft_api.php',
             '/process_purchase.php',
             '/process_purchase_edit.php',
             '/process_payment',
+            '/payment-receive.php',
+            '/payment_receive',
+            '/receive_payment',
             '/process_customer.php',
             '/process_withdraw.php',
             '/process_pay.php',
@@ -108,7 +128,44 @@ if (!function_exists('ame_party_amount_request_is_ledger_write')) {
         if (str_contains($uri, '/modules/purchase/') && (str_contains($uri, 'process_') || str_contains($uri, '/actions/'))) {
             return true;
         }
+        if (str_contains($uri, '/modules/returns/') && (str_contains($uri, 'process_') || str_contains($uri, '/actions/'))) {
+            return true;
+        }
+        $method = strtoupper((string)($_SERVER['REQUEST_METHOD'] ?? ''));
+        if ($method === 'POST' && (int)($_SESSION['user_id'] ?? 0) > 0) {
+            foreach (
+                [
+                    '/modules/sales/',
+                    '/modules/customers/',
+                    '/modules/suppliers/',
+                    '/modules/purchase/',
+                    '/modules/returns/',
+                    '/modules/accounts/',
+                ] as $prefix
+            ) {
+                if (str_contains($uri, $prefix)) {
+                    return true;
+                }
+            }
+        }
         return false;
+    }
+}
+
+if (!function_exists('ame_party_balance_allow_write')) {
+    /**
+     * লেনদেনের আগে একই mysqli কানেকশনে শিল্ড ট্রিগারকে অনুমোদন দিন।
+     */
+    function ame_party_balance_allow_write(?mysqli $db = null): bool
+    {
+        if (!($db instanceof mysqli)) {
+            return false;
+        }
+        if (!$db->query('SET @ame_party_balance_write = 1')) {
+            error_log('party_amount_shield: SET @ame_party_balance_write failed: ' . $db->error);
+            return false;
+        }
+        return true;
     }
 }
 
@@ -149,11 +206,11 @@ if (!function_exists('ame_party_amount_authorize_request')) {
             return;
         }
         if (ame_party_amount_request_is_ledger_write()) {
-            @$db->query('SET @ame_party_balance_write = 1');
+            ame_party_balance_allow_write($db);
         }
         if (ame_party_amount_request_is_admin_manual()) {
             @$db->query('SET @ame_party_admin_manual = 1');
-            @$db->query('SET @ame_party_balance_write = 1');
+            ame_party_balance_allow_write($db);
         }
     }
 }
