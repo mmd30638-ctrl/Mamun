@@ -129,211 +129,26 @@ $wa_text = $shop_name . "\n"
     . "ধন্যবাদ!";
 $wa_url = 'https://wa.me/' . ($wa_phone !== '' ? $wa_phone : '') . '?text=' . rawurlencode($wa_text);
 $ame_ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.847';
+$body_paper_class = ($paper_width === 'A4') ? ' ame-cpay-memo--a4' : '';
 ?>
 <!DOCTYPE html>
 <html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<?php echo defined('AME_VIEWPORT_META') ? AME_VIEWPORT_META : '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'; ?>
 <title>পেমেন্ট রসিদ #<?php echo htmlspecialchars($ref, ENT_QUOTES, 'UTF-8'); ?> - <?php echo htmlspecialchars($shop_name, ENT_QUOTES, 'UTF-8'); ?></title>
-<link rel="stylesheet" href="/assets/css/ame-front-colors.css">
+<link rel="stylesheet" href="/assets/css/ame-front-colors.css?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>">
 <link rel="stylesheet" href="/assets/css/memo-clear.css?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>">
-<style>
-    * { box-sizing: border-box; }
-    body {
-        font-family: "Noto Sans Bengali", "Segoe UI", Arial, sans-serif;
-        background: #E8EEF5;
-        color: #111827;
-        margin: 0;
-        padding: 20px 10px 40px;
-        font-size: 13px;
-        line-height: 1.5;
-    }
-    .inv-action-bar {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        margin: 0 auto 16px;
-        max-width: <?php echo $max_width; ?>;
-        flex-wrap: wrap;
-    }
-    .inv-btn {
-        min-height: 44px;
-        padding: 8px 14px;
-        border: 1px solid #D1D5DB;
-        border-radius: 10px;
-        background: #ffffff;
-        color: #003F8F;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        cursor: pointer;
-        text-decoration: none !important;
-        font-size: 13px;
-        font-weight: 700;
-        font-family: inherit;
-    }
-    .inv-btn-print { background: #003F8F; color: #ffffff; border-color: #003F8F; }
-    .inv-btn-pdf { background: #04933A; color: #ffffff; border-color: #04933A; }
-    .inv-btn-img { background: #4F46E5; color: #ffffff; border-color: #4F46E5; }
-    .inv-btn-share { background: #0284C7; color: #ffffff; border-color: #0284C7; }
-    .inv-btn-wa { background: #25D366; color: #ffffff; border-color: #25D366; }
-    .inv-btn-tg { background: #229ED9; color: #ffffff; border-color: #229ED9; }
-    .inv-btn-back { background: #ffffff; color: #374151; border-color: #D1D5DB; }
-    .pay-share-hint {
-        max-width: <?php echo $max_width; ?>;
-        margin: -6px auto 14px;
-        text-align: center;
-        color: #0B3D91;
-        font-size: 12px;
-        font-weight: 700;
-    }
-    .memo-wrapper {
-        background: #ffffff;
-        width: 100%;
-        max-width: <?php echo $max_width; ?>;
-        margin: 0 auto;
-        padding: 24px 20px;
-        border-radius: 14px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-        border: 1px solid #E5E7EB;
-    }
-    .memo-head { text-align: center; border-bottom: 2px dashed #003F8F; padding-bottom: 14px; margin-bottom: 14px; }
-    .memo-shop-name { font-size: 20px; font-weight: 800; margin: 0 0 4px; line-height: 1.25; }
-    .memo-shop-desc, .memo-shop-phone { margin: 0; font-weight: 800; }
-    .memo-badge { display: inline-block; margin-top: 8px; padding: 3px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; }
-    .memo-meta-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 4px;
-        background: #F8FAFC;
-        border: 1px solid #E2E8F0;
-        border-radius: 8px;
-        padding: 8px 10px;
-        margin-bottom: 10px;
-    }
-    .memo-meta-item { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
-    .memo-meta-item .lbl { flex: 0 0 auto; }
-    .memo-meta-item .val { text-align: right; min-width: 0; }
-    #memo-container .memo-table,
-    #ame-memo-capture-clone .memo-table,
-    #memo-container .memo-table tbody,
-    #ame-memo-capture-clone .memo-table tbody,
-    #memo-container .memo-table tr,
-    #ame-memo-capture-clone .memo-table tr { display: block; width: 100%; }
-    #memo-container .memo-table thead,
-    #ame-memo-capture-clone .memo-table thead { display: none; }
-    #memo-container .memo-table tr,
-    #ame-memo-capture-clone .memo-table tr { padding: 4px 0 8px; border-bottom: 1px solid #E2E8F0; }
-    #memo-container .memo-table td,
-    #ame-memo-capture-clone .memo-table td {
-        display: flex !important;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 12px;
-        width: 100%;
-        padding: 3px 0;
-        text-align: right !important;
-    }
-    #memo-container .memo-table td::before,
-    #ame-memo-capture-clone .memo-table td::before {
-        content: attr(data-k);
-        font-weight: 800;
-        text-align: left;
-        flex: 0 0 auto;
-    }
-    #memo-container .memo-table td:nth-child(1)::before,
-    #ame-memo-capture-clone .memo-table td:nth-child(1)::before { color: #1D4ED8 !important; -webkit-text-fill-color: #1D4ED8 !important; }
-    #memo-container .memo-table td:nth-child(2)::before,
-    #ame-memo-capture-clone .memo-table td:nth-child(2)::before { color: #0F766E !important; -webkit-text-fill-color: #0F766E !important; }
-    #memo-container .memo-table td:nth-child(3)::before,
-    #ame-memo-capture-clone .memo-table td:nth-child(3)::before { color: #C2410C !important; -webkit-text-fill-color: #C2410C !important; }
-    #memo-container .memo-table td:nth-child(4)::before,
-    #ame-memo-capture-clone .memo-table td:nth-child(4)::before { color: #6D28D9 !important; -webkit-text-fill-color: #6D28D9 !important; }
-    .cpay-val { text-align: right; min-width: 0; }
-    .sku-text { display: block; font-size: 12px; font-weight: 700; color: #0369A1; }
-    .memo-summary { border-top: 1px solid #CBD5E1; padding-top: 8px; }
-    .memo-sum-row { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; }
-    .memo-sum-row.sabek-box { flex-direction: column; align-items: stretch; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; padding: 8px 10px; margin-top: 6px; }
-    .sabek-line, .total-due-line { display: flex; justify-content: space-between; gap: 12px; width: 100%; }
-    .sabek-line span:last-child, .total-due-line span:last-child, .memo-sum-row > span:last-child { text-align: right; white-space: nowrap; }
-    .memo-foot { text-align: center; margin-top: 14px; padding-top: 10px; border-top: 1px dashed #CBD5E1; }
-    .cpay-sheet { width: 100%; max-width: <?php echo $max_width; ?>; margin: 0 auto; }
-    .cpay-sheet .memo-wrapper,
-    .cpay-sheet .notify-box {
-        width: 100%;
-        max-width: none;
-        margin-left: 0;
-        margin-right: 0;
-        box-sizing: border-box;
-    }
-    .notify-box { margin: 14px 0 0; padding: 16px 20px; background: #fff; border: 1px solid #E5E7EB; border-radius: 12px; }
-    #cpayReverse { display: flex; flex-direction: column; gap: 8px; align-items: stretch; width: 100%; }
-    #cpayReverse > strong { color: #9F1239; font-size: 16px; }
-    #cpayReverse > p { margin: 0; color: #1D4ED8; font-weight: 800; }
-    .cpay-reason { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .cpay-reason label { margin: 0; color: #C2410C; font-weight: 800; flex: 0 0 auto; }
-    .cpay-reason input { flex: 1; min-width: 0; text-align: right; color: #9A3412; font-weight: 800; border: 1.5px solid #C2410C !important; }
-    #cpayReverse .ame-pay-sec {
-        display: grid !important;
-        grid-template-columns: minmax(0, 46%) minmax(0, 1fr) !important;
-        gap: 8px 10px !important;
-        align-items: center !important;
-        margin: 0 !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-    }
-    #cpayReverse .ame-pay-sec-kicker {
-        margin: 0 !important;
-        color: #7C3AED !important;
-        -webkit-text-fill-color: #7C3AED !important;
-    }
-    #cpayReverse .ame-pay-sec-code {
-        width: auto !important;
-        margin: 0 !important;
-        justify-self: stretch;
-        text-align: right !important;
-        font-size: 22px !important;
-        letter-spacing: .08em !important;
-        padding: 4px 8px !important;
-    }
-    #cpayReverse .ame-pay-sec-click-hint,
-    #cpayReverse .ame-pay-sec-hint {
-        grid-column: 1 / -1;
-        margin: 0 !important;
-    }
-    #cpayReverse .ame-pay-sec-click-hint {
-        color: #0F766E !important;
-        -webkit-text-fill-color: #0F766E !important;
-    }
-    #cpayReverse .ame-pay-sec-hint {
-        color: #0369A1 !important;
-        -webkit-text-fill-color: #0369A1 !important;
-    }
-    #cpayReverse .ame-pay-sec-lbl {
-        display: block !important;
-        margin: 0 !important;
-        color: #9F1239 !important;
-        -webkit-text-fill-color: #9F1239 !important;
-    }
-    #cpayReverse .ame-pay-sec-input {
-        width: 100% !important;
-        min-height: 42px !important;
-        margin: 0 !important;
-        text-align: right !important;
-    }
-    #cpayReverse button[type="submit"] { align-self: stretch; width: 100%; box-sizing: border-box; }
-    .no-memo-print { display: none !important; }
-    @media print {
-        .no-print, .no-memo-print { display: none !important; }
-        body { background: #fff !important; margin: 0 !important; padding: 0 !important; }
-        .memo-wrapper { box-shadow: none !important; border: none !important; max-width: 100% !important; }
-    }
-</style>
+<link rel="stylesheet" href="/assets/css/customer-pay-receipt-memo.css?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>">
+<script src="/assets/js/ame-desktop-site.js?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>"></script>
+<?php
+if (function_exists('ame_global_responsive_tier_script_echo')) {
+    ame_global_responsive_tier_script_echo();
+}
+?>
+<script src="/assets/js/html2canvas.min.js?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>"></script>
 </head>
-<body>
+<body class="ame-customer-pay-receipt ame-payment-receipt<?php echo htmlspecialchars($body_paper_class, ENT_QUOTES, 'UTF-8'); ?>">
 <nav class="inv-action-bar no-print" aria-label="রসিদ অপশন">
     <button type="button" class="inv-btn inv-btn-print" data-pay-act="print-image">প্রিন্ট</button>
     <button type="button" class="inv-btn inv-btn-pdf" data-pay-act="download">পিডিএফ</button>
@@ -588,6 +403,11 @@ $pay_reversed = function_exists('ame_customer_payment_is_reversed') && ame_custo
 $confirm = __DIR__ . '/../../partials/confirm_actions.php';
 if (is_file($confirm)) {
     include $confirm;
+}
+?>
+<?php
+if (function_exists('ame_global_responsive_assets_echo')) {
+    ame_global_responsive_assets_echo();
 }
 ?>
 <?php include __DIR__ . '/../../partials/page_fit.php'; ?>

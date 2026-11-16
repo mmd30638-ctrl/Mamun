@@ -59,6 +59,7 @@ $cpay_ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.425';
 include __DIR__ . '/../../partials/header.php';
 ?>
 <link rel="stylesheet" href="/assets/css/customer-payment.css?v=<?php echo htmlspecialchars($cpay_ver, ENT_QUOTES, 'UTF-8'); ?>">
+<link rel="stylesheet" href="/assets/css/ame-pages-critical-responsive.css?v=<?php echo htmlspecialchars($cpay_ver, ENT_QUOTES, 'UTF-8'); ?>" id="ame-pages-critical-responsive">
 
 <div class="cpay-page cpay-page-wrap cpd" id="cpayPage">
     <form action="actions/process_payment.php" method="POST" id="paymentReceiveForm" data-ame-once="1">

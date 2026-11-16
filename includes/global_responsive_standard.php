@@ -6,7 +6,7 @@
 declare(strict_types=1);
 
 if (!defined('AME_GLOBAL_RESPONSIVE_VERSION')) {
-    define('AME_GLOBAL_RESPONSIVE_VERSION', '10.98.939');
+    define('AME_GLOBAL_RESPONSIVE_VERSION', '10.98.940');
 }
 
 if (!defined('AME_VIEWPORT_META')) {
@@ -26,6 +26,8 @@ function ame_global_responsive_assets_echo(): void
     $qv = htmlspecialchars($ver, ENT_QUOTES, 'UTF-8');
     echo '<link rel="stylesheet" href="/assets/css/ame-global-responsive-master.css?v=' . $qv
         . '" id="ame-global-responsive-master">' . "\n";
+    echo '<link rel="stylesheet" href="/assets/css/ame-pages-critical-responsive.css?v=' . $qv
+        . '" id="ame-pages-critical-responsive">' . "\n";
 }
 
 /**

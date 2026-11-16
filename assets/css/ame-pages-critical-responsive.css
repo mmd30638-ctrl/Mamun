@@ -1,0 +1,260 @@
+/*
+ * CRITICAL PAGES — বিক্রয় (POS) + ক্রেতার পেমেন্ট গ্রহণ
+ * Global tier: mobile <576 | tablet 576–991 | desktop >=992
+ * + Chrome Android «ডেস্কটপ সাইট» (html.ame-phone-desktop)
+ * Loads after ame-global-responsive-master.css — DO NOT REMOVE
+ * Version: 10.98.940
+ */
+
+/* ========== ক্রেতার পেমেন্ট গ্রহণ ========== */
+html body.ame-customer-payment-page #main-content {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: clip;
+}
+
+html body.ame-customer-payment-page #main-content .cpay-page,
+html body.ame-customer-payment-page #main-content .cpd,
+html body.ame-customer-payment-page #main-content .cpd-panel,
+html body.ame-customer-payment-page #main-content .cpd-form {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
+}
+
+/* মোবাইল + ট্যাবলেট (সাধারণ মোবাইল ভিউ, ডেস্কটপ সাইট মোড ছাড়া) */
+@media (max-width: 991.98px) {
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpay-grid,
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-top,
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-fields,
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-due {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-who {
+    flex-wrap: wrap;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-search {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-search button {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-actions .cpd-submit {
+    width: 100%;
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-form h1 {
+    font-size: clamp(1rem, 4.5vw, 1.25rem) !important;
+    line-height: 1.35 !important;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-due {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-top {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-balbox {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 992px) {
+  html body.ame-customer-payment-page #main-content .cpd-top {
+    grid-template-columns: minmax(200px, 320px) minmax(0, 1fr) minmax(160px, 240px) !important;
+  }
+}
+
+/* টেবিল: মোবাইলে কার্ড, ট্যাবলেটে স্ক্রল, ডেস্কটপ সাইটে স্ক্রল র‍্যাপ */
+@media (max-width: 991.98px) {
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-table,
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-due-table {
+    min-width: 0 !important;
+    display: block;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-table thead {
+    display: none;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-table tbody,
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-table tr,
+  html:not(.ame-phone-desktop) body.ame-customer-payment-page #main-content .cpd-table td {
+    display: block;
+    width: auto;
+  }
+}
+
+html.ame-phone-desktop body.ame-customer-payment-page #main-content .cpd-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+html.ame-phone-desktop body.ame-customer-payment-page #main-content .cpd-table {
+  min-width: 640px;
+}
+
+/* legacy 981px rule override */
+@media (min-width: 992px) {
+  html body.ame-customer-payment-page #main-content .cpay-grid {
+    grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.85fr) !important;
+  }
+}
+
+/* ========== বিক্রয় POS ========== */
+html body.ame-pos-terminal-page #main-content,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-pos-page,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell,
+html body.ame-pos-terminal-page #main-content .ame-sale-pro {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
+}
+
+/* সাধারণ মোবাইল (<992, ডেস্কটপ সাইট নয়) */
+@media (max-width: 991.98px) {
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-bar,
+  html:not(.ame-phone-desktop) body.ame-sales-pro #main-content .ame-sale-pro .ame-pos-term-bar {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-calc-row,
+  html:not(.ame-phone-desktop) body.ame-sales-pro #main-content .ame-sale-pro .ame-pos-calc-row,
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .pos-payment-summary {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-pos-table-wrap,
+  html:not(.ame-phone-desktop) body.ame-sales-pro #main-content .ame-sale-pro .ame-pos-table-wrap {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-desk-price-row,
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk #posPriceModeBar {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-actions {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content input,
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content select,
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content textarea,
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-pos-input {
+    font-size: 16px !important;
+    min-height: 44px;
+  }
+}
+
+/* ট্যাবলেট */
+@media (min-width: 576px) and (max-width: 991.98px) {
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+/* ডেস্কটপ */
+@media (min-width: 992px) {
+  html body.ame-pos-terminal-page #main-content .ame-pos-table-wrap,
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-pos-table-wrap {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+html.ame-phone-desktop body.ame-pos-terminal-page #main-content .ame-pos-table-wrap,
+html.ame-phone-desktop body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-pos-table-wrap {
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+html.ame-phone-desktop body.ame-pos-terminal-page #main-content {
+  overflow-x: auto;
+}
+
+html.ame-phone-desktop body.ame-pos-terminal-page #main-content .ame-sale-desk,
+html.ame-phone-desktop body.ame-pos-terminal-page #main-content .ame-pos-shell {
+  overflow: visible;
+}
+
+/* data-ame-tier hooks (viewport-tier.js) */
+html[data-ame-tier="mobile"] body.ame-customer-payment-page:not(.ame-phone-desktop) #main-content .cpd-top,
+html[data-ame-tier="mobile"] body.ame-customer-payment-page:not(.ame-phone-desktop) #main-content .cpd-fields {
+  grid-template-columns: 1fr !important;
+}
+
+html[data-ame-tier="tablet"] body.ame-customer-payment-page:not(.ame-phone-desktop) #main-content .cpd-fields {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+/* ========== কাস্টমার পেমেন্ট/উত্তোলন রসিদ (স্ট্যান্ডঅ্যালোন মেমো) ========== */
+html body.ame-customer-pay-receipt {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: clip;
+}
+
+html body.ame-customer-pay-receipt .cpay-sheet,
+html body.ame-customer-pay-receipt .inv-action-bar,
+html body.ame-customer-pay-receipt .pay-share-hint,
+html body.ame-customer-pay-receipt .memo-wrapper {
+  box-sizing: border-box;
+}
+
+@media (max-width: 575.98px) {
+  html:not(.ame-phone-desktop) body.ame-customer-pay-receipt #cpayReverse .ame-pay-sec {
+    grid-template-columns: 1fr !important;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-customer-pay-receipt .cpay-reason {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

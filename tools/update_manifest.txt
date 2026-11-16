@@ -1,3 +1,20 @@
+# 10.98.941 — কাস্টমার উত্তোলন রসিদ = পেমেন্ট রসিদ মেমো + রেসপন্সিভ
+assets/css/customer-pay-receipt-memo.css
+assets/css/ame-pages-critical-responsive.css
+modules/customers/withdraw_receipt.php
+modules/customers/receipt.php
+CRITICAL_PAGES_RESPONSIVE_BN.txt
+data/patch_get_fallback.json
+get.php
+.htaccess
+# 10.98.940 — POS + পেমেন্ট গ্রহণ ক্রিটিক্যাল রেসপন্সিভ
+assets/css/ame-pages-critical-responsive.css
+modules/customers/payment-receive.php
+includes/global_responsive_standard.php
+includes/responsive_boot.php
+GLOBAL_RESPONSIVE_ARCHITECTURE.md
+CRITICAL_PAGES_RESPONSIVE_BN.txt
+tools/pos_payment_responsive_lab.html
 # 10.98.939 — গ্লোবাল রেসপন্সিভ ও ভিউপোর্ট মাস্টার (PATCH, .env/uploads/SPEED.txt স্পর্শ করে না)
 assets/css/ame-global-responsive-master.css
 assets/js/ame-viewport-tier.js

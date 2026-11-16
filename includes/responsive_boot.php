@@ -28,7 +28,8 @@ function ame_responsive_inject($html)
     $css = '<link rel="stylesheet" href="/assets/css/responsive-fix.css?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '">'
         . '<link rel="stylesheet" href="/assets/css/ame-android-universal.css?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '">'
         . '<link rel="stylesheet" href="/assets/css/ame-modules-universal-responsive.css?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '">'
-        . '<link rel="stylesheet" href="/assets/css/ame-global-responsive-master.css?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '" id="ame-global-responsive-master">';
+        . '<link rel="stylesheet" href="/assets/css/ame-global-responsive-master.css?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '" id="ame-global-responsive-master">'
+        . '<link rel="stylesheet" href="/assets/css/ame-pages-critical-responsive.css?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '" id="ame-pages-critical-responsive">';
     $js = '<script src="/assets/js/responsive-fix.js?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '" defer></script>';
     $error_js = '<script src="/assets/js/error-boundary.js?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '" defer></script>';
     $premium_css = '<link rel="stylesheet" href="/assets/css/premium-saas.css?v=' . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '">';

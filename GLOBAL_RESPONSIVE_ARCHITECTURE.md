@@ -52,4 +52,15 @@ Injected automatically when missing via `includes/responsive_boot.php` (`AME_VIE
 
 ## Version
 
-Architecture lock: **10.98.939** (`AME_GLOBAL_RESPONSIVE_VERSION` / `AME_ASSET_VERSION`).
+Architecture lock: **10.98.940** (`AME_GLOBAL_RESPONSIVE_VERSION` / `AME_ASSET_VERSION`).
+
+## Critical pages (tier-aware overlay)
+
+`assets/css/ame-pages-critical-responsive.css` — **mandatory** for:
+
+| Page | Route / body class |
+|------|---------------------|
+| বিক্রয় (POS) | `/modules/sales/pos.php` · `ame-pos-terminal-page` `ame-sales-pro` |
+| ক্রেতার পেমেন্ট গ্রহণ | `/modules/customers/payment-receive.php` · `ame-customer-payment-page` |
+
+Related flows inherit the same header/footer stack (receipt, offline payment queue on payment page). New POS or payment UI **must not** bypass `ame-viewport-tier.js` or this overlay.
