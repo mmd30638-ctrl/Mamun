@@ -8,6 +8,7 @@
 !/data/.gitkeep
 !/data/.htaccess
 !/data/mobile_zip_url.txt
+!/data/patch_get_fallback.json
 
 # User-generated media (kept on the server, never in release source)
 /uploads/*
