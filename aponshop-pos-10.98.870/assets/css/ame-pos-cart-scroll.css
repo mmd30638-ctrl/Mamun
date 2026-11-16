@@ -20,8 +20,8 @@ html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart 
 html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap,
 html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap {
   flex: 1 1 auto !important;
-  min-height: 260px !important;
-  max-height: min(62vh, 680px) !important;
+  min-height: 280px !important;
+  max-height: min(66vh, 720px) !important;
   height: auto !important;
   overflow-x: auto !important;
   overflow-y: auto !important;

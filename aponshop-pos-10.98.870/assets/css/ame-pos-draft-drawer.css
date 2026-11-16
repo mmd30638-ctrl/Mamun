@@ -33,19 +33,55 @@ html body.ame-pos-terminal-page #draftDrawer.open {
   backdrop-filter: blur(2px) !important;
 }
 
-html.ame-pos-draft-open,
-html.ame-pos-draft-open body {
+/* ওভারলে খোলা থাকলে শুধু স্ক্রল লক — ডেস্কের প্রস্থ/টেবিল কমানো হয় না */
+html.ame-pos-draft-open body.ame-pos-terminal-page {
   overflow: hidden !important;
 }
 
 html.ame-pos-draft-open body.ame-pos-terminal-page #main-content,
 html.ame-pos-draft-open body.ame-pos-terminal-page #main-content .ame-sale-desk,
 html.ame-pos-draft-open body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell,
-html.ame-pos-draft-open body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid {
+html.ame-pos-draft-open body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid,
+html.ame-pos-draft-open body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main,
+html.ame-pos-draft-open body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart {
   width: 100% !important;
   max-width: 100% !important;
+  min-width: 0 !important;
   transform: none !important;
   scale: none !important;
+  clip-path: none !important;
+}
+
+/* দ্বিতীয়বার লিস্ট খোলা/বন্ধের পর কার্ট লাইন পূর্ণ দেখানো */
+html.ame-pos-draft-recover body.ame-pos-terminal-page .ame-pos-term-cart .ame-pos-table-wrap,
+html body.ame-pos-terminal-page .ame-pos-term-cart .ame-pos-table-wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+}
+
+html body.ame-pos-terminal-page #cart-body tr,
+html body.ame-pos-terminal-page .ame-pos-term-cart .table-pos tbody tr {
+  height: auto !important;
+  min-height: 34px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  clip-path: none !important;
+}
+
+html body.ame-pos-terminal-page #cart-body tr td,
+html body.ame-pos-terminal-page .ame-pos-term-cart .table-pos td {
+  overflow: visible !important;
+  clip-path: none !important;
+  vertical-align: middle !important;
+}
+
+/* লিস্ট ড্রয়ার কখনো গ্রিড কলাম দখল করবে না */
+html body.ame-pos-terminal-page #draftDrawer,
+html body.ame-pos-terminal-page .pos-draft-drawer {
+  grid-column: auto !important;
+  grid-row: auto !important;
 }
 
 html body.ame-pos-terminal-page .pos-draft-drawer.open .pos-recent-modal,
