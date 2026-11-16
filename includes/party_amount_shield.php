@@ -172,6 +172,26 @@ if (!function_exists('ame_party_balance_allow_write')) {
             error_log('party_amount_shield: SET @ame_party_balance_write failed: ' . $db->error);
             return false;
         }
+        $GLOBALS['ame_party_ledger_write_this_request'] = true;
+        static $shutdownRegistered = false;
+        if (!$shutdownRegistered) {
+            $shutdownRegistered = true;
+            register_shutdown_function(static function (): void {
+                $dbRef = $GLOBALS['ame_party_shield_db'] ?? null;
+                if (!($dbRef instanceof mysqli) || empty($GLOBALS['ame_party_ledger_write_this_request'])) {
+                    return;
+                }
+                if (!function_exists('ame_ledger_seal_refresh_baseline')) {
+                    $ledger = dirname(__FILE__) . '/ledger_lock.php';
+                    if (is_file($ledger)) {
+                        require_once $ledger;
+                    }
+                }
+                if (function_exists('ame_ledger_seal_refresh_baseline')) {
+                    ame_ledger_seal_refresh_baseline($dbRef, 'auto after ledger write');
+                }
+            });
+        }
         return true;
     }
 }
@@ -299,13 +319,17 @@ if (!function_exists('ame_party_amount_drift_log_throttled')) {
             return;
         }
         @file_put_contents($stateFile, json_encode(['sig' => $sig, 'ts' => $now], JSON_UNESCAPED_UNICODE));
-        error_log(sprintf(
-            'PARTY AMOUNT DRIFT: suppliers Σ=%.2f (expected %.2f), customers Σ=%.2f (expected %.2f) — মনিটরিং স্ন্যাপশট পুরোনো; অ্যাডমিন «party_seal_baseline» দিয়ে বেসলাইন মিলান (ব্যালেন্স অপরিবর্তিত)',
+        $line = sprintf(
+            'PARTY AMOUNT DRIFT: suppliers Σ=%.2f (expected %.2f), customers Σ=%.2f (expected %.2f)',
             $check['supplier'],
             (float)$check['expected_supplier'],
             $check['customer'],
             (float)$check['expected_customer']
-        ));
+        );
+        $audit = $logDir . '/party_drift_audit.log';
+        @file_put_contents($audit, date('c') . ' ' . $line . "\n", FILE_APPEND | LOCK_EX);
+        // PHP error_monitor এ ভুল সতর্ক না দেখাতে — শুধু প্রকৃত অসংগতি (অটো-সিঙ্কের পরও মিল না)
+        error_log($line . ' — পার্টি ব্যালেন্স যাচাই করুন; সেটিংসে «বেসলাইন মিলান»।');
     }
 }
 
@@ -315,15 +339,31 @@ if (!function_exists('ame_party_amount_shield_boot')) {
         if (!($db instanceof mysqli)) {
             return;
         }
+        $GLOBALS['ame_party_shield_db'] = $db;
         if (!ame_party_amount_shield_triggers_ok($db)) {
             ame_party_amount_shield_install($db);
         }
         ame_party_amount_authorize_request($db);
         $check = ame_ledger_seal_verify_totals($db);
         if (!$check['ok'] && $check['expected_supplier'] !== null) {
-            ame_party_amount_drift_log_throttled($check);
-            if (strtolower((string)($_SESSION['role'] ?? '')) === 'admin') {
-                $_SESSION['ame_party_amount_drift'] = $check;
+            if (ame_party_amount_shield_triggers_ok($db)) {
+                if (!function_exists('ame_ledger_seal_refresh_baseline') && is_file(dirname(__FILE__) . '/ledger_lock.php')) {
+                    require_once dirname(__FILE__) . '/ledger_lock.php';
+                }
+                if (function_exists('ame_ledger_seal_refresh_baseline')) {
+                    $ref = ame_ledger_seal_refresh_baseline($db, 'auto-sync monitoring snapshot');
+                    if (!empty($ref['ok'])) {
+                        $check = ame_ledger_seal_verify_totals($db);
+                    }
+                }
+            }
+            if (!$check['ok']) {
+                ame_party_amount_drift_log_throttled($check);
+                if (strtolower((string)($_SESSION['role'] ?? '')) === 'admin') {
+                    $_SESSION['ame_party_amount_drift'] = $check;
+                }
+            } elseif (isset($_SESSION['ame_party_amount_drift'])) {
+                unset($_SESSION['ame_party_amount_drift']);
             }
         } elseif (isset($_SESSION['ame_party_amount_drift'])) {
             unset($_SESSION['ame_party_amount_drift']);

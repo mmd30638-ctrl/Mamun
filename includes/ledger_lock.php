@@ -154,3 +154,82 @@ function ame_ledger_lock_boot(?mysqli $db = null): void
         $stmt->close();
     }
 }
+
+if (!function_exists('ame_ledger_seal_compute_party_sums')) {
+    /** @return array{supplier:float,customer:float} */
+    function ame_ledger_seal_compute_party_sums(mysqli $db): array
+    {
+        $supplier = 0.0;
+        $customer = 0.0;
+        $sr = @$db->query('SELECT COALESCE(SUM(total_due),0) AS s FROM suppliers');
+        if ($sr && ($row = $sr->fetch_assoc())) {
+            $supplier = round((float)$row['s'], 2);
+        }
+        if ($sr instanceof mysqli_result) {
+            $sr->free();
+        }
+        $cr = @$db->query('SELECT COALESCE(SUM(receivable_balance),0) AS s FROM customers');
+        if ($cr && ($row = $cr->fetch_assoc())) {
+            $customer = round((float)$row['s'], 2);
+        }
+        if ($cr instanceof mysqli_result) {
+            $cr->free();
+        }
+        return ['supplier' => $supplier, 'customer' => $customer];
+    }
+}
+
+if (!function_exists('ame_ledger_seal_refresh_baseline')) {
+    /**
+     * মনিটরিং স্ন্যাপশট — individual পার্টি ব্যালেন্স স্পর্শ করে না।
+     *
+     * @return array{ok:bool,message:string,supplier:float,customer:float}
+     */
+    function ame_ledger_seal_refresh_baseline(mysqli $db, string $note = ''): array
+    {
+        ame_ledger_lock_boot($db);
+        $sums = ame_ledger_seal_compute_party_sums($db);
+        $note = mb_substr(trim($note), 0, 190);
+        if ($note === '') {
+            $note = 'বেসলাইন রিফ্রেশ';
+        }
+        $ver = defined('AME_APP_VERSION') ? (string)AME_APP_VERSION : '';
+        $stmt = @$db->prepare(
+            'UPDATE ame_ledger_seal SET supplier_due_sum = ?, customer_recv_sum = ?, sealed_at = NOW(), note = ?,
+             version = IF(? <> "", ?, version) WHERE id = 1 AND sealed = 1'
+        );
+        if (!$stmt) {
+            return ['ok' => false, 'message' => 'সিল আপডেট প্রস্তুত হয়নি: ' . $db->error, 'supplier' => $sums['supplier'], 'customer' => $sums['customer']];
+        }
+        $stmt->bind_param('ddsss', $sums['supplier'], $sums['customer'], $note, $ver, $ver);
+        $stmt->execute();
+        $aff = $stmt->affected_rows;
+        $stmt->close();
+        if ($aff < 1) {
+            $one = 1;
+            $ins = @$db->prepare(
+                'INSERT INTO ame_ledger_seal (id, sealed, sealed_at, note, version, supplier_due_sum, customer_recv_sum)
+                 VALUES (1, ?, NOW(), ?, ?, ?, ?)'
+            );
+            if ($ins) {
+                $ins->bind_param('issdd', $one, $note, $ver, $sums['supplier'], $sums['customer']);
+                $ins->execute();
+                $ins->close();
+            }
+        }
+        return [
+            'ok' => true,
+            'message' => 'মনিটরিং বেসলাইন বর্তমান মোটের সাথে মিলেছে (কোনো পার্টি ব্যালেন্স বদলায়নি)।',
+            'supplier' => $sums['supplier'],
+            'customer' => $sums['customer'],
+        ];
+    }
+}
+
+if (!function_exists('ame_ledger_seal_rebaseline_totals')) {
+    /** @return array{ok:bool,message:string,supplier:float,customer:float} */
+    function ame_ledger_seal_rebaseline_totals(mysqli $db): array
+    {
+        return ame_ledger_seal_refresh_baseline($db, 'CLI rebaseline totals');
+    }
+}

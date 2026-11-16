@@ -1,3 +1,11 @@
+# 10.98.951 — PARTY DRIFT: সিল বেসলাইন ফাংশন + অটো-সিঙ্ক (PHP error_monitor শান্ত)
+includes/ledger_lock.php
+includes/party_amount_shield.php
+includes/config.php
+VERSION.txt
+APONSHOP_STACK_UPDATE.txt
+data/patch_get_fallback.json
+PARTY_DRIFT_FIX_951_BN.txt
 # 10.98.950 — ইসলামিক অডিও একের পর এক অটো + পেজ জুড়ে রিজিউম; SM40 গ্লোবাল ডক
 assets/js/islamic-audio.js
 assets/css/islamic-audio.css

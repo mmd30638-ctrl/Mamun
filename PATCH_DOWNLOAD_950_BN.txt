@@ -1,0 +1,14 @@
+10.98.950 — এক ক্লিকে প্যাচ ডাউনলোড
+====================================
+
+১) লাইভ সাইট (সবচেয়ে সহজ — চাপলেই ZIP নামবে)
+https://mavo12.online/get/Aponshop_10.98.950_PATCH.zip
+
+২) GitHub সরাসরি (মোবাইল/PC — এক ক্লিক)
+https://raw.githubusercontent.com/mmd30638-ctrl/Mamun/cursor/global-responsive-architecture-ab1e/downloads/Aponshop_10.98.950_PATCH.zip
+
+৩) বিকল্প (ব্রাউজার রিডাইরেক্ট)
+https://github.com/mmd30638-ctrl/Mamun/raw/cursor/global-responsive-architecture-ab1e/downloads/Aponshop_10.98.950_PATCH.zip
+
+ফাইল: Aponshop_10.98.950_PATCH.zip (≈429 KB)
+ইনস্টল: Easy Update → PATCH আপলোড, DB restore টিক করবেন না।
