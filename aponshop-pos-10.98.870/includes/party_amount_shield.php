@@ -215,6 +215,45 @@ if (!function_exists('ame_party_amount_authorize_request')) {
     }
 }
 
+if (!function_exists('ame_party_amount_drift_log_throttled')) {
+    function ame_party_amount_drift_log_throttled(array $check): void
+    {
+        $sig = sprintf(
+            '%.2f|%.2f|%.2f|%.2f',
+            (float)($check['supplier'] ?? 0),
+            (float)($check['expected_supplier'] ?? 0),
+            (float)($check['customer'] ?? 0),
+            (float)($check['expected_customer'] ?? 0)
+        );
+        $logDir = defined('AME_PRIVATE_DATA_DIR')
+            ? (AME_PRIVATE_DATA_DIR . '/logs')
+            : (dirname(__DIR__, 2) . '/private_data/logs');
+        if (!is_dir($logDir)) {
+            @mkdir($logDir, 0700, true);
+        }
+        $stateFile = $logDir . '/party_drift_throttle.json';
+        $now = time();
+        $state = ['sig' => '', 'ts' => 0];
+        if (is_file($stateFile)) {
+            $decoded = json_decode((string)@file_get_contents($stateFile), true);
+            if (is_array($decoded)) {
+                $state = array_merge($state, $decoded);
+            }
+        }
+        if ($state['sig'] === $sig && ($now - (int)$state['ts']) < 3600) {
+            return;
+        }
+        @file_put_contents($stateFile, json_encode(['sig' => $sig, 'ts' => $now], JSON_UNESCAPED_UNICODE));
+        error_log(sprintf(
+            'PARTY AMOUNT DRIFT: suppliers Σ=%.2f (expected %.2f), customers Σ=%.2f (expected %.2f) — মনিটরিং স্ন্যাপশট পুরোনো; অ্যাডমিন «party_seal_baseline» দিয়ে বেসলাইন মিলান (ব্যালেন্স অপরিবর্তিত)',
+            $check['supplier'],
+            (float)$check['expected_supplier'],
+            $check['customer'],
+            (float)$check['expected_customer']
+        ));
+    }
+}
+
 if (!function_exists('ame_party_amount_shield_boot')) {
     function ame_party_amount_shield_boot(?mysqli $db = null): void
     {
@@ -227,16 +266,12 @@ if (!function_exists('ame_party_amount_shield_boot')) {
         ame_party_amount_authorize_request($db);
         $check = ame_ledger_seal_verify_totals($db);
         if (!$check['ok'] && $check['expected_supplier'] !== null) {
-            error_log(sprintf(
-                'PARTY AMOUNT DRIFT: suppliers Σ=%.2f (expected %.2f), customers Σ=%.2f (expected %.2f)',
-                $check['supplier'],
-                (float)$check['expected_supplier'],
-                $check['customer'],
-                (float)$check['expected_customer']
-            ));
+            ame_party_amount_drift_log_throttled($check);
             if (strtolower((string)($_SESSION['role'] ?? '')) === 'admin') {
                 $_SESSION['ame_party_amount_drift'] = $check;
             }
+        } elseif (isset($_SESSION['ame_party_amount_drift'])) {
+            unset($_SESSION['ame_party_amount_drift']);
         }
     }
 }

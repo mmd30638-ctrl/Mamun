@@ -156,3 +156,67 @@ function ame_ledger_lock_boot(?mysqli $db = null): void
         $stmt->close();
     }
 }
+
+/** @return array{supplier:float,customer:float} */
+function ame_ledger_seal_party_totals(mysqli $db): array
+{
+    $out = ['supplier' => 0.0, 'customer' => 0.0];
+    $sr = @$db->query('SELECT COALESCE(SUM(total_due),0) AS s FROM suppliers');
+    if ($sr && ($row = $sr->fetch_assoc())) {
+        $out['supplier'] = round((float) $row['s'], 2);
+    }
+    $cr = @$db->query('SELECT COALESCE(SUM(receivable_balance),0) AS s FROM customers');
+    if ($cr && ($row = $cr->fetch_assoc())) {
+        $out['customer'] = round((float) $row['s'], 2);
+    }
+    return $out;
+}
+
+/**
+ * শুধু ame_ledger_seal স্ন্যাপশট মিলায় — customers/suppliers সারিতে হাত দেয় না।
+ *
+ * @return array{ok:bool,supplier:float,customer:float,message:string}
+ */
+function ame_ledger_seal_refresh_baseline(mysqli $db, string $note = ''): array
+{
+    $totals = ame_ledger_seal_party_totals($db);
+    if (!@$db->query('SELECT 1 FROM ame_ledger_seal WHERE id = 1 LIMIT 1')) {
+        return ['ok' => false, 'supplier' => $totals['supplier'], 'customer' => $totals['customer'], 'message' => 'ame_ledger_seal টেবিল নেই'];
+    }
+    $note = trim($note);
+    if ($note === '') {
+        $note = 'বেসলাইন রিফ্রেশ — বর্তমান মোট দেনা/বকেয়া (কোনো পার্টি ব্যালেন্স পরিবর্তন নেই)';
+    }
+    if (strlen($note) > 180) {
+        $note = substr($note, 0, 180);
+    }
+    $ver = defined('AME_ASSET_VERSION') ? (string) AME_ASSET_VERSION : '';
+    $stmt = @$db->prepare(
+        'UPDATE ame_ledger_seal
+         SET sealed = 1,
+             sealed_at = NOW(),
+             note = ?,
+             version = ?,
+             supplier_due_sum = ?,
+             customer_recv_sum = ?
+         WHERE id = 1'
+    );
+    if (!$stmt) {
+        return ['ok' => false, 'supplier' => $totals['supplier'], 'customer' => $totals['customer'], 'message' => $db->error];
+    }
+    $stmt->bind_param(
+        'ssdd',
+        $note,
+        $ver,
+        $totals['supplier'],
+        $totals['customer']
+    );
+    $ok = $stmt->execute();
+    $stmt->close();
+    return [
+        'ok' => (bool) $ok,
+        'supplier' => $totals['supplier'],
+        'customer' => $totals['customer'],
+        'message' => $ok ? 'সিল বেসলাইন আপডেট হয়েছে (শুধু মনিটরিং স্ন্যাপশট)।' : 'আপডেট ব্যর্থ।',
+    ];
+}

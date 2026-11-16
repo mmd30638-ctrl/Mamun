@@ -272,6 +272,7 @@ $ame_upload_leftovers = function_exists('ame_uploads_legacy_code_scan') ? ame_up
     <div class="eng-info">
         <div class="eng-info-row" id="versionRow"><span>ভার্সন</span><span id="versionText"><?php echo htmlspecialchars($ame_app_ver, ENT_QUOTES, 'UTF-8'); ?></span></div>
         <div class="eng-info-row"><span>ডেটাবেজ</span><span><?php echo htmlspecialchars($db_name, ENT_QUOTES, 'UTF-8'); ?></span></div>
+        <div class="eng-info-row"><span>পার্টি সিল DRIFT</span><button type="button" class="eng-btn" id="partySealBaselineBtn" style="font-size:12px;padding:6px 10px;">বেসলাইন মিলান</button></div>
         <div class="eng-info-row"><span>অ্যাডভান্সড</span><button type="button" class="eng-hidden-icon <?php echo $danger_unlocked ? 'unlocked' : ''; ?>" id="hiddenLockBtn" title="অ্যাডভান্সড">🔒</button></div>
     </div>
     <a href="dashboard_settings.php" class="eng-back">⬅️ ফিরে যান</a>
@@ -312,6 +313,22 @@ $ame_upload_leftovers = function_exists('ame_uploads_legacy_code_scan') ? ame_up
     if (versionRow) {
         versionRow.addEventListener('click', registerTap);
     }
+    var sealBtn = document.getElementById('partySealBaselineBtn');
+    if (sealBtn) {
+        sealBtn.addEventListener('click', function () {
+            if (!confirm('ame_ledger_seal মনিটরিং স্ন্যাপশট বর্তমান মোট দেনা/বকেয়ায় মিলবে। কোনো কাস্টমার/সাপ্লায়ার ব্যালেন্স বদলাবে না। চালাবেন?')) {
+                return;
+            }
+            fetch('/modules/settings/actions/party_seal_baseline.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'csrf_token=' + encodeURIComponent(csrf)
+            }).then(function (r) { return r.json(); }).then(function (data) {
+                alert(data.message || (data.ok ? 'সম্পন্ন' : 'ব্যর্থ'));
+            }).catch(function () { alert('নেটওয়ার্ক ব্যর্থ'); });
+        });
+    }
+
     if (lockBtn) {
         lockBtn.addEventListener('click', function (e) {
             e.stopPropagation();

@@ -1,0 +1,16 @@
+PARTY AMOUNT DRIFT লগ ও সিল বেসলাইন (v10.98.919)
+=============================================
+লাইভ সমস্যা: প্রতিটি পেজ লোডে PARTY AMOUNT DRIFT লগ ভরে যাচ্ছে।
+
+এর মানে: ame_ledger_seal টেবিলের পুরোনো «expected» মোট এখন DB মোটের সাথে মিলছে না।
+এটা মনিটরিং স্ন্যাপশট — অবশ্যই কোনো পার্টি ব্যালেন্স অপরিবর্তিত রেখে ঠিক করা যায়।
+
+এই প্যাচ:
+• একই drift সিগনেচার — সর্বোচ্চ ঘণ্টায় ১ বার লগ
+• ame_ledger_seal_refresh_baseline() — শুধু সিল টেবিল আপডেট
+• POST (অ্যাডমিন): /modules/settings/actions/party_seal_baseline.php + CSRF
+• CLI: php tools/party_seal_refresh_baseline.php
+
+১০.98.917 লেজার-রাইট প্যাচের সাথে একসাথে বা পরে লাগান।
+
+API 403 (unit_api / page_layout): ফাইল অনুপস্থিত বা পারমিশন — হোস্টিং প্যানেলে mod_security চেক করুন।
