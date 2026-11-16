@@ -16,7 +16,7 @@ function ame_sm40_show_home_chip(): bool
     return function_exists('ame_if_is_home_page') && ame_if_is_home_page();
 }
 
-function ame_sm40_home_chip_css(): void
+function ame_sm40_home_chip_assets(): void
 {
     if (!ame_sm40_show_home_chip()) {
         return;
@@ -26,7 +26,15 @@ function ame_sm40_home_chip_css(): void
         return;
     }
     $done = true;
-    $ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.947';
+    $ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.948';
     echo '<link rel="stylesheet" href="/assets/css/sm40-home-link.css?v='
         . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '" id="sm40-home-link-css">' . "\n";
+    echo '<script src="/assets/js/sm40-home-player.js?v='
+        . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '" defer id="sm40-home-player-js"></script>' . "\n";
+}
+
+/** @deprecated alias */
+function ame_sm40_home_chip_css(): void
+{
+    ame_sm40_home_chip_assets();
 }

@@ -297,7 +297,9 @@ html body .master-header-fixed .hdr-icon-btn .hdr-badge.hdr-badge-stock{backgrou
             if (function_exists('ame_sm40_show_home_chip') && ame_sm40_show_home_chip()) {
                 $ame_hdr_sm40 = true;
                 $ame_hdr_sm40_url = function_exists('ame_sm40_entry_url') ? ame_sm40_entry_url() : 'https://sm40.com/welcome?lang=bengali';
-                if (function_exists('ame_sm40_home_chip_css')) {
+                if (function_exists('ame_sm40_home_chip_assets')) {
+                    ame_sm40_home_chip_assets();
+                } elseif (function_exists('ame_sm40_home_chip_css')) {
                     ame_sm40_home_chip_css();
                 }
             }
@@ -311,11 +313,13 @@ html body .master-header-fixed .hdr-icon-btn .hdr-badge.hdr-badge-stock{backgrou
         </button>
         <?php if ($ame_hdr_sm40): ?>
         <a
+            id="ameSm40HomeLink"
             href="<?php echo htmlspecialchars($ame_hdr_sm40_url, ENT_QUOTES, 'UTF-8'); ?>"
             class="hdr-icon-btn hdr-i-sm40"
+            data-sm40-url="<?php echo htmlspecialchars($ame_hdr_sm40_url, ENT_QUOTES, 'UTF-8'); ?>"
             target="_blank"
             rel="noopener noreferrer"
-            title="SM40 — নতুন ট্যাবে খুলবে; সেখানে আপনার SM40 ইউজারনেম ও পাসওয়ার্ড দিয়ে লগইন করুন"
+            title="SM40 — পপআপ উইন্ডোতে খুলবে; লগইন করে অডিও চালু রেখে দোকান অ্যাপে কাজ করতে পারবেন"
         >
             <span class="hdr-i-sm40-label" aria-hidden="true">SM40</span>
         </a>
