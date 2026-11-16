@@ -428,8 +428,14 @@
   function grow() {
     var seen = [];
     root.querySelectorAll('[data-ame-fit="1"]').forEach(function (el) {
+      if (el.closest('.ame-pos-term-cart, .ame-desk-main, #amePosCartTableWrap')) {
+        return;
+      }
       var p = el.parentElement;
       if (!p || seen.indexOf(p) !== -1) return;
+      if (p.closest('.ame-pos-term-cart, .ame-desk-main')) {
+        return;
+      }
       seen.push(p);
       var bottom = 0;
       Array.prototype.forEach.call(p.children, function (kid) {

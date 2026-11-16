@@ -817,18 +817,46 @@ function appendBlankRows(body, startIndex) {
     }
 }
 
+function amePosCartLineCount() {
+    const body = document.getElementById('cart-body');
+    if (!body) {
+        return 0;
+    }
+  let n = 0;
+    body.querySelectorAll('tr').forEach(function (row) {
+        if (row.classList.contains('ame-pos-empty-row')) {
+            return;
+        }
+        if (row.classList.contains('ame-blank-search') && !row.querySelector('input, select, textarea')) {
+            return;
+        }
+        n += 1;
+    });
+    return n;
+}
+
 function amePosCartScrollSync() {
     const wrap = document.getElementById('amePosCartTableWrap')
         || document.querySelector('.ame-pos-term-cart .ame-pos-table-wrap');
     const hint = document.getElementById('amePosCartScrollHint');
+    const section = document.querySelector('.ame-pos-term-cart');
     if (!wrap) {
         return;
     }
     window.requestAnimationFrame(function () {
+        const lineCount = amePosCartLineCount();
+        const manyLines = lineCount >= 10;
         const needs = wrap.scrollHeight > wrap.clientHeight + 6;
         wrap.classList.toggle('ame-has-more-rows', needs);
+        if (section) {
+            section.classList.toggle('ame-cart-many-lines', manyLines);
+            section.classList.toggle('ame-has-more-rows', needs);
+        }
         if (hint) {
             hint.hidden = !needs;
+        }
+        if (manyLines && typeof window.amePosReleasePageFitDesk === 'function') {
+            window.amePosReleasePageFitDesk();
         }
     });
 }

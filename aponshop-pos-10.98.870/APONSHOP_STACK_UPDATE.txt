@@ -1,3 +1,3 @@
-APONSHOP_STACK_UPDATE 10.98.926
-AME_ASSET_VERSION=10.98.926
-Fix pos-draft-drawer stack overflow; customer payment shield widen
+APONSHOP_STACK_UPDATE 10.98.927
+AME_ASSET_VERSION=10.98.927
+Fix cart half-width when 10+ product lines (scroll threshold)
