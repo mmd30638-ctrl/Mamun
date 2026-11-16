@@ -715,6 +715,58 @@ function ame_easy_update_read_hint_url(): string
     return preg_match('#^https://[A-Za-z0-9._/?&=%-]+$#', $try) ? $try : '';
 }
 
+/**
+ * সরাসরি এক-ক্লিক ZIP — /get/Filename.zip (লগইন লাগে না)
+ */
+function ame_easy_update_direct_get_url(string $zipFileName): string
+{
+    $zipFileName = basename($zipFileName);
+    if (!preg_match('/^[A-Za-z0-9._-]+\.zip$/i', $zipFileName)) {
+        return '';
+    }
+    $base = '';
+    if (function_exists('ame_live_url')) {
+        $base = rtrim((string)ame_live_url(), '/');
+    }
+    if ($base === '') {
+        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        $host = (string)($_SERVER['HTTP_HOST'] ?? 'localhost');
+        $base = $scheme . '://' . $host;
+    }
+    return $base . '/get/' . rawurlencode($zipFileName);
+}
+
+/** PATCH/FULL_STACK যে ZIP সার্ভারে আছে তার সরাসরি /get/ লিংক */
+function ame_easy_update_list_direct_get_urls(): array
+{
+    $root = dirname(__DIR__);
+    $dirs = [$root . '/downloads', $root . '/deliverables'];
+    $out = [];
+    foreach ($dirs as $dir) {
+        if (!is_dir($dir)) {
+            continue;
+        }
+        foreach (glob($dir . '/Aponshop_*.zip') ?: [] as $path) {
+            if (!is_file($path) || filesize($path) < 100) {
+                continue;
+            }
+            $name = basename($path);
+            if (!preg_match('/^Aponshop_\d+\.\d+\.\d+_(PATCH|FULL_STACK|LIVE)\.zip$/i', $name)
+                && $name !== 'Aponshop_POS_STACK_UPDATE.zip') {
+                continue;
+            }
+            $bytes = (int)filesize($path);
+            $out[$name] = [
+                'name' => $name,
+                'bytes' => $bytes,
+                'url' => ame_easy_update_direct_get_url($name),
+            ];
+        }
+    }
+    uasort($out, static fn($a, $b) => strcmp((string)$b['name'], (string)$a['name']));
+    return array_values($out);
+}
+
 function ame_easy_update_write_hint_url(string $url): void
 {
     $url = trim($url);

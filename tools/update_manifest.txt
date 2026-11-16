@@ -1,3 +1,23 @@
+# 10.98.939 — গ্লোবাল রেসপন্সিভ ও ভিউপোর্ট মাস্টার (PATCH, .env/uploads/SPEED.txt স্পর্শ করে না)
+assets/css/ame-global-responsive-master.css
+assets/js/ame-viewport-tier.js
+assets/css/ame-device.css
+assets/js/ame-desktop-site.js
+assets/js/responsive-fix.js
+assets/js/ame-pos-device-setup.js
+assets/js/device-display.js
+assets/js/ame-runtime.812.js
+assets/js/saas-os.806.js
+includes/global_responsive_standard.php
+includes/responsive_boot.php
+includes/config.php
+partials/header.php
+partials/footer.php
+GLOBAL_RESPONSIVE_ARCHITECTURE.md
+UI_UX_DEVICE_STANDARD.md
+tools/responsive_architecture_check.php
+tools/responsive_viewport_preview.html
+storage/opc.ver
 # 10.98.925 — ইসলামিক অডিও দ্রুত প্লে (সরাসরি ফাইল + স্ট্রিম বাফার; MP3 কপি; loudnorm বাতিল)
 includes/islamic_audio.php
 modules/islamic_audio_stream.php

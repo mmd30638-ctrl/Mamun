@@ -10,6 +10,9 @@ $current = $fromFile !== '' ? $fromFile : (defined('AME_APP_VERSION') ? AME_APP_
 $zip_ok = ame_easy_update_zip_available();
 $backups = ame_update_backup_list();
 $hintUrl = ame_easy_update_read_hint_url();
+$directGetZips = function_exists('ame_easy_update_list_direct_get_urls')
+    ? ame_easy_update_list_direct_get_urls()
+    : [];
 
 include '../../partials/header.php';
 ?>
@@ -165,6 +168,26 @@ include '../../partials/header.php';
         প্রতিটা ইমপোর্টের ঠিক আগে ইঞ্জিন নিজে থেকেই একটা সেফটি ব্যাকআপ (বদলাতে যাওয়া ফাইল + সম্পূর্ণ ডাটাবেজ) নিয়ে রাখে — নিচে "ব্যাকআপ ও ফিরে যাওয়া" অংশে দেখতে পাবেন। চাইলে আলাদাভাবেও ডাউনলোড করে রাখতে পারেন:
         <a href="backup.php" class="ebtn sec">💾 ব্যাকআপ ডাউনলোড</a>
     </div>
+
+    <?php if ($directGetZips !== []): ?>
+    <div class="eplate">
+        <b class="etitle">⬇️ সরাসরি ডাউনলোড — চাপলেই ZIP (এক ক্লিকে)</b>
+        <p style="margin:0 0 10px;">লগইন ছাড়াই <code>/get/</code> — ৯ MB পোস্ট করবেন না; ছোট PATCH (~KB) নিন।</p>
+        <?php foreach ($directGetZips as $item): ?>
+            <?php
+            $kb = max(1, (int)ceil(((int)$item['bytes']) / 1024));
+            $url = (string)($item['url'] ?? '');
+            $name = (string)($item['name'] ?? '');
+            if ($url === '' || $name === '') {
+                continue;
+            }
+            ?>
+            <a class="ebtn sec" href="<?php echo htmlspecialchars($url, ENT_QUOTES, 'UTF-8'); ?>" download="<?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?>">
+                এক ক্লিকে ডাউনলোড — <?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?> (<?php echo $kb; ?> KB)
+            </a>
+        <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
 
     <div class="eplate">
         <b class="etitle">⚙️ ধাপ ২ — জিপ ইমপোর্ট (ইঞ্জিন চালু করুন)</b>
