@@ -512,9 +512,17 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
             <span><?php echo ame_ui('শেয়ার', 'Share'); ?></span>
         </button>
 
-        <a class="inv-btn inv-btn-wa" href="<?php echo htmlspecialchars($wa_url, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener" title="<?php echo ame_ui('হোয়াটসঅ্যাপে পাঠান', 'Send on WhatsApp'); ?>">
+        <button type="button" class="inv-btn inv-btn-wa" data-inv-act="share-whatsapp"
+            data-wa-phone="<?php echo htmlspecialchars($wa_phone, ENT_QUOTES, 'UTF-8'); ?>"
+            data-wa-text="<?php echo htmlspecialchars(
+                ($shop['shop_name'] ?? 'Aponshop') . ' — ' . ame_ui('বিক্রয় ইনভয়েস', 'Sales invoice') . ' #' . $inv_no,
+                ENT_QUOTES,
+                'UTF-8'
+            ); ?>"
+            data-ame-file-base="<?php echo htmlspecialchars(preg_replace('/[^A-Za-z0-9_-]+/', '-', $inv_no), ENT_QUOTES, 'UTF-8'); ?>"
+            title="<?php echo ame_ui('হোয়াটসঅ্যাপে মেমো ছবি পাঠান', 'Send memo image on WhatsApp'); ?>">
             <span><?php echo ame_ui('হোয়াটসঅ্যাপ', 'WhatsApp'); ?></span>
-        </a>
+        </button>
 
         <button type="button" class="inv-btn inv-btn-tg" data-inv-act="share-telegram" title="<?php echo ame_ui('টেলিগ্রামে মেমো শেয়ার করুন', 'Share the memo on Telegram'); ?>">
             <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .37z"/></svg>
@@ -721,11 +729,18 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
     </div>
 
     <!-- স্ক্রিপ্ট লোডার -->
-    <script src="/assets/js/ame-memo-file.js?v=10.98.847"></script>
+    <script src="/assets/js/ame-memo-file.js?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.939', ENT_QUOTES, 'UTF-8'); ?>"></script>
+    <script src="/assets/js/ame-receipt-wa-share.js?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.939', ENT_QUOTES, 'UTF-8'); ?>"></script>
     <script>
     (function () {
         var saleId = <?php echo (int)$sale_id; ?>;
         var fileBase = 'invoice-' + encodeURIComponent(String('<?php echo preg_replace('/[^A-Za-z0-9_-]+/', '-', $inv_no); ?>'));
+        var waPhone = '<?php echo htmlspecialchars($wa_phone, ENT_QUOTES, 'UTF-8'); ?>';
+        var waCaption = <?php echo json_encode(
+            ($shop['shop_name'] ?? 'Aponshop') . ' — ' . ame_ui('বিক্রয় ইনভয়েস', 'Sales invoice') . ' #' . $inv_no,
+            JSON_UNESCAPED_UNICODE
+        ); ?>;
+        var tgShareUrl = <?php echo json_encode($tg_url, JSON_UNESCAPED_UNICODE); ?>;
 
         document.querySelectorAll('[data-inv-act]').forEach(function (btn) {
             btn.addEventListener('click', function () {
@@ -740,7 +755,16 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
                     } catch (e) {}
                 }
                 if (typeof window.ameMemoCapture === 'function') {
-                    window.ameMemoCapture(act, fileBase, 'memo-container');
+                    var opts;
+                    if (act === 'share-whatsapp') {
+                        opts = {
+                            phone: btn.getAttribute('data-wa-phone') || waPhone,
+                            text: btn.getAttribute('data-wa-text') || waCaption
+                        };
+                    } else if (act === 'share-telegram') {
+                        opts = { telegramUrl: tgShareUrl, text: waCaption };
+                    }
+                    window.ameMemoCapture(act, fileBase, 'memo-container', opts);
                 }
             });
         });
@@ -776,9 +800,19 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
             } else if (urlParams.get('tg') === '1' || urlParams.get('telegram') === '1') {
                 setTimeout(function () {
                     if (typeof window.ameMemoCapture === 'function') {
-                        window.ameMemoCapture('share-telegram', fileBase, 'memo-container');
+                        window.ameMemoCapture('share-telegram', fileBase, 'memo-container', {
+                            telegramUrl: tgShareUrl,
+                            text: waCaption
+                        });
                     }
                 }, 400);
+            } else if (urlParams.get('wa') === '1' || urlParams.get('whatsapp') === '1') {
+                setTimeout(function () {
+                    var waBtn = document.querySelector('[data-inv-act="share-whatsapp"]');
+                    if (waBtn) {
+                        waBtn.click();
+                    }
+                }, 450);
             }
         });
     })();
