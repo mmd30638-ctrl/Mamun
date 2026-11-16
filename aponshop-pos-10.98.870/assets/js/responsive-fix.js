@@ -301,12 +301,16 @@
         if (!body || !body.classList.contains('ame-pos-terminal-page')) {
             return;
         }
-        document.querySelectorAll('.ame-pos-table-wrap, .ame-pos-term-cart .ame-auto-scroll-wrap').forEach(function (el) {
+        document.querySelectorAll('.ame-pos-term-cart .ame-pos-table-wrap, .ame-pos-term-cart .ame-auto-scroll-wrap').forEach(function (el) {
             el.style.overflowX = 'auto';
+            el.style.overflowY = 'auto';
             el.style.webkitOverflowScrolling = 'touch';
             el.style.maxWidth = '100%';
             el.style.touchAction = 'pan-x pan-y';
         });
+        if (typeof window.amePosCartScrollSync === 'function') {
+            window.amePosCartScrollSync();
+        }
     }
 
     function runAll() {

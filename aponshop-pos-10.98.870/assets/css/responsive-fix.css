@@ -438,7 +438,11 @@ body.ame-purchase-terminal-page .ame-pos-table-wrap {
    অনেক নিচে চলে যেত। এখন একই উচ্চতায় থাকে — পণ্য বাড়লে ভিতরে স্ক্রল। */
 body.ame-pos-terminal-page .ame-pos-term-cart .ame-pos-table-wrap {
     min-height: 280px !important;
-    max-height: min(46vh, 480px) !important;
+    max-height: min(62vh, 680px) !important;
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: touch !important;
 }
 @media (max-width: 760px) {
     body.ame-pos-terminal-page .ame-pos-term-cart .ame-pos-table-wrap {
@@ -644,6 +648,7 @@ body.ame-purchase-terminal-page #main-content > * {
 
 body.ame-pos-terminal-page .ame-pos-term-cart .ame-pos-table-wrap {
     overflow-x: auto !important;
+    overflow-y: auto !important;
 }
 body.ame-pos-terminal-page .ame-pos-table-wrap table.table-pos {
     min-width: 0 !important;

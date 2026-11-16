@@ -817,6 +817,22 @@ function appendBlankRows(body, startIndex) {
     }
 }
 
+function amePosCartScrollSync() {
+    const wrap = document.getElementById('amePosCartTableWrap')
+        || document.querySelector('.ame-pos-term-cart .ame-pos-table-wrap');
+    const hint = document.getElementById('amePosCartScrollHint');
+    if (!wrap) {
+        return;
+    }
+    window.requestAnimationFrame(function () {
+        const needs = wrap.scrollHeight > wrap.clientHeight + 6;
+        wrap.classList.toggle('ame-has-more-rows', needs);
+        if (hint) {
+            hint.hidden = !needs;
+        }
+    });
+}
+
 function renderCart() {
     const body = posElement('cart-body');
     if (!body) {
@@ -1018,7 +1034,10 @@ function renderCart() {
     ameSyncSelectAll();
 
     ameRefreshDeskTotals();
+    amePosCartScrollSync();
 }
+
+window.amePosCartScrollSync = amePosCartScrollSync;
 
 /*
  * ⭐ এই বেসিক calculateAll() ফাংশনটা pos-payment.js লোড হওয়ার সাথে সাথেই
@@ -1326,3 +1345,9 @@ if (addProductRow) {
 if (posElement('cart-body')) {
     renderCart();
 }
+
+window.addEventListener('resize', function () {
+    if (typeof amePosCartScrollSync === 'function') {
+        amePosCartScrollSync();
+    }
+});

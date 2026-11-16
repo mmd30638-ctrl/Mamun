@@ -701,7 +701,7 @@ if (isset($db) && $db instanceof mysqli) {
                 </a>
             </div>
         </div>
-        <div class="ame-pos-table-wrap">
+        <div class="ame-pos-table-wrap" id="amePosCartTableWrap" role="region" aria-label="<?php echo $escape($ame_pos_english ? 'Product cart lines' : 'বিক্রয় কার্টের পণ্য তালিকা'); ?>">
             <table class="table-pos">
                 <colgroup>
                     <col style="width:4%">
@@ -747,6 +747,11 @@ if (isset($db) && $db instanceof mysqli) {
                 <tbody id="ameExchangeBody"></tbody>
             </table>
         </div>
+        <p class="ame-pos-cart-scroll-hint" id="amePosCartScrollHint" hidden>
+            <?php echo $ame_pos_english
+                ? '↓ Scroll inside the table to see more product lines (10+)'
+                : '↓ ১০+ পণ্য থাকলে টেবিলের ভিতর উপরে-নিচে স্ক্রল করে বাকি সারি দেখুন'; ?>
+        </p>
         <button type="button" class="ame-pos-add-row" id="ameAddProductRow">
             <?php echo $ame_pos_english ? 'Add another product row' : 'আরেকটি পণ্যের সারি যোগ করুন'; ?>
         </button>

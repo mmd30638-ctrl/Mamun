@@ -1,0 +1,59 @@
+/* 10.98.918 — বিক্রয় কার্ট: ৯+ পণ্য উপরে-নিচে স্ক্রল (ডেস্কটপ + মোবাইল) */
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  overflow: hidden !important;
+  min-height: 0 !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart > .ame-desk-table-head,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart > .ame-desk-table-actions,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart > .ame-pos-add-row,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart > .ame-pos-row-note,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart > .ame-pos-pay-jump {
+  flex: 0 0 auto !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap {
+  flex: 1 1 auto !important;
+  min-height: 260px !important;
+  max-height: min(62vh, 680px) !important;
+  height: auto !important;
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-gutter: stable both-edges !important;
+  touch-action: pan-x pan-y !important;
+  border: 1px solid #d7dee8 !important;
+  background: #ffffff !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 760px) {
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap {
+    min-height: 200px !important;
+    max-height: min(46vh, 400px) !important;
+  }
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-cart-scroll-hint {
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  padding: 6px 10px 8px !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+  color: #0b3d91 !important;
+  background: linear-gradient(180deg, rgba(238, 243, 251, 0.95), #eef3fb) !important;
+  border-top: 1px solid #cfd6de !important;
+  line-height: 1.35 !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-cart-scroll-hint[hidden] {
+  display: none !important;
+}
