@@ -3,8 +3,34 @@
  * SM40 — হোমপেজ হেডার থেকে বাইরের লগইন (কোনো ক্রেডেনশিয়াল Aponshop-এ পাঠানো হয় না)।
  */
 
+function ame_sm40_listen_file(): ?string
+{
+    $root = dirname(__DIR__);
+    $candidates = [
+        $root . '/sm40_listen.php',
+        $root . '/modules/sm40/listen.php',
+    ];
+    foreach ($candidates as $path) {
+        if (is_file($path)) {
+            return $path;
+        }
+    }
+
+    return null;
+}
+
+/** SM40 শোনার হাব আছে → সেখানে; না থাকলে sm40.com (404 এড়াতে) */
 function ame_sm40_entry_url(): string
 {
+    $file = ame_sm40_listen_file();
+    if ($file === null) {
+        return 'https://sm40.com/welcome?lang=bengali';
+    }
+    $root = dirname(__DIR__);
+    if (str_starts_with($file, $root . '/modules/sm40/listen.php')) {
+        return '/modules/sm40/listen.php';
+    }
+
     return '/sm40_listen.php';
 }
 

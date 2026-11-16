@@ -9,7 +9,16 @@
   var SESSION_KEY = 'ame_sm40_popup_v1';
   var LOCAL_KEY = 'ame_sm40_popup_v1';
   var popupRef = null;
-  var lastUrl = '/sm40_listen.php';
+  var lastUrl = (function () {
+    var link = document.getElementById('ameSm40HomeLink');
+    if (link) {
+      var u = link.getAttribute('data-sm40-url') || link.getAttribute('href');
+      if (u) {
+        return u;
+      }
+    }
+    return '/sm40_listen.php';
+  })();
 
   /** ফোন, ট্যাবলেট, টাচ ল্যাপটপ — কম্প্যাক্ট শর্টকাট; ডেস্কটপ/ল্যাপটপ মাউস — নিচে বড় বার */
   function useCompactDock() {

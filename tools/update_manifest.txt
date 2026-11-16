@@ -1,3 +1,14 @@
+# 10.98.957 — SM40 শোনার পেজ (404 ঠিক) + প্যাচে ফাইল অন্তর্ভুক্ত
+sm40_listen.php
+modules/sm40/listen.php
+assets/css/sm40-listen-hub.css
+includes/sm40_portal.php
+includes/islamic_audio.php
+assets/js/islamic-audio.js
+assets/js/sm40-home-player.js
+partials/header.php
+includes/config.php
+VERSION.txt
 # 10.98.954 — সাবেক পাওনা: ক্লিকে সমন্বয় প্যানেল (আজকের কাজের মতো) + লং প্রেস ০
 includes/employee_hub.php
 modules/hrm/employee_list.php
