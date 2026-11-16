@@ -1,10 +1,9 @@
-/* 10.98.923 — POS ডেস্ক পূর্ণ প্রস্থ (ড্রাফট লিস্ট বন্ধের পর অর্ধেক কার্ট বাগ)
-   pos-pay-dock = ১ কলাম, কিন্তু ame-sale-desk-lock এখনও সামারিকে grid-column:২ দেয় —
-   ফলে দ্বিতীয় খালি/সরু কলামে কার্ট ডানে চলে যায়। */
+/* 10.98.924 — POS ডেস্ক পূর্ণ প্রস্থ (ড্রাফট মেমো + ড্রাফট লিস্ট)
+   Pay dock = পেমেন্ট ডক; গ্রিডে ২য় কলাম রাখলে কার্ট ডানে অর্ধেক থাকে। */
 
-@media (min-width: 1000px) {
-  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid,
-  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-pos-page.ame-sale-pro .ame-pos-shell .ame-pos-grid {
+@media (min-width: 901px) {
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid,
+  html body.ame-pos-terminal-page #main-content .ame-pos-page.ame-sale-pro .ame-pos-shell .ame-pos-grid {
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) !important;
     width: 100% !important;
@@ -13,24 +12,31 @@
     align-items: start !important;
   }
 
-  html:not(.ame-pos-memo-editing) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar,
-  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar {
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid > div.ame-desk-stack {
+    display: contents !important;
+  }
+
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-bar {
     grid-column: 1 / -1 !important;
     width: 100% !important;
     max-width: 100% !important;
   }
 
-  html:not(.ame-pos-memo-editing) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main,
-  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main {
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main {
+    display: flex !important;
+    flex-direction: column !important;
     grid-column: 1 / -1 !important;
     grid-row: auto !important;
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
+    align-self: stretch !important;
   }
 
-  html:not(.ame-pos-memo-editing) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-summary,
-  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-summary,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
     grid-column: 1 / -1 !important;
     grid-row: auto !important;
     width: 0 !important;
@@ -45,18 +51,25 @@
     pointer-events: none !important;
   }
 
-  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk #amePosPay {
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk #amePosPay {
     pointer-events: auto !important;
   }
 
-  html:not(.ame-pos-memo-editing) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-term-top,
-  html:not(.ame-pos-memo-editing) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-term-cart,
-  html:not(.ame-pos-memo-editing) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-fold-stack,
-  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top,
-  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
-  html:not(.ame-pos-memo-editing) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack {
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-term-top,
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-term-cart,
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-fold-stack,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack {
     grid-column: unset !important;
     grid-row: unset !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 auto !important;
+  }
+
+  html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap,
+  html.ame-pos-memo-editing body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap {
     width: 100% !important;
     max-width: 100% !important;
   }

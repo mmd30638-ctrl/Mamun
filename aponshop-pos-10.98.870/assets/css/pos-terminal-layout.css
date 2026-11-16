@@ -99,11 +99,8 @@ html body.ame-pos-terminal-page .ame-pos-page.ame-sale-pro .ame-pos-shell .ame-p
 }
 @media (min-width: 1000px) {
     html body.ame-pos-terminal-page .ame-pos-page.ame-sale-pro .ame-pos-shell .ame-pos-grid {
-        /* ব্যবহারকারীর অনুরোধ: ডান পাশের পেমেন্ট অংশ (সাব-টোটাল/ভ্যাট/ডিসকাউন্ট/
-           বিভক্ত পরিশোধ) আগের চেয়ে সরু হবে, বাম পাশের কার্ট/প্রোডাক্ট-তালিকা তত
-           বেশি জায়গা পাবে। আগে ছিল 1.6fr : 1fr (~৩৮% ডান পাশে), এখন 2.3fr : 0.85fr
-           (~২৭% ডান পাশে)। */
-        grid-template-columns: minmax(0, 2.3fr) minmax(280px, 0.85fr) !important;
+        /* পে-ডক চালু — গ্রিড এক কলাম; কার্ট পূর্ণ প্রস্থ (ame-pos-desk-fullwidth.css) */
+        grid-template-columns: minmax(0, 1fr) !important;
         align-items: start !important;
     }
 }

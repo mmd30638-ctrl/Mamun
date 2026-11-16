@@ -43,9 +43,7 @@
       '#posCustomerInfoField',
       '.ame-desk-price-row .ame-pos-mode',
       '.ame-pos-term-search',
-      '.ame-pos-term-top',
       '.ame-desk-box',
-      '.ame-pos-card.ame-pos-term-cart',
       '.ame-desk-bar .ame-desk-home',
       '#ameDeskClock',
       '.ame-pos-title-line'
@@ -61,6 +59,11 @@
       return true;
     }
     if (el.classList.contains('ame-pos-summary') || el.classList.contains('ame-pos-table-wrap') || el.classList.contains('ame-desk-pay')) {
+      return true;
+    }
+    if (el.classList.contains('ame-pos-term-cart') || el.classList.contains('ame-pos-term-top')
+      || el.classList.contains('ame-pos-fold-stack') || el.classList.contains('ame-desk-main')
+      || el.classList.contains('ame-pos-fold-stack') || el.id === 'amePosCartTableWrap') {
       return true;
     }
     if (el.matches('table, form, thead, tbody, tr')) {
@@ -362,8 +365,37 @@
     });
   }
 
+  function posDeskBlockFit(el) {
+    if (!isSalesDesk() || !el || !el.classList) {
+      return false;
+    }
+    if (el.classList.contains('ame-pos-term-cart') || el.classList.contains('ame-pos-term-top')
+      || el.classList.contains('ame-pos-fold-stack') || el.classList.contains('ame-desk-main')) {
+      return true;
+    }
+    return !!el.closest('.ame-pos-term-cart, .ame-desk-main');
+  }
+
+  window.amePosReleasePageFitDesk = function () {
+    var sel = '.ame-pos-term-cart, .ame-pos-term-top, .ame-pos-fold-stack, .ame-desk-main, #amePosCartTableWrap, .ame-pos-table-wrap';
+    document.querySelectorAll(sel).forEach(function (el) {
+      if (!el || !el.style) {
+        return;
+      }
+      ['position', 'left', 'top', 'right', 'bottom', 'width', 'height', 'max-width', 'min-width', 'min-height', 'transform', 'margin', 'z-index'].forEach(function (p) {
+        el.style.removeProperty(p);
+      });
+      el.removeAttribute('data-ame-fit');
+      el.removeAttribute('data-ame-sheet');
+      el.removeAttribute('data-ame-bit');
+    });
+  };
+
   function place(el, box) {
     if (isRunningText(el)) return;
+    if (posDeskBlockFit(el)) {
+      return;
+    }
     var parent = el.parentElement;
     if (parent && window.getComputedStyle(parent).position === 'static') {
       if (isSalesDesk()) {
@@ -420,7 +452,9 @@
     if (!saved || !saved.items) return;
     saved.items.forEach(function (item) {
       var el = lookup(item.path);
-      if (el) place(el, item);
+      if (el && !posDeskBlockFit(el)) {
+        place(el, item);
+      }
     });
     grow();
   }
@@ -615,7 +649,9 @@
     });
     items.forEach(function (item) {
       var el = lookup(item.path);
-      if (el) place(el, item);
+      if (el && !posDeskBlockFit(el)) {
+        place(el, item);
+      }
     });
     grow();
     remember(items);
@@ -806,6 +842,9 @@
     root = rootEl();
     if (!root) return;
     applySaved();
+    if (isSalesDesk() && typeof window.amePosReleasePageFitDesk === 'function') {
+      window.amePosReleasePageFitDesk();
+    }
     var setTool = ui();
     if (toolOn()) setTool(true);
     api('GET').then(function (data) {

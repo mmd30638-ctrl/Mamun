@@ -42,11 +42,21 @@
         document.body.classList.remove('ame-pos-draft-open');
     }
 
+    function releaseDeskFit() {
+        if (typeof window.amePosReleasePageFitDesk === 'function') {
+            window.amePosReleasePageFitDesk();
+        }
+        if (typeof window.amePosDraftListRecover === 'function') {
+            window.amePosDraftListRecover();
+        }
+    }
+
     window.amePosMemoLayoutSync = function () {
         var editing = isMemoEditing();
         document.documentElement.classList.toggle('ame-pos-memo-editing', editing);
         if (editing) {
             closeDraftListOverlay();
+            releaseDeskFit();
         }
         if (typeof window.amePosCartScrollSync === 'function') {
             window.amePosCartScrollSync();

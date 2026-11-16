@@ -25,39 +25,7 @@ html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-des
   min-width: 0 !important;
 }
 
-@media (min-width: 901px) {
-  html.ame-pos-memo-editing body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid,
-  html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
-    display: grid !important;
-    grid-template-columns: minmax(0, 2.3fr) minmax(280px, 0.85fr) !important;
-    gap: 10px !important;
-    align-items: start !important;
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top,
-  html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
-  html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack,
-  html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main {
-    grid-column: 1 !important;
-    grid-row: auto !important;
-  }
-
-  html.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-summary {
-    grid-column: 2 !important;
-    grid-row: 1 / span 4 !important;
-    align-self: start !important;
-  }
-}
-
-/* Chrome Android «Desktop site» */
-html.ame-phone-desktop.ame-pos-memo-editing body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
-  display: grid !important;
-  grid-template-columns: minmax(0, 2.2fr) minmax(260px, 0.8fr) !important;
-  width: 100% !important;
-  max-width: 100vw !important;
-}
+/* ডেস্কটপে ২-কলাম গ্রিড বন্ধ — পেমেন্ট pos-pay-dock; কার্ট পূর্ণ প্রস্থ = ame-pos-desk-fullwidth.css */
 
 @media (max-width: 900px) {
   html.ame-pos-memo-editing:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid {
