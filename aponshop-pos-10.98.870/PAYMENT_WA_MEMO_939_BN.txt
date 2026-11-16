@@ -1,0 +1,14 @@
+আপডেট 10.98.939 — কাস্টমার পেমেন্ট রসিদ হোয়াটসঅ্যাপে ছবি
+==========================================================
+
+যা বদলেছে:
+  • নতুন assets/js/ame-memo-file.js (html2canvas + PDF/PNG শেয়ার)
+  • নতুন assets/js/ame-receipt-wa-share.js (payment-receive wa.me লিংক প্যাচ)
+  • modules/sales/invoice.php — হোয়াটসঅ্যাপ এখন মেমো ছবি
+  • partials/footer.php — উপরের স্ক্রিপ্ট সব মডিউলে
+  • AME_ASSET_VERSION = 10.98.939
+
+ইনস্টল: Easy Update ZIP (DB restore বন্ধ রাখুন)।
+
+বিস্তারিত লাইভ payment-receive.php:
+  modules/customers/PAYMENT_RECEIVE_WA_MEMO_BN.txt

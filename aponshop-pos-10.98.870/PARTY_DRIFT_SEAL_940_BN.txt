@@ -1,0 +1,21 @@
+PARTY AMOUNT DRIFT + page_layout (v10.98.940)
+=============================================
+আপনার লগ:
+  suppliers Σ=845716.20 (expected 4829208.45)
+  customers Σ=3317462.73 (expected 7159589.24)
+
+এর মানে ame_ledger_seal এ পুরোনো মোট (expected) আছে; বর্তমান DB মোট ভিন্ন।
+এটা শুধু মনিটরিং — কোনো পার্টির বাকি/দেনা এই প্যাচ দিয়ে বদলাবে না।
+
+মূল কারণ (বাগ ঠিক):
+  আগে Easy Update শুধু version ফিল্ড আপডেট করত, supplier_due_sum / customer_recv_sum রাখত না।
+  এখন সংস্করণ বদলালে অটো বেসলাইন মিলবে (ledger_lock.php)।
+
+আপনি কী করবেন:
+  1) ZIP 10.98.940 লাগান (DB restore বন্ধ)।
+  2) যেকোনো এক পেজ খুলুন — বেসলাইন একবার অটো মিলে DRIFT লগ বন্ধ হবে।
+  অথবা সেটিংস → টুলস → «বেসলাইন মিলান»।
+  অথবা SSH: php tools/party_seal_refresh_baseline.php
+
+page_layout.php নেটওয়ার্ক এরর:
+  modules/settings/actions/page_layout.php এ প্যাচে যোগ হয়েছে।

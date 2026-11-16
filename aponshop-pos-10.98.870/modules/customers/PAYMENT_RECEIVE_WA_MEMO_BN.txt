@@ -1,0 +1,33 @@
+পেমেন্ট রিসিভ রসিদ — হোয়াটসঅ্যাপে ছবি (10.98.939)
+================================================
+
+সমস্যা: হোয়াটসঅ্যাপ বাটন শুধু লেখা (wa.me?text=) পাঠাত।
+সমাধান: ame-memo-file.js মেমো (#spayMemo বা #receiptCard) ক্যাপচার করে
+মোবাইলে Web Share দিয়ে PNG সংযুক্ত করে; না হলে ছবি ডাউনলোড + গাইড টেক্সট।
+
+অটো (ইনভয়েস ও ফুটার):
+  • assets/js/ame-memo-file.js
+  • assets/js/ame-receipt-wa-share.js — পুরনো wa.me লিংকও ধরে ধরে ছবি শেয়ার করে
+
+লাইভ payment-receive.php:
+  • footer.php না থাকলে শেষে: require_once 'payment_receipt_footer.php';
+  • পুরনো wa.me লিংক থাকলেও স্ক্রিপ্ট লিংক ধরে PDF/ছবি শেয়ার করবে।
+
+  ১) রসিদ বক্সে id="spayMemo" বা id="receiptCard" থাকা নিশ্চিত করুন।
+  ২) হোয়াটসঅ্যাপ বাটন:
+
+     <button type="button" class="inv-btn inv-btn-wa" data-inv-act="share-whatsapp"
+         data-wa-phone="<?php echo htmlspecialchars($wa_phone, ENT_QUOTES, 'UTF-8'); ?>"
+         data-wa-text="পেমেন্ট রসিদ #<?php echo htmlspecialchars($receipt_no, ENT_QUOTES, 'UTF-8'); ?>"
+         data-ame-file-base="<?php echo htmlspecialchars($receipt_no, ENT_QUOTES, 'UTF-8'); ?>"
+         data-ame-memo-id="spayMemo">
+         হোয়াটসঅ্যাপ
+     </button>
+
+  অথবা পুরনো <a href="https://wa.me/...?text=..."> লিংক রাখলেই
+  ame-receipt-wa-share.js ক্লিকে text বোঝা না দিয়ে ছবি শেয়ার করবে।
+
+  ৩) পেমেন্ট কমপ্লিটের পর অটো খুলতে: redirect-এ &wa=1 যোগ করুন।
+
+টেস্ট (Android Chrome):
+  হোয়াটসঅ্যাপ → শেয়ার শিট → ছবি + সংক্ষিপ্ত ক্যাপশন → WhatsApp বেছে নিন।

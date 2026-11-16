@@ -1,0 +1,12 @@
+হোয়াটসঅ্যাপ মেমো PDF/ছবি (10.98.942)
+=====================================
+সমস্যা: হোয়াটসঅ্যাপ বাটন শুধু wa.me টেক্সট খুলছিল।
+
+সমাধান:
+• পেমেন্ট রসিদে #spayMemo ক্যাপচার → Web Share এ PDF (না হলে PNG)
+• পুরনো সবুজ wa.me লিংক ক্লিকও ধরা হবে (guard স্ক্রিপ্ট)
+• payment-receive.php footer না থাকলে:
+  require_once __DIR__ . '/payment_receipt_footer.php';
+
+Android: শেয়ার শিট → WhatsApp → PDF/ছবি সংযুক্ত।
+Easy Update ZIP লাগান, DB restore বন্ধ।

@@ -1,0 +1,10 @@
+<IfModule mod_authz_core.c>
+Require all granted
+</IfModule>
+<IfModule mod_mime.c>
+  AddType audio/mpeg .mp3
+  AddType audio/mp4 .m4a .mp4
+  AddType audio/aac .aac
+  AddType audio/ogg .ogg
+  AddType audio/wav .wav
+</IfModule>

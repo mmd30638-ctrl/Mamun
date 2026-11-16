@@ -1,0 +1,166 @@
+/* ইনভয়েস / পেমেন্ট রসিদ — কাস্টমার বাকি আদায়, সেল মেমো (ওভারল্যাপ ফিক্স) */
+
+body.ame-customer-payment-page #main-content,
+body.ame-due-reminder-page #main-content {
+  overflow-x: hidden;
+}
+
+#memo-container,
+.memo-wrapper,
+.invoice-box,
+#invoiceBox,
+#receiptCard,
+#spayMemo,
+.ame-slip,
+#wsSlip,
+#wsShareSlip {
+  box-sizing: border-box !important;
+  width: min(480px, calc(100vw - 24px)) !important;
+  max-width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 14px 16px !important;
+  background: #fff !important;
+  border-radius: 10px !important;
+  line-height: 1.45 !important;
+  overflow: hidden !important;
+}
+
+.ame-centered-overlay #spayMemo,
+.ame-centered-overlay .invoice-box,
+.ame-centered-overlay #invoiceBox,
+.ame-centered-dialog #spayMemo,
+.ame-centered-dialog .invoice-box {
+  width: min(440px, calc(100vw - 32px)) !important;
+  max-height: calc(100vh - 48px) !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* মেটা তথ্য — লেবেল বাম, মান ডান, ওভারল্যাপ বন্ধ */
+.memo-meta-grid,
+#spayMemo .memo-meta-grid,
+#invoiceBox .memo-meta-grid,
+.invoice-box .memo-meta-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 6px !important;
+  padding: 10px 12px !important;
+  margin: 10px 0 !important;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+}
+
+.memo-meta-item,
+#spayMemo .memo-meta-row,
+#spayMemo .meta-row,
+.invoice-box .pay-row {
+  display: grid !important;
+  grid-template-columns: minmax(38%, max-content) minmax(0, 1fr) !important;
+  align-items: baseline !important;
+  gap: 10px 12px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  line-height: 1.35 !important;
+}
+
+.memo-meta-item .lbl,
+#spayMemo .lbl,
+#spayMemo label,
+.invoice-box .lbl {
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  color: #0b1e4d !important;
+  text-align: left !important;
+  white-space: normal !important;
+  flex: none !important;
+}
+
+.memo-meta-item .val,
+#spayMemo .val,
+#spayMemo .value,
+.invoice-box .val {
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  text-align: right !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  min-width: 0 !important;
+}
+
+.memo-meta-wide {
+  grid-column: 1 / -1 !important;
+}
+
+.memo-meta-item.memo-meta-wide {
+  display: block !important;
+}
+
+/* হেডার — লোগো + শিরোনাম */
+.invoice-box .memo-header,
+#spayMemo .memo-header,
+.memo-shop-block {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: flex-start !important;
+  gap: 10px 14px !important;
+  margin-bottom: 10px !important;
+}
+
+img.ame-print-logo,
+.memo-logo {
+  max-width: 88px !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+.memo-shop-name,
+.invoice-box .title {
+  font-size: clamp(18px, 4.5vw, 24px) !important;
+  line-height: 1.25 !important;
+  margin: 0 0 4px !important;
+  font-weight: 900 !important;
+}
+
+.memo-badge,
+.invoice-box .pay-badge {
+  display: inline-block !important;
+  margin-top: 6px !important;
+  padding: 4px 12px !important;
+  border-radius: 999px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+}
+
+/* পেমেন্ট মোডালে “সাজাও” বাটন লুকান */
+body.ame-customer-payment-page .ame-fit-launch,
+body.ame-due-reminder-page .ame-fit-launch,
+.ame-centered-overlay .ame-fit-launch {
+  display: none !important;
+}
+
+/* পেজ-ফিট absolute পজিশন ইনভয়েসে না */
+#spayMemo [data-ame-fit="1"],
+#invoiceBox [data-ame-fit="1"],
+.invoice-box [data-ame-fit="1"],
+#memo-container [data-ame-fit="1"] {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  width: auto !important;
+  height: auto !important;
+  transform: none !important;
+}
+
+@media print {
+  #spayMemo,
+  .invoice-box,
+  #memo-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+}
