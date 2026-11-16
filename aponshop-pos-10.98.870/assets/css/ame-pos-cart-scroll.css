@@ -13,7 +13,8 @@ html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart 
 html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart > .ame-desk-table-actions,
 html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart > .ame-pos-add-row,
 html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart > .ame-pos-row-note,
-html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart > .ame-pos-pay-jump {
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart > .ame-pos-pay-jump,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart > .ame-pos-cart-total-bar {
   flex: 0 0 auto !important;
 }
 
@@ -21,7 +22,7 @@ html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart 
 html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap {
   flex: 1 1 auto !important;
   min-height: 280px !important;
-  max-height: min(66vh, 720px) !important;
+  max-height: clamp(180px, 44vh, 540px) !important;
   height: auto !important;
   overflow-x: auto !important;
   overflow-y: auto !important;

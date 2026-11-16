@@ -844,6 +844,9 @@ function amePosCartScrollSync() {
         if (hint) {
             hint.hidden = !needs;
         }
+        if (typeof window.amePaintCartLinesTotal === 'function') {
+            window.amePaintCartLinesTotal();
+        }
     if (typeof window.amePosReleasePageFitDesk === 'function') {
       window.amePosReleasePageFitDesk();
     }

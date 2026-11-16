@@ -73,7 +73,7 @@
     min-width: 0 !important;
     overflow-x: auto !important;
     overflow-y: auto !important;
-    max-height: min(58vh, 680px) !important;
+    max-height: clamp(180px, 44vh, 540px) !important;
     -webkit-overflow-scrolling: touch !important;
     scrollbar-gutter: stable both-edges !important;
   }
@@ -142,17 +142,4 @@ html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-cart-total
   font-size: 20px !important;
   font-weight: 900 !important;
   letter-spacing: 0.02em !important;
-}
-
-@media (min-width: 1000px) {
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-cart-total-bar:not([hidden]) {
-    display: flex !important;
-  }
-
-  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos tfoot#cart-lines-foot:not([hidden]) tr.ame-pos-cart-total-row td {
-    position: sticky !important;
-    bottom: 0 !important;
-    z-index: 2 !important;
-    box-shadow: 0 -6px 14px rgba(11, 61, 145, 0.14) !important;
-  }
 }
