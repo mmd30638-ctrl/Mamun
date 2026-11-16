@@ -2529,10 +2529,17 @@ function ame_emp_hub_advance_split(mysqli $db, int $empId, string $date, float $
         $st->close();
     }
     $balance = round($balance, 2);
+    $given = round($given, 2);
+    $settled = round($settled, 2);
+    // সাবেক পাওনা = মোট ব্যালেন্সে আজকের নতুন অগ্রিম বাদ। আজ ফেরত দিলে ব্যালেন্স কমে — আর আগের সাবেক যতই দেখাবেনা।
+    $previous = $balance < 0.009
+        ? 0.0
+        : round(max(0.0, $balance - $given), 2);
+
     return [
-        'previous' => round(max(0.0, $balance - $given + $settled), 2),
-        'today_given' => round($given, 2),
-        'today_settled' => round($settled, 2),
+        'previous' => $previous,
+        'today_given' => $given,
+        'today_settled' => $settled,
         'total' => $balance,
     ];
 }
@@ -4130,7 +4137,7 @@ function ame_emp_hub_adjust_box(mysqli $db, array $in): array
         $advance = round((float)($emp['advance_balance'] ?? 0), 2);
         $split = ame_emp_hub_advance_split($db, $empId, $today, $advance);
         $prevBefore = round((float)$split['previous'], 2);
-        $balanceTarget = round($target + (float)$split['today_given'] - (float)$split['today_settled'], 2);
+        $balanceTarget = round($target + (float)$split['today_given'], 2);
         if ($balanceTarget < -0.009) {
             throw new Exception('এত কম রাখা যায় না — আজকের অগ্রিমের হিসাব মিলিয়ে নিন।');
         }
