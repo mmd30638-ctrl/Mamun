@@ -91,9 +91,6 @@
         if (typeof window.amePosCartScrollSync === 'function') {
             window.amePosCartScrollSync();
         }
-        if (typeof window.amePosMemoLayoutSync === 'function') {
-            window.amePosMemoLayoutSync();
-        }
         window.dispatchEvent(new CustomEvent('ame-pos-desk-recovered'));
     }
 
@@ -119,10 +116,6 @@
             recoverDeskLayout();
         }
         lastOpen = open;
-
-        if (!open && typeof window.amePosMemoLayoutSync === 'function') {
-            window.amePosMemoLayoutSync();
-        }
     }
 
     function bind() {

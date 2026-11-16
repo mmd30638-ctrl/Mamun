@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+    var lastEditing = false;
+
     function hasUrlDraft() {
         try {
             var q = new URLSearchParams(window.location.search);
@@ -42,21 +44,33 @@
         document.body.classList.remove('ame-pos-draft-open');
     }
 
-    function releaseDeskFit() {
-        if (typeof window.amePosReleasePageFitDesk === 'function') {
-            window.amePosReleasePageFitDesk();
+    function releaseDeskFitOnce() {
+        if (window.__amePosDeskReleaseBusy) {
+            return;
         }
-        if (typeof window.amePosDraftListRecover === 'function') {
-            window.amePosDraftListRecover();
+        window.__amePosDeskReleaseBusy = true;
+        try {
+            if (typeof window.amePosReleasePageFitDesk === 'function') {
+                window.amePosReleasePageFitDesk();
+            }
+            if (typeof window.amePosDraftListRecover === 'function') {
+                window.amePosDraftListRecover();
+            }
+        } finally {
+            window.setTimeout(function () {
+                window.__amePosDeskReleaseBusy = false;
+            }, 120);
         }
     }
 
     window.amePosMemoLayoutSync = function () {
         var editing = isMemoEditing();
+        var entered = editing && !lastEditing;
+        lastEditing = editing;
         document.documentElement.classList.toggle('ame-pos-memo-editing', editing);
-        if (editing) {
+        if (entered) {
             closeDraftListOverlay();
-            releaseDeskFit();
+            releaseDeskFitOnce();
         }
         if (typeof window.amePosCartScrollSync === 'function') {
             window.amePosCartScrollSync();
@@ -87,10 +101,7 @@
     function boot() {
         window.amePosMemoLayoutSync();
         bindWatchers();
-        window.setInterval(function () {
-            window.amePosMemoLayoutSync();
-            bindWatchers();
-        }, 1500);
+        window.setInterval(bindWatchers, 4000);
     }
 
     if (document.readyState === 'loading') {

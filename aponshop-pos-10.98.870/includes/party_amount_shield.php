@@ -139,7 +139,7 @@ if (!function_exists('ame_party_amount_request_is_ledger_write')) {
             return true;
         }
         $method = strtoupper((string)($_SERVER['REQUEST_METHOD'] ?? ''));
-        if ($method === 'POST' && (int)($_SESSION['user_id'] ?? 0) > 0) {
+        if ($method === 'POST' && ame_party_session_logged_in()) {
             foreach (
                 [
                     '/modules/sales/',
@@ -206,6 +206,22 @@ if (!function_exists('ame_party_amount_request_is_admin_manual')) {
     }
 }
 
+if (!function_exists('ame_party_session_logged_in')) {
+    function ame_party_session_logged_in(): bool
+    {
+        foreach (['user_id', 'id', 'admin_id', 'login_id', 'uid'] as $key) {
+            if ((int)($_SESSION[$key] ?? 0) > 0) {
+                return true;
+            }
+        }
+        if (trim((string)($_SESSION['username'] ?? '')) !== ''
+            || trim((string)($_SESSION['user_name'] ?? '')) !== '') {
+            return true;
+        }
+        return trim((string)($_SESSION['role'] ?? '')) !== '';
+    }
+}
+
 if (!function_exists('ame_party_amount_request_is_customer_payment_page')) {
     function ame_party_amount_request_is_customer_payment_page(): bool
     {
@@ -221,13 +237,15 @@ if (!function_exists('ame_party_amount_request_is_customer_payment_page')) {
             '/modules/customers/collect.php',
             '/modules/customers/payment.php',
             '/modules/customers/pay.php',
+            '/modules/customers/process_payment',
+            '/modules/customers/actions/',
         ];
         foreach ($patterns as $pattern) {
             if (str_contains($uri, $pattern)) {
                 return true;
             }
         }
-        return false;
+        return str_contains($uri, '/modules/customers/');
     }
 }
 
@@ -237,11 +255,10 @@ if (!function_exists('ame_party_amount_authorize_request')) {
         if (!($db instanceof mysqli)) {
             return;
         }
-        $loggedIn = (int)($_SESSION['user_id'] ?? 0) > 0
-            || (int)($_SESSION['id'] ?? 0) > 0
-            || trim((string)($_SESSION['username'] ?? '')) !== '';
-        if ($loggedIn && ame_party_amount_request_is_customer_payment_page()) {
-            ame_party_balance_allow_write($db);
+        if (ame_party_amount_request_is_customer_payment_page()) {
+            if (ame_party_session_logged_in() || strtoupper((string)($_SERVER['REQUEST_METHOD'] ?? '')) === 'POST') {
+                ame_party_balance_allow_write($db);
+            }
         }
         if (ame_party_amount_request_is_ledger_write()) {
             ame_party_balance_allow_write($db);

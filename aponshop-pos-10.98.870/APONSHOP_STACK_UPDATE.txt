@@ -1,3 +1,3 @@
-APONSHOP_STACK_UPDATE 10.98.925
-AME_ASSET_VERSION=10.98.925
-POS memo full width + cart at bottom + customer payment shield boot
+APONSHOP_STACK_UPDATE 10.98.926
+AME_ASSET_VERSION=10.98.926
+Fix pos-draft-drawer stack overflow; customer payment shield widen
