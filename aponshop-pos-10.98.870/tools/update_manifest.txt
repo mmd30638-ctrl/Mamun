@@ -162,6 +162,7 @@ modules/returns/v2/actions/search_invoice.php
 modules/returns/v2/create_invoice_return.php
 assets/css/pos-terminal-layout.css
 assets/css/ame-pos-desk-fullwidth.css
+assets/css/ame-pos-pc-desktop-parity.css
 assets/css/ame-pos-memo-draft.css
 assets/css/ame-pos-draft-drawer.css
 assets/js/pos-draft-drawer.js

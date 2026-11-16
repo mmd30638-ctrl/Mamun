@@ -145,6 +145,7 @@ if ($ame_is_pos) {
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-desk-fullwidth.css?v=' . $ame_lock_ver . '" id="amePosDeskFullwidth">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-memo-stack-order.css?v=' . $ame_lock_ver . '" id="amePosMemoStackOrder">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-cart-many-lines.css?v=' . $ame_lock_ver . '" id="amePosCartManyLines">' . "\n";
+    echo '<link rel="stylesheet" href="/assets/css/ame-pos-pc-desktop-parity.css?v=' . $ame_lock_ver . '" id="amePosPcDesktopParity">' . "\n";
 }
 ?>
 <script>

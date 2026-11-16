@@ -136,8 +136,27 @@
         syncDrawer();
     }
 
+    function ensurePcDeskParity() {
+        if (document.documentElement.classList.contains('ame-phone-desktop')) {
+            return;
+        }
+        if (Math.max(window.innerWidth || 0, document.documentElement.clientWidth || 0) < 1000) {
+            return;
+        }
+        recoverDeskLayout();
+        if (typeof window.amePosReleasePageFitDesk === 'function') {
+            window.amePosReleasePageFitDesk();
+        }
+        if (typeof window.amePosCartScrollSync === 'function') {
+            window.amePosCartScrollSync();
+        }
+    }
+
     function boot() {
         bind();
+        ensurePcDeskParity();
+        window.setTimeout(ensurePcDeskParity, 450);
+        window.setTimeout(ensurePcDeskParity, 1600);
         document.addEventListener('click', function (event) {
             var t = event.target;
             if (!t || !t.closest) {
