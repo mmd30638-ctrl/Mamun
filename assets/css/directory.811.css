@@ -1,0 +1,805 @@
+/**
+ * APONSHOP People Atlas 8.11 — charge boxes must visibly grow.
+ * Sky porcelain + sand cards.
+ */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@500;600;700;800&family=Sora:wght@500;600;700;800&display=swap");
+
+.ud-wrap {
+  --ud-ink: #0c2d48;
+  --ud-copy: #334155;
+  --ud-mute: #64748b;
+  --ud-sky: #0369a1;
+  --ud-sand: #fff7ed;
+  --ud-paper: #f8fafc;
+  --ud-line: rgba(12, 45, 72, 0.12);
+  --ud-charge: 1.25;
+  width: min(100% - 10px, 1180px);
+  margin: 8px auto 28px;
+  padding: max(8px, env(safe-area-inset-top, 0px))
+    max(6px, env(safe-area-inset-right, 0px))
+    max(20px, env(safe-area-inset-bottom, 0px))
+    max(6px, env(safe-area-inset-left, 0px));
+  box-sizing: border-box;
+  font-family: "Sora", "Noto Sans Bengali", sans-serif;
+  color: var(--ud-ink);
+}
+.ud-wrap > .card {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  border: 0;
+}
+.ud-wrap .ame-pair {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.15;
+}
+.ud-wrap .ame-pair strong { font-weight: 800; }
+.ud-wrap .ame-pair em {
+  font-style: normal;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ud-mute);
+}
+
+.ud-mast {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 12px;
+  padding: clamp(14px, 3.5vw, 22px);
+  border-radius: 22px;
+  background:
+    radial-gradient(280px 140px at 100% 0%, rgba(3, 105, 161, 0.12), transparent 62%),
+    linear-gradient(165deg, #e0f2fe 0%, #f8fafc 55%, #fff7ed 100%);
+  border: 1px solid rgba(3, 105, 161, 0.18);
+  box-shadow: 0 14px 32px rgba(12, 45, 72, 0.06);
+}
+.ud-kicker {
+  margin: 0 0 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--ud-sky) !important;
+}
+.ud-mast h1 {
+  margin: 0 0 6px;
+  font-size: clamp(20px, 4vw, 28px) !important;
+  letter-spacing: -0.03em;
+  color: var(--ud-ink) !important;
+  text-transform: none !important;
+}
+.ud-mast p {
+  margin: 0;
+  font-weight: 600;
+  color: var(--ud-copy);
+  line-height: 1.45;
+}
+.ud-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.ud-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  text-decoration: none !important;
+  font-weight: 800;
+  font-size: 13px;
+  border: 1px solid transparent;
+  background: var(--ud-sky);
+  color: #f0f9ff !important;
+}
+.ud-btn.ghost {
+  background: #fff;
+  color: var(--ud-ink) !important;
+  border-color: var(--ud-line);
+}
+.ud-btn.warn {
+  background: #fff7ed;
+  color: #c2410c !important;
+  border-color: #fdba74;
+}
+.due-count-circle {
+  background: #be123c;
+  color: #fff;
+  border-radius: 999px;
+  min-width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  margin-left: 6px;
+}
+
+.ud-size {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  margin: 0 0 12px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px dashed rgba(3, 105, 161, 0.28);
+}
+.ud-size strong { font-size: 13px; }
+.ud-size input[type="range"] {
+  flex: 1;
+  min-width: 140px;
+  accent-color: #0369a1;
+}
+.ud-size-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+.ud-size-btns button {
+  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--ud-line);
+  background: #fff;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--ud-ink);
+}
+.ud-size-btns button.on {
+  background: #0369a1;
+  color: #f0f9ff;
+  border-color: #0369a1;
+}
+.ud-size-now {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #e0f2fe;
+  color: #0c4a6e;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.ud-wrap .search-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 12px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid var(--ud-line);
+}
+.ud-wrap > .card,
+.ud-wrap .search-box,
+.ud-wrap .cus-search-wrap {
+  overflow: visible !important;
+}
+.ud-wrap .cus-search-wrap { z-index: 80; }
+.ud-wrap .cus-suggest.open,
+.ud-wrap .cus-suggest.open[hidden] {
+  display: block !important;
+  z-index: 50000;
+}
+.ud-wrap .cus-search-wrap input,
+.ud-wrap .search-box select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1.5px solid #cbd5e1;
+  background: #fff;
+  color: var(--ud-ink);
+  font-weight: 600;
+  box-sizing: border-box;
+}
+.ud-wrap .search-box select { width: auto; min-width: 160px; }
+.ud-wrap .search-box .btn,
+.ud-wrap .btn {
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-weight: 800;
+}
+
+.ud-wrap .table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  font-size: 13px;
+}
+.ud-wrap .table thead th {
+  background: transparent !important;
+  color: var(--ud-mute) !important;
+  font-size: 11px !important;
+  font-weight: 800;
+  padding: 0 10px 4px;
+  border: 0 !important;
+}
+.ud-wrap .table tbody tr {
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(12, 45, 72, 0.05);
+}
+.ud-wrap .table tbody td {
+  padding: 12px 10px;
+  border-top: 1px solid var(--ud-line);
+  border-bottom: 1px solid var(--ud-line);
+  vertical-align: middle;
+  background: #fff;
+}
+.ud-wrap .table tbody td:first-child {
+  border-left: 1px solid var(--ud-line);
+  border-radius: 16px 0 0 16px;
+}
+.ud-wrap .table tbody td:last-child {
+  border-right: 1px solid var(--ud-line);
+  border-radius: 0 16px 16px 0;
+}
+
+.ud-charge {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 0 0 auto !important;
+  width: calc(140px * var(--ud-charge)) !important;
+  min-width: calc(140px * var(--ud-charge)) !important;
+  min-height: calc(72px * var(--ud-charge)) !important;
+  padding: calc(12px * var(--ud-charge)) calc(14px * var(--ud-charge)) !important;
+  border-radius: 18px;
+  background: #fff7ed !important;
+  border: 1.5px solid rgba(194, 65, 12, 0.28) !important;
+  color: #9f1239 !important;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  box-sizing: border-box;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition: min-width 0.18s ease, min-height 0.18s ease, width 0.18s ease, padding 0.18s ease;
+}
+.ud-charge b {
+  display: block;
+  font-size: calc(20px * var(--ud-charge)) !important;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: inherit !important;
+  text-transform: none !important;
+}
+.ud-charge span {
+  display: block;
+  margin-top: 4px;
+  font-size: calc(12px * var(--ud-charge)) !important;
+  font-weight: 700;
+  color: #9a3412 !important;
+}
+.ud-charge.credit {
+  background: #ecfccb !important;
+  border-color: rgba(63, 98, 18, 0.32) !important;
+  color: #3f6212 !important;
+}
+.ud-charge.credit span { color: #3f6212 !important; }
+
+.ud-wrap[data-charge="1"] { --ud-charge: 0.85; }
+.ud-wrap[data-charge="2"] { --ud-charge: 1.25; }
+.ud-wrap[data-charge="3"] { --ud-charge: 1.85; }
+.ud-wrap[data-charge="4"] { --ud-charge: 2.6; }
+
+.ud-wrap .cus-photo-letter,
+.ud-wrap .cus-photo-thumb img {
+  background: linear-gradient(135deg, #0369a1, #38bdf8);
+}
+.ud-wrap .action-menu-btn {
+  background: #0c2d48;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+}
+.ud-wrap .star-cus-legend { margin: 8px 4px 0; color: var(--ud-mute); font-weight: 600; }
+
+@media (max-width: 760px) {
+  .ud-wrap .table thead { display: none; }
+  .ud-wrap .table, .ud-wrap .table tbody, .ud-wrap .table tr, .ud-wrap .table td {
+    display: block;
+    width: 100%;
+  }
+  .ud-wrap .table tbody tr {
+    margin-bottom: 10px;
+    border-radius: 16px;
+    overflow: hidden;
+    padding: 4px 0;
+  }
+  .ud-wrap .table tbody td,
+  .ud-wrap .table tbody td:first-child,
+  .ud-wrap .table tbody td:last-child {
+    border: 0;
+    border-radius: 0;
+    padding: 8px 12px;
+  }
+  .ud-wrap .table th:nth-child(2),
+  .ud-wrap .table td:nth-child(2) { display: block !important; }
+  .ud-charge {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    text-align: left;
+    min-height: calc(78px * var(--ud-charge)) !important;
+    padding: calc(14px * var(--ud-charge)) calc(16px * var(--ud-charge)) !important;
+  }
+  .ud-charge b { font-size: calc(24px * var(--ud-charge)) !important; }
+  .ud-charge span { font-size: calc(13px * var(--ud-charge)) !important; }
+}
+
+/* 10.98.517 — ছবি পুরো মুখ, ব্যাজ আলাদা ঘরে, পাতা ও কার্ড সাদা। */
+html:has(body.ame-customer-directory),
+html body.ame-customer-directory,
+html body.ame-premium-ui.ame-customer-directory,
+html body.ame-customer-directory #main-content {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+html body.ame-customer-directory .ud-wrap,
+html.ame-device-phone body.ame-customer-directory .ud-wrap,
+html.ame-device-tablet body.ame-customer-directory .ud-wrap,
+html.ame-device-pc body.ame-customer-directory .ud-wrap,
+html.ame-phone-desktop body.ame-customer-directory .ud-wrap,
+html.ame-force-phone body.ame-customer-directory .ud-wrap,
+html.ame-is-phone body.ame-customer-directory .ud-wrap {
+  width: min(1120px, calc(100% - 16px)) !important;
+  max-width: 1120px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+html body.ame-customer-directory .ud-wrap > .card,
+html body.ame-customer-directory .ud-mast,
+html body.ame-customer-directory .ud-wrap .table,
+html body.ame-customer-directory .ud-wrap .table thead th,
+html body.ame-customer-directory .ud-wrap .table tbody tr,
+html body.ame-customer-directory .ud-wrap .table tbody td,
+html body.ame-customer-directory .cus-info-box,
+html body.ame-customer-directory .cus-info-line,
+html body.ame-customer-directory .ud-charge,
+html body.ame-customer-directory .ud-charge.credit,
+html body.ame-customer-directory .ai-score,
+html body.ame-customer-directory .role-badge,
+html body.ame-customer-directory .status-badge,
+html body.ame-customer-directory .search-box,
+html body.ame-customer-directory .cus-suggest,
+html body.ame-customer-directory .ame-rdep-card,
+html body.ame-customer-directory .action-sheet,
+html body.ame-customer-directory .reminder-card,
+html body.ame-customer-directory .photo-view-card {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+html body.ame-customer-directory .ud-wrap .table thead th {
+  color: #0b3a82 !important;
+}
+html body.ame-customer-directory .ud-wrap .table tbody td,
+html body.ame-customer-directory .cus-info-name {
+  color: #111827;
+}
+html body.ame-customer-directory .role-badge.bg-cus { color: #1565c0 !important; border: 1px solid #1565c0; }
+html body.ame-customer-directory .role-badge.bg-sup { color: #2e7d32 !important; border: 1px solid #2e7d32; }
+html body.ame-customer-directory .role-badge.bg-ins { color: #6a1b9a !important; border: 1px solid #6a1b9a; }
+html body.ame-customer-directory .role-badge.bg-ren { color: #e65100 !important; border: 1px solid #e65100; }
+html body.ame-customer-directory .ud-charge,
+html body.ame-customer-directory .ud-charge b { color: #9f1239 !important; }
+html body.ame-customer-directory .ud-charge.credit,
+html body.ame-customer-directory .ud-charge.credit b,
+html body.ame-customer-directory .ud-charge.credit span { color: #3f6212 !important; }
+html body.ame-customer-directory .cus-photo-cell {
+  width: 104px;
+  max-width: 104px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  align-items: flex-start;
+}
+html body:not(.ame-sales-pro) #main-content .ud-wrap button.cus-photo-thumb:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.group-all):not(.cus-suggest-item) {
+  width: 96px !important;
+  height: 96px !important;
+  min-width: 96px !important;
+  max-width: 96px !important;
+  min-height: 96px !important;
+  max-height: 96px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 1px solid #d6deea !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  color: #0b3a82 !important;
+  overflow: hidden !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 96px !important;
+  box-sizing: border-box !important;
+  box-shadow: none !important;
+}
+html body.ame-customer-directory .cus-photo-thumb img,
+html body:not(.ame-sales-pro) #main-content .ud-wrap button.cus-photo-thumb img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  display: block !important;
+}
+html body:not(.ame-sales-pro) #main-content .ud-wrap button.cus-photo-thumb .cus-photo-letter {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  color: #0b3a82 !important;
+  -webkit-text-fill-color: #0b3a82 !important;
+  font-size: 34px !important;
+  font-weight: 800 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+html body.ame-customer-directory .overlay,
+html.ame-phone-desktop body.ame-customer-directory .overlay,
+html.ame-device-phone body.ame-customer-directory .overlay,
+html.ame-force-phone body.ame-customer-directory .overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 12px !important;
+  display: none;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 100000 !important;
+  box-sizing: border-box !important;
+}
+html body.ame-customer-directory .overlay.open {
+  display: flex !important;
+}
+html body.ame-customer-directory .photo-view-card {
+  width: min(440px, calc(100vw - 24px)) !important;
+  max-width: 440px !important;
+  max-height: min(86vh, 720px) !important;
+  min-height: 0 !important;
+  margin: auto !important;
+  overflow: auto !important;
+  color: #111111 !important;
+  text-align: center;
+}
+html body.ame-customer-directory .photo-view-card img {
+  width: 100% !important;
+  height: auto !important;
+  max-height: min(70vh, 560px) !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  background: #ffffff !important;
+  border-radius: 12px !important;
+}
+html body.ame-customer-directory .photo-view-card .close-x,
+html body.ame-customer-directory .photo-view-name {
+  color: #111111 !important;
+}
+html body.ame-customer-directory .photo-edit-preview.letter {
+  background: #ffffff !important;
+  color: #0b3a82 !important;
+  border: 1px solid #d6deea !important;
+}
+@media (max-width: 760px) {
+  html body.ame-customer-directory .cus-photo-cell {
+    width: 104px !important;
+    max-width: 104px !important;
+  }
+  html body.ame-customer-directory .ud-wrap.cus-compact .cus-photo-cell {
+    width: 44px !important;
+    max-width: 44px !important;
+  }
+}
+html body.ame-customer-directory:not(.ame-sales-pro) #main-content .ud-wrap table.table thead th,
+html body.ame-customer-directory:not(.ame-sales-pro) #main-content .ud-wrap table.table thead th * {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #0b3a82 !important;
+  -webkit-text-fill-color: #0b3a82 !important;
+}
+
+/* 10.98.579 — সব লিস্ট চিপে, পাতা ভর্তি না করে স্ক্রল */
+.ud-wrap.cus-compact .cus-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 10px;
+}
+.ud-wrap.cus-compact .cus-list-scroll {
+  max-height: none;
+  overflow: visible;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--ud-line);
+  border-radius: 12px;
+  background: #fff;
+}
+
+/* 10.98.583 — কাস্টমার লিস্টে পৃষ্ঠা নেই; যতজন আছে সবাই উপর-নিচ */
+html body.ame-customer-directory .ame-auto-pager {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 0 !important;
+}
+html body.ame-customer-directory table.table tbody tr {
+  display: table-row !important;
+}
+html body.ame-customer-directory .cus-photo-cell,
+html body.ame-customer-directory .cus-photo-thumb,
+html body.ame-customer-directory .cus-photo-thumb img {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+html body.ame-customer-directory .ud-wrap .table thead th:first-child,
+html body.ame-customer-directory .ud-wrap .table tbody td:first-child {
+  display: table-cell !important;
+  width: 56px;
+  min-width: 56px;
+  overflow: visible !important;
+}
+.ud-wrap.cus-compact .cus-list-scroll .table { margin-top: 0; }
+.ud-wrap.cus-compact .cus-list-scroll thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: #fff !important;
+}
+html body.ame-customer-directory .ud-wrap.cus-compact .cus-info-box {
+  padding: 4px 8px;
+  border-width: 1px;
+  border-radius: 8px;
+}
+html body.ame-customer-directory .ud-wrap.cus-compact .cus-info-name {
+  font-size: 14px;
+  line-height: 1.25;
+}
+html body.ame-customer-directory .ud-wrap.cus-compact .table {
+  border-spacing: 0 4px;
+}
+html body.ame-customer-directory .ud-wrap.cus-compact .table tbody td {
+  padding: 6px 8px;
+}
+html body.ame-customer-directory .ud-wrap.cus-compact .cus-photo-cell {
+  width: 44px;
+  max-width: 44px;
+}
+html body.ame-customer-directory:not(.ame-sales-pro) #main-content .ud-wrap.cus-compact button.cus-photo-thumb:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.group-all):not(.cus-suggest-item) {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  max-width: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  flex: 0 0 40px !important;
+  border-radius: 8px !important;
+}
+html body.ame-customer-directory:not(.ame-sales-pro) #main-content .ud-wrap.cus-compact button.cus-photo-thumb .cus-photo-letter {
+  font-size: 16px !important;
+}
+html body.ame-customer-directory .status-badge.status-enabled {
+  background: #E8F5E9 !important;
+  background-color: #E8F5E9 !important;
+  color: #2E7D32 !important;
+  -webkit-text-fill-color: #2E7D32 !important;
+}
+html body.ame-customer-directory .status-badge.status-disabled {
+  background: #FFEBEE !important;
+  background-color: #FFEBEE !important;
+  color: #C62828 !important;
+  -webkit-text-fill-color: #C62828 !important;
+}
+
+/* 10.98.696 — কাস্টমার ডিরেক্টরি: পরিষ্কার ও আধুনিক চেহারা (শুধু স্টাইল, টাকা/ডেটা বদলায় না) */
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet {
+  width: min(340px, calc(100vw - 28px)) !important;
+  max-width: 340px !important;
+  max-height: 86vh !important;
+  overflow-y: auto !important;
+  border-radius: 20px !important;
+  border: 1px solid #dbe5f3 !important;
+  box-shadow: 0 24px 60px rgba(15, 35, 70, 0.32), 0 2px 8px rgba(15, 35, 70, 0.12) !important;
+  padding: 0 0 8px !important;
+  -webkit-overflow-scrolling: touch;
+}
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet .action-sheet-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 15px 16px !important;
+  background: linear-gradient(135deg, #0b3a82 0%, #1565c0 100%) !important;
+  color: #fff !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  letter-spacing: .1px;
+}
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet .action-sheet-header .close-x {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .18);
+  font-size: 20px;
+  flex: 0 0 30px;
+}
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet form {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet .action-item,
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet a.action-item,
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet button.action-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  width: calc(100% - 16px) !important;
+  min-height: 46px !important;
+  margin: 4px 8px 0 !important;
+  padding: 11px 14px !important;
+  box-sizing: border-box !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: #f8fafc !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  font-family: inherit !important;
+  font-size: 14.5px !important;
+  font-weight: 700 !important;
+  line-height: 1.3 !important;
+  text-align: left !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: background .15s ease, transform .1s ease;
+}
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet .action-item:hover {
+  background: #eaf2ff !important;
+}
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet .action-item:active {
+  background: #dbeafe !important;
+  transform: scale(.985);
+}
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet .action-item.danger {
+  background: #fef2f2 !important;
+  color: #b91c1c !important;
+  -webkit-text-fill-color: #b91c1c !important;
+}
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet #actLinkToggle.action-item.danger {
+  background: #fff7ed !important;
+  color: #c2410c !important;
+  -webkit-text-fill-color: #c2410c !important;
+}
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet .action-item.danger:active {
+  background: #fee2e2 !important;
+}
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet .action-item[hidden],
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet form[hidden] {
+  display: none !important;
+}
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet .action-mode {
+  display: inline-block;
+  margin: 12px 8px 0 !important;
+  padding: 5px 12px !important;
+  border-radius: 999px;
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+  background: #ecfdf5 !important;
+}
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet .action-mode.is-off {
+  background: #fef2f2 !important;
+}
+
+/* ⋮ বাটন: সবুজ বক্সের বদলে নরম গোল বাটন */
+html body.ame-customer-directory .action-menu-btn,
+html body:not(.ame-sales-pro) #main-content .ud-wrap button.action-menu-btn:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.group-all):not(.cus-suggest-item) {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 38px !important;
+  min-width: 38px !important;
+  height: 38px !important;
+  min-height: 38px !important;
+  padding: 0 !important;
+  border: 1px solid #d6e2f3 !important;
+  border-radius: 50% !important;
+  background: #f1f6fd !important;
+  color: #0b3a82 !important;
+  -webkit-text-fill-color: #0b3a82 !important;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+html body.ame-customer-directory .action-menu-btn:hover,
+html body.ame-customer-directory .action-menu-btn:active {
+  background: #dbeafe !important;
+  border-color: #93b4e6 !important;
+}
+
+/* তালিকার সারি: হালকা কার্ড */
+html body.ame-customer-directory .ud-wrap .table tbody tr.cus-row {
+  box-shadow: 0 1px 3px rgba(15, 35, 70, .08) !important;
+  border-radius: 14px !important;
+  transition: box-shadow .15s ease;
+}
+html body.ame-customer-directory .ud-wrap .table tbody tr.cus-row:hover {
+  box-shadow: 0 4px 14px rgba(15, 35, 70, .14) !important;
+}
+html body.ame-customer-directory .ud-wrap .table thead th {
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  letter-spacing: .2px;
+  border-bottom: 2px solid #dbe5f3 !important;
+}
+
+/* হেডার কার্ড ও খোঁজার ঘর */
+html body.ame-customer-directory .ud-mast {
+  border-radius: 20px !important;
+  border: 1px solid #dbe5f3 !important;
+  box-shadow: 0 6px 20px rgba(15, 35, 70, .08) !important;
+}
+html body.ame-customer-directory .search-box {
+  border: 1px solid #dbe5f3 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 14px rgba(15, 35, 70, .07) !important;
+}
+html body.ame-customer-directory .search-box input[type="text"],
+html body.ame-customer-directory .search-box input[type="search"],
+html body.ame-customer-directory .search-box input:not([type]) {
+  border-radius: 12px !important;
+}
+html body.ame-customer-directory .cus-list-meta {
+  color: #334155 !important;
+  font-weight: 800 !important;
+}
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet .action-item *,
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet .action-item .ame-wait-label {
+  color: inherit !important;
+  -webkit-text-fill-color: currentColor !important;
+  font: inherit !important;
+}
+html body.ame-customer-directory #actionSheetOverlay.overlay {
+  padding-top: 92px !important;
+}
+html body.ame-customer-directory #actionSheetOverlay#actionSheetOverlay#actionSheetOverlay .action-sheet {
+  max-height: calc(100vh - 116px) !important;
+}
+html body.ame-customer-directory #main-content#main-content#main-content .ud-wrap button.action-menu-btn,
+html body.ame-customer-directory #main-content#main-content#main-content .ud-wrap button.action-menu-btn * {
+  border-color: #d6e2f3 !important;
+  background-color: #f1f6fd !important;
+  color: #0b3a82 !important;
+  -webkit-text-fill-color: #0b3a82 !important;
+}
+html body.ame-customer-directory #main-content#main-content#main-content .ud-wrap button.action-menu-btn {
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+}
+html body.ame-customer-directory #main-content#main-content#main-content .ud-wrap button.action-menu-btn * {
+  border: 0 !important;
+  background: transparent !important;
+}

@@ -1,0 +1,128 @@
+/* Master layout: header + horizontal nav, left work, right form, status footer.
+   Desktop-mode on a phone keeps the two-column desk (see ame-desktop-site.js). */
+html body.ame-master-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+html body.ame-master-shell #main-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+html body.ame-pos-terminal-page #main-content,
+html body.ame-purchase-desk #main-content {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - 48px);
+}
+html body.ame-pos-terminal-page .ame-master-status,
+html body.ame-purchase-desk .ame-master-status {
+  margin-top: auto;
+  padding: 6px 12px;
+  background: #0B3A82;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+html.ame-phone-desktop body.ame-pos-terminal-page .ame-pos-shell .ame-pos-grid,
+html.ame-phone-desktop body.ame-purchase-desk .ame-pos-shell .ame-pos-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 300px !important;
+}
+.ame-ledger-master {
+  padding: 12px;
+}
+.ame-ledger-master table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.ame-ledger-master th {
+  background: #0B3A82;
+  color: #fff;
+  padding: 10px 8px;
+  text-align: left;
+}
+.ame-ledger-master th.r,
+.ame-ledger-master td.r {
+  text-align: right;
+}
+.ame-ledger-master td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #eee;
+}
+.ame-pc-settle-help {
+  font-size: 12px;
+  color: #334155;
+}
+html body.ame-master-shell .ame-master-status,
+html body.ame-pos-terminal-page .ame-master-status,
+html body.ame-purchase-desk .ame-master-status {
+  flex-shrink: 0;
+}
+.ame-pay-history {
+  margin: 8px 0 12px;
+  padding: 8px 12px;
+  background: #fff;
+  border: 1px solid #cfe3f7;
+  border-radius: 8px;
+  font-size: 12px;
+}
+.ame-pay-history h4 {
+  margin: 0 0 6px;
+  font-size: 13px;
+}
+.ame-void-pay-bar {
+  margin: 0 0 10px;
+  padding: 10px 14px;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background: #fff1f2;
+  color: #7f1d1d;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  align-items: center;
+}
+.ame-void-pay-bar p {
+  margin: 0;
+  flex: 1 1 220px;
+  line-height: 1.45;
+}
+.ame-void-pay-bar button {
+  border: 0;
+  border-radius: 8px;
+  background: #b91c1c;
+  color: #fff;
+  font-weight: 800;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+@media print {
+  .ame-master-status { display: none !important; }
+}
+html body.ame-home-gallery .ame-master-status,
+html body.ame-if-dash .ame-master-status,
+html body.ame-home-gallery.ame-master-shell .ame-master-status {
+  display: none !important;
+}
+@media (max-width: 999.98px) {
+  html:not(.ame-phone-desktop) body.ame-purchase-desk .ame-pos-shell .ame-pos-grid {
+    display: flex;
+    flex-direction: column;
+  }
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page .ame-pos-shell .ame-pos-grid {
+    display: flex;
+    flex-direction: column;
+  }
+}
+html body.ame-master-shell > #quickAddOverlay,
+html body.ame-master-shell > #quickAddSupplierOverlay,
+html body.ame-master-shell > #voidMemoPayOverlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 5000000 !important;
+}

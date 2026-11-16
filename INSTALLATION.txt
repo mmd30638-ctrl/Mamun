@@ -1,0 +1,11 @@
+APONSHOP
+Application version: see VERSION.txt (must match AME_APP_VERSION)
+PHP: 8.1 or newer, 8.3 used on the live host
+Extensions: mysqli, json, mbstring, fileinfo, openssl, curl
+Database: MySQL or MariaDB, utf8mb4
+Web root: extract the LIVE zip inside public_html. Do not nest another public_html folder.
+Database import: do not import SQL from the website zip. Keep database backups outside the web root.
+Speed lock: SPEED.txt stays in the project. Shop menu: Settings → স্পিড সিস্টেম. Do not delete it. Follow it on every update.
+After update: open the shop and confirm the on-screen version matches VERSION.txt.
+Do not leave APP_ENV=development on the live site. Errors are logged, not shown.
+HTTPS is required on the public host. HTTP requests redirect to HTTPS.

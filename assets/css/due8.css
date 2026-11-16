@@ -1,0 +1,316 @@
+/* 10.98.481 — ৮ দিনের বকেয়া নোটিফিকেশন: সাদা বক্স, ইউনিক ফ্রন্ট, ডিভাইস ফিট */
+html body.ame-due8-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content,
+html body.ame-due8-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .d8,
+html body.ame-due8-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .ame-due8-well {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #0f172a !important;
+}
+
+html body.ame-due8-page #main-content {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  padding-bottom: 24px !important;
+  max-width: 1180px;
+  margin: 0 auto;
+  overflow-x: hidden !important;
+}
+
+.d8 { font-family: inherit; color: #0f172a; }
+
+.d8-hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: #ffffff !important;
+  border: 1.5px solid #003f8f;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+.d8-hero h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  background: transparent !important;
+}
+.d8-hero p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0e7490 !important;
+}
+
+.d8-switch { margin: 0; }
+.d8-on,
+.d8-off {
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  background: #ffffff !important;
+}
+.d8-on {
+  color: #15803d !important;
+  border: 2px solid #15803d !important;
+}
+.d8-off {
+  color: #64748b !important;
+  border: 2px solid #94a3b8 !important;
+}
+
+.d8-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.d8-kpi {
+  background: #ffffff !important;
+  border: 1.5px solid #94a3b8;
+  border-radius: 12px;
+  padding: 10px;
+  min-height: 64px;
+}
+.d8-kpi span {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+}
+.d8-kpi b {
+  display: block;
+  margin-top: 4px;
+  font-size: 22px;
+  font-weight: 900;
+  color: #0f172a !important;
+}
+.d8-kpi.d8-navy { border-color: #003f8f; }
+.d8-kpi.d8-navy span { color: #003f8f !important; }
+.d8-kpi.d8-rose { border-color: #be185d; }
+.d8-kpi.d8-rose span { color: #be185d !important; }
+.d8-kpi.d8-orange { border-color: #c2410c; }
+.d8-kpi.d8-orange span { color: #c2410c !important; }
+.d8-kpi.d8-cyan { border-color: #0e7490; }
+.d8-kpi.d8-cyan span { color: #0e7490 !important; }
+
+.d8-filter {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  background: #ffffff !important;
+  border: 1.5px solid #7c3aed;
+  border-radius: 12px;
+  padding: 8px;
+}
+.d8-filter input {
+  flex: 1;
+  min-height: 40px;
+  border: 1.5px solid #7c3aed;
+  border-radius: 8px;
+  padding: 0 10px;
+  background: #ffffff !important;
+  font-weight: 700;
+  color: #7c3aed;
+}
+.d8-filter button {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 8px;
+  font-weight: 800;
+  cursor: pointer;
+  background: #ffffff !important;
+  color: #7c3aed !important;
+  border: 1.5px solid #7c3aed !important;
+}
+
+.d8-empty {
+  background: #ffffff !important;
+  border: 1.5px solid #0f766e;
+  color: #0f766e !important;
+  border-radius: 12px;
+  padding: 16px;
+  font-weight: 700;
+}
+
+.d8-table-wrap {
+  overflow-x: hidden;
+  width: 100%;
+  background: #ffffff !important;
+  border: 1.5px solid #003f8f;
+  border-radius: 12px;
+}
+.d8-table {
+  width: max-content;
+  min-width: 820px;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: #ffffff !important;
+  transform-origin: top left;
+}
+.d8-table th,
+.d8-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+  background: #ffffff !important;
+}
+.d8-table thead th {
+  font-size: 12px;
+  font-weight: 800;
+  color: #003f8f !important;
+  border-bottom: 2px solid #003f8f;
+}
+.d8-table tbody tr:nth-child(odd) td { color: #0f172a; }
+.d8-name { color: #0e7490 !important; font-weight: 800; }
+.d8-due { color: #be185d !important; font-weight: 900; }
+.d8-days { color: #c2410c !important; font-weight: 900; }
+.d8-pay {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: 800;
+  text-decoration: none;
+  background: #ffffff !important;
+  color: #15803d !important;
+  border: 1.5px solid #15803d !important;
+}
+.d8-table tfoot td {
+  font-weight: 800;
+  color: #003f8f !important;
+}
+
+@media (max-width: 720px) {
+  .d8-kpis { grid-template-columns: 1fr 1fr; }
+  .d8-hero h1 { font-size: 16px; }
+}
+
+html body.ame-due8-page .master-header-fixed .hdr-icon-btn.hdr-i-due8.has-alert {
+  animation: ame-hdr-bell-pulse 1.8s ease-in-out infinite;
+}
+
+/* 10.98.487 — ল্যাপটপ: একটু বড়, সব কলাম দেখা যায় */
+@media (min-width: 900px) and (max-width: 1499px) {
+  html body.ame-due8-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content {
+    max-width: 100% !important;
+  }
+  html body.ame-due8-page .d8-table,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-table {
+    font-size: 15px !important;
+  }
+  html body.ame-due8-page .d8-table th,
+  html body.ame-due8-page .d8-table td,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-table th,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-table td {
+    padding: 8px 10px !important;
+    font-size: 15px !important;
+  }
+}
+
+/* 10.98.487 — দোকানের টিভি: বকেয়া টেবিলের মতো দূর থেকে পড়া যায় */
+@media (min-width: 1500px) {
+  html body.ame-due8-page,
+  html body.ame-due8-page #main-content,
+  html body.ame-due8-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content {
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+  html body.ame-due8-page .d8-hero h1,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-hero h1 {
+    font-size: 36px !important;
+  }
+  html body.ame-due8-page .d8-hero p,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-hero p {
+    font-size: 18px !important;
+  }
+  html body.ame-due8-page .d8-on,
+  html body.ame-due8-page .d8-off,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-on,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-off {
+    min-height: 56px !important;
+    font-size: 20px !important;
+    padding: 0 20px !important;
+  }
+  html body.ame-due8-page .d8-kpi span,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-kpi span {
+    font-size: 16px !important;
+  }
+  html body.ame-due8-page .d8-kpi b,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-kpi b {
+    font-size: 42px !important;
+  }
+  html body.ame-due8-page .d8-kpi,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-kpi {
+    min-height: 88px !important;
+    padding: 14px 16px !important;
+  }
+  html body.ame-due8-page .d8-filter input,
+  html body.ame-due8-page .d8-filter button,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-filter input,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-filter button {
+    min-height: 56px !important;
+    font-size: 20px !important;
+    padding: 0 16px !important;
+  }
+  html body.ame-due8-page .d8-table-wrap,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-table-wrap {
+    overflow-x: auto !important;
+    overflow-y: auto !important;
+    width: 100% !important;
+  }
+  html body.ame-due8-page .d8-table,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-table {
+    font-size: 22px !important;
+    zoom: 1 !important;
+    min-width: 100% !important;
+    width: max-content !important;
+    transform: none !important;
+  }
+  html body.ame-due8-page .d8-table th,
+  html body.ame-due8-page .d8-table td,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-table th,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-table td {
+    padding: 12px 14px !important;
+    font-size: 22px !important;
+    line-height: 1.35 !important;
+  }
+  html body.ame-due8-page .d8-table thead th,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-table thead th {
+    font-size: 18px !important;
+    font-weight: 900 !important;
+  }
+  html body.ame-due8-page .d8-name,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-name {
+    font-size: 24px !important;
+    font-weight: 900 !important;
+    white-space: nowrap;
+  }
+  html body.ame-due8-page .d8-due,
+  html body.ame-due8-page .d8-days,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-due,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-days {
+    font-size: 24px !important;
+    font-weight: 900 !important;
+  }
+  html body.ame-due8-page .d8-pay,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-pay {
+    min-height: 52px !important;
+    min-width: 128px !important;
+    font-size: 18px !important;
+    padding: 12px 16px !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+  html body.ame-due8-page .d8-empty,
+  html body.ame-due8-page:not(.ame-sales-pro) #main-content .d8-empty {
+    font-size: 22px !important;
+    padding: 22px !important;
+  }
+}

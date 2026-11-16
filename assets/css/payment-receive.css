@@ -1,0 +1,762 @@
+/* 10.98.366 — পেমেন্ট গ্রহণ: সমান বক্স, উজ্জ্বল রং, চেঞ্জ সাথে সাথে */
+html body.ame-customer-payment-page:not(.ame-sales-pro):not(.ame-pos-terminal-page),
+html body.ame-customer-payment-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content {
+  background: #e7f0ff !important;
+  color: #0b1e4d !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-page {
+  color: #0b1e4d !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-hero {
+  background: #fff !important;
+  border: 4px solid #0b57d0 !important;
+  border-radius: 24px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+html body.ame-customer-payment-page #main-content .cpay-hero-icon {
+  background: #0b57d0 !important;
+  border-radius: 16px;
+}
+html body.ame-customer-payment-page #main-content .cpay-hero h1 {
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  font-size: clamp(28px, 5vw, 40px) !important;
+  font-weight: 900 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-hero p,
+html body.ame-customer-payment-page #main-content .cpay-net {
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-steps {
+  gap: 8px;
+}
+html body.ame-customer-payment-page #main-content .cpay-step {
+  min-height: 52px;
+  background: #fff !important;
+  border: 3px solid #0b57d0 !important;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  font-weight: 900;
+  box-shadow: none !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-step b {
+  background: #dbe7ff !important;
+  color: #0b57d0 !important;
+  -webkit-text-fill-color: #0b57d0 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-step.is-active {
+  background: #0b57d0 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-step.is-active b {
+  background: #fff7d6 !important;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-step.is-done {
+  background: #0a8f3c !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #0a8f3c !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-step.is-done b {
+  background: #fff !important;
+  color: #0a8f3c !important;
+  -webkit-text-fill-color: #0a8f3c !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-card {
+  background: #fff !important;
+  border: 3px solid #0b57d0 !important;
+  border-radius: 22px;
+  box-shadow: none !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-card-head h2 {
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  font-weight: 900 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-card-ico {
+  background: #dbe7ff !important;
+  color: #0b57d0 !important;
+}
+html body.ame-customer-payment-page #main-content button.ame-calc-btn.cpay-search-btn {
+  min-height: 46px;
+  padding: 0 14px;
+  border-radius: 12px;
+  background: #0b57d0 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border: 0 !important;
+  font-size: 16px;
+  font-weight: 900;
+}
+html body.ame-customer-payment-page #main-content .cpay-cust-name,
+html body.ame-customer-payment-page #main-content .cpay-name {
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-badge {
+  background: #0a8f3c !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-badge.is-empty {
+  background: #fff7d6 !important;
+  color: #9a3412 !important;
+  -webkit-text-fill-color: #9a3412 !important;
+  border: 2px solid #e65100;
+}
+html body.ame-customer-payment-page #main-content .cpay-meta,
+html body.ame-customer-payment-page #main-content .cpay-meta span {
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  font-weight: 800;
+}
+html body.ame-customer-payment-page #main-content .cpay-avatar {
+  background: #dbe7ff !important;
+  color: #0b57d0 !important;
+  border: 3px solid #0b57d0 !important;
+}
+html body.ame-customer-payment-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpay-search-wrap input[type="text"]:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="file"]):not([type="color"]):not([type="range"]) {
+  background: #fff !important;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  border: 3px solid #0b57d0 !important;
+  min-height: 56px !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-results {
+  background: #fff !important;
+  border: 3px solid #0b57d0 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-account-art {
+  background: #0b57d0 !important;
+  color: #fff !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-account h3 {
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  font-weight: 900;
+}
+html body.ame-customer-payment-page #main-content .cpay-status {
+  background: #0a8f3c !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-status.is-due {
+  background: #d32f2f !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-status.is-deposit {
+  background: #6d28d9 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpis {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  align-items: stretch !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi {
+  min-height: 118px;
+  margin: 0;
+  padding: 12px;
+  border-radius: 16px;
+  background: #fff !important;
+  border: 3px solid #0b57d0 !important;
+  box-shadow: none !important;
+  box-sizing: border-box;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi > span,
+html body.ame-customer-payment-page #main-content .cpay-kpi small {
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi strong {
+  color: #0b57d0 !important;
+  -webkit-text-fill-color: #0b57d0 !important;
+  font-size: clamp(22px, 4vw, 30px) !important;
+  font-weight: 900 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-due {
+  border-color: #d32f2f !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-due strong {
+  color: #d32f2f !important;
+  -webkit-text-fill-color: #d32f2f !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-paid {
+  border-color: #0a8f3c !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-paid strong {
+  color: #0a8f3c !important;
+  -webkit-text-fill-color: #0a8f3c !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-deposit {
+  border-color: #6d28d9 !important;
+  background: #fff !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-deposit strong {
+  color: #6d28d9 !important;
+  -webkit-text-fill-color: #6d28d9 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-enter {
+  background: #fff7d6 !important;
+  border-color: #e65100 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-discount {
+  background: #fff !important;
+  border-color: #6d28d9 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-tender {
+  background: #fff !important;
+  border-color: #0b57d0 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change {
+  grid-column: 1 / -1;
+  background: #fff7d6 !important;
+  border: 4px solid #e65100 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change strong {
+  color: #9a3412 !important;
+  -webkit-text-fill-color: #9a3412 !important;
+  font-size: clamp(28px, 5vw, 40px) !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-hot {
+  background: #0a8f3c !important;
+  border-color: #0a8f3c !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-hot span,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-hot small,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-hot strong {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-short {
+  background: #d32f2f !important;
+  border-color: #d32f2f !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-short span,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-short small,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-short strong {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-even {
+  background: #fff !important;
+  border-color: #0a8f3c !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-even strong {
+  color: #0a8f3c !important;
+  -webkit-text-fill-color: #0a8f3c !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi small {
+  display: block;
+  margin-top: 4px;
+}
+html body.ame-customer-payment-page #main-content .cpay-amount {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px;
+  align-items: center;
+}
+html body.ame-customer-payment-page #main-content .cpay-amount em {
+  font-style: normal;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  font-size: 22px;
+  font-weight: 900;
+}
+html body.ame-customer-payment-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpay-amount input.cpay-money:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="file"]):not([type="color"]):not([type="range"]) {
+  width: 100%;
+  min-height: 48px !important;
+  padding: 0 8px !important;
+  border: 0 !important;
+  border-radius: 10px;
+  background: transparent !important;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  font-size: clamp(22px, 4vw, 30px) !important;
+  font-weight: 900 !important;
+  box-shadow: none !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-notes {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+html body.ame-customer-payment-page #main-content button.ame-calc-btn.cpay-note {
+  min-height: 52px;
+  border-radius: 14px;
+  border: 0 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  font-size: 16px;
+  font-weight: 900;
+  padding: 0 6px;
+}
+html body.ame-customer-payment-page #main-content button.ame-calc-btn.cpay-note[data-add="100"] { background: #0b57d0 !important; }
+html body.ame-customer-payment-page #main-content button.ame-calc-btn.cpay-note[data-add="200"] { background: #0a8f3c !important; }
+html body.ame-customer-payment-page #main-content button.ame-calc-btn.cpay-note[data-add="500"] { background: #e65100 !important; }
+html body.ame-customer-payment-page #main-content button.ame-calc-btn.cpay-note[data-add="1000"] { background: #6d28d9 !important; }
+html body.ame-customer-payment-page #main-content button.ame-calc-btn.cpay-note#tenderDueBtn {
+  background: #fff7d6 !important;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  border: 3px solid #e65100 !important;
+}
+html body.ame-customer-payment-page #main-content .method-trigger,
+html body.ame-customer-payment-page #main-content .method-panel,
+html body.ame-customer-payment-page #main-content .method-option {
+  background: #fff !important;
+  color: #0b1e4d !important;
+}
+html body.ame-customer-payment-page #main-content .method-trigger {
+  border: 3px solid #0b57d0 !important;
+  min-height: 58px;
+  border-radius: 16px;
+}
+html body.ame-customer-payment-page #main-content .method-trigger-icon {
+  background: #0b57d0 !important;
+}
+html body.ame-customer-payment-page #main-content .method-trigger-label,
+html body.ame-customer-payment-page #main-content .method-option-label {
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  font-weight: 900;
+}
+html body.ame-customer-payment-page #main-content .method-option {
+  min-height: 52px;
+  border-top: 2px solid #dbe7ff;
+}
+html body.ame-customer-payment-page #main-content .method-option.selected {
+  background: #ecfdf3 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-row2 {
+  align-items: stretch;
+}
+html body.ame-customer-payment-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpay-field input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="file"]):not([type="color"]):not([type="range"]),
+html body.ame-customer-payment-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpay-field select,
+html body.ame-customer-payment-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpay-field textarea {
+  background: #fff !important;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  border: 3px solid #0b57d0 !important;
+  border-radius: 14px;
+  font-weight: 800 !important;
+}
+html body.ame-customer-payment-page #main-content button.ame-calc-btn.cpay-due-toggle {
+  background: #fff7d6 !important;
+  color: #9a3412 !important;
+  -webkit-text-fill-color: #9a3412 !important;
+  border: 3px solid #e65100 !important;
+  font-weight: 900;
+}
+html body.ame-customer-payment-page #main-content .cpay-side .cpay-card:first-child {
+  border-color: #0a8f3c !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-main-calc {
+  background: #fff !important;
+  border: 3px solid #0b57d0 !important;
+  border-radius: 16px;
+}
+html body.ame-customer-payment-page #main-content .cpay-main-calc-row {
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 8px;
+  align-items: stretch;
+}
+html body.ame-customer-payment-page #main-content .cpay-main-calc-item {
+  background: #e7f0ff !important;
+  border-radius: 12px;
+  padding: 8px;
+  min-height: 72px;
+}
+html body.ame-customer-payment-page #main-content .cpay-main-calc-label,
+html body.ame-customer-payment-page #main-content .cpay-main-calc-value,
+html body.ame-customer-payment-page #main-content .cpay-main-calc-op {
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  font-weight: 900;
+}
+html body.ame-customer-payment-page #main-content .cpay-main-calc-value.is-now {
+  color: #e65100 !important;
+  -webkit-text-fill-color: #e65100 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-main-calc-value.is-final {
+  color: #0a8f3c !important;
+  -webkit-text-fill-color: #0a8f3c !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  min-height: 42px;
+  margin-top: 6px;
+  padding: 8px 10px;
+  border: 2px solid #dbe7ff;
+  border-radius: 12px;
+  color: #0b1e4d !important;
+  font-weight: 800;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row span {
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  font-weight: 800;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-now {
+  border-color: #e65100;
+  background: #fff7d6 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-change {
+  border: 3px solid #e65100;
+  background: #fff7d6 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-change.is-hot {
+  background: #0a8f3c !important;
+  border-color: #0a8f3c;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-change.is-hot span {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-change.is-short {
+  background: #d32f2f !important;
+  border-color: #d32f2f;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-change.is-short span {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 10px;
+  align-items: stretch;
+}
+html body.ame-customer-payment-page #main-content a.cpay-cancel {
+  min-height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #fff !important;
+  color: #d32f2f !important;
+  -webkit-text-fill-color: #d32f2f !important;
+  border: 3px solid #d32f2f !important;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 900;
+}
+html body.ame-customer-payment-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content button.cpay-confirm.btn-success:not(.hdr-icon-btn) {
+  min-height: 56px;
+  border-radius: 14px;
+  background: #0a8f3c !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border: 0 !important;
+  font-size: 18px;
+  font-weight: 900;
+}
+html body.ame-customer-payment-page #main-content .cpay-quick > a,
+html body.ame-customer-payment-page #main-content .cpay-quick > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: #fff !important;
+  border: 3px solid #0b57d0;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  text-decoration: none;
+  font-weight: 900;
+}
+@media (max-width: 720px) {
+  html body.ame-customer-payment-page #main-content .cpay-steps {
+    grid-template-columns: 1fr 1fr;
+  }
+  html body.ame-customer-payment-page #main-content .cpay-notes {
+    grid-template-columns: 1fr 1fr;
+  }
+  html body.ame-customer-payment-page #main-content .cpay-notes button.cpay-note#tenderDueBtn {
+    grid-column: 1 / -1;
+  }
+  html body.ame-customer-payment-page #main-content .cpay-grid,
+  html body.ame-customer-payment-page #main-content .cpay-row2,
+  html body.ame-customer-payment-page #main-content .cpay-actions,
+  html body.ame-customer-payment-page #main-content .cpay-meta {
+    grid-template-columns: 1fr !important;
+  }
+}
+@media (min-width: 980px) {
+  html body.ame-customer-payment-page #main-content .cpay-kpis {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+  html body.ame-customer-payment-page #main-content .cpay-kpi.is-change {
+    grid-column: span 2;
+  }
+}
+
+/* 10.98.368 — বক্সের ভিতরের লেখা গাঢ়, হালকা রঙের ওপর, দূর থেকে স্পষ্ট */
+html body.ame-customer-payment-page #main-content .cpay-hero-icon {
+  background: #e7f1ff !important;
+  border: 3px solid #2a6fdb !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-step,
+html body.ame-customer-payment-page #main-content .cpay-step.is-active,
+html body.ame-customer-payment-page #main-content .cpay-step.is-done {
+  background: #fff !important;
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-step.is-active {
+  border: 4px solid #2a6fdb !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-step.is-done {
+  border: 4px solid #1e8e4f !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-step b {
+  background: #e7f1ff !important;
+  color: #1d4f91 !important;
+  -webkit-text-fill-color: #1d4f91 !important;
+  font-size: 16px !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-account-art,
+html body.ame-customer-payment-page #main-content .method-trigger-icon,
+html body.ame-customer-payment-page #main-content .method-option-icon {
+  background: #e7f1ff !important;
+  color: #1d4f91 !important;
+  -webkit-text-fill-color: #1d4f91 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-status,
+html body.ame-customer-payment-page #main-content .cpay-status.is-due,
+html body.ame-customer-payment-page #main-content .cpay-status.is-deposit {
+  background: #fff !important;
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  border: 3px solid #2a6fdb;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-status.is-due {
+  background: #fff5f5 !important;
+  color: #9f1239 !important;
+  -webkit-text-fill-color: #9f1239 !important;
+  border-color: #c65b52;
+}
+html body.ame-customer-payment-page #main-content .cpay-status.is-deposit {
+  background: #f6f1ff !important;
+  color: #5b21b6 !important;
+  -webkit-text-fill-color: #5b21b6 !important;
+  border-color: #6b4bb3;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-due,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-paid,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-deposit,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-enter,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-hot,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-short,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-even {
+  background: #fff !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi :is(span, strong, small, em, b) {
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi > span,
+html body.ame-customer-payment-page #main-content .cpay-kpi small {
+  font-size: 18px !important;
+  font-weight: 900 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi strong {
+  font-size: clamp(28px, 5vw, 38px) !important;
+  font-weight: 900 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-due {
+  background: #fff5f5 !important;
+  border-color: #c65b52 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-due strong {
+  color: #9f1239 !important;
+  -webkit-text-fill-color: #9f1239 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-paid {
+  background: #f0faf4 !important;
+  border-color: #1e8e4f !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-paid strong {
+  color: #146c3a !important;
+  -webkit-text-fill-color: #146c3a !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-deposit {
+  background: #f6f1ff !important;
+  border-color: #6b4bb3 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-deposit strong {
+  color: #5b21b6 !important;
+  -webkit-text-fill-color: #5b21b6 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-enter,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-tender,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-discount {
+  background: #fffdf6 !important;
+  border-color: #c47b17 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-hot,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-short,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-even {
+  background: #fff8e8 !important;
+  border: 4px solid #c47b17 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change strong,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-hot strong,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-hot span,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-hot small,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-short strong,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-short span,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-short small,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-even strong {
+  color: #9a3412 !important;
+  -webkit-text-fill-color: #9a3412 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-hot {
+  background: #f0faf4 !important;
+  border-color: #1e8e4f !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-hot :is(span, strong, small) {
+  color: #146c3a !important;
+  -webkit-text-fill-color: #146c3a !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-short {
+  background: #fff5f5 !important;
+  border-color: #c65b52 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-change.is-short :is(span, strong, small) {
+  color: #9f1239 !important;
+  -webkit-text-fill-color: #9f1239 !important;
+}
+html body.ame-customer-payment-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpay-kpi .cpay-amount input.cpay-money:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="file"]):not([type="color"]):not([type="range"]),
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-enter input,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-discount input,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-tender input {
+  background: #fff !important;
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  border: 3px solid #2a6fdb !important;
+  border-radius: 12px !important;
+  min-height: 52px !important;
+  font-size: 28px !important;
+  font-weight: 900 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-kpi .cpay-amount em,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-enter .cpay-amount em,
+html body.ame-customer-payment-page #main-content .cpay-kpi.is-discount .cpay-amount em {
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  font-size: 26px !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row,
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-change,
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-change.is-hot,
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-change.is-short {
+  background: #fff !important;
+  border: 3px solid #8eb4e8 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row span,
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-change.is-hot span,
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-change.is-short span {
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-now {
+  background: #fffdf6 !important;
+  border-color: #c47b17 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-change {
+  background: #fff8e8 !important;
+  border-color: #c47b17 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-change.is-hot {
+  background: #f0faf4 !important;
+  border-color: #1e8e4f !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-change.is-hot span {
+  color: #146c3a !important;
+  -webkit-text-fill-color: #146c3a !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-change.is-short {
+  background: #fff5f5 !important;
+  border-color: #c65b52 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-sum-row.is-change.is-short span {
+  color: #9f1239 !important;
+  -webkit-text-fill-color: #9f1239 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-main-calc-label,
+html body.ame-customer-payment-page #main-content .cpay-main-calc-value,
+html body.ame-customer-payment-page #main-content .cpay-main-calc-op {
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-main-calc-value.is-now {
+  color: #9a3412 !important;
+  -webkit-text-fill-color: #9a3412 !important;
+  font-size: 22px !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-main-calc-value.is-final {
+  color: #146c3a !important;
+  -webkit-text-fill-color: #146c3a !important;
+  font-size: 22px !important;
+}
+html body.ame-customer-payment-page #main-content .method-trigger-label,
+html body.ame-customer-payment-page #main-content .method-option-label,
+html body.ame-customer-payment-page #main-content .cpay-field label {
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+}
+html body.ame-customer-payment-page #main-content .cpay-quick { display: none !important; }
+
+/* 10.98.723 */
+html body.ame-customer-payment-page #main-content .cpay-addr-line {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  min-width: 0;
+}
+html body.ame-customer-payment-page #main-content .cpay-addr-line .cpay-group {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: #e8f0fe;
+  color: #0b57d0 !important;
+  -webkit-text-fill-color: #0b57d0 !important;
+  border: 1.5px solid #9db9ec;
+  font-weight: 800;
+  line-height: 1.4;
+}
+html body.ame-customer-payment-page #main-content .cpay-addr-line .cpay-group[hidden] {
+  display: none !important;
+}

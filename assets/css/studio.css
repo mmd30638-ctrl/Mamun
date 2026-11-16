@@ -1,0 +1,423 @@
+/* Maison Ledger — editorial studio for theme + permissions */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+
+.studio-page {
+  --ink: #14110e;
+  --stone: #f4efe6;
+  --paper: #fffdf8;
+  --rule: rgba(20, 17, 14, 0.1);
+  --gold: #b45309;
+  --muted: #6b6258;
+  background:
+    radial-gradient(ellipse 80% 50% at 100% -10%, rgba(180, 83, 9, 0.08), transparent 50%),
+    linear-gradient(180deg, #f7f2ea 0%, #efe8dc 100%);
+  min-height: calc(100vh - 4rem);
+  margin: -1.5rem -1rem 0;
+  padding: 0 0 4rem;
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  color: var(--ink);
+}
+
+.studio-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 2.4rem 1.25rem 2rem;
+  border-bottom: 1px solid var(--rule);
+  background:
+    linear-gradient(135deg, rgba(20, 17, 14, 0.03) 0%, transparent 40%),
+    repeating-linear-gradient(-12deg, transparent, transparent 22px, rgba(20, 17, 14, 0.015) 22px, rgba(20, 17, 14, 0.015) 23px);
+}
+
+.studio-kicker {
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.studio-hero h1 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2.1rem, 6vw, 3.4rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin: 0.45rem 0 0.7rem;
+  max-width: 18ch;
+}
+.studio-hero h1 em {
+  font-style: italic;
+  font-weight: 500;
+  color: #5c4a32;
+}
+.studio-hairline {
+  width: 72px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin: 0 0 0.85rem;
+}
+
+.studio-hero p {
+  max-width: 42rem;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.studio-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 1.4rem 1.1rem 0;
+}
+
+.studio-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 980px) {
+  .studio-grid-theme { grid-template-columns: minmax(0, 1fr) 380px; align-items: start; }
+  .studio-grid-perm { grid-template-columns: 300px minmax(0, 1fr); align-items: start; }
+}
+
+.studio-panel {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  box-shadow: 0 24px 50px -28px rgba(20, 17, 14, 0.35);
+  padding: 1.15rem 1.15rem 1.3rem;
+}
+
+.studio-panel h2 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.55rem;
+  font-weight: 600;
+  margin: 0 0 0.2rem;
+}
+
+.studio-panel .lead {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+}
+
+.studio-rule {
+  height: 1px;
+  background: var(--rule);
+  margin: 1rem 0;
+}
+
+/* Theme tokens */
+.token-list { display: flex; flex-direction: column; gap: 0.7rem; }
+.token-row {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 0.85rem;
+  align-items: center;
+  padding: 0.65rem 0.7rem;
+  border: 1px solid var(--rule);
+  background: linear-gradient(180deg, #fff, #faf6ef);
+}
+.token-row input[type="color"] {
+  width: 56px;
+  height: 56px;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+.token-row input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+.token-row input[type="color"]::-webkit-color-swatch { border: 1px solid rgba(20,17,14,.15); }
+.token-meta small { display: block; color: var(--muted); font-size: 0.75rem; margin-top: 0.15rem; line-height: 1.4; }
+.token-meta strong { font-size: 0.92rem; }
+.token-hex {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  min-width: 5.4rem;
+  text-align: right;
+}
+
+.palette-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.55rem; }
+@media (min-width: 640px) { .palette-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.palette-card {
+  border: 1px solid var(--rule);
+  background: #fff;
+  padding: 0.55rem;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.palette-card:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -18px rgba(20,17,14,.5); }
+.palette-card.active { outline: 2px solid var(--ink); }
+.palette-swatches { display: flex; height: 32px; overflow: hidden; margin-bottom: 0.45rem; border-radius: 8px; }
+.palette-swatches i { flex: 1; display: block; }
+.palette-card b { display: block; font-size: 0.78rem; }
+.palette-card span { font-size: 0.68rem; color: var(--muted); }
+
+/* Device preview */
+.device {
+  background: #1a1612;
+  padding: 0.7rem 0.7rem 1rem;
+  color: #f6f1e8;
+}
+.device-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.55rem; font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: #c4b8a8; }
+.device-dots { display: flex; gap: 0.28rem; }
+.device-dots i { width: 7px; height: 7px; border-radius: 50%; background: #5b5248; }
+.device-screen { background: var(--pv-bg, #f4efe6); color: var(--pv-text, #1c1917); min-height: 420px; overflow: hidden; }
+.pv-top {
+  background: var(--pv-header, #1c1917);
+  color: #fff;
+  padding: 0.7rem 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pv-brand { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.15rem; font-weight: 600; }
+.pv-chip { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; background: var(--pv-gold, #c9a227); color: #1c1917; padding: 0.22rem 0.4rem; font-weight: 700; }
+.pv-clock {
+  font-size: 0.72rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--pv-clock, #2dd4bf);
+  background: rgba(0,0,0,.45);
+  padding: 0.22rem 0.45rem;
+  border-radius: 7px;
+  letter-spacing: 0.02em;
+}
+.pv-body { display: grid; grid-template-columns: 92px 1fr; min-height: 340px; }
+.pv-side { background: var(--pv-sidebar, #14110e); color: #ece7de; padding: 0.65rem 0.45rem; font-size: 0.62rem; border-right: 1px solid var(--pv-border, rgba(255,255,255,.08)); }
+.pv-side a { display: block; padding: 0.32rem 0.35rem; margin-bottom: 0.15rem; color: inherit; text-decoration: none; opacity: .72; }
+.pv-side a.on { background: var(--pv-accent, #0f766e); color: #fff; opacity: 1; }
+.pv-main { padding: 0.7rem; }
+.pv-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; margin-bottom: 0.55rem; }
+.pv-kpi { background: var(--pv-surface, #fff); border: 1px solid var(--pv-border, #e7e5e4); padding: 0.5rem; }
+.pv-kpi b { display: block; font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.2rem; color: var(--pv-primary, #1c1917); }
+.pv-kpi span { font-size: 0.62rem; color: var(--pv-muted, #78716c); letter-spacing: .04em; text-transform: uppercase; }
+.pv-cta {
+  display: inline-block;
+  background: var(--pv-accent, #0f766e);
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 0.4rem 0.65rem;
+  margin-right: 0.35rem;
+}
+.pv-cta.gold { background: var(--pv-gold, #c9a227); color: #1c1917; font-weight: 700; }
+.pv-cta.danger { background: var(--pv-danger, #b91c1c); }
+.pv-table { margin-top: 0.7rem; width: 100%; border-collapse: collapse; font-size: 0.68rem; }
+.pv-table th { text-align: left; color: var(--pv-muted, #78716c); font-weight: 500; padding: 0.28rem 0; border-bottom: 1px solid var(--pv-border, #e7e5e4); }
+.pv-table td { padding: 0.32rem 0; border-bottom: 1px solid var(--pv-border, #e7e5e4); }
+.contrast-note { margin-top: 0.75rem; font-size: 0.75rem; color: #c4b8a8; }
+
+.studio-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.btn-ink {
+  background: var(--ink);
+  color: #f6f1e8;
+  border: 0;
+  padding: 0.7rem 1.1rem;
+  font-weight: 600;
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+}
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  padding: 0.7rem 1.1rem;
+  font-size: 0.86rem;
+  cursor: pointer;
+}
+
+/* ----------------------------------------------------------------------------
+   Permissions — user-select পরিবর্তন (এই কমেন্টের নিচের সব ক্লাস শুধু
+   role_permissions.php-তেই ব্যবহৃত হয়, অন্য কোনো পেজে studio.css শেয়ার হলেও
+   এগুলো প্রভাব ফেলে না, তাই নিশ্চিন্তে বেশি উজ্জ্বল/স্পষ্ট রঙ দেওয়া হলো):
+
+   ১) "দূর থেকে কালার দেখা যায়" — প্রতিটা ইউজার-টাইলে এখন রোল অনুযায়ী একটা
+      পুরু, উজ্জ্বল রঙের বাম-বর্ডার এবং সলিড ব্যাজ (আগে ছিল শুধু হালকা সোনালি
+      লেখা, ২-৩ ফুট দূর থেকে বোঝা কঠিন ছিল)। সিলেক্টেড/অ্যাক্টিভ টাইল এখন
+      স্পষ্ট গাঢ় নীল ফ্রেম আর হালকা নীল ব্যাকগ্রাউন্ডে হাইলাইট হয়।
+   ২) সার্চ বক্স যোগ হয়েছে (নিচে .user-search-*)। ---------------------------- */
+.user-search-wrap { margin: 0.7rem 0 0.6rem; }
+.user-search-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid var(--rule);
+  background: #fff;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.86rem;
+  font-family: inherit;
+  color: var(--ink);
+}
+.user-search-input:focus {
+  outline: none;
+  border-color: #1d4ed8;
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15);
+}
+.user-search-empty { padding: 0.4rem 0.1rem; }
+
+.user-cinema { display: flex; flex-direction: column; gap: 0.55rem; }
+.user-tile {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid var(--rule);
+  border-left: 5px solid #94a3b8;
+  background: #fff;
+  padding: 0.75rem 0.8rem 0.75rem 0.7rem;
+  position: relative;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.user-tile:hover { transform: translateX(2px); box-shadow: 0 6px 16px -10px rgba(20,17,14,.4); }
+.user-tile.active {
+  outline: 2px solid #1d4ed8;
+  border-left-color: #1d4ed8;
+  background: #eff6ff;
+}
+.user-tile .nm { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.2rem; font-weight: 700; }
+.user-tile .meta { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; }
+.user-tile .bar { height: 4px; background: #ece7de; margin-top: 0.55rem; border-radius: 2px; overflow: hidden; }
+.user-tile .bar i { display: block; height: 100%; background: #1d4ed8; }
+.user-tile .role {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #64748b;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+/* রোল-ভিত্তিক রঙ — এক নজরে বোঝার জন্য (অ্যাডমিন=লাল, ম্যানেজার=বেগুনি,
+   ক্যাশিয়ার=সবুজ, কর্মচারী=নীল-ধূসর) */
+.user-tile.role-admin { border-left-color: #dc2626; }
+.user-tile.role-admin .role { background: #dc2626; }
+.user-tile.role-manager { border-left-color: #7c3aed; }
+.user-tile.role-manager .role { background: #7c3aed; }
+.user-tile.role-cashier { border-left-color: #16a34a; }
+.user-tile.role-cashier .role { background: #16a34a; }
+.user-tile.role-employee { border-left-color: #0891b2; }
+.user-tile.role-employee .role { background: #0891b2; }
+.user-tile.role-family { border-left-color: #ea580c; }
+.user-tile.role-family .role { background: #ea580c; }
+.user-tile.role-viewer { border-left-color: #64748b; }
+.user-tile.role-viewer .role { background: #64748b; }
+
+.perm-group { margin-bottom: 1.15rem; border: 1px solid var(--rule); }
+.perm-group-h {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 0.8rem;
+  padding: 0.85rem 0.9rem 0.7rem;
+  background: linear-gradient(180deg, #faf6ef, #fff);
+  border-bottom: 1px solid var(--rule);
+}
+.perm-group-h h3 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.35rem; margin: 0; }
+.perm-group-h p { margin: 0.15rem 0 0; font-size: 0.75rem; color: var(--muted); }
+.perm-group-h button {
+  border: 1px solid var(--rule);
+  background: #fff;
+  font-size: 0.7rem;
+  padding: 0.35rem 0.5rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.perm-item {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.75rem 0.9rem;
+  border-top: 1px solid var(--rule);
+  background: #fff;
+}
+.perm-ico {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  background: #f4efe6;
+  color: var(--ink);
+}
+.perm-item strong { display: block; font-size: 0.9rem; }
+.perm-item small { display: block; color: var(--muted); font-size: 0.74rem; line-height: 1.4; margin-top: 0.12rem; }
+.switch {
+  position: relative;
+  width: 46px;
+  height: 26px;
+  flex-shrink: 0;
+}
+.switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+.switch span {
+  position: absolute; inset: 0;
+  background: #d6cfc4;
+  transition: .15s;
+}
+.switch span::after {
+  content: "";
+  position: absolute;
+  width: 18px; height: 18px;
+  background: #fff;
+  top: 4px; left: 4px;
+  transition: .15s;
+}
+.switch input:checked + span { background: var(--ink); }
+.switch input:checked + span::after { transform: translateX(20px); }
+
+.studio-sticky {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  background: rgba(255,253,248,.92);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--rule);
+  padding: 0.75rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+.cov { font-size: 0.8rem; color: var(--muted); }
+.cov b { color: var(--ink); font-size: 1.1rem; }
+/* সেভ বাটন — শুধু পারমিশন পেজের স্টিকি ফুটারে, দূর থেকে চোখে পড়ার মতো সবুজ */
+.studio-sticky .btn-ink {
+  background: #15803d;
+  color: #fff;
+  padding: 0.8rem 1.4rem;
+  font-size: 0.92rem;
+  box-shadow: 0 8px 20px -8px rgba(21, 128, 61, 0.55);
+}
+.studio-sticky .btn-ink:hover { background: #166534; }
+/* গ্রুপ খুলুন/বন্ধ বাটন — স্পষ্ট নীল আউটলাইন, ফ্যাকাশে ধূসর নয় */
+.perm-group-h button.group-all {
+  border: 1.5px solid #1d4ed8;
+  color: #1d4ed8;
+  background: #fff;
+  font-weight: 700;
+}
+.perm-group-h button.group-all:hover { background: #eff6ff; }
+/* অন/অফ সুইচ — অন হলে উজ্জ্বল সবুজ (আগে ছিল হালকা কালচে-বাদামি) */
+.switch input:checked + span { background: #16a34a; }
+
+.admin-lock {
+  border: 1px solid var(--rule);
+  padding: 1.4rem;
+  background:
+    linear-gradient(135deg, rgba(180,83,9,.08), transparent 40%),
+    #fff;
+}
+.admin-lock h3 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.8rem; margin: 0 0 .4rem; }
+
+.flash-ok { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; padding: .7rem .85rem; margin-bottom: 1rem; }
+.flash-err { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; padding: .7rem .85rem; margin-bottom: 1rem; }

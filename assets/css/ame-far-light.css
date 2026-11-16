@@ -1,0 +1,98 @@
+/* 10.98.363 — অন্য পেজ ও ফ্রন্ট: বক্স সাদা, রং দূর থেকে স্পষ্ট, কালো বক্স নয় */
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) {
+  color-scheme: light;
+}
+
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content :is(
+  .card, .panel, .cdesk-card, .cdesk-table-wrap, .eup-card, .xf-form, .emp-card,
+  .ws-panel, .ar-table-wrap, .tv-dossier, .dmg-form, .dmg-sheet, .dmg-filters
+) {
+  background: #fff !important;
+  color: #0b1e4d !important;
+  border: 3px solid #0b57d0 !important;
+}
+
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content :is(h1, h2) {
+  font-size: clamp(22px, 4vw, 32px) !important;
+  font-weight: 900 !important;
+}
+
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content label {
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+}
+
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="file"]):not([type="color"]):not([type="range"]),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content select,
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content textarea {
+  background: #fff !important;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  border: 3px solid #0b57d0 !important;
+  min-height: 52px !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  color-scheme: light;
+}
+
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content thead th,
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content table th,
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .aud-table th,
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content table.cdesk-table th,
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content table.ar-table th,
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .ws-table th {
+  background: #0b57d0 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content :is(
+  .card-header, .panel-heading, .box-header, .aud-top, .fam-top, .ame-opt-head
+) {
+  background: #0b57d0 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content :is(
+  button, .btn, .eng-btn, .rpt-btn-primary, .cdesk-btn, .eup-btn, .eup-step-no,
+  .ame-opt-btn-add, .ame-opt-pc, .ame-purchase-desktop-fab, .vd-launch, .vd-primary,
+  .xf-go, .xf-empty a, .ws-btn, .ar-act, .tv-no, .tv-links a, .tm-pr, .emp-radio:has(input:checked)
+):not(.ghost):not(.btn-outline):not(.btn-secondary):not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.btn-danger):not(.danger):not(.is-danger):not(.adv-back):not(.dmg-void):not(.ps-save):not(.btn-success):not(.aud-btn):not(.ame-opt-btn-complete) {
+  background: #0b57d0 !important;
+  background-image: none !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #0b57d0 !important;
+}
+
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content :is(
+  .ghost, .btn-outline, .btn-secondary, .cdesk-btn.ghost, .eup-btn.ghost, .ar-act.ghost
+) {
+  background: #fff !important;
+  color: #0b57d0 !important;
+  -webkit-text-fill-color: #0b57d0 !important;
+  border: 3px solid #0b57d0 !important;
+}
+
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content :is(button, a, .btn).btn-success:not(.hdr-icon-btn),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content :is(button, a).ps-save:not(.hdr-icon-btn),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content :is(button, a).aud-btn:not(.hdr-icon-btn),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content button.ame-opt-btn-complete {
+  background: #0a8f3c !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #0a8f3c !important;
+}
+
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content :is(button, a, .btn).btn-danger:not(.hdr-icon-btn),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content :is(button, a).danger:not(.hdr-icon-btn),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content :is(button, a).adv-back:not(.hdr-icon-btn),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content button.dmg-void {
+  background: #d32f2f !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #d32f2f !important;
+}

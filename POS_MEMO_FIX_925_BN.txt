@@ -1,0 +1,16 @@
+POS মেমো ঠিকাকার (v10.98.925)
+================================
+
+কারণ (২ ঘন্টার আপডেটের বাগ):
+• «পেজ সাজান» (ame-page-fit) পণ্য কার্ট ও উপরের বক্সকে absolute + সরু প্রস্থ দিয়েছিল
+• pos-terminal-layout দ্বি-কলাম গ্রিড ডানে অর্ধেক কার্ট
+• নতুন ড্রাফটে ame-pos-memo-editing → উপরের CSS একসাথে কাজ করত
+
+সমাধান:
+1. ame-page-fit.js — কার্ট/term-top/fold-stack আর ফিট টার্গেট নয়; ড্রাফটে amePosReleasePageFitDesk()
+2. ame-pos-desk-fullwidth.css — এক কলাম পূর্ণ প্রস্থ (পেজ লেআউট CSS-এর পরে লোড)
+3. ame-pos-memo-stack-order.css — পণ্য তালিকা সর্বনিচে (order: 99)
+4. pos-memo-draft-layout.js — ড্রাফট মোডে প্রতিবার recover + release
+5. party_amount_shield + config boot — কাস্টমার পেমেন্ট
+
+Easy Update: DB restore বন্ধ। ব্যালেন্স ওভাররাইট নেই।

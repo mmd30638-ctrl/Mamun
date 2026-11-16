@@ -1,0 +1,247 @@
+/* 10.98.371 — ক্রেতা খাতা: হালকা কাগজ, গাঢ় বড় অঙ্ক, কালো বক্স নেই */
+html body.ame-customer-ledger-page:not(.ame-sales-pro):not(.ame-pos-terminal-page),
+html body.ame-customer-ledger-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content {
+  background: #f4f7f2 !important;
+  color: #1c3354 !important;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-wrap {
+  color: #1c3354;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-mast {
+  background: #fff !important;
+  border: 3px solid #8eb4a0 !important;
+  border-radius: 24px !important;
+  padding: 16px !important;
+}
+html body.ame-customer-ledger-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-mast h1,
+html body.ame-customer-ledger-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-mast h1 .ame-pair,
+html body.ame-customer-ledger-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-mast h1 .ame-pair strong {
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  font-size: clamp(28px, 5vw, 40px) !important;
+  font-weight: 900 !important;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-kicker,
+html body.ame-customer-ledger-page #main-content .cdesk-kicker .ame-pair,
+html body.ame-customer-ledger-page #main-content .cdesk-kicker .ame-pair strong {
+  color: #1e8e4f !important;
+  -webkit-text-fill-color: #1e8e4f !important;
+  font-size: 16px !important;
+  letter-spacing: 0 !important;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-mast > p,
+html body.ame-customer-ledger-page #main-content .cdesk-mast .ame-pair em {
+  color: #4b6280 !important;
+  -webkit-text-fill-color: #4b6280 !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+html body.ame-customer-ledger-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-card,
+html body.ame-customer-ledger-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-table-wrap {
+  background: #fff !important;
+  color: #1c3354 !important;
+  border: 3px solid #8eb4a0 !important;
+  border-radius: 22px !important;
+}
+html body.ame-customer-ledger-page #main-content .cldg-range {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-stats {
+  gap: 10px;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-stats article {
+  min-height: 108px;
+  padding: 14px;
+  background: #fff !important;
+  border: 3px solid #8eb4a0 !important;
+  border-radius: 18px;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-stats span,
+html body.ame-customer-ledger-page #main-content .cdesk-stats span .ame-pair,
+html body.ame-customer-ledger-page #main-content .cdesk-stats span .ame-pair strong,
+html body.ame-customer-ledger-page #main-content .cdesk-stats span .ame-pair em {
+  color: #4b6280 !important;
+  -webkit-text-fill-color: #4b6280 !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-stats b {
+  margin-top: 4px;
+  font-size: clamp(26px, 5vw, 36px) !important;
+  font-weight: 900 !important;
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-stats .is-in {
+  background: #f0faf4 !important;
+  border-color: #9dccb0 !important;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-stats .is-in b { color: #146c3a !important; -webkit-text-fill-color: #146c3a !important; }
+html body.ame-customer-ledger-page #main-content .cdesk-stats .is-out {
+  background: #fff5f5 !important;
+  border-color: #e7b2ae !important;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-stats .is-out b { color: #9f1239 !important; -webkit-text-fill-color: #9f1239 !important; }
+html body.ame-customer-ledger-page #main-content .cdesk-stats .is-left {
+  background: #e7f1ff !important;
+  border-color: #8eb4e8 !important;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-stats .is-left b { color: #1d4f91 !important; -webkit-text-fill-color: #1d4f91 !important; }
+html body.ame-customer-ledger-page #main-content .cdesk-stats .is-due {
+  background: #fff5f5 !important;
+  border-color: #e7b2ae !important;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-stats .is-due b { color: #9f1239 !important; -webkit-text-fill-color: #9f1239 !important; }
+html body.ame-customer-ledger-page #main-content a.cdesk-btn.ame-calc-btn.cldg-chip,
+html body.ame-customer-ledger-page #main-content button.cdesk-btn.ame-calc-btn.cldg-go,
+html body.ame-customer-ledger-page #main-content .ame-slip-bar .ame-slip-btn.ame-calc-btn {
+  background: #fff !important;
+  background-image: none !important;
+  color: #1d4f91 !important;
+  -webkit-text-fill-color: #1d4f91 !important;
+  border: 3px solid #8eb4e8 !important;
+  min-height: 48px !important;
+  padding: 8px 14px !important;
+  border-radius: 14px !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  text-decoration: none !important;
+}
+html body.ame-customer-ledger-page .ame-slip-sheet {
+  background: rgba(28, 51, 84, 0.35) !important;
+}
+html body.ame-customer-ledger-page #main-content .ame-slip-card {
+  background: #fff !important;
+  border: 3px solid #8eb4e8 !important;
+  color: #1c3354 !important;
+}
+html body.ame-customer-ledger-page #main-content button.ame-slip-opt.ame-calc-btn {
+  background: #f4f7f2 !important;
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  border: 3px solid #8eb4a0 !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+  min-height: 52px !important;
+}
+html body.ame-customer-ledger-page #main-content a.cdesk-btn.ame-calc-btn.cldg-chip.is-on,
+html body.ame-customer-ledger-page #main-content button.cdesk-btn.ame-calc-btn.cldg-go {
+  background: #2a6fdb !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #2a6fdb !important;
+}
+html body.ame-customer-ledger-page #main-content .cldg-chip .ame-pair,
+html body.ame-customer-ledger-page #main-content .cldg-chip .ame-pair strong,
+html body.ame-customer-ledger-page #main-content .cldg-chip .ame-pair em,
+html body.ame-customer-ledger-page #main-content .ame-slip-btn .ame-pair,
+html body.ame-customer-ledger-page #main-content .ame-slip-btn .ame-pair strong,
+html body.ame-customer-ledger-page #main-content .ame-slip-btn .ame-pair em {
+  color: inherit !important;
+  -webkit-text-fill-color: currentcolor !important;
+  font-size: 15px !important;
+}
+html body.ame-customer-ledger-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content table.cdesk-table th {
+  background: #e7f6ee !important;
+  color: #146c3a !important;
+  -webkit-text-fill-color: #146c3a !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+}
+html body.ame-customer-ledger-page #main-content table.cdesk-table td {
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  font-size: 17px !important;
+  font-weight: 800 !important;
+  background: #fff !important;
+}
+html body.ame-customer-ledger-page #main-content table.cdesk-table .bill { color: #9a3412 !important; -webkit-text-fill-color: #9a3412 !important; }
+html body.ame-customer-ledger-page #main-content table.cdesk-table .dep { color: #146c3a !important; -webkit-text-fill-color: #146c3a !important; }
+html body.ame-customer-ledger-page #main-content table.cdesk-table .wd { color: #9f1239 !important; -webkit-text-fill-color: #9f1239 !important; }
+html body.ame-customer-ledger-page #main-content table.cdesk-table tfoot td {
+  background: #f4f7f2 !important;
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  font-weight: 900 !important;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-row {
+  padding: 14px 4px;
+  border-bottom: 2px solid #d7eadc;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-row b {
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  font-size: 20px !important;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-row small {
+  color: #4b6280;
+  font-size: 15px;
+  font-weight: 800;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-due {
+  color: #9f1239 !important;
+  -webkit-text-fill-color: #9f1239 !important;
+  background: #fff5f5;
+  border: 2px solid #e7b2ae;
+  border-radius: 12px;
+  padding: 8px 10px;
+  font-size: 16px;
+}
+html body.ame-customer-ledger-page #main-content .cdesk-held {
+  color: #146c3a !important;
+  -webkit-text-fill-color: #146c3a !important;
+  background: #f0faf4;
+  border: 2px solid #9dccb0;
+  border-radius: 12px;
+  padding: 8px 10px;
+  font-size: 16px;
+}
+html body.ame-customer-ledger-page #main-content .wdr-shop-head p {
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  font-size: 18px !important;
+}
+@media (max-width: 760px) {
+  html body.ame-customer-ledger-page #main-content table.cdesk-table {
+    min-width: 0 !important;
+    display: block !important;
+  }
+  html body.ame-customer-ledger-page #main-content table.cdesk-table thead { display: none !important; }
+  html body.ame-customer-ledger-page #main-content table.cdesk-table tbody,
+  html body.ame-customer-ledger-page #main-content table.cdesk-table tfoot,
+  html body.ame-customer-ledger-page #main-content table.cdesk-table tr,
+  html body.ame-customer-ledger-page #main-content table.cdesk-table td {
+    display: block !important;
+    width: auto !important;
+  }
+  html body.ame-customer-ledger-page #main-content table.cdesk-table tr {
+    margin: 0 0 12px;
+    padding: 10px 12px;
+    border: 3px solid #8eb4a0 !important;
+    border-radius: 18px;
+    background: #fff !important;
+  }
+  html body.ame-customer-ledger-page #main-content table.cdesk-table td {
+    border: 0 !important;
+    text-align: left !important;
+    padding: 6px 0 !important;
+    font-size: 18px !important;
+  }
+  html body.ame-customer-ledger-page #main-content table.cdesk-table td::before {
+    content: attr(data-label);
+    display: block;
+    color: #4b6280;
+    font-size: 14px;
+    font-weight: 800;
+  }
+}
+@media print {
+  html body.ame-customer-ledger-page table.cdesk-table th {
+    background: #e7f6ee !important;
+    color: #146c3a !important;
+    -webkit-text-fill-color: #146c3a !important;
+  }
+}

@@ -1,0 +1,148 @@
+/* সাবমিট বাটনের ভিতরে বড় ঘুরন্ত লোডিং চাকা — নেট স্লো হলে দেখা যায় */
+@keyframes ameBtnSpin {
+    to { transform: rotate(360deg); }
+}
+
+button.ame-is-waiting,
+input.ame-is-waiting,
+.ame-is-waiting {
+    position: relative !important;
+    pointer-events: none !important;
+    cursor: wait !important;
+    overflow: hidden !important;
+    min-height: 56px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 1 !important;
+}
+
+.ame-wait-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: opacity .12s ease;
+}
+
+button.ame-is-waiting .ame-wait-label,
+.ame-is-waiting .ame-wait-label {
+    opacity: 0.12;
+}
+
+.ame-wait-spin {
+    position: absolute !important;
+    inset: 0;
+    display: none !important;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    pointer-events: none;
+    grid-area: 1 / 1;
+}
+
+button.ame-is-waiting > .ame-wait-spin,
+.ame-is-waiting > .ame-wait-spin {
+    display: flex !important;
+}
+
+.ame-wait-spin i {
+    display: block;
+    width: 48px;
+    height: 48px;
+    box-sizing: border-box;
+    border: 5px solid rgba(11, 30, 77, 0.18);
+    border-top-color: #0b1e4d;
+    border-radius: 50%;
+    animation: ameBtnSpin 0.65s linear infinite;
+}
+
+.cpay-confirm.ame-is-waiting .ame-wait-spin i,
+.btn-success.ame-is-waiting .ame-wait-spin i,
+button.btn.ame-is-waiting .ame-wait-spin i,
+#go.ame-is-waiting .ame-wait-spin i,
+#goTxn.ame-is-waiting .ame-wait-spin i {
+    width: 52px;
+    height: 52px;
+    border-width: 6px;
+    border-color: rgba(255, 255, 255, 0.28);
+    border-top-color: #fff;
+}
+
+.ame-pos-complete.ame-is-waiting .ame-wait-spin i {
+    width: 52px;
+    height: 52px;
+    border-width: 6px;
+    border-color: rgba(11, 30, 77, 0.18);
+    border-top-color: #0b1e4d;
+}
+
+/* 10.98.570 — center overlay + success */
+.ame-process-veil {
+    position: fixed;
+    inset: 0;
+    z-index: 99980;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(11, 30, 77, 0.38);
+    backdrop-filter: blur(2px);
+}
+.ame-process-veil.is-on {
+    display: flex;
+}
+.ame-process-card {
+    width: min(92vw, 420px);
+    padding: 28px 22px 24px;
+    border-radius: 20px;
+    background: #fff;
+    text-align: center;
+    box-shadow: 0 18px 50px rgba(11, 30, 77, 0.22);
+}
+.ame-process-card .ame-process-spin {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 14px;
+    border: 5px solid #dbe4ff;
+    border-top-color: #1d4ed8;
+    border-radius: 50%;
+    animation: ameBtnSpin 0.7s linear infinite;
+}
+.ame-process-card p {
+    margin: 0;
+    color: #0b1e4d;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.45;
+}
+.ame-process-card.is-ok .ame-process-spin {
+    display: none;
+}
+.ame-process-card .ame-process-check {
+    display: none;
+    font-size: 48px;
+    line-height: 1;
+    color: #16a34a;
+}
+.ame-process-card.is-ok .ame-process-check {
+    display: block;
+}
+.ame-process-card.is-err .ame-process-spin {
+    display: none;
+}
+
+@media (max-width: 480px) {
+    .ame-wait-spin i {
+        width: 44px;
+        height: 44px;
+    }
+    .cpay-confirm.ame-is-waiting .ame-wait-spin i,
+    .btn-success.ame-is-waiting .ame-wait-spin i,
+    button.btn.ame-is-waiting .ame-wait-spin i,
+    #go.ame-is-waiting .ame-wait-spin i,
+    #goTxn.ame-is-waiting .ame-wait-spin i,
+    .ame-pos-complete.ame-is-waiting .ame-wait-spin i {
+        width: 48px;
+        height: 48px;
+    }
+}

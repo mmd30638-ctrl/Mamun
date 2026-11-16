@@ -1,0 +1,558 @@
+/* Professional customer-hire desk — months+days, daily add, unpaid days */
+.hire-wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 12px 14px 40px;
+}
+.hire-mast h1 {
+  font-size: 1.55rem;
+  color: #003f8f;
+  margin: 4px 0 8px;
+}
+.hire-term-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(158px, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+.hire-term-preview,
+.hire-term-kpi {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #eef5ff, #e7eef8);
+  border: 1px solid #c5d4e8;
+  color: #003f8f;
+  font-weight: 650;
+  line-height: 1.45;
+}
+.hire-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+.hire-card {
+  background: #fff;
+  border: 1px solid #d5deea;
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: 0 1px 0 rgba(0, 63, 143, 0.04);
+}
+.hire-card span {
+  display: block;
+  font-size: 12px;
+  color: #4b5b73;
+  margin-bottom: 4px;
+}
+.hire-card b {
+  font-size: 1.35rem;
+  color: #111827;
+  letter-spacing: -0.02em;
+}
+.hire-card.is-danger,
+.hire-card.is-due {
+  background: #fff5f5;
+  border-color: #f3c0c0;
+}
+.hire-card.is-danger b,
+.hire-card.is-due b {
+  color: #b42318;
+}
+.hire-card.is-money b {
+  color: #04933a;
+}
+.hire-card.is-navy {
+  background: #f4f7fb;
+  border-color: #c5d4e8;
+}
+.hire-card.is-navy b {
+  color: #003f8f;
+}
+.hire-panel.hire-term-editor {
+  border: 1.5px solid #003f8f;
+  box-shadow: 0 8px 24px rgba(0, 63, 143, 0.08);
+}
+.hire-term-editor h2 {
+  color: #003f8f;
+}
+.hire-due-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+  background: #fef3c7;
+  color: #92400e;
+}
+.hire-due-pill.is-hot {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.hire-due-pill.is-ok {
+  background: #dcfce7;
+  color: #166534;
+}
+@media (max-width: 640px) {
+  .hire-card b {
+    font-size: 1.2rem;
+  }
+  .hire-term-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.hire-create-page {
+  max-width: 720px;
+}
+.hire-create-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.hire-create-page .hire-step {
+  background: var(--card, #fff);
+  border: 1px solid var(--line, #D7DEE8);
+  border-radius: 16px;
+  padding: 16px;
+  margin: 0;
+}
+.hire-create-page .hire-step h2 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  color: var(--navy, #003F8F);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hire-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--navy, #003F8F);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+}
+.hire-picked {
+  margin: 8px 0 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #ECFDF3;
+  color: #065F46;
+  font-weight: 700;
+  min-height: 40px;
+}
+.hire-picked.is-empty {
+  background: #F3F4F6;
+  color: #667085;
+  font-weight: 600;
+}
+.hire-term-preview {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #EEF4FF;
+  color: #003F8F;
+  font-size: 13px;
+  font-weight: 700;
+}
+.hire-form-err {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #FEF2F2;
+  color: #B91C1C;
+  font-weight: 700;
+}
+.hire-create-actions {
+  position: sticky;
+  bottom: 10px;
+  z-index: 4;
+  padding-top: 4px;
+}
+.hire-create-submit {
+  min-height: 48px;
+  flex: 1;
+  font-size: 16px;
+}
+.hire-create-page .hire-more summary {
+  cursor: pointer;
+  font-weight: 800;
+  color: var(--navy, #003F8F);
+  padding: 2px 0;
+}
+.hire-create-page .hire-more[open] .hire-grid {
+  margin-top: 10px;
+}
+.hire-source-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.hire-source-toggle label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: #fff;
+  border: 1.5px solid #d5deea;
+  border-radius: 14px;
+  padding: 12px 14px;
+  cursor: pointer;
+}
+.hire-source-toggle label.is-on {
+  border-color: #003f8f;
+  box-shadow: 0 0 0 3px rgba(0, 63, 143, 0.12);
+}
+.hire-source-toggle strong {
+  color: #003f8f;
+  font-size: 15px;
+}
+.hire-source-toggle span {
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.hire-source-toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.hire-owner-box {
+  margin-top: 12px;
+  background: #fff;
+  border: 1px solid #d5deea;
+  border-radius: 14px;
+  padding: 12px;
+}
+.hire-source-pill {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  font-size: 11px;
+  font-weight: 800;
+  vertical-align: middle;
+}
+.hire-source-pill.is-third {
+  border-color: #f5d0fe;
+  color: #a21caf;
+}
+.hire-cards-simple .hire-card span {
+  color: #64748b;
+}
+.hire-cards-simple .hire-card b {
+  color: #0f172a;
+}
+.hire-cards-simple .hire-card.is-danger b {
+  color: #b91c1c;
+}
+.hire-cards-simple .hire-card.is-money b {
+  color: #047857;
+}
+.hire-stop-panel {
+  background: #fff;
+  border: 1px solid #d5deea;
+}
+.hire-stop-actions {
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px;
+}
+.hire-stop-actions form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin: 0;
+}
+.hire-stop-actions input[name="reason"] {
+  min-width: 160px;
+}
+.hire-live-links form {
+  display: inline;
+  margin: 0;
+}
+.hire-cards-four {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (min-width: 720px) {
+  .hire-cards-four {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.hire-view-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 12px 0 14px;
+}
+.hire-view-tabs a {
+  background: #fff;
+  border: 1.5px solid #d5deea;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 800;
+  color: #334155;
+  text-decoration: none;
+}
+.hire-view-tabs a.is-on {
+  border-color: #003f8f;
+  color: #003f8f;
+}
+.hire-view-tabs .hire-btn-primary {
+  margin-left: auto;
+  border-radius: 12px;
+}
+.hire-btn-off {
+  background: #fff;
+  border: 1.5px solid #b91c1c;
+  color: #b91c1c;
+  font-weight: 800;
+}
+.hire-state {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  background: #fff;
+  border: 1.5px solid #e5eaf1;
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin: 0 0 12px;
+}
+.hire-state-kicker {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #667085;
+}
+.hire-state h2 {
+  margin: 0 0 4px;
+  font-size: 1.7rem;
+  letter-spacing: -0.03em;
+}
+.hire-state > div > p {
+  margin: 0;
+  font-weight: 600;
+  color: #475569;
+}
+.hire-state-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+.hire-state-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-weight: 800;
+  background: #f1f5f9;
+  color: #334155;
+}
+.hire-state.is-on {
+  border-color: #86efac;
+  background: #f7fef9;
+}
+.hire-state.is-on h2 { color: #047857; }
+.hire-state.is-on .hire-state-mark {
+  background: #dcfce7;
+  color: #047857;
+}
+.hire-state.is-off {
+  border-color: #fecaca;
+  background: #fff8f8;
+}
+.hire-state.is-off h2 { color: #b91c1c; }
+.hire-state.is-off .hire-state-mark {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+.hire-state.is-pause {
+  border-color: #fcd34d;
+  background: #fffbeb;
+}
+.hire-state.is-pause h2 { color: #b45309; }
+.hire-state.is-pause .hire-state-mark {
+  background: #fef3c7;
+  color: #b45309;
+}
+.hire-state.is-done .hire-state-mark {
+  background: #e2e8f0;
+  color: #475569;
+}
+.hire-state-side form { margin: 0; }
+@media (max-width: 640px) {
+  .hire-state {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hire-state-side {
+    align-items: stretch;
+  }
+  .hire-state-mark { width: 100%; }
+}
+.hire-owners-page .hire-live-card.is-edit {
+  border-color: #003f8f;
+  box-shadow: 0 0 0 2px rgba(0, 63, 143, 0.12);
+}
+.hire-owners-page .hire-live-links {
+  margin: 0 0 10px;
+}
+.hire-owners-page .hire-pay-from {
+  margin: 6px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+}
+.hire-owners-page .hire-pay-from b {
+  color: #003f8f;
+}
+.hire-owners-page .hire-cust-from {
+  margin: 4px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+.hire-owners-page .hire-cust-from b {
+  color: #0f766e;
+}
+.hire-live-card.is-inactive {
+  opacity: 0.92;
+  border-style: dashed;
+}
+.hire-badge.st-INACTIVE {
+  background: #fff;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+}
+.hire-desk-simple .hire-mast p {
+  color: #475569;
+  font-weight: 600;
+}
+.hire-contracts-page .hire-mast h1 {
+  color: #003f8f;
+}
+.hire-contracts-page .hire-mast p {
+  color: #475569;
+  font-weight: 600;
+}
+.hire-contracts-page .hire-card {
+  background: #fff;
+}
+.hire-contracts-page a.hire-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.hire-contracts-page a.hire-card.is-on {
+  border-color: #003f8f;
+  box-shadow: 0 0 0 2px rgba(0, 63, 143, 0.12);
+}
+.hire-contracts-page .hire-card span {
+  color: #64748b;
+}
+.hire-contracts-page .hire-card b {
+  color: #003f8f;
+}
+.hire-contracts-page .hire-cards-four .hire-card:nth-child(2) b {
+  color: #04933a;
+}
+.hire-contracts-page .hire-cards-four .hire-card:nth-child(3) b {
+  color: #b91c1c;
+}
+.hire-contracts-page .hire-cards-four .hire-card:nth-child(4) b {
+  color: #7c3aed;
+}
+.hire-contract-search {
+  background: #fff;
+}
+.hire-contract-search-grid {
+  grid-template-columns: 1.4fr 1fr 1fr;
+}
+.hire-contracts-page .hire-list-count {
+  margin: 4px 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+}
+.hire-contracts-page .hire-list-count b {
+  color: #003f8f;
+}
+.hire-contracts-page .hire-list-stamp {
+  margin: 6px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f766e;
+}
+.hire-contracts-page .hire-live-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  grid-auto-flow: row !important;
+  overflow: visible !important;
+  max-height: none !important;
+  height: auto !important;
+  width: 100% !important;
+}
+.hire-contracts-page .hire-live-card {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+.hire-contracts-page .hire-live-card.is-live {
+  border-color: #86efac;
+}
+@media (max-width: 720px) {
+  .hire-contract-search-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.hire-due-page .hire-mast h1 { color: #003f8f; }
+.hire-due-page .hire-mast p { color: #64748b; font-weight: 600; }
+.hire-due-page .hire-cards-four .hire-card { background: #fff; }
+.hire-due-page .hire-cards-four .hire-card span { color: #64748b; }
+.hire-due-page .hire-cards-four .hire-card:nth-child(1) b { color: #dc2626; }
+.hire-due-page .hire-cards-four .hire-card:nth-child(2) b { color: #2563eb; }
+.hire-due-page .hire-cards-four .hire-card:nth-child(3) b { color: #04933a; }
+.hire-due-page .hire-cards-four .hire-card:nth-child(4) b { color: #7c3aed; }
+.hire-due-page .hire-badge.badge-overdue {
+  background: #fff;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+}
+.hire-due-page .hire-badge.badge-today {
+  background: #fff;
+  border: 1px solid #bfdbfe;
+  color: #2563eb;
+}
+.hire-due-page .hire-badge.badge-upcoming {
+  background: #fff;
+  border: 1px solid #bbf7d0;
+  color: #04933a;
+}
+@media (max-width: 640px) {
+  .hire-create-page .hire-term-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .hire-create-submit {
+    width: 100%;
+  }
+  .hire-source-toggle {
+    grid-template-columns: 1fr;
+  }
+}

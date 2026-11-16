@@ -1,0 +1,55 @@
+/* =====================================================================
+   ⭐ যেকোনো ডিভাইসে স্বয়ংক্রিয় ফুল-ডিসপ্লে ফিক্স (শেয়ারড ফাইল)
+   =====================================================================
+   আমাদের সফটওয়্যারের প্রায় প্রতিটা পেজের মূল wrapper div-এর ক্লাসের
+   নামের শেষে সামঞ্জস্যপূর্ণভাবে "-wrap" ব্যবহার করা হয়েছে (যেমন:
+   pc-wrap, fd-wrap, ln-wrap ইত্যাদি) — মোবাইলের জন্য এগুলোতে ছোট
+   max-width বসানো ছিল।
+
+   vw (ভিউপোর্ট-প্রস্থ) ইউনিট ব্যবহার করা হয়েছে — এর ফলে ছোট ট্যাবলেট,
+   সাধারণ মনিটর, বড় টিভি/ডিসপ্লে — যেই ডিভাইসেই খোলা হোক না কেন, পেজটা
+   স্বয়ংক্রিয়ভাবে সেই ডিভাইসের প্রায় সম্পূর্ণ প্রস্থ (৯৭%) নিজে থেকে
+   পূরণ করে নেবে।
+
+   ⚠️ এই ফাইলটা যেসব পেজ partials/header.php ব্যবহার করে (header.php-তে
+   একই নিয়ম ইতিমধ্যে আছে) সেখানে দরকার নেই — শুধু যেসব পেজের নিজস্ব
+   সম্পূর্ণ HTML স্ট্রাকচার আছে (header.php ব্যবহার করে না) সেগুলোতে
+   সরাসরি <link> করে ব্যবহার করা হয়।
+
+   ⚠️ ইনভয়েস/রসিদ/ভাউচারের মতো প্রিন্ট-নির্দিষ্ট পেজে এটা ব্যবহার করা
+   হয়নি — সেগুলোর নির্দিষ্ট কাগজের মাপ (A4 ইত্যাদি) বজায় রাখা প্রয়োজন।
+   ===================================================================== */
+html, body {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+@media (max-width: 899px) {
+    #main-content,
+    body > div[class*="-wrap"],
+    .card {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}
+@media (min-width: 900px) {
+    #main-content > div[class*="-wrap"],
+    #main-content > div[class$="-wrap"],
+    body > div[class*="-wrap"],
+    body > div[class$="-wrap"] {
+        max-width: min(97vw, 1900px) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 97% !important;
+    }
+    body.ame-pos-terminal-page #main-content > div[class*="-wrap"],
+    body.ame-pos-terminal-page #main-content > div[class$="-wrap"],
+    body.ame-pos-terminal-page #main-content > .ame-pos-page,
+    body.ame-pos-terminal-page #main-content > .pc-wrap {
+        max-width: 100% !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}

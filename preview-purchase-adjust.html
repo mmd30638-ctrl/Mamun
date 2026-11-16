@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>APONSHOP 10.98.495 — ক্রয় সিস্টেম ফিরেছে</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Noto Sans Bengali", "Segoe UI", sans-serif; background: #fff; color: #111; }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 16px; }
+    .bar { display: flex; justify-content: space-between; gap: 12px; padding: 10px 14px; border: 1.5px solid #003f8f; border-radius: 12px; color: #003f8f; font-weight: 800; background: #fff; }
+    h1 { margin: 16px 0 8px; font-size: 22px; color: #0e7490; }
+    p.lead { margin: 0 0 16px; color: #334155; font-weight: 600; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .box { background: #fff; border-radius: 12px; padding: 16px 14px; border: 1.5px solid #ccc; text-align: center; }
+    .box h2 { margin: 0 0 10px; font-size: 15px; }
+    .box strong { display: block; font-size: 28px; }
+    .c1 { border-color: #c2410c; } .c1 h2, .c1 strong { color: #c2410c; }
+    .c2 { border-color: #0369a1; } .c2 h2, .c2 strong { color: #0369a1; }
+    .c3 { border-color: #0f766e; } .c3 h2, .c3 strong { color: #0f766e; }
+    .pay { margin-top: 14px; padding: 14px; border: 1.5px solid #be123c; border-radius: 12px; background: #fff; }
+    .pay h2 { margin: 0 0 10px; color: #be123c; font-size: 16px; }
+    .pay-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .pay-row label { display: flex; flex-direction: column; gap: 4px; font-weight: 700; color: #334155; font-size: 13px; }
+    .pay-row select, .pay-row input { min-height: 40px; padding: 6px 10px; border: 1.5px solid #be123c; border-radius: 8px; background: #fff; font-size: 16px; font-weight: 800; }
+    .pay-btns { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+    .pay-btns button { background: #fff; border: 1.5px solid #be123c; color: #be123c; border-radius: 8px; padding: 8px 12px; font-weight: 800; cursor: pointer; }
+    .note { margin: 14px 0 0; padding: 10px 12px; border: 1.5px solid #6d28d9; border-radius: 10px; color: #6d28d9; font-weight: 700; background: #fff; }
+    .auto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    @media (max-width: 800px) { .grid, .pay-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="bar"><span>APONSHOP · ক্রয় ফিরেছে · ১০.৯৮.৪৯৫</span><span>/v.php = 10.98.495</span></div>
+    <h1>ক্রয় পেজ চালু — তিনটি হিসাব বক্স, পেমেন্ট আছে</h1>
+    <p class="lead">সমন্বয় রিপেয়ার আর ক্রয় পেজ ভাঙবে না। নতুন ও পুরোনো মেমো: সাবেক − ক্রয় + পরিশোধ। পেমেন্ট আগের মতোই। ৫,০০০ − ৩,০০০ = ২,০০০।</p>
+    <div class="grid">
+      <section class="box c1">
+        <h2>সাবেক পাওনা</h2>
+        <strong>৳৫,০০০</strong>
+      </section>
+      <section class="box c2">
+        <h2>আজকের ক্রয়</h2>
+        <strong>৳৩,০০০</strong>
+      </section>
+      <section class="box c3">
+        <h2>অবশিষ্ট পাওনা</h2>
+        <strong id="remain">৳২,০০০</strong>
+      </section>
+    </div>
+    <section class="pay">
+      <h2>💳 পেমেন্ট — বাদ যায়নি</h2>
+      <div class="pay-row">
+        <label>অ্যাকাউন্ট
+          <select id="account">
+            <option value="">বাকিতে (টাকা দেইনি)</option>
+            <option>ক্যাশ</option>
+            <option>ব্যাংক</option>
+          </select>
+        </label>
+        <label>পরিশোধ
+          <input id="paid" type="number" min="0" step="1" value="0" inputmode="decimal">
+        </label>
+      </div>
+      <div class="pay-btns">
+        <button type="button" id="payFull">পুরো পরিশোধ</button>
+        <button type="button" id="payNone">সব বাকি</button>
+      </div>
+    </section>
+    <p class="note" id="note">৫,০০০ − ৩,০০০ + পরিশোধ ০ = ২,০০০</p>
+    <div class="auto" aria-hidden="true">লেজার রাউটিং ও পুরোনো মেমো হাইড থেকে অটো</div>
+  </div>
+  <script>
+    var previous = 5000, bill = 3000;
+    function sync() {
+      var paid = Math.max(0, Number(document.getElementById('paid').value) || 0);
+      var remain = previous - bill + paid;
+      document.getElementById('remain').textContent = '৳' + remain.toLocaleString('bn-BD');
+      document.getElementById('note').textContent = '৫,০০০ − ৩,০০০ + পরিশোধ ' + paid.toLocaleString('bn-BD') + ' = ' + remain.toLocaleString('bn-BD');
+    }
+    document.getElementById('paid').addEventListener('input', sync);
+    document.getElementById('payFull').addEventListener('click', function () {
+      document.getElementById('paid').value = String(bill);
+      document.getElementById('account').selectedIndex = 1;
+      sync();
+    });
+    document.getElementById('payNone').addEventListener('click', function () {
+      document.getElementById('paid').value = '0';
+      document.getElementById('account').selectedIndex = 0;
+      sync();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+LEDGER LOCK — মালিক ১৬ অক্টোবর ২০২৬
+কাস্টমার ও সাপ্লায়ারের এমাউন্ট, লেজার ও স্টেটমেন্ট বন্ধ।
+মালিকের অনুমতি ছাড়া এই ফাইল সহজ আপডেটে বদলাবে না, আর পেজ খুললে ডাটাবেসের বকেয়া আবার গোনা হবে না।
+খুলতে হলে সার্ভার রুটে LEDGER_UNLOCK.txt দিন। জিপে এই আনলক ফাইল যাবে না।
+
+দোকানের বিক্রয়, ক্রয় ও পেমেন্ট খাতায় বসবে — সেই অনুমতি আছে।
+যা বন্ধ: স্টেটমেন্ট/লিস্ট খুলে সব খাতা রিবিল্ড, ব্যাকফিল, রিপেয়ার-অল, আপডেট ZIP দিয়ে এই ফাইল ওভাররাইট।
+
+ফাইল:
+- LEDGER_LOCK.txt
+- includes/ledger_lock.php
+- includes/running_ledger.php
+- includes/purchase_functions.php
+- includes/supplier_settlement.php
+- modules/customers/ledger.php
+- modules/customers/customer_ledger_functions.php
+- modules/customers/customer_schema.php
+- modules/suppliers/statement.php
+- modules/suppliers/ledger.php
+- modules/suppliers/list.php
+- modules/suppliers/dashboard.php

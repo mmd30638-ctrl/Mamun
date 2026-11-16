@@ -1,0 +1,9 @@
+/* 10.98.461 — শুধু বিদ্যমান বিক্রয় রিপোর্ট (sales_report.php) ব্যাকগ্রাউন্ড সাদা।
+   ফ্রন্ট পেজ (body:not(.ame-srep-page)) এই ফাইল ছুঁয় না। বাটন/টেবিল ফ্রন্টের কালারই থাকে। */
+
+html body.ame-srep-page:not(.ame-sales-pro):not(.ame-pos-terminal-page),
+html body.ame-srep-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+}

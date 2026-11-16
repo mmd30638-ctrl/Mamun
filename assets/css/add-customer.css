@@ -1,0 +1,551 @@
+/* 10.98.486 — কাস্টমার যুক্ত: বকেয়া টেবিলের মতো টিভি রেজুলেশনে দূর থেকে বড় */
+html,
+body.ame-ac-page {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #0f172a;
+  font-family: "Segoe UI", "Noto Sans Bengali", sans-serif;
+  overflow: hidden;
+}
+
+body.ame-ac-page .ame-ac-well {
+  position: fixed;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #ffffff !important;
+  background-image: none !important;
+  box-sizing: border-box;
+}
+
+body.ame-ac-page .form-card {
+  background: #ffffff !important;
+  background-image: none !important;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 16px 18px 20px;
+  border-radius: 14px;
+  border: 1.5px solid #003f8f;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+
+body.ame-ac-page .ac-jump {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0 0 14px;
+}
+body.ame-ac-page .ac-jump-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 900;
+  font-size: 16px;
+  text-decoration: none;
+  text-align: center;
+  background: #ffffff !important;
+  background-image: none !important;
+  box-sizing: border-box;
+}
+body.ame-ac-page .ac-jump-bag {
+  color: #c2410c !important;
+  -webkit-text-fill-color: #c2410c !important;
+  border: 2px solid #c2410c !important;
+}
+body.ame-ac-page .ac-jump-home {
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  border: 2px solid #003f8f !important;
+}
+
+body.ame-ac-page .form-card h2 {
+  margin: 0 0 16px;
+  font-size: 22px;
+  font-weight: 900;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  background: transparent !important;
+  line-height: 1.35;
+}
+
+body.ame-ac-page .form-group {
+  margin-bottom: 16px;
+  min-width: 0;
+}
+
+body.ame-ac-page .form-group label {
+  display: block;
+  font-weight: 800;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+body.ame-ac-page .required-star {
+  color: #be185d !important;
+}
+
+body.ame-ac-page .form-group input,
+body.ame-ac-page .form-group textarea,
+body.ame-ac-page .form-group select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #94a3b8;
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-size: 15px;
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #0f172a;
+  min-height: 46px;
+}
+
+body.ame-ac-page .form-group input:focus,
+body.ame-ac-page .form-group textarea:focus,
+body.ame-ac-page .form-group select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 63, 143, 0.12);
+  background: #ffffff !important;
+}
+
+body.ame-ac-page .form-group small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+body.ame-ac-page .input-error {
+  border-color: #be185d !important;
+  background: #ffffff !important;
+}
+
+body.ame-ac-page .error-msg {
+  color: #be185d !important;
+  font-size: 13px;
+  margin-top: 4px;
+  display: none;
+  font-weight: 700;
+}
+
+body.ame-ac-page .ac-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 14px;
+}
+
+body.ame-ac-page .checkbox-group {
+  display: flex;
+  gap: 14px;
+  background: #ffffff !important;
+  background-image: none !important;
+  padding: 14px 16px;
+  border-radius: 10px;
+  flex-wrap: wrap;
+  border: 1.5px solid #003f8f;
+}
+
+body.ame-ac-page .checkbox-group label {
+  color: #003f8f !important;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+body.ame-ac-page .btn-submit {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+  padding: 14px 20px;
+  border: 2px solid #15803d !important;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: none;
+  margin-top: 8px;
+  min-height: 52px;
+}
+
+body.ame-ac-page .btn-submit:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+body.ame-ac-page .btn-submit:disabled {
+  background: #ffffff !important;
+  color: #94a3b8 !important;
+  -webkit-text-fill-color: #94a3b8 !important;
+  border-color: #94a3b8 !important;
+  cursor: not-allowed;
+}
+
+body.ame-ac-page .section-title {
+  margin: 22px 0 10px;
+  font-size: 15px;
+  font-weight: 800;
+  padding-bottom: 6px;
+  background: #ffffff !important;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
+
+body.ame-ac-page .ledger-hint,
+body.ame-ac-page .preset-banner,
+body.ame-ac-page .due-watch-box,
+body.ame-ac-page .photo-ready,
+body.ame-ac-page .ac-role-note {
+  background: #ffffff !important;
+  background-image: none !important;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  margin-bottom: 14px;
+  font-weight: 700;
+}
+
+body.ame-ac-page .ledger-hint {
+  border: 1.5px solid #c2410c;
+  color: #c2410c !important;
+}
+
+body.ame-ac-page .preset-banner {
+  border: 1.5px solid #0e7490;
+  color: #0e7490 !important;
+}
+
+body.ame-ac-page .due-watch-box {
+  border: 1.5px solid #c2410c;
+  margin: 4px 0 16px;
+}
+
+body.ame-ac-page .due-watch-box label {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+  font-weight: 800;
+  color: #c2410c !important;
+}
+
+body.ame-ac-page .due-watch-box input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: #c2410c;
+}
+
+body.ame-ac-page .due-watch-box strong {
+  display: block;
+  font-size: 15px;
+  color: #c2410c !important;
+}
+
+body.ame-ac-page .due-watch-box em {
+  display: block;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  color: #7c3aed !important;
+  margin-top: 4px;
+  line-height: 1.45;
+}
+
+body.ame-ac-page .photo-ready {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid #15803d;
+  color: #15803d !important;
+}
+
+body.ame-ac-page .photo-ready img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1.5px solid #15803d;
+}
+
+body.ame-ac-page .photo-hint {
+  font-size: 13px;
+  color: #0e7490 !important;
+  margin-top: 6px;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+body.ame-ac-page .ac-role-note {
+  border: 1.5px solid #003f8f;
+  color: #003f8f !important;
+}
+
+body.ame-ac-page #roleInfoBanner {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #7c3aed !important;
+  background: #ffffff !important;
+}
+
+body.ame-ac-page .ac-cam-open {
+  color: #003f8f !important;
+  background: #ffffff !important;
+  border: 1.5px solid #003f8f !important;
+  margin-top: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+body.ame-ac-page .cam-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #0B1E4D;
+  z-index: 100000;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+body.ame-ac-page .cam-overlay.open {
+  display: flex;
+}
+
+body.ame-ac-page .cam-overlay video {
+  width: min(96vw, 420px);
+  max-height: 58vh;
+  background: #000;
+  border-radius: 16px;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+body.ame-ac-page .cam-overlay .cam-actions {
+  width: min(96vw, 420px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+body.ame-ac-page .cam-overlay button {
+  min-height: 46px;
+  border: 0;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+body.ame-ac-page .cam-shot {
+  background: #ffffff;
+  color: #003f8f;
+  border: 1.5px solid #003f8f !important;
+}
+
+body.ame-ac-page .cam-skip {
+  background: #ffffff;
+  color: #0e7490;
+  border: 1.5px solid #0e7490 !important;
+}
+
+body.ame-ac-page .cam-status {
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* ইউনিক ফ্রন্ট — লেবেল ও বর্ডার; বক্স সাদা */
+body.ame-ac-page .ac-navy > label,
+body.ame-ac-page .section-title.ac-navy { color: #003f8f !important; border-bottom-color: #003f8f; }
+body.ame-ac-page .ac-navy input,
+body.ame-ac-page .ac-navy textarea,
+body.ame-ac-page .ac-navy select { border-color: #003f8f !important; }
+body.ame-ac-page .ac-navy small { color: #003f8f !important; }
+
+body.ame-ac-page .ac-cyan > label,
+body.ame-ac-page .section-title.ac-cyan { color: #0e7490 !important; border-bottom-color: #0e7490; }
+body.ame-ac-page .ac-cyan input,
+body.ame-ac-page .ac-cyan textarea,
+body.ame-ac-page .ac-cyan select { border-color: #0e7490 !important; }
+body.ame-ac-page .ac-cyan small { color: #0e7490 !important; }
+
+body.ame-ac-page .ac-green > label,
+body.ame-ac-page .section-title.ac-green { color: #15803d !important; border-bottom-color: #15803d; }
+body.ame-ac-page .ac-green input,
+body.ame-ac-page .ac-green textarea,
+body.ame-ac-page .ac-green select { border-color: #15803d !important; }
+body.ame-ac-page .ac-green small { color: #15803d !important; }
+
+body.ame-ac-page .ac-rose > label,
+body.ame-ac-page .section-title.ac-rose { color: #be185d !important; border-bottom-color: #be185d; }
+body.ame-ac-page .ac-rose input,
+body.ame-ac-page .ac-rose textarea,
+body.ame-ac-page .ac-rose select { border-color: #be185d !important; }
+body.ame-ac-page .ac-rose small { color: #be185d !important; }
+
+body.ame-ac-page .ac-orange > label,
+body.ame-ac-page .section-title.ac-orange { color: #c2410c !important; border-bottom-color: #c2410c; }
+body.ame-ac-page .ac-orange input,
+body.ame-ac-page .ac-orange textarea,
+body.ame-ac-page .ac-orange select { border-color: #c2410c !important; }
+body.ame-ac-page .ac-orange small { color: #c2410c !important; }
+
+body.ame-ac-page .ac-violet > label,
+body.ame-ac-page .section-title.ac-violet { color: #7c3aed !important; border-bottom-color: #7c3aed; }
+body.ame-ac-page .ac-violet input,
+body.ame-ac-page .ac-violet textarea,
+body.ame-ac-page .ac-violet select { border-color: #7c3aed !important; }
+body.ame-ac-page .ac-violet small { color: #7c3aed !important; }
+
+body.ame-ac-page .ac-teal > label,
+body.ame-ac-page .section-title.ac-teal { color: #0f766e !important; border-bottom-color: #0f766e; }
+body.ame-ac-page .ac-teal input,
+body.ame-ac-page .ac-teal textarea,
+body.ame-ac-page .ac-teal select { border-color: #0f766e !important; }
+body.ame-ac-page .ac-teal small { color: #0f766e !important; }
+
+/* ল্যাপটপ — পড়া যায়, জুম ছোট করে না, উপরে-নিচে স্ক্রল */
+@media (min-width: 900px) and (max-width: 1499px) {
+  html body.ame-ac-page .form-card {
+    max-width: none;
+    width: 100%;
+    padding: 16px 18px 22px;
+  }
+  html body.ame-ac-page .form-card h2 { font-size: 26px; }
+  html body.ame-ac-page .ac-jump-box {
+    min-height: 56px;
+    font-size: 18px;
+  }
+  html body.ame-ac-page .form-group label { font-size: 16px; }
+  html body.ame-ac-page .form-group input,
+  html body.ame-ac-page .form-group textarea,
+  html body.ame-ac-page .form-group select {
+    font-size: 16px;
+    min-height: 52px;
+  }
+  html body.ame-ac-page .section-title { font-size: 16px; }
+  html body.ame-ac-page .btn-submit {
+    font-size: 18px;
+    min-height: 56px;
+  }
+}
+
+/* দোকানের টিভি (~1920) — বকেয়া টেবিলের মতো পুরো চওড়া, দূর থেকে পড়া যায় */
+@media (min-width: 1500px) {
+  html body.ame-ac-page .ame-ac-well {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+  html body.ame-ac-page .form-card {
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 18px 22px 28px !important;
+    transform: none !important;
+    zoom: 1 !important;
+  }
+  html body.ame-ac-page .form-card h2 {
+    font-size: 36px !important;
+    margin-bottom: 16px !important;
+  }
+  html body.ame-ac-page .ac-jump {
+    gap: 16px !important;
+    margin-bottom: 18px !important;
+  }
+  html body.ame-ac-page .ac-jump-box {
+    min-height: 72px !important;
+    font-size: 26px !important;
+    border-width: 2px !important;
+    padding: 16px 22px !important;
+  }
+  html body.ame-ac-page .ac-row {
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 14px 20px !important;
+  }
+  html body.ame-ac-page .form-group {
+    margin-bottom: 14px !important;
+  }
+  html body.ame-ac-page .form-group label {
+    font-size: 22px !important;
+    margin-bottom: 8px !important;
+    font-weight: 900 !important;
+  }
+  html body.ame-ac-page .form-group input,
+  html body.ame-ac-page .form-group textarea,
+  html body.ame-ac-page .form-group select {
+    font-size: 24px !important;
+    min-height: 72px !important;
+    padding: 16px 18px !important;
+    border-width: 2px !important;
+    border-radius: 12px !important;
+  }
+  html body.ame-ac-page .form-group small,
+  html body.ame-ac-page .photo-hint,
+  html body.ame-ac-page .error-msg {
+    font-size: 16px !important;
+  }
+  html body.ame-ac-page .section-title {
+    font-size: 22px !important;
+    margin: 18px 0 12px !important;
+  }
+  html body.ame-ac-page .checkbox-group {
+    padding: 16px 18px !important;
+    gap: 22px !important;
+  }
+  html body.ame-ac-page .checkbox-group label {
+    font-size: 20px !important;
+  }
+  html body.ame-ac-page .checkbox-group input[type="checkbox"],
+  html body.ame-ac-page .due-watch-box input[type="checkbox"] {
+    width: 22px !important;
+    height: 22px !important;
+    transform: scale(1.35);
+    transform-origin: left center;
+  }
+  html body.ame-ac-page .btn-submit {
+    font-size: 26px !important;
+    min-height: 72px !important;
+    padding: 16px 24px !important;
+  }
+  html body.ame-ac-page .ledger-hint,
+  html body.ame-ac-page .preset-banner,
+  html body.ame-ac-page .due-watch-box,
+  html body.ame-ac-page .ac-role-note {
+    font-size: 18px !important;
+    padding: 16px 18px !important;
+  }
+  html body.ame-ac-page .due-watch-box strong {
+    font-size: 22px !important;
+  }
+  html body.ame-ac-page .due-watch-box em {
+    font-size: 16px !important;
+  }
+  html body.ame-ac-page .ac-cam-open {
+    font-size: 20px !important;
+    min-height: 56px !important;
+    padding: 12px 18px !important;
+  }
+  html body.ame-ac-page .d8-filter input,
+  html body.ame-ac-page #roleInfoBanner {
+    font-size: 18px !important;
+  }
+}

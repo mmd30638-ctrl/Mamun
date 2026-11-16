@@ -1,0 +1,433 @@
+/* 10.98.208 — top bar keeps every project icon, then the shop logo.
+   Loaded last so later sheets cannot scroll the icons away or crop the mark. */
+
+html body .master-header-fixed {
+    display: flex !important;
+    align-items: center !important;
+    overflow: visible !important;
+}
+
+html body .master-header-fixed .hdr-btn-group {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 6px !important;
+    max-width: none !important;
+    width: auto !important;
+    overflow: visible !important;
+    order: 0 !important;
+}
+
+html body .master-header-fixed .hdr-icon-btn,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-menu,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-home,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-sales,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-custadd,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-due8,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-bell,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-pay,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-expense,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-txn,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-staffpay,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-duty,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-live,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-stock {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    flex: 0 0 32px !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    max-width: none !important;
+    overflow: visible !important;
+    pointer-events: auto !important;
+}
+
+html body .master-header-fixed .hdr-icon-btn.hdr-i-menu {
+    flex-basis: 36px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+}
+
+/* প্রতিটি আইকনের নিজের রং — শেষে, যাতে অন্য শিট মুছে না ফেলে */
+html body .master-header-fixed .hdr-icon-btn {
+    background-image: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    box-shadow: 0 2px 5px rgba(15, 23, 42, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+    color: #fff !important;
+}
+html body .master-header-fixed .hdr-icon-btn svg {
+    color: inherit !important;
+    opacity: 1 !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-menu {
+    background: linear-gradient(145deg, #fbbf24, #b45309) !important;
+    color: #fffbeb !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-home {
+    background: linear-gradient(145deg, #38bdf8, #0369a1) !important;
+    color: #f0f9ff !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-sales {
+    background: linear-gradient(145deg, #22c55e, #15803d) !important;
+    color: #f0fdf4 !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-custadd {
+    background: linear-gradient(145deg, #f472b6, #be185d) !important;
+    color: #fdf2f8 !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-bell {
+    background: linear-gradient(145deg, #f87171, #b91c1c) !important;
+    color: #fff1f2 !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-due8 {
+    display: inline-flex !important;
+    background: linear-gradient(145deg, #fb923c, #c2410c) !important;
+    color: #fff7ed !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-due8.is-off {
+    background: linear-gradient(145deg, #94a3b8, #64748b) !important;
+    color: #f8fafc !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-pay {
+    background: linear-gradient(145deg, #22d3ee, #0e7490) !important;
+    color: #ecfeff !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-expense {
+    background: linear-gradient(145deg, #a78bfa, #6d28d9) !important;
+    color: #f5f3ff !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-txn {
+    background: linear-gradient(145deg, #818cf8, #4338ca) !important;
+    color: #eef2ff !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-staffpay {
+    background: linear-gradient(145deg, #14b8a6, #0f766e) !important;
+    color: #f0fdfa !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-duty {
+    display: inline-flex !important;
+    background: linear-gradient(145deg, #4ade80, #15803d) !important;
+    color: #f0fdf4 !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-live {
+    display: inline-flex !important;
+    background: linear-gradient(145deg, #22c55e, #15803d) !important;
+    color: #f0fdf4 !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-stock {
+    background: linear-gradient(145deg, #fb923c, #c2410c) !important;
+    color: #fff7ed !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-sreport {
+    display: inline-flex !important;
+    background: linear-gradient(145deg, #38bdf8, #0369a1) !important;
+    color: #f0f9ff !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-keys {
+    display: inline-flex !important;
+    background: linear-gradient(145deg, #e879f9, #a21caf) !important;
+    color: #fdf4ff !important;
+}
+
+html body .master-header-fixed .hdr-brand-box {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: min(42%, 320px) !important;
+    overflow: hidden !important;
+    order: 1 !important;
+}
+
+html body .master-header-fixed .hdr-brand-box img,
+html body .master-header-fixed .hdr-brand-box .hdr-brand-png {
+    display: block !important;
+    height: 48px !important;
+    width: auto !important;
+    max-width: 168px !important;
+    max-height: 48px !important;
+    object-fit: contain !important;
+    flex: 0 0 auto !important;
+}
+
+html body .master-header-fixed .hdr-clock {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    order: 2 !important;
+}
+
+@media (max-width: 900px) {
+    html body .master-header-fixed {
+        flex-wrap: wrap !important;
+        height: auto !important;
+        row-gap: 6px !important;
+        padding-bottom: 6px !important;
+        justify-content: flex-start !important;
+    }
+    html body .master-header-fixed .hdr-btn-group {
+        order: -1 !important;
+        flex: 1 0 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+        gap: 4px !important;
+    }
+    html body .master-header-fixed .hdr-icon-btn,
+    html body.ame-premium-ui .master-header-fixed .hdr-icon-btn {
+        flex: 0 0 30px !important;
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+    }
+    html body .master-header-fixed .hdr-icon-btn.hdr-i-menu {
+        flex-basis: 32px !important;
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+    }
+    html body .master-header-fixed .hdr-brand-box {
+        max-width: min(58vw, 220px) !important;
+        width: auto !important;
+    }
+    html body .master-header-fixed .hdr-brand-box h1 {
+        display: none !important;
+    }
+html body .master-header-fixed .hdr-brand-box img,
+html body .master-header-fixed .hdr-brand-box .hdr-brand-png {
+    height: 40px !important;
+    max-height: 40px !important;
+    max-width: min(56vw, 200px) !important;
+}
+}
+
+/* বিক্রয় পাতায় আইকনের নিচের সাদা বক্স নেই। লোগো আইকন সারির ডানে। */
+html body.ame-pos-terminal-page:not(.ame-purchase-desk):not(.ame-purchase-terminal-page) #ameRunDock {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    overflow: hidden !important;
+}
+html body.ame-pos-terminal-page:not(.ame-purchase-desk):not(.ame-purchase-terminal-page) .master-header-fixed {
+    min-height: 0 !important;
+    row-gap: 0 !important;
+    padding-bottom: 0 !important;
+    align-items: center !important;
+}
+html body.ame-pos-terminal-page:not(.ame-purchase-desk):not(.ame-purchase-terminal-page) .master-header-fixed .hdr-btn-group {
+    order: 0 !important;
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+html body.ame-pos-terminal-page:not(.ame-purchase-desk):not(.ame-purchase-terminal-page) .master-header-fixed .hdr-brand-box,
+html body.ame-premium-ui.ame-pos-terminal-page:not(.ame-purchase-desk):not(.ame-purchase-terminal-page) .master-header-fixed .hdr-brand-box {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    max-width: 0 !important;
+    flex: 0 0 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    overflow: hidden !important;
+    background: transparent !important;
+}
+html body.ame-pos-terminal-page:not(.ame-purchase-desk):not(.ame-purchase-terminal-page) .master-header-fixed .hdr-sale-logo {
+    display: block !important;
+    visibility: visible !important;
+    height: 36px !important;
+    width: auto !important;
+    max-width: 128px !important;
+    max-height: 36px !important;
+    margin: 0 0 0 auto !important;
+    object-fit: contain !important;
+    background: transparent !important;
+    flex: 0 0 auto !important;
+}
+html body.ame-pos-terminal-page:not(.ame-purchase-desk):not(.ame-purchase-terminal-page) .master-header-fixed .hdr-brand-box h1 {
+    display: none !important;
+}
+html body.ame-pos-terminal-page:not(.ame-purchase-desk):not(.ame-purchase-terminal-page) .master-header-fixed .hdr-brand-box img,
+html body.ame-pos-terminal-page:not(.ame-purchase-desk):not(.ame-purchase-terminal-page) .master-header-fixed .hdr-brand-png {
+    display: block !important;
+    visibility: visible !important;
+    height: 36px !important;
+    max-height: 36px !important;
+    width: auto !important;
+    max-width: 128px !important;
+    object-fit: contain !important;
+    background: transparent !important;
+}
+html body.ame-pos-terminal-page:not(.ame-purchase-desk):not(.ame-purchase-terminal-page) .master-header-fixed .hdr-clock {
+    display: none !important;
+}
+html body.ame-pos-terminal-page:has(#ameRunDock):not(:has(#ameTickerBar)) #main-content {
+    padding-top: var(--ame-header-h, 48px) !important;
+}
+
+body.ame-pos-terminal-page #ameSaleKeys[hidden] {
+    display: none !important;
+}
+body.ame-pos-terminal-page #ameSaleKeys:not([hidden]) {
+    display: flex !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 5000000 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 18px !important;
+    background: rgba(15, 23, 42, 0.55) !important;
+}
+body.ame-pos-terminal-page #ameSaleKeys .ame-sale-keys-card {
+    position: relative !important;
+    width: min(760px, 96vw) !important;
+    max-height: 90vh !important;
+    overflow: auto !important;
+    margin: 0 !important;
+    padding: 22px 22px 16px !important;
+    border-radius: 16px !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28) !important;
+}
+body.ame-pos-terminal-page #ameSaleKeys h2 {
+    margin: 0 36px 14px 0 !important;
+    color: #003F8F !important;
+    font-size: 32px !important;
+    font-weight: 800 !important;
+    line-height: 1.3 !important;
+}
+body.ame-pos-terminal-page #ameSaleKeys ul {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px 16px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+body.ame-pos-terminal-page #ameSaleKeys li {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    min-height: 48px !important;
+    color: #111827 !important;
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    line-height: 1.35 !important;
+}
+body.ame-pos-terminal-page #ameSaleKeys kbd {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+    min-width: 72px !important;
+    min-height: 40px !important;
+    padding: 4px 8px !important;
+    border: 2px solid #003F8F !important;
+    border-radius: 8px !important;
+    background: #003F8F !important;
+    color: #ffffff !important;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    font-family: inherit !important;
+}
+body.ame-pos-terminal-page #ameSaleKeys .ame-sale-keys-x {
+    position: absolute !important;
+    top: 12px !important;
+    right: 12px !important;
+    width: 44px !important;
+    height: 44px !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    background: #003F8F !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    font-size: 28px !important;
+    font-weight: 800 !important;
+    cursor: pointer !important;
+}
+@media (max-width: 700px) {
+    body.ame-pos-terminal-page #ameSaleKeys ul {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Sell-without-stock sits on the stock icon, inside the header, not clipped. */
+html body .master-header-fixed .hdr-stock-wrap {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    height: 32px !important;
+    gap: 0 !important;
+    overflow: visible !important;
+}
+html body .master-header-fixed .hdr-stock-wrap .hdr-icon-btn.hdr-i-stock {
+    border-radius: 10px 0 0 10px !important;
+}
+html body .master-header-fixed .hdr-stock-free {
+    position: static !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 32px !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    margin: 0 0 0 -1px !important;
+    padding: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+    border-radius: 0 10px 10px 0 !important;
+    background: #e2e8f0 !important;
+    color: #64748b !important;
+    -webkit-text-fill-color: #64748b !important;
+    overflow: visible !important;
+}
+html body .master-header-fixed .hdr-stock-free.is-on {
+    background: #047857 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-menu,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-home,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-return,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-sales,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-keys,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-duty,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-custadd,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-bell,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-pay,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-txn,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-live,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-staffpay,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-stock {
+    background: #ffffff !important;
+    background-image: none !important;
+    border: 2px solid currentColor !important;
+    box-shadow: none !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-menu { color: #b45309 !important; -webkit-text-fill-color: #b45309 !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-home { color: #0369a1 !important; -webkit-text-fill-color: #0369a1 !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-return { color: #e11d48 !important; -webkit-text-fill-color: #e11d48 !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-sales { color: #15803d !important; -webkit-text-fill-color: #15803d !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-keys { color: #1d4ed8 !important; -webkit-text-fill-color: #1d4ed8 !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-duty { color: #166534 !important; -webkit-text-fill-color: #166534 !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-custadd { color: #be185d !important; -webkit-text-fill-color: #be185d !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-bell { color: #b91c1c !important; -webkit-text-fill-color: #b91c1c !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-pay { color: #0e7490 !important; -webkit-text-fill-color: #0e7490 !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-txn { color: #7c3aed !important; -webkit-text-fill-color: #7c3aed !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-live { color: #c2410c !important; -webkit-text-fill-color: #c2410c !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-staffpay { color: #0f766e !important; -webkit-text-fill-color: #0f766e !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-stock { color: #1d4ed8 !important; -webkit-text-fill-color: #1d4ed8 !important; }

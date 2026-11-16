@@ -1,0 +1,597 @@
+/**
+ * Customer deposit payout + full statement desk.
+ * 10.98.581 — opening + due/advance KPIs match the live ledger.
+ */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,500;0,9..40,700;0,9..40,800;1,9..40,700&family=Noto+Sans+Bengali:wght@500;600;700;800&display=swap");
+
+.cdesk-wrap {
+  --ink: #111111;
+  --mute: #64748b;
+  --line: rgba(17, 17, 17, 0.10);
+  --paper: #ffffff;
+  width: min(calc(100% - 28px), 97vw);
+  max-width: 1900px;
+  margin: 8px auto 32px;
+  padding: 0 0 24px;
+  box-sizing: border-box;
+  font-family: "DM Sans", "Noto Sans Bengali", sans-serif;
+  color: var(--ink);
+}
+.cdesk-wrap .ame-pair {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.2;
+}
+.cdesk-wrap .ame-pair strong { font-weight: 800; }
+.cdesk-wrap .ame-pair em {
+  font-style: normal;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--mute);
+}
+
+.cdesk-mast {
+  margin: 0 0 12px;
+  padding: clamp(16px, 4vw, 22px);
+  border-radius: 22px;
+  background: linear-gradient(165deg, #f8fafc 0%, #fff 55%, #eef2ff 100%);
+  border: 1px solid var(--line);
+}
+.cdesk-kicker {
+  margin: 0 0 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #3730a3;
+}
+.cdesk-mast h1 {
+  margin: 0 0 6px;
+  font-size: clamp(22px, 4vw, 30px);
+  letter-spacing: -0.03em;
+}
+.cdesk-mast > p { margin: 0; font-weight: 600; color: #334155; }
+
+.cdesk-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  margin: 0 0 12px;
+}
+.cdesk-formula {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  font-weight: 800;
+  font-size: 13px;
+  color: #0B1E4D;
+  text-align: center;
+}
+.cdesk-memo-acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.cdesk-memo-acts a {
+  font-size: 11px;
+  font-weight: 800;
+  color: #003F8F;
+}
+.cdesk-stats article {
+  padding: 14px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+.cdesk-stats span { font-size: 12px; font-weight: 800; color: var(--mute); }
+.cdesk-stats b {
+  display: block;
+  margin-top: 4px;
+  font-size: clamp(18px, 3vw, 26px);
+  font-variant-numeric: tabular-nums;
+}
+.cdesk-stats .is-in b { color: #15803d; }
+.cdesk-stats .is-out b { color: #be123c; }
+.cdesk-stats .is-left b { color: #1d4ed8; }
+.cdesk-stats .is-due b { color: #9f1239; }
+
+.cdesk-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+.cdesk-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: #111;
+  color: #fff !important;
+  font-weight: 800;
+  font-size: 13px;
+  text-decoration: none !important;
+  cursor: pointer;
+  font-family: inherit;
+}
+.cdesk-btn.ghost {
+  background: #fff;
+  color: #111 !important;
+  border-color: var(--line);
+}
+.cdesk-flash {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+.cdesk-flash.ok { background: #ecfdf3; color: #166534; }
+.cdesk-flash.err { background: #fef2f2; color: #991b1b; }
+
+.cdesk-card {
+  padding: 16px;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
+  margin: 0 0 12px;
+}
+.cdesk-who { font-weight: 800; font-size: 18px; }
+.cdesk-meta { margin-top: 4px; color: var(--mute); font-weight: 600; font-size: 13px; }
+
+.cdesk-search {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font: inherit;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+.cdesk-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eef2f7;
+  cursor: pointer;
+  text-decoration: none !important;
+  color: inherit;
+}
+.cdesk-row b { color: #111; }
+.cdesk-held { color: #15803d; font-weight: 800; }
+.cdesk-due { color: #be123c; font-weight: 800; }
+
+.cdesk-form {
+  display: grid;
+  gap: 12px;
+}
+@media (min-width: 800px) {
+  .cdesk-form { grid-template-columns: 1fr 1fr; }
+  .cdesk-form .full { grid-column: 1 / -1; }
+}
+.cdesk-field { display: grid; gap: 6px; font-weight: 700; }
+.cdesk-field input, .cdesk-field select, .cdesk-field textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.cdesk-table-wrap {
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+table.cdesk-table {
+  width: 100%;
+  border-collapse: collapse;
+  display: table !important;
+  min-width: 720px;
+}
+table.cdesk-table th,
+table.cdesk-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #eef2f7;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  vertical-align: top;
+}
+table.cdesk-table th {
+  background: #111;
+  color: #fff;
+  font-weight: 800;
+}
+table.cdesk-table td.num,
+table.cdesk-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.cdesk-table .bill { color: #9a3412; }
+table.cdesk-table .dep { color: #15803d; }
+table.cdesk-table .wd { color: #be123c; }
+table.cdesk-table tfoot td { background: #f8fafc; font-weight: 800; }
+.cdesk-empty { padding: 36px 12px; text-align: center; color: var(--mute); font-weight: 600; }
+
+@media print {
+  .no-print { display: none !important; }
+  .cdesk-wrap { width: 100%; max-width: none; }
+  table.cdesk-table th { background: #111 !important; color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* 10.98.516 — স্টেটমেন্ট পাতার ক্যানভাস সাদা; কার্ড মাঝখানে। */
+html:has(body.ame-customer-ledger),
+html body.ame-customer-ledger,
+html body.ame-premium-ui.ame-customer-ledger,
+html body.ame-customer-ledger #main-content {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+html body.ame-customer-ledger .cdesk-wrap,
+html.ame-device-phone body.ame-customer-ledger .cdesk-wrap,
+html.ame-device-tablet body.ame-customer-ledger .cdesk-wrap,
+html.ame-device-pc body.ame-customer-ledger .cdesk-wrap,
+html.ame-phone-desktop body.ame-customer-ledger .cdesk-wrap,
+html.ame-force-phone body.ame-customer-ledger .cdesk-wrap,
+html.ame-is-phone body.ame-customer-ledger .cdesk-wrap {
+  width: min(1120px, calc(100% - 16px)) !important;
+  max-width: 1120px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+html body.ame-customer-ledger .cdesk-mast,
+html body.ame-customer-ledger .cdesk-card,
+html body.ame-customer-ledger .cdesk-stats article,
+html body.ame-customer-ledger .cdesk-table-wrap,
+html body.ame-customer-ledger table.cdesk-table tfoot td {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+html body.ame-customer-ledger #stList {
+  max-height: min(70vh, 640px);
+  overflow: auto;
+}
+html body.ame-customer-ledger table.cdesk-table,
+html body.ame-customer-ledger table.cdesk-table tbody tr,
+html body.ame-customer-ledger table.cdesk-table tbody tr:nth-child(even),
+html body.ame-customer-ledger table.cdesk-table tbody tr:hover,
+html body.ame-customer-ledger table.cdesk-table td {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+.cdesk-work {
+  margin-top: 8px;
+  padding: 8px;
+  border: 1px solid #dbeafe;
+  border-radius: 8px;
+  background: #f8fbff;
+}
+.cdesk-work > b {
+  display: block;
+  margin-bottom: 6px;
+  color: #003f8f;
+  font-size: 12px;
+  font-weight: 800;
+}
+table.cdesk-work-table {
+  width: 100%;
+  min-width: 0 !important;
+  border-collapse: collapse;
+  display: table !important;
+  background: #fff;
+}
+table.cdesk-work-table th,
+table.cdesk-work-table td {
+  padding: 4px 6px !important;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 12px !important;
+  font-weight: 700;
+  text-align: left;
+  background: #fff !important;
+  color: #111827 !important;
+}
+table.cdesk-work-table th {
+  color: #166534 !important;
+  background: #f0fdf4 !important;
+}
+table.cdesk-work-table td.num,
+table.cdesk-work-table th.num {
+  text-align: right;
+  white-space: nowrap;
+}
+html body.ame-customer-ledger table.ame-stack-table .cdesk-work,
+html body.ame-customer-ledger table.cdesk-table td .cdesk-work {
+  flex: 1 0 100%;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+html body.ame-customer-ledger table.ame-stack-table > tbody > tr > td.cdesk-has-work,
+html body.ame-customer-ledger table.ame-stack-table > tbody > tr > td:has(.cdesk-work) {
+  flex-wrap: wrap !important;
+}
+html body.ame-customer-ledger table.ame-stack-table .cdesk-work table.cdesk-work-table,
+html body.ame-customer-ledger table.ame-stack-table .cdesk-work table.cdesk-work-table > thead,
+html body.ame-customer-ledger table.ame-stack-table .cdesk-work table.cdesk-work-table > tbody,
+html body.ame-customer-ledger table.ame-stack-table .cdesk-work table.cdesk-work-table > tfoot {
+  display: table !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+}
+html body.ame-customer-ledger table.ame-stack-table .cdesk-work table.cdesk-work-table > thead {
+  display: table-header-group !important;
+}
+html body.ame-customer-ledger table.ame-stack-table .cdesk-work table.cdesk-work-table > tbody {
+  display: table-row-group !important;
+}
+html body.ame-customer-ledger table.ame-stack-table .cdesk-work table.cdesk-work-table > tfoot {
+  display: table-footer-group !important;
+}
+html body.ame-customer-ledger table.ame-stack-table .cdesk-work table.cdesk-work-table tr {
+  display: table-row !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+html body.ame-customer-ledger table.ame-stack-table .cdesk-work table.cdesk-work-table th,
+html body.ame-customer-ledger table.ame-stack-table .cdesk-work table.cdesk-work-table td {
+  display: table-cell !important;
+  width: auto !important;
+  padding: 4px 6px !important;
+  border: 0 !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  font-size: 12px !important;
+  line-height: 1.35;
+  text-align: left !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: anywhere;
+}
+html body.ame-customer-ledger table.ame-stack-table .cdesk-work table.cdesk-work-table td::before,
+html body.ame-customer-ledger table.ame-stack-table .cdesk-work table.cdesk-work-table th::before {
+  content: none !important;
+  display: none !important;
+}
+html body.ame-customer-ledger table.ame-stack-table .cdesk-work table.cdesk-work-table td.num,
+html body.ame-customer-ledger table.ame-stack-table .cdesk-work table.cdesk-work-table th.num {
+  text-align: right !important;
+  white-space: nowrap !important;
+}
+@media (max-width: 760px) {
+  html body.ame-customer-ledger table.cdesk-table.ame-stack-table {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+  }
+  html body.ame-customer-ledger .cdesk-work {
+    max-width: calc(100vw - 40px) !important;
+    box-sizing: border-box;
+  }
+  html body.ame-customer-ledger table.cdesk-work-table {
+    table-layout: fixed;
+    width: 100% !important;
+  }
+  html body.ame-customer-ledger table.cdesk-work-table th:nth-child(1),
+  html body.ame-customer-ledger table.cdesk-work-table td:nth-child(1) {
+    width: 44%;
+  }
+  html body.ame-customer-ledger table.cdesk-work-table th:nth-child(2),
+  html body.ame-customer-ledger table.cdesk-work-table td:nth-child(2) {
+    width: 34%;
+  }
+  html body.ame-customer-ledger table.cdesk-work-table th:nth-child(3),
+  html body.ame-customer-ledger table.cdesk-work-table td:nth-child(3) {
+    width: 22%;
+  }
+}
+html body.ame-customer-ledger .cdesk-table-wrap,
+html.ame-phone-desktop body.ame-customer-ledger .cdesk-table-wrap,
+html.ame-device-phone body.ame-customer-ledger .cdesk-table-wrap {
+  max-height: min(70vh, 720px);
+  overflow: auto;
+  background: #ffffff !important;
+}
+html body.ame-customer-ledger:not(.ame-sales-pro) #main-content table.cdesk-table thead th,
+html body.ame-customer-ledger:not(.ame-sales-pro) #main-content table.cdesk-table thead th * {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #0b3a82 !important;
+  -webkit-text-fill-color: #0b3a82 !important;
+}
+html body.ame-customer-ledger:not(.ame-sales-pro) #main-content table.cdesk-table td.bill {
+  color: #9a3412 !important;
+  -webkit-text-fill-color: #9a3412 !important;
+}
+html body.ame-customer-ledger:not(.ame-sales-pro) #main-content table.cdesk-table td.dep {
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+}
+
+/* 10.98.757 — কাস্টমার বাছাই: সাদা কার্ড, রঙিন বকেয়া/জমা। স্টেটমেন্ট হিসাব অপরিবর্তিত। */
+.cdesk-pick-page .ame-pair em { display: none !important; }
+html body.ame-customer-ledger .cdesk-pick-page .cdesk-mast {
+  background: #ffffff !important;
+  background-image: none !important;
+  border: 1px solid #e5eaf1 !important;
+  border-radius: 16px;
+  box-shadow: none;
+  padding: 16px 18px;
+}
+html body.ame-customer-ledger .cdesk-pick-page .cdesk-mast h1 {
+  color: #003f8f;
+  font-size: 1.45rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+}
+html body.ame-customer-ledger .cdesk-pick-page .cdesk-mast > p {
+  color: #667085;
+  font-weight: 600;
+  font-size: 14px;
+}
+html body.ame-customer-ledger .cdesk-pick-page .cdesk-pick-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 12px;
+}
+html body.ame-customer-ledger #main-content .cdesk-pick-page .cdesk-pick-stats article,
+html body.ame-customer-ledger .cdesk-pick-page .cdesk-pick-stats article {
+  background: #ffffff !important;
+  background-image: none !important;
+  border: 1px solid #e5eaf1 !important;
+  border-radius: 14px;
+  box-shadow: 0 1px 0 rgba(0, 63, 143, 0.04);
+  padding: 12px 14px;
+}
+html body.ame-customer-ledger .cdesk-pick-page .cdesk-pick-stats span {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 800;
+}
+html body.ame-customer-ledger .cdesk-pick-page .cdesk-pick-stats b {
+  color: #003f8f;
+  font-size: 1.35rem;
+}
+html body.ame-customer-ledger .cdesk-pick-page .cdesk-pick-stats .is-due b {
+  color: #dc2626 !important;
+  -webkit-text-fill-color: #dc2626 !important;
+}
+html body.ame-customer-ledger .cdesk-pick-page .cdesk-pick-stats .is-in b {
+  color: #04933a !important;
+  -webkit-text-fill-color: #04933a !important;
+}
+.cdesk-pick-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+.cdesk-pick-tabs button {
+  background: #fff;
+  border: 1.5px solid #d5deea;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font: inherit;
+  font-weight: 800;
+  color: #334155;
+  cursor: pointer;
+}
+.cdesk-pick-tabs button.is-on {
+  border-color: #003f8f;
+  color: #003f8f;
+}
+html body.ame-customer-ledger .cdesk-pick-page .cdesk-pick-card {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0;
+}
+html body.ame-customer-ledger .cdesk-pick-page .cdesk-search {
+  background: #ffffff;
+  border: 1.5px solid #d5deea;
+  border-radius: 14px;
+  margin-bottom: 12px;
+}
+html body.ame-customer-ledger .cdesk-pick-page #stList {
+  max-height: min(70vh, 720px);
+  overflow: auto;
+}
+html body.ame-customer-ledger #main-content .cdesk-pick-page a.cdesk-pick-row,
+html body.ame-customer-ledger .cdesk-pick-page a.cdesk-pick-row {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff !important;
+  background-image: none !important;
+  border: 1px solid #e5eaf1 !important;
+  border-bottom: 1px solid #e5eaf1 !important;
+  border-radius: 16px !important;
+  padding: 14px 16px !important;
+  margin: 0 0 10px !important;
+  text-decoration: none !important;
+  color: inherit;
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.03);
+}
+html body.ame-customer-ledger .cdesk-pick-page .cdesk-pick-row b {
+  display: block;
+  font-size: 16px;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+html body.ame-customer-ledger .cdesk-pick-page .cdesk-pick-row small {
+  display: block;
+  margin-top: 3px;
+  color: #667085;
+  font-size: 13px;
+  font-weight: 600;
+}
+html body.ame-customer-ledger #main-content .cdesk-pick-page .cdesk-due,
+html body.ame-customer-ledger .cdesk-pick-page .cdesk-due {
+  color: #dc2626 !important;
+  -webkit-text-fill-color: #dc2626 !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  font-weight: 800;
+  white-space: nowrap;
+}
+html body.ame-customer-ledger #main-content .cdesk-pick-page .cdesk-held,
+html body.ame-customer-ledger .cdesk-pick-page .cdesk-held {
+  color: #04933a !important;
+  -webkit-text-fill-color: #04933a !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.cdesk-pick-page .cdesk-ok {
+  color: #94a3b8;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.cdesk-pick-page .cdesk-gone-label {
+  margin: 16px 0 6px;
+  font-weight: 800;
+  color: #7f1d1d;
+}
+.cdesk-pick-page .cdesk-gone-note {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #7f1d1d;
+}
+html body.ame-customer-ledger .cdesk-pick-page a.cdesk-pick-row.cdesk-gone {
+  border-color: #f3c0c0 !important;
+}
+@media (max-width: 640px) {
+  html body.ame-customer-ledger .cdesk-pick-page .cdesk-pick-stats b {
+    font-size: 1.15rem;
+  }
+  html body.ame-customer-ledger .cdesk-pick-page .cdesk-pick-row b {
+    font-size: 15px;
+  }
+}

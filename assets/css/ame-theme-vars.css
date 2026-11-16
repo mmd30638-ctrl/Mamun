@@ -1,0 +1,27 @@
+/* 🎨 AponShop কেন্দ্রীয় থিম ভ্যারিয়েবল
+   ------------------------------------------------------------
+   এই ফাইলটাই সেই "একটা জায়গা" — ভবিষ্যতে যে ফাইল/পেজ আপডেট করা
+   হবে, সেটার হার্ডকোড করা কালার কোড বাদ দিয়ে এখান থেকে var()
+   আকারে কালার নেওয়া হবে। ধীরে ধীরে সব পেজ এই ফাইলের সাথে যুক্ত
+   হবে — একবারে নয়, প্রতিটা আপডেটের সাথে সাথে।
+*/
+:root {
+    --ame-c-primary: #0b1e4d;
+    --ame-c-primary-light: #1e3a8a;
+
+    --ame-c-success: #16a34a;
+    --ame-c-success-bg: #dcfce7;
+
+    --ame-c-danger: #dc2626;
+    --ame-c-danger-bg: #fee2e2;
+
+    --ame-c-warning: #d97706;
+    --ame-c-warning-bg: #fef3c7;
+
+    --ame-c-text: #0f172a;
+    --ame-c-text-muted: #334155;
+    --ame-c-border: #e2e8f0;
+
+    --ame-c-card-bg: #ffffff;
+    --ame-c-backdrop: rgba(15, 23, 42, 0.55);
+}

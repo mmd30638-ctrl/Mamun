@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>POS মোবাইল স্ক্রল ডেমো</title>
+  <link rel="stylesheet" href="/assets/css/ame-sale-desk-lock.css">
+  <link rel="stylesheet" href="/assets/css/ame-pos-mobile-scroll.css">
+  <style>
+    body { margin:0; background:#f4f4f4; font-family:system-ui,sans-serif; }
+    #main-content { padding:8px; }
+  </style>
+</head>
+<body class="ame-sales-pro ame-pos-terminal-page ame-screen-phone">
+<div id="main-content">
+  <div class="ame-sale-desk">
+    <div class="ame-pos-shell">
+      <div class="ame-desk-price-row" id="extraPriceModes">
+        <label class="ame-pos-mode"><span>ক</span><input type="radio" hidden></label>
+        <label class="ame-pos-mode"><span>প</span><input type="radio" hidden checked></label>
+        <label class="ame-pos-mode"><span>ড</span><input type="radio" hidden></label>
+      </div>
+      <div class="ame-pos-radios">
+        <label><input type="radio" name="m" checked> ক্যাশ</label>
+        <label><input type="radio" name="m"> ক্রেডিট</label>
+      </div>
+      <div class="ame-pos-term-cart">
+        <div class="ame-pos-table-wrap">
+          <table class="table-pos">
+            <thead><tr><th>ক্র.</th><th>কোড</th><th>পণ্যের নাম</th><th>পরিমাণ</th><th>দাম (৳)</th><th>মোট</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>A1</td><td>স্যাম্পল পণ্য</td><td>2</td><td>100</td><td>200</td></tr>
+              <tr><td>2</td><td>B2</td><td>আরেকটি লাইন</td><td>1</td><td>500</td><td>500</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/assets/js/responsive-fix.js" defer></script>
+</body>
+</html>

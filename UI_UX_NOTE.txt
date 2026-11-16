@@ -1,0 +1,18 @@
+APONSHOP UI/UX & Accessibility — v10.98.869
+Final standards note. No code that affects login or sales.
+
+1. Mobile responsive note
+2. Bengali font note
+3. Color contrast note
+4. Button size note
+5. Form label note
+6. Error message clarity note
+7. Loading state note
+8. Keyboard access note
+9. Screen reader note
+10. Dark mode note
+11. Touch target note
+12. Final version note
+
+All notes only. No financial impact.
+Project standards update complete.

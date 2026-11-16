@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>নতুন কাস্টমার এন্ট্রি</title>
+  <link rel="stylesheet" href="/assets/css/add-customer.css?v=10.98.483">
+</head>
+<body class="ame-ac-page">
+<div class="ame-ac-well">
+<div class="form-card">
+  <h2>👤 নতুন ইউনিভার্সাল কাস্টমার এন্ট্রি</h2>
+  <form id="customerForm" onsubmit="return false;">
+    <div class="ac-row">
+      <div class="form-group ac-navy">
+        <label>আইডি / কাস্টমার কোড <span class="required-star">*</span></label>
+        <input type="text" value="CUS-0108">
+      </div>
+      <div class="form-group ac-cyan">
+        <label>গ্রাহকের নাম <span class="required-star">*</span></label>
+        <input type="text" value="মোঃ মামুন">
+      </div>
+    </div>
+    <div class="section-title ac-green">যোগাযোগ ও পরিচয়</div>
+    <div class="ac-row">
+      <div class="form-group ac-green">
+        <label>মোবাইল নম্বর (ঐচ্ছিক)</label>
+        <input type="text" value="01700000000">
+      </div>
+      <div class="form-group ac-violet">
+        <label>জাতীয় পরিচয়পত্র (NID) / পাসপোর্ট</label>
+        <input type="text" value="1992269123456789">
+      </div>
+    </div>
+    <div class="ac-row">
+      <div class="form-group ac-orange">
+        <label>পিতার নাম</label>
+        <input type="text" value="আব্দুল করিম">
+      </div>
+      <div class="form-group ac-rose">
+        <label>ঠিকানা</label>
+        <textarea rows="2">চাঁদপুর, বাংলাদেশ</textarea>
+      </div>
+    </div>
+    <div class="section-title ac-teal">গ্রুপ ও এরিয়া</div>
+    <div class="ac-row">
+      <div class="form-group ac-teal">
+        <label>গ্রুপ</label>
+        <select><option>খুচরা</option></select>
+      </div>
+      <div class="form-group ac-navy">
+        <label>এরিয়া</label>
+        <select><option>সদর</option></select>
+      </div>
+    </div>
+    <div class="section-title ac-cyan">গ্যারান্টার তথ্য (ঐচ্ছিক)</div>
+    <div class="ac-row">
+      <div class="form-group ac-cyan">
+        <label>গ্যারান্টারের নাম</label>
+        <input type="text" value="রহিম উদ্দিন">
+      </div>
+      <div class="form-group ac-green">
+        <label>গ্যারান্টারের মোবাইল</label>
+        <input type="text" value="01800000000">
+      </div>
+    </div>
+    <div class="section-title ac-orange">আর্থিক প্রারম্ভিক তথ্য (ঐচ্ছিক)</div>
+    <div class="ledger-hint">এখানে যা লিখবেন তা স্বয়ংক্রিয়ভাবে কাস্টমারের লেজার স্টেটমেন্টে যোগ হয়ে যাবে।</div>
+    <div class="ac-row">
+      <div class="form-group ac-rose">
+        <label>সাবেক বকেয়া (৳)</label>
+        <input type="number" value="0">
+        <small>আগে থেকে এই কাস্টমারের কাছে যা পাওনা আছে</small>
+      </div>
+      <div class="form-group ac-teal">
+        <label>অগ্রিম জমা (৳)</label>
+        <input type="number" value="0">
+        <small>কাস্টমার আগে থেকে যা জমা রেখেছে</small>
+      </div>
+    </div>
+    <div class="section-title ac-navy">রোল ও ক্রেডিট</div>
+    <div class="form-group ac-navy">
+      <label>গ্রাহকের একটিভ রোলসমূহ নির্বাচন করুন:</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" checked> 🛒 সাধারণ ক্রেতা</label>
+        <label><input type="checkbox"> 🏭 সাপ্লায়ার</label>
+        <label><input type="checkbox"> 🏦 কিস্তি গ্রহীতা</label>
+        <label><input type="checkbox"> 🚜 ভাড়া গ্রহীতা</label>
+      </div>
+    </div>
+    <div class="form-group ac-teal">
+      <label>প্রাথমিক ক্রেডিট লিমিট (৳)</label>
+      <input type="number" value="0">
+    </div>
+    <div class="section-title ac-orange">১৫ দিনের বাকি নোটিফিকেশন</div>
+    <div class="due-watch-box">
+      <label>
+        <input type="checkbox">
+        <span>
+          <strong>টিক দিন — ১৫ দিন পর বাকি থাকলে উপরের ঘণ্টায় দেখাবে</strong>
+          <em>এই বক্স টিক করে রাখলে ১৫ দিন পরেও যদি এই কাস্টমারের কাছে বাকি টাকা থাকে, উপরের নোটিফিকেশন বারের ঘণ্টায় সংখ্যা উঠবে।</em>
+        </span>
+      </label>
+    </div>
+    <div class="section-title ac-green">সংযুক্তি</div>
+    <div class="ac-row">
+      <div class="form-group ac-green">
+        <label>প্রোফাইল ছবি</label>
+        <input type="file" accept="image/*">
+        <div class="photo-hint">প্রয়োজনে ক্যামেরা খুলুন, অথবা ফাইল বেছে নিন।</div>
+        <button type="button" class="ac-cam-open">📷 ক্যামেরা খুলুন</button>
+      </div>
+      <div class="form-group ac-violet">
+        <label>পিডিএফ ফাইল (চুক্তি/ডকুমেন্ট)</label>
+        <input type="file" accept="application/pdf">
+      </div>
+    </div>
+    <div class="section-title ac-rose">স্থায়ী কাস্টম রিকোয়ারমেন্ট</div>
+    <div class="form-group ac-rose">
+      <label>কাস্টমারের বিশেষ শর্ত/প্রয়োজনীয়তা (স্থায়ী নোট)</label>
+      <textarea rows="2">শুধু নগদ পেমেন্ট নেবে</textarea>
+    </div>
+    <div class="form-group ac-cyan">
+      <label>অতিরিক্ত বার্তা / নোট</label>
+      <textarea rows="2"></textarea>
+    </div>
+    <button type="submit" class="btn-submit">💾 কাস্টমার প্রোফাইল তৈরি করুন</button>
+  </form>
+</div>
+</div>
+<script src="/assets/js/add-customer-fit.js?v=10.98.483"></script>
+</body>
+</html>

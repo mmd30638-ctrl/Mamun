@@ -1,0 +1,376 @@
+/* Business loan desk — white page and white cards. Color stays on text, buttons, and icons. */
+
+html body.ame-bloan-page:not(.ame-sales-pro):not(.ame-pos-terminal-page),
+html body.ame-bloan-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content,
+html body.ame-bloan-page #main-content .bl,
+html body.ame-bloan-page #main-content .bl-cards a,
+html body.ame-bloan-page #main-content .bl-cards div,
+html body.ame-bloan-page #main-content .bl form.grid,
+html body.ame-bloan-page #main-content .bl form:not(.bl-inline),
+html body.ame-bloan-page #main-content .bl table,
+html body.ame-bloan-page #main-content .bl th,
+html body.ame-bloan-page #main-content .bl td,
+html body.ame-bloan-page #main-content .bl .empty,
+html body.ame-bloan-page #main-content .bl .err,
+html body.ame-bloan-page #main-content .bl .ok,
+html body.ame-bloan-page #main-content .bl input,
+html body.ame-bloan-page #main-content .bl select,
+html body.ame-bloan-page #main-content .bl textarea {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #111827 !important;
+}
+
+html body.ame-bloan-page #main-content .bl {
+  width: min(1120px, 100%) !important;
+  max-width: 1120px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box !important;
+}
+
+html body.ame-bloan-page #main-content .bl h1,
+html body.ame-bloan-page #main-content .bl h2,
+html body.ame-bloan-page #main-content .bl .en,
+html body.ame-bloan-page #main-content .bl label,
+html body.ame-bloan-page #main-content .bl th,
+html body.ame-bloan-page #main-content .bl td,
+html body.ame-bloan-page #main-content .bl a:not(.btn) {
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+}
+
+html body.ame-bloan-page #main-content .bl-cards b {
+  color: #04933a !important;
+  -webkit-text-fill-color: #04933a !important;
+}
+
+html body.ame-bloan-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .bl button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item),
+html body.ame-bloan-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .bl a.btn:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item) {
+  background: #04933a !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 0 !important;
+}
+
+html body.ame-bloan-page #main-content .bl-nav a {
+  background: #ffffff !important;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  border: 1px solid #003f8f !important;
+}
+
+html body.ame-bloan-page #main-content .bl-nav a.on {
+  background: #003f8f !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html body.ame-bloan-page #main-content .bl .err {
+  color: #9f1239 !important;
+  -webkit-text-fill-color: #9f1239 !important;
+  border: 1px solid #9f1239 !important;
+}
+
+html body.ame-bloan-page #main-content .bl .ok {
+  color: #04933a !important;
+  -webkit-text-fill-color: #04933a !important;
+  border: 1px solid #04933a !important;
+}
+
+html body.ame-bloan-page #main-content .bl .badge {
+  background: #ffffff !important;
+  border: 1px solid currentColor !important;
+}
+
+html body.ame-bloan-page #main-content .bl table:not(.bl-table) {
+  display: block !important;
+  max-height: min(72vh, 720px) !important;
+  overflow: auto !important;
+}
+
+html body.ame-bloan-page .ame-account-sheet:not([hidden]) {
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+html body.ame-bloan-page .ame-account-sheet-card {
+  background: #ffffff !important;
+  width: min(420px, calc(100vw - 32px)) !important;
+  max-height: min(78vh, 640px) !important;
+  overflow: auto !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+html.ame-phone-desktop body.ame-bloan-page #main-content .bl,
+html.ame-device-phone body.ame-bloan-page #main-content .bl,
+html.ame-force-phone body.ame-bloan-page #main-content .bl,
+html.ame-is-phone body.ame-bloan-page #main-content .bl {
+  width: min(1120px, 100%) !important;
+}
+
+@media (max-width: 800px) {
+  html body.ame-bloan-page #main-content .bl-cards {
+    grid-template-columns: 1fr !important;
+  }
+  html body.ame-bloan-page #main-content .bl form.grid,
+  html body.ame-bloan-page #main-content .bl form:not(.bl-inline) {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* 10.98.657 — ঋণ ডেস্ক ফোন, ট্যাবলেট ও ডেস্কটপে একই তথ্য। এডিট শিট হেডারের উপরে। */
+html body.ame-bloan-page #main-content .bl table.bl-table {
+  display: table !important;
+  width: 100% !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+html body.ame-bloan-page .bl-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 10000060 !important;
+  display: none;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  overflow: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  background: rgba(15, 23, 42, .45) !important;
+  padding: max(12px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) max(12px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)) !important;
+}
+html body.ame-bloan-page .bl-modal.open { display: flex !important; }
+html.bl-modal-open,
+html.bl-modal-open body { overflow: hidden !important; }
+html body.ame-bloan-page .bl-modal .bl-sheet {
+  width: min(560px, 100%) !important;
+  max-width: min(560px, 100%) !important;
+  min-width: 0 !important;
+  flex: 0 1 560px !important;
+  align-self: center !important;
+  max-height: none !important;
+  overflow: visible !important;
+  margin: 8px auto 24px !important;
+  background: #ffffff !important;
+  color: #142033 !important;
+  border-radius: 14px !important;
+  box-sizing: border-box !important;
+}
+html body.ame-bloan-page .bl-modal .bl-form,
+html body.ame-bloan-page .bl-modal label {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  width: 100% !important;
+}
+html body.ame-bloan-page .bl-modal input:not([type="hidden"]),
+html body.ame-bloan-page .bl-modal select,
+html body.ame-bloan-page .bl-modal textarea {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 44px !important;
+  font-size: 16px !important;
+  background: #ffffff !important;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  border: 1px solid #94a3b8 !important;
+  border-radius: 10px !important;
+  box-sizing: border-box !important;
+}
+html body.ame-bloan-page .bl-modal .bl-row {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+  width: 100% !important;
+}
+html body.ame-bloan-page .bl-modal .bl-date-bd {
+  display: block !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  color: #0f766e !important;
+  -webkit-text-fill-color: #0f766e !important;
+}
+html body.ame-bloan-page .bl-modal .bl-actions {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+  width: 100% !important;
+  background: #ffffff !important;
+  margin-top: 4px !important;
+}
+html body.ame-bloan-page .bl-modal .bl-btn {
+  width: 100% !important;
+  min-height: 46px !important;
+}
+html body.ame-bloan-page .bl-modal .bl-lead {
+  color: #526074 !important;
+  -webkit-text-fill-color: #526074 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+@media (max-width: 760px) {
+  html:not(.ame-phone-desktop) body.ame-bloan-page .bl-modal .bl-row,
+  html:not(.ame-phone-desktop) body.ame-bloan-page #main-content .bl-cards,
+  html:not(.ame-phone-desktop) body.ame-bloan-page #main-content .bl-row {
+    grid-template-columns: 1fr !important;
+  }
+  html:not(.ame-phone-desktop) body.ame-bloan-page .ame-auto-scroll-wrap:has(table.bl-table) {
+    overflow: visible !important;
+  }
+  html:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table,
+  html:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > thead,
+  html:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > tbody {
+    display: block !important;
+    width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  html:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > thead {
+    display: none !important;
+  }
+  html:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > tbody > tr {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 0 12px !important;
+    padding: 10px !important;
+    border: 1px solid #d5deea !important;
+    border-radius: 12px !important;
+    background: #ffffff !important;
+    box-sizing: border-box !important;
+  }
+  html:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > tbody > tr > td {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 8px 2px !important;
+    border: 0 !important;
+    border-bottom: 1px solid #eef2f6 !important;
+    white-space: normal !important;
+    box-sizing: border-box !important;
+    color: #142033 !important;
+    -webkit-text-fill-color: #142033 !important;
+  }
+  html:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > tbody > tr > td::before {
+    content: attr(data-label);
+    font-weight: 800;
+    color: #0e7490;
+    -webkit-text-fill-color: #0e7490;
+    flex: 0 0 42%;
+    max-width: 46%;
+  }
+  html:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > tbody > tr > td[data-label=""]::before {
+    content: none !important;
+    display: none !important;
+  }
+  html:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table td.bl-acts a,
+  html:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table td.bl-acts button {
+    min-height: 40px !important;
+    padding: 8px 12px !important;
+  }
+  html:not(.ame-phone-desktop) body.ame-bloan-page #main-content .bl-bar {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  html:not(.ame-phone-desktop) body.ame-bloan-page #main-content .bl-bar > * {
+    width: 100% !important;
+  }
+}
+
+html[data-ame-device="phone"]:not(.ame-phone-desktop) body.ame-bloan-page #main-content .bl-cards,
+html[data-ame-device="phone"]:not(.ame-phone-desktop) body.ame-bloan-page #main-content .bl-row,
+html[data-ame-device="phone"]:not(.ame-phone-desktop) body.ame-bloan-page .bl-modal .bl-row {
+  grid-template-columns: 1fr !important;
+}
+html[data-ame-device="phone"]:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table,
+html[data-ame-device="phone"]:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > thead,
+html[data-ame-device="phone"]:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > tbody {
+  display: block !important;
+  width: 100% !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+html[data-ame-device="phone"]:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > thead {
+  display: none !important;
+}
+html[data-ame-device="phone"]:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > tbody > tr {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 0 12px !important;
+  padding: 10px !important;
+  border: 1px solid #d5deea !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  box-sizing: border-box !important;
+}
+html[data-ame-device="phone"]:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > tbody > tr > td {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  width: 100% !important;
+  white-space: normal !important;
+}
+html[data-ame-device="phone"]:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > tbody > tr > td::before {
+  content: attr(data-label);
+  font-weight: 800;
+  color: #0e7490;
+  -webkit-text-fill-color: #0e7490;
+  flex: 0 0 42%;
+  max-width: 46%;
+}
+
+html.ame-phone-desktop body.ame-bloan-page #main-content table.bl-table {
+  display: table !important;
+  width: 100% !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+html.ame-phone-desktop body.ame-bloan-page #main-content table.bl-table > thead { display: table-header-group !important; }
+html.ame-phone-desktop body.ame-bloan-page #main-content table.bl-table > tbody { display: table-row-group !important; }
+html.ame-phone-desktop body.ame-bloan-page #main-content table.bl-table > tbody > tr { display: table-row !important; width: auto !important; margin: 0 !important; padding: 0 !important; border: 0 !important; }
+html.ame-phone-desktop body.ame-bloan-page #main-content table.bl-table > tbody > tr > td { display: table-cell !important; width: auto !important; }
+html.ame-phone-desktop body.ame-bloan-page #main-content table.bl-table > tbody > tr > td::before { content: none !important; display: none !important; }
+
+/* 10.98.663 — পেমেন্টের ভিতরের প্লাস-মাইনাস খাতা। লাভ সবুজ, খরচ লাল। */
+html body.ame-bloan-page #main-content .bl td.bl-plus,
+html body.ame-bloan-page #main-content .bl .bl-plus,
+html body.ame-bloan-page #main-content .bl-cards b.bl-plus,
+html:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > tbody > tr > td.bl-plus,
+html[data-ame-device="phone"]:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > tbody > tr > td.bl-plus {
+  color: #04933a !important;
+  -webkit-text-fill-color: #04933a !important;
+  font-weight: 800 !important;
+}
+html body.ame-bloan-page #main-content .bl td.bl-minus,
+html body.ame-bloan-page #main-content .bl .bl-minus,
+html body.ame-bloan-page #main-content .bl-cards b.bl-minus,
+html:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > tbody > tr > td.bl-minus,
+html[data-ame-device="phone"]:not(.ame-phone-desktop) body.ame-bloan-page #main-content table.bl-table > tbody > tr > td.bl-minus {
+  color: #9f1239 !important;
+  -webkit-text-fill-color: #9f1239 !important;
+  font-weight: 800 !important;
+}
+html body.ame-bloan-page #main-content #blPayBox,
+html body.ame-bloan-page #main-content #blBook {
+  scroll-margin-top: calc(var(--ame-header-h, 64px) + 12px);
+}
+html body.ame-bloan-page #main-content .bl form.bl-inline {
+  background: #ffffff !important;
+  background-image: none !important;
+}
+html body.ame-bloan-page #main-content .bl-inline-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+html body.ame-bloan-page #main-content .bl-inline-actions .bl-btn {
+  width: 100%;
+  min-height: 46px;
+}

@@ -1,0 +1,16 @@
+POS একই UI + ডিভাইস অটো সেটআপ (v10.98.938)
+
+যে ডিভাইসে খুলবেন:
+• phone (≤760px) — Android মোবাইল
+• tablet (761–999) — বড় ফোন / ছোট ট্যাব
+• wide (≥1000) — PC এবং মোবাইল Chrome «ডেস্কটপ সাইট»
+
+কিভাবে:
+• ame-pos-device-setup.js — আগে লোড, data-ame-pos-tier + body.ame-pos-tier-*
+• responsive-fix.js — একই tier ব্যবহার (পুরনো ame-phone-desktop শাখা জোরে নয়)
+• ame-pos-charge-unified.css + ame-pos-device-tier.css — চার্জ বক্স; lock.css absolute ঢাকা
+• পুরনো :not(.ame-phone-desktop) পারিটি অপসারণ (pc-desktop-parity, desk-100pct)
+
+লোড শেষে: sale-charge-popups → pos-charge-line → charge-unified → device-tier
+
+ZIP: deliverables/Aponshop_10.98.938_POS_UNIFIED_VIEWPORT.zip

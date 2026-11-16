@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>অফলাইন পেমেন্ট</title>
+  <style id="ame-pay-css">
+/* Customer Payment — RentEasy-style layout for Aponshop */
+body.ame-customer-payment-page {
+    background: #eef3fb !important;
+}
+
+.cpay-page {
+    --cpay-navy: #0b1e4d;
+    --cpay-muted: #64748b;
+    --cpay-line: #e2eaf4;
+    --cpay-green: #16a34a;
+    --cpay-green-soft: #ecfdf3;
+    --cpay-red: #dc2626;
+    --cpay-blue: #2563eb;
+    --cpay-card: #ffffff;
+    --cpay-shadow: 0 10px 28px rgba(15, 35, 80, 0.07);
+    --cpay-radius: 18px;
+    font-family: 'Hind Siliguri', 'Segoe UI', sans-serif;
+    color: var(--cpay-navy);
+    padding: 18px 18px 40px;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.cpay-page input,
+.cpay-page textarea,
+.cpay-page button,
+.cpay-page select {
+    font-family: inherit;
+}
+
+.cpay-hero {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.cpay-hero-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #1d4ed8, #22c55e);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
+}
+
+.cpay-hero h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--cpay-navy);
+}
+
+.cpay-hero p {
+    margin: 2px 0 0;
+    color: var(--cpay-muted);
+    font-weight: 600;
+    font-size: 13.5px;
+}
+
+.cpay-net {
+    color: #0284c7;
+    font-weight: 700;
+}
+
+.cpay-steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0 0 18px;
+}
+
+.cpay-step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px;
+    align-items: center;
+    background: #fff;
+    border: 1px solid var(--cpay-line);
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #94a3b8;
+}
+
+.cpay-step b {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #e2e8f0;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.cpay-step.is-active {
+    color: var(--cpay-navy);
+    border-color: #bbf7d0;
+    background: #f0fdf4;
+}
+
+.cpay-step.is-active b,
+.cpay-step.is-done b {
+    background: var(--cpay-green);
+    color: #fff;
+}
+
+.cpay-step.is-done {
+    color: var(--cpay-green);
+}
+
+.cpay-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 16px;
+    align-items: start;
+}
+
+.cpay-card {
+    background: var(--cpay-card);
+    border: 1px solid #edf2f7;
+    border-radius: var(--cpay-radius);
+    box-shadow: var(--cpay-shadow);
+    padding: 16px 18px 18px;
+    margin-bottom: 14px;
+}
+
+.cpay-card-head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.cpay-card-head h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.cpay-card-ico {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.cpay-search-btn {
+    border: 0;
+    background: transparent;
+    color: #2563eb;
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 4px 0;
+}
+
+.cpay-customer {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 14px;
+    align-items: center;
+}
+
+.cpay-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: linear-gradient(135deg, #dbeafe, #e2e8f0);
+    display: grid;
+    place-items: center;
+    font-size: 28px;
+    font-weight: 800;
+    color: #1e3a8a;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px #dbeafe;
+}
+
+.cpay-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cpay-cust-name {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.cpay-badge {
+    display: inline-grid;
+    place-items: center;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    background: #dcfce7;
+    color: #15803d;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+.cpay-badge.is-empty {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.cpay-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px 12px;
+    margin-top: 6px;
+    color: var(--cpay-muted);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.cpay-search-wrap {
+    position: relative;
+    margin-top: 14px;
+}
+
+.cpay-search-wrap input[type="text"] {
+    width: 100%;
+    border: 1.5px solid #dbe4f0;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 14px;
+    outline: none;
+}
+
+.cpay-search-wrap input[type="text"]:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.cpay-results {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 4px);
+    background: #fff;
+    border: 1px solid #dbe4f0;
+    border-radius: 12px;
+    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.14);
+    max-height: 260px;
+    overflow: auto;
+    z-index: 40;
+}
+
+.cpay-results.open { display: block; }
+
+.cpay-result {
+    display: grid;
+    grid-template-columns: 36px 1fr;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.cpay-result:hover { background: #f8fbff; }
+.cpay-result small { display: block; color: #64748b; font-size: 12px; }
+.cpay-results-empty { padding: 14px; color: #64748b; text-align: center; }
+
+.cpay-account {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    gap: 12px;
+    align-items: center;
+}
+
+.cpay-account-art {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #0f172a, #1d4ed8);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.cpay-account h3 {
+    margin: 0 0 4px;
+    font-size: 15px;
+}
+
+.cpay-account p {
+    margin: 0;
+    color: var(--cpay-muted);
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+.cpay-status {
+    border-radius: 999px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 800;
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.cpay-status.is-due {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.cpay-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.cpay-kpi {
+    border: 1px solid #e8eef6;
+    border-radius: 14px;
+    padding: 12px 12px 10px;
+    background: #f8fbff;
+    min-width: 0;
+}
+
+.cpay-kpi span {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cpay-muted);
+    margin-bottom: 6px;
+}
+
+.cpay-kpi strong {
+    display: block;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--cpay-navy);
+    letter-spacing: -0.03em;
+}
+
+.cpay-kpi.is-paid strong { color: var(--cpay-green); }
+.cpay-kpi.is-due strong { color: var(--cpay-red); }
+.cpay-kpi.is-enter {
+    background: #fff;
+    border-color: #86efac;
+    box-shadow: inset 0 0 0 1px #bbf7d0;
+}
+
+.cpay-kpi.is-enter .cpay-amount {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px;
+    align-items: center;
+}
+
+.cpay-kpi.is-enter .cpay-amount em {
+    font-style: normal;
+    color: var(--cpay-green);
+    font-weight: 800;
+    font-size: 18px;
+}
+
+.cpay-kpi.is-enter input {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--cpay-green);
+    outline: none;
+    padding: 0;
+    min-width: 0;
+}
+
+.method-dropdown { position: relative; margin-top: 2px; }
+
+.method-trigger {
+    display: flex;
+    flex-wrap: nowrap !important;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #dbe4f0;
+    border-radius: 12px;
+    background: #f8fbff;
+    cursor: pointer;
+    user-select: none;
+}
+
+.method-trigger:hover { background: #fff; }
+
+.method-trigger.open {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    background: #fff;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.method-trigger-icon,
+.method-option-icon {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: #0b1e4d;
+    color: #fff;
+    display: flex;
+    flex-wrap: nowrap !important;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+}
+
+.method-option-icon {
+    background: #eef3fb;
+    color: #0b1e4d;
+}
+
+.method-trigger-label,
+.method-option-label {
+    flex: 1 1 auto;
+    font-weight: 800;
+    font-size: 14.5px;
+    color: #0b1e4d;
+}
+
+.method-trigger .chevron {
+    flex: 0 0 auto;
+    display: inline-flex;
+    color: #64748b;
+    transition: transform .2s ease;
+}
+
+.method-trigger.open .chevron { transform: rotate(180deg); }
+
+.method-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: #fff;
+    border: 1.5px solid #60a5fa;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.14);
+    z-index: 50;
+    display: none;
+    overflow: hidden;
+}
+
+.method-panel.open { display: block; }
+
+.method-option {
+    display: flex;
+    flex-wrap: nowrap !important;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    border-top: 1px solid #f1f5f9;
+}
+
+.method-option:first-child { border-top: none; }
+.method-option:hover { background: #f8fbff; }
+.method-option.selected { background: #ecfdf3; }
+
+.method-option .check {
+    margin-left: auto;
+    color: #16a34a;
+    font-weight: 800;
+    opacity: 0;
+}
+
+.method-option.selected .check { opacity: 1; }
+
+.cpay-row2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.cpay-field label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.cpay-field input,
+.cpay-field textarea,
+.cpay-field select {
+    width: 100%;
+    border: 1.5px solid #dbe4f0;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 14px;
+    outline: none;
+    background: #fff;
+}
+
+.cpay-field input:focus,
+.cpay-field textarea:focus,
+.cpay-field select:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.cpay-field textarea { min-height: 84px; resize: vertical; }
+
+.cpay-due-toggle {
+    width: 100%;
+    margin-top: 14px;
+    border: 1.5px dashed #f0c674;
+    background: #fff8eb;
+    color: #8a6100;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    flex-wrap: nowrap !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.cpay-due-toggle .chevron {
+    flex: 0 0 auto;
+    display: inline-flex;
+    transition: transform .25s ease;
+}
+
+.cpay-due-toggle.open .chevron { transform: rotate(180deg); }
+
+.cpay-due-body { display: none; margin-top: 12px; }
+.cpay-due-body.open { display: block; }
+
+.cpay-actions {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.cpay-cancel,
+.cpay-confirm {
+    min-height: 52px;
+    border-radius: 14px;
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    display: grid;
+    place-items: center;
+}
+
+.cpay-cancel {
+    border: 1.5px solid #e2e8f0;
+    background: #fff;
+    color: #475569;
+}
+
+.cpay-confirm {
+    border: 0;
+    color: #fff;
+    background: linear-gradient(90deg, #2563eb, #22c55e);
+    box-shadow: 0 10px 22px rgba(37, 99, 235, 0.28);
+}
+
+.cpay-confirm:hover { filter: brightness(1.03); }
+
+.cpay-side .cpay-card { position: sticky; top: 76px; }
+
+.cpay-sum-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    padding: 8px 0;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.cpay-sum-row span:last-child { font-weight: 800; }
+.cpay-sum-row.is-paid span:last-child { color: var(--cpay-green); }
+.cpay-sum-row.is-now span:last-child { color: var(--cpay-blue); }
+.cpay-sum-row.is-left {
+    border-top: 1px dashed var(--cpay-line);
+    margin-top: 4px;
+    padding-top: 12px;
+    font-size: 15px;
+}
+
+.cpay-clear {
+    margin-top: 12px;
+    background: var(--cpay-green-soft);
+    color: #166534;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    display: none;
+}
+
+.cpay-clear.show { display: block; }
+
+.cpay-quick a,
+.cpay-quick span {
+    display: flex;
+    flex-wrap: nowrap !important;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 4px;
+    color: var(--cpay-navy);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13.5px;
+    border-top: 1px solid #f1f5f9;
+    white-space: nowrap;
+}
+
+.cpay-quick .qico {
+    flex: 0 0 auto;
+    width: 22px;
+    text-align: center;
+}
+
+.cpay-quick a:first-child,
+.cpay-quick span:first-child { border-top: 0; }
+
+.cpay-quick span {
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.cpay-side-confirm { display: none !important; }
+
+@media (max-width: 980px) {
+    .cpay-grid { grid-template-columns: 1fr; }
+    .cpay-side .cpay-card { position: static; }
+    .cpay-kpis { grid-template-columns: 1fr 1fr; }
+    .cpay-meta { grid-template-columns: 1fr; }
+    .cpay-steps { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+    .cpay-page { padding: 12px 12px 28px; }
+    .cpay-hero h1 { font-size: 22px; }
+    .cpay-row2,
+    .cpay-account,
+    .cpay-customer { grid-template-columns: 1fr; }
+    .cpay-actions { grid-template-columns: 1fr 1.4fr; }
+    .cpay-quick a,
+    .cpay-quick span { white-space: normal; }
+}
+  </style>
+  <style id="ame-offline-css">
+body{font-family:sans-serif;background:#eef3fb;margin:0;padding:16px;color:#0b1e4d}
+.wrap{max-width:640px;margin:0 auto}
+.card{background:#fff;border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 8px 20px rgba(15,35,80,.07)}
+h1{margin:0 0 8px;font-size:20px}
+p{color:#64748b;line-height:1.5}
+input,select,textarea{width:100%;padding:11px 12px;border:1.5px solid #dbe4f0;border-radius:10px;box-sizing:border-box;margin-top:6px}
+label{font-size:12px;font-weight:800;display:block;margin-top:10px}
+.hit{padding:10px 0;border-bottom:1px solid #f1f5f9;cursor:pointer}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 4px;border-bottom:1px solid #eef2f7;text-align:left}
+.btn{width:100%;margin-top:12px;padding:14px;border:0;border-radius:12px;background:linear-gradient(90deg,#2563eb,#22c55e);color:#fff;font-weight:800;cursor:pointer;display:block;text-align:center;text-decoration:none}
+.ghost{background:#f8fbff;color:#0b1e4d;border:1px solid #dbe4f0}
+.ok{display:none;background:#e7f7ef;color:#0e8f52;padding:10px;border-radius:10px;margin-bottom:10px;font-weight:700}
+.warn{background:#fff8eb;color:#8a6100;padding:10px;border-radius:10px;font-size:13px;margin-bottom:10px}
+a{color:#2563eb;font-weight:800;text-decoration:none}
+.tot{font-size:18px;font-weight:800;text-align:right;margin-top:8px}
+.grid{display:grid;gap:10px;margin:16px 0}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kpi div{border:1px solid #e8eef6;border-radius:12px;padding:10px}
+.kpi b{display:block;font-size:20px}
+.kpi span{font-size:12px;color:#64748b}
+.qty{display:inline-flex;gap:6px;align-items:center}
+.qty button{width:28px;height:28px;border:0;border-radius:8px;background:#e8eef6;font-weight:800;cursor:pointer}
+.off-bar{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.off-bar a{font-size:12px;padding:8px 10px;border-radius:999px;background:#fff;border:1px solid #dbe4f0;color:#0b1e4d;font-weight:800}
+.sec{font-size:11px;font-weight:800;letter-spacing:.06em;color:#64748b;margin:16px 0 6px;text-transform:uppercase}
+.grid.two{grid-template-columns:1fr 1fr}
+  </style>
+  <link rel="stylesheet" href="/assets/css/customer-payment.css?v=10.96.0">
+  <style>
+    body { margin: 0; background: #eef3fb; }
+    .off-note { margin: 0 0 14px; padding: 10px 12px; border-radius: 12px; background: #fff4e5; color: #9a5b00; font-size: 13px; font-weight: 700; }
+    .ok { background: #e7f7ef; color: #0e8f52; padding: 12px; border-radius: 12px; display: none; margin-bottom: 12px; font-weight: 700; }
+    .hit { padding: 10px 0; border-bottom: 1px solid #eee; cursor: pointer; }
+    a.back { color: #2563eb; text-decoration: none; font-size: 13px; font-weight: 800; }
+  </style>
+  <link rel="stylesheet" href="/assets/css/submit-spinner.css?v=10.98.31">
+</head>
+<body class="ame-customer-payment-page">
+  <div class="cpay-page">
+    <p><a class="back" href="/offline.html">← অফলাইন মেনু</a></p>
+    <div class="cpay-hero">
+      <div class="cpay-hero-icon">৳</div>
+      <div>
+        <h1>অফলাইন পেমেন্ট</h1>
+        <p>নেট নেই। পেমেন্ট ফোনে জমা হবে, নেট ফিরলে নিজে থেকে সার্ভারে যাবে। <span id="pendLabel"></span></p>
+      </div>
+    </div>
+    <div class="off-note" id="custWarn" style="display:none">কাস্টমার তালিকা নেই। আগে একবার অনলাইনে হোম বা পেমেন্ট পেজ খুলুন, তারপর অফলাইনে পেমেন্ট নিন।</div>
+    <div class="ok" id="okBox"></div>
+    <form id="offForm" class="cpay-card" data-ame-once="1">
+      <div class="cpay-field">
+        <label>কাস্টমার</label>
+        <input type="text" id="search" placeholder="নাম, আইডি বা মোবাইল" autocomplete="off">
+        <input type="hidden" id="customer_id" name="customer_id">
+        <div id="results"></div>
+      </div>
+      <div class="cpay-field" style="margin-top:12px">
+        <label>পরিমাণ (৳)</label>
+        <input type="number" step="0.01" min="0.01" id="amount" name="amount" required>
+      </div>
+      <div class="cpay-field" style="margin-top:12px">
+        <label>পেমেন্টের মাধ্যম</label>
+        <select id="method" name="method">
+          <option value="CASH">নগদ</option>
+          <option value="BKASH">বিকাশ</option>
+          <option value="NAGAD">নগদ (মোবাইল)</option>
+          <option value="BANK">ব্যাংক</option>
+          <option value="CHEQUE">চেক</option>
+        </select>
+      </div>
+      <div class="cpay-field" style="margin-top:12px">
+        <label>টাকা যে অ্যাকাউন্টে জমা হবে</label>
+        <select id="account_id" name="account_id" required>
+          <option value=""></option>
+        </select>
+      </div>
+      <div class="cpay-row2">
+        <div class="cpay-field">
+          <label>রেফারেন্স (ঐচ্ছিক)</label>
+          <input type="text" id="reference_no" name="reference_no" maxlength="100">
+        </div>
+        <div class="cpay-field">
+          <label>তারিখ</label>
+          <input type="date" id="payment_date" name="payment_date" required>
+        </div>
+      </div>
+      <div class="cpay-field" style="margin-top:12px">
+        <label>নোট (ঐচ্ছিক)</label>
+        <textarea id="note" name="note" rows="2" maxlength="255"></textarea>
+      </div>
+      <button type="button" class="cpay-due-toggle" id="dueToggle">📅 পরবর্তী পেমেন্টের তারিখ (ঐচ্ছিক)</button>
+      <div class="cpay-due-body" id="dueBody">
+        <div class="cpay-row2">
+          <div class="cpay-field">
+            <label>পরবর্তী তারিখ</label>
+            <input type="date" id="next_due_date" name="next_due_date">
+          </div>
+          <div class="cpay-field">
+            <label>পরবর্তী পরিমাণ (৳)</label>
+            <input type="number" step="0.01" min="0" id="next_due_amount" name="next_due_amount">
+          </div>
+        </div>
+        <div class="cpay-field" style="margin-top:12px">
+          <label>নোট</label>
+          <input type="text" id="due_note" name="due_note" maxlength="255" placeholder="যেমন: মাসিক কিস্তি">
+        </div>
+      </div>
+      <button type="submit" class="cpay-confirm" style="width:100%;margin-top:16px">পেমেন্ট সংরক্ষণ করুন</button>
+    </form>
+  </div>
+    <script src="/assets/js/double-submit-guard.js?v=10.98.31"></script>
+  <script src="/assets/js/offline-queue.js?v=10.82.0"></script>
+  <script src="/assets/js/offline-payment-queue.js?v=10.96.0"></script>
+  <script src="/assets/js/offline-boot.js?v=10.82.0"></script>
+  <script>
+    document.getElementById('payment_date').value = new Date().toISOString().slice(0, 10);
+    document.getElementById('dueToggle').addEventListener('click', function () {
+      document.getElementById('dueBody').classList.toggle('open');
+    });
+    function loadCustomers() {
+      if (window.AmeOfflinePay) return AmeOfflinePay.loadCustomers() || [];
+      try { return JSON.parse(localStorage.getItem('ame_offline_customers') || '[]'); } catch (e) { return []; }
+    }
+    function setPend() {
+      var n = window.AmeOfflinePay ? AmeOfflinePay.pendingCount() : 0;
+      document.getElementById('pendLabel').textContent = n ? ('অপেক্ষমাণ: ' + n) : '';
+    }
+    var customers = loadCustomers();
+    if (!customers.length) document.getElementById('custWarn').style.display = 'block';
+    function loadAccounts() {
+      if (window.AmeOfflinePay && AmeOfflinePay.loadAccounts) return AmeOfflinePay.loadAccounts() || [];
+      try { return JSON.parse(localStorage.getItem('ame_offline_accounts') || '[]'); } catch (e) { return []; }
+    }
+    var accounts = loadAccounts();
+    var accSel = document.getElementById('account_id');
+    if (accounts.length === 1) {
+      accSel.innerHTML = '<option value="' + accounts[0].id + '" selected>' + String(accounts[0].name || '').replace(/</g, '') + '</option>';
+    } else if (accounts.length) {
+      accSel.innerHTML = '<option value=""></option>' + accounts.map(function (a) {
+        return '<option value="' + a.id + '">' + String(a.name || '').replace(/</g, '') + '</option>';
+      }).join('');
+    }
+    var search = document.getElementById('search');
+    var hid = document.getElementById('customer_id');
+    var results = document.getElementById('results');
+    var preId = '';
+    try { preId = new URLSearchParams(location.search).get('id') || ''; } catch (e) {}
+    if (preId) {
+      var pre = customers.filter(function (c) { return String(c.id) === String(preId); })[0];
+      if (pre) { hid.value = pre.id; search.value = pre.name; }
+    }
+    search.addEventListener('input', function () {
+      hid.value = '';
+      var q = this.value.trim().toLowerCase();
+      if (!q) { results.innerHTML = ''; return; }
+      results.innerHTML = customers.filter(function (c) {
+        return (c.name || '').toLowerCase().indexOf(q) !== -1 || (c.phone || '').indexOf(q) !== -1 || (c.code || '').toLowerCase().indexOf(q) !== -1;
+      }).slice(0, 20).map(function (c) {
+        return '<div class="hit" data-id="' + c.id + '" data-name="' + String(c.name).replace(/"/g, '') + '"><b>' + c.name + '</b><br><small>' + (c.code || '') + (c.phone ? ' · ' + c.phone : '') + '</small></div>';
+      }).join('');
+    });
+    results.addEventListener('click', function (e) {
+      var row = e.target.closest('[data-id]');
+      if (!row) return;
+      hid.value = row.getAttribute('data-id');
+      search.value = row.getAttribute('data-name');
+      results.innerHTML = '';
+    });
+    document.getElementById('offForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!hid.value) { alert('কাস্টমার বাছাই করুন'); return; }
+      var amount = parseFloat(document.getElementById('amount').value || '0');
+      if (!(amount > 0)) { alert('সঠিক পরিমাণ লিখুন'); return; }
+      try {
+        var gk = 'ame_pay_guard_' + hid.value + '_' + amount.toFixed(2);
+        var gt = parseInt(sessionStorage.getItem(gk) || '0', 10);
+        if (gt && Date.now() - gt < 60000) {
+          alert('একই কাস্টমারের এই পরিমাণ গত ১ মিনিটেই নেওয়া হয়েছে। এক মিনিট পর নিন।');
+          return;
+        }
+      } catch (e) {}
+      var accId = document.getElementById('account_id').value;
+      if (!accId) { alert('টাকা যে অ্যাকাউন্টে জমা হবে সেটি বাছাই করুন'); return; }
+      var payload = {
+        customer_id: hid.value,
+        amount: String(amount),
+        payment_date: document.getElementById('payment_date').value,
+        method: document.getElementById('method').value,
+        account_id: accId,
+        reference_no: document.getElementById('reference_no').value,
+        note: document.getElementById('note').value,
+        next_due_date: document.getElementById('next_due_date').value,
+        next_due_amount: document.getElementById('next_due_amount').value,
+        due_note: document.getElementById('due_note').value,
+        idempotency_token: window.AmeOfflinePay ? AmeOfflinePay.makeRef() : ('PAYOFF-' + Date.now())
+      };
+      var done = function (res) {
+        var box = document.getElementById('okBox');
+        box.style.display = 'block';
+        if (res && res.ok) {
+          box.textContent = 'পেমেন্ট জমা হয়েছে।';
+          try { sessionStorage.setItem('ame_pay_guard_' + hid.value + '_' + amount.toFixed(2), String(Date.now())); } catch (e) {}
+          if (res.payment_id) {
+            location.href = '/modules/customers/receipt.php?payment_id=' + res.payment_id;
+            return;
+          }
+        } else if (res && res.duplicate) {
+          box.textContent = res.error || 'ডাবল পেমেন্ট আটকানো হয়েছে।';
+          try { sessionStorage.setItem('ame_pay_guard_' + hid.value + '_' + amount.toFixed(2), String(Date.now())); } catch (e) {}
+          if (res.payment_id) {
+            location.href = '/modules/customers/receipt.php?payment_id=' + res.payment_id;
+            return;
+          }
+        } else if (res && res.queued) {
+          box.textContent = 'ফোনে সংরক্ষিত হয়েছে। নেট ফিরলে জমা হবে। রেফ: ' + res.ref;
+        } else {
+          box.textContent = (res && res.error) ? res.error : 'সংরক্ষণ যায়নি';
+        }
+        document.getElementById('offForm').reset();
+        document.getElementById('payment_date').value = new Date().toISOString().slice(0, 10);
+        hid.value = '';
+        setPend();
+      };
+      if (window.AmeOfflinePay && AmeOfflinePay.sendPayload) {
+        ameWaitSend(AmeOfflinePay.sendPayload(payload)).then(done);
+      } else {
+        if (window.AmeSubmitWait) window.AmeSubmitWait.hideAll();
+        done({ queued: true, ref: payload.idempotency_token });
+      }
+    });
+    setPend();
+    window.addEventListener('ame-offline-pay-change', setPend);
+    window.addEventListener('online', setPend);
+    window.addEventListener('offline', setPend);
+  </script>
+</body>
+</html>

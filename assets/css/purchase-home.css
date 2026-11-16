@@ -1,0 +1,406 @@
+/* 10.98.342 — ক্রয় ডেস্ক: হোম/কম্পিউটার আইকন, সাদা অপশন বক্স */
+
+html body.ame-purchase-terminal-page .master-header-fixed .hdr-icon-btn.hdr-i-home,
+html body.ame-purchase-has-home .master-header-fixed .hdr-icon-btn.hdr-i-home,
+html body.ame-purchase-has-home a.hdr-i-home {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+.ame-purchase-home-fab {
+    position: fixed;
+    top: calc(10px + env(safe-area-inset-top, 0px));
+    left: 10px;
+    z-index: 1000050;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 42px;
+    padding: 0 12px 0 10px;
+    border-radius: 999px;
+    background: linear-gradient(145deg, #38bdf8, #0369a1);
+    color: #f0f9ff !important;
+    text-decoration: none !important;
+    font-weight: 800;
+    font-size: 13px;
+    box-shadow: 0 8px 20px rgba(3, 105, 161, 0.35);
+    font-family: inherit;
+}
+.ame-purchase-home-fab svg {
+    display: block;
+    flex: 0 0 auto;
+}
+.ame-purchase-home-inline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(145deg, #38bdf8, #0369a1);
+    color: #f0f9ff !important;
+    text-decoration: none !important;
+    box-shadow: 0 4px 12px rgba(3, 105, 161, 0.28);
+    flex: 0 0 auto;
+}
+.ame-purchase-home-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 8px;
+}
+.rstk-head .ame-purchase-home-inline {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+}
+.rstk-head {
+    position: relative;
+}
+
+@media print {
+    .ame-purchase-home-fab,
+    .ame-purchase-home-inline,
+    .ame-purchase-desktop-fab,
+    .ame-purchase-option-box,
+    .ame-purchase-submit-top {
+        display: none !important;
+    }
+}
+
+html body.ame-purchase-desk,
+html body.ame-purchase-add-page,
+html body.ame-purchase-memo-page {
+    background: #f4f7fb !important;
+    color: #111827 !important;
+    overflow-x: hidden;
+}
+html body.ame-purchase-desk #main-content,
+html body.ame-purchase-add-page #main-content {
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.ame-purchase-src-hidden {
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+}
+
+.ame-purchase-desktop-fab {
+    position: fixed;
+    top: calc(10px + env(safe-area-inset-top, 0px));
+    right: 10px;
+    z-index: 1000050;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 42px;
+    padding: 0 12px 0 10px;
+    border: 0;
+    border-radius: 999px;
+    background: #111827;
+    color: #f8fafc !important;
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.28);
+    font-family: inherit;
+}
+html.ame-phone-desktop .ame-purchase-desktop-fab,
+body.ame-purchase-desktop .ame-purchase-desktop-fab {
+    background: #04933a;
+}
+
+.ame-purchase-option-box {
+    position: sticky;
+    top: 8px;
+    z-index: 10040;
+    margin: 0 0 14px;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    background: #ffffff;
+    color: #111827;
+    border: 1px solid #d7dee8;
+    border-radius: 16px;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+    overflow: hidden;
+}
+.ame-opt-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #003f8f;
+    color: #ffffff;
+}
+.ame-opt-head h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+}
+.ame-opt-pc {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 36px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 999px;
+    background: #111827;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 12px;
+    cursor: pointer;
+}
+html.ame-phone-desktop .ame-opt-pc {
+    background: #04933a;
+}
+.ame-opt-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px;
+    background: #f4f7fb;
+}
+.ame-opt-submit-only {
+    min-height: 48px !important;
+    width: 100%;
+    font-size: 16px !important;
+    background: #04933a !important;
+    color: #ffffff !important;
+    border: 0 !important;
+}
+.ame-purchase-money-supplier {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 8px 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+    font-weight: 800;
+    font-size: 15px;
+}
+.ame-purchase-money-supplier strong {
+    color: #047857;
+    font-size: 18px;
+}
+a.ame-opt-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+}
+.ame-opt-btn,
+.ame-opt-toggle {
+    min-height: 44px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    border: 1px solid #d7dee8;
+    background: #ffffff;
+    color: #111827 !important;
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+}
+.ame-opt-btn-save { background: #e8f1fb !important; color: #003f8f !important; border-color: #9ec1e6; }
+.ame-opt-btn-complete { background: #04933a !important; color: #ffffff !important; border: 0; }
+.ame-opt-btn-add { background: #111827 !important; color: #ffffff !important; border: 0; }
+.ame-opt-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff7ed;
+    color: #9a3412 !important;
+    border-color: #fdba74;
+    font-size: 12px;
+}
+.ame-opt-add {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px;
+    background: #ffffff;
+    border-top: 1px solid #e5e7eb;
+}
+@media (min-width: 760px) {
+    .ame-opt-add {
+        grid-template-columns: minmax(0, 1fr) 88px 100px auto;
+        align-items: end;
+    }
+    .ame-opt-add-title,
+    .ame-opt-hits,
+    .ame-opt-msg { grid-column: 1 / -1; }
+}
+.ame-opt-add-title {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 800;
+    color: #003f8f;
+}
+.ame-opt-field {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+.ame-opt-field span {
+    font-size: 12px;
+    font-weight: 800;
+    color: #4b5563;
+}
+.ame-opt-field input {
+    min-height: 44px;
+    width: 100%;
+    border: 1px solid #d7dee8;
+    border-radius: 10px;
+    padding: 0 10px;
+    font-weight: 700;
+    color: #111827;
+    background: #f8fafc;
+    box-sizing: border-box;
+}
+.ame-opt-add-btn {
+    min-height: 44px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 10px;
+    background: #04933a;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+}
+.ame-opt-hits {
+    max-height: 200px;
+    overflow: auto;
+    border: 1px solid #d7dee8;
+    border-radius: 10px;
+    background: #ffffff;
+}
+.ame-memo-hit {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 12px;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    font-weight: 800;
+    color: #111827;
+}
+.ame-memo-hit:hover { background: #e8f1fb; }
+.ame-memo-hit span { color: #047857; }
+.ame-opt-msg { margin: 0; font-size: 13px; font-weight: 700; color: #334155; }
+.ame-opt-msg-ok { color: #047857 !important; }
+.ame-opt-msg-err { color: #b42318 !important; }
+.ame-memo-added td {
+    font-weight: 800 !important;
+    background: #ecfdf5 !important;
+    color: #065f46 !important;
+}
+
+/* পুরনো নীল লিফট বক্স — যদি ক্যাশ থেকে আসে, সাদা কার্ডে পড়া যায় */
+#amePurchaseSubmitTop,
+.ame-purchase-submit-top {
+    background: #ffffff !important;
+    color: #111827 !important;
+    border: 1px solid #d7dee8;
+    border-radius: 16px;
+    padding: 12px;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+.ame-purchase-submit-top .ame-purchase-submit-label {
+    grid-column: 1 / -1;
+    background: #003f8f;
+    color: #ffffff !important;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-weight: 800;
+}
+.ame-purchase-submit-top button,
+.ame-purchase-submit-top input,
+.ame-purchase-submit-top a.btn,
+.ame-purchase-submit-top label {
+    min-height: 44px;
+    background: #f4f7fb !important;
+    color: #111827 !important;
+    border: 1px solid #d7dee8 !important;
+    border-radius: 10px !important;
+    font-weight: 800 !important;
+}
+
+/* ক্রয় ইতিহাস: সাদা বক্সে গাঢ় লেখা, নীল হেডারে সাদা লেখা — বক্স ও ফন্ট মিল */
+html body[data-ame-layout-page="purchase/history"],
+html body.ame-purchase-history-page {
+    background: #f4f7fb !important;
+    color: #111827 !important;
+}
+html body[data-ame-layout-page="purchase/history"] #main-content,
+html body.ame-purchase-history-page #main-content {
+    background: #f4f7fb !important;
+    color: #111827 !important;
+}
+html body[data-ame-layout-page="purchase/history"] #main-content .card,
+html body[data-ame-layout-page="purchase/history"] #main-content .box,
+html body[data-ame-layout-page="purchase/history"] #main-content .panel,
+html body[data-ame-layout-page="purchase/history"] #main-content .stat,
+html body[data-ame-layout-page="purchase/history"] #main-content .kpi,
+html body[data-ame-layout-page="purchase/history"] #main-content .widget,
+html body[data-ame-layout-page="purchase/history"] #main-content .info-box,
+html body[data-ame-layout-page="purchase/history"] #main-content .summary,
+html body[data-ame-layout-page="purchase/history"] #main-content .table-wrap,
+html body[data-ame-layout-page="purchase/history"] #main-content table,
+html body.ame-purchase-history-page #main-content .card,
+html body.ame-purchase-history-page #main-content .box,
+html body.ame-purchase-history-page #main-content .panel,
+html body.ame-purchase-history-page #main-content .stat,
+html body.ame-purchase-history-page #main-content table {
+    background: #ffffff !important;
+    color: #111827 !important;
+    border-color: #d7dee8 !important;
+}
+html body[data-ame-layout-page="purchase/history"] #main-content .card :is(p, span, label, td, h1, h2, h3, h4, b, strong, small, div),
+html body.ame-purchase-history-page #main-content .card :is(p, span, label, td, h1, h2, h3, h4, b, strong, small, div) {
+    color: #111827 !important;
+}
+html body[data-ame-layout-page="purchase/history"] #main-content thead,
+html body[data-ame-layout-page="purchase/history"] #main-content thead th,
+html body[data-ame-layout-page="purchase/history"] #main-content .card-header,
+html body[data-ame-layout-page="purchase/history"] #main-content .panel-heading,
+html body[data-ame-layout-page="purchase/history"] #main-content .box-header,
+html body.ame-purchase-history-page #main-content thead,
+html body.ame-purchase-history-page #main-content thead th,
+html body.ame-purchase-history-page #main-content .card-header {
+    background: #003f8f !important;
+    color: #ffffff !important;
+}
+html body[data-ame-layout-page="purchase/history"] #main-content thead th,
+html body[data-ame-layout-page="purchase/history"] #main-content thead th *,
+html body[data-ame-layout-page="purchase/history"] #main-content .card-header,
+html body[data-ame-layout-page="purchase/history"] #main-content .card-header *,
+html body.ame-purchase-history-page #main-content thead th,
+html body.ame-purchase-history-page #main-content .card-header * {
+    color: #ffffff !important;
+}
+html body[data-ame-layout-page="purchase/history"] #main-content :is(.amount, .total, .grand-total, .text-success, [class*="taka"]),
+html body.ame-purchase-history-page #main-content :is(.amount, .total, .grand-total, .text-success, [class*="taka"]) {
+    color: #047857 !important;
+    font-weight: 800 !important;
+}

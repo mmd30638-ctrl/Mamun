@@ -1,0 +1,853 @@
+/* Sales-desk color system for every page except POS.
+   Tokens match ame-sale-desk.css: canvas #F4F7FB, bars #003F8F, type #111827.
+   POS (body.ame-sales-pro) is left to ame-sale-desk-lock.css. */
+
+:root {
+  --desk-navy: #003F8F;
+  --desk-blue: #0057B8;
+  --desk-green: #04933A;
+  --desk-canvas: #F4F7FB;
+  --desk-line: #D7DEE8;
+  --desk-text: #111827;
+  --desk-muted: #667085;
+  --desk-surface: #F8FAFC;
+  --desk-white: #ffffff;
+  --desk-danger: #DC2626;
+  --desk-warn: #C2410C;
+  --desk-warn-soft: #FFF7ED;
+  --desk-ok-soft: #ECFDF5;
+  --desk-danger-soft: #FEF2F2;
+  --desk-navy-soft: #E8EEF8;
+  --desk-radius: 12px;
+  --desk-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+  --desk-touch: 44px;
+  --desk-font: "Noto Sans Bengali", "Noto Sans", "Segoe UI", system-ui, sans-serif;
+}
+
+body:not(.ame-sales-pro),
+body:not(.ame-sales-pro) #main-content {
+  background: var(--desk-canvas) !important;
+  color: var(--desk-text) !important;
+  font-family: var(--desk-font);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+body:not(.ame-sales-pro) #main-content {
+  overflow-x: clip;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+body:not(.ame-sales-pro) #main-content *,
+body:not(.ame-sales-pro) #main-content *::before,
+body:not(.ame-sales-pro) #main-content *::after {
+  box-sizing: border-box;
+}
+
+/* Typography — dark on light, navy titles like the sales desk */
+body:not(.ame-sales-pro) #main-content h1,
+body:not(.ame-sales-pro) #main-content h2,
+body:not(.ame-sales-pro) #main-content h3,
+body:not(.ame-sales-pro) #main-content h4 {
+  color: var(--desk-navy) !important;
+  -webkit-text-fill-color: var(--desk-navy) !important;
+  font-weight: 800 !important;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+body:not(.ame-sales-pro) #main-content h1 { font-size: clamp(1.25rem, 1.1rem + 0.8vw, 1.7rem); }
+body:not(.ame-sales-pro) #main-content h2 { font-size: clamp(1.1rem, 1rem + 0.45vw, 1.4rem); }
+body:not(.ame-sales-pro) #main-content h3,
+body:not(.ame-sales-pro) #main-content h4 { font-size: clamp(1rem, 0.95rem + 0.25vw, 1.15rem); }
+
+body:not(.ame-sales-pro) #main-content p,
+body:not(.ame-sales-pro) #main-content li,
+body:not(.ame-sales-pro) #main-content td,
+body:not(.ame-sales-pro) #main-content dd,
+body:not(.ame-sales-pro) #main-content dt {
+  color: var(--desk-text) !important;
+  -webkit-text-fill-color: var(--desk-text) !important;
+  overflow-wrap: anywhere;
+}
+
+/* 10.98.555 — নিরাপত্তা কোড: ক্রিম বক্স, নীল কোড; কালো-ওপর-কালো নয় */
+body:not(.ame-sales-pro) #main-content .ame-pay-sec {
+  background: #fff7ed !important;
+  background-color: #fff7ed !important;
+  background-image: none !important;
+  border: 2px solid #c2410c !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+body:not(.ame-sales-pro) #main-content .ame-pay-sec p,
+body:not(.ame-sales-pro) #main-content .ame-pay-sec label,
+body:not(.ame-sales-pro) #main-content .ame-pay-sec .ame-pay-sec-hint,
+body:not(.ame-sales-pro) #main-content .ame-pay-sec .ame-pay-sec-lbl {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  background: transparent !important;
+}
+body:not(.ame-sales-pro) #main-content .ame-pay-sec .ame-pay-sec-kicker {
+  color: #c2410c !important;
+  -webkit-text-fill-color: #c2410c !important;
+}
+body:not(.ame-sales-pro) #main-content .ame-pay-sec .ame-pay-sec-code {
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  font-size: 32px !important;
+  font-weight: 900 !important;
+}
+body:not(.ame-sales-pro) #main-content .ame-pay-sec .ame-pay-sec-input {
+  background: #ffffff !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  border: 2px solid #003f8f !important;
+}
+
+body:not(.ame-sales-pro) #main-content label {
+  color: var(--desk-text) !important;
+  -webkit-text-fill-color: var(--desk-text) !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+}
+
+body:not(.ame-sales-pro) #main-content small,
+body:not(.ame-sales-pro) #main-content .muted,
+body:not(.ame-sales-pro) #main-content .text-muted,
+body:not(.ame-sales-pro) #main-content .hint,
+body:not(.ame-sales-pro) #main-content .help,
+body:not(.ame-sales-pro) #main-content .sup-sub {
+  color: var(--desk-muted) !important;
+  -webkit-text-fill-color: var(--desk-muted) !important;
+  font-weight: 600 !important;
+}
+
+/* Cards / boxes — white, navy-readable, no heavy shadow */
+body:not(.ame-sales-pro) #main-content .card,
+body:not(.ame-sales-pro) #main-content .panel,
+body:not(.ame-sales-pro) #main-content .studio-panel,
+body:not(.ame-sales-pro) #main-content .spay-card,
+body:not(.ame-sales-pro) #main-content .spay,
+body:not(.ame-sales-pro) #main-content fieldset,
+body:not(.ame-sales-pro) #main-content .ty-wrap,
+body:not(.ame-sales-pro) #main-content .ty-card,
+body:not(.ame-sales-pro) #main-content .stock-shell,
+body:not(.ame-sales-pro) #main-content .rstk-sheet,
+body:not(.ame-sales-pro) #main-content .ame-stock-now-card,
+body:not(.ame-sales-pro) #main-content .fam-kpi,
+body:not(.ame-sales-pro) #main-content .ws-stat,
+body:not(.ame-sales-pro) #main-content .pd-summary-box,
+body:not(.ame-sales-pro) #main-content .pd-kpi-box {
+  background: var(--desk-white) !important;
+  color: var(--desk-text) !important;
+  border: 1px solid var(--desk-line) !important;
+  border-radius: var(--desk-radius) !important;
+  box-shadow: var(--desk-shadow) !important;
+}
+
+body:not(.ame-sales-pro) #main-content .card,
+body:not(.ame-sales-pro) #main-content .panel,
+body:not(.ame-sales-pro) #main-content .spay-card {
+  padding: 14px 16px;
+}
+
+body:not(.ame-sales-pro) #main-content :is(.card-header, .panel-heading, .box-header, .cpay-card-head, .ame-box-head, .ame-phase, .ty-mast, .stock-heading, .rstk-head, .ame-stock-now-head) {
+  background: var(--desk-navy) !important;
+  background-image: none !important;
+  color: var(--desk-white) !important;
+  -webkit-text-fill-color: var(--desk-white) !important;
+  border-radius: 12px 12px 0 0;
+  padding: 10px 14px;
+}
+
+body:not(.ame-sales-pro) #main-content :is(.card-header, .panel-heading, .box-header, .cpay-card-head, .ame-box-head, .ame-phase, .ty-mast, .stock-heading, .rstk-head, .ame-stock-now-head) :is(h1, h2, h3, h4, p, span, strong, small, b, em) {
+  background: transparent !important;
+  color: var(--desk-white) !important;
+  -webkit-text-fill-color: var(--desk-white) !important;
+}
+
+/* Inputs */
+body:not(.ame-sales-pro) #main-content input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="file"]):not([type="color"]):not([type="range"]):not([type="image"]),
+body:not(.ame-sales-pro) #main-content select,
+body:not(.ame-sales-pro) #main-content textarea {
+  background: var(--desk-white) !important;
+  color: var(--desk-text) !important;
+  -webkit-text-fill-color: var(--desk-text) !important;
+  border: 1px solid var(--desk-line) !important;
+  border-radius: 8px !important;
+  min-height: var(--desk-touch) !important;
+  padding: 8px 12px !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+  max-width: 100%;
+}
+
+body:not(.ame-sales-pro) #main-content textarea { min-height: 96px !important; }
+
+body:not(.ame-sales-pro) #main-content input:focus,
+body:not(.ame-sales-pro) #main-content select:focus,
+body:not(.ame-sales-pro) #main-content textarea:focus {
+  border-color: var(--desk-navy) !important;
+  outline: 3px solid rgba(0, 63, 143, 0.18);
+  outline-offset: 1px;
+}
+
+body:not(.ame-sales-pro) #main-content input:disabled,
+body:not(.ame-sales-pro) #main-content select:disabled,
+body:not(.ame-sales-pro) #main-content textarea:disabled {
+  background: var(--desk-navy-soft) !important;
+  color: var(--desk-muted) !important;
+  -webkit-text-fill-color: var(--desk-muted) !important;
+}
+
+/* Primary actions — navy + white, same as sales desk bars */
+body:not(.ame-sales-pro) #main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.group-all):not(.cus-suggest-item):not(.cus-photo-thumb),
+body:not(.ame-sales-pro) #main-content input[type="submit"],
+body:not(.ame-sales-pro) #main-content input[type="button"],
+body:not(.ame-sales-pro) #main-content .btn,
+body:not(.ame-sales-pro) #main-content .btn-primary,
+body:not(.ame-sales-pro) #main-content .sup-add-btn,
+body:not(.ame-sales-pro) #main-content .spay-btn.primary,
+body:not(.ame-sales-pro) #main-content a[class*="btn"]:not(.hdr-icon-btn):not(.ghost):not(.btn-outline) {
+  background: var(--desk-navy) !important;
+  color: var(--desk-white) !important;
+  -webkit-text-fill-color: var(--desk-white) !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  min-height: 46px;
+  padding: 8px 14px;
+  font-size: 16px;
+  font-weight: 800 !important;
+  cursor: pointer;
+}
+
+body:not(.ame-sales-pro) #main-content button:not(.hdr-icon-btn):not(.cus-suggest-item):not(.cus-photo-thumb) *,
+body:not(.ame-sales-pro) #main-content .btn *,
+body:not(.ame-sales-pro) #main-content .sup-add-btn *,
+body:not(.ame-sales-pro) #main-content a[class*="btn"]:not(.hdr-icon-btn) * {
+  color: var(--desk-white) !important;
+  -webkit-text-fill-color: var(--desk-white) !important;
+}
+
+body:not(.ame-sales-pro) #main-content .btn-secondary,
+body:not(.ame-sales-pro) #main-content .ghost,
+body:not(.ame-sales-pro) #main-content .btn-outline,
+body:not(.ame-sales-pro) #main-content a.ghost,
+body:not(.ame-sales-pro) #main-content button.ghost {
+  background: var(--desk-white) !important;
+  color: var(--desk-navy) !important;
+  -webkit-text-fill-color: var(--desk-navy) !important;
+  border: 1.5px solid var(--desk-navy) !important;
+}
+
+body:not(.ame-sales-pro) #main-content .btn-secondary *,
+body:not(.ame-sales-pro) #main-content .ghost *,
+body:not(.ame-sales-pro) #main-content .btn-outline * {
+  color: var(--desk-navy) !important;
+  -webkit-text-fill-color: var(--desk-navy) !important;
+}
+
+body:not(.ame-sales-pro) #main-content button[class*="del"],
+body:not(.ame-sales-pro) #main-content button[class*="danger"],
+body:not(.ame-sales-pro) #main-content .btn-danger,
+body:not(.ame-sales-pro) #main-content .spay-btn.warn,
+body:not(.ame-sales-pro) #main-content a[class*="danger"],
+body:not(.ame-sales-pro) #main-content button[name="kind"][value="withdraw"] {
+  background: var(--desk-danger) !important;
+  color: var(--desk-white) !important;
+  -webkit-text-fill-color: var(--desk-white) !important;
+}
+
+body:not(.ame-sales-pro) #main-content .btn-success,
+body:not(.ame-sales-pro) #main-content button[class*="success"],
+body:not(.ame-sales-pro) #main-content a.stock-action.green,
+body:not(.ame-sales-pro) #main-content button.rstk-btn-wa {
+  background: var(--desk-green) !important;
+  color: var(--desk-white) !important;
+  -webkit-text-fill-color: var(--desk-white) !important;
+}
+
+/* Tables — navy head, dark rows, green only for money */
+body:not(.ame-sales-pro) #main-content table {
+  width: 100%;
+  background: var(--desk-white) !important;
+  border-collapse: collapse !important;
+}
+
+body:not(.ame-sales-pro) #main-content .table-wrap,
+body:not(.ame-sales-pro) #main-content .table-responsive,
+body:not(.ame-sales-pro) #main-content .ame-pos-table-wrap,
+body:not(.ame-sales-pro) #main-content [class*="table-wrap"],
+body:not(.ame-sales-pro) #main-content [class*="table_wrap"] {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+body:not(.ame-sales-pro) #main-content table thead th,
+body:not(.ame-sales-pro) #main-content table thead td,
+body:not(.ame-sales-pro) #main-content table thead th *,
+body:not(.ame-sales-pro) #main-content table thead td * {
+  background: var(--desk-navy) !important;
+  color: var(--desk-white) !important;
+  -webkit-text-fill-color: var(--desk-white) !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  padding: 10px 8px !important;
+}
+
+body:not(.ame-sales-pro) #main-content table tbody td {
+  background: var(--desk-white) !important;
+  color: var(--desk-text) !important;
+  -webkit-text-fill-color: var(--desk-text) !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  border-bottom: 1px solid var(--desk-line) !important;
+  padding: 10px 8px !important;
+  vertical-align: middle;
+}
+
+body:not(.ame-sales-pro) #main-content table tbody tr:nth-child(even) td {
+  background: var(--desk-surface) !important;
+}
+
+body:not(.ame-sales-pro) #main-content .money,
+body:not(.ame-sales-pro) #main-content .amount,
+body:not(.ame-sales-pro) #main-content [class*="-amount"],
+body:not(.ame-sales-pro) #main-content [class*="balance"] strong,
+body:not(.ame-sales-pro) #main-content .ty-mast-total b,
+body:not(.ame-sales-pro) #main-content .stock-price,
+body:not(.ame-sales-pro) #main-content .rstk-price,
+body:not(.ame-sales-pro) #main-content .ame-stock-now-money,
+body:not(.ame-sales-pro) #main-content .rstk-tot.grand,
+body:not(.ame-sales-pro) #main-content .rstk-tot.grand span {
+  color: var(--desk-green) !important;
+  -webkit-text-fill-color: var(--desk-green) !important;
+  font-weight: 800 !important;
+}
+
+body:not(.ame-sales-pro) #main-content .sup-due,
+body:not(.ame-sales-pro) #main-content .spay-kpi.danger strong,
+body:not(.ame-sales-pro) #main-content .spay-hero-due strong,
+body:not(.ame-sales-pro) #main-content [class*="-due"],
+body:not(.ame-sales-pro) #main-content [class*="-due"] *:not(button):not(a),
+body:not(.ame-sales-pro) #main-content .flash-err,
+body:not(.ame-sales-pro) #main-content .alert-danger,
+body:not(.ame-sales-pro) #main-content .err {
+  color: var(--desk-danger) !important;
+  -webkit-text-fill-color: var(--desk-danger) !important;
+}
+
+body:not(.ame-sales-pro) #main-content .flash-ok,
+body:not(.ame-sales-pro) #main-content .alert-success {
+  color: var(--desk-green) !important;
+  background: var(--desk-ok-soft) !important;
+}
+
+body:not(.ame-sales-pro) #main-content .flash-err,
+body:not(.ame-sales-pro) #main-content .alert-danger,
+body:not(.ame-sales-pro) #main-content .err {
+  background: var(--desk-danger-soft) !important;
+}
+
+body:not(.ame-sales-pro) #main-content [hidden] {
+  display: none !important;
+}
+
+/* Header / sidebar stay readable and aligned with the desk */
+body:not(.ame-sales-pro) .master-header-fixed {
+  background: var(--desk-white) !important;
+  border-bottom: 1px solid var(--desk-line) !important;
+  color: var(--desk-text) !important;
+}
+
+body:not(.ame-sales-pro) .custom-sidebar,
+body:not(.ame-sales-pro) #mySidebar {
+  --sb-bg: var(--desk-white);
+  --sb-bg-2: var(--desk-canvas);
+  --sb-text: var(--desk-text);
+  --sb-text-muted: var(--desk-muted);
+  --sb-accent: var(--desk-navy);
+  --sb-active-bg: var(--desk-navy-soft);
+  --sb-icon-bg: var(--desk-navy-soft);
+  --sb-icon-color: var(--desk-navy);
+  background: var(--desk-white) !important;
+  color: var(--desk-text) !important;
+}
+
+/* Login gate — same sales colors, high contrast */
+body.ame-lock-page {
+  background: var(--desk-canvas) !important;
+  color: var(--desk-text) !important;
+  font-family: var(--desk-font);
+}
+
+body.ame-lock-page .ame-lock {
+  background: var(--desk-white) !important;
+  color: var(--desk-text) !important;
+  border: 1px solid var(--desk-line);
+  border-radius: var(--desk-radius);
+  box-shadow: var(--desk-shadow);
+}
+
+body.ame-lock-page .ame-lock h1 {
+  color: var(--desk-navy) !important;
+  -webkit-text-fill-color: var(--desk-navy) !important;
+}
+
+body.ame-lock-page .ame-lock p,
+body.ame-lock-page .ame-lock .ame-lock-status {
+  color: var(--desk-muted) !important;
+  -webkit-text-fill-color: var(--desk-muted) !important;
+}
+
+body.ame-lock-page .ame-lock label {
+  color: var(--desk-text) !important;
+  -webkit-text-fill-color: var(--desk-text) !important;
+  font-weight: 800 !important;
+}
+
+body.ame-lock-page .ame-lock input[type="text"],
+body.ame-lock-page .ame-lock input[type="password"] {
+  background: var(--desk-white) !important;
+  color: var(--desk-text) !important;
+  -webkit-text-fill-color: var(--desk-text) !important;
+  border: 1px solid var(--desk-line) !important;
+  min-height: var(--desk-touch);
+}
+
+body.ame-lock-page .ame-lock .enter {
+  background: var(--desk-navy) !important;
+  color: var(--desk-white) !important;
+  -webkit-text-fill-color: var(--desk-white) !important;
+  min-height: 48px;
+  font-weight: 800;
+}
+
+body.ame-lock-page .ame-lock .lgn-eye {
+  background: transparent !important;
+  color: var(--desk-navy) !important;
+  -webkit-text-fill-color: var(--desk-navy) !important;
+}
+
+body.ame-lock-page .ame-lock .flash {
+  background: var(--desk-warn-soft);
+  color: var(--desk-warn);
+  border: 1px solid #FDBA74;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+/* Supplier / customer lookup strip */
+body:not(.ame-sales-pro) #main-content .sup-toolbar #supFront {
+  flex: 1 1 100% !important;
+}
+
+body:not(.ame-sales-pro) #main-content .sup-front {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  margin: 8px 0 12px !important;
+  padding: 8px !important;
+  background: var(--desk-white) !important;
+  border: 2px solid var(--desk-navy) !important;
+  border-radius: 12px !important;
+}
+
+body:not(.ame-sales-pro) #main-content .sup-front[hidden] {
+  display: none !important;
+}
+
+body:not(.ame-sales-pro) #main-content .sup-front a {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  padding: 8px 10px !important;
+  border-radius: 8px !important;
+  background: var(--desk-canvas) !important;
+  text-decoration: none !important;
+}
+
+body:not(.ame-sales-pro) #main-content .sup-front .sup-front-name {
+  color: var(--desk-navy) !important;
+  -webkit-text-fill-color: var(--desk-navy) !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+}
+
+body:not(.ame-sales-pro) #main-content .sup-front .sup-front-phone {
+  color: var(--desk-muted) !important;
+  -webkit-text-fill-color: var(--desk-muted) !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+/* Stock screens */
+html body:not(.ame-sales-pro) #main-content .stock-page {
+  background: var(--desk-canvas) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .stock-name,
+html body:not(.ame-sales-pro) #main-content .rstk-name,
+html body:not(.ame-sales-pro) #main-content .ame-stock-now-name {
+  color: var(--desk-navy) !important;
+  -webkit-text-fill-color: var(--desk-navy) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .stock-code,
+html body:not(.ame-sales-pro) #main-content .stock-meta,
+html body:not(.ame-sales-pro) #main-content .rstk-sub,
+html body:not(.ame-sales-pro) #main-content .rstk-code,
+html body:not(.ame-sales-pro) #main-content .rstk-meta span {
+  color: var(--desk-muted) !important;
+  -webkit-text-fill-color: var(--desk-muted) !important;
+  background: transparent !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .stock-badge {
+  background-color: var(--desk-ok-soft) !important;
+  color: var(--desk-green) !important;
+  -webkit-text-fill-color: var(--desk-green) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .stock-badge.low,
+html body:not(.ame-sales-pro) #main-content .stock-badge.low *,
+html body:not(.ame-sales-pro) #main-content .rstk-stock,
+html body:not(.ame-sales-pro) #main-content .ame-stock-now-qty.is-low {
+  color: var(--desk-danger) !important;
+  -webkit-text-fill-color: var(--desk-danger) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .stock-badge.low {
+  background-color: var(--desk-danger-soft) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .stock-badge.negative {
+  background-color: var(--desk-warn-soft) !important;
+  color: var(--desk-warn) !important;
+  -webkit-text-fill-color: var(--desk-warn) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content a.stock-action,
+html body:not(.ame-sales-pro) #main-content a.stock-edit {
+  color: var(--desk-white) !important;
+  -webkit-text-fill-color: var(--desk-white) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content a.stock-action.blue,
+html body:not(.ame-sales-pro) #main-content a.stock-edit {
+  background-color: var(--desk-navy) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content a.stock-action.black,
+html body:not(.ame-sales-pro) #main-content a.rstk-btn-buy,
+html body:not(.ame-sales-pro) #main-content a.rstk-btn-buy * {
+  background-color: var(--desk-warn) !important;
+  color: var(--desk-white) !important;
+  -webkit-text-fill-color: var(--desk-white) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content a.stock-action.red {
+  background-color: var(--desk-danger) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .rstk-qty button,
+html body:not(.ame-sales-pro) #main-content .rstk-qty button * {
+  background-color: var(--desk-navy-soft) !important;
+  color: var(--desk-navy) !important;
+  -webkit-text-fill-color: var(--desk-navy) !important;
+  min-height: 38px !important;
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 8px !important;
+  font-size: 20px !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .rstk-qty input {
+  min-height: 38px !important;
+  height: 38px !important;
+  width: 52px !important;
+  padding: 0 !important;
+  font-size: 16px !important;
+  text-align: center !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-stock-now {
+  padding: 14px !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-stock-now-head {
+  text-align: center !important;
+  border-radius: 12px 12px 0 0 !important;
+  padding: 16px 14px 12px !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-stock-now-table {
+  width: 100% !important;
+  text-align: left !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-stock-now-qty,
+html body:not(.ame-sales-pro) #main-content .ame-stock-now-money,
+html body:not(.ame-sales-pro) #main-content .ame-stock-now-total td:last-child {
+  text-align: right !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-stock-now-qty { text-align: center !important; }
+
+html body:not(.ame-sales-pro) #main-content tr.ame-stock-now-total td {
+  background: var(--desk-canvas) !important;
+  color: var(--desk-navy) !important;
+  -webkit-text-fill-color: var(--desk-navy) !important;
+  font-size: 18px !important;
+}
+
+html body:not(.ame-sales-pro) #main-content tr.ame-stock-now-total td:last-child {
+  color: var(--desk-green) !important;
+  -webkit-text-fill-color: var(--desk-green) !important;
+}
+
+/* Worker list — wrap instead of sliding off the page */
+html body:not(.ame-sales-pro) #main-content .ame-emp-list {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 12px !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-emp-list .ame-emp-filters {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-emp-list .ame-emp-filters select,
+html body:not(.ame-sales-pro) #main-content .ame-emp-list .ame-emp-filters button {
+  flex: 1 1 140px !important;
+  min-width: 0 !important;
+  width: auto !important;
+  max-width: 100% !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-emp-list .ame-emp-card,
+html body:not(.ame-sales-pro) #main-content .ame-emp-list .ame-auto-scroll-wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  padding: 0 !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-emp-list table.ame-emp-table {
+  width: 100% !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-emp-list table.ame-emp-table th,
+html body:not(.ame-sales-pro) #main-content .ame-emp-list table.ame-emp-table td {
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+  vertical-align: top !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-emp-list table.ame-emp-table th:nth-child(1),
+html body:not(.ame-sales-pro) #main-content .ame-emp-list table.ame-emp-table td:nth-child(1) { width: 24% !important; }
+html body:not(.ame-sales-pro) #main-content .ame-emp-list table.ame-emp-table th:nth-child(2),
+html body:not(.ame-sales-pro) #main-content .ame-emp-list table.ame-emp-table td:nth-child(2) { width: 16% !important; }
+html body:not(.ame-sales-pro) #main-content .ame-emp-list table.ame-emp-table th:nth-child(3),
+html body:not(.ame-sales-pro) #main-content .ame-emp-list table.ame-emp-table td:nth-child(3) { width: 14% !important; }
+html body:not(.ame-sales-pro) #main-content .ame-emp-list table.ame-emp-table th:nth-child(4),
+html body:not(.ame-sales-pro) #main-content .ame-emp-list table.ame-emp-table td:nth-child(4) { width: 12% !important; text-align: center !important; }
+html body:not(.ame-sales-pro) #main-content .ame-emp-list table.ame-emp-table th:nth-child(5),
+html body:not(.ame-sales-pro) #main-content .ame-emp-list table.ame-emp-table td:nth-child(5) { width: 34% !important; }
+
+html body:not(.ame-sales-pro) #main-content .ame-emp-list .ame-emp-person {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-width: 0 !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-emp-list .ame-emp-person img {
+  width: 38px !important;
+  height: 38px !important;
+  flex: 0 0 38px !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-emp-list .ame-emp-person > div {
+  min-width: 0 !important;
+  flex: 1 1 80px !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-emp-list .ame-emp-actions {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 4px !important;
+  width: 100% !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-emp-list .ame-emp-actions form {
+  display: inline-flex !important;
+  margin: 0 !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .ame-emp-list .ame-emp-actions a,
+html body:not(.ame-sales-pro) #main-content .ame-emp-list .ame-emp-actions button,
+html body:not(.ame-sales-pro) #main-content .ame-emp-list td button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  max-width: 100% !important;
+  min-height: 32px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 4px 8px !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  white-space: normal !important;
+}
+
+/* Permission switches stay visible on white cards */
+html body:not(.ame-sales-pro) #main-content label.perm-item {
+  background: var(--desk-white) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content label.perm-item > span:not(.switch),
+html body:not(.ame-sales-pro) #main-content label.perm-item strong {
+  background: transparent !important;
+  color: var(--desk-navy) !important;
+  -webkit-text-fill-color: var(--desk-navy) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content label.perm-item small {
+  color: var(--desk-muted) !important;
+  -webkit-text-fill-color: var(--desk-muted) !important;
+  background: transparent !important;
+}
+
+html body:not(.ame-sales-pro) #main-content label.perm-item .perm-ico {
+  background: var(--desk-navy-soft) !important;
+  color: var(--desk-navy) !important;
+  -webkit-text-fill-color: var(--desk-navy) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content label.perm-item .perm-ico svg {
+  stroke: var(--desk-navy) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content label.perm-item .switch {
+  position: relative !important;
+  display: inline-block !important;
+  width: 52px !important;
+  height: 30px !important;
+  background: transparent !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+html body:not(.ame-sales-pro) #main-content label.perm-item .switch span {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 52px !important;
+  height: 30px !important;
+  border-radius: 999px !important;
+  background-color: #94A3B8 !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+html body:not(.ame-sales-pro) #main-content label.perm-item .switch span::after {
+  content: "" !important;
+  position: absolute !important;
+  width: 22px !important;
+  height: 22px !important;
+  top: 4px !important;
+  left: 4px !important;
+  border-radius: 50% !important;
+  background: #0F172A !important;
+}
+
+html body:not(.ame-sales-pro) #main-content label.perm-item .switch input:checked + span {
+  background-color: var(--desk-green) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content label.perm-item .switch input:checked + span::after {
+  transform: translateX(22px) !important;
+  background: var(--desk-white) !important;
+}
+
+html body:not(.ame-sales-pro) #main-content .perm-group-h button.group-all,
+html body:not(.ame-sales-pro) #main-content .perm-group-h button.group-all * {
+  background: var(--desk-navy) !important;
+  color: var(--desk-white) !important;
+  -webkit-text-fill-color: var(--desk-white) !important;
+}
+
+/* Treasury / reports pair labels */
+body:not(.ame-sales-pro) #main-content .ame-pair {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.25;
+}
+
+body:not(.ame-sales-pro) #main-content .ame-pair em {
+  font-style: normal;
+  color: var(--desk-muted) !important;
+  -webkit-text-fill-color: var(--desk-muted) !important;
+  font-size: 0.82em;
+  font-weight: 600;
+}
+
+/* Responsive — stack, no horizontal overflow */
+@media (max-width: 900px) {
+  body:not(.ame-sales-pro) #main-content {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  body:not(.ame-sales-pro) #main-content .card,
+  body:not(.ame-sales-pro) #main-content .panel,
+  body:not(.ame-sales-pro) #main-content .spay-card {
+    padding: 12px !important;
+  }
+
+  body:not(.ame-sales-pro) #main-content table {
+    min-width: 560px;
+  }
+}
+
+@media (max-width: 480px) {
+  body:not(.ame-sales-pro) #main-content {
+    font-size: 15px;
+  }
+
+  body:not(.ame-sales-pro) #main-content button:not(.hdr-icon-btn):not(.cus-photo-thumb),
+  body:not(.ame-sales-pro) #main-content .btn,
+  body:not(.ame-sales-pro) #main-content input[type="submit"] {
+    width: 100%;
+  }
+
+  body:not(.ame-sales-pro) #main-content .ame-emp-list .ame-emp-actions a,
+  body:not(.ame-sales-pro) #main-content .ame-emp-list .ame-emp-actions button,
+  body:not(.ame-sales-pro) #main-content .ame-emp-list td button {
+    width: auto !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  body:not(.ame-sales-pro) #main-content {
+    font-size: 17px;
+  }
+}

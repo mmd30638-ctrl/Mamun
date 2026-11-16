@@ -1,0 +1,68 @@
+# Runtime secrets and private data
+.env
+.env.*
+!.env.example
+!.env.staging.example
+/private_data/
+/data/*
+!/data/.gitkeep
+!/data/.htaccess
+!/data/mobile_zip_url.txt
+
+# User-generated media (kept on the server, never in release source)
+/uploads/*
+!/uploads/.gitkeep
+!/uploads/.htaccess
+!/uploads/.user.ini
+!/uploads/family/
+!/uploads/family/.htaccess
+/uploads/family/*
+!/uploads/family/.htaccess
+
+# Shop photos that arrived inside the source dump
+/assets/img/customers/
+/assets/img/user_photo_*
+!/uploads/products/
+!/uploads/products/.htaccess
+!/uploads/user-documents/
+!/uploads/user-documents/.htaccess
+!/uploads/business-loans/
+!/uploads/business-loans/.htaccess
+!/uploads/supplier-pay/
+!/uploads/supplier-pay/.htaccess
+
+# Runtime output, migration state, and generated releases
+/logs/*
+!/logs/.gitkeep
+/releases/*
+!/releases/.gitkeep
+/downloads/*.zip
+/uploads/migrations/
+/uploads/sql/
+/uploads/scripts/
+/deliverables/*.zip
+/deliverables/*.sha256
+/deliverables/*.sql
+/tmp/
+
+# Database dumps and local tooling output
+*.dump
+*.bak
+*.tar
+*.tar.gz
+*.pem
+/agent-tools/
+
+# One-job module unlock. The owner names one folder. Never commit this.
+/MODULE_UNLOCK.txt
+
+# Staging QA logs. Never commit captured errors.
+/storage/qa-logs/
+/storage/shop_rent/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+_shot_boot.php

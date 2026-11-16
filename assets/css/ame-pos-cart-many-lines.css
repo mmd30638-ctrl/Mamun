@@ -1,0 +1,66 @@
+/* 10.98.928 — কার্ট পূর্ণ প্রস্থ সবসময় (লাইন সীমা নেই — যত পণ্য হোক ভিতরে স্ক্রল) */
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #amePosCartTableWrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  align-self: stretch !important;
+  grid-column: 1 / -1 !important;
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  right: auto !important;
+  transform: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart table.table-pos {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  table-layout: auto !important;
+}
+
+/* tbody-তে যত সারি আছে — কোনো কাটা নয়; শুধু wrap-এ উল্লম্ব স্ক্রল */
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos tbody tr,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #cart-body tr {
+  display: table-row !important;
+  visibility: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid > div.ame-desk-stack {
+  display: contents !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-term-top,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-term-cart,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-fold-stack {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}

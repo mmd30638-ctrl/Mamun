@@ -1,0 +1,330 @@
+/* Family desks — sales-desk colors + far-away type.
+   Canvas #F4F7FB, navy #003F8F, ink #111827, money #04933A.
+   Overrides mint/rainbow skins. Forms and math stay the same. */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@600;700;800&family=Noto+Sans:wght@600;700;800&display=swap");
+
+.fam-app[data-desk] {
+  --fam-ink: #111827;
+  --fam-navy: #003F8F;
+  --fam-brass: #003F8F;
+  --fam-ok: #04933A;
+  --fam-hot: #DC2626;
+  --fam-muted: #667085;
+  --fam-line: #D7DEE8;
+  --fam-paper: #ffffff;
+  --fam-bg: #F4F7FB;
+  background: #F4F7FB !important;
+  color: #111827 !important;
+  font-family: "Noto Sans Bengali", "Noto Sans", "Segoe UI", sans-serif !important;
+}
+.fam-app[data-desk],
+.fam-app[data-desk] * {
+  font-family: "Noto Sans Bengali", "Noto Sans", "Segoe UI", sans-serif !important;
+}
+.fam-app[data-desk] a { color: #003F8F !important; }
+
+.fam-app[data-desk] .fam-rail {
+  background: #E8EEF8 !important;
+  border-right: 1px solid #D7DEE8 !important;
+  color: #111827 !important;
+}
+.fam-app[data-desk] .fam-rail-brand span {
+  color: #003F8F !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+.fam-app[data-desk] .fam-rail-brand b {
+  color: #003F8F !important;
+  font-size: 26px !important;
+  font-weight: 800 !important;
+}
+.fam-app[data-desk] .fam-nav-g em {
+  color: #667085 !important;
+  font-size: 12px !important;
+}
+.fam-app[data-desk] .fam-nav-a {
+  color: #111827 !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+.fam-app[data-desk] .fam-nav-a:hover { background: #E8EEF8 !important; }
+.fam-app[data-desk] .fam-nav-a.on {
+  background: #003F8F !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+.fam-app[data-desk] .fam-nav-a.on .fam-nav-lab { color: #fff !important; }
+.fam-app[data-desk] .fam-nav-ico {
+  background: #E8EEF8 !important;
+  color: #003F8F !important;
+  font-size: 16px !important;
+}
+.fam-app[data-desk] .fam-nav-a.on .fam-nav-ico {
+  background: rgba(255,255,255,.18) !important;
+  color: #fff !important;
+}
+
+.fam-app[data-desk] .fam-top {
+  background: #003F8F !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  padding: 16px 18px !important;
+  box-shadow: none !important;
+  align-items: center !important;
+}
+.fam-app[data-desk] .fam-kicker {
+  color: #fff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+}
+.fam-app[data-desk] .fam-top h1 {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  text-transform: none !important;
+}
+.fam-app[data-desk] .fam-top .fam-lead {
+  color: rgba(255,255,255,.92) !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+}
+.fam-app[data-desk] .fam-q {
+  border: 2px solid #fff !important;
+  background: #fff !important;
+}
+.fam-app[data-desk] .fam-q input {
+  color: #111827 !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+}
+.fam-app[data-desk] .fam-q-btn,
+.fam-app[data-desk] .fam-btn {
+  background: #04933A !important;
+  color: #fff !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  min-height: 46px;
+  padding: 10px 16px !important;
+}
+.fam-app[data-desk] .fam-btn.soft {
+  background: #fff !important;
+  color: #003F8F !important;
+  border: 2px solid #003F8F !important;
+}
+.fam-app[data-desk] .fam-ghost,
+.fam-app[data-desk] .fam-role {
+  background: #fff !important;
+  color: #003F8F !important;
+  border: 2px solid #fff !important;
+  font-weight: 800 !important;
+  font-size: 14px !important;
+}
+
+.fam-desk-hero {
+  margin: 0 0 16px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  border: 1px solid #D7DEE8;
+  background: #fff;
+}
+.fam-desk-hero .fam-desk-kicker {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #003F8F !important;
+}
+.fam-desk-hero h2 {
+  margin: 0 0 8px;
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  text-transform: none !important;
+}
+.fam-desk-hero p {
+  margin: 0;
+  max-width: 46rem;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  color: #111827 !important;
+}
+.fam-app[data-desk] .fam-desk-hero h2,
+.fam-app[data-desk] .fam-desk-hero p,
+.fam-app[data-desk] .fam-desk-hero .fam-desk-kicker,
+.fam-app[data-desk] .fam-desk-hero .ame-pair em,
+.fam-app[data-desk] .kh-hero h2,
+.fam-app[data-desk] .kh-hero p,
+.fam-app[data-desk] .kh-hero .kh-kicker {
+  color: inherit;
+}
+
+.fam-app[data-desk] .kh-hero {
+  background: #fff !important;
+  border: 1px solid #D7DEE8 !important;
+  box-shadow: none !important;
+  color: #111827 !important;
+}
+.fam-app[data-desk] .kh-hero h2 { color: #003F8F !important; }
+.fam-app[data-desk] .kh-hero p,
+.fam-app[data-desk] .kh-hero .kh-kicker { color: #111827 !important; }
+
+.fam-app[data-desk] .fam-kpi,
+.fam-app[data-desk] .fam-panel,
+.fam-app[data-desk] .fam-card,
+.fam-app[data-desk] .ifd-card {
+  background: #fff !important;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, .05) !important;
+}
+.fam-app[data-desk] .fam-kpi .ifd-lbl,
+.fam-app[data-desk] .fam-kpi span,
+.fam-app[data-desk] .fam-kpi span.ifd-lbl {
+  color: #667085 !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+}
+.fam-app[data-desk] .fam-kpi b {
+  color: #003F8F !important;
+  font-size: 36px !important;
+  font-weight: 800 !important;
+}
+.fam-app[data-desk] .fam-kpi em {
+  color: #04933A !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+.fam-app[data-desk] .fam-kpi.hot { box-shadow: inset 6px 0 0 #DC2626, 0 8px 20px rgba(15, 23, 42, .05) !important; }
+.fam-app[data-desk] .fam-kpi.hot em { color: #DC2626 !important; }
+.fam-app[data-desk] .fam-kpi.gold,
+.fam-app[data-desk] .fam-kpi.ok { box-shadow: inset 6px 0 0 #04933A, 0 8px 20px rgba(15, 23, 42, .05) !important; }
+.fam-app[data-desk] .ifd-ico,
+.fam-app[data-desk] .fam-kpi:nth-child(n) .ifd-ico { background: #E8EEF8 !important; color: #003F8F !important; }
+
+.fam-app[data-desk] .fam-panel h2,
+.fam-app[data-desk] .ifd-card h2,
+.fam-app[data-desk] .fam-card h3 {
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+}
+.fam-app[data-desk] .fam-row strong {
+  color: #111827 !important;
+  font-size: 20px !important;
+  font-weight: 800 !important;
+}
+.fam-app[data-desk] .fam-row small,
+.fam-app[data-desk] .fam-muted {
+  color: #667085 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+}
+.fam-app[data-desk] .fam-row b { color: #04933A !important; font-size: 20px !important; }
+.fam-app[data-desk] .fam-mini {
+  border: 2px solid #003F8F !important;
+  color: #003F8F !important;
+  background: #fff !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+}
+
+.fam-app[data-desk] .fam-chip {
+  background: #E8EEF8 !important;
+  color: #003F8F !important;
+  border: 1px solid #D7DEE8 !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  padding: 8px 14px !important;
+}
+.fam-app[data-desk] .fam-chip.on {
+  background: #003F8F !important;
+  color: #fff !important;
+  border-color: #003F8F !important;
+}
+
+.fam-app[data-desk] .fam-form label {
+  color: #111827 !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+.fam-app[data-desk] .fam-form input,
+.fam-app[data-desk] .fam-form select,
+.fam-app[data-desk] .fam-form textarea {
+  border: 2px solid #D7DEE8 !important;
+  color: #111827 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  min-height: 46px;
+}
+
+.fam-app[data-desk] .fam-table th,
+.fam-app[data-desk] .ifd-table th {
+  color: #fff !important;
+  background: #003F8F !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+}
+.fam-app[data-desk] .fam-table td,
+.fam-app[data-desk] .ifd-table td {
+  color: #111827 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  border-bottom-color: #D7DEE8 !important;
+}
+.fam-app[data-desk] .ifd-table tr:nth-child(even) td { background: #F4F7FB !important; }
+
+.fam-app[data-desk] .ifd-bar-track { background: #E8EEF8 !important; }
+.fam-app[data-desk] .ifd-bar-fill { background: #003F8F !important; }
+.fam-app[data-desk] .ifd-bar-row { font-size: 15px !important; font-weight: 800 !important; color: #111827 !important; }
+.fam-app[data-desk] .ifd-today a { border: 1px solid #D7DEE8 !important; }
+.fam-app[data-desk] .ifd-today span { color: #667085 !important; font-size: 14px !important; }
+.fam-app[data-desk] .ifd-today b { color: #003F8F !important; font-size: 24px !important; }
+.fam-app[data-desk] .ifd-dot { background: #E8EEF8 !important; color: #003F8F !important; }
+.fam-app[data-desk] .ifd-move.hot .ifd-dot { background: #FEE2E2 !important; color: #DC2626 !important; }
+
+.fam-app[data-desk] .fam-cal b { color: #003F8F !important; font-size: 14px !important; }
+.fam-app[data-desk] .fam-day {
+  background: #fff !important;
+  border: 1px solid #D7DEE8 !important;
+  color: #111827 !important;
+  font-size: 14px !important;
+}
+.fam-app[data-desk] .fam-day.today {
+  border: 2px solid #003F8F !important;
+  background: #E8EEF8 !important;
+}
+.fam-app[data-desk] .fam-dot { color: #04933A !important; font-weight: 800 !important; }
+
+.fam-app[data-desk] .fam-empty { color: #667085 !important; font-size: 18px !important; }
+.fam-app[data-desk] .fam-rx-card { border-color: #D7DEE8 !important; }
+
+.fam-app[data-desk] .fam-profile {
+  background: #003F8F !important;
+  color: #fff !important;
+}
+.fam-app[data-desk] .fam-profile .fam-kicker,
+.fam-app[data-desk] .fam-profile h2,
+.fam-app[data-desk] .fam-profile p { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+.fam-app[data-desk] .fam-profile h2 { font-size: 30px !important; }
+
+@media (max-width: 860px) {
+  .fam-app[data-desk] .fam-rail { background: #F4F7FB !important; }
+  .fam-app[data-desk] .fam-nav-a {
+    background: #fff !important;
+    color: #111827 !important;
+    border: 1px solid #D7DEE8 !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+  }
+  .fam-app[data-desk] .fam-nav-a.on {
+    background: #003F8F !important;
+    color: #fff !important;
+  }
+  .fam-app[data-desk] .fam-top h1 { font-size: 26px !important; }
+  .fam-desk-hero h2 { font-size: 24px !important; }
+}

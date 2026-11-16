@@ -1,0 +1,60 @@
+/* ============================================================================
+   purchase-terminal-layout.css
+   ----------------------------------------------------------------------------
+   ক্রয় (Purchase) পেজে (modules/purchase/add.php) পণ্যের টেবিলের নিচে অনেকটা
+   ফাঁকা জায়গা দেখানোর সমাধান।
+
+   কারণ: pos-terminal.css-এ `body.ame-pos-terminal-page .ame-pos-table-wrap`-এর
+   জন্য min-height:920px / max-height:1100px বসানো আছে — এটা বিক্রয় (POS)
+   পেজের জন্য ইচ্ছাকৃত (কাউন্টারে বড় স্ক্রল-করা লিস্ট দরকার)। কিন্তু ক্রয়
+   পেজের <body>-তেও একই সাথে `ame-pos-terminal-page` ক্লাস বসানো আছে
+   (`ame-purchase-terminal-page`-এর পাশাপাশি), তাই এই একই ৯২০-১১০০px উচ্চতা
+   ক্রয় পেজেও জোর করে বসে যেত — পণ্য থাকুক বা না থাকুক, টেবিলের নিচে বিশাল
+   ফাঁকা জায়গা দেখাত (স্ক্রিনশটে দেখা গেছে, ১টা পণ্য থাকা অবস্থাতেও)।
+
+   এর আগে একটা `ame-purchase-pro.css` ফাইলে এই বাগের সমাধান লেখা হয়েছিল, কিন্তু
+   সেটা কোনো পেজেই <link> করে যুক্ত করা হয়নি — এবং তার ভেতরের ক্লাসগুলো
+   (`.ame-pur-pro`, `body.ame-purchase-pro`) বর্তমান add.php-এর আসল markup-এর
+   সাথে মেলেই না (add.php আসলে `body.ame-pos-terminal-page
+   ame-purchase-terminal-page` আর সাধারণ `.ame-pos-shell`/`.ame-pos-table-wrap`
+   ক্লাস ব্যবহার করে) — তাই লিংক করলেও এটা কাজ করত না।
+
+   এখানে add.php-এর প্রকৃত ক্লাস ব্যবহার করে ছোট, নিরাপদ ফিক্স রাখা হলো: টেবিল
+   কন্টেন্ট অনুযায়ী স্বাভাবিক উচ্চতা নেবে (height:auto)। পণ্য যোগ করলে মেমো
+   অটো নিচে বাড়ে — ভিতরে আলাদা স্ক্রল/ফিক্সড উচ্চতা নেই। */
+html body.ame-purchase-terminal-page .ame-pos-table-wrap {
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+}
+@media (min-width: 1000px) {
+    html body.ame-purchase-terminal-page .ame-pos-table-wrap {
+        max-height: none !important;
+    }
+}
+
+/* ----------------------------------------------------------------------------
+   ফিক্স: মোবাইলে "Desktop site" মোডে ক্রয় পেজের টেবিল কলাম (দাম/পরিমাণ/
+   ডিলার/পাইকারি/খুচরা/মোট) ডান পাশে এলোমেলো হয়ে যাওয়া।
+
+   কারণ: pos-terminal.css-তে `body.ame-pos-terminal-page .table-pos`-এর জন্য
+   `table-layout:fixed` আর নির্দিষ্ট কলামের (nth-child 1-8) প্রস্থ (%) বসানো
+   আছে — এটা বিক্রয় (POS) পেজের ৮-কলাম টেবিলের জন্য বানানো। কিন্তু ক্রয় পেজের
+   টেবিলে ১০টা কলাম (ক্রম, কোড, নাম, ক্রয়মূল্য, পরিমাণ, ডিলার, পাইকারি,
+   খুচরা, মোট, বাতিল) এবং body-তে `ame-pos-terminal-page` ক্লাস থাকায় এই
+   একই ভুল প্রস্থ-নিয়ম ক্রয় পেজের টেবিলেও বসে যেত — নাম/দামের কলাম ভুল
+   জায়গায় সংকুচিত হয়ে যেত, ডানের কলামগুলো (পাইকারি/খুচরা/মোট/বাতিল) কোনো
+   প্রস্থ না পেয়ে গাদাগাদি/কাটা দেখাত।
+
+   সমাধান: ক্রয় পেজের টেবিলকে তার নিজের পুরনো, সঠিক আচরণে ফিরিয়ে আনা হলো —
+   table-layout স্বাভাবিক (auto), প্রতিটা কলাম তার কন্টেন্ট অনুযায়ী প্রস্থ
+   নেবে, আর টেবিল-র‍্যাপের overflow-x:auto (responsive-fix.css-এ আগে থেকেই
+   আছে) দিয়ে প্রয়োজনে পাশে স্ক্রল হবে — কোনো কলাম চাপা পড়বে না। */
+html body.ame-purchase-terminal-page .table-pos,
+html body.ame-purchase-terminal-page .pc-cart-table {
+    table-layout: fixed !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+}

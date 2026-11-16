@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>কে কী করলো — লাইভ ড্যাশবোর্ড</title>
+  <link rel="stylesheet" href="/assets/css/live-work.css?v=10.98.473">
+  <style>
+    body { margin: 0; background: #ffffff; }
+    #main-content { min-height: 100vh; }
+    .find-bar { max-width: 1280px; margin: 0 auto; padding: 10px 10px 0; display: flex; flex-wrap: wrap; gap: 8px; }
+    .find-bar a { background: #fff; border: 1px solid #d7dee8; border-radius: 999px; padding: 8px 12px; text-decoration: none; color: #003f8f; font-weight: 800; font-size: 13px; }
+  </style>
+</head>
+<body class="ame-live-work">
+  <div class="find-bar">
+    <a href="/preview.html">← ড্যাশবোর্ড কোথায়</a>
+    <a href="/preview-due-reminder.html">বাকি নোটিফিকেশন</a>
+  </div>
+  <div id="main-content">
+    <div class="lw" id="lwRoot">
+      <header class="lw-hero">
+        <div class="lw-hero-copy">
+          <p class="lw-kicker"><span class="lw-dot on"></span> লাইভ ড্যাশবোর্ড</p>
+          <h1>কে কী করলো</h1>
+          <p>প্রতিটি ব্যবহারকারীর সারাদিনের কাজ — দিন, তারিখ, মাস ও বছর ধরে। মেনুতে Pulse-এর নিচে সরাসরি লিংক।</p>
+        </div>
+        <div class="lw-hero-clock">
+          <small>২০২৬-১০-০৭</small>
+          <b>১২:২০</b>
+          <em class="is-live">লাইভ</em>
+        </div>
+      </header>
+      <nav class="lw-modes">
+        <button type="button" class="lw-chip on">লাইভ</button>
+        <button type="button" class="lw-chip">আজ</button>
+        <button type="button" class="lw-chip">গতকাল</button>
+        <button type="button" class="lw-chip">সপ্তাহ</button>
+        <button type="button" class="lw-chip">মাস</button>
+        <button type="button" class="lw-chip">বছর</button>
+        <button type="button" class="lw-chip">তারিখ</button>
+      </nav>
+      <section class="lw-kpis">
+        <div class="lw-kpi is-live"><span>লাইভ এখন</span><b>2</b></div>
+        <div class="lw-kpi"><span>কাজ করছেন</span><b>3</b></div>
+        <div class="lw-kpi"><span>ব্যবহারকারী</span><b>5</b></div>
+        <div class="lw-kpi"><span>মোট কাজ</span><b>48</b></div>
+        <div class="lw-kpi"><span>বিক্রয়</span><b>12</b></div>
+        <div class="lw-kpi"><span>বিক্রয় টাকা</span><b>৳86,400</b></div>
+      </section>
+      <section class="lw-layout">
+        <aside class="lw-people">
+          <button type="button" class="lw-person on">
+            <span class="lw-ava">মা</span>
+            <div><h3>মমতাজ আক্তার</h3><small>MMP-12 · #2 · বিক্রয়</small></div>
+            <div class="lw-meta"><b>18</b><span class="lw-pill live">লাইভ</span></div>
+          </button>
+          <button type="button" class="lw-person">
+            <span class="lw-ava">তা</span>
+            <div><h3>তারিকুল ইসলাম</h3><small>MMP-1 · #1 · অ্যাডমিন</small></div>
+            <div class="lw-meta"><b>9</b><span class="lw-pill live">লাইভ</span></div>
+          </button>
+          <button type="button" class="lw-person">
+            <span class="lw-ava">রক</span>
+            <div><h3>রকিব হাসান</h3><small>MMP-21 · #7 · সার্ভিস</small></div>
+            <div class="lw-meta"><b>6</b><span class="lw-pill">১১:৪২</span></div>
+          </button>
+        </aside>
+        <div class="lw-main">
+          <div class="lw-chart-card">
+            <div class="lw-chart-head">
+              <h2>ঘণ্টার ছন্দ</h2>
+              <p>কোন ঘণ্টায় কত কাজ</p>
+            </div>
+            <div class="lw-bars">
+              <div class="lw-bar"><i style="height:28%"></i><em>৯</em></div>
+              <div class="lw-bar"><i style="height:46%"></i><em>১০</em></div>
+              <div class="lw-bar"><i style="height:72%"></i><em>১১</em></div>
+              <div class="lw-bar"><i style="height:90%"></i><em>১২</em></div>
+              <div class="lw-bar"><i style="height:38%"></i><em>১</em></div>
+              <div class="lw-bar"><i style="height:22%"></i><em>২</em></div>
+            </div>
+          </div>
+          <div class="lw-feed-card">
+            <div class="lw-chart-head">
+              <h2>এখন যা চলছে</h2>
+              <p>নতুন কাজ উপরে আসে</p>
+            </div>
+            <ol class="lw-feed">
+              <li class="lw-item"><time>১২:১৮</time><div><b>মমতাজ আক্তার</b><span>বিক্রয় কাউন্টারে ইনভয়েস #4821</span></div></li>
+              <li class="lw-item"><time>১২:১১</time><div><b>তারিকুল ইসলাম</b><span>ক্রেতার বাকি আদায় ৳4,000</span></div></li>
+              <li class="lw-item"><time>১১:৪২</time><div><b>রকিব হাসান</b><span>সার্ভিস টিকেট বন্ধ</span></div></li>
+            </ol>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

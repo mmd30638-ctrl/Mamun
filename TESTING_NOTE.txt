@@ -1,0 +1,17 @@
+APONSHOP Testing Support — v10.98.868
+Safe testing note. No code that affects login or sales.
+
+1. Login flow check
+2. Dashboard load check
+3. Sales page check (view only)
+4. Stock page check (view only)
+5. Settings page check
+6. Error monitor check
+7. Session timeout check
+8. Mobile view check
+9. Bengali text check
+10. Update import check
+11. Backup note
+12. Version display check
+
+All notes only. No financial impact.

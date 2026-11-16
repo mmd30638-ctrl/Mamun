@@ -1,0 +1,34 @@
+/* 10.98.384 — নতুন পণ্য / নতুন ক্রেতা বক্স: ওয়াইড অফ-কালার ক্রিম। সবার শেষে লোড। */
+html body.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-tool-add,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-tool-add:hover,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-tool-add,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button#openQuickCustomer,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-pos-quick-cust-btn,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk button#openQuickCustomer {
+  background: #EFE6D4 !important;
+  background-color: #EFE6D4 !important;
+  background-image: none !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  border: 1px solid #D4C4A8 !important;
+  box-shadow: none !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-tool-add *,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-desk-tool-add svg,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button#openQuickCustomer *,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk button.ame-pos-quick-cust-btn * {
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  stroke: #3D2A12 !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomItemBox,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomItemBox:not([hidden]),
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameCustomItemBox:not([hidden]),
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #quickCustomerModal.open .pos-customer-dialog,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .pos-customer-modal.open .pos-customer-dialog {
+  background: #EFE6D4 !important;
+  background-color: #EFE6D4 !important;
+  border-color: #D4C4A8 !important;
+}

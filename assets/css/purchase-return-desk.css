@@ -1,0 +1,86 @@
+/* ক্রয় ফেরত: সাদা ঘর, সামনে আলাদা রং। */
+html body #main-content#main-content .pc-price-modes {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 4px !important;
+  margin: 0 0 8px !important;
+}
+html body #main-content#main-content .pc-price-modes > span {
+  grid-column: 1 / -1 !important;
+  font-size: 11px !important;
+}
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content .pc-price-modes button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.hm-banner-arrow):not(.hm-banner-dot):not([data-ame-c]) {
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 32px !important;
+  padding: 4px 2px !important;
+  font-size: 12px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #ffffff !important;
+  background-image: none !important;
+}
+html body #main-content#main-content .pc-price-modes button[data-pc-price="wholesale"] { color: #15803d !important; -webkit-text-fill-color: #15803d !important; border-color: #15803d !important; }
+html body #main-content#main-content .pc-price-modes button[data-pc-price="retail"] { color: #1d4ed8 !important; -webkit-text-fill-color: #1d4ed8 !important; border-color: #1d4ed8 !important; }
+html body #main-content#main-content .pc-price-modes button[data-pc-price="dealer"] { color: #7c3aed !important; -webkit-text-fill-color: #7c3aed !important; border-color: #7c3aed !important; }
+html body #main-content#main-content .pc-price-modes button[data-pc-price="price"] { color: #c2410c !important; -webkit-text-fill-color: #c2410c !important; border-color: #c2410c !important; }
+html body #main-content#main-content .pc-price-modes button.is-on { border-width: 2.5px !important; text-decoration: underline !important; }
+
+html body #main-content#main-content .pur-ok-acts {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  margin: 8px 0 10px !important;
+}
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content .pur-ok-acts button:not(.hdr-icon-btn),
+html body #main-content#main-content .pur-ok-acts a {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 4px !important;
+  width: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  font-weight: 800 !important;
+  font-size: 12px !important;
+}
+html body #main-content#main-content .pur-ok-ico {
+  width: 58px !important;
+  height: 58px !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 2px solid currentColor !important;
+}
+html body #main-content#main-content .pur-ok-ico svg {
+  width: 26px !important;
+  height: 26px !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2 !important;
+}
+html body #main-content#main-content #prShare,
+html body #main-content#main-content #prShare .pur-ok-ico { color: #e11d48 !important; -webkit-text-fill-color: #e11d48 !important; }
+html body #main-content#main-content #prDownload,
+html body #main-content#main-content #prDownload .pur-ok-ico { color: #1d4ed8 !important; -webkit-text-fill-color: #1d4ed8 !important; }
+html body #main-content#main-content #prView,
+html body #main-content#main-content #prView .pur-ok-ico { color: #15803d !important; -webkit-text-fill-color: #15803d !important; }
+html body #main-content#main-content a.pur-ok-home {
+  display: block !important;
+  margin: 4px 0 12px !important;
+  padding: 10px 12px !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  background: #ffffff !important;
+  color: #c2410c !important;
+  -webkit-text-fill-color: #c2410c !important;
+  border: 2px solid #c2410c !important;
+  border-radius: 12px !important;
+  font-weight: 800 !important;
+}

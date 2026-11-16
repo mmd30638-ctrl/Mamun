@@ -1,0 +1,178 @@
+/* Module box icons: white fill, a different front colour on each control. */
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.hm-banner-arrow):not(.hm-banner-dot):not([data-ame-c]),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content a.btn:not(.hdr-icon-btn):not(.ame-c-home),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content .btn:not(.hdr-icon-btn):not(.ame-c-home):not([data-ame-c]) {
+  background: #ffffff !important;
+  background-image: none !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+}
+
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.hm-banner-arrow):not(.hm-banner-dot):not([data-ame-c]):nth-of-type(6n+1),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.hm-banner-arrow):not(.hm-banner-dot):not([data-ame-c]):nth-of-type(6n+1) * {
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+  border-color: #15803d !important;
+}
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.hm-banner-arrow):not(.hm-banner-dot):not([data-ame-c]):nth-of-type(6n+2),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.hm-banner-arrow):not(.hm-banner-dot):not([data-ame-c]):nth-of-type(6n+2) * {
+  color: #1d4ed8 !important;
+  -webkit-text-fill-color: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+}
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.hm-banner-arrow):not(.hm-banner-dot):not([data-ame-c]):nth-of-type(6n+3),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.hm-banner-arrow):not(.hm-banner-dot):not([data-ame-c]):nth-of-type(6n+3) * {
+  color: #7c3aed !important;
+  -webkit-text-fill-color: #7c3aed !important;
+  border-color: #7c3aed !important;
+}
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.hm-banner-arrow):not(.hm-banner-dot):not([data-ame-c]):nth-of-type(6n+4),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.hm-banner-arrow):not(.hm-banner-dot):not([data-ame-c]):nth-of-type(6n+4) * {
+  color: #c2410c !important;
+  -webkit-text-fill-color: #c2410c !important;
+  border-color: #c2410c !important;
+}
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.hm-banner-arrow):not(.hm-banner-dot):not([data-ame-c]):nth-of-type(6n+5),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.hm-banner-arrow):not(.hm-banner-dot):not([data-ame-c]):nth-of-type(6n+5) * {
+  color: #0e7490 !important;
+  -webkit-text-fill-color: #0e7490 !important;
+  border-color: #0e7490 !important;
+}
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.hm-banner-arrow):not(.hm-banner-dot):not([data-ame-c]):nth-of-type(6n),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.hm-banner-arrow):not(.hm-banner-dot):not([data-ame-c]):nth-of-type(6n) * {
+  color: #be185d !important;
+  -webkit-text-fill-color: #be185d !important;
+  border-color: #be185d !important;
+}
+
+html body .menu-icon-chip,
+html body .sb-sub-icon-chip {
+  background: #ffffff !important;
+  background-image: none !important;
+}
+
+html body .master-header-fixed .hdr-icon-btn.hdr-i-menu,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-menu,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-menu,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-home,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-home,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-home,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-return,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-return,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-return,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-sales,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-sales,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-sales,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-keys,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-keys,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-keys,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-duty,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-duty,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-duty,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-custadd,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-custadd,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-custadd,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-bell,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-bell,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-bell,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-pay,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-pay,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-pay,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-txn,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-txn,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-txn,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-live,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-live,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-live,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-staffpay,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-staffpay,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-staffpay,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-stock,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-stock,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-stock {
+  background: #ffffff !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-menu,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-menu,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-menu { color: #b45309 !important; -webkit-text-fill-color: #b45309 !important; border-color: #b45309 !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-home,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-home,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-home { color: #0369a1 !important; -webkit-text-fill-color: #0369a1 !important; border-color: #0369a1 !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-return,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-return,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-return { color: #e11d48 !important; -webkit-text-fill-color: #e11d48 !important; border-color: #e11d48 !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-sales,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-sales,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-sales { color: #15803d !important; -webkit-text-fill-color: #15803d !important; border-color: #15803d !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-keys,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-keys,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-keys { color: #1d4ed8 !important; -webkit-text-fill-color: #1d4ed8 !important; border-color: #1d4ed8 !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-duty,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-duty,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-duty { color: #166534 !important; -webkit-text-fill-color: #166534 !important; border-color: #166534 !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-custadd,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-custadd,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-custadd { color: #be185d !important; -webkit-text-fill-color: #be185d !important; border-color: #be185d !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-bell,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-bell,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-bell { color: #b91c1c !important; -webkit-text-fill-color: #b91c1c !important; border-color: #b91c1c !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-pay,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-pay,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-pay { color: #0e7490 !important; -webkit-text-fill-color: #0e7490 !important; border-color: #0e7490 !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-txn,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-txn,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-txn { color: #7c3aed !important; -webkit-text-fill-color: #7c3aed !important; border-color: #7c3aed !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-live,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-live,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-live { color: #c2410c !important; -webkit-text-fill-color: #c2410c !important; border-color: #c2410c !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-staffpay,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-staffpay,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-staffpay { color: #0f766e !important; -webkit-text-fill-color: #0f766e !important; border-color: #0f766e !important; }
+html body .master-header-fixed .hdr-icon-btn.hdr-i-stock,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-stock,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-stock { color: #1d4ed8 !important; -webkit-text-fill-color: #1d4ed8 !important; border-color: #1d4ed8 !important; }
+
+/* নোটিফিকেশন ও স্টকের সংখ্যা — সাদা লেখা, ঘন রঙের ব্যাজ, আইকনের ভেতরে। */
+html body .master-header-fixed {
+    overflow: visible !important;
+}
+html body .master-header-fixed .hdr-icon-btn .hdr-badge,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn .hdr-badge,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn .hdr-badge {
+    position: absolute !important;
+    top: -3px !important;
+    right: -3px !important;
+    bottom: auto !important;
+    left: auto !important;
+    z-index: 30 !important;
+    min-width: 18px !important;
+    height: 18px !important;
+    padding: 0 4px !important;
+    border-radius: 999px !important;
+    border: 2px solid #ffffff !important;
+    background: #b91c1c !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    line-height: 14px !important;
+    letter-spacing: 0 !important;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.45) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: visible !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-duty .hdr-badge {
+    background: #166534 !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-stock .hdr-badge,
+html body .master-header-fixed .hdr-icon-btn .hdr-badge.hdr-badge-stock {
+    background: #1d4ed8 !important;
+}

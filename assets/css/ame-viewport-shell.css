@@ -1,0 +1,34 @@
+/* removed — restored 10.98.67 look; kill-switch 10.98.80 (no white stroke force) */
+html.ame-viewport-shell,
+html.ame-viewport-shell body {
+  height: auto !important;
+  max-height: none !important;
+  overflow: auto !important;
+}
+html.ame-viewport-shell #main-content {
+  position: static !important;
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  padding-top: 0 !important;
+}
+html.ame-viewport-shell .master-header-fixed {
+  position: relative !important;
+}
+/* Icons: visible + use each button's own color (hdr-icons.css) */
+.hdr-icon-btn svg,
+.menu-icon-plain svg {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  width: 18px !important;
+  height: 18px !important;
+  max-width: none !important;
+  max-height: none !important;
+  fill: currentColor !important;
+  stroke: currentColor !important;
+  color: inherit !important;
+}
+.hdr-icon-btn {
+  color: inherit;
+}

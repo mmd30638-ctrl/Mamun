@@ -1,0 +1,501 @@
+/**
+ * APONSHOP Treasury Tray 8.08 — unique cash & bank desk.
+ * Cream paper + brass teller cage. Not hire-yard teal, not loan pine, not trust steel.
+ */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Noto+Sans+Bengali:wght@500;600;700;800&family=Source+Sans+3:wght@500;600;700;800&display=swap");
+
+.ty-wrap {
+  --ty-ink: #1c1408;
+  --ty-copy: #4a3b24;
+  --ty-mute: #7c6a4a;
+  --ty-gold: #a16207;
+  --ty-foil: #c9a227;
+  --ty-cream: #f6edd9;
+  --ty-paper: #fffaf0;
+  --ty-line: rgba(28, 20, 8, 0.12);
+  --ty-sage: #3f6212;
+  --ty-rose: #9f1239;
+  width: min(100% - 12px, 1120px);
+  margin: 8px auto 32px;
+  padding: max(8px, env(safe-area-inset-top, 0px))
+    max(6px, env(safe-area-inset-right, 0px))
+    max(22px, env(safe-area-inset-bottom, 0px))
+    max(6px, env(safe-area-inset-left, 0px));
+  box-sizing: border-box;
+  font-family: "Source Sans 3", "Noto Sans Bengali", sans-serif;
+  color: var(--ty-ink);
+}
+.ty-wrap .ame-pair {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.2;
+}
+.ty-wrap .ame-pair strong { font-weight: 800; }
+.ty-wrap .ame-pair em {
+  font-style: normal;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ty-mute);
+}
+
+.ty-mast {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1fr;
+  margin: 0 0 12px;
+  padding: clamp(16px, 4vw, 24px);
+  border-radius: 8px 22px 22px 8px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 18px,
+      rgba(201, 162, 39, 0.08) 18px 19px
+    ),
+    linear-gradient(165deg, #fff8ea 0%, #f6edd9 55%, #efe3c4 100%);
+  border: 1px solid rgba(161, 98, 7, 0.28);
+  box-shadow: 0 16px 36px rgba(28, 20, 8, 0.08);
+  position: relative;
+}
+.ty-mast::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 8px;
+  border-radius: 0 6px 6px 0;
+  background: linear-gradient(180deg, #fde68a, #a16207);
+}
+.ty-mast-copy { padding-left: 10px; }
+.ty-kicker {
+  margin: 0 0 6px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--ty-gold);
+}
+.ty-mast h1 {
+  margin: 0 0 8px;
+  font-family: "Fraunces", "Noto Sans Bengali", serif;
+  font-size: clamp(22px, 4.2vw, 32px);
+  letter-spacing: -0.03em;
+  color: var(--ty-ink);
+}
+.ty-mast > .ty-mast-copy > p {
+  margin: 0;
+  max-width: 46rem;
+  color: var(--ty-copy);
+  font-weight: 600;
+  line-height: 1.5;
+}
+.ty-mast-total {
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #fff8ea;
+  color: var(--ty-ink);
+  border: 1px solid rgba(161, 98, 7, 0.28);
+  align-self: start;
+}
+.ty-mast-total span { display: block; font-size: 11px; font-weight: 700; color: var(--ty-gold); }
+.ty-mast-total b {
+  display: block;
+  margin-top: 4px;
+  font-family: "Fraunces", serif;
+  font-size: clamp(26px, 5vw, 36px);
+  letter-spacing: -0.04em;
+  color: var(--ty-gold);
+  font-variant-numeric: tabular-nums;
+}
+@media (min-width: 820px) {
+  .ty-mast { grid-template-columns: 1.4fr 0.6fr; align-items: center; }
+}
+
+.ty-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 12px;
+  align-items: center;
+}
+.ty-meta { font-size: 11px; font-weight: 700; color: var(--ty-mute); }
+.ty-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.ty-btn {
+  min-height: 42px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 12px;
+  background: #a16207;
+  color: #fff8ea;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+.ty-btn.ghost {
+  background: var(--ty-paper);
+  color: var(--ty-ink);
+  border: 1px solid rgba(161, 98, 7, 0.28);
+}
+
+.ty-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-end;
+  padding: 14px;
+  margin: 0 0 12px;
+  border-radius: 16px;
+  background: var(--ty-paper);
+  border: 1px dashed rgba(161, 98, 7, 0.35);
+}
+.ty-filter label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.ty-filter input {
+  min-height: 42px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(161, 98, 7, 0.28);
+  background: #fff;
+  color: var(--ty-ink);
+}
+
+.ty-mark-banner {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  margin: 0 0 12px;
+  border-radius: 14px;
+  background: #fff7ed;
+  border: 1px dashed rgba(161, 98, 7, 0.4);
+  color: var(--ty-copy);
+  font-weight: 600;
+}
+.ty-mark-banner.on {
+  background: #ecfccb;
+  border-style: solid;
+  border-color: rgba(63, 98, 18, 0.35);
+}
+.ty-mark-banner strong { color: var(--ty-ink); font-size: 15px; }
+
+.ty-flow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 0 0 12px;
+}
+@media (min-width: 640px) {
+  .ty-flow { grid-template-columns: 1fr 1fr; }
+}
+.ty-flow article {
+  padding: 14px;
+  border-radius: 16px;
+  background: var(--ty-paper);
+  border: 1px solid var(--ty-line);
+}
+.ty-flow span { font-size: 12px; font-weight: 800; }
+.ty-flow b {
+  display: block;
+  margin-top: 4px;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+.ty-flow .in { background: #f7fee7; }
+.ty-flow .in b { color: var(--ty-sage); }
+.ty-flow .out { background: #fff1f2; }
+.ty-flow .out b { color: var(--ty-rose); }
+
+.ty-types {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 0 0 14px;
+}
+.ty-types article {
+  padding: 14px;
+  border-radius: 14px;
+  background: #fffaf0;
+  border: 1px solid var(--ty-line);
+  border-left: 5px solid var(--ty-chip);
+}
+.ty-types span { font-size: 12px; font-weight: 800; color: var(--ty-chip); }
+.ty-types b {
+  display: block;
+  margin-top: 4px;
+  font-size: 18px;
+  color: var(--ty-chip);
+  font-variant-numeric: tabular-nums;
+}
+
+.ty-tray {
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--ty-paper);
+  border: 1px solid var(--ty-line);
+  box-shadow: 0 12px 28px rgba(28, 20, 8, 0.06);
+}
+.ty-table-wrap { overflow-x: auto; }
+.ty-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13.5px;
+}
+.ty-wrap thead th {
+  padding: 12px;
+  background: #f6edd9;
+  color: var(--ty-ink);
+  font-weight: 800;
+  border-bottom: 2px solid rgba(161, 98, 7, 0.28);
+}
+.ty-wrap tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(28, 20, 8, 0.08);
+  vertical-align: middle;
+}
+.ty-wrap tbody tr.marked { background: #ecfccb; }
+.ty-wrap td.name { font-weight: 800; }
+.ty-wrap td.num {
+  text-align: right;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.ty-wrap td.num.neg { color: var(--ty-rose); }
+.ty-chip {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 800;
+  background: #fff8ea;
+  color: var(--ty-chip);
+  border: 1px solid rgba(161, 98, 7, 0.18);
+}
+.ty-star-form { margin: 0; }
+.ty-star {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px dashed rgba(161, 98, 7, 0.45);
+  background: #fff8ea;
+  color: var(--ty-gold);
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+}
+.ty-star.on {
+  background: #a16207;
+  color: #fff8ea;
+  border-style: solid;
+  border-color: #a16207;
+}
+.ty-empty {
+  padding: 40px 16px;
+  text-align: center;
+  color: var(--ty-mute);
+  font-weight: 600;
+}
+.ty-foot {
+  margin: 16px 0 0;
+  text-align: center;
+  font-size: 10.5px;
+  color: #b0a48c;
+}
+.ty-ops {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+  align-items: center;
+}
+.ty-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none !important;
+  border: 1px solid;
+  background: #fff;
+  cursor: pointer;
+}
+.ty-link.led { color: #1e3a5f !important; border-color: #93c5fd; }
+.ty-link.edit { color: #c2410c !important; border-color: #fdba74; }
+.ty-link.off { color: #9f1239 !important; border-color: #fda4af; }
+.ty-link.on { color: #15803d !important; border-color: #86efac; }
+.ty-warn {
+  padding: 12px 14px;
+  margin: 0 0 12px;
+  border-radius: 14px;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #9f1239;
+  font-weight: 600;
+}
+.ty-status {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.ty-status.ok { background: #ecfccb; color: #3f6212; }
+.ty-status.off { background: #ffe4e6; color: #9f1239; }
+@media print {
+  .no-print, .ty-star-form, .acc-print-hide, .master-header-fixed, #mySidenav { display: none !important; }
+  .ty-wrap { max-width: 100%; padding: 0; }
+}
+@media (max-width: 639px) {
+  .ty-wrap { width: calc(100% - 8px); }
+  .ty-star { width: 100%; justify-content: center; }
+}
+
+/* 10.98.563 — বক্স সাদা, ফ্রন্ট আলাদা রং (গ্লোবাল নেভি ফিল ঢেকে) */
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-mast {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  border: 2px solid #1d4ed8 !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-mast :is(h1, h2, h3, p, span, strong, small, em, b) {
+  background: transparent !important;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-kicker,
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-kicker * {
+  color: #1d4ed8 !important;
+  -webkit-text-fill-color: #1d4ed8 !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-mast-total {
+  background: #ffffff !important;
+  border: 2px solid #15803d !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-mast-total span,
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-mast-total span * {
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-mast-total b {
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-btn,
+html body:not(.ame-sales-pro) #main-content .ty-wrap a.ty-btn {
+  background: #ffffff !important;
+  color: #1d4ed8 !important;
+  -webkit-text-fill-color: #1d4ed8 !important;
+  border: 2px solid #1d4ed8 !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-btn *,
+html body:not(.ame-sales-pro) #main-content .ty-wrap a.ty-btn * {
+  color: #1d4ed8 !important;
+  -webkit-text-fill-color: #1d4ed8 !important;
+  background: transparent !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-toolbar a.ty-btn:last-of-type,
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-toolbar a.ty-btn:last-of-type * {
+  color: #7c3aed !important;
+  -webkit-text-fill-color: #7c3aed !important;
+  border-color: #7c3aed !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap button.ty-star,
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-star {
+  background: #ffffff !important;
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+  border: 2px solid #15803d !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap button.ty-star *,
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-star * {
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+  background: transparent !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap button.ty-star.on,
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-star.on,
+html body:not(.ame-sales-pro) #main-content .ty-wrap button.ty-star.on *,
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-star.on * {
+  background: #ffffff !important;
+  color: #a16207 !important;
+  -webkit-text-fill-color: #a16207 !important;
+  border-color: #a16207 !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap table thead th,
+html body:not(.ame-sales-pro) #main-content .ty-wrap table thead th * {
+  background: #ffffff !important;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap table tbody td {
+  background: #ffffff !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-link {
+  background: #ffffff !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-link.led,
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-link.led * {
+  color: #1d4ed8 !important;
+  -webkit-text-fill-color: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+  background: #ffffff !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-link.edit,
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-link.edit * {
+  color: #c2410c !important;
+  -webkit-text-fill-color: #c2410c !important;
+  border-color: #c2410c !important;
+  background: #ffffff !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-link.off,
+html body:not(.ame-sales-pro) #main-content .ty-wrap button.ty-link.off,
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-link.off * {
+  color: #be123c !important;
+  -webkit-text-fill-color: #be123c !important;
+  border-color: #be123c !important;
+  background: #ffffff !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-link.on,
+html body:not(.ame-sales-pro) #main-content .ty-wrap button.ty-link.on,
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-link.on * {
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+  border-color: #15803d !important;
+  background: #ffffff !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-mark-banner,
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-mark-banner.on {
+  background: #ffffff !important;
+  border: 2px solid #15803d !important;
+  color: #15803d !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-mark-banner strong,
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-mark-banner span,
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-mark-banner * {
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-warn {
+  background: #ffffff !important;
+  border: 2px solid #be123c !important;
+  color: #be123c !important;
+}
+html body:not(.ame-sales-pro) #main-content .ty-wrap .ty-tray {
+  background: #ffffff !important;
+}

@@ -1,0 +1,46 @@
+/* Permanent UI/UX Device Standard — every page.
+   Mobile Chrome = mobile. Tablet = tablet. Desktop / Chrome Desktop site = desktop.
+   See /UI_UX_DEVICE_STANDARD.md */
+
+html[data-ame-device="phone"] #main-content,
+html.ame-device-phone #main-content {
+  max-width: 100%;
+}
+
+html[data-ame-device="tablet"] #main-content,
+html.ame-device-tablet #main-content {
+  max-width: 100%;
+}
+
+html[data-ame-device="pc"] #main-content,
+html.ame-device-pc #main-content,
+html.ame-phone-desktop #main-content {
+  max-width: none;
+}
+
+html.ame-phone-desktop,
+html.ame-phone-desktop body {
+  overflow-x: auto;
+}
+
+html:not(.ame-phone-desktop) body {
+  overflow-x: hidden;
+}
+
+html[data-ame-device="phone"] table:not(.table-pos):not(.ame-keep-table) {
+  width: 100%;
+}
+
+@media (max-width: 575.98px) {
+  html:not(.ame-phone-desktop) #main-content {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  html:not(.ame-phone-desktop) #main-content {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

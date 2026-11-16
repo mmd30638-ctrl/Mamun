@@ -1,0 +1,298 @@
+/* 10.98.401 — ব্যবহারকারী মডিউল: কালো/নীল বক্স বাতিল, হালকা ক্রিম, দূর থেকে স্পষ্ট */
+html body.ame-users-page #main-content {
+  --usr-cream: #EFE6D4;
+  --usr-ink: #3D2A12;
+  --usr-line: #D4C4A8;
+}
+
+html body.ame-users-page #main-content .ar-wrap {
+  --ar-ink: #3D2A12;
+  --ar-copy: #3D2A12;
+  --ar-mute: #6B5340;
+  --ar-indigo: #3D2A12;
+  --ar-paper: #F7F1E4;
+  --ar-card: #FFFDF8;
+  --ar-line: #D4C4A8;
+}
+
+html body.ame-users-page #main-content .ar-mast,
+html body.ame-users-page #main-content .ar-stats article,
+html body.ame-users-page #main-content .ua-card,
+html body.ame-users-page #main-content .ar-id,
+html body.ame-users-page #main-content .ar-reset-card,
+html body.ame-users-page #main-content .ar-table-wrap,
+html body.ame-users-page #main-content .studio-hero,
+html body.ame-users-page #main-content .studio-panel,
+html body.ame-users-page #main-content .ame-staff-hero,
+html body.ame-users-page #main-content .ame-sa-hero,
+html body.ame-users-page #main-content .ame-staff-card,
+html body.ame-users-page #main-content .ame-staff-card-h,
+html body.ame-users-page #main-content .rp-card,
+html body.ame-users-page #main-content .rp-target,
+html body.ame-users-page #main-content .rp-note {
+  background: #EFE6D4 !important;
+  background-color: #EFE6D4 !important;
+  background-image: none !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  border: 1px solid #D4C4A8 !important;
+  box-shadow: none !important;
+}
+
+html body.ame-users-page #main-content .ar-mast *,
+html body.ame-users-page #main-content .studio-hero *,
+html body.ame-users-page #main-content .ame-staff-hero *,
+html body.ame-users-page #main-content .ame-sa-hero *,
+html body.ame-users-page #main-content .ame-staff-card-h * {
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+}
+
+html body.ame-users-page #main-content .ar-mast h1,
+html body.ame-users-page #main-content .studio-hero h1,
+html body.ame-users-page #main-content .ame-staff-hero h1 {
+  font-size: clamp(26px, 4.4vw, 36px) !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+}
+
+html body.ame-users-page #main-content .ar-mast > p,
+html body.ame-users-page #main-content .studio-hero p,
+html body.ame-users-page #main-content .ame-staff-hero p {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  line-height: 1.5 !important;
+}
+
+html body.ame-users-page #main-content table thead tr,
+html body.ame-users-page #main-content table thead th,
+html body.ame-users-page #main-content table th,
+html body.ame-users-page #main-content table.ar-table th,
+html body.ame-users-page #main-content .ame-staff-table th,
+html body.ame-users-page #main-content .ar-reset-table th {
+  background: #EFE6D4 !important;
+  background-color: #EFE6D4 !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  font-size: 15px !important;
+}
+
+html body.ame-users-page #main-content table.ar-table th .ame-pair em {
+  color: #6B5340 !important;
+}
+
+html body.ame-users-page #main-content .ar-btn,
+html body.ame-users-page #main-content .ar-filter.on,
+html body.ame-users-page #main-content .btn-ink,
+html body.ame-users-page #main-content .group-all,
+html body.ame-users-page #main-content .ame-staff-restore,
+html body.ame-users-page #main-content .ame-staff-home,
+html body.ame-users-page #main-content html body .ar-desk a.ar-act,
+html body.ame-users-page #main-content html body .ar-desk button.ar-act,
+html body.ame-users-page #main-content .ar-desk a.ar-act,
+html body.ame-users-page #main-content .ar-desk button.ar-act,
+html body.ame-users-page #main-content .user-tile.active,
+html body.ame-users-page #main-content .rp-submit,
+html body.ame-users-page #main-content .rp-gen-btn {
+  background: #EFE6D4 !important;
+  background-color: #EFE6D4 !important;
+  background-image: none !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  border: 1px solid #D4C4A8 !important;
+  box-shadow: none !important;
+}
+
+html body.ame-users-page #main-content .ar-btn .ame-pair,
+html body.ame-users-page #main-content .ar-btn .ame-pair strong,
+html body.ame-users-page #main-content .ar-btn .ame-pair em,
+html body.ame-users-page #main-content .ar-act .ame-pair,
+html body.ame-users-page #main-content .ar-act .ame-pair strong,
+html body.ame-users-page #main-content .ar-act .ame-pair em {
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+}
+
+html body.ame-users-page #main-content .ar-btn.ghost,
+html body.ame-users-page #main-content .ar-filter,
+html body.ame-users-page #main-content .ame-staff-muted-btn,
+html body.ame-users-page #main-content .ar-desk button.ar-act.ghost,
+html body.ame-users-page #main-content .ar-desk a.ar-act.ghost {
+  background: #FFFDF8 !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  border: 1px solid #D4C4A8 !important;
+}
+
+html body.ame-users-page #main-content .ar-desk button.ar-act.danger,
+html body.ame-users-page #main-content .ar-btn-remove,
+html body.ame-users-page #main-content .ar-reset-submit,
+html body.ame-users-page #main-content .ar-chip.remove,
+html body.ame-users-page #main-content .ame-hard-delete-btn,
+html body.ame-users-page #main-content button.ame-hard-delete-btn {
+  background: #B71C1C !important;
+  background-color: #B71C1C !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #B71C1C !important;
+}
+
+html body.ame-users-page #main-content .ar-desk button.ar-act.danger .ame-pair,
+html body.ame-users-page #main-content .ar-desk button.ar-act.danger .ame-pair strong,
+html body.ame-users-page #main-content .ar-desk button.ar-act.danger .ame-pair em,
+html body.ame-users-page #main-content .ar-btn-remove .ame-pair,
+html body.ame-users-page #main-content .ar-btn-remove .ame-pair strong,
+html body.ame-users-page #main-content .ar-btn-remove .ame-pair em,
+html body.ame-users-page #main-content .ar-reset-submit {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
+html body.ame-users-page #main-content .ar-role.admin,
+html body.ame-users-page #main-content .ar-ava-ph,
+html body.ame-users-page #main-content .ar-filter.on {
+  background: #EFE6D4 !important;
+  color: #3D2A12 !important;
+}
+
+html body.ame-users-page #main-content .ar-td-id {
+  color: #3D2A12 !important;
+  font-size: 16px !important;
+}
+
+html body.ame-users-page #main-content .ar-name {
+  font-size: 17px !important;
+  color: #3D2A12 !important;
+}
+
+html body.ame-users-page #main-content .ar-stats b {
+  font-size: 28px !important;
+  color: #3D2A12 !important;
+}
+html body.ame-users-page #main-content .ar-search input[type="search"] {
+  background: #FFFDF8 !important;
+  border: 1px solid #D4C4A8 !important;
+  color: #3D2A12 !important;
+}
+html body.ame-users-page #main-content .ar-user-card,
+html body.ame-users-page #main-content .ar-id-line,
+html body.ame-users-page #main-content .ar-cred-grid > div {
+  background: #FFFDF8 !important;
+  border-color: #D4C4A8 !important;
+  color: #3D2A12 !important;
+}
+
+html body.ame-users-page #main-content .ar-launch {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 14px;
+}
+@media (min-width: 820px) {
+  html body.ame-users-page #main-content .ar-launch {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+html body.ame-users-page #main-content .ar-launch a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 88px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  text-decoration: none !important;
+  background: #EFE6D4 !important;
+  border: 1px solid #D4C4A8 !important;
+  color: #3D2A12 !important;
+}
+html body.ame-users-page #main-content .ar-launch a strong {
+  font-size: 18px;
+  font-weight: 800;
+  color: #3D2A12 !important;
+}
+html body.ame-users-page #main-content .ar-launch a small {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #6B5340 !important;
+}
+
+html body.ame-users-page #main-content .ar-sa-help {
+  margin: 0 0 14px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: #EFE6D4 !important;
+  border: 1px solid #D4C4A8 !important;
+  color: #3D2A12 !important;
+}
+html body.ame-users-page #main-content .ar-sa-help h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  color: #3D2A12 !important;
+}
+html body.ame-users-page #main-content .ar-sa-help ol,
+html body.ame-users-page #main-content .ar-sa-help p {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.55;
+  color: #3D2A12 !important;
+}
+html body.ame-users-page #main-content .ar-sa-help a {
+  color: #3D2A12 !important;
+  font-weight: 800;
+}
+html body.ame-users-page #main-content .ar-sa-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #EFE6D4;
+  border: 1px solid #D4C4A8;
+  color: #3D2A12;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+html body.ame-users-page #main-content [style*="background:#000"],
+html body.ame-users-page #main-content [style*="background: #000"],
+html body.ame-users-page #main-content [style*="background:#0b1e4d"],
+html body.ame-users-page #main-content [style*="background:#0B1E4D"],
+html body.ame-users-page #main-content [style*="background:#003F8F"],
+html body.ame-users-page #main-content [style*="background:#111"],
+html body.ame-users-page #main-content [style*="background: #111"],
+html body.ame-users-page #main-content [style*="background:#14110e"],
+html body.ame-users-page #main-content [style*="background: #14110e"],
+html body.ame-users-page #main-content [style*="background:#1d4ed8"],
+html body.ame-users-page #main-content [style*="background:var(--dark-blue)"],
+html body.ame-users-page #main-content [style*="background: var(--dark-blue)"] {
+  background: #EFE6D4 !important;
+  background-color: #EFE6D4 !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  border-color: #D4C4A8 !important;
+}
+
+html body.ame-users-page #main-content .studio-page {
+  background: #F7F1E4 !important;
+  color: #3D2A12 !important;
+}
+html body.ame-users-page #main-content .user-tile {
+  background: #FFFDF8 !important;
+  border-color: #D4C4A8 !important;
+  color: #3D2A12 !important;
+}
+html body.ame-users-page #main-content .user-tile.active {
+  background: #EFE6D4 !important;
+  outline-color: #D4C4A8 !important;
+}
+html body.ame-users-page #main-content .user-tile .bar i {
+  background: #3D2A12 !important;
+}
+html body.ame-users-page #main-content .rp-c1,
+html body.ame-users-page #main-content .rp-c2,
+html body.ame-users-page #main-content .rp-c3 {
+  background: #D4C4A8 !important;
+}

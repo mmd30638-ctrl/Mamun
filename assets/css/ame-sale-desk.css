@@ -1,0 +1,943 @@
+/* Sales desk — master spec. Canvas #F4F7FB, bars #003F8F, type #111827. */
+
+body.ame-sales-pro,
+body.ame-sales-pro #main-content,
+body.ame-sales-pro .ame-sale-desk,
+body.ame-sales-pro .ame-sale-desk .ame-pos-shell,
+body.ame-sales-pro .ame-sale-desk .ame-pos-page {
+  background: #F4F7FB !important;
+  background-image: none !important;
+  color: #111827 !important;
+}
+
+.ame-sale-desk {
+  --desk-navy: #003F8F;
+  --desk-blue: #0057B8;
+  --desk-green: #04933A;
+  --desk-canvas: #F4F7FB;
+  --desk-line: #D7DEE8;
+  --desk-text: #111827;
+  --desk-muted: #667085;
+  --desk-surface: #F8FAFC;
+  padding: 8px 16px 16px !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+.ame-sale-desk .ame-pos-colorbar,
+.ame-sale-desk .ame-pos-heading,
+.ame-sale-desk .ame-phase,
+.ame-sale-desk .ame-pos-finder-link,
+.ame-sale-desk .ame-sale-brand,
+.ame-sale-desk .ame-pos-title-line,
+.ame-sale-desk .ame-pos-term-actions,
+.ame-sale-desk .ame-pos-pay-jump,
+.ame-sale-desk .ame-pos-row-note,
+.ame-sale-desk .ame-pos-add-row {
+  display: none !important;
+}
+
+.ame-sale-desk .ame-pos-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+
+.ame-sale-desk .ame-desk-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  margin: 0 0 4px;
+  padding: 8px 12px;
+  background: #003F8F;
+  color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+.ame-sale-desk .ame-desk-marquee {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.ame-sale-desk .ame-desk-marquee-viewport {
+  flex: 1 1 auto;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.ame-sale-desk .ame-desk-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 48px;
+  animation: ameDeskMarquee 22s linear infinite;
+}
+
+.ame-sale-desk .ame-desk-marquee-text {
+  display: inline-block;
+  color: #ffffff;
+  white-space: nowrap;
+  font-weight: 800;
+}
+
+@keyframes ameDeskMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 24px)); }
+}
+
+.ame-sale-desk .ame-desk-clockbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.ame-sale-desk .ame-desk-clockbox strong {
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+.ame-sale-desk .ame-desk-menu { position: relative; flex: 0 0 auto; }
+
+.ame-sale-desk #ameDeskMenuBtn,
+.ame-sale-desk .ame-desk-tool {
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #003F8F;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.ame-sale-desk .ame-desk-tool-add {
+  background: #EFE6D4;
+  color: #3D2A12;
+}
+
+.ame-sale-desk .ame-desk-menu-pop {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 40;
+  min-width: 190px;
+  padding: 6px;
+  background: #ffffff;
+  border: 1px solid #D7DEE8;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+.ame-sale-desk .ame-desk-menu-pop button {
+  display: block;
+  width: 100%;
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111827;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ame-sale-desk .ame-desk-menu-pop button:hover { background: #F8FAFC; }
+
+.ame-sale-desk .ame-pos-term-bar {
+  display: grid !important;
+  grid-template-columns: minmax(240px, 0.32fr) minmax(0, 0.68fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+.ame-sale-desk .ame-pos-term-controls { order: 1; }
+.ame-sale-desk .ame-pos-term-search { order: 2; }
+
+.ame-sale-desk .ame-pos-term-radios {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+}
+
+.ame-sale-desk #posCustomerBox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ame-sale-desk #posCustomerInfoField,
+.ame-sale-desk .ame-pos-term-search .ame-pos-input,
+.ame-sale-desk #posVehicleNo {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 36px;
+  border: 1px solid #D7DEE8;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111827;
+  box-sizing: border-box;
+}
+
+.ame-sale-desk .pos-vehicle-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.ame-sale-desk .ame-pos-term-controls,
+.ame-sale-desk .ame-pos-term-search {
+  min-height: 91px;
+  background: #ffffff !important;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+  padding: 0 12px 10px !important;
+  box-sizing: border-box;
+}
+
+.ame-sale-desk .ame-pos-term-controls::before,
+.ame-sale-desk .ame-pos-term-search::before {
+  display: block;
+  margin: 0 -12px 8px;
+  padding: 8px 12px;
+  background: #003F8F;
+  color: #ffffff;
+  font-weight: 800;
+  border-radius: 12px 12px 0 0;
+}
+
+.ame-sale-desk .ame-pos-term-controls::before { content: "গ্রাহক নির্বাচন"; }
+html.lang-en .ame-sale-desk .ame-pos-term-controls::before { content: "Customer"; }
+.ame-sale-desk .ame-pos-term-search::before { content: "পণ্য খুঁজে বের করুন"; }
+html.lang-en .ame-sale-desk .ame-pos-term-search::before { content: "Find product"; }
+
+.ame-sale-desk #posCustomerBox,
+.ame-sale-desk .ame-pos-search {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.ame-sale-desk .ame-desk-table-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 43px;
+  margin: 0;
+  padding: 8px 12px;
+  background: #003F8F;
+  color: #ffffff;
+  border-radius: 12px 12px 0 0;
+  font-weight: 800;
+}
+
+.ame-sale-desk .ame-desk-table-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.ame-sale-desk .ame-pos-term-cart {
+  background: #ffffff !important;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+  overflow: visible !important;
+}
+
+.ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap,
+.ame-sale-desk .ame-pos-table-wrap {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  border: 0 !important;
+  background: #ffffff !important;
+}
+
+.ame-sale-desk .table-pos {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  table-layout: fixed;
+}
+
+.ame-sale-desk .table-pos th {
+  background: #003F8F !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 800;
+  padding: 8px 6px !important;
+  text-align: center !important;
+}
+
+.ame-sale-desk .table-pos td,
+.ame-sale-desk .table-pos tr.ame-pos-blank-row td {
+  height: 28px;
+  background: #ffffff !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  border-bottom: 1px solid #D7DEE8 !important;
+  padding: 2px 6px !important;
+  text-align: center !important;
+}
+
+.ame-sale-desk .table-pos tbody tr:nth-child(even),
+.ame-sale-desk .table-pos tbody tr:hover {
+  background: #ffffff !important;
+}
+
+.ame-sale-desk .ame-pos-line-input {
+  width: 100%;
+  min-height: 28px;
+  border: 1px solid #D7DEE8;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111827;
+  text-align: center;
+}
+
+.ame-sale-desk .ame-desk-pay {
+  display: grid;
+  grid-template-columns: 1.32fr 0.71fr 0.57fr 0.77fr 0.54fr 0.96fr;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.ame-sale-desk .ame-desk-box,
+.ame-sale-desk .ame-desk-actions {
+  min-height: 120px;
+  background: #ffffff;
+  border: 1px solid #D7DEE8;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+  padding: 0 10px 10px;
+  box-sizing: border-box;
+}
+
+.ame-sale-desk .ame-desk-box h3 {
+  margin: 0 -10px 8px;
+  padding: 8px 10px;
+  background: #003F8F;
+  color: #ffffff;
+  border-radius: 12px 12px 0 0;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.ame-sale-desk .ame-desk-box label {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  margin: 6px 0;
+  color: #111827;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ame-sale-desk .ame-desk-box input,
+.ame-sale-desk .ame-desk-box select {
+  width: 108px;
+  max-width: 46%;
+  min-height: 32px;
+  padding: 4px 6px;
+  border: 1px solid #D7DEE8;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111827;
+  font-weight: 800;
+}
+
+.ame-sale-desk .ame-desk-box > select,
+.ame-sale-desk .ame-desk-box > input {
+  width: 100%;
+  max-width: none;
+}
+
+.ame-sale-desk .ame-desk-box output {
+  color: #111827;
+  font-weight: 800;
+}
+
+.ame-sale-desk .ame-desk-grand {
+  background: #003F8F;
+  color: #ffffff;
+  text-align: center;
+}
+
+.ame-sale-desk .ame-desk-grand h3 {
+  background: transparent;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.ame-sale-desk .ame-desk-grand strong {
+  display: block;
+  color: #ffffff;
+  font-size: 28px;
+  line-height: 1.15;
+}
+
+.ame-sale-desk .ame-desk-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.ame-sale-desk #amePosCompleteBtn {
+  width: 100% !important;
+  min-height: 56px !important;
+  border-radius: 12px !important;
+  background: #04933A !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+}
+
+.ame-sale-desk .ame-desk-draft {
+  min-height: 36px;
+  border: 1px solid #D7DEE8;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #0057B8;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.ame-sale-desk .ame-desk-sms {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: #667085;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ame-sale-desk .ame-pos-summary {
+  position: relative;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.ame-sale-desk .ame-pos-summary .ame-phase,
+.ame-sale-desk .ame-pos-summary .ame-pos-card-title,
+.ame-sale-desk .ame-pos-summary .ame-pos-calc-row,
+.ame-sale-desk .ame-pos-summary .ame-pos-total,
+.ame-sale-desk .ame-pos-summary .pos-payment-panel,
+.ame-sale-desk .ame-pos-summary .ame-pos-due,
+.ame-sale-desk .ame-pos-summary .ame-pos-draft-slot,
+.ame-sale-desk .ame-pos-summary .ame-pos-home {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+}
+
+.ame-sale-desk .ame-pos-summary > label.ame-pos-due-check {
+  position: static !important;
+  width: auto !important;
+  margin: 0 !important;
+  color: #667085 !important;
+  font-size: 13px !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.ame-desk-remove {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 8px;
+  background: #FDECEC;
+  color: #D92D20;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+@media (max-width: 1279px) {
+  .ame-sale-desk .ame-desk-pay {
+    gap: 8px;
+  }
+  .ame-sale-desk .ame-pos-term-bar {
+    grid-template-columns: minmax(200px, 0.36fr) minmax(0, 0.64fr);
+  }
+  .ame-sale-desk .ame-desk-grand strong {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 1023px) and (min-width: 768px) {
+  .ame-sale-desk .ame-desk-pay {
+    grid-template-columns: minmax(0, 1.32fr) minmax(0, 0.71fr) minmax(0, 0.57fr) minmax(0, 0.77fr) minmax(0, 0.54fr) minmax(0, 0.96fr);
+    gap: 6px;
+  }
+}
+
+@media (max-width: 767px) {
+  html.ame-phone-desktop .ame-sale-desk { padding: 8px 16px 16px !important; }
+  html.ame-phone-desktop .ame-sale-desk .ame-desk-bar,
+  html.ame-phone-desktop .ame-sale-desk .ame-desk-table-head {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+  html.ame-phone-desktop .ame-sale-desk .ame-pos-term-bar {
+    display: grid !important;
+    flex-direction: row !important;
+    grid-template-columns: minmax(220px, 0.32fr) minmax(0, 0.68fr) !important;
+  }
+  html.ame-phone-desktop .ame-sale-desk .ame-desk-pay {
+    display: grid !important;
+    flex-direction: row !important;
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  }
+  html.ame-phone-desktop .ame-sale-desk .ame-pos-table-wrap {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  html.ame-phone-desktop .ame-sale-desk .table-pos { min-width: 0 !important; }
+  html.ame-phone-desktop .ame-sale-desk .ame-pos-term-radios,
+  html.ame-phone-desktop .ame-sale-desk .pos-vehicle-box { display: none !important; }
+  .ame-sale-desk { padding: 8px !important; }
+  .ame-sale-desk .ame-desk-bar,
+  .ame-sale-desk .ame-desk-table-head,
+  .ame-sale-desk .ame-pos-term-bar,
+  .ame-sale-desk .ame-desk-pay {
+    display: flex !important;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ame-sale-desk .ame-pos-table-wrap {
+    overflow-x: auto !important;
+  }
+  .ame-sale-desk .table-pos { min-width: 760px; }
+}
+
+/* Picture lock. Wide viewport (desktop, or desktop mode on a phone) matches the
+   reference. Narrow viewport keeps the stacked mobile layout. */
+html body.ame-pos-terminal-page .ame-pos-page.ame-sale-pro.ame-sale-desk .ame-pos-shell .ame-pos-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  grid-template-columns: none !important;
+  gap: 8px !important;
+}
+
+@media (min-width: 768px) {
+  body.ame-pos-terminal-page .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap,
+  html.ame-is-phone body.ame-sales-pro .ame-sale-desk .ame-pos-table-wrap,
+  html.ame-force-phone body.ame-sales-pro .ame-sale-desk .ame-pos-table-wrap,
+  body.ame-force-phone.ame-sales-pro .ame-sale-desk .ame-pos-table-wrap {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+  }
+
+  body.ame-pos-terminal-page .ame-sale-desk .table-pos td,
+  body.ame-pos-terminal-page .ame-sale-desk .table-pos tr.ame-pos-blank-row td {
+    height: 24px !important;
+    padding: 0 4px !important;
+    font-size: 13px !important;
+    line-height: 24px !important;
+  }
+
+  body.ame-pos-terminal-page .ame-sale-desk .ame-desk-bar {
+    min-height: 36px !important;
+    padding: 4px 10px !important;
+  }
+
+  body.ame-pos-terminal-page .ame-sale-desk .ame-pos-term-controls,
+  body.ame-pos-terminal-page .ame-sale-desk .ame-pos-term-search {
+    min-height: 0 !important;
+  }
+
+  body.ame-pos-terminal-page .ame-sale-desk .ame-desk-box h3 {
+    margin-bottom: 4px !important;
+    padding: 5px 8px !important;
+  }
+
+  body.ame-pos-terminal-page .ame-sale-desk .ame-desk-box label {
+    margin: 2px 0 !important;
+  }
+
+  body.ame-pos-terminal-page .ame-sale-desk .table-pos th {
+    padding: 4px 4px !important;
+    font-size: 13px !important;
+  }
+
+  body.ame-pos-terminal-page .ame-sale-desk .ame-pos-term-radios,
+  body.ame-pos-terminal-page .ame-sale-desk .pos-vehicle-box {
+    display: none !important;
+  }
+
+  body.ame-pos-terminal-page .ame-sale-desk .ame-desk-box,
+  body.ame-pos-terminal-page .ame-sale-desk .ame-desk-actions {
+    min-height: 0 !important;
+  }
+
+  body.ame-pos-terminal-page .ame-sale-desk #amePosCompleteBtn {
+    min-height: 44px !important;
+    font-size: 16px !important;
+  }
+}
+
+body.ame-pos-terminal-page .ame-sale-desk #openQuickCustomer {
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 8px;
+  background: #0057B8;
+  color: #ffffff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-method-native {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 42px;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-method {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: #0057B8;
+  color: transparent;
+  font-size: 0;
+  cursor: pointer;
+  position: relative;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-method.is-cash { background: #04933A; }
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-method.is-bkash { background: #E2136E; }
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-method.is-nagad { background: #D92D20; }
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-method.is-on {
+  border-color: #111827;
+  box-shadow: 0 0 0 2px #ffffff inset;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-date {
+  position: relative;
+  display: block;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-date input {
+  width: 100% !important;
+  max-width: none !important;
+  color: transparent;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-date input.is-filled,
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-date input:focus {
+  color: #111827;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-date span {
+  position: absolute;
+  left: 8px;
+  right: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #667085;
+  font-size: 13px;
+  font-weight: 700;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-date input.is-filled + span,
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-date input:focus + span {
+  display: none;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-draft {
+  border: 0;
+  background: transparent;
+  min-height: 28px;
+  padding: 0;
+  text-align: left;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-sms {
+  margin-left: auto;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-sms input {
+  appearance: none;
+  width: 36px !important;
+  max-width: 36px !important;
+  height: 20px;
+  min-height: 20px !important;
+  margin: 0;
+  border-radius: 99px;
+  border: 0;
+  background: #D7DEE8;
+  position: relative;
+  cursor: pointer;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-sms input::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-sms input:checked {
+  background: #04933A;
+}
+
+body.ame-pos-terminal-page .ame-sale-desk .ame-desk-sms input:checked::after {
+  left: 18px;
+}
+
+/* Picture match: card heads, horizontal totals, payment list, action column. */
+.ame-sale-desk .ame-pos-term-controls::before,
+.ame-sale-desk .ame-pos-term-search::before {
+  content: none !important;
+  display: none !important;
+}
+
+.ame-sale-desk .ame-desk-card-head,
+.ame-sale-desk .ame-desk-box h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ame-sale-desk .ame-desk-card-head {
+  margin: 0 -12px 8px;
+  padding: 8px 12px;
+  background: #003F8F;
+  color: #ffffff;
+  font-weight: 800;
+  border-radius: 12px 12px 0 0;
+}
+
+.ame-sale-desk .ame-desk-card-head svg,
+.ame-sale-desk .ame-desk-box h3 svg,
+.ame-sale-desk #amePosCompleteBtn svg,
+.ame-sale-desk .ame-desk-draft svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+
+.ame-sale-desk .ame-desk-datepill {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111827;
+  font-weight: 800;
+}
+
+.ame-sale-desk .ame-desk-menu-pop button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ame-sale-desk .ame-desk-menu-pop i {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  flex: 0 0 16px;
+}
+
+.ame-sale-desk .ame-desk-menu-pop i.is-ok { background: #04933A; }
+.ame-sale-desk .ame-desk-menu-pop i.is-draft { background: #7C3AED; }
+.ame-sale-desk .ame-desk-menu-pop i.is-recent { background: #0057B8; }
+
+.ame-sale-desk .ame-desk-fields {
+  display: grid;
+  gap: 6px;
+}
+
+.ame-sale-desk .ame-desk-fields-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ame-sale-desk .ame-desk-fields-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.ame-sale-desk .ame-desk-fields label {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  gap: 4px;
+  margin: 0 !important;
+  color: #667085;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.ame-sale-desk .ame-desk-fields input,
+.ame-sale-desk .ame-desk-fields output {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 34px;
+  box-sizing: border-box;
+  border: 1px solid #D7DEE8;
+  border-radius: 8px;
+  background: #F4F7FB;
+  color: #111827;
+  text-align: center;
+  font-weight: 800;
+}
+
+.ame-sale-desk .ame-desk-method-menu { position: relative; }
+
+.ame-sale-desk .ame-desk-method-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 36px;
+  padding: 6px 28px 6px 8px;
+  border: 1px solid #D7DEE8;
+  border-radius: 8px;
+  background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23111827' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 8px center;
+  color: #111827;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ame-sale-desk .ame-desk-method-trigger i,
+.ame-sale-desk .ame-desk-method-item i {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  flex: 0 0 18px;
+}
+
+.ame-sale-desk .is-nagad { background: #04933A; }
+.ame-sale-desk .is-cash { background: #0057B8; }
+.ame-sale-desk .is-bkash { background: #E2136E; }
+.ame-sale-desk .is-other { background: #0057B8; }
+
+.ame-sale-desk .ame-desk-method-list {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  z-index: 30;
+  padding: 6px;
+  background: #ffffff;
+  border: 1px solid #D7DEE8;
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+}
+
+.ame-sale-desk .ame-desk-method-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 34px;
+  border: 0;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111827;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ame-sale-desk .ame-desk-actions {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  gap: 8px;
+}
+
+.ame-sale-desk #amePosCompleteBtn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ame-sale-desk .ame-desk-draft {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #D7DEE8;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #0057B8;
+}
+
+.ame-sale-desk .ame-desk-sms {
+  width: 100%;
+  justify-content: flex-end;
+  margin: 0;
+}
+
+/* Picture 2: no yellow jump, no extra fold bars, no second ticker. */
+body.ame-sales-pro.ame-pos-terminal-page .ame-sale-desk .ame-pos-pay-jump,
+body.ame-sales-pro .ame-sale-pro.ame-sale-desk .ame-pos-pay-jump {
+  display: none !important;
+}
+
+body.ame-sales-pro .ame-sale-desk .ame-pos-custom-item-toggle {
+  display: none !important;
+}
+
+body.ame-sales-pro .ame-sale-desk.ame-pos-page {
+  min-height: 0 !important;
+  padding-bottom: 16px !important;
+}

@@ -1,0 +1,29 @@
+/* 10.98.938 — POS tier: phone / tablet / wide (পুরনো ame-phone-desktop বাদ দিয়ে একই নিয়ম) */
+
+body.ame-pos-tier-wide.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)),
+body.ame-pos-tier-wide.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)),
+body.ame-pos-tier-tablet.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)),
+body.ame-pos-tier-tablet.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)) {
+  position: fixed !important;
+}
+
+/* lock.css absolute পণ্য মোডাল — tier ভিত্তিকে বন্ধ */
+body.ame-pos-tier-wide.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)),
+body.ame-pos-tier-tablet.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)) {
+  position: fixed !important;
+  left: 12px !important;
+  right: 12px !important;
+  top: var(--ame-product-pop-top, 180px) !important;
+  transform: none !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+body.ame-pos-tier-wide.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos tfoot#cart-lines-foot,
+body.ame-pos-tier-tablet.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos tfoot#cart-lines-foot {
+  display: none !important;
+}
+
+body.ame-pos-tier-phone.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos tfoot#cart-lines-foot:not([hidden]) {
+  display: table-footer-group !important;
+}

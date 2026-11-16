@@ -1,0 +1,201 @@
+.ws-page { padding: 16px 14px 28px; max-width: 980px; margin: 0 auto; }
+.ws-hero {
+    background: #fff;
+    border-radius: 16px;
+    padding: 18px 16px 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.06);
+    margin-bottom: 14px;
+}
+.ws-hero h1 { margin: 4px 0 6px; font-size: 20px; color: #0F3D26; }
+.ws-hero p { margin: 0; color: #546E7A; font-size: 13px; line-height: 1.55; }
+.ws-kicker { font-size: 11px; font-weight: 800; letter-spacing: .04em; color: #2E7D32; text-transform: uppercase; }
+.ws-formula {
+    margin-top: 10px;
+    background: #F1F8E9;
+    color: #1B5E20;
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-weight: 700;
+}
+.ws-flash {
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    font-weight: 700;
+}
+.ws-flash.ok { background: #E8F5E9; color: #1B5E20; }
+.ws-flash.err { background: #FFEBEE; color: #B71C1C; }
+.ws-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+.ws-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.05);
+}
+.ws-card small { display: block; color: #78909C; font-size: 11px; font-weight: 700; }
+.ws-card b { display: block; margin-top: 4px; font-size: 18px; color: #111; }
+.ws-card.shop b { color: #1565C0; }
+.ws-card.due b { color: #EF6C00; }
+.ws-card.keep { grid-column: 1 / -1; background: #EFE6D4; border: 1px solid #D4C4A8; }
+.ws-card.keep small, .ws-card.keep b { color: #3D2A12; }
+.ws-panel {
+    background: #fff;
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.05);
+    margin-bottom: 14px;
+}
+.ws-panel h2 { margin: 0 0 10px; font-size: 16px; color: #111; }
+.ws-month { display: flex; gap: 8px; align-items: end; flex-wrap: wrap; margin-bottom: 12px; }
+.ws-month label { font-size: 12px; font-weight: 700; display: block; margin-bottom: 4px; }
+.ws-month input, .ws-field input, .ws-field select, .ws-field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    border: 1.5px solid #ddd;
+    border-radius: 10px;
+    background: #fafafa;
+    font-size: 14px;
+}
+.ws-month button, .ws-btn {
+    border: 1px solid #D4C4A8;
+    background: #EFE6D4;
+    color: #3D2A12;
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-weight: 800;
+    cursor: pointer;
+}
+.ws-table-wrap { overflow-x: auto; }
+.ws-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ws-table th {
+    background: #EFE6D4;
+    color: #3D2A12;
+    text-align: left;
+    padding: 9px 8px;
+    white-space: nowrap;
+}
+.ws-table td { padding: 10px 8px; border-bottom: 1px solid #f0f0f0; }
+.ws-table .num { text-align: right; font-weight: 700; white-space: nowrap; }
+.ws-empty { text-align: center; color: #90A4AE; padding: 22px 8px; font-size: 13px; }
+.ws-links a {
+    display: inline-block;
+    margin-right: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    color: #1565C0;
+}
+.ws-form-grid { display: grid; gap: 10px; }
+.ws-field label { display: block; font-weight: 700; font-size: 13px; margin-bottom: 5px; }
+.ws-note { font-size: 12px; color: #607D8B; line-height: 1.5; margin: 0 0 8px; }
+.ws-pay { width: 100%; margin-top: 6px; background: #2E7D32; }
+
+.ws-stmt-actions { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+.ws-stmt-actions a, .ws-stmt-actions button {
+    flex: 1;
+    min-width: 120px;
+    text-align: center;
+    text-decoration: none;
+    border: 0;
+    border-radius: 10px;
+    padding: 11px 12px;
+    font-weight: 800;
+    cursor: pointer;
+    color: #3D2A12;
+    background: #EFE6D4;
+    border: 1px solid #D4C4A8;
+    font-size: 13px;
+}
+.ws-stmt-actions .share { background: #EFE6D4; }
+.ws-stmt-actions .back { background: #EFE6D4; }
+.ws-stmt-status { font-size: 12px; color: #546E7A; min-height: 18px; }
+
+.ws-slip {
+    background: #fff;
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 720px;
+    margin: 0 auto;
+}
+.ws-slip-top {
+    background: #EFE6D4;
+    color: #3D2A12;
+    border-bottom: 1px solid #D4C4A8;
+    text-align: center;
+    padding: 18px 14px 14px;
+}
+.ws-slip-shop { font-size: 18px; font-weight: 800; }
+.ws-slip-title { font-size: 14px; margin-top: 4px; opacity: .95; }
+.ws-slip-month { font-size: 12px; margin-top: 4px; opacity: .8; }
+.ws-slip-who {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 12px 14px;
+    background: #F8FAF8;
+    font-size: 12px;
+}
+.ws-slip-who b { display: block; color: #111; font-size: 13px; }
+.ws-slip-who span { color: #607D8B; }
+.ws-slip table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.ws-slip th { background: #E8F5E9; color: #1B5E20; padding: 7px 6px; text-align: left; }
+.ws-slip td { padding: 7px 6px; border-bottom: 1px solid #f3f3f3; }
+.ws-slip .num { text-align: right; white-space: nowrap; }
+.ws-slip-sum {
+    padding: 12px 14px 6px;
+}
+.ws-slip-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 13px;
+    border-bottom: 1px dashed #eee;
+}
+.ws-slip-row.total { font-weight: 800; border-bottom: 0; font-size: 15px; }
+.ws-slip-row.keep { color: #1565C0; font-weight: 700; }
+.ws-slip-foot {
+    padding: 10px 14px 14px;
+    font-size: 11px;
+    color: #78909C;
+    text-align: center;
+}
+.ws-sign {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 18px 14px 16px;
+    font-size: 12px;
+    color: #546E7A;
+}
+.ws-sign div { border-top: 1px solid #BDBDBD; padding-top: 6px; text-align: center; }
+
+@media (min-width: 768px) {
+    .ws-cards { grid-template-columns: repeat(4, 1fr); }
+    .ws-card.keep { grid-column: auto; }
+    .ws-form-grid { grid-template-columns: 1fr 1fr; }
+    .ws-form-grid .full { grid-column: 1 / -1; }
+}
+
+@media print {
+    body * { visibility: hidden; }
+    .ws-slip, .ws-slip * { visibility: visible; }
+    .ws-slip {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        border: 0;
+        box-shadow: none;
+        border-radius: 0;
+    }
+    .no-print, .ws-stmt-actions, header, .sidebar, #clock-display { display: none !important; }
+}

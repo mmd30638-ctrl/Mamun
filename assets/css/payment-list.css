@@ -1,0 +1,275 @@
+/* 10.98.367 — সকল পেমেন্ট তালিকা: নরম কার্ড, দূর থেকে স্পষ্ট, কালো বক্স নেই */
+html body.ame-pay-list-page,
+html body.ame-pay-list-page #main-content {
+  background: #f3f6fb !important;
+  color: #1c3354 !important;
+}
+html body.ame-pay-list-page #main-content .cpl {
+  width: min(980px, 100%);
+  margin: 0 auto;
+  padding: 12px 12px 32px;
+  color: #1c3354 !important;
+}
+html body.ame-pay-list-page #main-content .cpl-head {
+  background: #fff !important;
+  border: 3px solid #8eb4e8 !important;
+  border-radius: 22px;
+  padding: 14px;
+  align-items: center;
+}
+html body.ame-pay-list-page #main-content .cpl-head h1 {
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  font-size: clamp(26px, 5vw, 36px) !important;
+  font-weight: 900 !important;
+}
+html body.ame-pay-list-page #main-content .cpl-head p {
+  color: #4b6280 !important;
+  -webkit-text-fill-color: #4b6280 !important;
+  font-size: 16px;
+  font-weight: 800;
+}
+html body.ame-pay-list-page #main-content a.cpl-new {
+  min-height: 52px;
+  padding: 0 16px;
+  border-radius: 14px;
+  background: #1e8e4f !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  font-size: 18px;
+  font-weight: 900;
+  text-decoration: none;
+}
+html body.ame-pay-list-page #main-content form.cpl-filters {
+  background: #fff !important;
+  border: 3px solid #8eb4e8 !important;
+  border-radius: 20px;
+  padding: 12px;
+  margin-top: 12px;
+  box-shadow: none !important;
+}
+html body.ame-pay-list-page #main-content .cpl-ranges {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+html body.ame-pay-list-page #main-content .cpl-ranges a {
+  min-height: 46px;
+  justify-content: center;
+  border-radius: 14px;
+  background: #fff !important;
+  border: 3px solid #8eb4e8 !important;
+  color: #1d4f91 !important;
+  -webkit-text-fill-color: #1d4f91 !important;
+  font-weight: 900;
+}
+html body.ame-pay-list-page #main-content .cpl-ranges a.is-on {
+  background: #2a6fdb !important;
+  border-color: #2a6fdb !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+html body.ame-pay-list-page #main-content .cpl-field span {
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-field input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="file"]):not([type="color"]):not([type="range"]) {
+  background: #fff !important;
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  border: 3px solid #8eb4e8 !important;
+  border-radius: 14px;
+  min-height: 52px !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+}
+html body.ame-pay-list-page #main-content button.ame-calc-btn.cpl-go {
+  min-height: 52px;
+  border: 0 !important;
+  border-radius: 14px;
+  background: #2a6fdb !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  font-size: 18px;
+  font-weight: 900;
+}
+html body.ame-pay-list-page #main-content a.cpl-clear {
+  min-height: 52px;
+  border-radius: 14px;
+  background: #fff !important;
+  color: #c65b52 !important;
+  -webkit-text-fill-color: #c65b52 !important;
+  border: 3px solid #e7b2ae !important;
+  font-weight: 900;
+  text-decoration: none;
+}
+html body.ame-pay-list-page #main-content .cpl-kpis {
+  gap: 10px;
+}
+html body.ame-pay-list-page #main-content .cpl-kpi {
+  min-height: 108px;
+  border-radius: 18px;
+  border: 3px solid #8eb4e8 !important;
+  background: #fff !important;
+  box-shadow: none;
+}
+html body.ame-pay-list-page #main-content .cpl-kpi span,
+html body.ame-pay-list-page #main-content .cpl-kpi small {
+  color: #4b6280 !important;
+  -webkit-text-fill-color: #4b6280 !important;
+  font-weight: 800;
+}
+html body.ame-pay-list-page #main-content .cpl-kpi b {
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 900;
+}
+html body.ame-pay-list-page #main-content .cpl-kpi.bill {
+  background: #e7f1ff !important;
+  border-color: #2a6fdb !important;
+}
+html body.ame-pay-list-page #main-content .cpl-kpi.bill b {
+  color: #1d4f91 !important;
+  -webkit-text-fill-color: #1d4f91 !important;
+}
+html body.ame-pay-list-page #main-content .cpl-kpi.paid {
+  background: #e8f6ee !important;
+  border-color: #1e8e4f !important;
+}
+html body.ame-pay-list-page #main-content .cpl-kpi.paid b {
+  color: #1e8e4f !important;
+  -webkit-text-fill-color: #1e8e4f !important;
+}
+html body.ame-pay-list-page #main-content .cpl-kpi.due {
+  background: #fff0ee !important;
+  border-color: #c65b52 !important;
+}
+html body.ame-pay-list-page #main-content .cpl-kpi.due b {
+  color: #c65b52 !important;
+  -webkit-text-fill-color: #c65b52 !important;
+}
+html body.ame-pay-list-page #main-content .cpl-sheet {
+  display: grid;
+  gap: 12px;
+  background: transparent !important;
+  border: 0 !important;
+  overflow: visible;
+}
+html body.ame-pay-list-page #main-content .cpl-h { display: none !important; }
+html body.ame-pay-list-page #main-content article.cpl-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "date who"
+    "money money"
+    "method ref"
+    "ops ops";
+  gap: 8px 10px;
+  align-items: start;
+  margin: 0;
+  padding: 12px;
+  background: #fff !important;
+  border: 3px solid #8eb4e8 !important;
+  border-radius: 20px;
+}
+html body.ame-pay-list-page #main-content article.cpl-row > div:nth-child(1) { grid-area: date; }
+html body.ame-pay-list-page #main-content article.cpl-row .cpl-who { grid-area: who; }
+html body.ame-pay-list-page #main-content article.cpl-row .cpl-money { grid-area: money; }
+html body.ame-pay-list-page #main-content article.cpl-row > div:nth-child(4) { grid-area: method; }
+html body.ame-pay-list-page #main-content article.cpl-row .cpl-meta { grid-area: ref; }
+html body.ame-pay-list-page #main-content article.cpl-row .cpl-ops { grid-area: ops; }
+html body.ame-pay-list-page #main-content article.cpl-row > div[data-label]::before {
+  content: attr(data-label);
+  display: block;
+  margin-bottom: 2px;
+  color: #4b6280 !important;
+  -webkit-text-fill-color: #4b6280 !important;
+  font-size: 12px;
+  font-weight: 800;
+}
+html body.ame-pay-list-page #main-content article.cpl-row > div:nth-child(1) {
+  min-width: 78px;
+  min-height: 64px;
+  padding: 6px 8px;
+  border-radius: 14px;
+  background: #fff8e8 !important;
+  border: 3px solid #e2b15a;
+  color: #8a5a10 !important;
+  font-weight: 900;
+  text-align: center;
+}
+html body.ame-pay-list-page #main-content .cpl-who strong {
+  color: #1c3354 !important;
+  -webkit-text-fill-color: #1c3354 !important;
+  font-size: 20px;
+  font-weight: 900;
+}
+html body.ame-pay-list-page #main-content .cpl-who small,
+html body.ame-pay-list-page #main-content .cpl-meta {
+  color: #4b6280 !important;
+  -webkit-text-fill-color: #4b6280 !important;
+  font-weight: 700;
+}
+html body.ame-pay-list-page #main-content a.cpl-by {
+  color: #2a6fdb !important;
+  -webkit-text-fill-color: #2a6fdb !important;
+  font-weight: 800;
+}
+html body.ame-pay-list-page #main-content .cpl-money {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: #e8f6ee !important;
+  color: #1e8e4f !important;
+  -webkit-text-fill-color: #1e8e4f !important;
+  font-size: 26px;
+  font-weight: 900;
+}
+html body.ame-pay-list-page #main-content .cpl-ops {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  justify-content: stretch;
+}
+html body.ame-pay-list-page #main-content .cpl-ops a {
+  min-height: 46px;
+  justify-content: center;
+  border-radius: 12px;
+  border: 0 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  font-weight: 900;
+  text-decoration: none;
+  background: #2a6fdb !important;
+}
+html body.ame-pay-list-page #main-content .cpl-ops a.view { background: #2a6fdb !important; }
+html body.ame-pay-list-page #main-content .cpl-ops a:nth-child(2) { background: #3d8b8b !important; }
+html body.ame-pay-list-page #main-content .cpl-ops a:nth-child(3) { background: #c47b17 !important; }
+html body.ame-pay-list-page #main-content .cpl-ops a.share { background: #1e8e4f !important; }
+html body.ame-pay-list-page #main-content .cpl-empty {
+  background: #fff !important;
+  border: 3px dashed #8eb4e8;
+  border-radius: 18px;
+  color: #1c3354 !important;
+  font-size: 18px;
+  font-weight: 900;
+}
+@media (max-width: 640px) {
+  html body.ame-pay-list-page #main-content .cpl-ranges,
+  html body.ame-pay-list-page #main-content .cpl-kpis,
+  html body.ame-pay-list-page #main-content .cpl-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  html body.ame-pay-list-page #main-content .cpl-ops {
+    grid-template-columns: 1fr 1fr;
+  }
+  html body.ame-pay-list-page #main-content a.cpl-new { width: 100%; }
+}
+@media (min-width: 900px) {
+  html body.ame-pay-list-page #main-content .cpl-sheet {
+    grid-template-columns: 1fr 1fr;
+  }
+}

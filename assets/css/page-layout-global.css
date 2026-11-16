@@ -1,0 +1,45 @@
+/* Hide the old sales-desk 📐 buttons. Settings owns the designer. Never on POS. */
+#ameDeskBarDesigner,
+.ame-desk-tool-designer,
+a.ame-desk-tool-designer,
+#m-sales a[href*="layout_designer.php"],
+html body.ame-pos-terminal-page #ameDeskBarDesigner,
+html body.ame-pos-terminal-page .ame-desk-tool-designer,
+html body.ame-pos-terminal-page a.ame-desk-tool-designer,
+html body.ame-pos-terminal-page .ame-layout-fab,
+html body.ame-pos-terminal-page #ameLayoutFab,
+html body.ame-pos-terminal-page .ame-sale-desk a[href*="layout_designer"],
+html body.ame-pos-terminal-page .ame-sale-desk button[title*="লেআউট"],
+html body.ame-pos-terminal-page a[href*="/modules/sales/layout_designer.php"],
+html body.ame-pos-terminal-page a[href*="/modules/sales/pos_layout_designer.php"],
+html body[data-ame-layout-page^="sales/"] #ameLayoutFab,
+html body[data-ame-layout-page^="sales/"] .ame-layout-fab,
+html body[data-ame-layout-page="sales/pos"] #ameDeskBarDesigner {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+#ameLayoutFab,
+.ame-layout-fab,
+#vdLaunch,
+.vd-launch {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+body.ame-layout-embed .ame-layout-fab,
+body.ame-layout-embed .vd-launch,
+body.ame-layout-embed #vdLaunch {
+    display: none !important;
+}
+body.ame-layout-pick [data-ame-hit="1"] {
+    outline: 2px solid #eab308 !important;
+    outline-offset: 2px;
+    cursor: crosshair;
+}
+body.ame-layout-pick [data-ame-hit="2"] {
+    outline: 3px solid #dc2626 !important;
+    outline-offset: 2px;
+}

@@ -1,0 +1,154 @@
+/* Employee payment desks: white boxes, a different ink colour on each label. */
+html body.ame-emp-hub #main-content#main-content .eh-kpi,
+html body.ame-emp-hub #main-content#main-content .eh-card,
+html body.ame-emp-hub #main-content#main-content .eh-stats > div,
+html body.ame-emp-hub #main-content#main-content .eh-toolbar,
+html body.ame-emp-hub #main-content#main-content .wd-home,
+html body.ame-emp-hub #main-content#main-content .eh-money-row,
+html body #main-content#main-content .wd-card,
+html body #main-content#main-content .wd-side,
+html body #main-content#main-content #ehPanel,
+html body #main-content#main-content #ehPanel .eh-field,
+html body #main-content#main-content #ehPanel .eh-pending,
+html body #main-content#main-content #ehPanel .eh-pay-scope,
+html body #main-content#main-content #ehPanel .eh-money-row {
+  background: #ffffff !important;
+  background-image: none !important;
+}
+
+html body.ame-emp-hub #main-content#main-content .eh-kpi:nth-child(1) b { color: #003f8f !important; }
+html body.ame-emp-hub #main-content#main-content .eh-kpi:nth-child(2) b { color: #15803d !important; }
+html body.ame-emp-hub #main-content#main-content .eh-kpi:nth-child(3) b { color: #b45309 !important; }
+html body.ame-emp-hub #main-content#main-content .eh-kpi:nth-child(4) b { color: #1d4ed8 !important; }
+html body.ame-emp-hub #main-content#main-content .eh-kpi:nth-child(5) b { color: #7c3aed !important; }
+html body.ame-emp-hub #main-content#main-content .eh-kpi:nth-child(6) b { color: #0e7490 !important; }
+html body.ame-emp-hub #main-content#main-content .eh-kpi:nth-child(7) b { color: #be185d !important; }
+html body.ame-emp-hub #main-content#main-content .eh-kpi:nth-child(8) b { color: #0369a1 !important; }
+html body.ame-emp-hub #main-content#main-content .eh-kpi:nth-child(9) b { color: #c2410c !important; }
+html body.ame-emp-hub #main-content#main-content .eh-kpi:nth-child(10) b { color: #166534 !important; }
+html body.ame-emp-hub #main-content#main-content .eh-kpi:nth-child(11) b { color: #9a3412 !important; }
+html body.ame-emp-hub #main-content#main-content .eh-kpi:nth-child(12) b { color: #4338ca !important; }
+html body.ame-emp-hub #main-content#main-content .eh-kpi span { color: #64748b !important; }
+
+html body.ame-emp-hub #main-content#main-content .eh-stats > div:nth-child(1) b { color: #1d4ed8 !important; }
+html body.ame-emp-hub #main-content#main-content .eh-stats > div:nth-child(2) b { color: #7c3aed !important; }
+html body.ame-emp-hub #main-content#main-content .eh-stats > div:nth-child(3) b { color: #15803d !important; }
+html body.ame-emp-hub #main-content#main-content .eh-stats > div:nth-child(4) b { color: #c2410c !important; }
+html body.ame-emp-hub #main-content#main-content .eh-stats > div:nth-child(5) b { color: #0e7490 !important; }
+html body.ame-emp-hub #main-content#main-content .eh-stats > div:nth-child(6) b { color: #9a3412 !important; }
+html body.ame-emp-hub #main-content#main-content .eh-name { color: #003f8f !important; }
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-head .eh-add:not(.hdr-icon-btn) {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  border: 1.5px solid #003f8f !important;
+}
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-head a.eh-add {
+  color: #0f766e !important;
+  -webkit-text-fill-color: #0f766e !important;
+  border-color: #0f766e !important;
+}
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-head .eh-add:not(.hdr-icon-btn) {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  border: 1.5px solid #003f8f !important;
+}
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-head a.eh-add {
+  color: #0f766e !important;
+  -webkit-text-fill-color: #0f766e !important;
+  border-color: #0f766e !important;
+}
+
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-actions button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item),
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-att button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item),
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content #ehPanel button.eh-del:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item),
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content #ehPanel button.eh-submit:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item),
+html body:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .wd button.wd-btn:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item) {
+  background: #ffffff !important;
+  background-image: none !important;
+  border-width: 1.5px !important;
+  border-style: solid !important;
+}
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-actions button[data-eh="attendance"]:not(.hdr-icon-btn) { color: #15803d !important; -webkit-text-fill-color: #15803d !important; border-color: #15803d !important; }
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-actions button[data-eh="work"]:not(.hdr-icon-btn) { color: #1d4ed8 !important; -webkit-text-fill-color: #1d4ed8 !important; border-color: #1d4ed8 !important; }
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-actions button[data-eh="ledger"]:not(.hdr-icon-btn) { color: #0e7490 !important; -webkit-text-fill-color: #0e7490 !important; border-color: #0e7490 !important; }
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-actions button[data-eh="report"]:not(.hdr-icon-btn) { color: #7c3aed !important; -webkit-text-fill-color: #7c3aed !important; border-color: #7c3aed !important; }
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-actions button[data-eh="edit"]:not(.hdr-icon-btn) { color: #003f8f !important; -webkit-text-fill-color: #003f8f !important; border-color: #003f8f !important; }
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-actions button[data-eh="salary"]:not(.hdr-icon-btn) { color: #b45309 !important; -webkit-text-fill-color: #b45309 !important; border-color: #b45309 !important; }
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-actions button[data-eh="more"]:not(.hdr-icon-btn) { color: #be185d !important; -webkit-text-fill-color: #be185d !important; border-color: #be185d !important; }
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-actions button.eh-forever:not(.hdr-icon-btn),
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-actions button[data-eh="delete"]:not(.hdr-icon-btn) {
+  background: #ffffff !important;
+  color: #b91c1c !important;
+  -webkit-text-fill-color: #b91c1c !important;
+  border-color: #b91c1c !important;
+}
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-att button.on:not(.hdr-icon-btn) {
+  background: #ffffff !important;
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+  border-color: #15803d !important;
+}
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .eh-att button.off:not(.hdr-icon-btn) {
+  background: #ffffff !important;
+  color: #64748b !important;
+  -webkit-text-fill-color: #64748b !important;
+  border-color: #94a3b8 !important;
+}
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content #ehPanel button.eh-del {
+  color: #b91c1c !important;
+  -webkit-text-fill-color: #b91c1c !important;
+  border-color: #b91c1c !important;
+}
+html body.ame-emp-hub:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content #ehPanel button.eh-submit {
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+  border-color: #15803d !important;
+}
+
+html body #main-content#main-content #ehPanel .eh-field {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+html body #main-content#main-content #ehPanel .eh-field > span {
+  color: #0e7490 !important;
+  -webkit-text-fill-color: #0e7490 !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
+html body #main-content#main-content #ehPanel .eh-del {
+  background: #ffffff !important;
+  color: #b91c1c !important;
+  -webkit-text-fill-color: #b91c1c !important;
+  border: 1.5px solid #b91c1c !important;
+}
+html body #main-content#main-content #ehPanel .eh-money h3 { color: #003f8f !important; }
+html body #main-content#main-content #ehPanel .eh-money-row b { color: #0f172a !important; }
+html body #main-content#main-content #ehPanel .eh-pending,
+html body #main-content#main-content #ehPanel .eh-pay-scope {
+  border-color: #bfdbfe !important;
+}
+html body #main-content#main-content .wd-form label { color: #0e7490 !important; }
+html body #main-content#main-content .wd-side h2 { color: #9a3412 !important; }
+html body #main-content#main-content .wd-side.is-zero h2,
+html body #main-content#main-content .wd-side.is-zero .wd-live { color: #166534 !important; }
+html body #main-content#main-content .wd-nav a { background: #ffffff !important; }
+html body #main-content#main-content .wd-nav a:nth-child(1) { color: #0f766e !important; border-color: #0f766e !important; }
+html body #main-content#main-content .wd-nav a:nth-child(2) { color: #1d4ed8 !important; border-color: #1d4ed8 !important; }
+html body #main-content#main-content .wd-nav a:nth-child(3),
+html body #main-content#main-content .wd-nav a.on { color: #c2410c !important; border-color: #c2410c !important; background: #ffffff !important; }
+html body #main-content#main-content .wd-btn.primary {
+  background: #ffffff !important;
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+  border: 1.5px solid #15803d !important;
+}
+
+/* 10.98.725 */
+html body.ame-emp-hub #main-content#main-content .eh-stats > .eh-prev-due b { color: #b45309 !important; }

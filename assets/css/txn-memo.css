@@ -1,0 +1,225 @@
+.tm-page {
+    margin: 0;
+    padding: 20px;
+    padding-top: calc(76px + env(safe-area-inset-top, 0px));
+    background: #fff;
+    font-family: "Segoe UI", Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #111;
+}
+.tm-card {
+    width: 100%;
+    max-width: 380px;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,.15);
+}
+.tm-card.sale { border-top: 10px solid #D32F2F; }
+.tm-card.buy {
+    border-top: 6px solid #D4C4A8;
+    background: #FFFDF8;
+    box-shadow: 0 12px 28px rgba(61,42,18,.08);
+}
+.tm-card.buy .tm-head {
+    background: #EFE6D4;
+    color: #3D2A12;
+    padding: 22px 20px 18px;
+}
+.tm-card.buy .tm-head h1 { color: #3D2A12; }
+.tm-card.buy .tm-head p { color: #6B5340; }
+.tm-card.buy .tm-title {
+    display: inline-block;
+    width: 100%;
+    background: #EFE6D4;
+    color: #3D2A12;
+    border-radius: 999px;
+    padding: 8px 0;
+    margin: 12px 0 16px;
+}
+.tm-card.buy .tm-paid {
+    background: linear-gradient(135deg, #E3F2FD, #E8F5E9);
+    border: 0;
+}
+.tm-done-stamp {
+    text-align: center;
+    margin: 10px 0 0;
+    font-weight: 800;
+    color: #0D47A1;
+    letter-spacing: .04em;
+}
+.tm-head { padding: 22px 20px 10px; text-align: center; }
+.ame-print-logo { height: 52px; width: auto; max-width: 180px; object-fit: contain; display: block; margin: 0 auto 6px; }
+.tm-head h1 { margin: 0; color: #0D47A1; font-size: 18px; }
+.tm-head p { margin: 6px 0 0; color: #888; font-size: 12px; }
+.tm-body { padding: 0 22px 22px; }
+.tm-title { text-align: center; color: #444; font-size: 16px; font-weight: 800; margin: 8px 0 16px; }
+.tm-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 13px;
+}
+.tm-label { color: #777; }
+.tm-value { color: #111; font-weight: 700; text-align: right; }
+.tm-svc { margin-top: 12px; padding: 10px; background: #e3f2fd; border-radius: 8px; }
+.tm-svc .tm-row { border: none; padding: 6px 0; }
+table.tm-items { width: 100%; border-collapse: collapse; margin: 12px 0 4px; font-size: 12px; }
+table.tm-items th { text-align: left; color: #0D47A1; border-bottom: 1px solid #eee; padding: 6px 0; }
+table.tm-items td { padding: 6px 0; border-bottom: 1px solid #f5f5f5; }
+table.tm-items .r { text-align: right; }
+table.tm-items .c { text-align: center; }
+.tm-invoice-total {
+    font-weight: 800;
+    border-bottom: 2px solid #cfd8e3;
+}
+.tm-invoice-total .tm-label,
+.tm-invoice-total .tm-value { color: #0D47A1; }
+.tm-due {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 12px;
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+}
+.tm-due h3 { margin: 0 0 8px; font-size: 12px; color: #E65100; }
+.tm-due .tm-row { border-bottom: 1px dashed #ffe082; }
+.tm-due .tm-row.total {
+    border-bottom: 0;
+    font-size: 15px;
+    font-weight: 800;
+    padding-top: 10px;
+}
+.tm-due .due, .tm-page .due { color: #C62828; }
+.tm-due .net, .tm-page .net { color: #087F3D; }
+.tm-note { margin: 8px 0 0; font-size: 11px; color: #8D6E63; text-align: center; }
+.tm-paid {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    margin: 16px 0 8px;
+    border: 1px solid #eee;
+}
+.tm-paid small { display: block; font-size: 12px; color: #666; }
+.tm-paid b { display: block; font-size: 26px; color: #087F3D; margin-top: 4px; }
+.tm-qr { text-align: center; margin-top: 10px; }
+.tm-foot { text-align: center; padding: 16px 20px 20px; color: #999; font-size: 11px; }
+.tm-btns {
+    width: 100%;
+    max-width: 380px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 18px;
+}
+.tm-btns button, .tm-btns a {
+    padding: 13px;
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: 800;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+}
+.tm-dl { background: #0D47A1; }
+.tm-sh { background: #1B5E20; }
+.tm-pr { background: #111827; }
+.tm-wa { background: #128C7E; }
+.tm-tg { background: #229ED9; }
+.tm-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 0;
+    z-index: 10050;
+    padding: calc(10px + env(safe-area-inset-top, 0px)) 12px 10px;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.12);
+    box-sizing: border-box;
+}
+.tm-nav a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 12px;
+    border-radius: 12px;
+    color: #fff !important;
+    font-weight: 800;
+    font-size: 14px;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+.tm-home { background: #003F8F; }
+.tm-go-back { background: #374151; }
+.tm-back { background: #666; grid-column: span 2; }
+.tm-missing {
+    max-width: 380px;
+    background: #fff;
+    padding: 28px;
+    border-radius: 16px;
+    text-align: center;
+}
+@media (max-width: 480px) {
+    .tm-page { padding: 10px; padding-top: calc(76px + env(safe-area-inset-top, 0px)); }
+    .tm-card, .tm-btns, .tm-missing { max-width: 100%; }
+    .tm-btns button, .tm-btns a { min-height: 44px; }
+    .tm-items { font-size: 12px; }
+}
+.tm-due .tm-prev-row {
+    min-height: 28px;
+    font-weight: 800;
+}
+@media print {
+    .tm-nav, .tm-btns { display: none !important; }
+    .tm-page { padding-top: 12px !important; }
+    .tm-due, .tm-due .tm-prev-row {
+        display: block !important;
+        visibility: visible !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+.tm-card.buy .tm-due {
+    background: #EFE6D4;
+    border: 1px solid #D4C4A8;
+}
+.tm-card.buy .tm-due h3 { color: #3D2A12; }
+.tm-card.buy .tm-due .tm-row { border-bottom: 1px dashed #D4C4A8; }
+.tm-due-proof {
+    margin: 10px 0 0;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.35;
+    text-align: center;
+    color: #3D2A12;
+    background: #fff8e8;
+    border: 1px dashed #D4C4A8;
+    border-radius: 8px;
+}
+.tm-card.sale .tm-due-proof {
+    color: #7f1d1d;
+    background: #fff1f2;
+    border-color: #fecaca;
+}
+.tm-card.buy .tm-done-stamp { color: #3D2A12; }
+.tm-card.buy .tm-invoice-total .tm-label,
+.tm-card.buy .tm-invoice-total .tm-value { color: #3D2A12; }
+.tm-card.buy .tm-paid {
+    background: #EFE6D4;
+    border: 1px solid #D4C4A8;
+}

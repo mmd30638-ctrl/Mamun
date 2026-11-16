@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>স্পিড সিস্টেম — স্থায়ী নোট</title>
+  <style>
+    body { margin: 0; font-family: "Noto Sans Bengali", "Noto Sans", system-ui, sans-serif; background: #fff; color: #0f172a; }
+    .spd { max-width: 720px; margin: 0 auto; padding: 12px 12px 28px; }
+    h1 { margin: 8px 0 6px; font-size: 22px; color: #003f8f; }
+    .lead { margin: 0 0 14px; font-weight: 700; color: #334155; font-size: 14px; line-height: 1.55; }
+    .spd-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px 16px; }
+    pre { margin: 0; white-space: pre-wrap; word-break: break-word; font-family: inherit; font-size: 14px; line-height: 1.55; font-weight: 650; }
+  </style>
+</head>
+<body>
+  <div class="spd">
+    <h1>স্পিড সিস্টেম</h1>
+    <p class="lead">প্রজেক্ট দ্রুত ও হালকা রাখার স্থায়ী নোট। সেটিংস → স্পিড সিস্টেম। ফাইল SPEED.txt — মুছবেন না।</p>
+    <div class="spd-card"><pre>APONSHOP স্পিড সিস্টেম — স্থায়ী নোট। এই ফাইল মুছবেন না।
+প্রতিটি আপডেট ও নতুন মডিউল এই নিয়মে করতে হবে।
+দোকানে দেখুন: সেটিংস → স্পিড সিস্টেম
+
+১) gzip — .htaccess HTML/CSS/JS। PHP gzip নয়।
+২) ভারী POS CSS শুধু বিক্রয় ডেস্কে।
+৩) লোগো ~৪৭ KB। ব্যানার মেগাবাইট ZIP-এ নয়।
+৪) perf_indexes.php বুটে। বাকি/স্টক COUNT দ্রুত। N+1 নিষেধ।
+৫) Keep-warm ৪৫ সেকেন্ডে /warm.php। সেশন লক নড়ে না।
+৬) বিক্রয়/স্টক/লেজার/বাকি ক্যাশ নয়।
+৭) ছোট PATCH ZIP, public_html/ প্রিফিক্স। ফোনে ৯ MB নয়।
+৮) /v.php = VERSION.txt। CSS/JS ?v=AME_ASSET_VERSION।
+
+করবেন না: সব পেজে POS CSS, হিসাব ক্যাশ, SPEED.txt মুছা।</pre></div>
+  </div>
+</body>
+</html>

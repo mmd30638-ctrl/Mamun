@@ -1,0 +1,700 @@
+/* AME-HOOK-V5-SYNC - UNIFIED PREMIUM DESIGN SYSTEM (v2) */
+
+/* =====================================================================
+   গ্লোবাল ডিজাইন টোকেন — একটাই কেন্দ্রীয় প্যালেট, পুরো সফটওয়্যারের
+   প্রতিটা মডিউল (Sales, Inventory, Stock, Returns, Diagnostics,
+   Customer Payment, Sidebar) এখন এই একই টোকেন-সেট থেকে রঙ নেয়,
+   যাতে পুরো প্রোডাক্টে একটাই সামঞ্জস্যপূর্ণ, প্রিমিয়াম ব্র্যান্ড লুক থাকে।
+   ===================================================================== */
+:root {
+    /* মূল ব্র্যান্ড — গাঢ় নেভি-ব্লু (অপরিবর্তিত ভিত্তি, আরও প্রিমিয়াম করা হয়েছে) */
+    --dark-blue: #0B3A82;
+    --brand-navy: #0B3A82;
+    --brand-navy-deep: #0A2A5C;
+    --brand-navy-dark: #123A7A;
+    --brand-accent: #4C1D95;
+    --brand-accent-2: #6D28D9;
+
+    /* নতুন — "প্রাণবন্ত" (lively) স্পর্শের জন্য গোল্ড/অ্যাম্বার অ্যাকসেন্ট,
+       শুধু হাইলাইট/ব্যাজ/সিগনেচার স্ট্রাইপে ব্যবহার হয়, বাটনে না —
+       যাতে নেভি-ব্লু ব্র্যান্ড আইডেন্টিটি প্রধান থাকে */
+    --brand-gold: #E0E7FF;
+    --brand-gold-soft: #F3E8FF;
+
+    /* সিমান্টিক রঙ — এখন থেকে পুরো সাইটে একটাই সবুজ/লাল (আগে প্রতিটা
+       মডিউলে আলাদা আলাদা শেড ছিল: #087f3d, #2E7D32, #c62828, #B71C1C ইত্যাদি) */
+    --brand-success: #15803D;
+    --brand-success-soft: #E8F6EC;
+    --brand-danger: #C62828;
+    --brand-danger-soft: #FDECEA;
+
+    /* হালকা নীল ক্যানভাস, হালকা বেগুনি কার্ড */
+    --brand-bg: #FFFFFF;
+    --brand-bg-soft: #F8FAFC;
+    --brand-border: #C9D7EE;
+    --brand-muted: #334155;
+    --brand-white: #FFFFFF;
+    --brand-black: #0F172A;
+
+    /* ⭐ নতুন — হালকা ধূসর-নীল সারফেস/বর্ডার (কার্ডের ভিতরে ধাপ/স্টেপ বক্স,
+       ইনফো প্যানেল ইত্যাদির জন্য) এবং হলুদ সতর্কতা রঙ — যাতে ফাইলে ফাইলে
+       আলাদা হার্ডকোড কালার না থেকে এখান থেকেই নেওয়া যায় */
+    --brand-surface-soft: #F8FAFC;
+    --brand-border-soft: #E2E8F0;
+    --brand-warn: #D97706;
+    --brand-warn-soft: #FEF3C7;
+    --brand-warn-text: #92400E;
+
+    /* ⭐ ফুল-স্ক্রিন ওভারলে/মোডাল ব্যাকড্রপের জন্য (ame_notify.php ইত্যাদি) */
+    --brand-backdrop: rgba(15, 23, 42, 0.55);
+    /* এই তিনটা এখন সরাসরি --brand-* এর সাথে যুক্ত, যেগুলো
+       partials/header.php-এর ame-live-theme ব্লক প্রতি-রিকোয়েস্টে
+       DB থেকে বসায় — তাই "সব পেজের রং পরিবর্তন" অপশন থেকে বদলালে
+       বিক্রয় পেজও সাথে সাথে বদলে যাবে। */
+    --mono-white: var(--brand-white);
+    --mono-border: var(--brand-border);
+    --mono-black: var(--brand-black);
+
+    /* ⭐ বিক্রয়/POS পেজ থেকে বের করা কাঁচা কালার (raw palette) — মান অপরিবর্তিত
+       রাখতে প্রতিটা মূল hex-এর জন্য একটা ভ্যারিয়েবল, যাতে পেজে আর কোনো
+       হার্ডকোড কালার কোড না থাকে অথচ ডিজাইন হুবহু আগের মতোই থাকে। পরে
+       ইচ্ছা করলে এগুলো আরও অর্থবহ নামের সাথে মিলিয়ে/একত্র করা যাবে। */
+    --pos-c-000000: #000000;
+    --pos-c-00695c: #00695C;
+    --pos-c-050c1f: #050C1F;
+    --pos-c-071a34: #071A34;
+    --pos-c-086b3c: #086B3C;
+    --pos-c-087f3d: #087F3D;
+    --pos-c-0d47a1: #0D47A1;
+    --pos-c-0e8f7a: #0E8F7A;
+    --pos-c-0f172a: #0F172A;
+    --pos-c-111827: #111827;
+    --pos-c-1565c0: #1565C0;
+    --pos-c-1b5e20: #1B5E20;
+    --pos-c-1b8a3d: #1B8A3D;
+    --pos-c-1f2937: #1F2937;
+    --pos-c-334155: #334155;
+    --pos-c-4a148c: #4A148C;
+    --pos-c-546e7a: #546E7A;
+    --pos-c-5b6b7c: #5B6B7C;
+    --pos-c-64748b: #64748B;
+    --pos-c-69f0ae: #69F0AE;
+    --pos-c-6b7280: #6B7280;
+    --pos-c-7cffc4: #7CFFC4;
+    --pos-c-7f1d1d: #7F1D1D;
+    --pos-c-8a96a3: #8A96A3;
+    --pos-c-8e0000: #8E0000;
+    --pos-c-90caf9: #90CAF9;
+    --pos-c-9aa7b5: #9AA7B5;
+    --pos-c-9ca3af: #9CA3AF;
+    --pos-c-aebccc: #AEBCCC;
+    --pos-c-afbdcd: #AFBDCD;
+    --pos-c-b71c1c: #B71C1C;
+    --pos-c-b91c1c: #B91C1C;
+    --pos-c-bcc8d6: #BCC8D6;
+    --pos-c-bf360c: #BF360C;
+    --pos-c-c5ced8: #C5CED8;
+    --pos-c-c62828: #C62828;
+    --pos-c-c9a227: #C9A227;
+    --pos-c-cfd6de: #CFD6DE;
+    --pos-c-cfe3f7: #CFE3F7;
+    --pos-c-d1d5db: #D1D5DB;
+    --pos-c-d7e0eb: #D7E0EB;
+    --pos-c-d8e1ec: #D8E1EC;
+    --pos-c-d9dee5: #D9DEE5;
+    --pos-c-dbeafe: #DBEAFE;
+    --pos-c-e1f5fe: #E1F5FE;
+    --pos-c-e3f2fd: #E3F2FD;
+    --pos-c-e5eaf0: #E5EAF0;
+    --pos-c-e5edf5: #E5EDF5;
+    --pos-c-e65100: #E65100;
+    --pos-c-e7edf4: #E7EDF4;
+    --pos-c-e8edf2: #E8EDF2;
+    --pos-c-e8f5e9: #E8F5E9;
+    --pos-c-eef6ff: #EEF6FF;
+    --pos-c-ef9a9a: #EF9A9A;
+    --pos-c-eff6ff: #EFF6FF;
+    --pos-c-f0f9ff: #F0F9FF;
+    --pos-c-f0fdf4: #F0FDF4;
+    --pos-c-f1f5f9: #F1F5F9;
+    --pos-c-f4f7fb: #F4F7FB;
+    --pos-c-f59e0b: #F59E0B;
+    --pos-c-f9a825: #F9A825;
+    --pos-c-fecaca: #FECACA;
+    --pos-c-fee2e2: #FEE2E2;
+    --pos-c-ff8a80: #FF8A80;
+    --pos-c-ffebee: #FFEBEE;
+    --pos-c-fff7f7: #FFF7F7;
+    --pos-c-fff8e8: #FFF8E8;
+    --pos-c-fffef9: #FFFEF9;
+    --pos-c-0284c7: #0284C7;
+    --pos-c-0369a1: #0369A1;
+    --pos-c-059669: #059669;
+    --pos-c-10b981: #10B981;
+    --pos-c-1d4ed8: #1D4ED8;
+    --pos-c-1e3a8a: #1E3A8A;
+    --pos-c-7dd3fc: #7DD3FC;
+    --pos-c-a7f3d0: #A7F3D0;
+    --pos-c-b45309: #B45309;
+    --pos-c-bae6fd: #BAE6FD;
+    --pos-c-bbf7d0: #BBF7D0;
+    --pos-c-c7d2fe: #C7D2FE;
+    --pos-c-cbd5e1: #CBD5E1;
+    --pos-c-d97706: #D97706;
+    --pos-c-dc2626: #DC2626;
+    --pos-c-ecfdf5: #ECFDF5;
+    --pos-c-eef2ff: #EEF2FF;
+    --pos-c-fbbf24: #FBBF24;
+    --pos-c-fcd34d: #FCD34D;
+    --pos-c-fffbeb: #FFFBEB;
+
+    /* ⭐ modules/purchase/add.php ("ক্রয়" স্ক্রিন) থেকে বের করা কাঁচা কালার —
+       ওপরের কমেন্টে লেখা একই নীতিতে: মান অপরিবর্তিত রেখে হার্ডকোড সরানো হলো */
+    --pos-c-94a3b8: #94A3B8;
+    --pos-c-eaf4ff: #EAF4FF;
+    --pos-c-fff5f5: #FFF5F5;
+    --pos-c-ffe082: #FFE082;
+    --pos-c-fef3c7: #FEF3C7;
+    --pos-c-dbeeff: #DBEEFF;
+    --pos-c-bfe0ff: #BFE0FF;
+    --pos-c-f6c445: #F6C445;
+    --pos-c-34d399: #34D399;
+    --pos-c-0d9488: #0D9488;
+
+    /* ⭐ modules/purchase/history.php থেকে বের করা কাঁচা কালার — একই নীতি */
+    --pos-c-ffffff: #FFFFFF;
+    --pos-c-eeeeee: #EEEEEE;
+    --pos-c-555555: #555555;
+    --pos-c-777777: #777777;
+    --pos-c-888888: #888888;
+
+    /* ⭐ modules/suppliers/ledger.php থেকে বের করা কাঁচা কালার — একই নীতি */
+    --pos-c-333333: #333333;
+    --pos-c-666666: #666666;
+    --pos-c-f4f7f9: #F4F7F9;
+    --pos-c-f5f5f5: #F5F5F5;
+    --pos-c-ffccbc: #FFCCBC;
+    --pos-c-c8e6c9: #C8E6C9;
+
+    /* একই ফাইলের স্বচ্ছ (rgba/alpha) শ্যাডো ও ওভারলে রংও — নেভি/টিল/সাদা/কমলা
+       ভিত্তিক, মান অপরিবর্তিত রেখে কেন্দ্রীয় ভ্যারিয়েবলে আনা হলো */
+    --pos-rgba-black-08: rgba(0, 0, 0, 0.08);
+    --pos-rgba-navy-06: rgba(11, 30, 77, 0.06);
+    --pos-rgba-navy-14: rgba(11, 30, 77, 0.14);
+    --pos-rgba-navy-16: rgba(11, 30, 77, 0.16);
+    --pos-rgba-navy-55: rgba(11, 30, 77, 0.55);
+    --pos-rgba-teal-35: rgba(13, 148, 136, 0.35);
+    --pos-rgba-teal-40: rgba(13, 148, 136, 0.4);
+    --pos-rgba-white-25: rgba(255, 255, 255, 0.25);
+    --pos-rgba-orange-08: rgba(230, 81, 0, 0.08);
+
+    /* বাগ ফিক্স: "🧮 পেমেন্ট ক্যালকুলেটর" চিপ-হেডিং-এ (assets/css/ame-sales-pro.css)
+       ব্যাকগ্রাউন্ড সবসময় গাঢ় নেভি গ্র্যাডিয়েন্ট, কিন্তু লেখার রং সেট করা
+       ছিল var(--brand-bg) দিয়ে — যেটা "ব্যাকগ্রাউন্ড/সারফেস" রঙের টোকেন,
+       "রং পরিবর্তন"-এ অ্যাডমিন যদি সারফেস কালার গাঢ় (যেমন কালচে) কিছু বেছে
+       নেন, তাহলে গাঢ় ব্যাকগ্রাউন্ডের ওপর লেখাও গাঢ় হয়ে যেত — ফলে লেখা
+       অদৃশ্য/মিশে যাচ্ছিল। এই চিপের জন্য এখন একটা নির্দিষ্ট, সবসময়-সাদা
+       টেক্সট-কালার টোকেন — থিম যা-ই হোক না কেন গাঢ় নেভি ব্যাকগ্রাউন্ডের
+       ওপর সবসময় স্পষ্ট পড়া যাবে। */
+    --pos-chip-fg: #FFFFFF;
+
+    /* শ্যাডো/রেডিয়াস স্কেল — কার্ড, বাটন, মডালে অভিন্নভাবে ব্যবহৃত */
+    --shadow-sm: 0 2px 8px rgba(11, 30, 77, 0.06);
+    --shadow-md: 0 4px 18px rgba(11, 30, 77, 0.10);
+    --shadow-lg: 0 10px 30px rgba(11, 30, 77, 0.16);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    /* ব্র্যান্ড গ্র্যাডিয়েন্ট — বাটন, হেডার-স্ট্রিপ, সাইডবার হেডারে পুনঃব্যবহৃত */
+    --brand-gradient: linear-gradient(135deg, var(--brand-navy), var(--brand-accent));
+    --brand-gradient-rich: linear-gradient(135deg, var(--brand-navy) 0%, var(--brand-accent) 70%, var(--brand-accent-2) 100%);
+
+    /* বাগ ফিক্স: --dark-green ও --red-alert ভ্যারিয়েবল দুটো ৪১টা ফাইলে ব্যবহার
+       হচ্ছিল (সফল/ব্যর্থ স্ট্যাটাস টেক্সটের রঙের জন্য) কিন্তু কোথাও ডিফাইন করা
+       ছিল না — ফলে ব্রাউজার সেই color/border রুলগুলো ইনভ্যালিড হিসেবে বাতিল
+       করে দিচ্ছিল, আর টেক্সট ডিফল্ট কালোতে দেখাচ্ছিল। এখন ডিফাইন করে সঠিক
+       সবুজ/লাল রঙ প্রয়োগ করা হলো। */
+    --dark-green: var(--brand-success);
+    --red-alert: var(--brand-danger);
+}
+
+html, body {
+    margin: 0; padding: 0; width: 100%; height: 100%;
+    background-color: #ffffff !important;
+    font-family: 'Segoe UI', 'SolaimanLipi', -apple-system, sans-serif;
+    overflow-x: hidden;
+    color: #111111;
+}
+
+#main-content {
+    width: 100%; min-height: 100vh;
+    background-color: var(--brand-bg) !important;
+}
+
+/* স্লাইডার */
+.hero-slider-main {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100vh;
+    z-index: 1; background: #000;
+}
+.myslide, .myslide img { width: 100%; height: 100%; object-fit: cover; }
+
+/* কার্ড ডিজাইন — প্রিমিয়াম সফট শ্যাডো + উপরে ব্র্যান্ড গ্র্যাডিয়েন্টের
+   একটা পাতলা এক্সেন্ট বার (সিগনেচার লুক, পুরো সাইটে অভিন্ন) */
+.card { 
+    background: #ffffff !important; 
+    border: 1px solid var(--brand-border) !important;
+    border-radius: var(--radius-lg);
+    margin-bottom: 18px;
+    padding: 22px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    z-index: 100;
+    transition: box-shadow 0.2s ease;
+}
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: var(--brand-gradient-rich);
+}
+.card h3 {
+    margin-top: 0;
+    color: var(--dark-blue);
+    font-weight: 800;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--brand-bg);
+    margin-bottom: 18px;
+}
+
+/* সিগনেচার তিন-রঙা টপ-স্ট্রিপ ইউটিলিটি (settings/about পেজগুলোতে ব্যবহৃত) —
+   এখন ব্র্যান্ডের নিজস্ব নেভি → সায়ান → গোল্ড রঙে, আগের সবুজ/কালো/লাল
+   পতাকা-সদৃশ রঙের বদলে — পুরো সাইটে একই সিগনেচার দেখাবে */
+.brand-topbar-strip { display: flex; height: 6px; }
+.brand-topbar-strip span { flex: 1; }
+.brand-topbar-strip .strip-1 { background: var(--brand-navy); }
+.brand-topbar-strip .strip-2 { background: var(--brand-accent); }
+.brand-topbar-strip .strip-3 { background: var(--brand-gold); }
+
+/* ব্যাজ/চিপ — নতুন কম্পোনেন্ট, স্ট্যাটাস/লেবেল দেখানোর জন্য */
+.brand-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 10px; border-radius: 999px;
+    font-size: 12px; font-weight: 700;
+}
+.brand-badge.success { background: var(--brand-success-soft); color: var(--brand-success); }
+.brand-badge.danger  { background: var(--brand-danger-soft); color: var(--brand-danger); }
+.brand-badge.gold    { background: var(--brand-gold-soft); color: #9A6300; }
+.brand-badge.info    { background: var(--brand-bg); color: var(--brand-accent); }
+
+/* =====================================================================
+   ফর্ম ইনপুট ও বাটন — আগে ৪২টা ফাইলে .input-style / .btn-success /
+   .btn-danger ক্লাস ব্যবহার হচ্ছিল কিন্তু কোথাও ডিফাইন করা ছিল না,
+   ফলে ফর্মগুলো ব্রাউজারের ডিফল্ট (স্টাইলবিহীন) চেহারায় দেখাচ্ছিল।
+   এখন প্রফেশনাল, আধুনিক ডিজাইন দেওয়া হলো — পুরো সাইটের সব ফর্ম
+   এই একটা ফিক্সেই আপগ্রেড হয়ে যাবে।
+   ===================================================================== */
+.input-style,
+input[type="text"], input[type="number"], input[type="email"],
+input[type="password"], input[type="date"], input[type="tel"],
+input[type="search"], textarea, select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--brand-border);
+    border-radius: 10px;
+    background: #fbfdff;
+    color: var(--brand-navy-dark);
+    font-size: 14.5px;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.input-style:focus,
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--brand-accent);
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(0, 145, 234, 0.12);
+}
+
+.input-style::placeholder, input::placeholder, textarea::placeholder {
+    color: #93a5c2;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--dark-blue);
+}
+
+/* বাটন — সাইটজুড়ে অভিন্ন, আধুনিক ব্র্যান্ড কালার */
+.btn-success, .btn-primary, button[type="submit"]:not([class*="hdr-"]) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: auto;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    background: var(--brand-gradient);
+    color: #ffffff !important;
+    font-weight: 800;
+    font-size: 14.5px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(11, 30, 77, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+.btn-success:hover, .btn-primary:hover, button[type="submit"]:not([class*="hdr-"]):hover {
+    filter: brightness(1.08);
+    box-shadow: 0 6px 20px rgba(11, 30, 77, 0.32);
+    transform: translateY(-1px);
+}
+.btn-success:active, .btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--brand-danger), #e53935);
+    color: #ffffff !important;
+    font-weight: 800;
+    font-size: 14.5px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(211, 47, 47, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+.btn-danger:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+}
+
+/* সাইডবার (fallback — মূল ডিজাইন partials/sidebar-style.php-তে) */
+.sidebar {
+    height: 100%; width: 0; position: fixed; z-index: 3000; top: 0; left: 0;
+    background-color: #111; overflow-x: hidden; transition: 0.4s;
+}
+.sidebar a { padding: 12px 20px; text-decoration: none; font-size: 14px; color: #ccc; display: block; border-bottom: 1px solid #222; }
+
+a { color: var(--dark-blue); }
+
+/* টেবিল — সব পেজে অভিন্ন আধুনিক লুক, জেব্রা-স্ট্রাইপ + হোভার হাইলাইট */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table thead tr, table tr[style*="background"] {
+    background: var(--dark-blue) !important;
+}
+table th {
+    color: #ffffff;
+    font-weight: 700;
+    text-align: left;
+}
+table td, table th {
+    padding: 12px;
+    border-bottom: 1px solid var(--brand-border);
+}
+table tbody tr:nth-child(even) { background: var(--brand-bg-soft); }
+table tbody tr:hover {
+    background: var(--brand-bg);
+}
+
+/* স্ক্রলবার — সূক্ষ্ম, প্রিমিয়াম (ওয়েবকিট ব্রাউজার) */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--brand-bg-soft); }
+::-webkit-scrollbar-thumb { background: #B9CBE0; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-accent); }
+
+/* সাইডবার মেনু আইকন — রঙিন বক্স নয়, শুধু আইকন */
+.custom-sidebar .menu-icon-badge,
+.sidebar-menu-body .menu-icon-badge,
+span.menu-icon-badge {
+    background: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* ⭐ সমস্ত কালার বাতিল — বিক্রয় (POS) পেজ ডিফল্টভাবে কালো লেখা + সাদা
+   ব্যাকগ্রাউন্ড দেখাবে (বক্স বোঝার জন্য হালকা ধূসর বর্ডার)। এটা "সব পেজের
+   রং পরিবর্তন" অপশনের (partials/header.php-এর ame-live-theme ব্লক,
+   DB-ব্যাকড) সাথে যুক্ত — --mono-white/border/black সরাসরি
+   --brand-white/border/black থেকে আসে।
+
+   ইতিহাস (v30 ফিক্স): আগে এই ব্লকটা বেছে .ame-pos-page (বিক্রয় পেজের একটা
+   সাধারণ div ক্লাস)-এর ওপর বসানো ছিল — ফলে এটা তখনকার ৫টা সাজানো "বিক্রয়
+   কাউন্টার থিম" (নেভি/গোলাপ বাগান/পদ্ম সরোবর/সেগুন বাগান/বনছায়া)-এর নিজস্ব
+   রঙও (--pos-skin-*, --sale-*) মুছে/চ্যাপ্টা করে দিচ্ছিল। v30-এ এই ব্লকটা
+   শুধু "স্টিল কাউন্টার" (workshop) স্কিন সক্রিয় থাকলেই প্রযোজ্য করে সেই
+   বাগ ঠিক করা হয়েছিল।
+
+   v33 (এই সংস্করণে): ব্যবহারকারীর অনুরোধে ওই ৫টা সাজানো স্কিনই
+   (includes/pos_skin.php থেকে) সম্পূর্ণ ডিলিট করা হয়েছে — এখন কাউন্টারের
+   ডিজাইন একটাই, "স্টিল কাউন্টার" (workshop), যেটা এই ব্লকের মাধ্যমে সবসময়
+   সাইটের সাধারণ "সব পেজের রং পরিবর্তন" থিম-কালার অনুসরণ করবে। নিচের
+   body.ame-pos-skin-workshop সিলেক্টরটা তাই এখন কার্যত সবসময় প্রযোজ্য। */
+body.ame-pos-skin-workshop .ame-pos-page {
+    /* বাগ ফিক্স: এখানে আগে --brand-navy/--brand-navy-dark/--brand-success/
+       --brand-danger/--brand-accent — এই ৫টা অর্থবহ (সিমান্টিক) রঙকেও
+       --mono-black-এ চ্যাপ্টা করে দেওয়া হয়েছিল। ফলে সবুজ (সফল/মোট), লাল
+       (বিপদ/বাকি), নীল (এক্সেন্ট) — সব রঙ একই টোনে মিশে গিয়ে "সর্বমোট
+       পাওনা"-র সংখ্যা ও অন্যান্য গুরুত্বপূর্ণ হাইলাইট পড়া যাচ্ছিল না /
+       ব্যাকগ্রাউন্ডের সাথে মিশে যাচ্ছিল। এই ৫টা এখন আর ফ্ল্যাট করা হচ্ছে না —
+       এগুলো তাদের নিজস্ব থিম-নির্ভর (হেডার/সাইডবারে যেভাবে সফলভাবে ব্যবহৃত
+       হয়, ঠিক সেভাবে বৈসাদৃশ্যপূর্ণ) রঙ ধরে রাখবে। শুধু প্রকৃত নিরপেক্ষ/ধূসর
+       (background/border/muted) টোকেনগুলো এখনো "সব পেজের রং পরিবর্তন"
+       অপশনের সাথে যুক্ত থাকছে। */
+    --brand-bg: var(--mono-white);
+    --brand-border: var(--mono-border);
+    --brand-border-soft: var(--mono-border);
+    --brand-muted: var(--mono-black);
+    --brand-surface-soft: var(--mono-white);
+    --brand-warn-soft: var(--mono-white);
+    --brand-white: var(--mono-white);
+    --pos-c-000000: var(--mono-black);
+    --pos-c-00695c: var(--mono-black);
+    --pos-c-0284c7: var(--mono-black);
+    --pos-c-0369a1: var(--mono-black);
+    --pos-c-050c1f: var(--brand-navy-dark);
+    --pos-c-059669: var(--mono-black);
+    --pos-c-071a34: var(--mono-black);
+    --pos-c-086b3c: var(--mono-black);
+    --pos-c-087f3d: var(--mono-black);
+    --pos-c-0d47a1: var(--mono-black);
+    --pos-c-0e8f7a: var(--mono-black);
+    --pos-c-0f172a: var(--mono-black);
+    --pos-c-10b981: var(--mono-black);
+    --pos-c-111827: var(--mono-black);
+    --pos-c-1565c0: var(--mono-black);
+    --pos-c-1b5e20: var(--mono-black);
+    --pos-c-1b8a3d: var(--mono-black);
+    --pos-c-1d4ed8: var(--mono-black);
+    --pos-c-1e3a8a: var(--mono-black);
+    --pos-c-1f2937: var(--mono-black);
+    --pos-c-334155: var(--mono-black);
+    --pos-c-4a148c: var(--mono-black);
+    --pos-c-546e7a: var(--mono-black);
+    --pos-c-5b6b7c: var(--mono-black);
+    --pos-c-64748b: var(--mono-black);
+    --pos-c-69f0ae: var(--brand-success);
+    --pos-c-6b7280: var(--mono-black);
+    --pos-c-7cffc4: var(--mono-border);
+    --pos-c-7dd3fc: var(--mono-border);
+    --pos-c-7f1d1d: var(--mono-black);
+    --pos-c-8a96a3: var(--mono-border);
+    --pos-c-8e0000: var(--mono-black);
+    --pos-c-90caf9: var(--mono-border);
+    --pos-c-9aa7b5: var(--mono-border);
+    --pos-c-9ca3af: var(--mono-border);
+    --pos-c-a7f3d0: var(--mono-border);
+    --pos-c-aebccc: var(--mono-border);
+    --pos-c-afbdcd: var(--mono-border);
+    --pos-c-b45309: var(--mono-black);
+    --pos-c-b71c1c: var(--mono-black);
+    --pos-c-b91c1c: var(--mono-black);
+    --pos-c-bae6fd: var(--mono-border);
+    --pos-c-bbf7d0: var(--mono-border);
+    --pos-c-bcc8d6: var(--mono-border);
+    --pos-c-bf360c: var(--mono-black);
+    --pos-c-c5ced8: var(--mono-border);
+    --pos-c-c62828: var(--mono-black);
+    --pos-c-ffffff: var(--mono-white);
+    --pos-c-eeeeee: var(--mono-border);
+    --pos-c-555555: var(--mono-black);
+    --pos-c-777777: var(--mono-black);
+    --pos-c-888888: var(--mono-black);
+    --pos-c-333333: var(--mono-black);
+    --pos-c-666666: var(--mono-black);
+    --pos-c-f4f7f9: var(--mono-white);
+    --pos-c-f5f5f5: var(--mono-white);
+    --pos-c-ffccbc: var(--mono-border);
+    --pos-c-c8e6c9: var(--mono-border);
+    --pos-c-c7d2fe: var(--mono-border);
+    --pos-c-c9a227: var(--mono-border);
+    --pos-c-cbd5e1: var(--mono-border);
+    --pos-c-cfd6de: var(--mono-border);
+    --pos-c-cfe3f7: var(--mono-border);
+    --pos-c-d1d5db: var(--mono-border);
+    --pos-c-d7e0eb: var(--mono-border);
+    --pos-c-d8e1ec: var(--mono-border);
+    --pos-c-d97706: var(--mono-black);
+    --pos-c-d9dee5: var(--mono-border);
+    --pos-c-dbeafe: var(--mono-border);
+    --pos-c-dc2626: var(--mono-black);
+    --pos-c-e1f5fe: var(--mono-white);
+    --pos-c-e3f2fd: var(--mono-border);
+    --pos-c-e5eaf0: var(--mono-border);
+    --pos-c-e5edf5: var(--mono-border);
+    --pos-c-e65100: var(--mono-black);
+    --pos-c-e7edf4: var(--mono-border);
+    --pos-c-e8edf2: var(--mono-border);
+    --pos-c-e8f5e9: var(--mono-border);
+    --pos-c-ecfdf5: var(--mono-white);
+    --pos-c-eef2ff: var(--mono-white);
+    --pos-c-eef6ff: var(--mono-white);
+    --pos-c-ef9a9a: var(--mono-border);
+    --pos-c-eff6ff: var(--mono-white);
+    --pos-c-f0f9ff: var(--mono-white);
+    --pos-c-f0fdf4: var(--mono-white);
+    --pos-c-f1f5f9: var(--mono-white);
+    --pos-c-f4f7fb: var(--mono-white);
+    --pos-c-f59e0b: var(--mono-border);
+    --pos-c-f9a825: var(--mono-border);
+    --pos-c-fbbf24: var(--mono-border);
+    --pos-c-fcd34d: var(--mono-border);
+    --pos-c-fecaca: var(--mono-border);
+    --pos-c-fee2e2: var(--mono-border);
+    --pos-c-ff8a80: var(--mono-border);
+    --pos-c-ffebee: var(--mono-white);
+    --pos-c-fff7f7: var(--mono-white);
+    --pos-c-fff8e8: var(--mono-white);
+    --pos-c-fffbeb: var(--mono-white);
+    --pos-c-fffef9: var(--mono-white);
+    --pos-skin-border: var(--mono-border);
+    --pos-skin-btn: var(--mono-black);
+    --pos-skin-btn-fg: var(--mono-white);
+    --pos-skin-card: var(--mono-white);
+    --pos-skin-chip: var(--mono-border);
+    --pos-skin-chip-fg: var(--mono-black);
+    --pos-skin-input: var(--mono-white);
+    --pos-skin-input-bd: var(--mono-border);
+    --pos-skin-input-fg: var(--mono-black);
+    --pos-skin-muted: var(--mono-black);
+    --pos-skin-net: var(--mono-black);
+    --pos-skin-page: var(--mono-white);
+    --pos-skin-text: var(--mono-black);
+    --pos-skin-th: var(--mono-border);
+    --pos-skin-th-fg: var(--mono-black);
+    --pos-skin-title-bg: var(--mono-border);
+    --pos-skin-title-fg: var(--mono-black);
+    --sale-amber: var(--mono-black);
+    --sale-amber-line: var(--mono-border);
+    --sale-amber-soft: var(--mono-white);
+    --sale-card: var(--mono-white);
+    --sale-danger: var(--mono-black);
+    --sale-muted: var(--mono-black);
+    --sale-navy: var(--mono-black);
+    --sale-ok: var(--mono-black);
+    --sale-radius: var(--mono-white);
+    --sale-radius-sm: var(--mono-white);
+    --sale-shadow: var(--mono-white);
+    --sale-shadow-lg: var(--mono-white);
+    --sale-sky: var(--mono-black);
+    --sale-sky-soft: var(--mono-white);
+    --sale-surface: var(--mono-white);
+    --sale-text: var(--mono-black);
+    --sale-touch: var(--mono-white);
+}
+
+/* =====================================================================
+   হেডারের উপরের আইকন-বার (assets/css/hdr-icons.css + partials/header.php-এর
+   ব্যাজ) — আগে প্রতিটা আইকনের রঙ সরাসরি hex হিসেবে hdr-icons.css-এ বসানো
+   ছিল। মান অপরিবর্তিত রেখে প্রতিটা রঙের জন্য একটা ভ্যারিয়েবল বানানো হলো,
+   যাতে ভবিষ্যতে এক জায়গা থেকেই হেডারের সব আইকনের রঙ বদলানো যায়। নতুন
+   ৩টা আইকনের (কর্মীর পেমেন্ট, সাধারণ লেনদেন, প্রোডাক্ট স্টক) জন্যও এখান
+   থেকেই নতুন রঙ দেওয়া হয়েছে।
+   ===================================================================== */
+:root {
+    --hdr-icon-green-1: #04933A;
+    --hdr-icon-green-2: #04933A;
+    --hdr-icon-text-green: #ffffff;
+
+    --hdr-icon-amber-1: #003F8F;
+    --hdr-icon-amber-2: #003F8F;
+    --hdr-icon-text-amber: #ffffff;
+
+    --hdr-icon-sky-1: #003F8F;
+    --hdr-icon-sky-2: #003F8F;
+    --hdr-icon-text-sky: #ffffff;
+
+    --hdr-icon-red-1: #DC2626;
+    --hdr-icon-red-2: #DC2626;
+    --hdr-icon-text-red: #ffffff;
+
+    --hdr-icon-cyan-1: #04933A;
+    --hdr-icon-cyan-2: #04933A;
+    --hdr-icon-text-cyan: #ffffff;
+
+    --hdr-icon-violet-1: #003F8F;
+    --hdr-icon-violet-2: #003F8F;
+    --hdr-icon-text-violet: #ffffff;
+
+    --hdr-icon-teal-1: #003F8F;
+    --hdr-icon-teal-2: #003F8F;
+    --hdr-icon-text-teal: #ffffff;
+
+    --hdr-icon-indigo-1: #003F8F;
+    --hdr-icon-indigo-2: #003F8F;
+    --hdr-icon-text-indigo: #ffffff;
+
+    --hdr-icon-orange-1: #003F8F;
+    --hdr-icon-orange-2: #003F8F;
+    --hdr-icon-text-orange: #ffffff;
+
+    --hdr-icon-pink-1: #003F8F;
+    --hdr-icon-pink-2: #003F8F;
+    --hdr-icon-text-pink: #ffffff;
+
+    --hdr-icon-shadow: rgba(15, 23, 42, 0.28);
+    --hdr-icon-shadow-inset: rgba(255, 255, 255, 0.22);
+    --hdr-icon-border: rgba(255, 255, 255, 0.14);
+    --hdr-icon-shadow-hover: rgba(15, 23, 42, 0.32);
+    --hdr-icon-shadow-hover-inset: rgba(255, 255, 255, 0.25);
+    --hdr-icon-svg-shadow: rgba(0, 0, 0, 0.18);
+
+    --hdr-bell-pulse-1: rgba(185, 28, 28, 0.35);
+    --hdr-bell-pulse-2: rgba(248, 113, 113, 0.22);
+    --hdr-stock-pulse-1: rgba(194, 65, 12, 0.35);
+    --hdr-stock-pulse-2: rgba(251, 146, 60, 0.28);
+
+    --hdr-badge-bg: #B91C1C;
+    --hdr-badge-fg: #ffffff;
+    --hdr-badge-border: #ffffff;
+    --hdr-badge-stock-bg: #C2410C;
+}
+
+/* =====================================================================
+   দোকান মালিক ও ঋণ ব্যবস্থাপনা (modules/loans/owners/*) — নতুন KPI/ট্যাগ
+   রঙ। বেশিরভাগ জায়গায় বিদ্যমান --brand-* ভ্যারিয়েবলই পুনর্ব্যবহার হয়েছে;
+   এখানে শুধু এই মডিউলের জন্য একান্ত নতুন কিছু রঙ (--oln-*) সংজ্ঞায়িত করা
+   হলো, যাতে পেজের CSS-এ কখনো raw hex/rgb লিখতে না হয়।
+   ===================================================================== */
+:root {
+    --oln-kpi-blue-bg: #E6F3FF;
+    --oln-kpi-blue-fg: #0B63B3;
+    --oln-kpi-purple-bg: #F1EAFE;
+    --oln-kpi-purple-fg: #6D28D9;
+    --oln-kpi-teal-bg: #E4F9F5;
+    --oln-kpi-teal-fg: #0F766E;
+    --oln-kpi-orange-bg: #FFF1E4;
+    --oln-kpi-orange-fg: #C2410C;
+
+    --oln-ledger-debit: #D32F2F;
+    --oln-ledger-credit: #0E8F52;
+
+    --oln-tab-active-bg: #EEF6FF;
+    --oln-status-upcoming-bg: #EEF2FF;
+    --oln-status-upcoming-fg: #4338CA;
+    --oln-status-partial-bg: #FFF8E1;
+    --oln-status-partial-fg: #9A5B00;
+    --oln-status-overdue-bg: #FDECEA;
+    --oln-status-overdue-fg: #D32F2F;
+    --oln-status-paid-bg: #E7F7EF;
+    --oln-status-paid-fg: #0E8F52;
+}

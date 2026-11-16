@@ -1,0 +1,80 @@
+/**
+ * সাইডবার আইকন — প্রতিটা মডিউলের নিজস্ব রঙের "চিপ" আইকন + সাবমেনুতে সেই
+ * রঙের ছোট বিন্দু (ইমোজির বদলে) — যাতে পুরো মেনুটা একরকম, প্রফেশনাল এবং
+ * প্রতিটা বিভাগ রঙ দেখেই আলাদা করে চেনা যায়।
+ */
+.menu-icon-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    margin-right: 4px;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+.menu-icon-chip svg {
+    width: 18px;
+    height: 18px;
+}
+.direct-link:hover .menu-icon-chip,
+.menu-head:hover .menu-icon-chip {
+    transform: translateY(-1px) scale(1.04);
+}
+
+/* সাবমেনুর প্রতিটা লিংকের সামনে ছোট রঙিন বিন্দু (parent module-এর রঙে) */
+.menu-list a {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+}
+.sb-sub-dot {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.04);
+}
+
+/* সাবমেনুর নিজস্ব আইকন (কাজের ধরন অনুযায়ী — যোগ, তালিকা, রিপোর্ট, প্রিন্ট...) */
+.sb-sub-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+}
+.sb-sub-icon svg {
+    width: 16px;
+    height: 16px;
+}
+.sb-sub-icon-chip {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+}
+.sb-sub-icon-chip svg {
+    width: 15px;
+    height: 15px;
+}
+.sb-sub-icon-chip-lg {
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+    background: #fff !important;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.16);
+}
+.sb-sub-icon-chip-lg svg {
+    width: 20px;
+    height: 20px;
+}
+.menu-list a:hover .sb-sub-icon-chip {
+    transform: translateY(-1px);
+}
+
+@media (prefers-color-scheme: dark) {
+    .sb-sub-dot { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06); }
+}

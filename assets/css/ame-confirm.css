@@ -1,0 +1,120 @@
+/**
+ * ব্র্যান্ডেড কনফার্ম মডাল — ব্রাউজারের ডিফল্ট Cancel/OK পপআপের বদলে।
+ * ব্যবহার: কোনো <form> বা <a>/<button>-এ onsubmit/onclick="return confirm(...)"-এর
+ * বদলে data-confirm="বাংলা টেক্সট\n\nEnglish text" attribute বসান।
+ * ঐচ্ছিক: data-confirm-type="danger" (লাল বাটন, ডিলিট/বিপজ্জনক কাজের জন্য)।
+ */
+.ame-cf-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 99990;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+.ame-cf-backdrop.is-open { opacity: 1; }
+@media (min-width: 620px) {
+  .ame-cf-backdrop { align-items: center; padding: 20px; }
+}
+
+.ame-cf-card {
+  width: 100%;
+  max-width: 440px;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  transform: translateY(16px);
+  transition: transform 0.18s ease;
+  font-family: "DM Sans", "Noto Sans Bengali", sans-serif;
+}
+.ame-cf-backdrop.is-open .ame-cf-card { transform: translateY(0); }
+@media (min-width: 620px) {
+  .ame-cf-card { border-radius: 18px; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22); }
+}
+
+.ame-cf-bar { display: flex; height: 5px; }
+.ame-cf-bar span { flex: 1; }
+.ame-cf-bar .b1 { background: var(--brand-navy, #0b1e4d); }
+.ame-cf-bar .b2 { background: var(--brand-accent, #1d9bf0); }
+.ame-cf-bar .b3 { background: var(--brand-gold, #c9a227); }
+.ame-cf-card.is-danger .ame-cf-bar .b1,
+.ame-cf-card.is-danger .ame-cf-bar .b2,
+.ame-cf-card.is-danger .ame-cf-bar .b3 { background: #e11d48; }
+
+.ame-cf-body { padding: 22px 22px 18px; }
+.ame-cf-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 12px;
+  background: #eef2ff;
+  color: var(--brand-navy, #0b1e4d);
+}
+.ame-cf-card.is-danger .ame-cf-icon { background: #fee2e2; color: #e11d48; }
+.ame-cf-bn {
+  font-size: 16.5px;
+  font-weight: 800;
+  color: #111;
+  line-height: 1.5;
+  margin: 0 0 4px;
+}
+.ame-cf-en {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.ame-cf-actions {
+  display: flex;
+  gap: 10px;
+  padding: 0 22px 22px;
+}
+.ame-cf-btn {
+  flex: 1;
+  padding: 13px 14px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 800;
+  font-size: 14.5px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.ame-cf-btn.is-cancel { background: #f1f5f9; color: #334155; }
+.ame-cf-btn.is-ok {
+  background: linear-gradient(135deg, var(--brand-navy, #0b1e4d), var(--brand-accent, #1d9bf0));
+  color: #fff;
+}
+.ame-cf-card.is-danger .ame-cf-btn.is-ok { background: #e11d48; }
+.ame-cf-btn:active { transform: scale(0.98); }
+
+.ame-cf-card.is-withdraw {
+  background: #fff6e8;
+  border: 2px dashed #c47a32;
+}
+.ame-cf-kicker {
+  margin: 10px 18px 0;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #9a3412;
+  text-transform: uppercase;
+}
+.ame-cf-card.is-withdraw .ame-cf-icon {
+  background: #9a3412;
+  color: #fff6e8;
+}
+.ame-cf-card.is-withdraw .ame-cf-btn.is-ok {
+  background: #9a3412;
+  color: #fff6e8;
+}

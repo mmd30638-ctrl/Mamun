@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>APONSHOP · ক্রয় ডেস্ক লেআউট</title>
+  <style>
+    :root { --navy:#0B3A82; --green:#0E8F52; --line:#cfe3f7; --bg:#f4f7f9; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, sans-serif; background: var(--bg); color:#111; min-height:100dvh; display:flex; flex-direction:column; }
+    header { background: var(--green); color:#fff; padding:8px 12px; font-weight:700; font-size:13px; }
+    nav { background: var(--navy); color:#fff; display:flex; gap:12px; padding:8px 12px; font-size:13px; overflow:auto; }
+    nav a { color:#fff; text-decoration:none; white-space:nowrap; }
+    .grid { display:grid; grid-template-columns: minmax(0,1fr) 320px; flex:1; min-height:0; }
+    .work { padding:10px; overflow:auto; }
+    .form { background:#fff; border-left:1px solid var(--line); padding:12px; overflow:auto; }
+    label { display:block; font-size:12px; font-weight:700; margin:8px 0 4px; }
+    input, select { width:100%; padding:8px; border:1px solid var(--line); border-radius:6px; }
+    table { width:100%; border-collapse:collapse; background:#fff; font-size:13px; }
+    th { background: var(--navy); color:#fff; padding:8px; text-align:left; }
+    td { padding:8px; border-bottom:1px solid #eee; }
+    .filters { display:flex; gap:8px; margin-bottom:8px; }
+    .filters input { flex:1; }
+    .row2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    button { background: var(--navy); color:#fff; border:0; padding:10px 12px; border-radius:8px; font-weight:800; width:100%; margin-top:10px; }
+    footer { background: var(--navy); color:#fff; padding:6px 12px; font-size:12px; font-weight:700; }
+    .pay { font-size:18px; font-weight:900; color:#991B1B; }
+    @media (max-width: 800px) { html:not(.ame-phone-desktop) .grid { display:flex; flex-direction:column; } }
+  </style>
+</head>
+<body>
+  <header>ত দান করবেন যারা ঈমান আনার পর কুফরী করে এবং নূরে মুজাসসাম, হাবীবুল্লাহ ছয়ূর পাক ছল্লাল্লাহু আলাইহি ওয়া সাল্লাম উনাকে সত্য বলে সাক্ষ্য দেয়ার পর উনার নাফরমানী করে</header>
+  <nav>
+    <a href="#">বিক্রয়</a><a href="#">ক্রয়</a><a href="#">পণ্য</a><a href="#">স্টক</a>
+    <a href="#">সাপ্লায়ার</a><a href="#">লেজার</a><a href="#">কাস্টমার</a><a href="#">রিপোর্ট</a>
+  </nav>
+  <div class="grid">
+    <section class="work">
+      <div class="filters">
+        <input value="" placeholder="পণ্যের নাম / কোড">
+        <input placeholder="ক্রয় মূল্য">
+        <button style="width:auto;padding:8px 14px;margin:0;">খোঁজ</button>
+      </div>
+      <table>
+        <thead>
+          <tr><th>পণ্যের নাম</th><th>ক্রয় মূল্য</th><th>পরিমাণ</th><th>মোট</th><th>বকেয়া</th><th>মূল্য পরিমাণ</th><th>আজকের মূল্য</th><th>বাতিল</th></tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="8" style="text-align:center;color:#64748b;padding:40px;">পণ্য যোগ করুন — বাম টেবিল, ডান ফর্ম</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <aside class="form">
+      <div class="row2">
+        <label>তারিখ<input value="2026-10-05"></label>
+        <label>মেমো নং<input placeholder="ঐচ্ছিক"></label>
+      </div>
+      <label>সাবেক বকেয়া<input value="10000.00"></label>
+      <div class="row2">
+        <label>মোট পরিশোধযোগ্য<input value="৳35000.00" readonly></label>
+        <label>অবশিষ্ট ব্যালেন্স<input value="৳35000.00" readonly></label>
+      </div>
+      <label>সাবেক সমন্বয়
+        <select><option>সাবেক অপরিবর্তিত</option><option>সাবেক পরিশোধ</option><option>সাবেক সমন্বয়</option></select>
+      </label>
+      <label>সমন্বয়ের কারণ<input placeholder="কেন সাবেক বদলাচ্ছে"></label>
+      <div class="row2">
+        <label>এই ইনভয়েস<input value="৳25000.00" readonly></label>
+        <label>সর্বমোট ব্যালেন্স<input value="৳35000.00" readonly></label>
+      </div>
+      <p class="pay">৳35,000.00</p>
+      <div class="row2">
+        <label>পরিশোধ<input value="0.00"></label>
+        <label>অ্যাকাউন্ট<select><option>ক্যাশ</option></select></label>
+      </div>
+      <button>সংরক্ষণ</button>
+    </aside>
+  </div>
+  <footer>APONSHOP 10.98.431 · সাবেক + বিল − পরিশোধ − সমন্বয় = রানিং ব্যালেন্স</footer>
+</body>
+</html>

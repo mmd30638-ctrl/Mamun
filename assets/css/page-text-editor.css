@@ -1,0 +1,30 @@
+.ame-text-size-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.ame-text-step {
+    width: 52px;
+    height: 44px;
+    border: 0;
+    border-radius: 10px;
+    background: #e2e8f0;
+    color: #0f172a;
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
+}
+.ame-text-step-lg {
+    background: #0f766e;
+    color: #fff;
+    font-size: 20px;
+}
+#ameScaleLabel {
+    font-size: 22px;
+    color: #0f766e;
+}
+#ameScale {
+    width: 100%;
+}

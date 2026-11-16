@@ -1,0 +1,41 @@
+.dw-wrap { padding: 14px; }
+.dw-card { background:#fff; border-radius:16px; max-width:640px; margin:0 auto 18px; overflow:hidden; box-shadow:0 8px 24px rgba(11,30,77,.08); }
+.dw-top { display:flex; height:6px; }
+.dw-top span { flex:1; }
+.dw-head { padding:18px 18px 10px; }
+.dw-head h3 { margin:0; font-size:18px; color:#0B1E4D; }
+.dw-head small { color:#64748B; font-size:12px; }
+.dw-ok { background:#E7F7EF; color:#0E8F52; margin:0 18px 12px; padding:10px 12px; border-radius:10px; font-size:13px; font-weight:700; }
+.dw-body { padding:0 18px 18px; }
+.dw-list { display:flex; flex-direction:column; gap:10px; padding:0 18px 18px; }
+.dw-item { display:flex; align-items:center; gap:10px; padding:12px; border:1px solid #E8EEF5; border-radius:12px; background:#F8FAFC; }
+.dw-item b { display:block; color:#0B1E4D; font-size:13px; }
+.dw-item span { color:#64748B; font-size:12px; }
+.dw-item .dw-ico { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+.dw-actions { margin-left:auto; display:flex; gap:6px; }
+.dw-actions a, .dw-actions button { border:0; background:#E2E8F0; color:#0B1E4D; border-radius:8px; padding:7px 10px; font-size:12px; font-weight:700; text-decoration:none; cursor:pointer; }
+.dw-actions .danger { background:#FFEBEE; color:#C62828; }
+.dw-group { margin-bottom:13px; }
+.dw-group label { display:block; font-weight:700; font-size:12px; color:#0B1E4D; margin-bottom:6px; }
+.dw-group input[type=text], .dw-group input[type=number], .dw-group input[type=datetime-local], .dw-group textarea, .dw-group select {
+  width:100%; padding:11px 12px; border:1.5px solid #D6E3F0; border-radius:10px; box-sizing:border-box; background:#F8FAFC; font-size:14px;
+}
+.dw-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.dw-color { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 12px; border:1px solid #E8EEF5; border-radius:10px; background:#F8FAFC; margin-bottom:8px; }
+.dw-color span { font-size:12px; font-weight:700; color:#0B1E4D; }
+.dw-color input[type=color] { width:46px; height:34px; border:0; background:none; padding:0; }
+.dw-color input[type=text] { width:88px; padding:6px 8px; font-size:12px; }
+.dw-check { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:600; color:#0B1E4D; margin:6px 0; }
+.dw-submit { width:100%; padding:13px; border:0; border-radius:10px; background:linear-gradient(135deg,#0B1E4D,#1565C0); color:#fff; font-weight:800; font-size:15px; cursor:pointer; }
+.dw-preview { margin:0 18px 16px; border-radius:12px; overflow:hidden; border:1px dashed #CFE3F7; }
+.dw-preview-label { font-size:11px; font-weight:800; color:#64748B; padding:8px 12px 0; letter-spacing:.3px; }
+.dw-icons { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.dw-icon { display:flex; flex-direction:column; align-items:center; gap:4px; padding:8px 4px; border:1.5px solid #E2E8F0; border-radius:12px; cursor:pointer; background:#fff; color:#0B1E4D; }
+.dw-icon small { font-size:10px; font-weight:700; text-align:center; line-height:1.2; }
+.dw-icon input { display:none; }
+.dw-icon.selected, .dw-icon:has(input:checked) { border-color:#0091EA; background:#E8F5FE; box-shadow:0 0 0 3px rgba(0,145,234,.12); }
+.dw-new { display:block; margin:0 18px 16px; text-align:center; padding:10px; border-radius:10px; background:#0B1E4D; color:#fff; font-weight:800; text-decoration:none; }
+@media (max-width: 520px) {
+  .dw-row { grid-template-columns:1fr; }
+  .dw-icons { grid-template-columns:repeat(3,1fr); }
+}
