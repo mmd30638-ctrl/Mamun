@@ -172,6 +172,11 @@
       return;
     }
     if (!t) return;
+    var holdSkip = t.closest('[data-eh-hold-skip="1"]');
+    if (holdSkip) {
+      holdSkip.removeAttribute('data-eh-hold-skip');
+      return;
+    }
     var act = t.getAttribute('data-eh');
     setEmp(t);
     if (act === 'on' || act === 'off') {
@@ -409,7 +414,14 @@
     fillMoneyBox('advance', 'advance');
   }
 
-  var boxTitles = { work: 'আজকের কাজ', salary: 'আজকের বেতন', advance: 'অগ্রিম', deposit: 'জমা', balance: 'ব্যালেন্স' };
+  var boxTitles = {
+    work: 'আজকের কাজ',
+    salary: 'আজকের বেতন',
+    advance: 'অগ্রিম',
+    advance_previous: 'সাবেক পাওনা',
+    deposit: 'জমা',
+    balance: 'ব্যালেন্স'
+  };
 
   function submitBoxZero(btn) {
     var box = btn.getAttribute('data-box') || 'work';
@@ -455,8 +467,11 @@
         list += '<div class="eh-money-row"><div><b>' + esc(e.label) + '</b><span>' + esc(e.date) + ' · ' + money(e.amount) + '</span></div>'
           + '<button type="button" class="eh-submit" data-eh="box-edit" data-box="' + esc(box) + '" data-entry="' + e.id + '" data-kind="' + esc(e.kind) + '" data-amount="' + e.amount + '" data-id="' + currentId + '" data-name="' + esc(currentName) + '">এডিট</button></div>';
       });
+      var intro = box === 'advance_previous'
+        ? '<p class="eh-meta">সাবেক পাওনা এখন <b>' + money(res.current) + '</b>। সঠিক টাকা লিখে সমন্বয় রাখুন। <b>আজকের অগ্রিম</b> আলাদা থাকবে — শুধু পুরোনো অংশ বদলাবে।</p>'
+        : '<p class="eh-meta">এখন আছে <b>' + money(res.current) + '</b>। সঠিক টাকা লিখে সমন্বয় রাখুন। কর্মী মুছবে না।</p>';
       openDraw((boxTitles[box] || 'টাকা') + ' · ' + currentName,
-        '<p class="eh-meta">এখন আছে <b>' + money(res.current) + '</b>। সঠিক টাকা লিখে সমন্বয় রাখুন। কর্মী মুছবে না।</p>'
+        intro
         + '<form class="eh-form" id="ehBox">'
         + '<input type="hidden" name="id" value="' + currentId + '">'
         + '<input type="hidden" name="box" value="' + esc(box) + '">'
@@ -1088,7 +1103,7 @@
       }
     }
     document.addEventListener('pointerdown', function (ev) {
-      var el = ev.target.closest('.eh-prev-due[data-eh="prev-due-zero"]');
+      var el = ev.target.closest('.eh-prev-due[data-box="advance_previous"]');
       if (!el || ev.button > 0) {
         return;
       }
@@ -1108,6 +1123,7 @@
         }
         var node = holdEl;
         holdEl = null;
+        node.setAttribute('data-eh-hold-skip', '1');
         submitPrevDueZero(node);
       }, HOLD_MS);
     }, { passive: true });

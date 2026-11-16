@@ -913,8 +913,10 @@ html body.ame-emp-hub #ehDraw #ehPanel select.eh-account {
 }
 .eh-stats .eh-prev-due span { display: inline; font-size: 12px; }
 .eh-stats .eh-prev-due b { font-size: 14px; }
-.eh-stats .eh-prev-due--hold {
+.eh-stats .eh-prev-due--tap {
   cursor: pointer;
+}
+.eh-stats .eh-prev-due--hold {
   touch-action: manipulation;
   border-radius: 10px;
   padding: 6px 8px;

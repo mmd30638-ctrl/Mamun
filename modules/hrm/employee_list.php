@@ -254,19 +254,18 @@ $chip = static function (string $key, string $val, string $label) use ($filters)
                 if (isset($p['advance_previous']) && $p['advance_previous'] !== null) {
                     $prevNum = round((float)$p['advance_previous'], 2);
                     $prevTip = 'আজকের আগে পর্যন্ত কর্মীর কাছে দোকানের পাওনা (অগ্রিম)';
-                    if ($canFin && $prevNum > 0.009) {
-                        $prevTip .= ' — এডমিন: ধরে রাখলে ০ করা যায়';
-                    }
                     $prevAttrs = '';
-                    if ($canFin && $prevNum > 0.009) {
-                        $prevAttrs = ' data-eh="prev-due-zero" data-id="' . (int)$p['id'] . '"'
+                    if ($canFin || $canAdv) {
+                        $prevTip .= ' — চাপলে সমন্বয়; ধরে রাখলে ০';
+                        $prevAttrs = ' data-eh="box" data-box="advance_previous" data-id="' . (int)$p['id'] . '"'
                             . ' data-name="' . htmlspecialchars((string)$p['name'], ENT_QUOTES, 'UTF-8') . '"'
                             . ' data-amount="' . htmlspecialchars((string)$prevNum, ENT_QUOTES, 'UTF-8') . '"';
                     }
-                    echo '<div class="eh-prev-due' . ($canFin && $prevNum > 0.009 ? ' eh-prev-due--hold' : '') . '" title="' . htmlspecialchars($prevTip, ENT_QUOTES, 'UTF-8') . '"' . $prevAttrs . '>';
+                    $holdCls = ($canFin || $canAdv) ? ' eh-prev-due--hold eh-prev-due--tap' : '';
+                    echo '<div class="eh-prev-due' . $holdCls . '" title="' . htmlspecialchars($prevTip, ENT_QUOTES, 'UTF-8') . '"' . $prevAttrs . '>';
                     echo '<span>সাবেক পাওনা</span><b>৳' . number_format($prevNum, 2) . '</b>';
-                    if ($canFin && $prevNum > 0.009) {
-                        echo '<small class="eh-prev-hold-hint">ধরে রাখুন → ০</small>';
+                    if ($canFin || $canAdv) {
+                        echo '<small class="eh-prev-hold-hint">চাপ = সমন্বয় · ধরে রাখুন = ০</small>';
                     }
                     echo '</div>';
                 }

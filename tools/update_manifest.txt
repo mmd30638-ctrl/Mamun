@@ -1,3 +1,10 @@
+# 10.98.954 — সাবেক পাওনা: ক্লিকে সমন্বয় প্যানেল (আজকের কাজের মতো) + লং প্রেস ০
+includes/employee_hub.php
+modules/hrm/employee_list.php
+assets/js/employee-hub.js
+assets/css/employee-hub.css
+includes/config.php
+VERSION.txt
 # 10.98.953 — কর্মী কার্ড: সাবেক পাওনায় লং প্রেস → ০ (আজকের অগ্রিম অপরিবর্তিত)
 includes/employee_hub.php
 modules/hrm/hub_api.php

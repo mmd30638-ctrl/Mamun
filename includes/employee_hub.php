@@ -3954,6 +3954,11 @@ function ame_emp_hub_box_current(mysqli $db, array $emp, string $box): float
 {
     $id = (int)($emp['id'] ?? 0);
     $today = ame_emp_hub_today();
+    if ($box === 'advance_previous') {
+        $advance = round((float)($emp['advance_balance'] ?? 0), 2);
+
+        return ame_emp_hub_advance_split($db, $id, $today, $advance)['previous'];
+    }
     if ($box === 'advance') {
         return round((float)($emp['advance_balance'] ?? 0), 2);
     }
@@ -4030,12 +4035,36 @@ function ame_emp_hub_box_entries(mysqli $db, int $empId, string $box): array
             $out[] = $row;
         }
     }
+    if ($box === 'advance_previous') {
+        $today = ame_emp_hub_today();
+        $st = @$db->prepare(
+            "SELECT id, advance_date, kind, amount, note FROM employee_advances
+             WHERE employee_id = ? AND advance_date < ? AND COALESCE(status,'posted') <> 'draft'
+             ORDER BY advance_date DESC, id DESC LIMIT 25"
+        );
+        if ($st) {
+            $st->bind_param('is', $empId, $today);
+            $st->execute();
+            $res = $st->get_result();
+            while ($r = $res->fetch_assoc()) {
+                $kind = (string)($r['kind'] ?? 'give');
+                $out[] = [
+                    'kind' => 'advance_' . $kind,
+                    'id' => (int)$r['id'],
+                    'date' => (string)$r['advance_date'],
+                    'label' => ($kind === 'collect' ? 'ফেরত' : 'অগ্রিম') . (!empty($r['note']) ? ' · ' . $r['note'] : ''),
+                    'amount' => round((float)$r['amount'], 2),
+                ];
+            }
+            $st->close();
+        }
+    }
     return $out;
 }
 
 function ame_emp_hub_box_state(mysqli $db, int $empId, string $box): array
 {
-    $allowed = ['work', 'salary', 'advance', 'deposit', 'balance'];
+    $allowed = ['work', 'salary', 'advance', 'advance_previous', 'deposit', 'balance'];
     if (!in_array($box, $allowed, true)) {
         return ['ok' => false, 'error' => 'এই বক্স সমন্বয় করা যায় না।'];
     }
@@ -4058,43 +4087,23 @@ function ame_emp_hub_box_state(mysqli $db, int $empId, string $box): array
  */
 function ame_emp_hub_zero_advance_previous(mysqli $db, int $empId, string $note = ''): array
 {
-    if (!ame_emp_hub_can_finance($db) && !ame_emp_hub_can_advance($db)) {
-        throw new Exception('সাবেক পাওনা শূন্য করার অনুমতি নেই।');
-    }
-    $emp = ame_emp_hub_row($db, $empId, false);
-    if (!$emp) {
-        throw new Exception('কর্মী পাওয়া যায়নি।');
-    }
-    $today = ame_emp_hub_today();
-    $advance = round((float)($emp['advance_balance'] ?? 0), 2);
-    $split = ame_emp_hub_advance_split($db, $empId, $today, $advance);
-    $prev = round((float)$split['previous'], 2);
-    if ($prev < 0.009) {
-        return ['ok' => true, 'message' => 'সাবেক পাওনা ইতিমধ্যে ৳০.০০।', 'previous_cleared' => 0.0];
-    }
     if ($note === '') {
-        $note = 'সাবেক পাওনা শূন্য';
+        $note = 'সাবেক পাওনা শূন্য (লং প্রেস)';
     }
-    $target = round(max(0.0, (float)$split['today_given'] - (float)$split['today_settled']), 2);
-    $res = ame_emp_hub_adjust_box($db, [
+
+    return ame_emp_hub_adjust_box($db, [
         'id' => $empId,
-        'box' => 'advance',
-        'amount' => (string)$target,
+        'box' => 'advance_previous',
+        'amount' => '0',
         'note' => $note,
     ]);
-    if (!empty($res['ok'])) {
-        ame_emp_hub_audit($db, $empId, 'সাবেক পাওনা শূন্য', 'advance_previous', (string)$prev, '0');
-        $res['previous_cleared'] = $prev;
-        $res['message'] = 'সাবেক পাওনা ৳' . number_format($prev, 2) . ' শূন্য করা হয়েছে। আজকের অগ্রিম অপরিবর্তিত।';
-    }
-    return $res;
 }
 
 function ame_emp_hub_adjust_box(mysqli $db, array $in): array
 {
     $empId = (int)($in['id'] ?? 0);
     $box = (string)($in['box'] ?? '');
-    $allowed = ['work', 'salary', 'advance', 'deposit', 'balance'];
+    $allowed = ['work', 'salary', 'advance', 'advance_previous', 'deposit', 'balance'];
     if (!in_array($box, $allowed, true)) {
         throw new Exception('এই বক্স সমন্বয় করা যায় না।');
     }
@@ -4111,6 +4120,38 @@ function ame_emp_hub_adjust_box(mysqli $db, array $in): array
     $entryKind = (string)($in['entry_kind'] ?? '');
     $entryId = (int)($in['entry_id'] ?? 0);
     $today = ame_emp_hub_today();
+    if ($box === 'advance_previous') {
+        if (!ame_emp_hub_can_finance($db) && !ame_emp_hub_can_advance($db)) {
+            throw new Exception('সাবেক পাওনা সমন্বয়ের অনুমতি নেই।');
+        }
+        if ($target < -0.009) {
+            throw new Exception('সাবেক পাওনা ঋণাত্মক রাখা যায় না।');
+        }
+        $advance = round((float)($emp['advance_balance'] ?? 0), 2);
+        $split = ame_emp_hub_advance_split($db, $empId, $today, $advance);
+        $prevBefore = round((float)$split['previous'], 2);
+        $balanceTarget = round($target + (float)$split['today_given'] - (float)$split['today_settled'], 2);
+        if ($balanceTarget < -0.009) {
+            throw new Exception('এত কম রাখা যায় না — আজকের অগ্রিমের হিসাব মিলিয়ে নিন।');
+        }
+        if (abs($target - $prevBefore) < 0.009) {
+            return ['ok' => true, 'message' => 'সাবেক পাওনা আগের মতোই আছে।', 'current' => $target];
+        }
+        $res = ame_emp_hub_adjust_box($db, [
+            'id' => $empId,
+            'box' => 'advance',
+            'amount' => (string)$balanceTarget,
+            'note' => $note,
+            'account_id' => $accountId,
+        ]);
+        if (!empty($res['ok'])) {
+            ame_emp_hub_audit($db, $empId, 'সাবেক পাওনা সমন্বয়', 'advance_previous', (string)$prevBefore, (string)$target);
+            $res['message'] = 'সাবেক পাওনা ৳' . number_format($prevBefore, 2) . ' → ৳' . number_format($target, 2) . ' (আজকের অগ্রিম অপরিবর্তিত)।';
+            $res['current'] = $target;
+        }
+
+        return $res;
+    }
     if ($entryId > 0) {
         ame_emp_hub_adjust_entry($db, $empId, $box, $entryKind, $entryId, $target, $note, $accountId);
         return ['ok' => true, 'message' => 'এন্ট্রি সমন্বয় হয়েছে।'];
