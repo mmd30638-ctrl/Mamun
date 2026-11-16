@@ -16,8 +16,22 @@
 
   html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos td {
     font-size: 14px !important;
-    height: 36px !important;
-    padding: 4px 4px !important;
+    height: auto !important;
+    min-height: 36px !important;
+    max-height: none !important;
+    padding: 6px 4px !important;
+    vertical-align: middle !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    line-height: 1.35 !important;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos td:nth-child(4) {
+    text-align: left !important;
+    word-break: break-word !important;
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+    font-weight: 700 !important;
   }
 
   html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk input,

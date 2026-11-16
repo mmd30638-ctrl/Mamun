@@ -80,10 +80,10 @@
 
   html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos,
   html:not(.ame-phone-desktop) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .table-pos {
-    width: max-content !important;
+    width: 100% !important;
     min-width: 100% !important;
-    max-width: none !important;
-    table-layout: auto !important;
+    max-width: 100% !important;
+    table-layout: fixed !important;
   }
 }
 

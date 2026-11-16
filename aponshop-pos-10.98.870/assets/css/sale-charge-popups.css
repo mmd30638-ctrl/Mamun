@@ -241,12 +241,21 @@ html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameP
   html:not(.ame-phone-desktop) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)) {
     display: flex !important;
     position: fixed !important;
-    left: 12px !important;
-    right: 12px !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: min(1080px, calc(100vw - 24px)) !important;
+    max-width: min(1080px, calc(100vw - 24px)) !important;
     top: var(--ame-product-pop-top, 180px) !important;
     z-index: 1000002 !important;
     visibility: visible !important;
     pointer-events: auto !important;
+  }
+
+  html:not(.ame-phone-desktop) body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)) #search-res,
+  html:not(.ame-phone-desktop) body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)) #search-res {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    max-height: min(52vh, 520px) !important;
   }
 }
 

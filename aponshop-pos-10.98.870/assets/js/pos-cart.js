@@ -421,6 +421,7 @@ function addToCart(product) {
     }
 
     renderCart();
+    ameScrollCartToLatestRow();
     if (posFocusBlankAfterRender) {
         posFocusBlankAfterRender = false;
         const nextBlank = document.querySelector('#cart-body .ame-blank-search');
@@ -825,6 +826,23 @@ function appendBlankRows(body, startIndex) {
         );
         body.appendChild(row);
     }
+}
+
+function ameScrollCartToLatestRow() {
+    const wrap = document.getElementById('amePosCartTableWrap')
+        || document.querySelector('.ame-pos-term-cart .ame-pos-table-wrap');
+    if (!wrap || cart.length < 1) {
+        return;
+    }
+    const rows = document.querySelectorAll('#cart-body tr:not(.ame-pos-empty-row)');
+    const last = rows.length ? rows[rows.length - 1] : null;
+  window.requestAnimationFrame(function () {
+    if (last) {
+      last.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    } else {
+      wrap.scrollTop = wrap.scrollHeight;
+    }
+  });
 }
 
 function amePosCartScrollSync() {
