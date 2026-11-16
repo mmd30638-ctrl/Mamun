@@ -1,0 +1,50 @@
+/* 10.98.925 — মেমোতে পণ্য তালিকা সর্বনিচে (খোঁজ/ক্রেতা → সেবা/অতিরিক্ত → কার্ট) */
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 8px !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-top {
+  order: 1 !important;
+  flex: 0 0 auto !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack {
+  order: 2 !important;
+  flex: 0 0 auto !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart {
+  order: 99 !important;
+  flex: 1 1 auto !important;
+  align-self: stretch !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  margin-top: auto !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #amePosCartTableWrap {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* sale-desk-lock গ্রিড-সারি (কার্ট ২, ফোল্ড ৩) উল্টে দেওয়া — ফ্লেক্স order-ই মাস্টার */
+@media (min-width: 901px) {
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-term-cart,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart {
+    grid-row: auto !important;
+  }
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main .ame-pos-fold-stack,
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-fold-stack {
+    grid-row: auto !important;
+  }
+}

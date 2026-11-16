@@ -1,0 +1,85 @@
+/* 10.98.533 — যিকিরের লেখা আর শুধু এই বাক্যের পেছনের রং
+   প্রতি ২০ সেকেন্ডে একসাথে বদলায়। পাঁচটা রং, মোট ১০০ সেকেন্ড।
+   রঙের মান চলন্ত ভেরিয়েবলে, যাতে অন্য শিটের !important আটকে না রাখে। */
+
+@property --ame-zikir-bg {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #b00000;
+}
+
+@property --ame-zikir-fg {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #fff5f5;
+}
+
+@keyframes ameChargeColor {
+  0%, 19.99% {
+    --ame-zikir-bg: #b00000;
+    --ame-zikir-fg: #fff5f5;
+  }
+  20%, 39.99% {
+    --ame-zikir-bg: #39ff14;
+    --ame-zikir-fg: #04210a;
+  }
+  40%, 59.99% {
+    --ame-zikir-bg: #0033b5;
+    --ame-zikir-fg: #f4f8ff;
+  }
+  60%, 79.99% {
+    --ame-zikir-bg: #ffe14a;
+    --ame-zikir-fg: #1a1400;
+  }
+  80%, 100% {
+    --ame-zikir-bg: #d35400;
+    --ame-zikir-fg: #fff8f0;
+  }
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search > .ame-search-zikir {
+  --ame-zikir-bg: #b00000;
+  --ame-zikir-fg: #fff5f5;
+  display: inline-block !important;
+  position: static !important;
+  box-sizing: border-box !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 2px 0 8px !important;
+  padding: 4px 10px !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background-image: none !important;
+  background-color: var(--ame-zikir-bg) !important;
+  background-clip: border-box !important;
+  -webkit-background-clip: border-box !important;
+  color: var(--ame-zikir-fg) !important;
+  -webkit-text-fill-color: var(--ame-zikir-fg) !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0 !important;
+  text-align: left !important;
+  text-shadow: none !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+  transform: none !important;
+  animation-name: ameChargeColor !important;
+  animation-duration: 100s !important;
+  animation-timing-function: linear !important;
+  animation-iteration-count: infinite !important;
+  animation-fill-mode: both !important;
+  pointer-events: none !important;
+}
+
+@media (max-width: 900px) {
+  html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search > .ame-search-zikir {
+    font-size: 20px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 6px !important;
+  }
+}

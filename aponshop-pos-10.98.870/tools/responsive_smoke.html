@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>রেসপন্সিভ স্মোক টেস্ট 10.98.915</title>
+  <link rel="stylesheet" href="/assets/css/responsive-fix.css">
+  <link rel="stylesheet" href="/assets/css/ame-responsive-pro.css">
+  <link rel="stylesheet" href="/assets/css/ame-android-universal.css">
+  <link rel="stylesheet" href="/assets/css/ame-modules-universal-responsive.css">
+  <style>
+    body { font-family: system-ui, sans-serif; background: #f1f5f9; margin: 0; }
+    #main-content { padding: 12px; max-width: 100%; box-sizing: border-box; }
+    .card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 16px; border: 1px solid #e2e8f0; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; }
+    .toolbar { display: flex; gap: 8px; margin-bottom: 12px; }
+    .btn { background: #003f8f; color: #fff; border: none; padding: 12px 16px; border-radius: 8px; cursor: pointer; }
+    .row { display: flex; gap: 12px; }
+    .col-6 { flex: 1; }
+    input, select { padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; }
+  </style>
+</head>
+<body class="ame-screen-phone">
+<div id="main-content">
+  <h1>রেসপন্সিভ স্মোক — সব মডিউল প্যাটার্ন</h1>
+  <p id="vp-label">viewport: …</p>
+
+  <div class="card">
+    <h2>ফিল্টার টুলবার</h2>
+    <div class="toolbar actions-row">
+      <input type="search" placeholder="সার্চ" style="flex:2">
+      <select><option>অ্যাকাউন্ট</option></select>
+      <button type="button" class="btn">জমা দিন</button>
+      <button type="button" class="btn">এক্সপোর্ট</button>
+    </div>
+    <div class="row form-row">
+      <div class="col-6"><label>তারিখ</label><input type="date"></div>
+      <div class="col-6"><label>সাপ্লায়ার</label><input type="text"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>দীর্ঘ টেবিল</h2>
+    <table>
+      <thead><tr><th>#</th><th>পণ্য</th><th>কোড</th><th>পরিমাণ</th><th>দাম</th><th>মোট</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>নমুনা পণ্য</td><td>SKU-99</td><td>10</td><td>৳100</td><td>৳1000</td></tr>
+        <tr><td>2</td><td>আরেকটি</td><td>SKU-88</td><td>5</td><td>৳200</td><td>৳1000</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script src="/assets/js/responsive-fix.js" defer></script>
+<script>
+  function paint() {
+    var w = window.innerWidth;
+    var el = document.getElementById('vp-label');
+    if (el) el.textContent = 'viewport: ' + w + 'px · body classes: ' + document.body.className;
+  }
+  window.addEventListener('resize', paint);
+  window.addEventListener('load', paint);
+  document.addEventListener('DOMContentLoaded', paint);
+</script>
+</body>
+</html>

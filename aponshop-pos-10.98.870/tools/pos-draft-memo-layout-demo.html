@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="bn" class="ame-pos-memo-editing">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ড্রাফট মেমো লেআউট ডেমো (1366)</title>
+  <link rel="stylesheet" href="../assets/css/ame-sale-desk-lock.css">
+  <link rel="stylesheet" href="../assets/css/pos-pay-dock.css">
+  <link rel="stylesheet" href="../assets/css/ame-pos-memo-draft.css">
+  <link rel="stylesheet" href="../assets/css/pos-terminal-layout.css">
+  <link rel="stylesheet" href="../assets/css/ame-pos-desk-fullwidth.css">
+  <link rel="stylesheet" href="../assets/css/ame-pos-memo-stack-order.css">
+  <style>
+    body { margin:0; background:#e8ecf2; }
+    #main-content { max-width:1366px; margin:0 auto; padding:8px; }
+    .demo-badge { background:#0b3d91;color:#fff;padding:6px 12px;border-radius:8px;font:700 14px system-ui;margin-bottom:8px; }
+  </style>
+</head>
+<body class="ame-sales-pro ame-pos-terminal-page">
+<div id="main-content">
+  <div class="ame-pos-page ame-sale-desk">
+    <div class="ame-pos-shell">
+      <div class="ame-pos-grid">
+        <div class="ame-desk-stack">
+          <div class="ame-desk-bar" style="background:#0b3d91;color:#fff;padding:8px;">Ma Engineering POS — draft memo #866</div>
+          <div class="ame-desk-main">
+            <section class="ame-pos-term-top" style="background:#fff;padding:12px;border-radius:8px;">
+              <button type="button">+ নতুন ক্রেতা যোগ</button>
+              <input placeholder="যন্ত্রাংশের নাম বা কোড" value="866" style="width:200px;margin-left:12px;">
+              <button type="button">ক্যাশ</button>
+            </section>
+            <div class="ame-pos-fold-stack" style="background:#fff;padding:8px;border-radius:8px;">
+              <button type="button">ইঞ্জিনিয়ার ও মেকানিক</button>
+            </div>
+            <section class="ame-pos-term-cart" style="background:#fff;padding:8px;border-radius:8px;margin-top:8px;">
+              <div id="amePosCartTableWrap" class="ame-pos-table-wrap">
+                <table class="table-pos" style="width:100%;border-collapse:collapse;">
+                  <thead><tr style="background:#f1f5f9;"><th>ক্রম</th><th>কোড</th><th>পণ্যের নাম</th><th>পরিমাণ</th></tr></thead>
+                  <tbody id="cart-body">
+                    <tr><td>1</td><td>245/</td><td>চাবি এসকেল(760)</td><td>1</td></tr>
+                    <tr><td>2</td><td>279/hv</td><td>লিভার ডাবল</td><td>2</td></tr>
+                    <tr><td>3</td><td>280/ee</td><td>লিভার বুশ</td><td>2</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+        </div>
+        <aside class="ame-pos-summary" id="amePosPay" style="background:#fff;padding:12px;">Payment column (docked)</aside>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="demo-badge" style="position:fixed;bottom:8px;left:8px;">ame-pos-memo-editing · viewport 1366px</p>
+<script>
+  document.documentElement.classList.add('ame-pos-memo-editing');
+</script>
+</body>
+</html>

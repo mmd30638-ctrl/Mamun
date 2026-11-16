@@ -1,0 +1,148 @@
+/* Cash box sits on the left of the Complete box. */
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-complete-row {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: stretch !important;
+  gap: 8px !important;
+  width: 100% !important;
+  margin-top: 8px !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-complete-row button#amePosCashPaid {
+  flex: 0 0 42% !important;
+  width: 42% !important;
+  max-width: 42% !important;
+  min-width: 0 !important;
+  min-height: 48px !important;
+  height: 48px !important;
+  margin: 0 !important;
+  padding: 6px 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 12px !important;
+  border: 1.5px solid #0b3d91 !important;
+  background: #0b3d91 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+}
+
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-complete-row button#amePosRecentToggle {
+  flex: 1 1 auto !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin-top: 0 !important;
+}
+
+.ame-cash-ask {
+  position: fixed;
+  inset: 0;
+  z-index: 960000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(11, 30, 77, 0.58);
+}
+
+.ame-cash-ask-card {
+  width: min(380px, 100%);
+  padding: 0;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #fffdf8;
+  border: 3px solid #f59e0b;
+  box-shadow: 0 24px 48px rgba(11, 61, 145, 0.32);
+}
+
+.ame-cash-ask-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: linear-gradient(115deg, #0b3d91 0%, #0f766e 58%, #9f1239 100%);
+}
+
+.ame-cash-ask-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #fde68a, #f59e0b);
+  color: #7c2d12;
+  -webkit-text-fill-color: #7c2d12;
+  font: 900 22px/1 'Noto Sans Bengali', 'Segoe UI', sans-serif;
+  box-shadow: 0 3px 0 #b45309;
+}
+
+.ame-cash-ask-kicker {
+  margin: 0;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  font: 900 20px/1.1 'Noto Sans Bengali', 'Segoe UI', sans-serif;
+}
+
+.ame-cash-ask-body {
+  padding: 14px 14px 14px;
+}
+
+.ame-cash-ask-bubble {
+  margin: 0;
+  padding: 14px 14px 12px;
+  border-radius: 16px;
+  border: 2px solid #93c5fd;
+  border-left: 7px solid #f59e0b;
+  background: linear-gradient(180deg, #eff6ff 0%, #fef9c3 100%);
+  color: #1e3a8a;
+  -webkit-text-fill-color: #1e3a8a;
+  font: 800 18px/1.45 'Noto Sans Bengali', 'Segoe UI', sans-serif;
+}
+
+.ame-cash-ask-who {
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: #fff1f2;
+  border: 1.5px solid #fda4af;
+  color: #9f1239;
+  -webkit-text-fill-color: #9f1239;
+  font: 900 15px/1.35 'Noto Sans Bengali', 'Segoe UI', sans-serif;
+  word-break: break-word;
+}
+
+.ame-cash-ask-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.ame-cash-ask-yes,
+.ame-cash-ask-no {
+  flex: 1;
+  min-height: 48px;
+  border: 0;
+  border-radius: 14px;
+  font: 800 15px/1.2 'Noto Sans Bengali', 'Segoe UI', sans-serif;
+  cursor: pointer;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+}
+
+.ame-cash-ask-yes {
+  background: linear-gradient(180deg, #22c55e, #15803d);
+  box-shadow: 0 3px 0 #166534;
+}
+
+.ame-cash-ask-no {
+  background: linear-gradient(180deg, #fb7185, #be123c);
+  box-shadow: 0 3px 0 #9f1239;
+}

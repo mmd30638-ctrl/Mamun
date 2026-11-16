@@ -1,0 +1,3 @@
+APONSHOP_STACK_UPDATE 10.98.930
+AME_ASSET_VERSION=10.98.930
+POS PC cart total bar below table (মোট অ্যামাউন্ট always visible on desktop)

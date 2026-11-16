@@ -1,0 +1,108 @@
+/* 10.98.938 — পণ্য চার্জ: PC + Android + মোবাইল «ডেস্কটপ সাইট» একই UI (viewport-ভিত্তিক, ame-phone-desktop নয়) */
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search:has(#search-res:not(:empty)),
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-search:has(#search-res:not(:empty)),
+body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-search:has(#search-res:not(:empty)),
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-search:has(#search-res:not(:empty)) {
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)),
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)) {
+  display: flex !important;
+  flex-direction: column !important;
+  position: fixed !important;
+  left: 12px !important;
+  right: 12px !important;
+  top: var(--ame-product-pop-top, 180px) !important;
+  bottom: auto !important;
+  transform: none !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  max-height: calc(100vh - var(--ame-product-pop-top, 180px) - 16px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: 1000002 !important;
+  overflow: hidden !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  background: #eef2f7 !important;
+  border: 1px solid #d7dee8 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.28) !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal #search-res .res-item,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal #search-res .res-item {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  min-height: 128px !important;
+  background: #ffffff !important;
+  border: 1px solid #d7dee8 !important;
+  border-left: 4px solid #003f8f !important;
+  border-radius: 12px !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06) !important;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal #search-res .res-name,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal #search-res .res-name {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  font-size: 22px !important;
+  font-weight: 900 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal #search-res .res-meta,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal #search-res .res-meta {
+  color: #64748b !important;
+  -webkit-text-fill-color: #64748b !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+
+body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal #search-res .res-price,
+body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal #search-res .res-price {
+  color: #047857 !important;
+  -webkit-text-fill-color: #047857 !important;
+  font-size: 22px !important;
+  font-weight: 900 !important;
+  text-align: right !important;
+}
+
+@media (max-width: 640px) {
+  body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)),
+  body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal:has(#search-res:not(:empty)) {
+    left: 6px !important;
+    right: 6px !important;
+  }
+
+  body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal #search-res .res-name,
+  body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal #search-res .res-name,
+  body.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal #search-res .res-price,
+  body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #ameProductSearchModal #search-res .res-price {
+    font-size: 18px !important;
+  }
+}
+
+/* ট্যাবলেট/ডেস্কটপ (responsive-fix body.ame-screen-tablet|desktop) */
+body.ame-screen-tablet.ame-pos-terminal-page #main-content .ame-sale-desk #p-search,
+body.ame-screen-desktop.ame-pos-terminal-page #main-content .ame-sale-desk #p-search,
+body.ame-screen-tablet.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #p-search,
+body.ame-screen-desktop.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk #p-search {
+  height: 55px !important;
+  min-height: 55px !important;
+  max-height: none !important;
+  border: 3px solid #006400 !important;
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: #0f3d8c !important;
+  -webkit-text-fill-color: #0f3d8c !important;
+  box-sizing: border-box !important;
+}

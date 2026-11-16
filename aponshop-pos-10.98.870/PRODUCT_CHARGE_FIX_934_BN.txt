@@ -1,0 +1,11 @@
+পণ্য চার্জ বক্স ফিক্স (v10.98.934)
+===============================
+
+কারণ: ৯৩৩ আপডেটে POS CSS শেষে লোড — sale-charge-popups.css আগে থাকায়
+পণ্য খোঁজার চার্জ পপআপ (গ্রিড তালিকা) লুকিয়ে যেত বা মুছে যেত।
+
+সমাধান:
+• sale-charge-popups.css + pos-charge-line.css গিটে যোগ
+• footer.php — দুটো ফাইল সব POS CSS-এর শেষে লোড
+
+ZIP: deliverables/Aponshop_10.98.934_PRODUCT_CHARGE_FIX.zip

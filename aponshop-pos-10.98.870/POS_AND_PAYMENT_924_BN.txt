@@ -1,0 +1,15 @@
+দুই সমস্যার সমাধান (v10.98.924)
+=================================
+
+১) ড্রাফট মেমো খুললে পণ্য লিস্ট অর্ধেক
+   • ame-pos-desk-fullwidth.css — ডেস্কটপে (মেমো সহ) এক কলাম, কার্ট ১০০% প্রস্থ
+   • ame-pos-memo-draft.css — ২-কলাম গ্রিড সরানো
+   • pos-memo-draft-layout.js — ড্রাফট লোডে amePosDraftListRecover()
+
+২) কাস্টমার পেমেন্ট নেওয়া যাচ্ছিল না (পার্টি শিল্ড)
+   • includes/config.php → ame_party_amount_shield_boot()
+   • payment-receive / collect পেজে আগে থেকেই allow_write
+   • modules/customers/ame_payment_shield_pre.php (লাইভ payment-receive.php-এ এক লাইন require)
+
+Easy Update: DB restore বন্ধ। কোনো ব্যালেন্স পরিবর্তন নয়।
+EOF

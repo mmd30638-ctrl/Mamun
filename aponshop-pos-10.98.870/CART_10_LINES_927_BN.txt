@@ -1,0 +1,9 @@
+১০+ পণ্য লাইন — কার্ট পূর্ণ প্রস্থ (v10.98.927)
+================================================
+৯টির নিচে ঠিক ছিল; ১০+ হলে স্ক্রল চালু হতে পেজ-ফিট/গ্রিড কার্টকে অর্ধ প্রস্থ দিত।
+
+• ame-pos-cart-many-lines.css — ১০+ লাইনে width 100% লক
+• pos-cart.js — ame-cart-many-lines ক্লাস, পেজ-ফিট মুক্তি
+• ame-page-fit.js grow() — কার্ট বক্সে min-height বাড়াবে না
+
+ZIP: Aponshop_10.98.927_POS_STACK_UPDATE.zip — public_html/

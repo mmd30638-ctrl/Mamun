@@ -1,0 +1,185 @@
+# 10.98.915 — সব মডিউল সব পেজ রেসপন্সিভ (ফোন/ট্যাবলেট/ডেস্কটপ)
+assets/css/ame-modules-universal-responsive.css
+assets/css/ame-android-universal.css
+assets/css/ame-responsive-pro.css
+assets/css/responsive-fix.css
+assets/js/responsive-fix.js
+includes/responsive_boot.php
+partials/footer.php
+ANDROID_RESPONSIVE_BN.txt
+tools/responsive_smoke.html
+VERSION.txt
+includes/config.php
+# 10.98.913 — কাস্টমার পেমেন্ট ইনভয়েস লেআউট (ওভারল্যাপ ফিক্স)
+assets/css/invoice-print-fix.css
+assets/css/ame-android-universal.css
+assets/js/responsive-fix.js
+assets/js/ame-page-fit.js
+partials/footer.php
+# 10.98.912 — প্লেয়ার: সিক বার, লোডিং, স্ট্রিম MIME (সাউন্ড ফিক
+includes/islamic_audio.php
+modules/islamic_audio_stream.php
+assets/css/islamic-audio.css
+assets/js/islamic-audio.js
+assets/css/islamic-audio-admin.css
+assets/js/islamic-audio-admin.js
+uploads/islamic_audio/.htaccess
+# 10.98.911 — অডিও FAB সব পেজে (ট্র্যাক ছাড়াও); ফুটার ডক
+includes/islamic_audio.php
+partials/footer.php
+index.php
+assets/css/islamic-audio.css
+assets/js/islamic-audio.js
+# 10.98.910 — আপলোড-কেন্দ্রিক UI; YouTube/হোস্টার মেসেজ সরানো
+modules/settings/islamic_audio.php
+modules/settings/islamic_audio_api.php
+modules/settings/tools.php
+includes/islamic_audio.php
+assets/css/islamic-audio-admin.css
+assets/js/islamic-audio-admin.js
+ISLAMIC_AUDIO_BN.txt
+# 10.98.909 — PC/মোবাইল একাধিক অডিও সরাসরি আপলোড
+includes/islamic_audio.php
+modules/settings/islamic_audio.php
+modules/settings/islamic_audio_api.php
+assets/css/islamic-audio-admin.css
+assets/js/islamic-audio-admin.js
+ISLAMIC_AUDIO_BN.txt
+# 10.98.908 — শেয়ারড হোস্টিং: YouTube অটো বন্ধ + অফলাইন গাইড
+modules/settings/islamic_audio.php
+assets/css/islamic-audio-admin.css
+assets/js/islamic-audio-admin.js
+# 10.98.907 — হোস্টার মেসেজ এক-ক্লিক কপি (ইসলামিক অড
+includes/islamic_audio.php
+modules/settings/islamic_audio.php
+assets/css/islamic-audio-admin.css
+assets/js/islamic-audio-admin.js
+# 10.98.906 — yt-dlp ইন্সটল স্ক্রিপ্ট + সার্ভার স্ট্যাটাস বার
+includes/islamic_audio.php
+modules/settings/islamic_audio.php
+assets/css/islamic-audio-admin.css
+# 10.98.905 — YouTube চ্যানেল (@handle) থেকে Videos তালিকা ইম্পোর্ট
+includes/islamic_audio.php
+modules/settings/islamic_audio.php
+modules/settings/islamic_audio_api.php
+ISLAMIC_AUDIO_BN.txt
+# 10.98.904 — Android POS: এক কলাম গ্রিড, পেমেন্ট ডক full-width, overflow clamp
+assets/css/ame-sale-desk-lock.css
+assets/css/ame-android-universal.css
+assets/css/pos-pay-dock.css
+assets/js/responsive-fix.js
+# 10.98.903 — ইসলামিক অডিও: YouTube yt-dlp ইম্পোর্ট + প্লেলিস্ট (২৫)
+includes/islamic_audio.php
+modules/settings/islamic_audio.php
+modules/settings/islamic_audio_api.php
+assets/css/islamic-audio-admin.css
+assets/js/islamic-audio-admin.js
+tools/test_islamic_youtube.php
+ISLAMIC_AUDIO_BN.txt
+# 10.98.902 — Android/মোবাইল: সব পেজ রেসপন্সিভ (POS রেডিও, হেডার, টেবিল)
+assets/css/responsive-fix.css
+assets/css/ame-responsive-pro.css
+assets/css/ame-android-universal.css
+assets/js/responsive-fix.js
+includes/responsive_boot.php
+ANDROID_RESPONSIVE_BN.txt
+partials/footer.php
+# 10.98.901 — বিক্রয় ইতিহাস: completed_at তারিখ+সময় (sale_date এক দিন পিছিয়ে ফিক
+includes/sales/sale_finance.php
+modules/sales/history.php
+modules/sales/history_query.php
+# 10.98.900 — হোমপেজ ইসলামিক অডিও + URL ডাউনলোড + অটো কম্প্রেশন
+includes/islamic_audio.php
+index.php
+ISLAMIC_AUDIO_BN.txt
+assets/css/islamic-audio.css
+assets/css/islamic-audio-admin.css
+assets/js/islamic-audio.js
+assets/js/islamic-audio-admin.js
+modules/settings/islamic_audio.php
+modules/settings/islamic_audio_api.php
+modules/settings/tools.php
+tools/test_islamic_audio.php
+# 10.98.899 — ডুপ্লিকেট মেমো হার্ড ব্লক + ইঞ্জিনিয়ার/সার্ভিস কোর লক
+includes/engineer_bill_lock.php
+ENGINEER_SERVICE_PROTECTED_BN.txt
+tools/engineer_bill_lock_manifest.sha256
+tools/pin_engineer_bill_lock.php
+tools/test_sale_submit_guard.php
+includes/config.php
+# 10.98.898 — দ্রুত ডুপ্লিকেট কনফার্ম উইন্ডো ১৫ সেকেন্ড (৬→১৫)
+# 10.98.897 — POS ৬ সেক: দ্রুত ডুপ্লিকেট কনফার্ম মোডাল (সার্ভার+ফোন মেমরি)
+# 10.98.896 — আজকের বেতন বক্স = কার্ড (নাস্তা ৮০ টাকার মতো ফাঁক ফিক্স, জিরো ২৪৫→০)
+# 10.98.895 — এডমিন: আজকের কাজ/বেতন/ব্যালেন্স/পাওনা ক্লিকে জিরো (বক্স সমন্বয়)
+# 10.98.894 — কর্মী কার্ড: আজকের পাওনা / বেতন দেওয়া হয়েছে (salaries.payment_date)
+# 10.98.893 — কার্ড/পেমেন্ট = কাজের হিস্ট্রি একই যোগ; worker_pay employee_hub; pending তারিখ
+modules/hrm/worker_pay.php
+# 10.98.892 — কমিশন তারিখ লেজার+বিক্রয় (কার্ড/হিস্ট্রি খালি ফিক্স); staff_duty; হিস্ট্রি কোয়েরি ফলব্যাক
+includes/staff_duty.php
+tools/test_commission_day_logic.php
+# 10.98.891 — কর্মী কার্ড আজকের কাজ ঠিক; হিস্ট্রিতে সময়; রঙিন দ্রুত-সাবমিট মোডাল; INTERVAL 
+assets/js/ame-resubmit-guard.js
+assets/css/ame-resubmit-guard.css
+modules/hrm/worker_history.php
+# 10.98.890 — employee_list.php সিনট্যাক্স (বন্ধনী) ফিক্স
+# 10.98.889 — ৬ সেকেন্ডে ডুপ্লিকেট হলে সুন্দর কনফার্ম (পণ্য/কাজ), হার্ড ব্লক নয়
+assets/js/employee-hub.js
+assets/js/pos-payment.js
+assets/js/offline-queue.js
+modules/hrm/hub_api.php
+# 10.98.888 — কর্মী কার্ড: আজকের ব্যালেন্স; কমিশন তারিখ; সময়ভিত্তিক ডাবল বন্ধ
+modules/hrm/employee_list.php
+# 10.98.887 — বিক্রয় কমপ্লিটের পর নিচের শেয়ার শিট বন্ধ (ক্যাশ বাটন থেকে share=1 নয়)
+assets/js/pos-cash-paid.js
+modules/sales/invoice.php
+# 10.98.886 — POS কার্টে EMP-#### কাজের বিল → sale_services + কর্মী স্টেটমেন্ট
+includes/sales/sale_finance.php
+modules/sales/pos_workspace.php
+# 10.98.885 — একত্রিত PATCH (878–884 সব কিছু; শুধু এটি ইন্সটল)
+deliverables/KORMI_EKTI_PATCH.txt
+# 10.98.884 — 062240: same_job_line ডিডাপ (ওয়েল্ডিং+কাজের বিল = ২ লাইন)
+# 10.98.883 — কাজের হিস্ট্রি/লেজার: logical_key ডিডাপ (ডুপ sc.id), sale_services বাদ
+# 10.98.882 — বেতন process_salary + প্রিভিউ: ame_emp_hub_pending_job_share (ডাবল SUM বন্ধ)
+modules/hrm/process_salary.php
+# 10.98.881 — কর্মী সার্ভিস লক (পারসেন্ট/নির্ধারিত, ডাবল ভাগ বন্ধ, কমিশন একবার)
+includes/worker_work_lock.php
+WORKER_SERVICE_LOCK.txt
+modules/sales/process_sale.php
+# 10.98.880 — কর্মী লেজার/স্টেটমেন্টে কমিশন+ম্যানুয়াল কাজের টাকা দ্বিগুণ ঠিক (879 সহ)
+# 10.98.879 — কর্মী কাজের হিস্ট্রি ডাবল মেমো (062240 ইত্যাদি) ঠিক + নতুন এন্ট্রি ব্লক
+includes/worker_desk.php
+includes/employee_hub.php
+# 10.98.876 — বিক্রয় পেজ «পেজ সাজান» (সাইডবার শর্টকাট)
+assets/js/ame-page-fit.js
+assets/css/ame-page-fit.css
+assets/css/page-layout-pos-override.css
+assets/js/page-layout-global.js
+includes/page_layout.php
+partials/page_fit.php
+partials/footer.php
+includes/return_v2_functions.php
+modules/returns/v2/actions/search_invoice.php
+modules/returns/v2/create_invoice_return.php
+assets/css/pos-terminal-layout.css
+assets/css/ame-pos-desk-fullwidth.css
+assets/css/ame-pos-pc-desktop-parity.css
+assets/css/sale-charge-popups.css
+assets/css/ame-pos-charge-unified.css
+assets/css/ame-pos-device-tier.css
+assets/js/ame-pos-device-setup.js
+assets/css/pos-charge-line.css
+assets/css/pos-round-hide.css
+assets/css/pos-cash-paid.css
+assets/css/ame-pos-memo-draft.css
+assets/css/ame-pos-draft-drawer.css
+assets/js/pos-draft-drawer.js
+assets/js/pos-memo-draft-layout.js
+assets/css/ame-sale-desk-lock.css
+assets/js/pos-cart.js
+includes/easy_update_functions.php
+includes/config.php
+modules/sales/pos_workspace.php
+get.php
+.htaccess
+VERSION.txt
+APONSHOP_STACK_UPDATE.txt

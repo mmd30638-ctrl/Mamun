@@ -1,0 +1,131 @@
+/* 10.98.920 — ড্রাফট/বিক্রয় লিস্ট মডাল: পূর্ণ স্ক্রিন ওভারলে, POS অর্ধেক হবে না */
+
+html body.ame-pos-terminal-page .pos-draft-drawer:not(.open),
+html body.ame-pos-terminal-page #draftDrawer:not(.open) {
+  display: none !important;
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+html body.ame-pos-terminal-page .pos-draft-drawer.open,
+html body.ame-pos-terminal-page #draftDrawer.open {
+  display: flex !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  height: 100% !important;
+  max-height: 100dvh !important;
+  margin: 0 !important;
+  padding: 12px !important;
+  box-sizing: border-box !important;
+  z-index: 5000005 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  background: rgba(17, 24, 39, 0.72) !important;
+  backdrop-filter: blur(2px) !important;
+}
+
+/* ওভারলে খোলা থাকলে শুধু স্ক্রল লক — ডেস্কের প্রস্থ/টেবিল কমানো হয় না */
+html.ame-pos-draft-open body.ame-pos-terminal-page {
+  overflow: hidden !important;
+}
+
+html.ame-pos-draft-open body.ame-pos-terminal-page #main-content,
+html.ame-pos-draft-open body.ame-pos-terminal-page #main-content .ame-sale-desk,
+html.ame-pos-draft-open body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell,
+html.ame-pos-draft-open body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-grid,
+html.ame-pos-draft-open body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-desk-main,
+html.ame-pos-draft-open body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  transform: none !important;
+  scale: none !important;
+  clip-path: none !important;
+}
+
+/* দ্বিতীয়বার লিস্ট খোলা/বন্ধের পর কার্ট লাইন পূর্ণ দেখানো */
+html.ame-pos-draft-recover body.ame-pos-terminal-page .ame-pos-term-cart .ame-pos-table-wrap,
+html body.ame-pos-terminal-page .ame-pos-term-cart .ame-pos-table-wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+}
+
+html body.ame-pos-terminal-page #cart-body tr,
+html body.ame-pos-terminal-page .ame-pos-term-cart .table-pos tbody tr {
+  height: auto !important;
+  min-height: 34px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  clip-path: none !important;
+}
+
+html body.ame-pos-terminal-page #cart-body tr td,
+html body.ame-pos-terminal-page .ame-pos-term-cart .table-pos td {
+  overflow: visible !important;
+  clip-path: none !important;
+  vertical-align: middle !important;
+}
+
+/* লিস্ট ড্রয়ার কখনো গ্রিড কলাম দখল করবে না */
+html body.ame-pos-terminal-page #draftDrawer,
+html body.ame-pos-terminal-page .pos-draft-drawer {
+  grid-column: auto !important;
+  grid-row: auto !important;
+}
+
+html body.ame-pos-terminal-page .pos-draft-drawer.open .pos-recent-modal,
+html body.ame-pos-terminal-page .pos-draft-drawer.open .pos-draft-panel,
+html body.ame-pos-terminal-page #draftDrawer.open .pos-recent-modal,
+html body.ame-pos-terminal-page #draftDrawer.open .pos-draft-panel {
+  width: min(920px, calc(100vw - 24px)) !important;
+  max-width: min(920px, calc(100vw - 24px)) !important;
+  min-width: 0 !important;
+  max-height: min(88dvh, 900px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  border-radius: 16px !important;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.35) !important;
+  background: #ffffff !important;
+}
+
+html body.ame-pos-terminal-page #draftDrawer .pos-recent-table-wrap {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+html body.ame-pos-terminal-page #draftDrawer .pos-recent-table {
+  width: 100% !important;
+  min-width: 640px !important;
+  table-layout: auto !important;
+}
+
+html body.ame-pos-terminal-page #draftDrawer .pos-recent-table td.pos-recent-time,
+html body.ame-pos-terminal-page #draftDrawer .pos-recent-table td.pos-recent-inv,
+html body.ame-pos-terminal-page #draftDrawer .pos-recent-table td.pos-recent-cust {
+  max-width: none !important;
+  white-space: normal !important;
+}
+
+html body.ame-pos-terminal-page .ame-pos-recent-flyout:not([hidden]) {
+  position: absolute !important;
+  z-index: 1200 !important;
+  min-width: 180px !important;
+  right: 0 !important;
+  left: auto !important;
+}
