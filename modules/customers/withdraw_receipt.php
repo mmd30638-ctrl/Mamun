@@ -152,7 +152,7 @@ if (function_exists('ame_global_responsive_tier_script_echo')) {
         <?php if ($shop_phone !== ''): ?>
         <p class="memo-shop-phone">📞 <?php echo htmlspecialchars($shop_phone, ENT_QUOTES, 'UTF-8'); ?></p>
         <?php endif; ?>
-        <div class="memo-badge"><?php echo htmlspecialchars(ame_l('জমা টাকা তোলা', 'Deposit payout'), ENT_QUOTES, 'UTF-8'); ?></div>
+        <div class="memo-badge"><?php echo htmlspecialchars(ame_l('টাকা উত্তোলন', 'Cash payout'), ENT_QUOTES, 'UTF-8'); ?></div>
     </div>
 
     <div class="memo-meta-grid">
