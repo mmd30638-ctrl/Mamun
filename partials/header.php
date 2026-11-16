@@ -289,9 +289,38 @@ html body .master-header-fixed .hdr-icon-btn .hdr-badge.hdr-badge-stock{backgrou
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4.2" y="5.6" width="15.6" height="2.6" rx="1.3" fill="currentColor"/><rect x="4.2" y="10.7" width="10.4" height="2.6" rx="1.3" fill="currentColor"/><rect x="4.2" y="15.8" width="13.2" height="2.6" rx="1.3" fill="currentColor"/></svg>
         </button>
 
+        <?php
+        $ame_hdr_sm40 = false;
+        $ame_hdr_sm40_url = '';
+        if (is_file(__DIR__ . '/../includes/sm40_portal.php')) {
+            require_once __DIR__ . '/../includes/sm40_portal.php';
+            if (function_exists('ame_sm40_show_home_chip') && ame_sm40_show_home_chip()) {
+                $ame_hdr_sm40 = true;
+                $ame_hdr_sm40_url = function_exists('ame_sm40_entry_url') ? ame_sm40_entry_url() : 'https://sm40.com/welcome?lang=bengali';
+                if (function_exists('ame_sm40_home_chip_css')) {
+                    ame_sm40_home_chip_css();
+                }
+            }
+        }
+        if ($ame_hdr_sm40) {
+            echo '<span class="hdr-home-duo">';
+        }
+        ?>
         <button type="button" class="hdr-icon-btn hdr-i-home" onclick="window.location.href='/index.php'" title="<?php echo te('go_home'); ?>">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3.2 3.6 10.4h2.2V20h5.1v-5.4h2.2V20h5.1v-9.6h2.2L12 3.2z"/></svg>
         </button>
+        <?php if ($ame_hdr_sm40): ?>
+        <a
+            href="<?php echo htmlspecialchars($ame_hdr_sm40_url, ENT_QUOTES, 'UTF-8'); ?>"
+            class="hdr-icon-btn hdr-i-sm40"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="SM40 — নতুন ট্যাবে খুলবে; সেখানে আপনার SM40 ইউজারনেম ও পাসওয়ার্ড দিয়ে লগইন করুন"
+        >
+            <span class="hdr-i-sm40-label" aria-hidden="true">SM40</span>
+        </a>
+        </span>
+        <?php endif; ?>
 
         <?php if (!empty($_SESSION['user_id'])): ?>
         <a href="/modules/returns/v2/create_invoice_return.php" class="hdr-icon-btn hdr-i-return" title="<?php echo current_lang() === 'en' ? 'Sale return' : 'বিক্রি ফেরত'; ?>">

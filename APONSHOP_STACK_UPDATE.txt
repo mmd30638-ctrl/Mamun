@@ -1,3 +1,3 @@
-APONSHOP_STACK_UPDATE 10.98.946
-AME_ASSET_VERSION=10.98.946
-পেমেন্ট গ্রহণ + POS: পার্টনার খরচ ডিসকাউন্ট বক্স → partner_acct_expenses
+APONSHOP_STACK_UPDATE 10.98.947
+AME_ASSET_VERSION=10.98.947
+হোমপেজ হেডারে ফ্রেশ হোমের পাশে SM40 লগইন লিংক (শুধু হোম)

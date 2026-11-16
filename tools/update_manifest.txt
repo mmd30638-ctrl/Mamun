@@ -1,4 +1,11 @@
-# 10.98.946 — পেমেন্ট গ্রহণ + POS: পার্টনার খরচ ডিসকাউন্ট বক্স
+# 10.98.947 — হোমপেজ হেডার: ফ্রেশ হোম + SM40 লিংক (শুধু index)
+includes/sm40_portal.php
+assets/css/sm40-home-link.css
+partials/header.php
+includes/config.php
+VERSION.txt
+SM40_HOME_LINK_947_BN.txt
+# 10.98.946 — পেমেন্ট গ্রহণ + POS: পার্টনার খরচ ডিসকাউন্ট 
 includes/partner_accounting.php
 assets/css/partner-cost-discount-box.css
 modules/customers/payment-receive.php
