@@ -36,6 +36,12 @@
   var SESSION_KEY = 'ame-ia-session-v1';
   var persistLast = 0;
   var restoring = false;
+  var sm40Hub = root.getAttribute('data-ia-hub') === 'sm40';
+  if (root.getAttribute('data-ia-autoplay-next') === '1') {
+    try {
+      localStorage.setItem(AUTO_KEY, '1');
+    } catch (eAuto) { /* ignore */ }
+  }
 
   function fmt(sec) {
     sec = Math.max(0, Math.floor(sec || 0));
@@ -156,32 +162,58 @@
     syncAutoNextToggle();
   }
 
-  function playNextAutomatic() {
-    if (!autoNextOn() || !tracks.length) {
+  function playPrevAutomatic() {
+    if (!tracks.length) {
+      return;
+    }
+    var idx = trackIndexById(currentId);
+    var pi = idx <= 0 ? tracks.length - 1 : idx - 1;
+    playTrack(tracks[pi].id);
+  }
+
+  function playNextTrack() {
+    if (!tracks.length) {
       return;
     }
     playTrack(nextTrackId(currentId));
   }
 
+  function playNextAutomatic() {
+    if (!autoNextOn() || !tracks.length) {
+      return;
+    }
+    playNextTrack();
+  }
+
+  function skipToNextOnError() {
+    if (!autoNextOn() || tracks.length < 2 || !currentId) {
+      return;
+    }
+    var nextId = nextTrackId(currentId);
+    if (nextId !== currentId) {
+      playTrack(nextId);
+    }
+  }
+
   function restorePlaybackIfNeeded() {
     if (!hasTracks) {
-      return;
+      return false;
     }
     try {
       var raw = localStorage.getItem(SESSION_KEY);
       if (!raw) {
-        return;
+        return false;
       }
       var s = JSON.parse(raw);
       if (!s || !s.id || !s.playing) {
-        return;
+        return false;
       }
       if (Date.now() - (s.ts || 0) > 45 * 60 * 1000) {
         clearPlaybackSession();
-        return;
+        return false;
       }
       if (!find(s.id)) {
-        return;
+        return false;
       }
       restoring = true;
       playTrack(s.id);
@@ -196,8 +228,10 @@
         persistPlayback(true);
       };
       audio.addEventListener('loadedmetadata', onMeta);
+      return true;
     } catch (e2) {
       restoring = false;
+      return false;
     }
   }
 
@@ -323,6 +357,10 @@
   });
   audio.addEventListener('error', function () {
     setLoading(false);
+    if (autoNextOn()) {
+      skipToNextOnError();
+      return;
+    }
     if (ui.timeEl) {
       ui.timeEl.textContent = 'লোড ব্যর্থ — আবার চেষ্টা করুন';
     }
@@ -342,7 +380,9 @@
       'aria-label="সামনে বা পিছনে টানুন">' +
       '<span class="ia-load-spin" id="iaLoadSpin" hidden aria-hidden="true"></span></div>' +
       '<div class="ia-controls">' +
+      '<button type="button" class="ia-skip" id="iaPrev" aria-label="আগের অডিও">⏮</button>' +
       '<button type="button" class="ia-play" id="iaMainPlay" aria-label="প্লে/পজ">▶</button>' +
+      '<button type="button" class="ia-skip" id="iaNext" aria-label="পরের অডিও">⏭</button>' +
       '<div class="ia-wave" id="iaWave" aria-hidden="true">' +
       '<span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>' +
       '<span class="ia-time" id="iaTime">00:00 / ' + fmt(dur) + '</span></div>';
@@ -359,6 +399,18 @@
         audio.pause();
       }
     });
+    var prevBtn = document.getElementById('iaPrev');
+    var nextBtn = document.getElementById('iaNext');
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function () {
+        playPrevAutomatic();
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function () {
+        playNextAutomatic();
+      });
+    }
   }
 
   function renderList() {
@@ -410,13 +462,23 @@
   }
 
   function openPanel() {
+    if (!panel) {
+      return;
+    }
     panel.hidden = false;
-    fab.setAttribute('aria-expanded', 'true');
+    if (fab) {
+      fab.setAttribute('aria-expanded', 'true');
+    }
     ensureAutoNextToggle();
   }
   function closePanel() {
+    if (!panel) {
+      return;
+    }
     panel.hidden = true;
-    fab.setAttribute('aria-expanded', 'false');
+    if (fab) {
+      fab.setAttribute('aria-expanded', 'false');
+    }
   }
 
   var POS_KEY = 'ame-ia-fab-pos-v1';
@@ -586,6 +648,17 @@
   if (hasTracks) {
     renderList();
     ensureAutoNextToggle();
-    restorePlaybackIfNeeded();
+    if (sm40Hub) {
+      setAutoNext(true);
+      openPanel();
+      if (!restorePlaybackIfNeeded()) {
+        playTrack(tracks[0].id);
+      }
+    } else {
+      restorePlaybackIfNeeded();
+    }
+  } else if (sm40Hub && panel) {
+    openPanel();
+    ensureAutoNextToggle();
   }
 })();

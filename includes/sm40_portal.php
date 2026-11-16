@@ -5,7 +5,7 @@
 
 function ame_sm40_entry_url(): string
 {
-    return 'https://sm40.com/welcome?lang=bengali';
+    return '/sm40_listen.php';
 }
 
 function ame_sm40_show_home_chip(): bool

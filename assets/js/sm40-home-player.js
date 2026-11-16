@@ -9,7 +9,7 @@
   var SESSION_KEY = 'ame_sm40_popup_v1';
   var LOCAL_KEY = 'ame_sm40_popup_v1';
   var popupRef = null;
-  var lastUrl = 'https://sm40.com/welcome?lang=bengali';
+  var lastUrl = '/sm40_listen.php';
 
   /** ফোন, ট্যাবলেট, টাচ ল্যাপটপ — কম্প্যাক্ট শর্টকাট; ডেস্কটপ/ল্যাপটপ মাউস — নিচে বড় বার */
   function useCompactDock() {
@@ -29,7 +29,13 @@
 
   function entryUrl(link) {
     var u = link && link.getAttribute('data-sm40-url');
-    return u && String(u).indexOf('https://sm40.com') === 0 ? u : lastUrl;
+    if (!u) {
+      return lastUrl;
+    }
+  if (String(u).charAt(0) === '/' || String(u).indexOf('https://sm40.com') === 0) {
+      return u;
+    }
+    return lastUrl;
   }
 
   function markOpened() {
