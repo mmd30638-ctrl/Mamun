@@ -120,16 +120,19 @@ function ame_ledger_lock_boot(?mysqli $db = null): void
         customer_recv_sum DECIMAL(14,2) NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
-    $ver = defined('AME_APP_VERSION') ? (string) AME_APP_VERSION : '';
-    $exists = @$db->query('SELECT id FROM ame_ledger_seal WHERE id = 1 LIMIT 1');
+    $ver = defined('AME_ASSET_VERSION') ? (string) AME_ASSET_VERSION : '';
+    if ($ver === '' && defined('AME_APP_VERSION')) {
+        $ver = (string) AME_APP_VERSION;
+    }
+    $exists = @$db->query('SELECT id, version FROM ame_ledger_seal WHERE id = 1 LIMIT 1');
     if ($exists && $exists->num_rows > 0) {
-        if ($ver !== '') {
-            $stmt = @$db->prepare('UPDATE ame_ledger_seal SET version = ? WHERE id = 1 AND sealed = 1');
-            if ($stmt) {
-                $stmt->bind_param('s', $ver);
-                $stmt->execute();
-                $stmt->close();
-            }
+        $row = $exists->fetch_assoc();
+        $storedVer = (string) ($row['version'] ?? '');
+        if ($ver !== '' && $storedVer !== $ver) {
+            ame_ledger_seal_refresh_baseline(
+                $db,
+                'অটো — সংস্করণ ' . $ver . ' এ মনিটরিং বেসলাইন (পার্টি ব্যালেন্স অপরিবর্তিত)'
+            );
         }
         return;
     }

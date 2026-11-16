@@ -264,3 +264,82 @@ function ame_page_layout_echo_styles_after_lock(): void
     $data = ame_page_layout_load();
     echo '<style id="amePageLayoutCssAfterLock">' . ame_page_layout_css($data) . '</style>' . "\n";
 }
+
+function ame_page_fit_store_path(): string
+{
+    $dir = dirname(__DIR__) . '/storage';
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0755, true);
+    }
+    return $dir . '/page_fit.json';
+}
+
+/** @return array<string,array{items:array<int,array<string,mixed>>}> */
+function ame_page_fit_load_all(): array
+{
+    $path = ame_page_fit_store_path();
+    if (!is_file($path)) {
+        return [];
+    }
+    $raw = json_decode((string) file_get_contents($path), true);
+    return is_array($raw) ? $raw : [];
+}
+
+function ame_page_fit_normalize_path(string $path): string
+{
+    $path = strtolower(trim($path));
+    if ($path === '') {
+        return '/';
+    }
+    $path = strtok($path, '?') ?: $path;
+    $path = '/' . ltrim(str_replace('\\', '/', $path), '/');
+    if (preg_match('#^/index\.php$#', $path)) {
+        return '/';
+    }
+    return $path;
+}
+
+/** @return list<array<string,mixed>> */
+function ame_page_fit_items_for_path(string $path): array
+{
+    $key = ame_page_fit_normalize_path($path);
+    $all = ame_page_fit_load_all();
+    $items = $all[$key]['items'] ?? [];
+    return is_array($items) ? $items : [];
+}
+
+/** @param list<array<string,mixed>> $items */
+function ame_page_fit_save_path(string $path, array $items): bool
+{
+    $key = ame_page_fit_normalize_path($path);
+    $all = ame_page_fit_load_all();
+    $clean = [];
+    foreach ($items as $row) {
+        if (!is_array($row)) {
+            continue;
+        }
+        $pathSeg = isset($row['path']) ? (string) $row['path'] : '';
+        if ($pathSeg === '' || strlen($pathSeg) > 400) {
+            continue;
+        }
+        $clean[] = [
+            'path' => $pathSeg,
+            'left' => isset($row['left']) ? (float) $row['left'] : 0,
+            'top' => isset($row['top']) ? (float) $row['top'] : 0,
+            'width' => isset($row['width']) ? (float) $row['width'] : 0,
+            'height' => isset($row['height']) ? (float) $row['height'] : 0,
+        ];
+    }
+    $all[$key] = ['items' => $clean, 'updated_at' => date('c')];
+    $json = json_encode($all, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    return $json !== false && file_put_contents(ame_page_fit_store_path(), $json) !== false;
+}
+
+function ame_page_fit_clear_path(string $path): bool
+{
+    $key = ame_page_fit_normalize_path($path);
+    $all = ame_page_fit_load_all();
+    unset($all[$key]);
+    $json = json_encode($all, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    return $json !== false && file_put_contents(ame_page_fit_store_path(), $json) !== false;
+}
