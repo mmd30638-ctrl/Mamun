@@ -129,13 +129,12 @@
         }, 800);
     }
 
-    async function pngToPdf(blob, fileBase) {
+    async function pngToPdfBlob(pngBlob) {
         await loadScript(JSPDF);
         if (!window.jspdf || !window.jspdf.jsPDF) {
-            downloadBlob(blob, safeBase(fileBase) + '.png');
-            return;
+            return null;
         }
-        var url = URL.createObjectURL(blob);
+        var url = URL.createObjectURL(pngBlob);
         try {
             var img = await new Promise(function (resolve, reject) {
                 var im = new Image();
@@ -150,10 +149,19 @@
             var PDF = window.jspdf.jsPDF;
             var pdf = new PDF({ unit: 'mm', format: [mmW, mmH] });
             pdf.addImage(img, 'PNG', 0, 0, mmW, mmH);
-            pdf.save(safeBase(fileBase) + '.pdf');
+            return pdf.output('blob');
         } finally {
             URL.revokeObjectURL(url);
         }
+    }
+
+    async function pngToPdf(pngBlob, fileBase) {
+        var pdfBlob = await pngToPdfBlob(pngBlob);
+        if (!pdfBlob) {
+            downloadBlob(pngBlob, safeBase(fileBase) + '.png');
+            return;
+        }
+        downloadBlob(pdfBlob, safeBase(fileBase) + '.pdf');
     }
 
     function openWa(phone, text) {
@@ -165,7 +173,9 @@
 
     async function shareWithFiles(blob, fileBase, opts) {
         opts = opts || {};
-        var file = new File([blob], safeBase(fileBase) + '.png', { type: 'image/png' });
+        var mime = opts.mime || 'image/png';
+        var ext = mime.indexOf('pdf') >= 0 ? 'pdf' : 'png';
+        var file = new File([blob], safeBase(fileBase) + '.' + ext, { type: mime });
         if (!navigator.share) {
             return false;
         }
@@ -239,10 +249,28 @@
 
             if (act === 'share-whatsapp') {
                 var caption = opts.text || 'পেমেন্ট রসিদ';
-                var shared = await shareWithFiles(blob, fileBase, { text: caption, title: safeBase(fileBase) });
+                var preferPdf = opts.preferPdf !== false;
+                var shareBlob = blob;
+                var shareMime = 'image/png';
+                if (preferPdf) {
+                    var pdfBlob = await pngToPdfBlob(blob);
+                    if (pdfBlob) {
+                        shareBlob = pdfBlob;
+                        shareMime = 'application/pdf';
+                    }
+                }
+                var shared = await shareWithFiles(shareBlob, fileBase, {
+                    text: caption,
+                    title: safeBase(fileBase),
+                    mime: shareMime
+                });
                 if (!shared) {
-                    downloadBlob(blob, safeBase(fileBase) + '.png');
-                    var hint = caption + '\n\nরসিদের ছবি ডাউনলোড হয়েছে — হোয়াটসঅ্যাপে 📎 দিয়ে সংযুক্ত করুন।';
+                    if (shareMime === 'application/pdf') {
+                        downloadBlob(shareBlob, safeBase(fileBase) + '.pdf');
+                    } else {
+                        downloadBlob(blob, safeBase(fileBase) + '.png');
+                    }
+                    var hint = caption + '\n\nরসিদের ফাইল ডাউনলোড হয়েছে — হোয়াটসঅ্যাপে 📎 দিয়ে সংযুক্ত করুন।';
                     openWa(opts.phone || opts.waPhone || '', hint);
                 }
                 return;

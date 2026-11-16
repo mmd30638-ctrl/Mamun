@@ -759,7 +759,8 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
                     if (act === 'share-whatsapp') {
                         opts = {
                             phone: btn.getAttribute('data-wa-phone') || waPhone,
-                            text: btn.getAttribute('data-wa-text') || waCaption
+                            text: btn.getAttribute('data-wa-text') || waCaption,
+                            preferPdf: true
                         };
                     } else if (act === 'share-telegram') {
                         opts = { telegramUrl: tgShareUrl, text: waCaption };

@@ -9,7 +9,10 @@
   • assets/js/ame-memo-file.js
   • assets/js/ame-receipt-wa-share.js — পুরনো wa.me লিংকও ধরে ধরে ছবি শেয়ার করে
 
-লাইভ payment-receive.php (যদি এখনও শুধু wa.me লিংক থাকে):
+লাইভ payment-receive.php:
+  • footer.php না থাকলে শেষে: require_once 'payment_receipt_footer.php';
+  • পুরনো wa.me লিংক থাকলেও স্ক্রিপ্ট লিংক ধরে PDF/ছবি শেয়ার করবে।
+
   ১) রসিদ বক্সে id="spayMemo" বা id="receiptCard" থাকা নিশ্চিত করুন।
   ২) হোয়াটসঅ্যাপ বাটন:
 

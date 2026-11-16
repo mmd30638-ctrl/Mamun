@@ -11,10 +11,7 @@
                 return null;
             }
             var phone = u.pathname.replace(/^\//, '').split('/')[0];
-            return {
-                phone: phone,
-                text: u.searchParams.get('text') || ''
-            };
+            return { phone: phone, text: u.searchParams.get('text') || '' };
         } catch (e) {
             return null;
         }
@@ -47,16 +44,16 @@
                 return no;
             }
         }
-        var tag = document.querySelector('[data-receipt-no]');
-        if (tag) {
-            return tag.getAttribute('data-receipt-no');
-        }
         return 'receipt-' + Date.now();
     }
 
-    function shareWhatsApp(el) {
+    window.ameReceiptShareWhatsApp = function (el) {
         if (typeof window.ameMemoCapture !== 'function') {
-            return false;
+            window.alert('মেমো ফাইল লোড হয়নি। ইন্টারনেট চেক করে পেজ রিফ্রেশ করুন।');
+            return;
+        }
+        if (el && el.tagName === 'A' && el.getAttribute('href') && el.getAttribute('href').indexOf('wa.me') !== -1) {
+            el.setAttribute('data-share-wa', '1');
         }
         var parsed = parseWa(el.getAttribute('href') || '');
         var phone = el.getAttribute('data-wa-phone') || (parsed && parsed.phone) || '';
@@ -64,36 +61,31 @@
         var short = text ? String(text).split('\n')[0] : 'পেমেন্ট রসিদ';
         window.ameMemoCapture('share-whatsapp', fileBase(el), memoId(el), {
             phone: phone,
-            text: short
+            text: short,
+            preferPdf: el.getAttribute('data-wa-pdf') !== '0'
         });
-        return true;
-    }
+    };
 
-    function bind(el) {
-        el.addEventListener('click', function (ev) {
-            var act = el.getAttribute('data-inv-act');
-            if (act === 'share-whatsapp' || el.classList.contains('inv-btn-wa') || el.getAttribute('data-share-wa') === '1') {
-                if (typeof window.ameMemoCapture === 'function') {
-                    ev.preventDefault();
-                    shareWhatsApp(el);
-                }
+    function patchWaAnchors() {
+        document.querySelectorAll('a.inv-btn-wa[href*="wa.me"], a[href*="wa.me"][class*="wa"]').forEach(function (a) {
+            if (a.getAttribute('data-share-wa') === '1') {
+                return;
             }
+            a.setAttribute('data-share-wa', '1');
+            a.setAttribute('role', 'button');
         });
     }
 
     function boot() {
-        document.querySelectorAll(
-            '.inv-btn-wa, [data-inv-act="share-whatsapp"], [data-share-wa="1"]'
-        ).forEach(bind);
-
+        patchWaAnchors();
         var qs = new URLSearchParams(window.location.search);
         if (qs.get('wa') === '1' || qs.get('whatsapp') === '1') {
             window.setTimeout(function () {
-                var btn = document.querySelector('[data-inv-act="share-whatsapp"], .inv-btn-wa');
+                var btn = document.querySelector('[data-inv-act="share-whatsapp"], .inv-btn-wa, a[data-share-wa="1"]');
                 if (btn) {
-                    btn.click();
+                    window.ameReceiptShareWhatsApp(btn);
                 }
-            }, 550);
+            }, 600);
         }
     }
 

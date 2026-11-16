@@ -158,9 +158,20 @@ if ($ame_is_pos) {
 <script src="/assets/js/pay-security-autofill.js?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>" defer></script>
 <script src="/assets/js/module-navigation.js?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>" defer></script>
 <script src="/assets/js/ame-keep-warm.js?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>" defer></script>
-<?php $ame_memo_ver = htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : ($sys_version ?? '1.0'), ENT_QUOTES, 'UTF-8'); ?>
-<script src="/assets/js/ame-memo-file.js?v=<?php echo $ame_memo_ver; ?>" defer></script>
-<script src="/assets/js/ame-receipt-wa-share.js?v=<?php echo $ame_memo_ver; ?>" defer></script>
+<?php
+$ame_memo_ver = htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : ($sys_version ?? '1.0'), ENT_QUOTES, 'UTF-8');
+$ame_pay_receipt_scripts = __DIR__ . '/../includes/customer_receipt_share.php';
+if (is_file($ame_pay_receipt_scripts)) {
+    require_once $ame_pay_receipt_scripts;
+}
+if (function_exists('ame_customer_payment_request') && ame_customer_payment_request() && function_exists('ame_customer_receipt_share_tags')) {
+    echo ame_customer_receipt_share_tags();
+} else {
+    echo '<script src="/assets/js/ame-memo-file.js?v=' . $ame_memo_ver . '" defer></script>' . "\n"
+        . '<script src="/assets/js/ame-receipt-actions.js?v=' . $ame_memo_ver . '" defer></script>' . "\n"
+        . '<script src="/assets/js/ame-receipt-wa-share.js?v=' . $ame_memo_ver . '" defer></script>' . "\n";
+}
+?>
 <?php if (!empty($ame_is_pos)): ?>
 <script src="/assets/js/sell-without-stock.js?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>" defer></script>
 <script src="/assets/js/pos-cash-paid.js?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>" defer></script>
