@@ -15,6 +15,13 @@ include dirname(__DIR__, 2) . '/partials/header.php';
   <header class="ia-admin-head">
     <h1>🕌 ইসলামিক অডিও লাইব্রেরি</h1>
     <p class="ia-admin-sub">PC ও মোবাইল থেকে অডিও আপলোড · অথবা Direct MP3 লিংক</p>
+    <section class="ia-fab-pref" id="iaFabPref">
+      <label class="ia-check ia-fab-pref-label">
+        <input type="checkbox" id="iaShowHomeFab" value="1" checked>
+        হোমপেজ ও সব পেজে ডান নিচের <strong>অডিও</strong> আইকন দেখান
+      </label>
+      <p class="ia-fab-pref-note">টিক বন্ধ করলে অডিও আইকন সরে যাবে; লাইব্রেরি ও আপলোড এখান থেকেই চলবে।</p>
+    </section>
     <?php if (!$ffmpegOk): ?>
     <p class="ia-ffmpeg-note">নোট: সার্ভারে ffmpeg নেই — আপলোড হবে, কম্প্রেশন সীমিত থাকতে পারে।</p>
     <?php endif; ?>

@@ -29,6 +29,28 @@
   color: #92400e;
 }
 
+.ia-fab-pref {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #eef6ff;
+  border: 1px solid #bfdbfe;
+}
+
+.ia-fab-pref-label {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1e3a8a;
+}
+
+.ia-fab-pref-note {
+  margin: 8px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  line-height: 1.45;
+}
+
 .ia-admin-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

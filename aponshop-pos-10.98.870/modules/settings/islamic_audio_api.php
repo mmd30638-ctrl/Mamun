@@ -34,7 +34,18 @@ $needPost = static function () use ($isPost, $out): void {
 
 try {
     if ($action === 'list') {
-        $out(['ok' => true, 'tracks' => ame_islamic_audio_admin_list($db), 'categories' => ame_islamic_audio_categories()]);
+        $out([
+            'ok' => true,
+            'tracks' => ame_islamic_audio_admin_list($db),
+            'categories' => ame_islamic_audio_categories(),
+            'prefs' => ame_islamic_audio_prefs($db),
+        ]);
+    }
+
+    if ($action === 'set_prefs') {
+        $needPost();
+        $on = !isset($_POST['show_home_fab']) || (string)$_POST['show_home_fab'] !== '0';
+        $out(ame_islamic_audio_set_show_home_fab($db, $on) + ['prefs' => ame_islamic_audio_prefs($db)]);
     }
 
     if ($action === 'upload' || $action === 'upload_many') {

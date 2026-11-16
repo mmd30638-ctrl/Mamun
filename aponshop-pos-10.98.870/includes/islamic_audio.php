@@ -46,6 +46,48 @@ function ame_islamic_audio_schema(mysqli $db): void
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 
     ame_islamic_audio_ensure_upload_dir();
+
+    $db->query("CREATE TABLE IF NOT EXISTS islamic_audio_prefs (
+        id TINYINT UNSIGNED NOT NULL PRIMARY KEY,
+        show_home_fab TINYINT(1) NOT NULL DEFAULT 1,
+        updated_at DATETIME NULL DEFAULT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    $prefRes = $db->query('SELECT id FROM islamic_audio_prefs WHERE id = 1 LIMIT 1');
+    if ($prefRes && $prefRes->num_rows === 0) {
+        $db->query('INSERT INTO islamic_audio_prefs (id, show_home_fab) VALUES (1, 1)');
+    }
+}
+
+function ame_islamic_audio_show_home_fab(mysqli $db): bool
+{
+    ame_islamic_audio_schema($db);
+    $res = $db->query('SELECT show_home_fab FROM islamic_audio_prefs WHERE id = 1 LIMIT 1');
+    if (!$res || $res->num_rows === 0) {
+        return true;
+    }
+    $row = $res->fetch_assoc();
+    return (int)($row['show_home_fab'] ?? 1) === 1;
+}
+
+/** @return array{show_home_fab:bool} */
+function ame_islamic_audio_prefs(mysqli $db): array
+{
+    return ['show_home_fab' => ame_islamic_audio_show_home_fab($db)];
+}
+
+function ame_islamic_audio_set_show_home_fab(mysqli $db, bool $on): array
+{
+    ame_islamic_audio_schema($db);
+    $flag = $on ? 1 : 0;
+    $st = $db->prepare('INSERT INTO islamic_audio_prefs (id, show_home_fab, updated_at) VALUES (1, ?, NOW())
+        ON DUPLICATE KEY UPDATE show_home_fab = VALUES(show_home_fab), updated_at = NOW()');
+    if (!$st) {
+        throw new RuntimeException('সেটিংস সেভ হয়নি।');
+    }
+    $st->bind_param('i', $flag);
+    $st->execute();
+    $st->close();
+    return ['ok' => true, 'show_home_fab' => $on];
 }
 
 function ame_islamic_audio_doc_root(): string
@@ -1001,6 +1043,9 @@ function ame_islamic_audio_can_admin(): bool
 function ame_islamic_audio_render_widget(mysqli $db, bool $floating = true): void
 {
     if (empty($_SESSION['user_id'])) {
+        return;
+    }
+    if (!ame_islamic_audio_show_home_fab($db)) {
         return;
     }
     static $rendered = false;

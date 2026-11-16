@@ -6,6 +6,7 @@
   var csrf = root.getAttribute('data-csrf') || '';
   var statusEl = document.getElementById('iaStatus');
   var bodyEl = document.getElementById('iaTableBody');
+  var fabToggle = document.getElementById('iaShowHomeFab');
   var api = '/modules/settings/islamic_audio_api.php';
 
   function say(msg) {
@@ -31,6 +32,9 @@
           throw new Error(data.error || 'লোড ব্যর্থ');
         }
         render(data.tracks || []);
+        if (fabToggle && data.prefs) {
+          fabToggle.checked = !!data.prefs.show_home_fab;
+        }
         say((data.tracks || []).length + 'টি অডিও');
       })
       .catch(function (e) {
@@ -356,6 +360,22 @@
             btn.classList.remove('ia-btn--loading');
             btn.disabled = false;
           }
+        });
+    });
+  }
+
+  if (fabToggle) {
+    fabToggle.addEventListener('change', function () {
+      var fd = new FormData();
+      fd.append('show_home_fab', fabToggle.checked ? '1' : '0');
+      say(fabToggle.checked ? 'অডিও আইকন চালু করা হচ্ছে…' : 'অডিও আইকন বন্ধ করা হচ্ছে…');
+      post('set_prefs', fd)
+        .then(function () {
+          say(fabToggle.checked ? 'হোমপেজে অডিও আইকন চালু' : 'হোমপেজ থেকে অডিও আইকন সরানো হয়েছে');
+        })
+        .catch(function (err) {
+          say(err.message || 'সেভ ব্যর্থ');
+          fabToggle.checked = !fabToggle.checked;
         });
     });
   }
