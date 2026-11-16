@@ -749,8 +749,8 @@ if (isset($db) && $db instanceof mysqli) {
         </div>
         <p class="ame-pos-cart-scroll-hint" id="amePosCartScrollHint" hidden>
             <?php echo $ame_pos_english
-                ? '↓ Scroll inside the table to see more product lines (10+)'
-                : '↓ ১০+ পণ্য থাকলে টেবিলের ভিতর উপরে-নিচে স্ক্রল করে বাকি সারি দেখুন'; ?>
+                ? '↓ Scroll inside the table for more lines (no row limit)'
+                : '↓ আরও পণ্য থাকলে টেবিলের ভিতর উপরে-নিচে স্ক্রল করুন (কোনো লাইন সীমা নেই)'; ?>
         </p>
         <button type="button" class="ame-pos-add-row" id="ameAddProductRow">
             <?php echo $ame_pos_english ? 'Add another product row' : 'আরেকটি পণ্যের সারি যোগ করুন'; ?>
