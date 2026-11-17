@@ -1233,6 +1233,7 @@
                 return;
             }
             ev.preventDefault();
+            ev.stopPropagation();
             if (ev.stopImmediatePropagation) {
                 ev.stopImmediatePropagation();
             }

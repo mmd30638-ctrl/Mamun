@@ -236,7 +236,7 @@ $ame_file_base = 'return-' . preg_replace('/[^A-Za-z0-9_-]/', '', (string) $ret[
         <button type="button" class="inv-btn inv-btn-pdf" data-ret-act="download"><?php echo ame_ui('পিডিএফ', 'PDF'); ?></button>
         <button type="button" class="inv-btn inv-btn-img" data-ret-act="download-image"><?php echo ame_ui('ছবি', 'Image'); ?></button>
         <button type="button" class="inv-btn inv-btn-share" data-ret-act="share"><?php echo ame_ui('শেয়ার', 'Share'); ?></button>
-        <button type="button" class="inv-btn inv-btn-wa" data-ret-act="wa"><?php echo ame_ui('হোয়াটসঅ্যাপ', 'WhatsApp'); ?></button>
+        <button type="button" class="inv-btn inv-btn-wa"><?php echo ame_ui('হোয়াটসঅ্যাপ', 'WhatsApp'); ?></button>
         <button type="button" class="inv-btn inv-btn-tg" data-ret-act="share-telegram"><?php echo ame_ui('টেলিগ্রাম', 'Telegram'); ?></button>
     </nav>
     <div class="memo-wrapper" id="memo-container" data-ame-capture="clone" data-ame-file-base="<?php echo htmlspecialchars($ame_file_base, ENT_QUOTES, 'UTF-8'); ?>">
