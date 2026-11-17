@@ -66,7 +66,8 @@ try {
             $vals[] = (int)$q;
         }
         $cust = !empty($cols['is_customer']) ? ' AND is_customer = 1' : '';
-        $sql = 'SELECT ' . implode(', ', $sel) . ' FROM customers WHERE (' . implode(' OR ', $where) . ')' . $cust . ' ORDER BY name ASC LIMIT 40';
+        $lim = min(80, max(15, (int)($_GET['limit'] ?? 40)));
+        $sql = 'SELECT ' . implode(', ', $sel) . ' FROM customers WHERE (' . implode(' OR ', $where) . ')' . $cust . ' ORDER BY name ASC LIMIT ' . $lim;
         $stmt = $db->prepare($sql);
         if (!$stmt) {
             throw new RuntimeException('customer search');
@@ -115,7 +116,8 @@ try {
         $vals[] = (int)$q;
     }
     $status = !empty($cols['status']) ? ' AND ' . ame_product_option_sql('status') : '';
-    $sql = 'SELECT ' . implode(', ', $sel) . ' FROM products WHERE (' . implode(' OR ', $where) . ')' . $status . ' ORDER BY name ASC LIMIT 40';
+    $lim = min(80, max(15, (int)($_GET['limit'] ?? 40)));
+    $sql = 'SELECT ' . implode(', ', $sel) . ' FROM products WHERE (' . implode(' OR ', $where) . ')' . $status . ' ORDER BY name ASC LIMIT ' . $lim;
     $stmt = $db->prepare($sql);
     if (!$stmt) {
         throw new RuntimeException('product search');

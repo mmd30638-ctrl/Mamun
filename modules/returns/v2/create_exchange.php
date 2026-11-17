@@ -7,12 +7,6 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-$customers_res = $db->query("SELECT id, name, phone, customer_code FROM customers WHERE is_customer = 1 AND " . (function_exists('ame_customer_picker_sql') ? ame_customer_picker_sql($db) : '1=1') . " ORDER BY name ASC LIMIT 500");
-$customers = $customers_res ? $customers_res->fetch_all(MYSQLI_ASSOC) : [];
-
-$products_res = $db->query('SELECT id, name, sale_price, stock FROM products WHERE ' . ame_product_option_sql('status') . ' ORDER BY name ASC LIMIT 1000');
-$products = $products_res ? $products_res->fetch_all(MYSQLI_ASSOC) : [];
-
 require_once __DIR__ . '/../sales_return_module.php';
 include __DIR__ . '/../../../partials/header.php';
 ame_sales_return_include_nav('exchange');
@@ -40,7 +34,8 @@ ame_sales_return_include_nav('exchange');
     .ex-results {
         position:absolute; left:0; right:0; top:calc(100% + 4px); background:#fff;
         border:1.5px solid #CFE3F7; border-radius:12px; box-shadow:0 12px 28px rgba(11,30,77,0.15);
-        max-height:200px; overflow-y:auto; z-index:30; display:none;
+        max-height:min(52vh, 320px); overflow-y:auto; z-index:1200; display:none;
+        -webkit-overflow-scrolling: touch;
     }
     .ex-results.open { display:block; }
     .ex-result-item { padding:8px 12px; cursor:pointer; border-bottom:1px solid #F1F5F9; font-size:12.5px; }
@@ -61,6 +56,12 @@ ame_sales_return_include_nav('exchange');
     .ex-calc-final.credit { color:#69F0AE; }
 
     .ex-submit-btn { width:100%; padding:14px; border:none; border-radius:12px; background: linear-gradient(135deg,#00838F,#26C6DA); color:#fff; font-weight:800; font-size:15px; cursor:pointer; }
+    .ex-price-modes { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:0 0 12px; }
+    .ex-price-modes > span { font-size:12px; font-weight:800; width:100%; color:#0B1E4D; }
+    .ex-price-modes button { flex:1; min-width:0; min-height:38px; padding:6px 8px; border-radius:10px; border:1.5px solid #CFE3F7; background:#fff; font-weight:800; font-size:12px; cursor:pointer; }
+    .ex-price-modes button.is-on { border-color:#00838F; background:#E0F7FA; color:#006064; }
+    .ex-price-note { display:none; margin:0 0 10px; font-size:11px; font-weight:700; color:#B45309; }
+    .ex-price-note.show { display:block; }
 </style>
 
 <div class="ex-wrap">
@@ -89,6 +90,15 @@ ame_sales_return_include_nav('exchange');
                         <button type="button" onclick="clearCustomer()">✕</button>
                     </div>
                 </div>
+
+                <div class="ex-price-modes" id="exPriceModes" role="group" aria-label="ফেরত/বদলির দামের ধরন">
+                    <span>ফেরত ও বদলির দাম (উভয় পণ্য)</span>
+                    <button type="button" data-ex-price="wholesale">পাইকারি</button>
+                    <button type="button" data-ex-price="retail" class="is-on">খুচরা</button>
+                    <button type="button" data-ex-price="dealer">ডিলার</button>
+                    <button type="button" data-ex-price="price">প্রাইস</button>
+                </div>
+                <p class="ex-price-note" id="exPriceNote" role="status"></p>
 
                 <div class="ex-section">
                     <div class="ex-section-title returned">↩️ ফেরত দেওয়া পণ্য</div>
@@ -131,15 +141,7 @@ ame_sales_return_include_nav('exchange');
                 </div>
                 <input type="hidden" name="adjustment" id="adjustmentInput" value="0">
 
-                <div class="ex-row">
-                    <div class="ex-group">
-                        <label>বিক্রয়ের ধরন</label>
-                        <select name="sales_type">
-                            <option value="retail">Retail</option>
-                            <option value="wholesale">Wholesale</option>
-                        </select>
-                    </div>
-                </div>
+                <input type="hidden" name="sales_type" id="salesTypeInput" value="retail">
 
                 <div class="ex-group">
                     <label>এক্সচেঞ্জের কারণ *</label>
@@ -157,38 +159,110 @@ ame_sales_return_include_nav('exchange');
 </div>
 
 <script>
-var CUSTOMERS = <?php echo json_encode($customers, JSON_UNESCAPED_UNICODE); ?>;
-var PRODUCTS = <?php echo json_encode($products, JSON_UNESCAPED_UNICODE); ?>;
+var exState = { priceType: 'retail', oldP: null, newP: null };
 
-function setupSearch(inputId, resultsId, dataset, onSelect, formatFn) {
+function escEx(s) {
+    return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+function exFmtBal(n) {
+    var v = Number(n) || 0;
+    if (v > 0.009) return 'বকেয়া ৳' + v.toFixed(2);
+    if (v < -0.009) return 'জমা ৳' + Math.abs(v).toFixed(2);
+    return '৳0';
+}
+function exUnitPrice(p, type) {
+    if (!p) return 0;
+    if (type === 'wholesale') return Number(p.wholesale_price) || 0;
+    if (type === 'dealer') return Number(p.dealer_price) || 0;
+    if (type === 'price') return Number(p.ask_price) || Number(p.sale_price) || 0;
+    return Number(p.sale_price) || Number(p.retail_price) || 0;
+}
+function exNormProduct(row) {
+    return {
+        id: row.id,
+        name: row.name,
+        sale_price: Number(row.sale_price) || 0,
+        retail_price: Number(row.sale_price) || 0,
+        wholesale_price: Number(row.wholesale_price) || 0,
+        dealer_price: Number(row.dealer_price) || 0,
+        stock: Number(row.stock) || 0,
+        ask_price: Number(row.sale_price) || 0
+    };
+}
+function exApplyPricesToInputs() {
+    var t = exState.priceType;
+    var ro = t !== 'price';
+    ['old', 'new'].forEach(function (side) {
+        var p = side === 'old' ? exState.oldP : exState.newP;
+        var inp = document.getElementById(side + 'PriceInput');
+        if (!inp || !p) return;
+        var u = exUnitPrice(p, t);
+        if (t !== 'price' && u > 0) p.ask_price = u;
+        inp.readOnly = ro;
+        if (document.activeElement !== inp || t !== 'price') {
+            inp.value = (u > 0 ? u : p.ask_price || 0).toFixed(2);
+        }
+    });
+    var note = document.getElementById('exPriceNote');
+    if (note && t !== 'price') {
+        var miss = (exState.oldP && exUnitPrice(exState.oldP, t) <= 0) || (exState.newP && exUnitPrice(exState.newP, t) <= 0);
+        if (miss) { note.textContent = 'কিছু পণ্যে ওই দাম সেট নেই — «প্রাইস» বা অন্য ধরন বেছে নিন।'; note.classList.add('show'); }
+        else { note.textContent = ''; note.classList.remove('show'); }
+    }
+    document.getElementById('salesTypeInput').value = (t === 'retail') ? 'retail' : 'wholesale';
+    calcExchange();
+}
+function exSetPriceType(type) {
+    exState.priceType = type;
+    document.querySelectorAll('#exPriceModes [data-ex-price]').forEach(function (btn) {
+        btn.classList.toggle('is-on', btn.getAttribute('data-ex-price') === type);
+    });
+    exApplyPricesToInputs();
+}
+document.getElementById('exPriceModes').addEventListener('click', function (ev) {
+    var btn = ev.target.closest('[data-ex-price]');
+    if (btn) exSetPriceType(btn.getAttribute('data-ex-price'));
+});
+document.getElementById('oldPriceInput').addEventListener('input', function () {
+    if (exState.oldP && exState.priceType === 'price') exState.oldP.ask_price = parseFloat(this.value) || 0;
+    calcExchange();
+});
+document.getElementById('newPriceInput').addEventListener('input', function () {
+    if (exState.newP && exState.priceType === 'price') exState.newP.ask_price = parseFloat(this.value) || 0;
+    calcExchange();
+});
+
+function setupRemoteSearch(inputId, resultsId, kind, onSelect, formatRow) {
     var input = document.getElementById(inputId);
     var results = document.getElementById(resultsId);
-
+    var timer = null;
+    var rows = [];
     input.addEventListener('input', function () {
-        var q = input.value.trim().toLowerCase();
-        if (q === '') { results.classList.remove('open'); return; }
-
-        var matches = dataset.filter(function (item) {
-            return (item.name || '').toLowerCase().indexOf(q) !== -1 ||
-                (item.phone || '').indexOf(q) !== -1 ||
-                String(item.id).indexOf(q) !== -1;
-        }).slice(0, 8);
-
-        results.innerHTML = matches.length === 0
-            ? '<div class="ex-result-item" style="color:#94A3B8;">কোনো ফলাফল নেই</div>'
-            : matches.map(function (item) {
-                return '<div class="ex-result-item" data-i="' + dataset.indexOf(item) + '">' + formatFn(item) + '</div>';
-            }).join('');
-        results.classList.add('open');
-
-        results.querySelectorAll('.ex-result-item[data-i]').forEach(function (el) {
-            el.addEventListener('click', function () {
-                onSelect(dataset[parseInt(el.getAttribute('data-i'), 10)]);
-                results.classList.remove('open');
-            });
-        });
+        clearTimeout(timer);
+        var q = input.value.trim();
+        if (q.length < 1) { results.classList.remove('open'); results.innerHTML = ''; return; }
+        timer = setTimeout(function () {
+            fetch('actions/search_lookup.php?kind=' + encodeURIComponent(kind) + '&q=' + encodeURIComponent(q) + '&limit=60', { credentials: 'same-origin' })
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    rows = data.rows || [];
+                    results.innerHTML = rows.length
+                        ? rows.map(function (row, i) {
+                            return '<div class="ex-result-item" data-ri="' + i + '">' + formatRow(row) + '</div>';
+                        }).join('')
+                        : '<div class="ex-result-item" style="color:#94A3B8;cursor:default;">মিল নেই — আরেকটু লিখুন</div>';
+                    results.classList.add('open');
+                });
+        }, 160);
     });
-
+    results.addEventListener('click', function (ev) {
+        var el = ev.target.closest('[data-ri]');
+        if (!el) return;
+        var row = rows[Number(el.getAttribute('data-ri'))];
+        if (row) onSelect(row);
+        results.classList.remove('open');
+        input.value = '';
+    });
     document.addEventListener('click', function (e) {
         if (!e.target.closest('#' + inputId) && !e.target.closest('#' + resultsId)) {
             results.classList.remove('open');
@@ -196,31 +270,39 @@ function setupSearch(inputId, resultsId, dataset, onSelect, formatFn) {
     });
 }
 
-setupSearch('custSearch', 'custResults', CUSTOMERS, function (c) {
+setupRemoteSearch('custSearch', 'custResults', 'customer', function (c) {
     document.getElementById('customerIdInput').value = c.id;
     document.getElementById('customerNameInput').value = c.name;
-    document.getElementById('custSearch').value = '';
-    document.getElementById('custChipText').textContent = c.name + ' (' + (c.phone || 'N/A') + ')';
+    document.getElementById('custChipText').textContent = c.name + ' (' + (c.phone || 'N/A') + ') · ' + exFmtBal(c.balance);
     document.getElementById('custChip').classList.add('show');
-}, function (c) { return c.name + '<small>' + (c.phone || '') + ' • ' + c.customer_code + '</small>'; });
+}, function (c) {
+    return escEx(c.name) + '<small>' + escEx(c.phone || '') + (c.code ? ' • ' + escEx(c.code) : '') + ' · ' + exFmtBal(c.balance) + '</small>';
+});
 
-setupSearch('oldProdSearch', 'oldProdResults', PRODUCTS, function (p) {
-    document.getElementById('oldProductIdInput').value = p.id;
-    document.getElementById('oldProdSearch').value = '';
-    document.getElementById('oldProdChipText').textContent = p.name;
+setupRemoteSearch('oldProdSearch', 'oldProdResults', 'product', function (row) {
+    exState.oldP = exNormProduct(row);
+    document.getElementById('oldProductIdInput').value = exState.oldP.id;
+    document.getElementById('oldProdChipText').textContent = exState.oldP.name;
     document.getElementById('oldProdChip').classList.add('show');
-    document.getElementById('oldPriceInput').value = p.sale_price;
-    calcExchange();
-}, function (p) { return p.name + '<small>ID: ' + p.id + ' • মূল্য: ৳' + p.sale_price + '</small>'; });
+    exApplyPricesToInputs();
+}, function (p) {
+    return escEx(p.name) + '<small>খু ৳' + Number(p.sale_price || 0).toFixed(0)
+        + ' · পা ৳' + Number(p.wholesale_price || 0).toFixed(0)
+        + ' · ডি ৳' + Number(p.dealer_price || 0).toFixed(0) + '</small>';
+});
 
-setupSearch('newProdSearch', 'newProdResults', PRODUCTS, function (p) {
-    document.getElementById('newProductIdInput').value = p.id;
-    document.getElementById('newProdSearch').value = '';
-    document.getElementById('newProdChipText').textContent = p.name + ' (স্টক: ' + p.stock + ')';
+setupRemoteSearch('newProdSearch', 'newProdResults', 'product', function (row) {
+    exState.newP = exNormProduct(row);
+    document.getElementById('newProductIdInput').value = exState.newP.id;
+    document.getElementById('newProdChipText').textContent = exState.newP.name + ' (স্টক: ' + exState.newP.stock + ')';
     document.getElementById('newProdChip').classList.add('show');
-    document.getElementById('newPriceInput').value = p.sale_price;
-    calcExchange();
-}, function (p) { return p.name + '<small>ID: ' + p.id + ' • মূল্য: ৳' + p.sale_price + ' • স্টক: ' + p.stock + '</small>'; });
+    exApplyPricesToInputs();
+}, function (p) {
+    return escEx(p.name) + '<small>স্টক ' + Number(p.stock || 0).toFixed(2)
+        + ' · খু ৳' + Number(p.sale_price || 0).toFixed(0)
+        + ' · পা ৳' + Number(p.wholesale_price || 0).toFixed(0)
+        + ' · ডি ৳' + Number(p.dealer_price || 0).toFixed(0) + '</small>';
+});
 
 function clearCustomer() {
     document.getElementById('customerIdInput').value = '';
@@ -228,11 +310,13 @@ function clearCustomer() {
     document.getElementById('custChip').classList.remove('show');
 }
 function clearOldProduct() {
+    exState.oldP = null;
     document.getElementById('oldProductIdInput').value = '';
     document.getElementById('oldProdChip').classList.remove('show');
     calcExchange();
 }
 function clearNewProduct() {
+    exState.newP = null;
     document.getElementById('newProductIdInput').value = '';
     document.getElementById('newProdChip').classList.remove('show');
     calcExchange();
@@ -275,19 +359,17 @@ document.getElementById('exchangeForm').addEventListener('submit', function (e) 
 (function () {
     var params = new URLSearchParams(window.location.search);
     var cid = parseInt(params.get('customer_id') || '0', 10);
-    if (cid < 1) {
-        return;
-    }
-    var found = CUSTOMERS.find(function (c) {
-        return Number(c.id) === cid;
-    });
-    if (!found) {
-        return;
-    }
-    document.getElementById('customerIdInput').value = found.id;
-    document.getElementById('customerNameInput').value = found.name;
-    document.getElementById('custChipText').textContent = found.name + ' (' + (found.phone || 'N/A') + ')';
-    document.getElementById('custChip').classList.add('show');
+    if (cid < 1) return;
+    fetch('actions/search_lookup.php?kind=customer&q=' + cid + '&limit=5', { credentials: 'same-origin' })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+            var found = (data.rows || []).find(function (c) { return Number(c.id) === cid; }) || (data.rows || [])[0];
+            if (!found) return;
+            document.getElementById('customerIdInput').value = found.id;
+            document.getElementById('customerNameInput').value = found.name;
+            document.getElementById('custChipText').textContent = found.name + ' (' + (found.phone || 'N/A') + ') · ' + exFmtBal(found.balance);
+            document.getElementById('custChip').classList.add('show');
+        });
 })();
 </script>
 <?php include __DIR__ . '/../../../partials/footer.php'; ?>
