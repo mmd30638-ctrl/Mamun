@@ -615,15 +615,19 @@
             wrap.style.overflow = 'visible';
         });
         var spayShot = node && node.classList && node.classList.contains('spay-memo');
+        var cpayShot = !!(document.body && document.body.classList.contains('ame-customer-pay-receipt'))
+            || !!(node && node.classList && node.classList.contains('memo-wrapper') && document.querySelector('.cpay-sheet'));
+        var narrowPx = cpayShot ? 480 : 420;
+        var useNarrow = spayShot || cpayShot;
         clone.style.cssText = [
             'position:absolute',
             'left:0',
             'top:0',
             'z-index:-1',
-            'width:' + (spayShot ? '420px' : (A4_CSS_PX + 'px')),
-            'max-width:' + (spayShot ? '420px' : (A4_CSS_PX + 'px')),
+            'width:' + (useNarrow ? (narrowPx + 'px') : (A4_CSS_PX + 'px')),
+            'max-width:' + (useNarrow ? (narrowPx + 'px') : (A4_CSS_PX + 'px')),
             'background:#ffffff',
-            'padding:' + (spayShot ? '16px 14px' : '28px 32px'),
+            'padding:' + (useNarrow ? '16px 14px' : '28px 32px'),
             'box-sizing:border-box',
             'font-size:16px',
             'line-height:1.5',
@@ -632,9 +636,9 @@
             'box-shadow:none',
             'overflow:visible'
         ].join(';');
-        if (spayShot) {
-            clone.style.setProperty('width', '420px', 'important');
-            clone.style.setProperty('max-width', '420px', 'important');
+        if (useNarrow) {
+            clone.style.setProperty('width', narrowPx + 'px', 'important');
+            clone.style.setProperty('max-width', narrowPx + 'px', 'important');
             clone.style.setProperty('min-width', '0', 'important');
             clone.style.setProperty('box-sizing', 'border-box', 'important');
             clone.style.setProperty('overflow', 'visible', 'important');
@@ -664,7 +668,7 @@
                     el.style.webkitTextFillColor = 'unset';
                 }
                 el.style.animation = 'none';
-                if (spayShot) {
+                if (useNarrow) {
                     el.style.setProperty('white-space', 'normal', 'important');
                     el.style.setProperty('overflow', 'visible', 'important');
                     el.style.setProperty('overflow-wrap', 'anywhere', 'important');
@@ -724,7 +728,10 @@
         var clone = prepClone(node);
             var scale = 2;
         var spayShot = clone.classList && clone.classList.contains('spay-memo');
-        var boxW = spayShot ? Math.ceil(Math.max(clone.scrollWidth, clone.offsetWidth, 320)) : A4_CSS_PX;
+        var cpayClone = !!(document.body && document.body.classList.contains('ame-customer-pay-receipt'));
+        var narrowCapture = spayShot || cpayClone;
+        var narrowW = cpayClone ? 480 : 420;
+        var boxW = narrowCapture ? Math.ceil(Math.max(clone.scrollWidth, clone.offsetWidth, narrowW)) : A4_CSS_PX;
         var boxH = Math.ceil(Math.max(clone.scrollHeight, clone.offsetHeight));
         return waitImages(clone).then(function () {
             return window.html2canvas(clone, {

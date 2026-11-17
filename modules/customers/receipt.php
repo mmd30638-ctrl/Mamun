@@ -132,7 +132,7 @@ $ame_ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.847';
 $body_paper_class = ($paper_width === 'A4') ? ' ame-cpay-memo--a4' : '';
 ?>
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" data-ame-memo-standalone="1">
 <head>
 <meta charset="UTF-8">
 <?php echo defined('AME_VIEWPORT_META') ? AME_VIEWPORT_META : '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">'; ?>
@@ -148,7 +148,7 @@ if (function_exists('ame_global_responsive_tier_script_echo')) {
 ?>
 <script src="/assets/js/html2canvas.min.js?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>"></script>
 </head>
-<body class="ame-customer-pay-receipt ame-payment-receipt<?php echo htmlspecialchars($body_paper_class, ENT_QUOTES, 'UTF-8'); ?>">
+<body class="ame-customer-pay-receipt ame-payment-receipt<?php echo htmlspecialchars($body_paper_class, ENT_QUOTES, 'UTF-8'); ?>" data-ame-memo-standalone="1">
 <nav class="inv-action-bar no-print" aria-label="রসিদ অপশন">
     <button type="button" class="inv-btn inv-btn-print" data-pay-act="print-image">প্রিন্ট</button>
     <button type="button" class="inv-btn inv-btn-pdf" data-pay-act="download">পিডিএফ</button>

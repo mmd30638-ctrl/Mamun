@@ -107,7 +107,7 @@ if ($row) {
 $file_base = $row ? 'withdraw-' . preg_replace('/[^A-Za-z0-9_-]+/', '-', $ref) : 'withdraw';
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo is_en() ? 'en' : 'bn'; ?>">
+<html lang="<?php echo is_en() ? 'en' : 'bn'; ?>" data-ame-memo-standalone="1">
 <head>
 <meta charset="UTF-8">
 <?php echo defined('AME_VIEWPORT_META') ? AME_VIEWPORT_META : '<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">'; ?>

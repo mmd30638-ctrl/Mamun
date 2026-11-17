@@ -1,3 +1,12 @@
+# 10.98.965 — PARTY DRIFT অটো-সিঙ্ক+লগ; মোবাইল পেমেন্ট মেমো পূর্ণ প্রস্থ
+includes/party_amount_shield.php
+includes/ledger_lock.php
+assets/js/ame-desktop-site.js
+assets/js/ame-memo-file.js
+assets/css/customer-pay-receipt-memo.css
+modules/customers/receipt.php
+includes/config.php
+VERSION.txt
 # 10.98.964 — দ্রুত ফেরত: ক্রেতা+পণ্য → স্টক/বকেয়া/শেয়ার মেমো এক ক্লিক
 modules/returns/v2/quick_return.php
 modules/returns/v2/actions/quick_customer_return.php

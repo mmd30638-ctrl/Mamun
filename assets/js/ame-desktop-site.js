@@ -30,12 +30,38 @@
         return !mobileUa;
     };
 
+    /** স্ট্যান্ডঅ্যালোন মেমো/রসিদ — ভিউপোর্ট ১৩৬৬ স্কেল করলে মোবাইলে অর্ধেক খালি হয় */
+    function ameMemoStandaloneNoDesktopViewport() {
+        var root = document.documentElement;
+        if (root && root.getAttribute('data-ame-memo-standalone') === '1') {
+            return true;
+        }
+        var b = document.body;
+        if (!b) {
+            return false;
+        }
+        if (b.classList.contains('ame-customer-pay-receipt') || b.classList.contains('ame-payment-receipt')) {
+            return true;
+        }
+        if (b.getAttribute('data-ame-memo-standalone') === '1') {
+            return true;
+        }
+        if (document.getElementById('memo-container') && document.querySelector('.cpay-sheet')) {
+            return true;
+        }
+        return false;
+    }
+
     window.ameApplySaleDesktopViewport = function () {
         if (!window.amePhoneDesktopSite()) {
             return;
         }
         window.AME_SALE_DESKTOP_SITE = true;
         document.documentElement.classList.add('ame-phone-desktop');
+        if (ameMemoStandaloneNoDesktopViewport()) {
+            document.documentElement.classList.add('ame-memo-standalone-fit');
+            return;
+        }
         var design = 1366;
         if (!window.AME_SALE_DESKTOP_FIT) {
             var fitNow = window.innerWidth || screen.width || design;

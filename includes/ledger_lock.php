@@ -195,8 +195,8 @@ if (!function_exists('ame_ledger_seal_refresh_baseline')) {
         }
         $ver = defined('AME_APP_VERSION') ? (string)AME_APP_VERSION : '';
         $stmt = @$db->prepare(
-            'UPDATE ame_ledger_seal SET supplier_due_sum = ?, customer_recv_sum = ?, sealed_at = NOW(), note = ?,
-             version = IF(? <> "", ?, version) WHERE id = 1 AND sealed = 1'
+            'UPDATE ame_ledger_seal SET supplier_due_sum = ?, customer_recv_sum = ?, sealed = 1, sealed_at = NOW(), note = ?,
+             version = IF(? <> "", ?, version) WHERE id = 1'
         );
         if (!$stmt) {
             return ['ok' => false, 'message' => 'সিল আপডেট প্রস্তুত হয়নি: ' . $db->error, 'supplier' => $sums['supplier'], 'customer' => $sums['customer']];

@@ -426,8 +426,37 @@ body.ame-customer-pay-receipt .no-memo-print { display: none !important; }
     }
 }
 
-html.ame-phone-desktop body.ame-customer-pay-receipt .cpay-sheet,
-html.ame-phone-desktop body.ame-customer-pay-receipt .inv-action-bar,
-html.ame-phone-desktop body.ame-customer-pay-receipt .pay-share-hint {
+/* মোবাইল Chrome «ডেস্কটপ সাইট» — পূর্ণ প্রস্থ মেমো (viewport স্কেল বন্ধ: ame-memo-standalone-fit) */
+html.ame-memo-standalone-fit body.ame-customer-pay-receipt,
+html.ame-phone-desktop.ame-memo-standalone-fit body.ame-customer-pay-receipt {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding-left: max(10px, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(10px, env(safe-area-inset-right, 0px)) !important;
+    overflow-x: hidden !important;
+}
+
+html.ame-memo-standalone-fit body.ame-customer-pay-receipt .cpay-sheet,
+html.ame-memo-standalone-fit body.ame-customer-pay-receipt .inv-action-bar,
+html.ame-memo-standalone-fit body.ame-customer-pay-receipt .pay-share-hint,
+html.ame-phone-desktop.ame-memo-standalone-fit body.ame-customer-pay-receipt .cpay-sheet,
+html.ame-phone-desktop.ame-memo-standalone-fit body.ame-customer-pay-receipt .inv-action-bar,
+html.ame-phone-desktop.ame-memo-standalone-fit body.ame-customer-pay-receipt .pay-share-hint {
+    width: 100% !important;
+    max-width: min(var(--cpay-memo-max), 100%) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+html.ame-memo-standalone-fit body.ame-customer-pay-receipt .memo-wrapper,
+html.ame-phone-desktop.ame-memo-standalone-fit body.ame-customer-pay-receipt .memo-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+html.ame-phone-desktop:not(.ame-memo-standalone-fit) body.ame-customer-pay-receipt .cpay-sheet,
+html.ame-phone-desktop:not(.ame-memo-standalone-fit) body.ame-customer-pay-receipt .inv-action-bar,
+html.ame-phone-desktop:not(.ame-memo-standalone-fit) body.ame-customer-pay-receipt .pay-share-hint {
     max-width: min(var(--cpay-memo-max), 92vw);
 }

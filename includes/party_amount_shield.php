@@ -328,8 +328,8 @@ if (!function_exists('ame_party_amount_drift_log_throttled')) {
         );
         $audit = $logDir . '/party_drift_audit.log';
         @file_put_contents($audit, date('c') . ' ' . $line . "\n", FILE_APPEND | LOCK_EX);
-        // PHP error_monitor এ ভুল সতর্ক না দেখাতে — শুধু প্রকৃত অসংগতি (অটো-সিঙ্কের পরও মিল না)
-        error_log($line . ' — পার্টি ব্যালেন্স যাচাই করুন; সেটিংসে «বেসলাইন মিলান»।');
+        // স্ন্যাপশট ড্রিফট — audit ফাইলে রাখি; Error Monitor এ PHP error নয়
+        @file_put_contents($audit, date('c') . " [hint] সেটিংস → Tools → বেসলাইন মিলান\n", FILE_APPEND | LOCK_EX);
     }
 }
 
@@ -344,17 +344,21 @@ if (!function_exists('ame_party_amount_shield_boot')) {
             ame_party_amount_shield_install($db);
         }
         ame_party_amount_authorize_request($db);
+        if (!function_exists('ame_ledger_lock_boot') && is_file(dirname(__FILE__) . '/ledger_lock.php')) {
+            require_once dirname(__FILE__) . '/ledger_lock.php';
+        }
+        if (function_exists('ame_ledger_lock_boot')) {
+            ame_ledger_lock_boot($db);
+        }
         $check = ame_ledger_seal_verify_totals($db);
         if (!$check['ok'] && $check['expected_supplier'] !== null) {
-            if (ame_party_amount_shield_triggers_ok($db)) {
-                if (!function_exists('ame_ledger_seal_refresh_baseline') && is_file(dirname(__FILE__) . '/ledger_lock.php')) {
-                    require_once dirname(__FILE__) . '/ledger_lock.php';
-                }
-                if (function_exists('ame_ledger_seal_refresh_baseline')) {
-                    $ref = ame_ledger_seal_refresh_baseline($db, 'auto-sync monitoring snapshot');
-                    if (!empty($ref['ok'])) {
-                        $check = ame_ledger_seal_verify_totals($db);
-                    }
+            if (!function_exists('ame_ledger_seal_refresh_baseline') && is_file(dirname(__FILE__) . '/ledger_lock.php')) {
+                require_once dirname(__FILE__) . '/ledger_lock.php';
+            }
+            if (function_exists('ame_ledger_seal_refresh_baseline')) {
+                $ref = ame_ledger_seal_refresh_baseline($db, 'auto-sync monitoring snapshot');
+                if (!empty($ref['ok'])) {
+                    $check = ame_ledger_seal_verify_totals($db);
                 }
             }
             if (!$check['ok']) {
