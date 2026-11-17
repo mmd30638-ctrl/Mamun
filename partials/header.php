@@ -210,6 +210,19 @@ if (str_contains($ame_script_now, '/modules/customers/hire/')):
     <?php if (str_contains($ame_head_script, '/modules/customers/withdraw.php')): ?>
     <link rel="stylesheet" href="/assets/css/withdraw-desk.css?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>">
     <?php endif; ?>
+    <?php if (str_contains($ame_head_script, '/modules/returns/v2/view.php')): ?>
+    <link rel="stylesheet" href="/assets/css/memo-clear.css?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>">
+    <link rel="stylesheet" href="/assets/css/sale-return-memo.css?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>">
+  <script>
+  (function () {
+    document.documentElement.setAttribute('data-ame-memo-standalone', '1');
+    var m = document.querySelector('meta[name="viewport"]');
+    if (m) {
+      m.setAttribute('content', 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover');
+    }
+  })();
+  </script>
+    <?php endif; ?>
     <?php
     if (!empty($_SESSION['user_id']) && is_file(__DIR__ . '/../includes/sm40_portal.php')) {
         require_once __DIR__ . '/../includes/sm40_portal.php';
@@ -232,6 +245,9 @@ if (str_contains($ame_script_now, '/modules/customers/hire/')):
     }
     if (str_contains($ame_current_script, '/modules/returns/')) {
         $ame_body_class = trim($ame_body_class . ' ame-return-desk');
+    }
+    if (str_contains($ame_current_script, '/modules/returns/v2/view.php')) {
+        echo ' data-ame-memo-standalone="1"';
     }
     if (str_contains($ame_current_script, '/modules/hrm/')) {
         $ame_body_class = trim($ame_body_class . ' ame-hrm-page');

@@ -1,0 +1,124 @@
+/* বিক্রয় ফেরত মেমো (view.php) — মোবাইল Chrome ডেস্কটপ সাইটে ডান পাশ কাটা ঠিক */
+:root {
+    --srv-memo-max: min(100%, 480px);
+}
+html.ame-memo-standalone-fit {
+    --srv-memo-max: 100%;
+}
+
+html body.ame-sale-return-memo #main-content,
+html body.ame-sale-return-memo #main-content > .rv-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: clip !important;
+    box-sizing: border-box !important;
+}
+
+html body.ame-sale-return-memo .rv-wrap {
+    width: 100% !important;
+    max-width: var(--srv-memo-max) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: max(8px, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(8px, env(safe-area-inset-right, 0px)) !important;
+    box-sizing: border-box !important;
+}
+
+html body.ame-sale-return-memo #memo-container,
+html body.ame-sale-return-memo .memo-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+
+html body.ame-sale-return-memo .inv-action-bar {
+    max-width: 100% !important;
+    width: 100% !important;
+}
+
+html body.ame-sale-return-memo .memo-meta-grid {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+html body.ame-sale-return-memo .memo-meta-item .val {
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+}
+
+html body.ame-sale-return-memo .memo-table-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+html body.ame-sale-return-memo .memo-table {
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: fixed !important;
+}
+
+html body.ame-sale-return-memo .memo-table th,
+html body.ame-sale-return-memo .memo-table td {
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    white-space: normal !important;
+}
+
+html body.ame-sale-return-memo .memo-table .tr {
+    white-space: normal !important;
+}
+
+html body.ame-sale-return-memo .memo-sum-row {
+    flex-wrap: wrap !important;
+    gap: 4px 10px !important;
+}
+
+html body.ame-sale-return-memo .memo-sum-row > span {
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    max-width: 100% !important;
+}
+
+html body.ame-sale-return-memo .rv-settle .sabek-line {
+    flex-wrap: wrap !important;
+}
+
+html body.ame-sale-return-memo .rv-settle .sabek-line b {
+    white-space: normal !important;
+    word-break: break-word !important;
+}
+
+/* মোবাইল + «ডেস্কটপ সাইট» — viewport স্কেল বন্ধ (পেমেন্ট রসিদের মতো) */
+html.ame-memo-standalone-fit body.ame-sale-return-memo,
+html.ame-phone-desktop.ame-memo-standalone-fit body.ame-sale-return-memo {
+    overflow-x: hidden !important;
+}
+
+html.ame-memo-standalone-fit body.ame-sale-return-memo #main-content,
+html.ame-phone-desktop.ame-memo-standalone-fit body.ame-sale-return-memo #main-content {
+    padding-left: max(6px, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(6px, env(safe-area-inset-right, 0px)) !important;
+}
+
+html.ame-memo-standalone-fit body.ame-sale-return-memo #memo-container,
+html.ame-phone-desktop.ame-memo-standalone-fit body.ame-sale-return-memo #memo-container {
+    padding: 16px 12px !important;
+    border-radius: 12px !important;
+}
+
+html.ame-phone-desktop:not(.ame-memo-standalone-fit) body.ame-sale-return-memo .rv-wrap {
+    max-width: min(var(--srv-memo-max), 92vw) !important;
+}
+
+@media (min-width: 768px) {
+    html:not(.ame-phone-desktop) body.ame-sale-return-memo .memo-meta-grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}

@@ -145,6 +145,7 @@ $ame_ret_pct = ($ame_ret_prev !== null && $ame_ret_prev > 0.009 && $ame_ret_cut 
     : null;
 
 require_once __DIR__ . '/../sales_return_module.php';
+$ame_body_class = 'ame-sale-return-memo';
 include __DIR__ . '/../../../partials/header.php';
 ame_sales_return_include_nav('register');
 
@@ -235,10 +236,10 @@ $ame_file_base = 'return-' . preg_replace('/[^A-Za-z0-9_-]/', '', (string) $ret[
         <button type="button" class="inv-btn inv-btn-pdf" data-ret-act="download"><?php echo ame_ui('পিডিএফ', 'PDF'); ?></button>
         <button type="button" class="inv-btn inv-btn-img" data-ret-act="download-image"><?php echo ame_ui('ছবি', 'Image'); ?></button>
         <button type="button" class="inv-btn inv-btn-share" data-ret-act="share"><?php echo ame_ui('শেয়ার', 'Share'); ?></button>
-        <a class="inv-btn inv-btn-wa" href="<?php echo htmlspecialchars($ame_wa_url, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener"><?php echo ame_ui('হোয়াটসঅ্যাপ', 'WhatsApp'); ?></a>
+        <button type="button" class="inv-btn inv-btn-wa" data-ret-act="wa"><?php echo ame_ui('হোয়াটসঅ্যাপ', 'WhatsApp'); ?></button>
         <button type="button" class="inv-btn inv-btn-tg" data-ret-act="share-telegram"><?php echo ame_ui('টেলিগ্রাম', 'Telegram'); ?></button>
     </nav>
-    <div class="memo-wrapper" id="memo-container" data-ame-capture="clone">
+    <div class="memo-wrapper" id="memo-container" data-ame-capture="clone" data-ame-file-base="<?php echo htmlspecialchars($ame_file_base, ENT_QUOTES, 'UTF-8'); ?>">
         <div class="memo-head">
             <?php echo function_exists('shop_print_logo_tag') ? shop_print_logo_tag(56) : ''; ?>
             <h1 class="memo-shop-name"><?php echo htmlspecialchars($ame_shop_name, ENT_QUOTES, 'UTF-8'); ?></h1>
@@ -285,6 +286,7 @@ $ame_file_base = 'return-' . preg_replace('/[^A-Za-z0-9_-]/', '', (string) $ret[
         <?php if (trim((string)($ret['reason'] ?? '')) !== ''): ?>
         <div class="memo-sum-row" style="margin-bottom:8px;"><span><?php echo ame_ui('কারণ', 'Reason'); ?></span><span><?php echo htmlspecialchars((string)$ret['reason'], ENT_QUOTES, 'UTF-8'); ?></span></div>
         <?php endif; ?>
+        <div class="memo-table-wrap">
         <table class="memo-table">
             <thead>
                 <tr>
@@ -318,6 +320,7 @@ $ame_file_base = 'return-' . preg_replace('/[^A-Za-z0-9_-]/', '', (string) $ret[
                 <?php endforeach; ?>
             </tbody>
         </table>
+        </div>
         <div class="memo-summary">
             <div class="memo-sum-row">
                 <span><?php echo ame_ui('ফেরতের বিল', 'Return bill'); ?></span>
@@ -414,6 +417,9 @@ function toggleDateEdit() {
 
 <script src="/assets/js/ame-memo-file.js?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '1', ENT_QUOTES, 'UTF-8'); ?>"></script>
 <script>
+window.AME_MEMO = window.AME_MEMO || {};
+window.AME_MEMO.wa = <?php echo json_encode($ame_wa_url, JSON_UNESCAPED_UNICODE); ?>;
+window.AME_MEMO.fileBase = <?php echo json_encode($ame_file_base, JSON_UNESCAPED_UNICODE); ?>;
 function shareVoucher() {
     if (typeof window.ameMemoCapture === 'function') {
         window.ameMemoCapture('share', <?php echo json_encode($ame_file_base); ?>, 'memo-container');

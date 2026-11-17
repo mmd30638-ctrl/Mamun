@@ -1,3 +1,18 @@
+# 10.98.974 — হোয়াটসঅ্যাপ = মেমো ছবি শেয়ার + ফেরত মেমো ডেস্কটপ সাইট ফিট
+assets/js/ame-memo-file.js
+assets/css/sale-return-memo.css
+assets/js/ame-desktop-site.js
+modules/returns/v2/view.php
+partials/header.php
+includes/config.php
+VERSION.txt
+# 10.98.973 — ফেরত মেমো: মোবাইল ডেস্কটপ সাইটে কাটা ঠিক
+assets/css/sale-return-memo.css
+assets/js/ame-desktop-site.js
+modules/returns/v2/view.php
+partials/header.php
+includes/config.php
+VERSION.txt
 # 10.98.972 — বিক্রয় ফেরত ড্যাশবোর্ড: লাইভ KPI + সাম্প্রতিক মেমো লিংক
 modules/returns/v2/dashboard.php
 modules/returns/v2/register.php

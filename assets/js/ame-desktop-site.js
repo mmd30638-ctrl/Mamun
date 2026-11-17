@@ -43,6 +43,9 @@
         if (b.classList.contains('ame-customer-pay-receipt') || b.classList.contains('ame-payment-receipt')) {
             return true;
         }
+        if (b.classList.contains('ame-sale-return-memo')) {
+            return true;
+        }
         if (b.getAttribute('data-ame-memo-standalone') === '1') {
             return true;
         }

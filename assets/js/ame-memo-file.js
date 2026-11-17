@@ -1203,9 +1203,56 @@
         });
     };
 
+    function ameMemoResolveFileBase(memoEl) {
+        var meta = window.AME_MEMO || {};
+        if (meta.fileBase) {
+            return String(meta.fileBase);
+        }
+        if (memoEl && memoEl.getAttribute && memoEl.getAttribute('data-ame-file-base')) {
+            return String(memoEl.getAttribute('data-ame-file-base'));
+        }
+        return 'memo';
+    }
+
+    function wireWhatsAppMemoImageShare() {
+        document.addEventListener('click', function (ev) {
+            var btn = ev.target && ev.target.closest
+                ? ev.target.closest('a.inv-btn-wa, button.inv-btn-wa')
+                : null;
+            if (!btn || btn.getAttribute('data-ame-wa-text-only') === '1') {
+                return;
+            }
+            var memo = document.getElementById('memo-container')
+                || document.querySelector('.memo-wrapper[data-ame-capture], [data-ame-capture="clone"]');
+            if (!memo || typeof window.ameMemoCapture !== 'function') {
+                return;
+            }
+            var taggedAct = btn.getAttribute('data-pay-act') || btn.getAttribute('data-ret-act')
+                || btn.getAttribute('data-inv-act') || '';
+            if (taggedAct !== '' && taggedAct !== 'wa') {
+                return;
+            }
+            ev.preventDefault();
+            if (ev.stopImmediatePropagation) {
+                ev.stopImmediatePropagation();
+            }
+            var meta = window.AME_MEMO || {};
+            if (btn.href && String(btn.href).indexOf('wa.me') !== -1) {
+                meta.wa = btn.href;
+            }
+            window.AME_MEMO = meta;
+            var elId = memo.id || 'memo-container';
+            if (!memo.id) {
+                memo.id = elId;
+            }
+            window.ameMemoCapture('wa', ameMemoResolveFileBase(memo), elId);
+        }, true);
+    }
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', injectInvoiceType);
     } else {
         injectInvoiceType();
     }
+    wireWhatsAppMemoImageShare();
 })();
