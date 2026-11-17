@@ -9,6 +9,10 @@ function ame_slip_share_bar_render(): void
     if (!empty($GLOBALS['ame_slip_bar_done'])) {
         return;
     }
+    $script = strtolower(str_replace('\\', '/', (string)($_SERVER['SCRIPT_NAME'] ?? '')));
+    if (str_contains($script, '/modules/accounts/partner_accounting.php')) {
+        return;
+    }
     if (!isset($GLOBALS['ame_slip']) || !is_array($GLOBALS['ame_slip'])) {
         return;
     }

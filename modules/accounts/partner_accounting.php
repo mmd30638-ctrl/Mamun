@@ -200,11 +200,12 @@ $exp_total_view = $exp_pid ? (float)($exp_pack['shares'][$exp_pid] ?? 0) : $exp_
 $exp_q = $pa_rep_qs_amp . ($exp_pid ? ('&amp;ep=' . $exp_pid) : '');
 
 require_once '../../includes/partner_expense_ui.php';
+unset($ame_slip, $GLOBALS['ame_slip']);
 include '../../partials/header.php';
 ?>
 <link rel="stylesheet" href="/assets/css/partner-accounting.css?v=<?php echo htmlspecialchars(AME_ASSET_VERSION, ENT_QUOTES, 'UTF-8'); ?>">
 
-<div class="pa-page">
+<div class="pa-page pa-dash">
     <div class="pa-hero">
         <div class="pa-hero-top">
             <div>
@@ -344,7 +345,7 @@ include '../../partials/header.php';
                 <h2>সময়কাল রিপোর্ট · <?php echo htmlspecialchars(date('d-m-Y', strtotime($sale_from))); ?> – <?php echo htmlspecialchars(date('d-m-Y', strtotime($sale_to))); ?></h2>
                 <div class="sub">হিসাব সার্ভার থেকে — URL শুধু তারিখ ফিল্টার। টাকার অংক এখানে বদলানো যায় না। নিচে সাবেক ব্যালেন্স, তারপর এই সময়ের অংশ, শেষ কলাম মাসের বই ব্যালেন্স।</div>
             </div>
-            <a class="pa-btn soft" href="partner_sales_share.php?doc=all&amp;month=<?php echo htmlspecialchars($ym); ?>&amp;lf=<?php echo htmlspecialchars($sale_from); ?>&amp;lt=<?php echo htmlspecialchars($sale_to); ?>">প্রিন্ট / শেয়ার</a>
+            <a class="pa-btn soft" href="partner_sales_share.php?doc=all&amp;month=<?php echo htmlspecialchars($ym); ?>&amp;lf=<?php echo htmlspecialchars($sale_from); ?>&amp;lt=<?php echo htmlspecialchars($sale_to); ?>">স্টেটমেন্ট প্রিন্ট</a>
         </div>
         <div class="pa-period-kpi">
             <div><span>মোট বিক্রি</span><b><?php echo pa_taka($pa_period['sales']); ?></b></div>
@@ -462,7 +463,6 @@ include '../../partials/header.php';
             <span>মোট <b><?php echo (int)count($sale_lines); ?></b>টি বিক্রি</span>
             <span>লাভ <b class="<?php echo $sale_total < -0.009 ? 'pa-minus' : 'pa-plus'; ?>"><?php echo pa_taka($sale_total); ?></b></span>
         </div>
-        <a class="pa-sales-share-btn no-print" href="partner_sales_share.php?doc=all&amp;month=<?php echo htmlspecialchars($ym); ?>&amp;lf=<?php echo htmlspecialchars($sale_from); ?>&amp;lt=<?php echo htmlspecialchars($sale_to); ?>">পার্টনার স্টেটমেন্ট শেয়ার করুন (বিক্রয় · ক্রয় · খরচ)</a>
         <?php if (!$sale_lines): ?>
             <div class="pa-empty"><?php echo $range_on ? 'এই তারিখে যুক্ত খাতের কোনো বিক্রি নেই।' : 'ক্যাটাগরি যুক্ত করলে শুধু সেই খাতের বিক্রি এখানে এক লাইনে আসবে।'; ?></div>
         <?php else: ?>
@@ -517,7 +517,6 @@ include '../../partials/header.php';
             <?php endforeach; ?>
         </div>
         <?php endif; ?>
-        <a class="pa-sales-share-btn no-print" href="partner_sales_share.php?doc=all&amp;month=<?php echo htmlspecialchars($ym); ?>">খরচসহ পার্টনার স্টেটমেন্ট শেয়ার করুন</a>
         <?php /* 10.98.714 */ if (!$locked): ?>
         <details class="pa-exp-add no-print" id="paExpAddBox">
             <summary class="pa-btn red">+ নতুন খরচ যোগ করুন</summary>

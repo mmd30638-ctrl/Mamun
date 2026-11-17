@@ -63,6 +63,12 @@
     font-weight: 700;
     text-decoration: none;
 }
+/* ড্যাশবোর্ডে গ্লোবাল শেয়ার বার নয় — শুধু স্টেটমেন্ট/প্রিন্ট পেজে */
+.pa-page.pa-dash .acc-share-wrap,
+.pa-page.pa-dash .acc-share-bar {
+    display: none !important;
+}
+
 .pa-period-report {
     border: 1px solid #99f6e4;
     background: linear-gradient(180deg, #f8fffe 0%, #fff 120px);
