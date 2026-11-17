@@ -600,7 +600,7 @@ include '../../partials/header.php';
             $sec = $pg['sec'];
             $page_items = $pg['items'];
             ?>
-        <section class="psp-page pst" data-page="<?php echo $page_no; ?>">
+        <section class="psp-page pst<?php echo $sec === 'summary' ? ' psp-page-summary' : ''; ?>" data-page="<?php echo $page_no; ?>" data-sec="<?php echo $h($sec); ?>">
             <div class="psp-topbar"></div>
             <header class="psp-head">
                 <div class="psp-brand">

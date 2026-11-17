@@ -1,3 +1,8 @@
+# 10.98.988 — স্টেটমেন্ট সারাংশ: নিচের গণনা এলোমেলো ফিক্স (ফ্লো + মোবাইল)
+assets/css/partner-statement.css
+modules/accounts/partner_sales_share.php
+includes/config.php
+VERSION.txt
 # 10.98.987 — স্টেটমেন্ট: বিক্রয়→খরচ→৬-কলাম সাবেক/+/− (ড্যাশবোর্ড মিল)
 includes/partner_accounting.php
 modules/accounts/partner_accounting.php
