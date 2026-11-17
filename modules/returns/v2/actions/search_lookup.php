@@ -66,8 +66,9 @@ try {
             $vals[] = (int)$q;
         }
         $cust = !empty($cols['is_customer']) ? ' AND is_customer = 1' : '';
+        $picker = function_exists('ame_customer_picker_sql') ? (' AND ' . ame_customer_picker_sql($db)) : '';
         $lim = min(80, max(15, (int)($_GET['limit'] ?? 40)));
-        $sql = 'SELECT ' . implode(', ', $sel) . ' FROM customers WHERE (' . implode(' OR ', $where) . ')' . $cust . ' ORDER BY name ASC LIMIT ' . $lim;
+        $sql = 'SELECT ' . implode(', ', $sel) . ' FROM customers WHERE (' . implode(' OR ', $where) . ')' . $cust . $picker . ' ORDER BY name ASC LIMIT ' . $lim;
         $stmt = $db->prepare($sql);
         if (!$stmt) {
             throw new RuntimeException('customer search');
