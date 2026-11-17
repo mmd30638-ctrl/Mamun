@@ -1,3 +1,10 @@
+# 10.98.975 — গ্লোবাল: হোয়াটসঅ্যাপে মেমো ছবি (ame-memo-file.js)
+assets/js/ame-memo-file.js
+partials/footer.php
+modules/sales/invoice.php
+modules/hrm/worker_success.php
+includes/config.php
+VERSION.txt
 # 10.98.974 — হোয়াটসঅ্যাপ = মেমো ছবি শেয়ার + ফেরত মেমো ডেস্কটপ সাইট ফিট
 assets/js/ame-memo-file.js
 assets/css/sale-return-memo.css

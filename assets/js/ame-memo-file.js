@@ -964,7 +964,40 @@
         return Promise.resolve();
     }
 
-    function openShareSheet(title, text, wa, imgBlob, imgName) {
+    function ameMemoDeliverViaWhatsApp(file, imgBlob, imageName, title, text, wa) {
+        title = title || 'মেমো';
+        if (!file) {
+            openShareSheet(title, text, wa, imgBlob, imageName, { preferWa: true });
+            return Promise.resolve();
+        }
+        var files = [file];
+        try {
+            if (navigator.canShare && !navigator.canShare({ files: files })) {
+                openShareSheet(title, text, wa, imgBlob, imageName, { preferWa: true });
+                return Promise.resolve();
+            }
+        } catch (eCan) {}
+        if (typeof navigator.share === 'function') {
+            return navigator.share({ files: files }).catch(function (err) {
+                if (err && err.name === 'AbortError') {
+                    return;
+                }
+                openShareSheet(title, text, wa, imgBlob, imageName, { preferWa: true });
+            });
+        }
+        openShareSheet(title, text, wa, imgBlob, imageName, { preferWa: true });
+        return Promise.resolve();
+    }
+
+    window.ameMemoShareWhatsApp = function (fileBase, elementId) {
+        if (typeof window.ameMemoCapture === 'function') {
+            return window.ameMemoCapture('wa', fileBase || '', elementId || '');
+        }
+        return Promise.resolve();
+    };
+
+    function openShareSheet(title, text, wa, imgBlob, imgName, opts) {
+        opts = opts || {};
         var old = document.getElementById('ameShareSheet');
         if (old && old.parentNode) { old.parentNode.removeChild(old); }
         var url = window.location.href;
@@ -1003,7 +1036,7 @@
                 if (err && err.name === 'AbortError') { return; }
             });
         });
-        opt('হোয়াটসঅ্যাপ', function () {
+        var waOptBtn = opt('হোয়াটসঅ্যাপ', function () {
             var files = currentFiles();
             if (files.length) {
                 sharePayload(title, '', files).catch(function (err) {
@@ -1040,6 +1073,13 @@
         sheet.appendChild(card);
         sheet.addEventListener('click', function (e) { if (e.target === sheet && sheet.parentNode) sheet.parentNode.removeChild(sheet); });
         document.body.appendChild(sheet);
+        if (opts.preferWa && waOptBtn && (imgBlob || window.__ameShareImg)) {
+            window.setTimeout(function () {
+                try {
+                    waOptBtn.click();
+                } catch (eWa) {}
+            }, 100);
+        }
     }
 
     function attachShareImage(imgBlob, imgName) {
@@ -1148,6 +1188,9 @@
             }).then(function (imgBlob) {
                 setShareBusy(false);
                 var file = fileFromBlob(imgBlob, imageName, 'image/jpeg');
+                if (action === 'wa') {
+                    return ameMemoDeliverViaWhatsApp(file, imgBlob, imageName, title, text, wa);
+                }
                 var liveTap = navigator.userActivation && navigator.userActivation.isActive;
                 if (file && liveTap && typeof navigator.share === 'function') {
                     navigator.share({ files: [file] }).catch(function (err) {
@@ -1217,14 +1260,23 @@
     function wireWhatsAppMemoImageShare() {
         document.addEventListener('click', function (ev) {
             var btn = ev.target && ev.target.closest
-                ? ev.target.closest('a.inv-btn-wa, button.inv-btn-wa')
+                ? ev.target.closest(
+                    'a.inv-btn-wa, button.inv-btn-wa, [data-ame-share-wa], '
+                    + '.inv-action-bar a[href*="wa.me"], #purWa'
+                )
                 : null;
             if (!btn || btn.getAttribute('data-ame-wa-text-only') === '1') {
                 return;
             }
-            var memo = document.getElementById('memo-container')
-                || document.querySelector('.memo-wrapper[data-ame-capture], [data-ame-capture="clone"]');
-            if (!memo || typeof window.ameMemoCapture !== 'function') {
+            if (typeof window.ameMemoResolveTarget !== 'function' || typeof window.ameMemoCapture !== 'function') {
+                return;
+            }
+            var targetId = window.ameMemoResolveTarget();
+            if (!targetId) {
+                return;
+            }
+            var memo = document.getElementById(targetId);
+            if (!memo) {
                 return;
             }
             var taggedAct = btn.getAttribute('data-pay-act') || btn.getAttribute('data-ret-act')
@@ -1242,11 +1294,7 @@
                 meta.wa = btn.href;
             }
             window.AME_MEMO = meta;
-            var elId = memo.id || 'memo-container';
-            if (!memo.id) {
-                memo.id = elId;
-            }
-            window.ameMemoCapture('wa', ameMemoResolveFileBase(memo), elId);
+            window.ameMemoCapture('wa', ameMemoResolveFileBase(memo), targetId);
         }, true);
     }
 

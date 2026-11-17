@@ -151,7 +151,12 @@ window.AME_MEMO = <?php echo $payload; ?>;
     document.getElementById('purShare').addEventListener('click', sharePdf);
     document.getElementById('purShareClose').addEventListener('click', function () { sheet.hidden = true; });
     sheet.addEventListener('click', function (e) { if (e.target === sheet) sheet.hidden = true; });
-    document.getElementById('purWa').addEventListener('click', sharePdf);
+    document.getElementById('purWa').addEventListener('click', function () {
+        sheet.hidden = true;
+        if (typeof window.ameMemoCapture === 'function') {
+            window.ameMemoCapture('wa', <?php echo json_encode($file); ?>, 'memo-container');
+        }
+    });
     document.getElementById('purMs').addEventListener('click', sharePdf);
     document.getElementById('purImg').addEventListener('click', sharePdf);
     document.getElementById('purDownload').addEventListener('click', function () {

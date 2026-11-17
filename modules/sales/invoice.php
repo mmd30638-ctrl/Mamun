@@ -529,7 +529,7 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
     </nav>
 
     <!-- মূল মেমো কন্টেইনার (এটি ছবি বা PDF হবে) -->
-    <div id="memo-container" class="memo-wrapper" data-ame-capture="clone">
+    <div id="memo-container" class="memo-wrapper" data-ame-capture="clone" data-ame-file-base="<?php echo htmlspecialchars(preg_replace('/[^A-Za-z0-9_-]+/', '-', (string)$inv_no), ENT_QUOTES, 'UTF-8'); ?>">
         <!-- শপ ব্র্যান্ডিং ও হেডার -->
         <div class="memo-head">
             <?php echo shop_print_logo_tag(56); ?>
