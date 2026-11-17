@@ -414,6 +414,94 @@ function ame_return_v2_list_customer_memos(mysqli $db, int $customerId, int $lim
     ];
 }
 
+/**
+ * রেজিস্টার ক্রেতার সব মেমো থেকে ফেরতযোগ্য পণ্য লাইন (নাম দিয়ে ফিল্টার)।
+ *
+ * @return list<array<string,mixed>>
+ */
+function ame_return_v2_customer_product_lines(mysqli $db, int $customerId, string $productQ = '', int $limit = 60): array
+{
+    ensure_return_v2_schema($db);
+    if ($customerId <= 0) {
+        return [];
+    }
+    $limit = max(1, min(120, $limit));
+    $needle = mb_strtolower(trim($productQ));
+
+    $stmt = $db->prepare(
+        "SELECT s.id AS sale_id, s.invoice_number, s.completed_at, s.sale_date,
+                si.product_id,
+                COALESCE(NULLIF(TRIM(si.item_name), ''), p.name, CONCAT('পণ্য #', si.product_id)) AS product_name,
+                si.qty AS sold_qty, si.sale_price AS unit_price,
+                p.sale_price AS retail_price, p.wholesale_price, p.dealer_price,
+                p.barcode, p.sku
+         FROM sales s
+         INNER JOIN sale_items si ON si.sale_id = s.id
+         LEFT JOIN products p ON p.id = si.product_id
+         WHERE s.status = 'completed'
+           AND s.customer_id = ?
+           AND si.product_id IS NOT NULL AND si.product_id > 0
+         ORDER BY COALESCE(s.completed_at, s.sale_date, s.created_at) DESC, si.id DESC
+         LIMIT 500"
+    );
+    if (!$stmt) {
+        return [];
+    }
+    $stmt->bind_param('i', $customerId);
+    $stmt->execute();
+    $rows = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $stmt->close();
+
+    $lines = [];
+    foreach ($rows as $row) {
+        $saleId = (int)($row['sale_id'] ?? 0);
+        $productId = (int)($row['product_id'] ?? 0);
+        if ($saleId <= 0 || $productId <= 0) {
+            continue;
+        }
+        $sold = (float)($row['sold_qty'] ?? 0);
+        $already = get_already_returned_qty($db, $saleId, $productId);
+        $remaining = round($sold - $already, 4);
+        if ($remaining <= 0.0009) {
+            continue;
+        }
+        $name = trim((string)($row['product_name'] ?? ''));
+        $barcode = trim((string)($row['barcode'] ?? ''));
+        $sku = trim((string)($row['sku'] ?? ''));
+        if ($needle !== '') {
+            $hay = mb_strtolower($name . ' ' . $barcode . ' ' . $sku . ' ' . $productId);
+            if (!str_contains($hay, $needle)) {
+                continue;
+            }
+        }
+        $inv = trim((string)($row['invoice_number'] ?? ''));
+        if ($inv === '') {
+            $inv = 'INV-' . $saleId;
+        }
+        $when = $row['completed_at'] ?? $row['sale_date'] ?? '';
+        $lines[] = [
+            'sale_id' => $saleId,
+            'invoice_number' => $inv,
+            'search_ref' => $inv,
+            'sale_date' => $when ? date('d-m-Y', strtotime((string)$when)) : '',
+            'product_id' => $productId,
+            'product_name' => $name,
+            'sold_qty' => $sold,
+            'already_returned' => $already,
+            'remaining' => $remaining,
+            'unit_price' => round((float)($row['unit_price'] ?? 0), 2),
+            'retail_price' => round((float)($row['retail_price'] ?? $row['unit_price'] ?? 0), 2),
+            'wholesale_price' => round((float)($row['wholesale_price'] ?? 0), 2),
+            'dealer_price' => round((float)($row['dealer_price'] ?? 0), 2),
+        ];
+        if (count($lines) >= $limit) {
+            break;
+        }
+    }
+
+    return $lines;
+}
+
 function ame_return_store_due_snapshot($db, int $returnId, float $previous, float $after): void
 {
     if ($returnId <= 0) {

@@ -1,3 +1,9 @@
+# 10.98.963 — বিক্রয় ফেরত: রেজিস্টার ক্রেতার নাম → যেকোনো মেমো থেকে পণ্য সার্চ
+includes/return_v2_functions.php
+modules/returns/v2/actions/search_customer_products.php
+modules/returns/v2/create_invoice_return.php
+includes/config.php
+VERSION.txt
 # 10.98.962 — বিক্রয় ফেরত: সাইডবার এক লিংক, মডিউল হাব + ট্যাব নেভ (অন্য মডিউল অপরিবর্তিত)
 modules/returns/index.php
 modules/returns/sales_return_module.php

@@ -153,9 +153,18 @@ ame_sales_return_include_nav('invoice');
                 <span id="registryBalanceText">সাবেক ব্যালেন্স: ৳0.00</span>
             </div>
             <div id="registryMemoHost"></div>
+            <div id="registryProductBlock" style="margin-top:14px; padding-top:14px; border-top:1px dashed #E2E8F0; display:none;">
+                <div class="sr-card-title" style="margin-bottom:6px;">📦 ক্রেতার যেকোনো মেমো থেকে পণ্য ফেরত</div>
+                <p class="sr-memo-muted">ক্রেতা বেছে নিলে তার সব সম্পন্ন মেমোর ফেরতযোগ্য পণ্য এখানে খুঁজুন — মেমো নম্বর মনে না থাকলেও চলে।</p>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <input type="text" id="registryProdSearch" autocomplete="off" placeholder="পণ্যের নাম, কোড, বারকোড..." style="flex:1; min-width:180px;">
+                    <button type="button" class="sr-search-btn" id="registryProdSearchBtn">🔍 পণ্য খুঁজুন</button>
+                </div>
+                <div class="sr-results" id="registryProdResults" style="position:relative; max-height:280px;"></div>
+            </div>
         </div>
         <div class="sr-card">
-            <div class="sr-card-title">🧾 ইনভয়েস নির্বাচন করুন</div>
+            <div class="sr-card-title">🧾 ইনভয়েস নির্বাচন করুন (ঐচ্ছিক — মেমো নম্বর জানা থাকলে)</div>
             <div style="display:flex; gap:8px;">
                 <input type="text" id="invoiceSearchInput" placeholder="মেমো #, বিক্রয় নম্বর বা INV-20261114-060739" style="flex:1;">
                 <button type="button" class="sr-search-btn" onclick="searchInvoice()">🔍 খুঁজুন</button>
@@ -292,8 +301,23 @@ function fmtBal(n) {
     return 'সমান ৳0.00';
 }
 
-function loadInvoiceMemo(ref) {
+var srRegistryCustomerId = 0;
+var srFocusProductId = 0;
+
+function bindRegistryCustomer(data) {
+    if (!data || !data.customer) return;
+    srRegistryCustomerId = Number(data.customer.id) || 0;
+    document.getElementById('customerIdInput').value = srRegistryCustomerId;
+    document.getElementById('customerNameInput').value = data.customer.name || '';
+    document.getElementById('summaryCustomer').textContent = data.customer.name || '';
+    applyRegisteredReturnLock(srRegistryCustomerId > 0, Number(data.balance) || 0);
+    var block = document.getElementById('registryProductBlock');
+    if (block) block.style.display = srRegistryCustomerId > 0 ? 'block' : 'none';
+}
+
+function loadInvoiceMemo(ref, productId) {
     if (!ref) return;
+    srFocusProductId = productId ? Number(productId) : 0;
     switchReturnMode('invoice');
     document.getElementById('invoiceSearchInput').value = ref;
     searchInvoice();
@@ -320,7 +344,7 @@ function paintRegistryMemos(data) {
             + '<td>৳' + Number(m.net_payable).toFixed(2) + '<br><small>বকেয়া ৳' + Number(m.due_amount).toFixed(2) + '</small></td>'
             + '<td>' + retTag + '</td>'
             + '<td><div class="sr-memo-actions">'
-            + (m.can_return ? '<button type="button" class="sr-memo-btn open" onclick="loadInvoiceMemo(' + JSON.stringify(String(m.search_ref)) + ')">ফেরত খুলুন</button>' : '')
+            + (m.can_return ? '<button type="button" class="sr-memo-btn open" onclick="loadInvoiceMemo(' + JSON.stringify(String(m.search_ref)) + ')">মেমো খুলুন</button>' : '')
             + '<a class="sr-memo-btn memo" href="../../sales/invoice.php?id=' + encodeURIComponent(String(m.sale_id)) + '" target="_blank" rel="noopener">মেমো</a>'
             + '<a class="sr-memo-btn ex" href="create_exchange.php?customer_id=' + encodeURIComponent(String(data.customer.id)) + '">এক্সচেঞ্জ</a>'
             + '</div></td></tr>';
@@ -330,6 +354,7 @@ function paintRegistryMemos(data) {
         balText.textContent = (data.customer.name || '') + ' — সাবেক: ' + fmtBal(data.balance);
         balBox.classList.add('show');
     }
+    bindRegistryCustomer(data);
 }
 
 function fetchRegistryMemos(customerId) {
@@ -352,11 +377,69 @@ function fetchRegistryMemos(customerId) {
 var registryCustSearch = document.getElementById('registryCustSearch');
 var registryCustResults = document.getElementById('registryCustResults');
 if (registryCustSearch && registryCustResults) {
-    srBindLookup(registryCustSearch, registryCustResults, 'customer', function () {}, function (c) {
+    srBindLookup(registryCustSearch, registryCustResults, 'customer', function (c) {
+        var meta = [];
+        if (c.code) meta.push('কোড ' + c.code);
+        if (c.phone) meta.push('ফোন ' + c.phone);
+        meta.push(srMoney(c.balance));
+        return srEsc(c.name) + '<small>' + srEsc(meta.join(' · ')) + '</small>';
+    }, function (c) {
         registryCustSearch.value = c.name;
+        bindRegistryCustomer({ customer: { id: c.id, name: c.name }, balance: c.balance });
         fetchRegistryMemos(c.id);
     });
 }
+
+(function () {
+    var prodInput = document.getElementById('registryProdSearch');
+    var prodBtn = document.getElementById('registryProdSearchBtn');
+    var prodBox = document.getElementById('registryProdResults');
+    if (!prodInput || !prodBox) return;
+
+    function runRegistryProductSearch() {
+        if (!srRegistryCustomerId) {
+            prodBox.innerHTML = '<div class="sr-result-item" style="color:#B45309;font-weight:700;">আগে উপরে রেজিস্টার ক্রেতা বেছে নিন।</div>';
+            prodBox.classList.add('open');
+            return;
+        }
+        var q = prodInput.value.trim();
+        prodBox.innerHTML = '<div class="sr-result-item">খোঁজা হচ্ছে...</div>';
+        prodBox.classList.add('open');
+        fetch('actions/search_customer_products.php?customer_id=' + encodeURIComponent(String(srRegistryCustomerId)) + '&q=' + encodeURIComponent(q), { credentials: 'same-origin' })
+            .then(function (res) { return res.json(); })
+            .then(function (data) {
+                if (data.status !== 'success' || !data.lines || !data.lines.length) {
+                    prodBox.innerHTML = '<div class="sr-result-item">' + srEsc(data.message || 'ফেরতযোগ্য পণ্য পাওয়া যায়নি।') + '</div>';
+                    return;
+                }
+                prodBox.innerHTML = data.lines.map(function (ln, idx) {
+                    return '<button type="button" class="sr-result-item" data-reg-prod="' + idx + '">'
+                        + srEsc(ln.product_name) + ' <small>মেমো ' + srEsc(ln.invoice_number)
+                        + ' · বাকি ' + Number(ln.remaining).toFixed(2) + ' · ৳' + Number(ln.unit_price).toFixed(2) + '</small></button>';
+                }).join('');
+                prodBox._lines = data.lines;
+            })
+            .catch(function () {
+                prodBox.innerHTML = '<div class="sr-result-item">সার্ভার ত্রুটি।</div>';
+            });
+    }
+
+    prodBtn.addEventListener('click', runRegistryProductSearch);
+    prodInput.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Enter') {
+            ev.preventDefault();
+            runRegistryProductSearch();
+        }
+    });
+    prodBox.addEventListener('click', function (ev) {
+        var hit = ev.target.closest('[data-reg-prod]');
+        if (!hit || !prodBox._lines) return;
+        var ln = prodBox._lines[Number(hit.getAttribute('data-reg-prod'))];
+        if (!ln) return;
+        loadInvoiceMemo(ln.search_ref, ln.product_id);
+        prodBox.classList.remove('open');
+    });
+})();
 
 function switchReturnMode(mode) {
     document.getElementById('isManualInput').value = mode === 'manual' ? '1' : '0';
@@ -634,6 +717,17 @@ function searchInvoice() {
                 cart.push(line);
             });
             renderCart();
+            if (srFocusProductId > 0) {
+                var focusId = srFocusProductId;
+                srFocusProductId = 0;
+                cart.forEach(function (line, idx) {
+                    if (line.product_id === focusId && (line.returned_qty || 0) < 0.001) {
+                        line.returned_qty = Math.min(1, line.remaining || 1);
+                        srPaintRow(idx);
+                    }
+                });
+                recalc();
+            }
         })
         .catch(function () {
             document.getElementById('searchNote').textContent = 'সার্ভারে সংযোগে সমস্যা হয়েছে।';
