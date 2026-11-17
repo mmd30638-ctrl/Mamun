@@ -168,13 +168,13 @@ $meta = $status_meta[$ret['status']] ?? $status_meta['draft'];
     .inv-btn-share { background:#0284C7; color:#fff; border-color:#0284C7; }
     .inv-btn-wa { background:#25D366; color:#fff; border-color:#25D366; }
     .inv-btn-tg { background:#229ED9; color:#fff; border-color:#229ED9; }
-    .memo-wrapper { background:#fff; width:100%; max-width:min(100%,480px); margin:0 auto; padding:24px 16px; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,.08); border:1px solid #E5E7EB; overflow:visible; box-sizing:border-box; }
-    .memo-head { text-align:center; border-bottom:2px dashed #003F8F; padding-bottom:12px; margin-bottom:12px; }
+    .memo-wrapper { background:#fff; width:100%; max-width:min(100%,480px); margin:0 auto; padding:24px 16px; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,.08); border:1.5px solid #059669; overflow:visible; box-sizing:border-box; }
+    .memo-head { text-align:center; border-bottom:2px dashed #059669; padding-bottom:12px; margin-bottom:12px; }
     .memo-shop-name { font-size:20px; font-weight:800; color:#003F8F; margin:0 0 4px; line-height:1.25; }
     .memo-shop-desc, .memo-shop-phone { font-size:15px; color:#111827; margin:0; font-weight:800; line-height:1.45; text-shadow:none; }
     .memo-shop-desc { color:#111827; }
     .memo-badge { display:inline-block; margin-top:8px; padding:3px 14px; background:#003F8F; color:#fff; font-size:12px; font-weight:800; border-radius:20px; }
-    .memo-meta-grid { display:grid; grid-template-columns:1fr; gap:8px 12px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:10px 12px; margin-bottom:12px; font-size:12px; width:100%; max-width:100%; box-sizing:border-box; }
+    .memo-meta-grid { display:grid; grid-template-columns:1fr; gap:8px 12px; background:#F8FAFC; border:1px solid #D6D3D1; border-radius:10px; padding:10px 12px; margin-bottom:12px; font-size:12px; width:100%; max-width:100%; box-sizing:border-box; }
     .memo-meta-item { display:flex; flex-direction:column; line-height:1.35; min-width:0; }
     .memo-meta-item .lbl { font-size:13px; color:#0B1E4D; font-weight:800; }
     .memo-meta-item .val { font-weight:800; color:#0F172A; word-break:break-word; }
@@ -338,7 +338,7 @@ $ame_file_base = 'return-' . preg_replace('/[^A-Za-z0-9_-]/', '', (string) $ret[
                 <span style="color:#C62828; font-weight:900;">−৳<?php echo number_format($deducted_amount > 0 ? $deducted_amount : (float)$ret['return_amount'], 2); ?></span>
             </div>
             <?php elseif (($ret['refund_method'] ?? '') === 'customer_balance'): ?>
-            <div class="memo-sum-row" style="background:#EFF6FF; border:1px solid #BFDBFE; border-radius:8px; padding:7px 9px; margin-top:6px; color:#1E40AF;">
+            <div class="memo-sum-row" style="background:#ECFDF5; border:1px solid #6EE7B7; border-radius:8px; padding:7px 9px; margin-top:6px; color:#047857;">
                 <span>👤 <?php echo ame_ui('সমন্বয় পদ্ধতি', 'Adjustment method'); ?></span>
                 <span style="font-weight:900;"><?php echo ame_ui('গ্রাহক খতিয়ানে সমন্বয়', 'Adjusted on the customer ledger'); ?> (−৳<?php echo number_format((float)$ret['return_amount'], 2); ?>)</span>
             </div>

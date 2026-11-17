@@ -32,6 +32,15 @@ html body.ame-sale-return-memo .memo-wrapper {
     margin-right: auto !important;
     box-sizing: border-box !important;
     overflow: visible !important;
+    border-color: #059669 !important;
+}
+
+html body.ame-sale-return-memo .memo-head {
+    border-bottom-color: #059669 !important;
+}
+
+html body.ame-sale-return-memo .memo-meta-grid {
+    border-color: #D6D3D1 !important;
 }
 
 html body.ame-sale-return-memo .inv-action-bar {
