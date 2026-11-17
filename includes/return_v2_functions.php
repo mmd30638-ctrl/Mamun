@@ -502,6 +502,203 @@ function ame_return_v2_customer_product_lines(mysqli $db, int $customerId, strin
     return $lines;
 }
 
+/**
+ * ইনভয়েস-ভিত্তিক ফেরত সংরক্ষণ + অনুমোদন + স্টক/লেজার সম্পন্ন (এক ট্রানজ্যাকশন)।
+ *
+ * @param list<array<string,mixed>> $items_raw
+ * @return array{return_id:int,return_no:string,total:float,previous_due:?float,balance_after:?float}
+ */
+function ame_return_v2_save_and_complete_invoice_return(
+    mysqli $db,
+    int $user_id,
+    ?int $sale_id,
+    ?int $customer_id,
+    string $customer_name,
+    string $sales_type,
+    array $items_raw,
+    bool $is_manual = false,
+    string $refund_method = 'customer_balance',
+    ?int $account_id = null,
+    string $notes = ''
+): array {
+    ensure_return_v2_schema($db);
+    if (!function_exists('account_debit')) {
+        require_once __DIR__ . '/account_functions.php';
+    }
+    $return_no = generate_return_no($db);
+    $total_return_amount = 0.0;
+    $total_discount = 0.0;
+    $clean_items = [];
+    $combined_reason = [];
+
+    foreach ($items_raw as $item) {
+        if (!is_array($item)) {
+            continue;
+        }
+        $product_id = (int)($item['product_id'] ?? 0);
+        $qty = round((float)($item['returned_qty'] ?? 0), 2);
+        $discount_pct = min(100, max(0, round((float)($item['discount_pct'] ?? 0), 2)));
+        $line_reason = substr(trim((string)($item['reason'] ?? '')), 0, 100);
+
+        if ($product_id <= 0 || $qty <= 0) {
+            continue;
+        }
+
+        if ($is_manual) {
+            $p_stmt = $db->prepare('SELECT id, sale_price FROM products WHERE id = ?');
+            $p_stmt->bind_param('i', $product_id);
+            $p_stmt->execute();
+            $p = $p_stmt->get_result()->fetch_assoc();
+            $p_stmt->close();
+            if (!$p) {
+                throw new RuntimeException('⚠️ নির্বাচিত পণ্যটি খুঁজে পাওয়া যায়নি।');
+            }
+            $unit_price = round((float)($item['unit_price'] ?? $p['sale_price']), 2);
+            if ($unit_price < 0) {
+                $unit_price = 0;
+            }
+            $sold_qty = null;
+        } else {
+            if (!$sale_id) {
+                throw new RuntimeException('⚠️ বিক্রয় মেমো নির্বাচন করুন।');
+            }
+            $si_stmt = $db->prepare('SELECT qty, sale_price FROM sale_items WHERE sale_id = ? AND product_id = ?');
+            $si_stmt->bind_param('ii', $sale_id, $product_id);
+            $si_stmt->execute();
+            $si = $si_stmt->get_result()->fetch_assoc();
+            $si_stmt->close();
+            if (!$si) {
+                throw new RuntimeException('⚠️ এই পণ্যটি মূল ইনভয়েসে পাওয়া যায়নি।');
+            }
+            $sold_qty = (float)$si['qty'];
+            $unit_price = round((float)($item['unit_price'] ?? $si['sale_price']), 2);
+            if ($unit_price < 0) {
+                $unit_price = (float)$si['sale_price'];
+            }
+            $already_returned = get_already_returned_qty($db, $sale_id, $product_id);
+            $remaining = $sold_qty - $already_returned;
+            if ($remaining <= 0) {
+                throw new RuntimeException('⚠️ এই পণ্যের আর ফেরতযোগ্য পরিমাণ নেই।');
+            }
+            if ($qty > $remaining + 0.001) {
+                throw new RuntimeException('⚠️ সর্বোচ্চ ফেরত ' . $remaining);
+            }
+        }
+
+        $gross = round($qty * $unit_price, 2);
+        $discount_amt = round($gross * ($discount_pct / 100), 2);
+        $line_total = round($gross - $discount_amt, 2);
+        $total_return_amount += $line_total;
+        $total_discount += $discount_amt;
+        if ($line_reason !== '') {
+            $combined_reason[$line_reason] = true;
+        }
+
+        $clean_items[] = [
+            'product_id' => $product_id,
+            'original_qty' => $sold_qty,
+            'returned_qty' => $qty,
+            'unit_price' => $unit_price,
+            'discount_pct' => $discount_pct,
+            'line_reason' => $line_reason,
+            'line_total' => $line_total,
+        ];
+    }
+
+    if ($clean_items === []) {
+        throw new RuntimeException('⚠️ বৈধ ফেরত লাইন পাওয়া যায়নি।');
+    }
+
+    $reason_summary = implode(', ', array_keys($combined_reason)) ?: 'গ্রাহক ফেরত';
+    $return_type = $is_manual ? 'manual' : 'invoice_based';
+
+    $stmt = $db->prepare(
+        "INSERT INTO sale_returns_v2 (return_no, sale_id, customer_id, customer_name, sales_type, return_type, return_amount, refund_method, discount_amount, account_id, reason, notes, return_date, status, created_by)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURDATE(), 'pending_approval', ?)"
+    );
+    $stmt->bind_param(
+        'siisssdsdissi',
+        $return_no,
+        $sale_id,
+        $customer_id,
+        $customer_name,
+        $sales_type,
+        $return_type,
+        $total_return_amount,
+        $refund_method,
+        $total_discount,
+        $account_id,
+        $reason_summary,
+        $notes,
+        $user_id
+    );
+    $stmt->execute();
+    $return_id = (int)$stmt->insert_id;
+    $stmt->close();
+
+    $item_stmt = $db->prepare(
+        'INSERT INTO sale_return_items (return_id, product_id, original_qty, returned_qty, unit_price, discount_pct, line_reason, line_total, is_replacement)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)'
+    );
+    foreach ($clean_items as $ci) {
+        $item_stmt->bind_param(
+            'iiddddsd',
+            $return_id,
+            $ci['product_id'],
+            $ci['original_qty'],
+            $ci['returned_qty'],
+            $ci['unit_price'],
+            $ci['discount_pct'],
+            $ci['line_reason'],
+            $ci['line_total']
+        );
+        $item_stmt->execute();
+    }
+    $item_stmt->close();
+
+    $approve = $db->prepare("UPDATE sale_returns_v2 SET status = 'approved', approved_by = ?, approved_at = NOW() WHERE id = ?");
+    $approve->bind_param('ii', $user_id, $return_id);
+    $approve->execute();
+    $approve->close();
+
+    if (!function_exists('add_ledger_entry')) {
+        require_once __DIR__ . '/../modules/customers/customer_ledger_functions.php';
+    }
+    complete_return_transaction($db, $return_id, $user_id, false);
+
+    $pay_status = ($refund_method !== 'customer_balance' && $account_id) ? 'paid' : ($customer_id ? 'adjusted' : 'paid');
+    $upd_pay = $db->prepare('UPDATE sale_returns_v2 SET payment_status = ? WHERE id = ?');
+    if ($upd_pay) {
+        $upd_pay->bind_param('si', $pay_status, $return_id);
+        $upd_pay->execute();
+        $upd_pay->close();
+    }
+
+    $prevShown = null;
+    $afterShown = null;
+    if ($customer_id) {
+        $snap = $db->prepare('SELECT previous_due, balance_after FROM sale_returns_v2 WHERE id = ? LIMIT 1');
+        if ($snap) {
+            $snap->bind_param('i', $return_id);
+            $snap->execute();
+            $snapRow = $snap->get_result()->fetch_assoc();
+            $snap->close();
+            if ($snapRow && $snapRow['previous_due'] !== null && $snapRow['balance_after'] !== null) {
+                $prevShown = (float)$snapRow['previous_due'];
+                $afterShown = (float)$snapRow['balance_after'];
+            }
+        }
+    }
+
+    return [
+        'return_id' => $return_id,
+        'return_no' => $return_no,
+        'total' => $total_return_amount,
+        'previous_due' => $prevShown,
+        'balance_after' => $afterShown,
+    ];
+}
+
 function ame_return_store_due_snapshot($db, int $returnId, float $previous, float $after): void
 {
     if ($returnId <= 0) {

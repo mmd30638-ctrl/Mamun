@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-const AME_SALES_RETURN_MODULE_REV = '10.98.962';
+const AME_SALES_RETURN_MODULE_REV = '10.98.964';
 
 /**
  * @return list<array{id:string,href:string,icon:string,label_key:string,desc_bn:string,desc_en:string}>
@@ -22,6 +22,14 @@ function ame_sales_return_sections(): array
             'label_key' => 'nav_return_dash',
             'desc_bn' => 'KPI, সাম্প্রতিক ফেরত, দ্রুত অ্যাকশন',
             'desc_en' => 'KPIs, recent returns, quick actions',
+        ],
+        [
+            'id' => 'quick',
+            'href' => '/modules/returns/v2/quick_return.php',
+            'icon' => '⚡',
+            'label_key' => 'nav_return_quick',
+            'desc_bn' => 'ক্রেতা নাম → পণ্য → ফেরত + মেমো (স্টক ও বকেয়া)',
+            'desc_en' => 'Customer → product → instant return memo',
         ],
         [
             'id' => 'register',
@@ -82,6 +90,9 @@ function ame_sales_return_hub_url(): string
 function ame_sales_return_active_from_request(): string
 {
     $script = str_replace('\\', '/', (string)($_SERVER['SCRIPT_NAME'] ?? ''));
+    if (str_contains($script, 'quick_return.php')) {
+        return 'quick';
+    }
     if (str_contains($script, 'dashboard.php') || str_ends_with($script, '/modules/returns/index.php')) {
         return 'dashboard';
     }

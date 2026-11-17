@@ -50,6 +50,7 @@ return [
     'nav_cashier_report' => 'ক্যাশিয়ার পারফরম্যান্স রিপোর্ট',
     'nav_sale_return' => 'বিক্রয় ফেরত',
     'nav_return_dash' => 'ফেরত ড্যাশবোর্ড',
+    'nav_return_quick' => 'দ্রুত ফেরত (ক্রেতা + পণ্য)',
     'nav_return_register' => 'ফেরত রেজিস্টার',
     'nav_return_invoice' => 'ইনভয়েস থেকে ফেরত',
     'nav_return_manual' => 'হাতে লেখা ফেরত (ইনভয়েস ছাড়া)',

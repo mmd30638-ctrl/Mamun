@@ -1,3 +1,12 @@
+# 10.98.964 — দ্রুত ফেরত: ক্রেতা+পণ্য → স্টক/বকেয়া/শেয়ার মেমো এক ক্লিক
+modules/returns/v2/quick_return.php
+modules/returns/v2/actions/quick_customer_return.php
+includes/return_v2_functions.php
+modules/returns/sales_return_module.php
+modules/returns/v2/dashboard.php
+includes/lang/bn_ui.php
+includes/config.php
+VERSION.txt
 # 10.98.963 — বিক্রয় ফেরত: রেজিস্টার ক্রেতার নাম → যেকোনো মেমো থেকে পণ্য সার্চ
 includes/return_v2_functions.php
 modules/returns/v2/actions/search_customer_products.php

@@ -79,7 +79,7 @@ $status_meta = [
 <div class="rd-wrap">
     <div class="rd-header">
         <h2>📦 <?php echo htmlspecialchars(function_exists('te') ? te('nav_sale_return') : 'বিক্রয় ফেরত', ENT_QUOTES, 'UTF-8'); ?> — <?php echo htmlspecialchars(function_exists('te') ? te('nav_return_dash') : 'ড্যাশবোর্ড', ENT_QUOTES, 'UTF-8'); ?></h2>
-        <a href="create_invoice_return.php" class="rd-add-btn">➕ নতুন রিটার্ন</a>
+        <a href="quick_return.php" class="rd-add-btn">⚡ দ্রুত ফেরত</a>
     </div>
 
     <?php if ($pending_approvals > 0): ?>
