@@ -1,3 +1,9 @@
+# 10.98.983 — নিট লাভ: অটো ব্যালেন্স, পরিশোধ/বণ্টন UI বাতিল
+modules/accounts/partner_accounting.php
+assets/css/partner-accounting.css
+modules/accounts/PA_REPORT_STANDARD.md
+includes/config.php
+VERSION.txt
 # 10.98.982 — পার্টনার রেঞ্জ রিপোর্ট PA-INTL-100 (হিরো rf/rt)
 includes/partner_accounting.php
 modules/accounts/partner_accounting.php

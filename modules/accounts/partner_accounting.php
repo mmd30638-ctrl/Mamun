@@ -502,7 +502,7 @@ include '../../partials/header.php';
         <div class="pa-head">
             <div>
                 <h2>ক্যাটাগরি ও নিট লাভ</h2>
-                <div class="sub"><?php echo htmlspecialchars($nestle['label']); ?> · প্রত্যেকের লাভের অংশ থেকে খরচ কাটে। নিট = লাভের অংশ − খরচ কাটা।</div>
+                <div class="sub"><?php echo htmlspecialchars($nestle['label']); ?> · নিট লাভের অংশ <strong>স্বয়ংক্রিয়ভাবে</strong> পার্টনার ব্যালেন্সে (লেজার বই) যোগ হয়। টাকা তুলতে উপরের <strong>উত্তোলন</strong> ট্যাব — আলাদা প্রোগ্রাম। এখানে পরিশোধ বাটন লাগে না।</div>
             </div>
             <form method="GET" class="pa-month-form no-print">
                 <input type="hidden" name="month" value="<?php echo htmlspecialchars($ym); ?>">
@@ -533,9 +533,8 @@ include '../../partials/header.php';
                             <th class="num">লাভের অংশ</th>
                             <th class="num">খরচ কাটা</th>
                             <th class="num">নিট লাভের অংশ</th>
-                            <th class="num">ব্যালেন্স</th>
-                            <th class="num">এই মাসে পরিশোধ</th>
-                            <th>স্ট্যাটাস</th>
+                            <th class="num">বর্তমান ব্যালেন্স</th>
+                            <th class="num">এই সময়ে লেজারে যুক্ত</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -546,7 +545,10 @@ include '../../partials/header.php';
                         }
                         $nestle_cuts = pa_share_cuts((float)$nestle['profit'], (float)$nestle['expense'], $nestle_pcts);
                         foreach ($dash['active'] as $a):
-                            $slice_cut = $nestle_cuts[(int)$a['partner']['id']] ?? ['gross' => 0.0, 'expense' => 0.0, 'net' => 0.0];
+                            $pid = (int)$a['partner']['id'];
+                            $slice_cut = ($range_on && $pcat === '')
+                                ? ($pa_period_cuts[$pid] ?? ['gross' => 0.0, 'expense' => 0.0, 'net' => 0.0])
+                                : ($nestle_cuts[$pid] ?? ['gross' => 0.0, 'expense' => 0.0, 'net' => 0.0]);
                             ?>
                             <tr>
                                 <td data-label="পার্টনার"><a class="pa-link pa-name" href="<?php echo htmlspecialchars(pa_partner_edit_href($ym, (int)$a['partner']['id'])); ?>"><?php echo htmlspecialchars($a['partner']['name']); ?></a></td>
@@ -554,40 +556,21 @@ include '../../partials/header.php';
                                 <td class="num" data-label="লাভের অংশ"><?php echo pa_taka($slice_cut['gross']); ?></td>
                                 <td class="num pa-cut" data-label="খরচ কাটা"><?php echo pa_taka($slice_cut['expense']); ?></td>
                                 <td class="num" data-label="নিট লাভের অংশ"><?php echo pa_taka($slice_cut['net']); ?></td>
-                                <td class="num pa-bal-cell" data-label="ব্যালেন্স">
+                                <td class="num pa-bal-cell" data-label="বর্তমান ব্যালেন্স">
                                     <?php
                                     $pid = (int)$a['partner']['id'];
                                     $book_total = (float)($pa_books[$pid]['total'] ?? 0);
-                                    echo pa_taka($book_total);
-                                    if (!$locked):
                                     ?>
-                                    <form class="pa-bal-form no-print" method="POST" action="actions/partner_accounting.php">
-                                        <?php echo csrf_field(); ?>
-                                        <input type="hidden" name="action" value="save_balance">
-                                        <input type="hidden" name="month" value="<?php echo htmlspecialchars($ym); ?>">
-                                        <input type="hidden" name="partner_id" value="<?php echo $pid; ?>">
-                                        <input type="number" step="0.01" name="balance" value="<?php echo htmlspecialchars(number_format($book_total, 2, '.', '')); ?>" aria-label="ব্যালেন্স" required>
-                                        <button type="submit" class="pa-btn primary">ব্যালেন্স সেভ</button>
-                                    </form>
-                                    <?php endif; ?>
+                                    <b><?php echo pa_taka($book_total); ?></b>
+                                    <span class="pa-bal-hint">সাবেক + এই মাসের লাভ/খরচ + উত্তোলন (লেজার)</span>
                                 </td>
-                                <td class="num" data-label="এই মাসে পরিশোধ"><?php echo pa_taka($a['paid']); ?></td>
-                                <td data-label="স্ট্যাটাস"><span class="pa-badge <?php echo htmlspecialchars($a['status']['key']); ?>"><?php echo htmlspecialchars($a['status']['label']); ?></span></td>
+                                <td class="num pa-plus" data-label="এই সময়ে লেজারে যুক্ত"><?php echo pa_taka($slice_cut['net']); ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-            <?php if (!$locked): ?>
-            <form class="pa-form no-print" method="POST" action="actions/partner_accounting.php">
-                <?php echo csrf_field(); ?>
-                <input type="hidden" name="action" value="distribute_profit">
-                <input type="hidden" name="month" value="<?php echo htmlspecialchars($ym); ?>">
-                <input type="hidden" name="pcat" value="<?php echo htmlspecialchars($pcat); ?>">
-                <?php echo pa_account_box($db); ?>
-                <button type="submit" class="pa-btn green" onclick="return confirm(<?php echo htmlspecialchars(json_encode(ame_l('সিলেক্ট করা খাতের বাকি নিট লাভ পার্টনার লেজারে জমা হবে। আবার চাপলে দ্বিতীয়বার জমা হবে না।','The remaining net profit of the selected category will be posted to the partner ledger. Pressing again will not post it twice.'), JSON_UNESCAPED_UNICODE), ENT_QUOTES); ?>);"><?php echo ame_l('লাভ বণ্টন করুন','Distribute Profit'); ?></button>
-            </form>
-            <?php endif; ?>
+            <p class="pa-auto-profit-note no-print">নিট লাভের অংশ ইতিমধ্যে লেজার বইতে আছে — আলাদা «লাভ বণ্টন» বা «পরিশোধ» চাপার দরকার নেই। ব্যালেন্স সমন্বয় শুধু <a href="<?php echo htmlspecialchars(pa_partner_edit_href($ym, (int)($dash['active'][0]['partner']['id'] ?? 0))); ?>">পার্টনার এডিট</a> বা স্টেটমেন্টে।</p>
         <?php endif; ?>
     </section>
 

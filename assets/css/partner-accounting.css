@@ -102,6 +102,28 @@
     background: #f1f5f9;
     border-radius: 10px;
 }
+.pa-bal-hint {
+    display: block;
+    margin-top: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748b;
+    line-height: 1.35;
+}
+.pa-auto-profit-note {
+    margin: 12px 0 0;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #ecfdf5;
+    border: 1px solid #6ee7b7;
+    color: #065f46;
+    font-size: 13px;
+    line-height: 1.45;
+}
+.pa-auto-profit-note a {
+    font-weight: 800;
+    color: #047857;
+}
 html body #main-content .pa-page .pa-card.teal {
     background: linear-gradient(135deg, #ccfbf1, #f0fdfa);
     border-color: #5eead4;
