@@ -106,7 +106,9 @@ $ame_slip = [
     'shop' => $shop,
 ];
 
+require_once __DIR__ . '/sales_return_module.php';
 include '../../partials/header.php';
+ame_sales_return_include_nav('report');
 ?>
 <style>
     .rr-wrap { padding: 12px; }

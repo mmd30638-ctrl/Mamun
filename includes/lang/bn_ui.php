@@ -48,7 +48,7 @@ return [
     'nav_sales_detailed' => 'বিস্তারিত বিক্রি রিপোর্ট',
     'nav_items_report' => 'পণ্যভিত্তিক বিক্রি রিপোর্ট',
     'nav_cashier_report' => 'ক্যাশিয়ার পারফরম্যান্স রিপোর্ট',
-    'nav_sale_return' => 'বিক্রি ফেরত',
+    'nav_sale_return' => 'বিক্রয় ফেরত',
     'nav_return_dash' => 'ফেরত ড্যাশবোর্ড',
     'nav_return_register' => 'ফেরত রেজিস্টার',
     'nav_return_invoice' => 'ইনভয়েস থেকে ফেরত',

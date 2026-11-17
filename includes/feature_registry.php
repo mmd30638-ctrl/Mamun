@@ -13,7 +13,7 @@ function ame_feature_routes(): array
     return [
         'm-sales' => '/modules/sales/pos.php',
         'm-sales-report' => '/modules/reports/sales_summary.php',
-        'm-sales-returns' => '/modules/returns/v2/dashboard.php',
+        'm-sales-returns' => '/modules/returns/index.php',
         'm-purchase' => '/modules/purchase/add.php',
         'm-purchase-returns' => '/modules/purchase/returns/dashboard.php',
         'm-inv' => '/modules/inventory/list.php',

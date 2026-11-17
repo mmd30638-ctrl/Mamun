@@ -1,7 +1,9 @@
 <?php 
 require_once '../../includes/config.php';
 require_once '../../includes/lang_helper.php';
-include '../../partials/header.php'; 
+require_once __DIR__ . '/sales_return_module.php';
+include '../../partials/header.php';
+ame_sales_return_include_nav('legacy'); 
 
 $returns = $db->query("SELECT * FROM sale_returns ORDER BY id DESC LIMIT 50");
 ?>

@@ -1,3 +1,23 @@
+# 10.98.962 — বিক্রয় ফেরত: সাইডবার এক লিংক, মডিউল হাব + ট্যাব নেভ (অন্য মডিউল অপরিবর্তিত)
+modules/returns/index.php
+modules/returns/sales_return_module.php
+modules/returns/SALES_RETURN_MODULE.md
+modules/returns/v2/partials/module_nav.php
+modules/returns/v2/dashboard.php
+modules/returns/v2/register.php
+modules/returns/v2/create_invoice_return.php
+modules/returns/v2/create_manual_return.php
+modules/returns/v2/create_exchange.php
+modules/returns/v2/view.php
+modules/returns/return_report.php
+modules/returns/history.php
+assets/css/sales-return-module.css
+partials/sidebar-menu.php
+partials/header.php
+includes/lang/bn_ui.php
+includes/feature_registry.php
+includes/config.php
+VERSION.txt
 # 10.98.961 — ড্রাফট মেমো: কমপ্লিট না হলে কমিশন/কর্মী হিস্ট্রিতে নয়; ড্রাফট সেভে পুরনো লাইন পurge
 includes/sales/sale_finance.php
 includes/engineer_bill_lock.php

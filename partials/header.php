@@ -335,7 +335,7 @@ html body .master-header-fixed .hdr-icon-btn .hdr-badge.hdr-badge-stock{backgrou
         <?php endif; ?>
 
         <?php if (!empty($_SESSION['user_id'])): ?>
-        <a href="/modules/returns/v2/create_invoice_return.php" class="hdr-icon-btn hdr-i-return" title="<?php echo current_lang() === 'en' ? 'Sale return' : 'বিক্রি ফেরত'; ?>">
+        <a href="/modules/returns/index.php" class="hdr-icon-btn hdr-i-return" title="<?php echo current_lang() === 'en' ? 'Sales return' : 'বিক্রয় ফেরত'; ?>">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 7H4.5v2.5M17 17h2.5V14.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 8.8A7.2 7.2 0 0 1 18.4 9.2M19 15.2A7.2 7.2 0 0 1 5.6 14.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         </a>
         <?php endif; ?>

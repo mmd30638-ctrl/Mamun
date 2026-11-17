@@ -13,7 +13,9 @@ $customers = $customers_res ? $customers_res->fetch_all(MYSQLI_ASSOC) : [];
 $products_res = $db->query('SELECT id, name, sale_price, stock FROM products WHERE ' . ame_product_option_sql('status') . ' ORDER BY name ASC LIMIT 1000');
 $products = $products_res ? $products_res->fetch_all(MYSQLI_ASSOC) : [];
 
+require_once __DIR__ . '/../sales_return_module.php';
 include __DIR__ . '/../../../partials/header.php';
+ame_sales_return_include_nav('exchange');
 ?>
 <style>
     .ex-wrap { padding: 15px; max-width: 640px; margin: 0 auto; }

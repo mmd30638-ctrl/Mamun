@@ -1,8 +1,10 @@
 <?php
 require_once __DIR__ . '/../../../includes/config.php';
 require_once __DIR__ . '/../../../includes/return_v2_functions.php';
+require_once __DIR__ . '/../sales_return_module.php';
 ensure_return_v2_schema($db);
 include __DIR__ . '/../../../partials/header.php';
+ame_sales_return_include_nav('dashboard');
 
 $today = date('Y-m-d');
 
@@ -76,7 +78,7 @@ $status_meta = [
 
 <div class="rd-wrap">
     <div class="rd-header">
-        <h2>📦 Sales Return & Exchange — ড্যাশবোর্ড</h2>
+        <h2>📦 <?php echo htmlspecialchars(function_exists('te') ? te('nav_sale_return') : 'বিক্রয় ফেরত', ENT_QUOTES, 'UTF-8'); ?> — <?php echo htmlspecialchars(function_exists('te') ? te('nav_return_dash') : 'ড্যাশবোর্ড', ENT_QUOTES, 'UTF-8'); ?></h2>
         <a href="create_invoice_return.php" class="rd-add-btn">➕ নতুন রিটার্ন</a>
     </div>
 
@@ -96,10 +98,19 @@ $status_meta = [
     </div>
 
     <div class="rd-nav-grid">
-        <a href="create_invoice_return.php" class="rd-nav-card"><div class="icon">🧾</div><div class="title">Invoice-Based Return</div></a>
-        <a href="create_manual_return.php" class="rd-nav-card"><div class="icon">✍️</div><div class="title">Manual Return</div></a>
-        <a href="create_exchange.php" class="rd-nav-card"><div class="icon">🔄</div><div class="title">Product Exchange</div></a>
-        <a href="register.php" class="rd-nav-card"><div class="icon">📋</div><div class="title">Return Register</div></a>
+        <?php foreach (ame_sales_return_sections() as $sec):
+            if (($sec['id'] ?? '') === 'dashboard') {
+                continue;
+            }
+            $isEn = function_exists('current_lang') && current_lang() === 'en';
+            $desc = $isEn ? ($sec['desc_en'] ?? '') : ($sec['desc_bn'] ?? '');
+            ?>
+        <a href="<?php echo htmlspecialchars((string)$sec['href'], ENT_QUOTES, 'UTF-8'); ?>" class="rd-nav-card">
+            <div class="icon"><?php echo htmlspecialchars((string)($sec['icon'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></div>
+            <div class="title"><?php echo htmlspecialchars(ame_sales_return_label($sec), ENT_QUOTES, 'UTF-8'); ?></div>
+            <?php if ($desc !== ''): ?><div style="font-size:11px;color:#64748B;margin-top:4px;"><?php echo htmlspecialchars($desc, ENT_QUOTES, 'UTF-8'); ?></div><?php endif; ?>
+        </a>
+        <?php endforeach; ?>
     </div>
 
     <div class="rd-recent">

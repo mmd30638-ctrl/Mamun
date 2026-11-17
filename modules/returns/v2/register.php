@@ -1,8 +1,10 @@
 <?php
 require_once __DIR__ . '/../../../includes/config.php';
 require_once __DIR__ . '/../../../includes/return_v2_functions.php';
+require_once __DIR__ . '/../sales_return_module.php';
 ensure_return_v2_schema($db);
 include __DIR__ . '/../../../partials/header.php';
+ame_sales_return_include_nav('register');
 
 $filter_status = trim($_GET['status'] ?? '');
 $filter_type = trim($_GET['type'] ?? '');

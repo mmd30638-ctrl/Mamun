@@ -58,7 +58,7 @@ function get_all_modules()
     return [
         'm-sales' => '🧾 বিক্রয় ও POS',
         'm-sales-report' => '📊 বিক্রয় রিপোর্ট',
-        'm-sales-returns' => '🔄 বিক্রয় ফেরত',
+        'm-sales-returns' => '🔄 বিক্রয় ফেরত মডিউল',
         'm-purchase' => '🚚 ক্রয়',
         'm-purchase-returns' => '↩️ ক্রয় ফেরত',
         'm-inv' => '📦 ইনভেন্টরি',

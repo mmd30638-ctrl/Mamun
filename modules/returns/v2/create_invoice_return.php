@@ -13,7 +13,9 @@ $accounts = ame_active_accounts($db);
 
 $preview_return_no = generate_return_no($db);
 
+require_once __DIR__ . '/../sales_return_module.php';
 include __DIR__ . '/../../../partials/header.php';
+ame_sales_return_include_nav('invoice');
 ?>
 <style>
     :root { --sr-primary:#059669; --sr-primary-dark:#047857; --sr-bg:#F0FDF4; --sr-border:#D1FAE5; --sr-danger:#DC2626; }

@@ -144,7 +144,9 @@ $ame_ret_pct = ($ame_ret_prev !== null && $ame_ret_prev > 0.009 && $ame_ret_cut 
     ? round(($ame_ret_cut / $ame_ret_prev) * 100, 2)
     : null;
 
+require_once __DIR__ . '/../sales_return_module.php';
 include __DIR__ . '/../../../partials/header.php';
+ame_sales_return_include_nav('register');
 
 $status_meta = [
     'draft' => ['label' => ame_ui('খসড়া', 'Draft'), 'bg' => '#F1F5F9', 'color' => '#64748B'],

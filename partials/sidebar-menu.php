@@ -115,20 +115,9 @@ $englishAtlas = function_exists('current_lang') && current_lang() === 'en';
 <?php endif; ?>
 
 <?php if ($is_admin || has_permission($db, 'm-sales-returns')): ?>
-<div class="menu-section">
-    <div class="menu-head" onclick="toggleAccordion('m-sales-returns')">
-        <span><?php echo ame_sb_icon('sale_return'); ?> <?php echo te('nav_sale_return'); ?></span><span class="arrow">▼</span>
-    </div>
-    <div id="m-sales-returns" class="menu-list hidden">
-        <a href="/modules/returns/v2/dashboard.php"><?php echo ame_sb_dot('sale_return', 'nav_return_dash'); ?> <?php echo te('nav_return_dash'); ?></a>
-        <a href="/modules/returns/v2/register.php"><?php echo ame_sb_dot('sale_return', 'nav_return_register'); ?> <?php echo te('nav_return_register'); ?></a>
-        <a href="/modules/returns/v2/create_invoice_return.php"><?php echo ame_sb_dot('sale_return', 'nav_return_invoice'); ?> <?php echo te('nav_return_invoice'); ?></a>
-        <a href="/modules/returns/v2/create_manual_return.php"><?php echo ame_sb_dot('sale_return', 'nav_return_manual'); ?> <?php echo te('nav_return_manual'); ?></a>
-        <a href="/modules/returns/v2/create_exchange.php"><?php echo ame_sb_dot('sale_return', 'nav_return_exchange'); ?> <?php echo te('nav_return_exchange'); ?></a>
-        <a href="/modules/returns/return_report.php"><?php echo ame_sb_dot('sale_return', 'nav_return_report'); ?> <?php echo te('nav_return_report'); ?></a>
-        <a href="/modules/returns/history.php"><?php echo ame_sb_dot('sale_return', 'nav_return_old_hist'); ?> <?php echo te('nav_return_old_hist'); ?></a>
-    </div>
-</div>
+<a href="/modules/returns/index.php" class="direct-link <?php echo str_contains($script_now, '/modules/returns/') ? 'active' : ''; ?>">
+    <?php echo ame_sb_icon('sale_return'); ?> <?php echo te('nav_sale_return'); ?>
+</a>
 <?php endif; ?>
 
 <?php if ($is_admin || has_permission($db, 'm-purchase')): ?>
