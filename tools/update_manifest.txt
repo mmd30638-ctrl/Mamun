@@ -1,3 +1,10 @@
+# 10.98.981 — পার্টনার: যোগদান তারিখ পিকার (CSS + মোবাইল ক্লিক)
+assets/css/pa-datepicker.css
+assets/js/pa-datepicker.js
+modules/accounts/partner_accounting.php
+partials/footer.php
+includes/config.php
+VERSION.txt
 # 10.98.980 — এক্সচেঞ্জ: মেমো ব্যালেন্স চিহ্ন + ফর্ম লেবেল
 modules/returns/v2/view.php
 modules/returns/v2/create_exchange.php

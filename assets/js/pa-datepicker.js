@@ -1,9 +1,15 @@
-/* 10.98.698 — পার্টনার হিসাব: বাংলা তারিখ/মাস বাছাই (ব্রাউজারের ইংরেজি পিকারের বদলে) */
+/* পার্টনার হিসাব: বাংলা তারিখ/মাস বাছাই (মোবাইল + ডেস্কটপ) */
 (function () {
   'use strict';
-  var root = document.querySelector('.pa-page');
-  if (!root || root.getAttribute('data-pa-dp') === '1') return;
-  root.setAttribute('data-pa-dp', '1');
+
+  function boot() {
+    var root = document.querySelector('.pa-page');
+    if (!root || root.getAttribute('data-pa-dp') === '1') return;
+    root.setAttribute('data-pa-dp', '1');
+    init(root);
+  }
+
+  function init(root) {
 
   var MONTHS = ['জানুয়ারি', 'ফেব্রুয়ারি', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টেম্বর', 'অক্টোবর', 'নভেম্বর', 'ডিসেম্বর'];
   var SHORT = ['জানু', 'ফেব্রু', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টে', 'অক্টো', 'নভে', 'ডিসে'];
@@ -39,6 +45,9 @@
   var state = null;
 
   function close() {
+    if (state && state.btn) {
+      state.btn.setAttribute('aria-expanded', 'false');
+    }
     if (sheet) { sheet.parentNode.removeChild(sheet); sheet = null; }
     document.removeEventListener('keydown', onKey, true);
     document.body.classList.remove('pa-dp-open');
@@ -175,35 +184,77 @@
     });
   }
 
+  function normValue(raw, kind) {
+    var v = String(raw || '').trim();
+    if (kind === 'date' && /^\d{4}-\d{2}-\d{2}/.test(v)) {
+      return v.slice(0, 10);
+    }
+    if (kind === 'month' && /^\d{4}-\d{2}/.test(v)) {
+      return v.slice(0, 7);
+    }
+    return v;
+  }
+
   function enhance(input) {
+    if (input.getAttribute('data-pa-dp-done') === '1') return;
     var kind = input.type;
     if (kind !== 'date' && kind !== 'month') return;
+    input.setAttribute('data-pa-dp-done', '1');
+    input.value = normValue(input.value, kind);
     var required = input.required;
     var placeholder = kind === 'month' ? 'মাস বাছুন' : 'তারিখ বাছুন';
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'pa-dp-btn' + (input.value ? '' : ' is-empty');
+    btn.setAttribute('aria-haspopup', 'dialog');
+    btn.setAttribute('aria-expanded', 'false');
     btn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M7 2h2v2h6V2h2v2h2a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2V2zm12 8H5v9h14v-9zM5 6v2h14V6H5z"/></svg>'
       + '<span class="pa-dp-text">' + esc(input.value ? label(parse(input.value, kind), kind) : placeholder) + '</span>'
       + '<span class="pa-dp-chev" aria-hidden="true">▾</span>';
+    var wrap = document.createElement('div');
+    wrap.className = 'pa-dp-field';
+    var host = input.parentNode;
+    host.insertBefore(wrap, input);
+    wrap.appendChild(input);
+    wrap.appendChild(btn);
     input.required = false;
     input.type = 'hidden';
-    input.parentNode.insertBefore(btn, input.nextSibling);
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
+    input.setAttribute('autocomplete', 'off');
+    function triggerOpen(e) {
+      if (e && e.cancelable) e.preventDefault();
+      if (e) e.stopPropagation();
+      btn.setAttribute('aria-expanded', 'true');
       open(input, btn, kind, placeholder, !required && kind === 'date');
+    }
+    wrap.addEventListener('click', function (e) {
+      if (e.target === input) return;
+      triggerOpen(e);
     });
+    if (host && host.tagName === 'LABEL') {
+      host.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          triggerOpen(e);
+        }
+      });
+    }
     if (input.form && required) {
       input.form.addEventListener('submit', function (e) {
         if (!input.value) {
           e.preventDefault();
           btn.classList.add('is-bad');
-          open(input, btn, kind, placeholder, false);
+          triggerOpen(e);
         }
       });
     }
   }
 
-  var inputs = root.querySelectorAll('input[type="date"], input[type="month"]');
-  for (var i = 0; i < inputs.length; i++) enhance(inputs[i]);
+    var inputs = root.querySelectorAll('input[type="date"], input[type="month"]');
+    for (var i = 0; i < inputs.length; i++) enhance(inputs[i]);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
 })();

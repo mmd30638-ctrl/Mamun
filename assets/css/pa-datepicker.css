@@ -1,0 +1,199 @@
+/* পার্টনার অ্যাকাউন্টিং — বাংলা তারিখ/মাস বাছাই (pa-datepicker.js) */
+.pa-dp-field {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+}
+.pa-dp-btn {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1.5px solid #6ee7b7;
+  border-radius: 12px;
+  background: #ecfdf5;
+  color: #047857;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  text-align: left;
+}
+.pa-dp-btn.is-empty {
+  color: #64748b;
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+.pa-dp-btn.is-bad {
+  border-color: #f87171;
+  background: #fef2f2;
+}
+.pa-dp-btn svg {
+  flex: 0 0 auto;
+  color: #059669;
+}
+.pa-dp-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  line-height: 1.35;
+}
+.pa-dp-chev {
+  flex: 0 0 auto;
+  opacity: 0.65;
+  font-size: 12px;
+}
+
+body.pa-dp-open {
+  overflow: hidden;
+}
+.pa-dp-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100050;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 12px;
+  background: rgba(15, 23, 42, 0.45);
+}
+.pa-dp-card {
+  width: min(100%, 380px);
+  max-height: min(92vh, 520px);
+  overflow: auto;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.28);
+  color: #0f172a;
+}
+.pa-dp-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e2e8f0;
+  font-weight: 800;
+  font-size: 15px;
+}
+.pa-dp-x {
+  border: 0;
+  background: #f1f5f9;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.pa-dp-body {
+  padding: 12px;
+}
+.pa-dp-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.pa-dp-title {
+  flex: 1;
+  text-align: center;
+  font-weight: 800;
+  font-size: 15px;
+}
+.pa-dp-title.is-link {
+  border: 0;
+  background: #ecfdf5;
+  color: #047857;
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.pa-dp-nav {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.pa-dp-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 6px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+}
+.pa-dp-days,
+.pa-dp-months {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.pa-dp-months {
+  grid-template-columns: repeat(3, 1fr);
+}
+.pa-dp-d,
+.pa-dp-m {
+  min-height: 40px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+.pa-dp-d.is-sel,
+.pa-dp-m.is-sel {
+  background: #059669;
+  border-color: #059669;
+  color: #fff;
+}
+.pa-dp-d.is-today:not(.is-sel),
+.pa-dp-m.is-today:not(.is-sel) {
+  border-color: #34d399;
+  background: #ecfdf5;
+}
+.pa-dp-blank {
+  display: block;
+  min-height: 40px;
+}
+.pa-dp-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed #e2e8f0;
+}
+.pa-dp-act {
+  flex: 1 1 auto;
+  min-height: 42px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  font-weight: 700;
+  cursor: pointer;
+}
+.pa-dp-close {
+  background: #fff;
+}
+
+html body #main-content .pa-page .pa-edit label:has(.pa-dp-field),
+html body #main-content .pa-page .pa-form label:has(.pa-dp-field) {
+  cursor: pointer;
+}
+
+@media (min-width: 640px) {
+  .pa-dp-overlay {
+    align-items: center;
+  }
+}

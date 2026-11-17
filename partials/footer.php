@@ -44,8 +44,11 @@ if ($ame_load_resubmit_guard):
 <script src="/assets/js/qa-api-log.js?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>" defer></script>
 <?php include __DIR__ . '/page_fit.php'; ?>
 <?php if (str_contains((string)($_SERVER['SCRIPT_NAME'] ?? ''), '/modules/accounts/partner_')): ?>
-<link rel="stylesheet" href="/assets/css/partner-desk.css?v=10.98.847">
-<script src="/assets/js/partner-desk.js?v=10.98.847" defer></script>
+<?php $pa_asset_v = htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : ($sys_version ?? '1.0'), ENT_QUOTES, 'UTF-8'); ?>
+<link rel="stylesheet" href="/assets/css/partner-desk.css?v=<?php echo $pa_asset_v; ?>">
+<link rel="stylesheet" href="/assets/css/pa-datepicker.css?v=<?php echo $pa_asset_v; ?>">
+<script src="/assets/js/partner-desk.js?v=<?php echo $pa_asset_v; ?>" defer></script>
+<script src="/assets/js/pa-datepicker.js?v=<?php echo $pa_asset_v; ?>" defer></script>
 <?php endif; ?>
 
 

@@ -112,6 +112,13 @@ $sale_total = round($sale_total, 2);
 $qd = static function (string $d): string {
     return date('Y-m-d', strtotime($d));
 };
+$pa_ymd = static function ($raw): string {
+    $raw = trim((string)$raw);
+    if (preg_match('/^(\d{4}-\d{2}-\d{2})/', $raw, $m)) {
+        return $m[1];
+    }
+    return '';
+};
 $range_links = [
     'আজ' => [$qd('today'), $qd('today')],
     'গতকাল' => [$qd('yesterday'), $qd('yesterday')],
@@ -807,10 +814,10 @@ include '../../partials/header.php';
                 <input type="number" step="0.01" name="balance" required value="<?php echo htmlspecialchars(number_format($edit_balance, 2, '.', '')); ?>">
             </label>
             <label>যোগদান
-                <input type="date" name="join_date" value="<?php echo htmlspecialchars((string)($edit['join_date'] ?? '')); ?>">
+                <input type="date" name="join_date" value="<?php echo htmlspecialchars($pa_ymd($edit['join_date'] ?? '')); ?>">
             </label>
             <label>প্রস্থান
-                <input type="date" name="exit_date" value="<?php echo htmlspecialchars((string)($edit['exit_date'] ?? '')); ?>">
+                <input type="date" name="exit_date" value="<?php echo htmlspecialchars($pa_ymd($edit['exit_date'] ?? '')); ?>">
             </label>
             <label>স্ট্যাটাস
                 <select name="status">
@@ -1362,7 +1369,6 @@ include '../../partials/header.php';
     });
 })();
 </script>
-<script src="/assets/js/pa-datepicker.js?v=<?php echo htmlspecialchars(AME_ASSET_VERSION, ENT_QUOTES, 'UTF-8'); ?>" defer></script><!-- 10.98.698 -->
 <?php include '../../partials/footer.php'; ?>
 <style id="pa-acct-618">
 html body #main-content .pa-page .pa-nowrap,
