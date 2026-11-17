@@ -63,7 +63,6 @@ $pcat = trim((string)($_GET['pcat'] ?? ''));
 if ($pcat !== '' && !in_array($pcat, $shared_cats, true)) {
     $pcat = '';
 }
-$nestle = pa_nestle_view($db, $ym, $pcat, $m);
 $reserve = pa_reserve_accounts($db);
 $capital_rows = pa_capital_history($db, $bounds['from'], $bounds['to']);
 $tab = (string)($_GET['tab'] ?? 'capital');
@@ -86,19 +85,64 @@ foreach ($dash['partners'] as $pa_partner_row) {
         error_log('partner books: ' . $e->getMessage());
     }
 }
-$lf_raw = trim((string)($_GET['lf'] ?? ''));
-$lt_raw = trim((string)($_GET['lt'] ?? ''));
-$lf_ok = preg_match('/^\d{4}-\d{2}-\d{2}$/', $lf_raw) && strtotime($lf_raw) !== false;
-$lt_ok = preg_match('/^\d{4}-\d{2}-\d{2}$/', $lt_raw) && strtotime($lt_raw) !== false;
-$range_on = $lf_ok || $lt_ok;
-$sale_from = $bounds['from'];
-$sale_to = $bounds['to'];
-if ($range_on) {
-    $sale_from = $lf_ok ? $lf_raw : ($lt_ok ? $lt_raw : $bounds['from']);
-    $sale_to = $lt_ok ? $lt_raw : $sale_from;
-    if ($sale_to < $sale_from) {
-        [$sale_from, $sale_to] = [$sale_to, $sale_from];
+$rf_raw = trim((string)($_GET['rf'] ?? $_GET['lf'] ?? ''));
+$rt_raw = trim((string)($_GET['rt'] ?? $_GET['lt'] ?? ''));
+$pa_rep = pa_resolve_report_range($db, $ym, $rf_raw, $rt_raw);
+$sale_from = $pa_rep['from'];
+$sale_to = $pa_rep['to'];
+$range_on = !$pa_rep['full_month'];
+$pa_period = pa_period_totals($db, $sale_from, $sale_to, $pcat);
+$pur_pack = pa_ledger_purchase_lines($db, $sale_from, $sale_to, $range_on ? 500 : 120);
+$pur_lines = $pur_pack['lines'] ?? [];
+$pa_rep_qs = pa_report_qs($ym, $sale_from, $sale_to, ['tab' => $tab]);
+$pa_rep_qs_amp = str_replace('&', '&amp;', $pa_rep_qs);
+if ($pcat === '') {
+    $nestle = [
+        'category' => '',
+        'label' => $range_on
+            ? (date('d-m-Y', strtotime($sale_from)) . ' – ' . date('d-m-Y', strtotime($sale_to)))
+            : ('সব অ্যাক্টিভ খাত · ' . (string)($bounds['label'] ?? $ym)),
+        'sales' => (float)$pa_period['sales'],
+        'cost' => (float)$pa_period['cost'],
+        'profit' => (float)$pa_period['invoice_profit'],
+        'expense' => (float)$pa_period['expense_total'],
+        'net' => (float)$pa_period['net_profit'],
+    ];
+} else {
+    $nestle = pa_nestle_view($db, $ym, $pcat, $m);
+    if ($range_on) {
+        $p_rows = pa_month_invoices($db, $sale_from, $sale_to, $pcat);
+        $p_sales = $p_profit = $p_cost = 0.0;
+        foreach ($p_rows as $inv) {
+            $p_sales += pa_money($inv['sales_amount'] ?? 0);
+            $p_cost += pa_money($inv['cost_amount'] ?? 0);
+            $p_profit += pa_money($inv['profit_amount'] ?? 0);
+        }
+        $base = pa_money($m['invoice_profit'] ?? 0);
+        $p_exp = 0.0;
+        if (abs($base) > 0.009) {
+            $p_exp = pa_money($pa_period['expense_total'] * ($p_profit / $base));
+        } else {
+            $p_exp = (float)$pa_period['expense_total'];
+        }
+        $nestle = [
+            'category' => $pcat,
+            'label' => $pcat . ' · ' . date('d-m-Y', strtotime($sale_from)) . ' – ' . date('d-m-Y', strtotime($sale_to)),
+            'sales' => $p_sales,
+            'cost' => $p_cost,
+            'profit' => $p_profit,
+            'expense' => $p_exp,
+            'net' => pa_money($p_profit - $p_exp),
+        ];
     }
+}
+$pa_period_cuts = [];
+$pa_period_pcts = [];
+foreach ($dash['active'] as $pa_a) {
+    $pa_period_pcts[(int)$pa_a['partner']['id']] = (float)$pa_a['share_pct'];
+}
+if ($pa_period_pcts !== []) {
+    $pa_period_cuts = pa_share_cuts((float)$pa_period['invoice_profit'], (float)$pa_period['expense_total'], $pa_period_pcts);
 }
 $ledger_cats = pa_ledger_categories($db, $sale_from, $sale_to);
 $sale_pack = pa_ledger_sale_lines($db, $sale_from, $sale_to, $range_on ? 1000 : 200);
@@ -119,27 +163,20 @@ $pa_ymd = static function ($raw): string {
     }
     return '';
 };
+$m_start = max($bounds['from'], $pa_rep['month_from']);
+$m_end = min($bounds['to'], $qd('today'));
+if ($m_end < $m_start) {
+    $m_end = $bounds['to'];
+}
 $range_links = [
+    'পুরো মাস' => [$bounds['from'], $bounds['to']],
     'আজ' => [$qd('today'), $qd('today')],
     'গতকাল' => [$qd('yesterday'), $qd('yesterday')],
-    'গত ৭ দিন' => [$qd('-6 days'), $qd('today')],
-    'এই মাস' => [date('Y-m-01'), $qd('today')],
+    '১–আজ' => [$bounds['from'], $m_end],
 ];
-
-$exp_lf = trim((string)($_GET['ef'] ?? ''));
-$exp_lt = trim((string)($_GET['et'] ?? ''));
-$exp_lf_ok = preg_match('/^\d{4}-\d{2}-\d{2}$/', $exp_lf) && strtotime($exp_lf) !== false;
-$exp_lt_ok = preg_match('/^\d{4}-\d{2}-\d{2}$/', $exp_lt) && strtotime($exp_lt) !== false;
-$exp_range_on = $exp_lf_ok || $exp_lt_ok;
-$exp_from = $bounds['from'];
-$exp_to = $bounds['to'];
-if ($exp_range_on) {
-    $exp_from = $exp_lf_ok ? $exp_lf : $exp_lt;
-    $exp_to = $exp_lt_ok ? $exp_lt : $exp_from;
-    if ($exp_to < $exp_from) {
-        [$exp_from, $exp_to] = [$exp_to, $exp_from];
-    }
-}
+$exp_from = $sale_from;
+$exp_to = $sale_to;
+$exp_range_on = $range_on;
 $exp_pid = (int)($_GET['ep'] ?? 0);
 $exp_partners = [];
 foreach ($dash['active'] as $exp_a) {
@@ -152,7 +189,7 @@ $exp_pack = pa_expense_lines($db, $exp_from, $exp_to, $exp_range_on ? 1000 : 200
 $exp_lines = $exp_pack['lines'];
 $exp_total_all = (float)$exp_pack['total'];
 $exp_total_view = $exp_pid ? (float)($exp_pack['shares'][$exp_pid] ?? 0) : $exp_total_all;
-$exp_q = '?month=' . rawurlencode($ym) . '&amp;tab=' . rawurlencode($tab) . ($exp_pid ? ('&amp;ep=' . $exp_pid) : '');
+$exp_q = $pa_rep_qs_amp . ($exp_pid ? ('&amp;ep=' . $exp_pid) : '');
 
 require_once '../../includes/partner_expense_ui.php';
 include '../../partials/header.php';
@@ -167,9 +204,32 @@ include '../../partials/header.php';
                 <h1><?php echo htmlspecialchars(shop_name()); ?></h1>
                 <p>একসাথে ব্যবসা, পরিষ্কার হিসাব। ইনভয়েস লাভ আগে ভাগ হয়। পার্টনারশিপ খরচ তারপর দুজনের লাভের অংশ থেকে শেয়ার অনুযায়ী কাটে।</p>
             </div>
-            <form method="GET" class="pa-month-form">
-                <input type="month" name="month" value="<?php echo htmlspecialchars($ym); ?>">
-                <button type="submit" class="pa-btn ghost">মাস দেখুন</button>
+            <form method="GET" class="pa-hero-range no-print" id="paHeroRangeForm">
+                <input type="hidden" name="tab" value="<?php echo htmlspecialchars($tab); ?>">
+                <div class="pa-hero-range-grid">
+                    <label class="pa-hero-field">
+                        <span>হিসাব মাস</span>
+                        <input type="month" name="month" value="<?php echo htmlspecialchars($ym); ?>" required>
+                    </label>
+                    <label class="pa-hero-field">
+                        <span>শুরু</span>
+                        <input type="date" name="rf" min="<?php echo htmlspecialchars($bounds['from']); ?>" max="<?php echo htmlspecialchars($bounds['to']); ?>" value="<?php echo htmlspecialchars($sale_from); ?>" required>
+                    </label>
+                    <label class="pa-hero-field">
+                        <span>শেষ</span>
+                        <input type="date" name="rt" min="<?php echo htmlspecialchars($bounds['from']); ?>" max="<?php echo htmlspecialchars($bounds['to']); ?>" value="<?php echo htmlspecialchars($sale_to); ?>" required>
+                    </label>
+                    <button type="submit" class="pa-btn primary pa-hero-range-btn">রিপোর্ট দেখুন</button>
+                </div>
+                <p class="pa-hero-range-note">শুধু এই মাসের ভিতরে তারিখ — সব বিক্রয়, ক্রয়, খরচ ও পার্টনার অংশ একসাথে। মূলধন/ব্যালেন্স ট্যাব পুরো মাস অনুযায়ী।</p>
+                <?php if (!empty($pa_rep['clamped'])): ?>
+                    <p class="pa-hero-range-warn">তারিখ মাসের মধ্যে রাখা হয়েছে — বাইরের তারিখ গ্রহণ হয় না।</p>
+                <?php endif; ?>
+                <div class="pa-hero-range-quick">
+                    <?php foreach ($range_links as $rl_label => $rl): ?>
+                        <a href="<?php echo htmlspecialchars(pa_report_qs($ym, $rl[0], $rl[1], ['tab' => $tab])); ?>"><?php echo htmlspecialchars($rl_label); ?></a>
+                    <?php endforeach; ?>
+                </div>
             </form>
         </div>
         <div class="pa-foot-links no-print">
@@ -219,11 +279,75 @@ include '../../partials/header.php';
     ?>
 
     <div class="pa-cards">
-        <div class="pa-card blue"><div class="lbl">মোট মূলধন</div><div class="val"><?php echo pa_taka($dash['capital_total']); ?></div></div>
-        <div class="pa-card green"><div class="lbl">সিলেক্টেড ক্যাটাগরি লাভ</div><div class="val"><?php echo pa_taka($nestle['profit']); ?></div></div>
-        <div class="pa-card gold"><div class="lbl"><?php echo ame_l('নিট লাভ / নেসলে','Net profit / Nestle'); ?></div><div class="val"><?php echo pa_taka($nestle['net']); ?></div></div>
+        <div class="pa-card blue"><div class="lbl">মোট মূলধন <small>(মাস)</small></div><div class="val"><?php echo pa_taka($dash['capital_total']); ?></div></div>
+        <div class="pa-card green"><div class="lbl">বিক্রয় · <?php echo (int)$pa_period['invoice_count']; ?> টি</div><div class="val"><?php echo pa_taka($pa_period['invoice_profit']); ?></div></div>
+        <div class="pa-card teal"><div class="lbl">ক্রয় · <?php echo (int)$pa_period['purchase_count']; ?> টি</div><div class="val"><?php echo pa_taka($pa_period['purchase_total']); ?></div></div>
+        <div class="pa-card gold"><div class="lbl">নিট লাভ (রেঞ্জ)</div><div class="val"><?php echo pa_taka($nestle['net']); ?></div></div>
         <div class="pa-card red"><div class="lbl"><span class="pa-nowrap">ব্যাংক ও ক্যাশ রিজার্ভ</span></div><div class="val"><?php echo pa_taka($reserve['total']); ?></div></div>
     </div>
+
+    <section class="pa-panel pa-period-report" id="paPeriodReport">
+        <div class="pa-head">
+            <div>
+                <h2>সময়কাল রিপোর্ট · <?php echo htmlspecialchars(date('d-m-Y', strtotime($sale_from))); ?> – <?php echo htmlspecialchars(date('d-m-Y', strtotime($sale_to))); ?></h2>
+                <div class="sub">হিসাব সার্ভার থেকে — URL শুধু তারিখ ফিল্টার। টাকার অংক এখানে বদলানো যায় না। নিচে সাবেক ব্যালেন্স, তারপর এই সময়ের অংশ, শেষ কলাম মাসের বই ব্যালেন্স।</div>
+            </div>
+            <a class="pa-btn soft" href="partner_sales_share.php?doc=all&amp;month=<?php echo htmlspecialchars($ym); ?>&amp;lf=<?php echo htmlspecialchars($sale_from); ?>&amp;lt=<?php echo htmlspecialchars($sale_to); ?>">প্রিন্ট / শেয়ার</a>
+        </div>
+        <div class="pa-period-kpi">
+            <div><span>মোট বিক্রি</span><b><?php echo pa_taka($pa_period['sales']); ?></b></div>
+            <div><span>পণ্য খরচ</span><b><?php echo pa_taka($pa_period['cost']); ?></b></div>
+            <div><span>পার্টনারশিপ খরচ</span><b class="pa-minus"><?php echo pa_taka($pa_period['expense_total']); ?></b></div>
+            <div><span>ক্রয় (শেয়ার্ড খাত)</span><b><?php echo pa_taka($pa_period['purchase_total']); ?></b></div>
+        </div>
+        <?php if (!$dash['active']): ?>
+            <div class="pa-empty">সক্রিয় পার্টনার লাগবে।</div>
+        <?php else: ?>
+        <div class="pa-table-wrap">
+            <table class="pa-table pa-period-table">
+                <thead>
+                    <tr>
+                        <th>পার্টনার</th>
+                        <th class="num">সাবেক ব্যালেন্স</th>
+                        <th class="num">রেঞ্জে লাভের অংশ</th>
+                        <th class="num">রেঞ্জে খরচ কাটা</th>
+                        <th class="num">রেঞ্জে নিট</th>
+                        <th class="num">মাস শেষ ব্যালেন্স</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($dash['active'] as $a):
+                        $pid = (int)$a['partner']['id'];
+                        $slice = $pa_period_cuts[$pid] ?? ['gross' => 0.0, 'expense' => 0.0, 'net' => 0.0];
+                        $open = pa_opening($db, $a['partner'], $ym);
+                        $book_total = (float)($pa_books[$pid]['total'] ?? 0);
+                        ?>
+                    <tr>
+                        <td data-label="পার্টনার"><a class="pa-link" href="<?php echo htmlspecialchars(pa_partner_edit_href($ym, $pid)); ?>"><?php echo htmlspecialchars($a['partner']['name']); ?></a></td>
+                        <td class="num" data-label="সাবেক ব্যালেন্স"><?php echo pa_taka($open); ?></td>
+                        <td class="num" data-label="রেঞ্জে লাভের অংশ"><?php echo pa_taka($slice['gross']); ?></td>
+                        <td class="num pa-cut" data-label="রেঞ্জে খরচ কাটা"><?php echo pa_taka($slice['expense']); ?></td>
+                        <td class="num" data-label="রেঞ্জে নিট"><?php echo pa_taka($slice['net']); ?></td>
+                        <td class="num" data-label="মাস শেষ ব্যালেন্স"><?php echo pa_taka($book_total); ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <?php endif; ?>
+        <?php if ($pur_lines): ?>
+        <h3 class="pa-period-sub">ক্রয় লাইন (শেয়ার্ড খাত)</h3>
+        <div class="pa-sale-list">
+            <?php foreach ($pur_lines as $pl): ?>
+                <div class="pa-sale-line">
+                    <span class="pa-sale-date"><?php echo htmlspecialchars(date('d-m-Y', strtotime((string)($pl['date'] ?? '')))); ?></span>
+                    <span class="pa-sale-who"><?php echo htmlspecialchars(implode(' · ', array_filter([(string)($pl['memo_no'] ?? ''), (string)($pl['product_name'] ?? ''), (string)($pl['category_name'] ?? '')]))); ?></span>
+                    <b><?php echo pa_taka($pl['total_cost'] ?? 0); ?></b>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
+    </section>
 
     <section class="pa-panel" id="paLedgerBox">
         <div class="pa-head">
@@ -280,30 +404,13 @@ include '../../partials/header.php';
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
-        <form method="GET" class="pa-range no-print" id="paRangeForm">
-            <input type="hidden" name="month" value="<?php echo htmlspecialchars($ym); ?>">
-            <input type="hidden" name="tab" value="<?php echo htmlspecialchars($tab); ?>">
-            <div class="pa-range-title">তারিখ অনুযায়ী খুঁজুন</div>
-            <div class="pa-range-row">
-                <label>শুরু<input type="date" name="lf" value="<?php echo $range_on ? htmlspecialchars($sale_from) : ''; ?>"></label>
-                <label>শেষ<input type="date" name="lt" value="<?php echo $range_on ? htmlspecialchars($sale_to) : ''; ?>"></label>
-            </div>
-            <div class="pa-range-actions">
-                <button type="submit" class="pa-btn primary">খুঁজুন</button>
-                <?php if ($range_on): ?><a class="pa-btn soft" href="?month=<?php echo htmlspecialchars($ym); ?>&amp;tab=<?php echo htmlspecialchars($tab); ?>#paLedgerBox">মাস অনুযায়ী</a><?php endif; ?>
-            </div>
-            <div class="pa-range-quick">
-                <?php foreach ($range_links as $rl_label => $rl): ?>
-                    <a href="?month=<?php echo htmlspecialchars($ym); ?>&amp;tab=<?php echo htmlspecialchars($tab); ?>&amp;lf=<?php echo $rl[0]; ?>&amp;lt=<?php echo $rl[1]; ?>#paLedgerBox"><?php echo $rl_label; ?></a>
-                <?php endforeach; ?>
-            </div>
-        </form>
+        <p class="pa-range-sync no-print">বিক্রয় তালিকা · উপরের <strong>রিপোর্ট দেখুন</strong> তারিখ অনুযায়ী (<?php echo htmlspecialchars(date('d-m-Y', strtotime($sale_from))); ?> – <?php echo htmlspecialchars(date('d-m-Y', strtotime($sale_to))); ?>)</p>
         <div class="pa-range-sum">
             <span><?php echo $range_on ? (htmlspecialchars(date('d-m-Y', strtotime($sale_from))) . ' থেকে ' . htmlspecialchars(date('d-m-Y', strtotime($sale_to)))) : ('এই মাস · ' . htmlspecialchars(date('d-m-Y', strtotime($sale_from))) . ' থেকে ' . htmlspecialchars(date('d-m-Y', strtotime($sale_to)))); ?></span>
             <span>মোট <b><?php echo (int)count($sale_lines); ?></b>টি বিক্রি</span>
             <span>লাভ <b class="<?php echo $sale_total < -0.009 ? 'pa-minus' : 'pa-plus'; ?>"><?php echo pa_taka($sale_total); ?></b></span>
         </div>
-        <a class="pa-sales-share-btn no-print" href="partner_sales_share.php?doc=all&amp;month=<?php echo htmlspecialchars($ym); ?><?php echo $range_on ? ('&amp;lf=' . htmlspecialchars($sale_from) . '&amp;lt=' . htmlspecialchars($sale_to)) : ''; ?>">পার্টনার স্টেটমেন্ট শেয়ার করুন (বিক্রয় · ক্রয় · খরচ)</a>
+        <a class="pa-sales-share-btn no-print" href="partner_sales_share.php?doc=all&amp;month=<?php echo htmlspecialchars($ym); ?>&amp;lf=<?php echo htmlspecialchars($sale_from); ?>&amp;lt=<?php echo htmlspecialchars($sale_to); ?>">পার্টনার স্টেটমেন্ট শেয়ার করুন (বিক্রয় · ক্রয় · খরচ)</a>
         <?php if (!$sale_lines): ?>
             <div class="pa-empty"><?php echo $range_on ? 'এই তারিখে যুক্ত খাতের কোনো বিক্রি নেই।' : 'ক্যাটাগরি যুক্ত করলে শুধু সেই খাতের বিক্রি এখানে এক লাইনে আসবে।'; ?></div>
         <?php else: ?>
@@ -345,25 +452,7 @@ include '../../partials/header.php';
             <?php endforeach; ?>
         </div>
         <?php endif; ?>
-        <form method="GET" class="pa-range no-print" id="paExpRangeForm">
-            <input type="hidden" name="month" value="<?php echo htmlspecialchars($ym); ?>">
-            <input type="hidden" name="tab" value="<?php echo htmlspecialchars($tab); ?>">
-            <?php if ($exp_pid): ?><input type="hidden" name="ep" value="<?php echo (int)$exp_pid; ?>"><?php endif; ?>
-            <div class="pa-range-title">তারিখ অনুযায়ী খরচ খুঁজুন</div>
-            <div class="pa-range-row">
-                <label>শুরু<input type="date" name="ef" value="<?php echo $exp_range_on ? htmlspecialchars($exp_from) : ''; ?>"></label>
-                <label>শেষ<input type="date" name="et" value="<?php echo $exp_range_on ? htmlspecialchars($exp_to) : ''; ?>"></label>
-            </div>
-            <div class="pa-range-actions">
-                <button type="submit" class="pa-btn primary">খুঁজুন</button>
-                <?php if ($exp_range_on): ?><a class="pa-btn soft" href="<?php echo $exp_q; ?>#paExpBox">মাস অনুযায়ী</a><?php endif; ?>
-            </div>
-            <div class="pa-range-quick">
-                <?php foreach ($range_links as $rl_label => $rl): ?>
-                    <a href="<?php echo $exp_q; ?>&amp;ef=<?php echo $rl[0]; ?>&amp;et=<?php echo $rl[1]; ?>#paExpBox"><?php echo $rl_label; ?></a>
-                <?php endforeach; ?>
-            </div>
-        </form>
+        <p class="pa-range-sync no-print">খরচ তালিকা · একই তারিখ রেঞ্জ</p>
         <div class="pa-range-sum">
             <span><?php echo $exp_range_on ? '' : 'এই মাস · '; ?><?php echo htmlspecialchars(date('d-m-Y', strtotime($exp_from))); ?> থেকে <?php echo htmlspecialchars(date('d-m-Y', strtotime($exp_to))); ?></span>
             <span>মোট <b><?php echo (int)count($exp_lines); ?></b>টি খরচ</span>

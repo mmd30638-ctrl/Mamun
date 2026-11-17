@@ -1,3 +1,10 @@
+# 10.98.982 — পার্টনার রেঞ্জ রিপোর্ট PA-INTL-100 (হিরো rf/rt)
+includes/partner_accounting.php
+modules/accounts/partner_accounting.php
+modules/accounts/PA_REPORT_STANDARD.md
+assets/css/partner-accounting.css
+includes/config.php
+VERSION.txt
 # 10.98.981 — পার্টনার: যোগদান তারিখ পিকার (CSS + মোবাইল ক্লিক)
 assets/css/pa-datepicker.css
 assets/js/pa-datepicker.js

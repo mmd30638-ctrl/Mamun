@@ -1,4 +1,120 @@
 /* Partner accounting · statement book (intl-100, mobile + desktop-site) */
+
+/* Hero — unified report range (PA-INTL-100) */
+.pa-hero-range {
+    margin-top: 12px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #ecfeff 0%, #f0fdf4 45%, #eef2ff 100%);
+    border: 1px solid #99f6e4;
+    box-shadow: 0 8px 28px rgba(15, 118, 110, 0.12);
+}
+.pa-hero-range-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+.pa-hero-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #0f766e;
+}
+.pa-hero-field input {
+    min-height: 46px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1.5px solid #5eead4;
+    background: #fff;
+    font-weight: 600;
+}
+.pa-hero-range-btn {
+    min-height: 48px;
+    border-radius: 12px;
+    font-weight: 800;
+}
+.pa-hero-range-note {
+    margin: 10px 0 0;
+    font-size: 12px;
+    line-height: 1.45;
+    color: #334155;
+}
+.pa-hero-range-warn {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: #b45309;
+    font-weight: 700;
+}
+.pa-hero-range-quick {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+.pa-hero-range-quick a {
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    color: #0f766e;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+.pa-period-report {
+    border: 1px solid #99f6e4;
+    background: linear-gradient(180deg, #f8fffe 0%, #fff 120px);
+}
+.pa-period-kpi {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+}
+.pa-period-kpi > div {
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+    color: #64748b;
+}
+.pa-period-kpi b {
+    font-size: 16px;
+    color: #0f172a;
+    font-variant-numeric: tabular-nums;
+}
+.pa-period-sub {
+    margin: 16px 0 8px;
+    font-size: 14px;
+    color: #0f766e;
+}
+.pa-range-sync {
+    font-size: 13px;
+    color: #475569;
+    margin: 0 0 12px;
+    padding: 8px 10px;
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+html body #main-content .pa-page .pa-card.teal {
+    background: linear-gradient(135deg, #ccfbf1, #f0fdfa);
+    border-color: #5eead4;
+}
+@media (min-width: 720px) {
+    .pa-hero-range-grid {
+        grid-template-columns: 1.1fr 1fr 1fr auto;
+        align-items: end;
+    }
+    .pa-period-kpi {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
 article.pa-stmt {
     margin: 16px 0 20px;
     padding: 14px 14px 18px;

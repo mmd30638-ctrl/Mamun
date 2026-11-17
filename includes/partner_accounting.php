@@ -2006,6 +2006,146 @@ function pa_find_invoice($db, $id, $ym)
     return null;
 }
 
+/**
+ * Report date range inside one accounting month (read-only filter; amounts never from POST).
+ *
+ * @return array{ym:string,from:string,to:string,month_from:string,month_to:string,full_month:bool,clamped:bool,invalid:bool}
+ */
+function pa_resolve_report_range($db, string $ym, string $rf, string $rt): array
+{
+    $bounds = pa_month($ym);
+    $month_from = $bounds['from'];
+    $month_to = $bounds['to'];
+    $books = trim((string)(pa_books_start($db)['date'] ?? ''));
+    if ($books !== '' && $month_to < $books) {
+        return [
+            'ym' => $ym,
+            'from' => $month_from,
+            'to' => $month_to,
+            'month_from' => $month_from,
+            'month_to' => $month_to,
+            'full_month' => true,
+            'clamped' => false,
+            'invalid' => true,
+        ];
+    }
+    if ($books !== '' && $month_from < $books) {
+        $month_from = $books;
+    }
+    $from = $month_from;
+    $to = $month_to;
+    $clamped = false;
+    $rf_ok = preg_match('/^\d{4}-\d{2}-\d{2}$/', $rf) === 1 && strtotime($rf) !== false;
+    $rt_ok = preg_match('/^\d{4}-\d{2}-\d{2}$/', $rt) === 1 && strtotime($rt) !== false;
+    if ($rf_ok || $rt_ok) {
+        $from = $rf_ok ? $rf : ($rt_ok ? $rt : $month_from);
+        $to = $rt_ok ? $rt : $from;
+        if ($to < $from) {
+            [$from, $to] = [$to, $from];
+        }
+        if (substr($from, 0, 7) !== $ym || substr($to, 0, 7) !== $ym) {
+            $from = $month_from;
+            $to = $month_to;
+            $clamped = true;
+        } else {
+            if ($from < $month_from) {
+                $from = $month_from;
+                $clamped = true;
+            }
+            if ($to > $month_to) {
+                $to = $month_to;
+                $clamped = true;
+            }
+            if ($books !== '' && $from < $books) {
+                $from = $books;
+                $clamped = true;
+            }
+        }
+    }
+    $full = ($from === $month_from && $to === $month_to);
+    return [
+        'ym' => $ym,
+        'from' => $from,
+        'to' => $to,
+        'month_from' => $bounds['from'],
+        'month_to' => $bounds['to'],
+        'full_month' => $full,
+        'clamped' => $clamped,
+        'invalid' => false,
+    ];
+}
+
+/** @return array<string,mixed> Server-side period totals — client cannot override amounts. */
+function pa_period_totals($db, string $from, string $to, string $only_category = ''): array
+{
+    $start = trim((string)(pa_books_start($db)['date'] ?? ''));
+    if ($start !== '' && $to < $start) {
+        return [
+            'from' => $from,
+            'to' => $to,
+            'invoice_count' => 0,
+            'sales' => 0.0,
+            'cost' => 0.0,
+            'invoice_profit' => 0.0,
+            'expense_total' => 0.0,
+            'purchase_total' => 0.0,
+            'purchase_count' => 0,
+            'net_profit' => 0.0,
+        ];
+    }
+    if ($start !== '' && $from < $start) {
+        $from = $start;
+    }
+    $invoices = pa_month_invoices($db, $from, $to, $only_category);
+    $sales = 0.0;
+    $cost = 0.0;
+    $profit = 0.0;
+    foreach ($invoices as $inv) {
+        $sales += pa_money($inv['sales_amount'] ?? 0);
+        $cost += pa_money($inv['cost_amount'] ?? 0);
+        $profit += pa_money($inv['profit_amount'] ?? 0);
+    }
+    $exp_pack = pa_expense_lines($db, $from, $to, 5000);
+    $expense_total = pa_money($exp_pack['total'] ?? 0);
+    $pur_pack = pa_ledger_purchase_lines($db, $from, $to, 5000);
+    $purchase_total = 0.0;
+    foreach ($pur_pack['lines'] ?? [] as $pl) {
+        $purchase_total += pa_money($pl['total_cost'] ?? 0);
+    }
+    $net = pa_money($profit - $expense_total);
+    return [
+        'from' => $from,
+        'to' => $to,
+        'invoice_count' => count($invoices),
+        'sales' => pa_money($sales),
+        'cost' => pa_money($cost),
+        'invoice_profit' => pa_money($profit),
+        'expense_total' => $expense_total,
+        'purchase_total' => pa_money($purchase_total),
+        'purchase_count' => count($pur_pack['lines'] ?? []),
+        'net_profit' => $net,
+    ];
+}
+
+/**
+ * Build shareable query string for partner accounting report range.
+ */
+function pa_report_qs(string $ym, string $from, string $to, array $extra = []): string
+{
+    $q = ['month' => $ym, 'rf' => $from, 'rt' => $to];
+    foreach ($extra as $k => $v) {
+        if ($v === '' || $v === null) {
+            continue;
+        }
+        $q[$k] = $v;
+    }
+    $parts = [];
+    foreach ($q as $k => $v) {
+        $parts[] = rawurlencode((string)$k) . '=' . rawurlencode((string)$v);
+    }
+    return '?' . implode('&', $parts);
+}
+
 function pa_nestle_view($db, $ym, $category = '', $month = null)
 {
     if (!is_array($month)) {
