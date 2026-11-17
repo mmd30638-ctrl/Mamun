@@ -412,7 +412,7 @@ function toggleDateEdit() {
 }
 </script>
 
-<script src="/assets/js/ame-memo-file.js?v=10.98.847"></script>
+<script src="/assets/js/ame-memo-file.js?v=<?php echo htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '1', ENT_QUOTES, 'UTF-8'); ?>"></script>
 <script>
 function shareVoucher() {
     if (typeof window.ameMemoCapture === 'function') {

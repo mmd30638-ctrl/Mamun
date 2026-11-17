@@ -8,10 +8,60 @@ ame_sales_return_include_nav('register');
 
 $filter_status = trim($_GET['status'] ?? '');
 $filter_type = trim($_GET['type'] ?? '');
+$filter_kpi = trim($_GET['kpi'] ?? '');
+$filter_sales_type = trim($_GET['sales_type'] ?? '');
+$filter_date = trim($_GET['date'] ?? '');
 
 $where = [];
 $params = [];
 $types = '';
+
+$kpi_titles = [
+    'today' => 'আজকের সব রিটার্ন',
+    'wholesale_today' => 'আজকের Wholesale রিটার্ন',
+    'retail_today' => 'আজকের Retail রিটার্ন',
+    'exchange_today' => 'আজকের প্রোডাক্ট এক্সচেঞ্জ',
+    'amount_today' => 'আজকের অনুমোদিত/সম্পন্ন রিটার্ন (পরিমাণ)',
+    'refund_credit' => 'মোট রিফান্ড/ক্রেডিট (গ্রাহক সমন্বয়)',
+    'receivable_adj' => 'Receivable সমন্বয় (সম্পন্ন + নিবন্ধিত গ্রাহক)',
+    'pending' => 'অপেক্ষমাণ অনুমোদন',
+];
+$kpi_title = $kpi_titles[$filter_kpi] ?? '';
+
+if ($filter_kpi !== '') {
+    switch ($filter_kpi) {
+        case 'today':
+            $filter_date = $filter_date !== '' ? $filter_date : date('Y-m-d');
+            break;
+        case 'wholesale_today':
+            $filter_date = $filter_date !== '' ? $filter_date : date('Y-m-d');
+            $filter_sales_type = 'wholesale';
+            break;
+        case 'retail_today':
+            $filter_date = $filter_date !== '' ? $filter_date : date('Y-m-d');
+            $filter_sales_type = 'retail';
+            break;
+        case 'exchange_today':
+            $filter_date = $filter_date !== '' ? $filter_date : date('Y-m-d');
+            $filter_type = 'exchange';
+            break;
+        case 'amount_today':
+            $filter_date = $filter_date !== '' ? $filter_date : date('Y-m-d');
+            $where[] = "r.status IN ('approved','completed')";
+            break;
+        case 'refund_credit':
+            $where[] = 'r.customer_adjustment < 0';
+            $where[] = "r.status IN ('approved','completed')";
+            break;
+        case 'receivable_adj':
+            $where[] = "r.status = 'completed'";
+            $where[] = 'r.customer_id IS NOT NULL';
+            break;
+        case 'pending':
+            $filter_status = 'pending_approval';
+            break;
+    }
+}
 
 if ($filter_status !== '') {
     $where[] = 'r.status = ?';
@@ -21,6 +71,16 @@ if ($filter_status !== '') {
 if ($filter_type !== '') {
     $where[] = 'r.return_type = ?';
     $params[] = $filter_type;
+    $types .= 's';
+}
+if ($filter_sales_type !== '') {
+    $where[] = 'r.sales_type = ?';
+    $params[] = $filter_sales_type;
+    $types .= 's';
+}
+if ($filter_date !== '' && preg_match('/^\d{4}-\d{2}-\d{2}$/', $filter_date)) {
+    $where[] = 'DATE(r.created_at) = ?';
+    $params[] = $filter_date;
     $types .= 's';
 }
 
@@ -83,11 +143,23 @@ $type_labels = [
 
 <div class="rr-wrap">
     <div class="rr-header">
-        <h2>📋 Return Register</h2>
+        <h2>📋 Return Register<?php if ($kpi_title !== ''): ?> <span style="font-size:14px;font-weight:700;color:#64748B;">— <?php echo htmlspecialchars($kpi_title, ENT_QUOTES, 'UTF-8'); ?></span><?php endif; ?></h2>
         <a href="dashboard.php" class="rr-link">← ড্যাশবোর্ডে ফিরে যান</a>
     </div>
+    <?php if ($filter_kpi !== '' || $filter_date !== '' || $filter_sales_type !== ''): ?>
+        <p style="margin:0 0 12px;font-size:12px;color:#64748B;">ড্যাশবোর্ড থেকে ফিল্টার করা তালিকা — প্রতিটি সারিতে <strong>দেখুন</strong> ক্লিক করে মেমো ও শেয়ার খুলুন।</p>
+    <?php endif; ?>
 
     <form method="GET" class="rr-filters">
+        <?php if ($filter_kpi !== ''): ?>
+            <input type="hidden" name="kpi" value="<?php echo htmlspecialchars($filter_kpi, ENT_QUOTES, 'UTF-8'); ?>">
+        <?php endif; ?>
+        <?php if ($filter_date !== ''): ?>
+            <input type="hidden" name="date" value="<?php echo htmlspecialchars($filter_date, ENT_QUOTES, 'UTF-8'); ?>">
+        <?php endif; ?>
+        <?php if ($filter_sales_type !== ''): ?>
+            <input type="hidden" name="sales_type" value="<?php echo htmlspecialchars($filter_sales_type, ENT_QUOTES, 'UTF-8'); ?>">
+        <?php endif; ?>
         <select name="status" onchange="this.form.submit()">
             <option value="">সব স্ট্যাটাস</option>
             <?php foreach ($status_meta as $key => $meta): ?>

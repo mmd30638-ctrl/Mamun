@@ -58,20 +58,35 @@ $status_meta = [
         font-weight:800; font-size:13.5px; box-shadow:0 4px 14px rgba(11,30,77,0.25);
     }
     .rd-kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin-bottom:20px; }
-    .rd-kpi-box { border-radius:14px; padding:14px; color:#fff; box-shadow:0 6px 16px rgba(11,30,77,0.15); }
+    .rd-kpi-box {
+        border-radius:14px; padding:14px; color:#fff; box-shadow:0 6px 16px rgba(11,30,77,0.15);
+        text-decoration:none; display:block; cursor:pointer; transition:transform .12s ease, box-shadow .12s ease;
+    }
+    .rd-kpi-box:hover, .rd-kpi-box:focus { transform:translateY(-2px); box-shadow:0 10px 22px rgba(11,30,77,0.22); outline:2px solid rgba(255,255,255,.35); outline-offset:2px; }
     .rd-kpi-box .lbl { font-size:11px; opacity:.85; }
     .rd-kpi-box .val { font-size:18px; font-weight:800; margin-top:5px; }
+    .rd-kpi-box .hint { font-size:10px; opacity:.75; margin-top:6px; }
 
     .rd-alert { background:#FFF3E0; border:1px solid #FFE0B2; color:#8D6E00; border-radius:12px; padding:12px 16px; font-size:12.5px; margin-bottom:18px; }
 
     .rd-nav-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-bottom:22px; }
-    .rd-nav-card { background:#fff; border-radius:14px; padding:14px; text-decoration:none; box-shadow:0 4px 14px rgba(11,30,77,0.08); border:1px solid #EAF4FF; }
+    .rd-nav-card {
+        background:#fff; border-radius:14px; padding:14px; text-decoration:none; box-shadow:0 4px 14px rgba(11,30,77,0.08); border:1px solid #EAF4FF;
+        transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+    .rd-nav-card:hover, .rd-nav-card:focus { transform:translateY(-2px); box-shadow:0 8px 20px rgba(11,30,77,0.14); border-color:#BFDBFE; outline:none; }
     .rd-nav-card .icon { font-size:20px; margin-bottom:6px; }
     .rd-nav-card .title { font-weight:800; color:#0B1E4D; font-size:13px; }
 
     .rd-recent { background:#fff; border-radius:16px; padding:16px; box-shadow:0 4px 18px rgba(11,30,77,0.08); }
     .rd-recent h3 { margin:0 0 12px; color:#0B1E4D; font-size:14.5px; }
-    .rd-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid #F1F5F9; font-size:12.5px; }
+    .rd-row {
+        display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid #F1F5F9; font-size:12.5px;
+        text-decoration:none; color:inherit; cursor:pointer; border-radius:8px; margin:0 -6px; padding-left:6px; padding-right:6px;
+    }
+    .rd-row:hover, .rd-row:focus { background:#F0F9FF; outline:none; }
+    .rd-row .rd-open-hint { font-size:10px; color:#0284C7; font-weight:800; opacity:0; transition:opacity .12s; }
+    .rd-row:hover .rd-open-hint, .rd-row:focus .rd-open-hint { opacity:1; }
     .rd-badge { padding:3px 10px; border-radius:20px; font-size:10.5px; font-weight:800; }
     .rd-empty { text-align:center; color:#999; padding:30px; font-size:13px; }
 </style>
@@ -87,14 +102,14 @@ $status_meta = [
     <?php endif; ?>
 
     <div class="rd-kpi-grid">
-        <div class="rd-kpi-box" style="background:linear-gradient(135deg,#0B1E4D,#0091EA);"><div class="lbl">আজকের রিটার্ন</div><div class="val"><?php echo (int)$today_returns; ?> টা</div></div>
-        <div class="rd-kpi-box" style="background:linear-gradient(135deg,#7B1FA2,#AB47BC);"><div class="lbl">Wholesale রিটার্ন</div><div class="val"><?php echo (int)$wholesale_returns; ?> টা</div></div>
-        <div class="rd-kpi-box" style="background:linear-gradient(135deg,#F57C00,#FFB74D);"><div class="lbl">Retail রিটার্ন</div><div class="val"><?php echo (int)$retail_returns; ?> টা</div></div>
-        <div class="rd-kpi-box" style="background:linear-gradient(135deg,#00838F,#26C6DA);"><div class="lbl">প্রোডাক্ট এক্সচেঞ্জ</div><div class="val"><?php echo (int)$exchanges_today; ?> টা</div></div>
-        <div class="rd-kpi-box" style="background:linear-gradient(135deg,#0B8043,#2ECC71);"><div class="lbl">মোট রিটার্ন পরিমাণ (আজ)</div><div class="val">৳<?php echo number_format($total_return_amount, 0); ?></div></div>
-        <div class="rd-kpi-box" style="background:linear-gradient(135deg,#C62828,#E53935);"><div class="lbl">মোট রিফান্ড/ক্রেডিট</div><div class="val">৳<?php echo number_format($total_refund, 0); ?></div></div>
-        <div class="rd-kpi-box" style="background:linear-gradient(135deg,#455A64,#78909C);"><div class="lbl">Receivable সমন্বয়</div><div class="val">৳<?php echo number_format($receivable_adjustment, 0); ?></div></div>
-        <div class="rd-kpi-box" style="background:linear-gradient(135deg,#E65100,#FF9800);"><div class="lbl">অপেক্ষমাণ অনুমোদন</div><div class="val"><?php echo (int)$pending_approvals; ?> টা</div></div>
+        <a href="register.php?kpi=today" class="rd-kpi-box" style="background:linear-gradient(135deg,#0B1E4D,#0091EA);"><div class="lbl">আজকের রিটার্ন</div><div class="val"><?php echo (int)$today_returns; ?> টা</div><div class="hint">ক্লিক → বিস্তারিত তালিকা</div></a>
+        <a href="register.php?kpi=wholesale_today" class="rd-kpi-box" style="background:linear-gradient(135deg,#7B1FA2,#AB47BC);"><div class="lbl">Wholesale রিটার্ন</div><div class="val"><?php echo (int)$wholesale_returns; ?> টা</div><div class="hint">ক্লিক → বিস্তারিত তালিকা</div></a>
+        <a href="register.php?kpi=retail_today" class="rd-kpi-box" style="background:linear-gradient(135deg,#F57C00,#FFB74D);"><div class="lbl">Retail রিটার্ন</div><div class="val"><?php echo (int)$retail_returns; ?> টা</div><div class="hint">ক্লিক → বিস্তারিত তালিকা</div></a>
+        <a href="register.php?kpi=exchange_today" class="rd-kpi-box" style="background:linear-gradient(135deg,#00838F,#26C6DA);"><div class="lbl">প্রোডাক্ট এক্সচেঞ্জ</div><div class="val"><?php echo (int)$exchanges_today; ?> টা</div><div class="hint">ক্লিক → বিস্তারিত তালিকা</div></a>
+        <a href="register.php?kpi=amount_today" class="rd-kpi-box" style="background:linear-gradient(135deg,#0B8043,#2ECC71);"><div class="lbl">মোট রিটার্ন পরিমাণ (আজ)</div><div class="val">৳<?php echo number_format($total_return_amount, 0); ?></div><div class="hint">ক্লিক → বিস্তারিত তালিকা</div></a>
+        <a href="register.php?kpi=refund_credit" class="rd-kpi-box" style="background:linear-gradient(135deg,#C62828,#E53935);"><div class="lbl">মোট রিফান্ড/ক্রেডিট</div><div class="val">৳<?php echo number_format($total_refund, 0); ?></div><div class="hint">ক্লিক → বিস্তারিত তালিকা</div></a>
+        <a href="register.php?kpi=receivable_adj" class="rd-kpi-box" style="background:linear-gradient(135deg,#455A64,#78909C);"><div class="lbl">Receivable সমন্বয়</div><div class="val">৳<?php echo number_format($receivable_adjustment, 0); ?></div><div class="hint">ক্লিক → বিস্তারিত তালিকা</div></a>
+        <a href="register.php?kpi=pending" class="rd-kpi-box" style="background:linear-gradient(135deg,#E65100,#FF9800);"><div class="lbl">অপেক্ষমাণ অনুমোদন</div><div class="val"><?php echo (int)$pending_approvals; ?> টা</div><div class="hint">ক্লিক → বিস্তারিত তালিকা</div></a>
     </div>
 
     <div class="rd-nav-grid">
@@ -114,19 +129,21 @@ $status_meta = [
     </div>
 
     <div class="rd-recent">
-        <h3>🕒 সাম্প্রতিক লেনদেন</h3>
+        <h3>🕒 সাম্প্রতিক লেনদেন <span style="font-weight:500;color:#94A3B8;font-size:11px;">(লাইনে ট্যাপ → মেমো ও শেয়ার)</span></h3>
         <?php if (empty($recent)): ?>
             <div class="rd-empty">এখনো কোনো রিটার্ন এন্ট্রি নেই।</div>
         <?php else: foreach ($recent as $r):
             $meta = $status_meta[$r['status']] ?? $status_meta['draft'];
+            $viewUrl = 'view.php?id=' . (int)$r['id'];
         ?>
-            <div class="rd-row">
+            <a href="<?php echo htmlspecialchars($viewUrl, ENT_QUOTES, 'UTF-8'); ?>" class="rd-row">
                 <span><?php echo htmlspecialchars($r['return_no']); ?> — <?php echo htmlspecialchars($r['customer_name'] ?: 'গ্রাহকের নাম নেই'); ?></span>
                 <span style="display:flex; align-items:center; gap:8px;">
+                    <span class="rd-open-hint">মেমো →</span>
                     <span style="font-weight:700; color:#0B1E4D;">৳<?php echo number_format((float)$r['return_amount'], 2); ?></span>
                     <span class="rd-badge" style="background:<?php echo $meta['bg']; ?>; color:<?php echo $meta['color']; ?>;"><?php echo $meta['label']; ?></span>
                 </span>
-            </div>
+            </a>
         <?php endforeach; endif; ?>
     </div>
 </div>
