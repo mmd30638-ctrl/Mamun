@@ -228,9 +228,12 @@ include '../../partials/header.php';
                         <span>শেষ</span>
                         <input type="date" name="rt" min="<?php echo htmlspecialchars($bounds['from']); ?>" max="<?php echo htmlspecialchars($bounds['to']); ?>" value="<?php echo htmlspecialchars($sale_to); ?>" required>
                     </label>
-                    <button type="submit" class="pa-btn primary pa-hero-range-btn">রিপোর্ট দেখুন</button>
+                    <div class="pa-hero-range-actions">
+                        <button type="submit" class="pa-btn soft pa-hero-range-btn">রিপোর্ট দেখুন</button>
+                        <button type="submit" class="pa-btn primary pa-hero-stmt-btn" formaction="partner_sales_share.php" formmethod="get" name="doc" value="all">স্টেটমেন্ট তৈরি ও শেয়ার</button>
+                    </div>
                 </div>
-                <p class="pa-hero-range-note">শুধু এই মাসের ভিতরে তারিখ — সব বিক্রয়, ক্রয়, খরচ ও পার্টনার অংশ একসাথে। মূলধন/ব্যালেন্স ট্যাব পুরো মাস অনুযায়ী।</p>
+                <p class="pa-hero-range-note">শুধু এই মাসের ভিতরে তারিখ — ড্যাশবোর্ডে দ্রুত দেখুন, অথবা <strong>স্টেটমেন্ট তৈরি ও শেয়ার</strong> চাপলে সম্পূর্ণ বিক্রয় লাভ · ক্রয় · খরচ · সাবেক ব্যালেন্স সহ আন্তর্জাতিক মানের স্টেটমেন্ট (প্রিন্ট/PDF/শেয়ার) খুলবে।</p>
                 <?php if (!empty($pa_rep['clamped'])): ?>
                     <p class="pa-hero-range-warn">তারিখ মাসের মধ্যে রাখা হয়েছে — বাইরের তারিখ গ্রহণ হয় না।</p>
                 <?php endif; ?>
@@ -345,7 +348,7 @@ include '../../partials/header.php';
                 <h2>সময়কাল রিপোর্ট · <?php echo htmlspecialchars(date('d-m-Y', strtotime($sale_from))); ?> – <?php echo htmlspecialchars(date('d-m-Y', strtotime($sale_to))); ?></h2>
                 <div class="sub">হিসাব সার্ভার থেকে — URL শুধু তারিখ ফিল্টার। টাকার অংক এখানে বদলানো যায় না। নিচে সাবেক ব্যালেন্স, তারপর এই সময়ের অংশ, শেষ কলাম মাসের বই ব্যালেন্স।</div>
             </div>
-            <a class="pa-btn soft" href="partner_sales_share.php?doc=all&amp;month=<?php echo htmlspecialchars($ym); ?>&amp;lf=<?php echo htmlspecialchars($sale_from); ?>&amp;lt=<?php echo htmlspecialchars($sale_to); ?>">স্টেটমেন্ট প্রিন্ট</a>
+            <a class="pa-btn primary pa-stmt-open" href="<?php echo htmlspecialchars(pa_statement_share_href($ym, $sale_from, $sale_to, 'all')); ?>">স্টেটমেন্ট তৈরি ও শেয়ার</a>
         </div>
         <div class="pa-period-kpi">
             <div><span>মোট বিক্রি</span><b><?php echo pa_taka($pa_period['sales']); ?></b></div>

@@ -30,10 +30,32 @@
     background: #fff;
     font-weight: 600;
 }
-.pa-hero-range-btn {
+.pa-hero-range-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+.pa-hero-range-btn,
+.pa-hero-stmt-btn {
     min-height: 48px;
     border-radius: 12px;
     font-weight: 800;
+    width: 100%;
+}
+.pa-hero-stmt-btn {
+    background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
+    border-color: #0f766e !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    box-shadow: 0 6px 20px rgba(15, 118, 110, 0.35);
+}
+.pa-stmt-open {
+    white-space: nowrap;
+}
+@media (min-width: 520px) {
+    .pa-hero-range-actions {
+        grid-template-columns: 1fr 1.2fr;
+    }
 }
 .pa-hero-range-note {
     margin: 10px 0 0;

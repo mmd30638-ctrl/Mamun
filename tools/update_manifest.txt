@@ -1,3 +1,11 @@
+# 10.98.986 — তারিখ বাছাই → এক ক্লিকে স্টেটমেন্ট (PA-INTL-100 রেঞ্জ মিল)
+includes/partner_accounting.php
+modules/accounts/partner_accounting.php
+modules/accounts/partner_sales_share.php
+modules/accounts/PA_REPORT_STANDARD.md
+assets/css/partner-accounting.css
+includes/config.php
+VERSION.txt
 # 10.98.985 — পার্টনার ড্যাশবোর্ড: শেয়ার বার বন্ধ, স্টেটমেন্ট পেজে শেয়ার
 modules/accounts/partner_accounting.php
 modules/accounts/PA_REPORT_STANDARD.md

@@ -11,20 +11,12 @@ $dash = pa_dashboard($db, $ym);
 $bounds = $dash['month']['bounds'];
 $ym = $bounds['ym'];
 
-$from = $bounds['from'];
-$to = $bounds['to'];
-$lf = trim((string)($_GET['lf'] ?? ''));
-$lt = trim((string)($_GET['lt'] ?? ''));
-$lf_ok = preg_match('/^\d{4}-\d{2}-\d{2}$/', $lf) && strtotime($lf) !== false;
-$lt_ok = preg_match('/^\d{4}-\d{2}-\d{2}$/', $lt) && strtotime($lt) !== false;
-$range_on = $lf_ok || $lt_ok;
-if ($range_on) {
-    $from = $lf_ok ? $lf : $lt;
-    $to = $lt_ok ? $lt : $from;
-    if ($to < $from) {
-        [$from, $to] = [$to, $from];
-    }
-}
+$rf_raw = trim((string)($_GET['rf'] ?? $_GET['lf'] ?? ''));
+$rt_raw = trim((string)($_GET['rt'] ?? $_GET['lt'] ?? ''));
+$pa_rep = pa_resolve_report_range($db, $ym, $rf_raw, $rt_raw);
+$from = $pa_rep['from'];
+$to = $pa_rep['to'];
+$range_on = !$pa_rep['full_month'];
 
 $partners = [];
 foreach ($dash['active'] as $a) {
@@ -75,6 +67,24 @@ $ym_key = str_replace('-', '', $first_m);
 $exp_cats = pa_expense_categories();
 $expenses = [];
 $total_exp = 0.0;
+if ($partial_range) {
+    $exp_pack = pa_expense_lines($db, $from, $to, 2000);
+    foreach ($exp_pack['lines'] as $row) {
+        $sh = [];
+        foreach ($row['by_partner'] ?? [] as $pid => $v) {
+            $sh[(int)$pid] = pa_money($v);
+        }
+        $expenses[] = [
+            'no' => 'EXP-' . (int)($row['id'] ?? 0),
+            'date' => (string)($row['date'] ?? ''),
+            'category' => (string)($row['category'] ?? 'খরচ'),
+            'desc' => trim((string)($row['description'] ?? '')),
+            'amount' => pa_money($row['amount'] ?? 0),
+            'shares' => $sh,
+        ];
+    }
+    $total_exp = pa_money($exp_pack['total'] ?? 0);
+} else {
 foreach ($months as $m) {
     $mrows = $month_data[$m]['expenses'] ?? [];
     $amts = [];
@@ -101,7 +111,8 @@ foreach ($months as $m) {
         ];
     }
 }
-$total_exp = round($total_exp, 2);
+    $total_exp = round($total_exp, 2);
+}
 
 $pack = pa_ledger_sale_lines($db, $from, $to, 2000);
 $lines = array_reverse($pack['lines'] ?? []);
@@ -194,6 +205,24 @@ foreach ($partners as $pp) {
 usort($wd_items, static function ($a, $b) {
     return strcmp((string)$a['date'], (string)$b['date']);
 });
+if ($partial_range && !$multi_month) {
+    $wd_f = [];
+    foreach ($wd_items as $wi) {
+        $d = substr((string)($wi['date'] ?? ''), 0, 10);
+        if ($d >= $from && $d <= $to) {
+            $wd_f[] = $wi;
+        }
+    }
+    $wd_items = $wd_f;
+    $stmt_sum = pa_statement_period_summary($db, $ym, $from, $to, $partners, $pcts);
+    $book_rows = $stmt_sum['rows'];
+    $sum_open = (float)$stmt_sum['sums']['open'];
+    $sum_profit = (float)$stmt_sum['sums']['profit'];
+    $sum_exp = (float)$stmt_sum['sums']['exp'];
+    $sum_draw = (float)$stmt_sum['sums']['draw'];
+    $sum_other = (float)$stmt_sum['sums']['other'];
+    $sum_total = (float)$stmt_sum['sums']['total'];
+}
 $sum_open = round($sum_open, 2);
 $sum_profit = round($sum_profit, 2);
 $sum_exp = round($sum_exp, 2);
@@ -458,7 +487,7 @@ foreach ($book_rows as $br) {
 }
 $sum_net = round($sum_profit - $sum_exp, 2);
 
-$sum_word = $multi_month ? 'এ সময়ের' : 'এ মাসের';
+$sum_word = ($multi_month || $partial_range) ? 'এ সময়ের' : 'এ মাসের';
 $doc_meta = [
     'all' => ['PST-', 'পার্টনার স্টেটমেন্ট', 'PARTNER STATEMENT', 'partner-statement-'],
     'sales' => ['PSS-', 'বিক্রয় লাভ স্টেটমেন্ট', 'SALES PROFIT STATEMENT', 'partner-sales-profit-'],
@@ -470,10 +499,11 @@ $doc_title = $doc_meta[1];
 $doc_kicker = $doc_meta[2];
 $doc_period = ($doc === 'expense') ? $month_label : ($range_on ? $period : $month_label);
 $file_base = $doc_meta[3] . $first_m . ($range_on ? ('-' . $from . '_' . $to) : '');
-$qs = static function (string $d) use ($ym, $range_on, $from, $to): string {
-    return 'partner_sales_share.php?month=' . rawurlencode($ym) . '&doc=' . $d . ($range_on ? ('&lf=' . rawurlencode($from) . '&lt=' . rawurlencode($to)) : '');
+$qs = static function (string $d) use ($ym, $from, $to, $range_on): string {
+    $href = pa_statement_share_href($ym, $from, $to, $d);
+    return $href;
 };
-$back = 'partner_accounting.php?month=' . rawurlencode($ym) . ($range_on ? ('&lf=' . rawurlencode($from) . '&lt=' . rawurlencode($to)) : '') . ($doc === 'expense' ? '&tab=draw#paExpBox' : '#paLedgerBox');
+$back = 'partner_accounting.php' . pa_report_qs($ym, $from, $to, ['tab' => ($doc === 'expense' ? 'draw' : 'capital')]) . ($doc === 'expense' ? '#paExpBox' : '#paPeriodReport');
 
 $share_lines = [$shop, 'পার্টনার: ' . $partner_label, $doc_title . ' · ' . $doc_period];
 if (in_array('sales', $sec_list, true)) {
@@ -803,7 +833,7 @@ include '../../partials/header.php';
                         <?php endforeach; ?>
                         <div class="cl-net"><span class="k"><?php echo $h($sum_word); ?> নিট লাভ <small>(লাভ − খরচ)</small></span><span class="v"><?php echo $h($mny($sum_profit)); ?> − <?php echo $h($mny($sum_exp)); ?> = <b class="<?php echo $tone($sum_net); ?>"><?php echo $h($mny($sum_net)); ?></b></span></div>
                     </div>
-                    <?php if ($partial_range): ?><div class="psp-formula note">বিক্রয়/ক্রয়ের তালিকা বাছা তারিখের (<?php echo $h($period); ?>); এই সারসংক্ষেপ সম্পূর্ণ মাসের হিসাব।</div><?php endif; ?>
+                    <?php if ($partial_range): ?><div class="psp-formula note">PA-INTL-100 · সব অংক সার্ভার থেকে — সময়কাল <?php echo $h($period); ?>। বিক্রয় লাভ, ক্রয়, খরচ বিবরণ ও সারসংক্ষেপ একই তারিখ সীমায়।</div><?php endif; ?>
                 </div>
                 <div class="psp-sign">
                     <?php foreach ($book_rows as $bi => $br): ?>

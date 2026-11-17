@@ -1,0 +1,14 @@
+10.98.986 — তারিখ অনুযায়ী সম্পূর্ণ স্টেটমেন্ট (এক ক্লিক)
+========================================================
+
+১) লাইভ সাইট
+https://mavo12.online/get/Aponshop_10.98.986_PATCH.zip
+
+২) GitHub সরাসরি
+https://raw.githubusercontent.com/mmd30638-ctrl/Mamun/cursor/global-responsive-architecture-ab1e/downloads/Aponshop_10.98.986_PATCH.zip
+
+৩) বিকল্প
+https://github.com/mmd30638-ctrl/Mamun/raw/cursor/global-responsive-architecture-ab1e/downloads/Aponshop_10.98.986_PATCH.zip
+
+ব্যবহার: পার্টনার হিসাব → তারিখ বাছুন → «স্টেটমেন্ট তৈরি ও শেয়ার» → প্রিন্ট/PDF/শেয়ার।
+Easy Update → PATCH; DB restore টিক দেবেন না।

@@ -2146,6 +2146,70 @@ function pa_report_qs(string $ym, string $from, string $to, array $extra = []): 
     return '?' . implode('&', $parts);
 }
 
+/** Full partner statement (print/share) — read-only dates in query string. */
+function pa_statement_share_href(string $ym, string $from, string $to, string $doc = 'all'): string
+{
+    $doc = in_array($doc, ['all', 'sales', 'purchase', 'expense'], true) ? $doc : 'all';
+    $q = ['month' => $ym, 'doc' => $doc, 'rf' => $from, 'rt' => $to];
+    $parts = [];
+    foreach ($q as $k => $v) {
+        $parts[] = rawurlencode((string)$k) . '=' . rawurlencode((string)$v);
+    }
+    return 'partner_sales_share.php?' . implode('&', $parts);
+}
+
+/**
+ * Statement partner summary for a sub-month range — same cuts as dashboard period report.
+ *
+ * @param array<int,array<string,mixed>> $partners
+ * @param array<int,float> $pcts
+ * @return array{rows:array<int,array<string,mixed>>,sums:array<string,float>}
+ */
+function pa_statement_period_summary($db, string $ym, string $from, string $to, array $partners, array $pcts): array
+{
+    $period = pa_period_totals($db, $from, $to, '');
+    $cuts = $pcts !== [] ? pa_share_cuts((float)$period['invoice_profit'], (float)$period['expense_total'], $pcts) : [];
+    $cap_hist = pa_capital_history($db, $from, $to);
+    $rows = [];
+    $sum_open = $sum_profit = $sum_exp = $sum_draw = $sum_other = $sum_total = 0.0;
+    foreach ($partners as $pp) {
+        $pid = (int)$pp['id'];
+        $slice = $cuts[$pid] ?? ['gross' => 0.0, 'expense' => 0.0, 'net' => 0.0];
+        $open = (float)(pa_opening($db, $pp, $ym)['opening'] ?? 0);
+        $tot = (float)(pa_partner_book($db, $pp, $ym)['total'] ?? 0);
+        $gross = (float)$slice['gross'];
+        $ecut = (float)$slice['expense'];
+        $draw = 0.0;
+        foreach ($cap_hist as $cr) {
+            if ((int)($cr['partner_id'] ?? 0) !== $pid) {
+                continue;
+            }
+            if ((string)($cr['type'] ?? '') === 'capital_withdrawal') {
+                $draw = round($draw + pa_money($cr['amount'] ?? 0), 2);
+            }
+        }
+        $other = round($tot - $open - $gross + $ecut + $draw, 2);
+        $rows[] = ['p' => $pp, 'open' => $open, 'profit' => $gross, 'exp' => $ecut, 'draw' => $draw, 'other' => $other, 'total' => $tot];
+        $sum_open += $open;
+        $sum_profit += $gross;
+        $sum_exp += $ecut;
+        $sum_draw += $draw;
+        $sum_other += $other;
+        $sum_total += $tot;
+    }
+    return [
+        'rows' => $rows,
+        'sums' => [
+            'open' => round($sum_open, 2),
+            'profit' => round($sum_profit, 2),
+            'exp' => round($sum_exp, 2),
+            'draw' => round($sum_draw, 2),
+            'other' => round($sum_other, 2),
+            'total' => round($sum_total, 2),
+        ],
+    ];
+}
+
 function pa_nestle_view($db, $ym, $category = '', $month = null)
 {
     if (!is_array($month)) {
