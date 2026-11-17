@@ -1,3 +1,8 @@
+# 10.98.992 — স্টেটমেন্ট: খাত/সর্বমোট কলাম অনুযায়ী মোট টাকা
+modules/accounts/partner_sales_share.php
+assets/css/partner-statement.css
+includes/config.php
+VERSION.txt
 # 10.98.991 — স্টেটমেন্ট: মোট সারিতে লাভ ও পার্টনার অংশের যোগফল
 modules/accounts/partner_sales_share.php
 assets/css/partner-statement.css
