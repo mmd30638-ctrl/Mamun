@@ -8,6 +8,28 @@
  * Wholesale/Retail ভাগ, ও সম্পূর্ণ অডিট ট্রেইলসহ।
  */
 
+if (!function_exists('ame_return_v2_ensure_customer_ledger')) {
+    function ame_return_v2_ensure_customer_ledger(): void
+    {
+        if (function_exists('add_ledger_entry')) {
+            return;
+        }
+        $candidates = [
+            __DIR__ . '/../modules/customers/customer_ledger_functions.php',
+            dirname(__DIR__) . '/modules/customers/customer_ledger_functions.php',
+        ];
+        foreach ($candidates as $path) {
+            if (is_file($path)) {
+                require_once $path;
+                break;
+            }
+        }
+        if (!function_exists('add_ledger_entry')) {
+            throw new RuntimeException('কাস্টমার লেজার মডিউল লোড হয়নি (customer_ledger_functions.php)।');
+        }
+    }
+}
+
 function ensure_return_v2_schema($db) {
     $db->query("CREATE TABLE IF NOT EXISTS sale_returns_v2 (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -661,9 +683,7 @@ function ame_return_v2_save_and_complete_invoice_return(
     $approve->execute();
     $approve->close();
 
-    if (!function_exists('add_ledger_entry')) {
-        require_once __DIR__ . '/../modules/customers/customer_ledger_functions.php';
-    }
+    ame_return_v2_ensure_customer_ledger();
     complete_return_transaction($db, $return_id, $user_id, false);
 
     $pay_status = ($refund_method !== 'customer_balance' && $account_id) ? 'paid' : ($customer_id ? 'adjusted' : 'paid');
@@ -780,26 +800,31 @@ function complete_return_transaction($db, $return_id, $performed_by, $is_english
 
     if ($ret['return_type'] === 'exchange') {
         if ($ret['customer_id']) {
+            ame_return_v2_ensure_customer_ledger();
             // এক্সচেঞ্জ: customer_adjustment ধনাত্মক হলে গ্রাহক বাড়তি পাওনা (debit),
             // ঋণাত্মক হলে গ্রাহকের বকেয়া কমবে (credit)
             $adj = (float)$ret['customer_adjustment'];
-            if ($adj > 0) {
+            $cid = (int)$ret['customer_id'];
+            $prevDue = ame_return_customer_due($db, $cid);
+            if ($adj > 0.005) {
                 add_ledger_entry(
-                    $db, $ret['customer_id'],
+                    $db, $cid,
                     $is_english ? 'Exchange — Extra Payable' : 'এক্সচেঞ্জ — বাড়তি প্রদেয়',
                     $ref_no,
                     $is_english ? 'Exchange adjustment' : 'এক্সচেঞ্জ সমন্বয়',
                     $adj, 0
                 );
-            } elseif ($adj < 0) {
+            } elseif ($adj < -0.005) {
                 add_ledger_entry(
-                    $db, $ret['customer_id'],
+                    $db, $cid,
                     $is_english ? 'Exchange — Customer Credit' : 'এক্সচেঞ্জ — গ্রাহক ক্রেডিট',
                     $ref_no,
                     $is_english ? 'Exchange adjustment' : 'এক্সচেঞ্জ সমন্বয়',
                     0, abs($adj)
                 );
             }
+            $afterDue = ame_return_customer_due($db, $cid);
+            ame_return_store_due_snapshot($db, (int)$return_id, $prevDue, $afterDue);
         }
     } elseif (in_array($refund_method, ['cash_refund', 'bank_transfer', 'mobile_banking'], true) && $ret['account_id']) {
         ame_require_active_account($db, (int)$ret['account_id']);
@@ -811,13 +836,7 @@ function complete_return_transaction($db, $return_id, $performed_by, $is_english
             true
         );
     } elseif ($ret['customer_id']) {
-        // গ্রাহক ব্যালেন্স সমন্বয় — কাস্টমারের বকেয়া থেকে ফেরতের পরিমাণ বাদ (credit)
-        if (!function_exists('add_ledger_entry')) {
-            $ledgerFile = __DIR__ . '/../modules/customers/customer_ledger_functions.php';
-            if (is_file($ledgerFile)) {
-                require_once $ledgerFile;
-            }
-        }
+        ame_return_v2_ensure_customer_ledger();
         $amount = (float)$ret['return_amount'];
         $prevDue = ame_return_customer_due($db, (int) $ret['customer_id']);
         add_ledger_entry(

@@ -1,3 +1,9 @@
+# 10.98.970 — ফেরত/এক্সচেঞ্জ: add_ledger_entry ফিক্স + কাস্টমার ব্যালেন্স
+includes/return_v2_functions.php
+modules/returns/v2/actions/save_exchange.php
+modules/returns/v2/create_exchange.php
+includes/config.php
+VERSION.txt
 # 10.98.969 — PARTY DRIFT: স্বয়ং মিলান + Error Monitor বন্ধ (stale সিল)
 includes/party_amount_shield.php
 includes/ledger_lock.php

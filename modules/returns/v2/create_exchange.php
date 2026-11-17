@@ -54,6 +54,8 @@ ame_sales_return_include_nav('exchange');
     .ex-calc-final { font-size:17px; font-weight:800; margin-top:8px; text-align:center; }
     .ex-calc-final.pay { color:#FF8A65; }
     .ex-calc-final.credit { color:#69F0AE; }
+    .ex-balance-box { margin-top:10px; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.25); font-size:12px; display:none; }
+    .ex-balance-box.show { display:block; }
 
     .ex-submit-btn { width:100%; padding:14px; border:none; border-radius:12px; background: linear-gradient(135deg,#00838F,#26C6DA); color:#fff; font-weight:800; font-size:15px; cursor:pointer; }
     .ex-price-modes { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:0 0 12px; }
@@ -138,6 +140,11 @@ ame_sales_return_include_nav('exchange');
                     <div class="ex-calc-row"><span>ফেরত পণ্যের মূল্য</span><span id="oldValueDisplay">৳0.00</span></div>
                     <div class="ex-calc-row"><span>বদলি পণ্যের মূল্য</span><span id="newValueDisplay">৳0.00</span></div>
                     <div class="ex-calc-final" id="finalResultDisplay">সমান মূল্য — কোনো সমন্বয় লাগবে না</div>
+                    <div class="ex-balance-box" id="exBalanceBox">
+                        <div class="ex-calc-row"><span>সাবেক বকেয়া / ব্যালেন্স</span><span id="exPrevDue">—</span></div>
+                        <div class="ex-calc-row"><span>এক্সচেঞ্জ সমন্বয় (+/−)</span><span id="exAdjLine">৳0.00</span></div>
+                        <div class="ex-calc-row" style="font-weight:800;"><span>মেমো শেষে সর্বমোট</span><span id="exAfterDue">—</span></div>
+                    </div>
                 </div>
                 <input type="hidden" name="adjustment" id="adjustmentInput" value="0">
 
@@ -148,7 +155,7 @@ ame_sales_return_include_nav('exchange');
                     <textarea name="reason" rows="2" required maxlength="255" placeholder="যেমন: সাইজ পরিবর্তন, রং পরিবর্তন"></textarea>
                 </div>
 
-                <button type="submit" class="ex-submit-btn">✅ অনুমোদনের জন্য জমা দিন</button>
+                <button type="submit" class="ex-submit-btn">✅ এক্সচেঞ্জ সম্পন্ন করুন (স্টক + ব্যালেন্স)</button>
             </form>
 
             <div style="margin-top:16px; text-align:center;">
@@ -159,7 +166,7 @@ ame_sales_return_include_nav('exchange');
 </div>
 
 <script>
-var exState = { priceType: 'retail', oldP: null, newP: null };
+var exState = { priceType: 'retail', oldP: null, newP: null, custBalance: null };
 
 function escEx(s) {
     return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -273,8 +280,10 @@ function setupRemoteSearch(inputId, resultsId, kind, onSelect, formatRow) {
 setupRemoteSearch('custSearch', 'custResults', 'customer', function (c) {
     document.getElementById('customerIdInput').value = c.id;
     document.getElementById('customerNameInput').value = c.name;
+    exState.custBalance = Number(c.balance);
     document.getElementById('custChipText').textContent = c.name + ' (' + (c.phone || 'N/A') + ') · ' + exFmtBal(c.balance);
     document.getElementById('custChip').classList.add('show');
+    calcExchange();
 }, function (c) {
     return escEx(c.name) + '<small>' + escEx(c.phone || '') + (c.code ? ' • ' + escEx(c.code) : '') + ' · ' + exFmtBal(c.balance) + '</small>';
 });
@@ -305,9 +314,11 @@ setupRemoteSearch('newProdSearch', 'newProdResults', 'product', function (row) {
 });
 
 function clearCustomer() {
+    exState.custBalance = null;
     document.getElementById('customerIdInput').value = '';
     document.getElementById('customerNameInput').value = '';
     document.getElementById('custChip').classList.remove('show');
+    calcExchange();
 }
 function clearOldProduct() {
     exState.oldP = null;
@@ -347,6 +358,19 @@ function calcExchange() {
         resultEl.className = 'ex-calc-final';
         resultEl.textContent = 'সমান মূল্য — কোনো সমন্বয় লাগবে না';
     }
+
+    var balBox = document.getElementById('exBalanceBox');
+    var cid = parseInt(document.getElementById('customerIdInput').value || '0', 10);
+    if (balBox && cid > 0 && exState.custBalance !== null) {
+        var prev = Number(exState.custBalance) || 0;
+        var after = prev + diff;
+        balBox.classList.add('show');
+        document.getElementById('exPrevDue').textContent = exFmtBal(prev);
+        document.getElementById('exAdjLine').textContent = (diff >= 0 ? '+' : '') + '৳' + diff.toFixed(2);
+        document.getElementById('exAfterDue').textContent = exFmtBal(after);
+    } else if (balBox) {
+        balBox.classList.remove('show');
+    }
 }
 
 document.getElementById('exchangeForm').addEventListener('submit', function (e) {
@@ -367,8 +391,10 @@ document.getElementById('exchangeForm').addEventListener('submit', function (e) 
             if (!found) return;
             document.getElementById('customerIdInput').value = found.id;
             document.getElementById('customerNameInput').value = found.name;
+            exState.custBalance = Number(found.balance);
             document.getElementById('custChipText').textContent = found.name + ' (' + (found.phone || 'N/A') + ') · ' + exFmtBal(found.balance);
             document.getElementById('custChip').classList.add('show');
+            calcExchange();
         });
 })();
 </script>

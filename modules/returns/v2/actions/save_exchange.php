@@ -80,12 +80,42 @@ try {
     $item_stmt->bind_param('iidddi', $return_id, $new_product_id, $new_qty, $new_price, $new_value, $is_replacement);
     $item_stmt->execute();
 
+    $approve = $db->prepare("UPDATE sale_returns_v2 SET status = 'approved', approved_by = ?, approved_at = NOW(), refund_method = 'customer_balance' WHERE id = ?");
+    $approve->bind_param('ii', $user_id, $return_id);
+    $approve->execute();
+    $approve->close();
+
+    ame_return_v2_ensure_customer_ledger();
+    complete_return_transaction($db, $return_id, $user_id, false);
+
+    $pay_status = $customer_id ? 'adjusted' : 'paid';
+    $upd_pay = $db->prepare("UPDATE sale_returns_v2 SET payment_status = ? WHERE id = ?");
+    if ($upd_pay) {
+        $upd_pay->bind_param('si', $pay_status, $return_id);
+        $upd_pay->execute();
+        $upd_pay->close();
+    }
+
     log_activity('Exchange Created', 'Returns', $return_no . ' — সমন্বয় ৳' . $adjustment);
 
     $db->commit();
     $transaction_started = false;
 
-    $_SESSION['success'] = 'এক্সচেঞ্জ তৈরি হয়েছে (' . $return_no . ') — এখন অনুমোদনের অপেক্ষায়।';
+    $msg = 'এক্সচেঞ্জ সম্পন্ন (' . $return_no . ')। স্টক ও কাস্টমার ব্যালেন্স আপডেট হয়েছে।';
+    if ($customer_id) {
+        $snap = $db->prepare('SELECT previous_due, balance_after FROM sale_returns_v2 WHERE id = ? LIMIT 1');
+        if ($snap) {
+            $snap->bind_param('i', $return_id);
+            $snap->execute();
+            $snapRow = $snap->get_result()->fetch_assoc();
+            $snap->close();
+            if ($snapRow && $snapRow['previous_due'] !== null && $snapRow['balance_after'] !== null) {
+                $msg .= ' সাবেক ৳' . number_format((float)$snapRow['previous_due'], 2)
+                    . ' → সর্বমোট ৳' . number_format((float)$snapRow['balance_after'], 2);
+            }
+        }
+    }
+    $_SESSION['success'] = $msg;
     header('Location: ../view.php?id=' . $return_id);
     exit;
 } catch (Throwable $e) {
