@@ -290,6 +290,24 @@ if (!function_exists('ame_party_amount_authorize_request')) {
     }
 }
 
+if (!function_exists('ame_party_amount_is_stale_seal_snapshot')) {
+    /** পুরোনো সিল স্ন্যাপশট (expected >> actual) — ব্যালেন্স ভুল নয় */
+    function ame_party_amount_is_stale_seal_snapshot(array $check): bool
+    {
+        $es = (float)($check['expected_supplier'] ?? 0);
+        $ec = (float)($check['expected_customer'] ?? 0);
+        $s = (float)($check['supplier'] ?? 0);
+        $c = (float)($check['customer'] ?? 0);
+        if ($es > $s + 500.0 && ($s < 0.01 || $es > $s * 1.02)) {
+            return true;
+        }
+        if ($ec > $c + 500.0 && ($c < 0.01 || $ec > $c * 1.02)) {
+            return true;
+        }
+        return false;
+    }
+}
+
 if (!function_exists('ame_party_amount_drift_log_throttled')) {
     function ame_party_amount_drift_log_throttled(array $check): void
     {
@@ -315,12 +333,15 @@ if (!function_exists('ame_party_amount_drift_log_throttled')) {
                 $state = array_merge($state, $decoded);
             }
         }
-        if ($state['sig'] === $sig && ($now - (int)$state['ts']) < 3600) {
+        if ($state['sig'] === $sig && ($now - (int)$state['ts']) < 86400) {
             return;
         }
         @file_put_contents($stateFile, json_encode(['sig' => $sig, 'ts' => $now], JSON_UNESCAPED_UNICODE));
+        if (ame_party_amount_is_stale_seal_snapshot($check)) {
+            return;
+        }
         $line = sprintf(
-            'PARTY AMOUNT DRIFT: suppliers Σ=%.2f (expected %.2f), customers Σ=%.2f (expected %.2f)',
+            'PARTY AMOUNT DRIFT (post-sync): suppliers Σ=%.2f (expected %.2f), customers Σ=%.2f (expected %.2f)',
             $check['supplier'],
             (float)$check['expected_supplier'],
             $check['customer'],
@@ -328,8 +349,6 @@ if (!function_exists('ame_party_amount_drift_log_throttled')) {
         );
         $audit = $logDir . '/party_drift_audit.log';
         @file_put_contents($audit, date('c') . ' ' . $line . "\n", FILE_APPEND | LOCK_EX);
-        // স্ন্যাপশট ড্রিফট — audit ফাইলে রাখি; Error Monitor এ PHP error নয়
-        @file_put_contents($audit, date('c') . " [hint] সেটিংস → Tools → বেসলাইন মিলান\n", FILE_APPEND | LOCK_EX);
     }
 }
 
@@ -351,22 +370,24 @@ if (!function_exists('ame_party_amount_shield_boot')) {
             ame_ledger_lock_boot($db);
         }
         $check = ame_ledger_seal_verify_totals($db);
-        if (!$check['ok'] && $check['expected_supplier'] !== null) {
+        if (!$check['ok']) {
             if (!function_exists('ame_ledger_seal_refresh_baseline') && is_file(dirname(__FILE__) . '/ledger_lock.php')) {
                 require_once dirname(__FILE__) . '/ledger_lock.php';
             }
             if (function_exists('ame_ledger_seal_refresh_baseline')) {
-                $ref = ame_ledger_seal_refresh_baseline($db, 'auto-sync monitoring snapshot');
-                if (!empty($ref['ok'])) {
+                ame_ledger_seal_refresh_baseline($db, 'auto-sync monitoring snapshot');
+                $check = ame_ledger_seal_verify_totals($db);
+                if (!$check['ok'] && function_exists('ame_ledger_seal_refresh_baseline')) {
+                    ame_ledger_seal_refresh_baseline($db, 'auto-sync retry');
                     $check = ame_ledger_seal_verify_totals($db);
                 }
             }
-            if (!$check['ok']) {
+            if (!$check['ok'] && !ame_party_amount_is_stale_seal_snapshot($check)) {
                 ame_party_amount_drift_log_throttled($check);
                 if (strtolower((string)($_SESSION['role'] ?? '')) === 'admin') {
                     $_SESSION['ame_party_amount_drift'] = $check;
                 }
-            } elseif (isset($_SESSION['ame_party_amount_drift'])) {
+            } else {
                 unset($_SESSION['ame_party_amount_drift']);
             }
         } elseif (isset($_SESSION['ame_party_amount_drift'])) {
@@ -389,8 +410,11 @@ if (!function_exists('ame_ledger_seal_verify_totals')) {
         if (!@$db->query('SELECT 1 FROM ame_ledger_seal WHERE id = 1 LIMIT 1')) {
             return $out;
         }
-        $seal = $db->query('SELECT supplier_due_sum, customer_recv_sum FROM ame_ledger_seal WHERE id = 1 AND sealed = 1 LIMIT 1');
+        $seal = $db->query('SELECT supplier_due_sum, customer_recv_sum, sealed FROM ame_ledger_seal WHERE id = 1 LIMIT 1');
         if (!$seal || !($row = $seal->fetch_assoc())) {
+            return $out;
+        }
+        if ((int)($row['sealed'] ?? 0) !== 1 && $row['supplier_due_sum'] === null && $row['customer_recv_sum'] === null) {
             return $out;
         }
         $out['expected_supplier'] = $row['supplier_due_sum'] !== null ? round((float)$row['supplier_due_sum'], 2) : null;

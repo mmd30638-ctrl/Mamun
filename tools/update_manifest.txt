@@ -1,3 +1,8 @@
+# 10.98.969 — PARTY DRIFT: স্বয়ং মিলান + Error Monitor বন্ধ (stale সিল)
+includes/party_amount_shield.php
+includes/ledger_lock.php
+includes/config.php
+VERSION.txt
 # 10.98.968 — এক্সচেঞ্জ: সার্ভার সার্চ + খুচরা/পাইকারি/ডিলার
 modules/returns/v2/create_exchange.php
 modules/returns/v2/actions/search_lookup.php

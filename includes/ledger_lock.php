@@ -209,7 +209,11 @@ if (!function_exists('ame_ledger_seal_refresh_baseline')) {
             $one = 1;
             $ins = @$db->prepare(
                 'INSERT INTO ame_ledger_seal (id, sealed, sealed_at, note, version, supplier_due_sum, customer_recv_sum)
-                 VALUES (1, ?, NOW(), ?, ?, ?, ?)'
+                 VALUES (1, ?, NOW(), ?, ?, ?, ?)
+                 ON DUPLICATE KEY UPDATE
+                    sealed = 1, sealed_at = NOW(), note = VALUES(note),
+                    supplier_due_sum = VALUES(supplier_due_sum), customer_recv_sum = VALUES(customer_recv_sum),
+                    version = IF(VALUES(version) <> "", VALUES(version), version)'
             );
             if ($ins) {
                 $ins->bind_param('issdd', $one, $note, $ver, $sums['supplier'], $sums['customer']);
