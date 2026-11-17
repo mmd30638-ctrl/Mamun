@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-const AME_SALES_RETURN_MODULE_REV = '10.98.964';
+const AME_SALES_RETURN_MODULE_REV = '10.98.966';
 
 /**
  * @return list<array{id:string,href:string,icon:string,label_key:string,desc_bn:string,desc_en:string}>

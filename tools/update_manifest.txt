@@ -1,3 +1,7 @@
+# 10.98.966 — দ্রুত ফেরত: খুচরা/পাইকারি/ডিলার/প্রাইস টগল
+modules/returns/v2/quick_return.php
+includes/config.php
+VERSION.txt
 # 10.98.965 — PARTY DRIFT অটো-সিঙ্ক+লগ; মোবাইল পেমেন্ট মেমো পূর্ণ প্রস্থ
 includes/party_amount_shield.php
 includes/ledger_lock.php
