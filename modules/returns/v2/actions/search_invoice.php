@@ -77,7 +77,9 @@ echo json_encode([
         'customer_name' => $sale['customer_name'] ?: 'Retail Customer',
         'customer_code' => $sale['customer_code'] ?? '',
         'customer_phone' => $sale['customer_phone'] ?? '',
-        'customer_balance' => (float)($sale['receivable_balance'] ?? 0),
+        'customer_balance' => $sale['customer_id']
+            ? ame_return_customer_due($db, (int)$sale['customer_id'])
+            : (float)($sale['receivable_balance'] ?? 0),
         'sales_type' => (strtolower((string)$sale['customer_type']) === 'wholesale') ? 'wholesale' : 'retail',
     ],
     'items' => $items,

@@ -269,5 +269,23 @@ document.getElementById('exchangeForm').addEventListener('submit', function (e) 
         alert('ফেরত ও বদলি — দুটো পণ্যই নির্বাচন করুন।');
     }
 });
+
+(function () {
+    var params = new URLSearchParams(window.location.search);
+    var cid = parseInt(params.get('customer_id') || '0', 10);
+    if (cid < 1) {
+        return;
+    }
+    var found = CUSTOMERS.find(function (c) {
+        return Number(c.id) === cid;
+    });
+    if (!found) {
+        return;
+    }
+    document.getElementById('customerIdInput').value = found.id;
+    document.getElementById('customerNameInput').value = found.name;
+    document.getElementById('custChipText').textContent = found.name + ' (' + (found.phone || 'N/A') + ')';
+    document.getElementById('custChip').classList.add('show');
+})();
 </script>
 <?php include __DIR__ . '/../../../partials/footer.php'; ?>

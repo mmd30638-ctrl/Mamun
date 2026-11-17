@@ -284,6 +284,15 @@ function ame_return_customer_due($db, int $customerId): float
     if ($customerId <= 0) {
         return 0.0;
     }
+    if (!function_exists('ame_ledger_net')) {
+        $ledgerPath = dirname(__DIR__) . '/modules/customers/customer_ledger_functions.php';
+        if (is_file($ledgerPath)) {
+            require_once $ledgerPath;
+        }
+    }
+    if (function_exists('ame_ledger_net')) {
+        return round((float)ame_ledger_net($db, $customerId), 2);
+    }
     $stmt = @$db->prepare('SELECT receivable_balance FROM customers WHERE id = ? LIMIT 1');
     if (!$stmt) {
         return 0.0;
@@ -293,6 +302,116 @@ function ame_return_customer_due($db, int $customerId): float
     $row = $stmt->get_result()->fetch_assoc();
     $stmt->close();
     return round((float) ($row['receivable_balance'] ?? 0), 2);
+}
+
+/**
+ * রেজিস্টার ক্রেতার সম্পন্ন মেমো — ফেরতযোগ্য পণ্য সহ (রিটার্ন মডিউল সার্চ)।
+ *
+ * @return array{customer:array,balance:float,memos:array<int,array<string,mixed>>}
+ */
+function ame_return_v2_list_customer_memos(mysqli $db, int $customerId, int $limit = 50): array
+{
+    ensure_return_v2_schema($db);
+    $empty = ['customer' => [], 'balance' => 0.0, 'memos' => []];
+    if ($customerId <= 0) {
+        return $empty;
+    }
+
+    $stmt = $db->prepare(
+        'SELECT id, name, phone, customer_code, receivable_balance FROM customers WHERE id = ? AND is_customer = 1 LIMIT 1'
+    );
+    if (!$stmt) {
+        return $empty;
+    }
+    $stmt->bind_param('i', $customerId);
+    $stmt->execute();
+    $cust = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+    if (!$cust) {
+        return $empty;
+    }
+
+    $balance = ame_return_customer_due($db, $customerId);
+    $limit = max(1, min(80, $limit));
+
+    $salesStmt = $db->prepare(
+        "SELECT id, invoice_number, sale_date, completed_at, net_payable, paid_amount, due_amount, customer_type
+         FROM sales
+         WHERE status = 'completed' AND customer_id = ?
+         ORDER BY COALESCE(completed_at, sale_date, created_at) DESC
+         LIMIT ?"
+    );
+    if (!$salesStmt) {
+        return [
+            'customer' => $cust,
+            'balance' => $balance,
+            'memos' => [],
+        ];
+    }
+    $salesStmt->bind_param('ii', $customerId, $limit);
+    $salesStmt->execute();
+    $sales = $salesStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $salesStmt->close();
+
+    $memos = [];
+    foreach ($sales as $sale) {
+        $saleId = (int)$sale['id'];
+        $itemsStmt = $db->prepare(
+            'SELECT product_id, qty FROM sale_items WHERE sale_id = ? AND product_id IS NOT NULL AND product_id > 0'
+        );
+        if (!$itemsStmt) {
+            continue;
+        }
+        $itemsStmt->bind_param('i', $saleId);
+        $itemsStmt->execute();
+        $itemRows = $itemsStmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $itemsStmt->close();
+
+        $returnableQty = 0.0;
+        $returnableLines = 0;
+        foreach ($itemRows as $it) {
+            $pid = (int)($it['product_id'] ?? 0);
+            $sold = (float)($it['qty'] ?? 0);
+            if ($pid <= 0 || $sold <= 0) {
+                continue;
+            }
+            $already = get_already_returned_qty($db, $saleId, $pid);
+            $left = round($sold - $already, 4);
+            if ($left > 0.0009) {
+                $returnableLines++;
+                $returnableQty += $left;
+            }
+        }
+
+        $inv = trim((string)($sale['invoice_number'] ?? ''));
+        if ($inv === '') {
+            $inv = 'INV-' . $saleId;
+        }
+        $when = $sale['completed_at'] ?? $sale['sale_date'] ?? '';
+        $memos[] = [
+            'sale_id' => $saleId,
+            'invoice_number' => $inv,
+            'search_ref' => $inv,
+            'sale_date' => $when ? date('d-m-Y', strtotime((string)$when)) : '',
+            'net_payable' => round((float)($sale['net_payable'] ?? 0), 2),
+            'due_amount' => round((float)($sale['due_amount'] ?? 0), 2),
+            'returnable_lines' => $returnableLines,
+            'returnable_qty' => round($returnableQty, 2),
+            'can_return' => $returnableLines > 0,
+            'sales_type' => (strtolower((string)($sale['customer_type'] ?? '')) === 'wholesale') ? 'wholesale' : 'retail',
+        ];
+    }
+
+    return [
+        'customer' => [
+            'id' => (int)$cust['id'],
+            'name' => (string)$cust['name'],
+            'phone' => (string)($cust['phone'] ?? ''),
+            'code' => (string)($cust['customer_code'] ?? ''),
+        ],
+        'balance' => $balance,
+        'memos' => $memos,
+    ];
 }
 
 function ame_return_store_due_snapshot($db, int $returnId, float $previous, float $after): void

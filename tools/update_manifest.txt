@@ -1,3 +1,11 @@
+# 10.98.960 — রিটার্ন: রেজিস্টার ক্রেতা নামে মেমো সার্চ + সাবেক ব্যালেন্স
+includes/return_v2_functions.php
+modules/returns/v2/actions/search_customer_memos.php
+modules/returns/v2/actions/search_invoice.php
+modules/returns/v2/create_invoice_return.php
+modules/returns/v2/create_exchange.php
+includes/config.php
+VERSION.txt
 # 10.98.959 — রিভার্ট: বিক্রয় রিটার্ন রেজিস্ট্রি (958) বাতিল — আগের POS/রিটার্ন
 includes/sales/sale_common.php
 modules/sales/process_sale.php

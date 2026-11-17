@@ -84,6 +84,18 @@ include __DIR__ . '/../../../partials/header.php';
     .sr-btn { flex:1; min-width:120px; padding:14px; border:none; border-radius:12px; font-weight:800; font-size:14px; cursor:pointer; }
     .sr-btn-cancel { background:#F1F5F9; color:#64748B; }
     .sr-btn-submit { background:linear-gradient(135deg,var(--sr-primary),var(--sr-primary-dark)); color:#fff; }
+
+    .sr-registry-balance { margin-top:10px; padding:12px 14px; border-radius:12px; background:#FFFBEB; border:1px solid #FDE68A; font-size:13px; font-weight:800; color:#92400E; display:none; }
+    .sr-registry-balance.show { display:block; }
+    .sr-memo-table { width:100%; border-collapse:collapse; font-size:12px; margin-top:10px; }
+    .sr-memo-table th { background:#0F172A; color:#fff; padding:8px 6px; text-align:left; white-space:nowrap; }
+    .sr-memo-table td { padding:8px 6px; border-bottom:1px solid #F1F5F9; vertical-align:middle; }
+    .sr-memo-actions { display:flex; flex-wrap:wrap; gap:6px; }
+    .sr-memo-btn { border:none; border-radius:8px; padding:6px 10px; font-size:11px; font-weight:800; cursor:pointer; text-decoration:none; display:inline-block; }
+    .sr-memo-btn.open { background:var(--sr-primary); color:#fff; }
+    .sr-memo-btn.memo { background:#E0F2FE; color:#0369A1; }
+    .sr-memo-btn.ex { background:#EDE9FE; color:#5B21B6; }
+    .sr-memo-muted { color:#94A3B8; font-size:11px; }
 </style>
 
 <div class="sr-wrap">
@@ -128,6 +140,18 @@ include __DIR__ . '/../../../partials/header.php';
 
         <!-- ইনভয়েস মোড -->
         <div id="invoiceModeSection">
+        <div class="sr-card" id="srRegistryCard">
+            <div class="sr-card-title">📋 রেজিস্টার ক্রেতা — নাম দিয়ে মেমো খুঁজুন</div>
+            <p class="sr-memo-muted">নিবন্ধিত ক্রেতার নাম/ফোন লিখুন → তার মেমো তালিকা → ফেরত বা এক্সচেঞ্জ খুলুন। সাবেক বকেয়া/জমা মেমো সহ দেখাবে।</p>
+            <div style="position:relative;">
+                <input type="text" id="registryCustSearch" autocomplete="off" placeholder="রেজিস্টার ক্রেতার নাম, কোড বা ফোন...">
+                <div class="sr-results" id="registryCustResults"></div>
+            </div>
+            <div class="sr-registry-balance" id="registryBalanceBox">
+                <span id="registryBalanceText">সাবেক ব্যালেন্স: ৳0.00</span>
+            </div>
+            <div id="registryMemoHost"></div>
+        </div>
         <div class="sr-card">
             <div class="sr-card-title">🧾 ইনভয়েস নির্বাচন করুন</div>
             <div style="display:flex; gap:8px;">
@@ -258,6 +282,79 @@ include __DIR__ . '/../../../partials/header.php';
 var currentItems = [];
 var cart = [];
 var REASON_OPTIONS = ['পণ্য ক্ষতিগ্রস্ত', 'ভুল পণ্য সরবরাহ', 'ভুল সাইজ/ভ্যারিয়েন্ট', 'গ্রাহকের পছন্দ নয়', 'অতিরিক্ত পণ্য', 'মেয়াদ শেষ', 'Warranty Return', 'অন্যান্য'];
+
+function fmtBal(n) {
+    var v = Number(n) || 0;
+    if (v > 0.009) return 'বকেয়া ৳' + v.toFixed(2);
+    if (v < -0.009) return 'জমা ৳' + Math.abs(v).toFixed(2);
+    return 'সমান ৳0.00';
+}
+
+function loadInvoiceMemo(ref) {
+    if (!ref) return;
+    switchReturnMode('invoice');
+    document.getElementById('invoiceSearchInput').value = ref;
+    searchInvoice();
+    document.getElementById('itemsBody').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function paintRegistryMemos(data) {
+    var host = document.getElementById('registryMemoHost');
+    var balBox = document.getElementById('registryBalanceBox');
+    var balText = document.getElementById('registryBalanceText');
+    if (!host) return;
+    var memos = data.memos || [];
+    if (!memos.length) {
+        host.innerHTML = '<p class="sr-memo-muted" style="margin-top:10px;">এই ক্রেতার সম্পন্ন মেমো পাওয়া যায়নি।</p>';
+        return;
+    }
+    var rows = '';
+    memos.forEach(function (m) {
+        var retTag = m.can_return
+            ? '<span style="color:#059669;font-weight:800;">ফেরতযোগ্য ' + m.returnable_lines + ' লাইন</span>'
+            : '<span class="sr-memo-muted">ফেরত নেই</span>';
+        rows += '<tr>'
+            + '<td><b>' + srEsc(m.invoice_number) + '</b><br><small>' + srEsc(m.sale_date) + '</small></td>'
+            + '<td>৳' + Number(m.net_payable).toFixed(2) + '<br><small>বকেয়া ৳' + Number(m.due_amount).toFixed(2) + '</small></td>'
+            + '<td>' + retTag + '</td>'
+            + '<td><div class="sr-memo-actions">'
+            + (m.can_return ? '<button type="button" class="sr-memo-btn open" onclick="loadInvoiceMemo(' + JSON.stringify(String(m.search_ref)) + ')">ফেরত খুলুন</button>' : '')
+            + '<a class="sr-memo-btn memo" href="../../sales/invoice.php?id=' + encodeURIComponent(String(m.sale_id)) + '" target="_blank" rel="noopener">মেমো</a>'
+            + '<a class="sr-memo-btn ex" href="create_exchange.php?customer_id=' + encodeURIComponent(String(data.customer.id)) + '">এক্সচেঞ্জ</a>'
+            + '</div></td></tr>';
+    });
+    host.innerHTML = '<table class="sr-memo-table"><thead><tr><th>মেমো</th><th>বিক্রয়</th><th>ফেরত</th><th>কর্ম</th></tr></thead><tbody>' + rows + '</tbody></table>';
+    if (balBox && balText) {
+        balText.textContent = (data.customer.name || '') + ' — সাবেক: ' + fmtBal(data.balance);
+        balBox.classList.add('show');
+    }
+}
+
+function fetchRegistryMemos(customerId) {
+    if (!customerId) return;
+    document.getElementById('registryMemoHost').innerHTML = '<p class="sr-memo-muted">লোড হচ্ছে...</p>';
+    fetch('actions/search_customer_memos.php?customer_id=' + encodeURIComponent(String(customerId)), { credentials: 'same-origin' })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+            if (data.status !== 'success') {
+                document.getElementById('registryMemoHost').innerHTML = '<p class="sr-memo-muted">' + srEsc(data.message || 'তথ্য পাওয়া যায়নি') + '</p>';
+                return;
+            }
+            paintRegistryMemos(data);
+        })
+        .catch(function () {
+            document.getElementById('registryMemoHost').innerHTML = '<p class="sr-memo-muted">সার্ভার ত্রুটি।</p>';
+        });
+}
+
+var registryCustSearch = document.getElementById('registryCustSearch');
+var registryCustResults = document.getElementById('registryCustResults');
+if (registryCustSearch && registryCustResults) {
+    srBindLookup(registryCustSearch, registryCustResults, 'customer', function () {}, function (c) {
+        registryCustSearch.value = c.name;
+        fetchRegistryMemos(c.id);
+    });
+}
 
 function switchReturnMode(mode) {
     document.getElementById('isManualInput').value = mode === 'manual' ? '1' : '0';
