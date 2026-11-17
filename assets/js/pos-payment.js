@@ -904,16 +904,6 @@ if (typeof document !== 'undefined') {
             offline_client_ref: amePosStableSaleClientRef()
         };
 
-        if (!registered || !customerId) {
-            var guestInfo = (
-                typeof window.amePosGuestSnapshot === 'function'
-                && window.amePosGuestSnapshot()
-            ) || {};
-            requestData.guest_customer_name = (guestInfo.name || '').trim();
-            requestData.guest_customer_phone = (guestInfo.phone || '').trim();
-            requestData.guest_customer_note = (guestInfo.note || '').trim();
-        }
-
         function goCompletedInvoice(saleId) {
             const id = Number(saleId || 0);
             if (id > 0) {

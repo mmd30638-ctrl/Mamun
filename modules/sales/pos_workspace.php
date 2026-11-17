@@ -30,8 +30,7 @@ $ame_pos_workspace_words = $ame_pos_english
         'search_product' => 'Part name or code',
         'search_label' => 'Part name or code',
         'finder_hint' => 'See parts by machine model',
-        'customer_info' => 'Customer name (for return/exchange)',
-        'return_registry_hint' => 'Enter buyer name before charging — needed for return/exchange by memo later.',
+        'customer_info' => 'Customer info',
         'all_sales' => 'Recent sales',
         'recent_draft' => 'Draft',
         'recent_complete' => 'Complete',
@@ -75,8 +74,7 @@ $ame_pos_workspace_words = $ame_pos_english
         'search_product' => 'যন্ত্রাংশের নাম বা কোড',
         'search_label' => 'যন্ত্রাংশের নাম বা কোড',
         'finder_hint' => 'মেশিন অনুযায়ী পার্টস দেখুন',
-        'customer_info' => 'ক্রেতার নাম (ফেরত/এক্সচেঞ্জ)',
-        'return_registry_hint' => 'চার্জ/বিক্রয়ের আগে নাম দিন — পরে মেমো দিয়ে ফেরত বা এক্সচেঞ্জ সহজ হবে।',
+        'customer_info' => 'ক্রেতার তথ্য',
         'all_sales' => 'সাম্প্রতিক বিক্রয়',
         'recent_draft' => 'ড্রাফট',
         'recent_complete' => 'কমপ্লিট',
@@ -576,7 +574,6 @@ if (isset($db) && $db instanceof mysqli) {
                         </div>
                         <ul id="posCustomerSearchList" class="pos-customer-suggest" hidden></ul>
                     </div>
-                    <p class="ame-return-registry-hint" id="ameReturnRegistryHint"><?php echo $escape($words['return_registry_hint']); ?></p>
                 </div>
 
             </div>

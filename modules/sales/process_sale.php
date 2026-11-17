@@ -748,10 +748,6 @@ try {
         }
     }
 
-    if (!empty($sale_id)) {
-        ame_sale_apply_guest_snapshot($db, (int)$sale_id, $data, $customer_id);
-    }
-
     if (!empty($offline_ref) && !empty($sale_id)) {
         attach_sale_offline_ref($db, (int)$sale_id, $offline_ref);
         $dup = find_sale_by_offline_ref($db, $offline_ref);
