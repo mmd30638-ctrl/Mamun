@@ -60,6 +60,14 @@
         document.documentElement.classList.add('ame-phone-desktop');
         if (ameMemoStandaloneNoDesktopViewport()) {
             document.documentElement.classList.add('ame-memo-standalone-fit');
+            var metaMemo = document.querySelector('meta[name="viewport"]');
+            if (metaMemo) {
+                metaMemo.setAttribute(
+                    'content',
+                    'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover'
+                );
+            }
+            window.AME_SALE_DESKTOP_SITE = false;
             return;
         }
         var design = 1366;

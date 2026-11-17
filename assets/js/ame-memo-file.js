@@ -603,6 +603,78 @@
         }));
     }
 
+    function isCpayReceiptPage() {
+        return !!(document.body && document.body.classList.contains('ame-customer-pay-receipt'));
+    }
+
+    function cpayMemoCaptureWidth(node) {
+        var root = document.documentElement;
+        var vw = Math.round(root.clientWidth || window.innerWidth || 390);
+        if (root.classList.contains('ame-memo-standalone-fit') || root.getAttribute('data-ame-memo-standalone') === '1') {
+            return Math.max(300, vw - 16);
+        }
+        if (node && node.getBoundingClientRect) {
+            var rect = node.getBoundingClientRect();
+            var w = Math.ceil(rect.width);
+            if (w > 200) {
+                return w;
+            }
+        }
+        return Math.max(300, Math.min(520, vw));
+    }
+
+    function trimCanvasWhitespace(canvas) {
+        if (!canvas || !canvas.getContext) {
+            return canvas;
+        }
+        var ctx = canvas.getContext('2d');
+        var w = canvas.width;
+        var h = canvas.height;
+        if (w < 4 || h < 4) {
+            return canvas;
+        }
+        var img = ctx.getImageData(0, 0, w, h);
+        var d = img.data;
+        var minX = w;
+        var minY = h;
+        var maxX = 0;
+        var maxY = 0;
+        var y;
+        var x;
+        var i;
+        var a;
+        for (y = 0; y < h; y++) {
+            for (x = 0; x < w; x++) {
+                i = (y * w + x) * 4;
+                a = d[i + 3];
+                if (a < 12) {
+                    continue;
+                }
+                if (d[i] < 248 || d[i + 1] < 248 || d[i + 2] < 248) {
+                    if (x < minX) { minX = x; }
+                    if (y < minY) { minY = y; }
+                    if (x > maxX) { maxX = x; }
+                    if (y > maxY) { maxY = y; }
+                }
+            }
+        }
+        if (maxX <= minX || maxY <= minY) {
+            return canvas;
+        }
+        var pad = 4;
+        minX = Math.max(0, minX - pad);
+        minY = Math.max(0, minY - pad);
+        maxX = Math.min(w - 1, maxX + pad);
+        maxY = Math.min(h - 1, maxY + pad);
+        var tw = maxX - minX + 1;
+        var th = maxY - minY + 1;
+        var out = document.createElement('canvas');
+        out.width = tw;
+        out.height = th;
+        out.getContext('2d').drawImage(canvas, minX, minY, tw, th, 0, 0, tw, th);
+        return out;
+    }
+
     function prepClone(node) {
         var clone = node.cloneNode(true);
         clone.id = 'ame-memo-capture-clone';
@@ -615,9 +687,9 @@
             wrap.style.overflow = 'visible';
         });
         var spayShot = node && node.classList && node.classList.contains('spay-memo');
-        var cpayShot = !!(document.body && document.body.classList.contains('ame-customer-pay-receipt'))
+        var cpayShot = isCpayReceiptPage()
             || !!(node && node.classList && node.classList.contains('memo-wrapper') && document.querySelector('.cpay-sheet'));
-        var narrowPx = cpayShot ? 480 : 420;
+        var narrowPx = cpayShot ? cpayMemoCaptureWidth(node) : 420;
         var useNarrow = spayShot || cpayShot;
         clone.style.cssText = [
             'position:absolute',
@@ -728,9 +800,9 @@
         var clone = prepClone(node);
             var scale = 2;
         var spayShot = clone.classList && clone.classList.contains('spay-memo');
-        var cpayClone = !!(document.body && document.body.classList.contains('ame-customer-pay-receipt'));
+        var cpayClone = isCpayReceiptPage();
         var narrowCapture = spayShot || cpayClone;
-        var narrowW = cpayClone ? 480 : 420;
+        var narrowW = cpayClone ? cpayMemoCaptureWidth(node) : 420;
         var boxW = narrowCapture ? Math.ceil(Math.max(clone.scrollWidth, clone.offsetWidth, narrowW)) : A4_CSS_PX;
         var boxH = Math.ceil(Math.max(clone.scrollHeight, clone.offsetHeight));
         return waitImages(clone).then(function () {
@@ -765,6 +837,9 @@
         }).then(function (canvas) {
             if (clone.parentNode) {
                 clone.parentNode.removeChild(clone);
+            }
+            if (cpayClone) {
+                canvas = trimCanvasWhitespace(canvas);
             }
             return canvas;
         }, function (err) {

@@ -2,6 +2,9 @@
 :root {
     --cpay-memo-max: min(100%, 480px);
 }
+html.ame-memo-standalone-fit {
+    --cpay-memo-max: 100%;
+}
 body.ame-cpay-memo--a4 {
     --cpay-memo-max: min(100%, 720px);
 }
@@ -432,9 +435,9 @@ html.ame-phone-desktop.ame-memo-standalone-fit body.ame-customer-pay-receipt {
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 !important;
-    padding-left: max(10px, env(safe-area-inset-left, 0px)) !important;
-    padding-right: max(10px, env(safe-area-inset-right, 0px)) !important;
+    padding: max(12px, env(safe-area-inset-top, 0px)) max(8px, env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) max(8px, env(safe-area-inset-left, 0px)) !important;
     overflow-x: hidden !important;
+    background: #f0f4f8 !important;
 }
 
 html.ame-memo-standalone-fit body.ame-customer-pay-receipt .cpay-sheet,
@@ -450,9 +453,13 @@ html.ame-phone-desktop.ame-memo-standalone-fit body.ame-customer-pay-receipt .pa
 }
 
 html.ame-memo-standalone-fit body.ame-customer-pay-receipt .memo-wrapper,
-html.ame-phone-desktop.ame-memo-standalone-fit body.ame-customer-pay-receipt .memo-wrapper {
+html.ame-phone-desktop.ame-memo-standalone-fit body.ame-customer-pay-receipt .memo-wrapper,
+html.ame-memo-standalone-fit body.ame-customer-pay-receipt .cpay-sheet .memo-wrapper {
     width: 100% !important;
     max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    border-radius: 12px !important;
 }
 
 html.ame-phone-desktop:not(.ame-memo-standalone-fit) body.ame-customer-pay-receipt .cpay-sheet,

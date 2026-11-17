@@ -111,6 +111,15 @@ $file_base = $row ? 'withdraw-' . preg_replace('/[^A-Za-z0-9_-]+/', '-', $ref) :
 <head>
 <meta charset="UTF-8">
 <?php echo defined('AME_VIEWPORT_META') ? AME_VIEWPORT_META : '<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">'; ?>
+<script>
+(function () {
+    var m = document.querySelector('meta[name="viewport"]');
+    if (m) {
+        m.setAttribute('content', 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover');
+    }
+    document.documentElement.classList.add('ame-memo-standalone-fit');
+})();
+</script>
 <title><?php echo htmlspecialchars(ame_l('উত্তোলন রসিদ', 'Payout receipt'), ENT_QUOTES, 'UTF-8'); ?><?php echo $row ? ' #' . htmlspecialchars($ref, ENT_QUOTES, 'UTF-8') : ''; ?></title>
 <link rel="stylesheet" href="/assets/css/ame-front-colors.css?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>">
 <link rel="stylesheet" href="/assets/css/memo-clear.css?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>">
@@ -123,7 +132,7 @@ if (function_exists('ame_global_responsive_tier_script_echo')) {
 ?>
 <script src="/assets/js/html2canvas.min.js?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>"></script>
 </head>
-<body class="ame-customer-pay-receipt ame-withdraw-receipt<?php echo htmlspecialchars($body_paper_class, ENT_QUOTES, 'UTF-8'); ?>">
+<body class="ame-customer-pay-receipt ame-withdraw-receipt<?php echo htmlspecialchars($body_paper_class, ENT_QUOTES, 'UTF-8'); ?>" data-ame-memo-standalone="1">
 <?php if (!$row): ?>
 <div class="memo-missing no-print">
     <p><?php echo htmlspecialchars(ame_l('উত্তোলন রসিদ পাওয়া যায়নি।', 'Payout receipt not found.'), ENT_QUOTES, 'UTF-8'); ?></p>
@@ -284,6 +293,5 @@ if (function_exists('ame_global_responsive_assets_echo')) {
     ame_global_responsive_assets_echo();
 }
 ?>
-<?php include __DIR__ . '/../../partials/page_fit.php'; ?>
 </body>
 </html>
