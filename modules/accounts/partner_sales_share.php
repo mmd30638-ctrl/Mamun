@@ -141,16 +141,19 @@ foreach ($by_month_idx as $m => $idxs) {
 }
 $total = 0.0;
 $total_sale = 0.0;
+$total_sale_qty = 0.0;
 $sales_share_sum = [];
 foreach ($lines as $l) {
     $total += (float)$l['profit'];
     $total_sale += (float)($l['sale_amount'] ?? 0);
+    $total_sale_qty += (float)($l['qty'] ?? 0);
     foreach (($l['shares'] ?? []) as $pid => $v) {
         $sales_share_sum[$pid] = pa_money(($sales_share_sum[$pid] ?? 0) + $v);
     }
 }
 $total = round($total, 2);
 $total_sale = round($total_sale, 2);
+$total_sale_qty = round($total_sale_qty, 3);
 $exp_share_sum = [];
 foreach ($expenses as $r) {
     foreach ($r['shares'] as $pid => $v) {
@@ -309,9 +312,10 @@ $cat_stat = [];
 foreach ($sales_rows as $r) {
     $k = (string)$r['category_name'];
     if (!isset($cat_stat[$k])) {
-        $cat_stat[$k] = ['n' => 0, 'sale' => 0.0, 'profit' => 0.0, 'shares' => []];
+        $cat_stat[$k] = ['n' => 0, 'qty' => 0.0, 'sale' => 0.0, 'profit' => 0.0, 'shares' => []];
     }
     $cat_stat[$k]['n']++;
+    $cat_stat[$k]['qty'] = round(($cat_stat[$k]['qty'] ?? 0) + (float)($r['qty'] ?? 0), 3);
     $cat_stat[$k]['sale'] += (float)$r['sale_amount'];
     $cat_stat[$k]['profit'] += (float)$r['profit'];
     foreach (($r['shares'] ?? []) as $pid => $v) {
@@ -322,9 +326,10 @@ $pur_stat = [];
 foreach ($pur_rows as $r) {
     $k = (string)$r['category_name'];
     if (!isset($pur_stat[$k])) {
-        $pur_stat[$k] = ['n' => 0, 'cost' => 0.0];
+        $pur_stat[$k] = ['n' => 0, 'qty' => 0.0, 'cost' => 0.0];
     }
     $pur_stat[$k]['n']++;
+    $pur_stat[$k]['qty'] = round(($pur_stat[$k]['qty'] ?? 0) + (float)($r['qty'] ?? 0), 3);
     $pur_stat[$k]['cost'] += (float)$r['total_cost'];
 }
 $exp_cat_stat = [];
@@ -430,7 +435,7 @@ $mini_rows = static function (array $stat, int $max = 5) use ($bn): array {
                 $rest = ['n' => 0, 'sale' => 0.0, 'profit' => 0.0, 'cost' => 0.0, 'amount' => 0.0, 'c' => 0, 'shares' => []];
             }
             $rest['c']++;
-            foreach (['n', 'sale', 'profit', 'cost', 'amount'] as $f) {
+            foreach (['n', 'qty', 'sale', 'profit', 'cost', 'amount'] as $f) {
                 $rest[$f] += (float)($st[$f] ?? 0);
             }
             foreach (($st['shares'] ?? []) as $pid => $v) {
@@ -546,11 +551,11 @@ $np = max(1, count($book_rows));
 $pw = $np <= 2 ? 90 : 72;
 $share_cols = str_repeat('<col style="width:' . $pw . 'px">', count($book_rows));
 $cols = [
-    'sales' => '<col style="width:28px"><col style="width:100px"><col style="width:116px"><col><col style="width:106px"><col style="width:92px">' . $share_cols,
+    'sales' => '<col style="width:28px"><col style="width:100px"><col style="width:116px"><col><col style="width:52px"><col style="width:98px"><col style="width:86px">' . $share_cols,
     'purchase' => '<col style="width:28px"><col style="width:104px"><col style="width:124px"><col><col style="width:54px"><col style="width:90px"><col style="width:104px">',
     'expense' => '<col style="width:28px"><col style="width:118px"><col style="width:102px"><col><col style="width:96px">' . $share_cols,
 ];
-$ncols = ['sales' => 6 + count($book_rows), 'purchase' => 7, 'expense' => 5 + count($book_rows)];
+$ncols = ['sales' => 7 + count($book_rows), 'purchase' => 7, 'expense' => 5 + count($book_rows)];
 $pcol = $np <= 2
     ? 195
     : max(100, min(150, (int)floor((748 - 200 - 150) / $np)));
@@ -602,7 +607,10 @@ include '../../partials/header.php';
             $sec = $pg['sec'];
             $page_items = $pg['items'];
             ?>
-        <section class="psp-page pst<?php echo $sec === 'summary' ? ' psp-page-summary' : ''; ?>" data-page="<?php echo $page_no; ?>" data-sec="<?php echo $h($sec); ?>">
+        <section class="psp-page pst<?php
+            echo $sec === 'summary' ? ' psp-page-summary' : '';
+            echo $sec === 'cats' ? ' psp-page-cats' : '';
+        ?>" data-page="<?php echo $page_no; ?>" data-sec="<?php echo $h($sec); ?>">
             <div class="psp-topbar"></div>
             <header class="psp-head">
                 <div class="psp-brand">
@@ -648,7 +656,7 @@ include '../../partials/header.php';
                         <colgroup><?php echo $cols[$sec]; ?></colgroup>
                         <thead>
                             <?php if ($sec === 'sales'): ?>
-                            <tr><th>নং</th><th>তারিখ<small>ইনভয়েস</small></th><th>কাস্টমার<small>আইডি</small></th><th>পণ্য</th><th class="num">বিক্রয়</th><th class="num">লাভ</th><?php foreach ($book_rows as $bi => $br): ?><th class="num psh psh<?php echo ($bi % 4) + 1; ?>">পার্টনার <?php echo $h($bn($bi + 1)); ?><small>লাভের অংশ</small></th><?php endforeach; ?></tr>
+                            <tr><th>নং</th><th>তারিখ<small>ইনভয়েস</small></th><th>কাস্টমার<small>আইডি</small></th><th>পণ্য</th><th class="num">পরিমাণ</th><th class="num">বিক্রয়</th><th class="num">লাভ</th><?php foreach ($book_rows as $bi => $br): ?><th class="num psh psh<?php echo ($bi % 4) + 1; ?>">পার্টনার <?php echo $h($bn($bi + 1)); ?><small>লাভের অংশ</small></th><?php endforeach; ?></tr>
                             <?php elseif ($sec === 'purchase'): ?>
                             <tr><th>নং</th><th>তারিখ<small>মেমো নং</small></th><th>সরবরাহকারী<small>আইডি</small></th><th>পণ্য</th><th class="num">পরিমাণ</th><th class="num">দর</th><th class="num">মোট ক্রয়</th></tr>
                             <?php else: ?>
@@ -669,6 +677,7 @@ include '../../partials/header.php';
                                 <td class="c-two c-dt"><span class="cut d1"><?php echo $h($fmt_date((string)$r['invoice_date'])); ?></span><span class="cut d2"><?php echo $h($r['invoice_no']); ?></span></td>
                                 <td class="c-two c-cus"><span class="cut nm"><?php echo $h($r['customer_name']); ?></span><span class="cut cid">আইডি: <?php echo $cid !== '' ? $h($cid) : '—'; ?></span></td>
                                 <td class="c-prod"><span class="pcl"><?php echo $h($r['product_name']); ?></span></td>
+                                <td class="num c-qty"><?php echo $h($bn($qty_fmt($r['qty'] ?? 0))); ?></td>
                                 <td class="num c-amt"><?php echo $h($mny($r['sale_amount'])); ?></td>
                                 <td class="num <?php echo $tone($r['profit']); ?>"><?php echo $h($mny($r['profit'])); ?></td>
                                 <?php foreach ($book_rows as $bi => $br): ?><td class="num psh psh<?php echo ($bi % 4) + 1; ?>"><?php echo $h($mny($r['shares'][(int)$br['p']['id']] ?? 0)); ?></td><?php endforeach; ?>
@@ -695,7 +704,8 @@ include '../../partials/header.php';
                             <?php elseif ($it['t'] === 'tot'): ?>
                             <?php if ($sec === 'sales'): ?>
                             <tr class="pst-trow">
-                                <td colspan="4"><b>সর্বমোট</b><span><?php echo $h($bn(count($lines))); ?>টি ইনভয়েস<?php echo $more ? '+' : ''; ?></span></td>
+                                <td colspan="4"><b>সর্বমোট</b><span><?php echo $h($bn(count($lines))); ?>টি লাইন<?php echo $more ? '+' : ''; ?></span></td>
+                                <td class="num c-qty"><?php echo $h($bn($qty_fmt($total_sale_qty))); ?></td>
                                 <td class="num c-amt"><?php echo $h($mny($total_sale)); ?></td>
                                 <td class="num hi"><?php echo $h($mny($total)); ?></td>
                                 <?php foreach ($book_rows as $bi => $br): ?><td class="num psh psh<?php echo ($bi % 4) + 1; ?>"><?php echo $h($mny($sales_share_sum[(int)$br['p']['id']] ?? 0)); ?></td><?php endforeach; ?>
@@ -724,28 +734,34 @@ include '../../partials/header.php';
                     <div class="psp-sec sales">
                         <div class="psp-sec-title"><span class="psp-sec-dot"></span><span class="psp-sec-name">খাত অনুযায়ী বিক্রয় লাভ</span><span class="psp-sec-sub"><?php echo $h($range_on ? $period : $month_label); ?></span></div>
                         <table class="pst-mini" data-ame-no-page="1">
-                            <colgroup><col><col style="width:70px"><col style="width:112px"><col style="width:100px"><?php echo str_repeat('<col style="width:' . ($np <= 2 ? 96 : 80) . 'px">', count($book_rows)); ?></colgroup>
-                            <thead><tr><th>খাত</th><th class="num">ইনভয়েস</th><th class="num">বিক্রয়</th><th class="num">লাভ</th><?php foreach ($book_rows as $bi => $br): ?><th class="num psh psh<?php echo ($bi % 4) + 1; ?>">পার্টনার <?php echo $h($bn($bi + 1)); ?></th><?php endforeach; ?></tr></thead>
+                            <colgroup><col><col style="width:64px"><col style="width:64px"><col style="width:100px"><col style="width:90px"><?php echo str_repeat('<col style="width:' . ($np <= 2 ? 88 : 76) . 'px">', count($book_rows)); ?></colgroup>
+                            <thead><tr><th>খাত</th><th class="num">লাইন</th><th class="num">পরিমাণ</th><th class="num">বিক্রয়</th><th class="num">লাভ</th><?php foreach ($book_rows as $bi => $br): ?><th class="num psh psh<?php echo ($bi % 4) + 1; ?>">পার্টনার <?php echo $h($bn($bi + 1)); ?></th><?php endforeach; ?></tr></thead>
                             <tbody>
                             <?php foreach ($blk['rows'] as [$cn, $cs]): ?>
-                                <tr><td><?php echo $h($cn); ?></td><td class="num"><?php echo $h($bn((int)$cs['n'])); ?>টি</td><td class="num c-amt"><?php echo $h($mny($cs['sale'])); ?></td><td class="num <?php echo $tone($cs['profit']); ?>"><?php echo $h($mny($cs['profit'])); ?></td><?php foreach ($book_rows as $bi => $br): ?><td class="num psh psh<?php echo ($bi % 4) + 1; ?>"><?php echo $h($mny($cs['shares'][(int)$br['p']['id']] ?? 0)); ?></td><?php endforeach; ?></tr>
+                                <tr><td><?php echo $h($cn); ?></td><td class="num"><?php echo $h($bn((int)$cs['n'])); ?>টি</td><td class="num c-qty"><?php echo $h($bn($qty_fmt($cs['qty'] ?? 0))); ?></td><td class="num c-amt"><?php echo $h($mny($cs['sale'])); ?></td><td class="num <?php echo $tone($cs['profit']); ?>"><?php echo $h($mny($cs['profit'])); ?></td><?php foreach ($book_rows as $bi => $br): ?><td class="num psh psh<?php echo ($bi % 4) + 1; ?>"><?php echo $h($mny($cs['shares'][(int)$br['p']['id']] ?? 0)); ?></td><?php endforeach; ?></tr>
                             <?php endforeach; ?>
                             </tbody>
-                            <tfoot><tr><td>মোট</td><td class="num"><?php echo $h($bn(count($lines))); ?>টি</td><td class="num"><?php echo $h($mny($total_sale)); ?></td><td class="num"><?php echo $h($mny($total)); ?></td><?php foreach ($book_rows as $bi => $br): ?><td class="num psh psh<?php echo ($bi % 4) + 1; ?>"><?php echo $h($mny($sales_share_sum[(int)$br['p']['id']] ?? 0)); ?></td><?php endforeach; ?></tr></tfoot>
+                            <tfoot><tr><td>মোট</td><td class="num"><?php echo $h($bn(count($lines))); ?>টি</td><td class="num c-qty"><?php echo $h($bn($qty_fmt($total_sale_qty))); ?></td><td class="num"><?php echo $h($mny($total_sale)); ?></td><td class="num"><?php echo $h($mny($total)); ?></td><?php foreach ($book_rows as $bi => $br): ?><td class="num psh psh<?php echo ($bi % 4) + 1; ?>"><?php echo $h($mny($sales_share_sum[(int)$br['p']['id']] ?? 0)); ?></td><?php endforeach; ?></tr></tfoot>
                         </table>
                     </div>
                     <?php elseif ($blk['k'] === 'purchase'): ?>
                     <div class="psp-sec purchase">
                         <div class="psp-sec-title"><span class="psp-sec-dot"></span><span class="psp-sec-name">খাত অনুযায়ী ক্রয়</span><span class="psp-sec-sub"><?php echo $h($range_on ? $period : $month_label); ?></span></div>
                         <table class="pst-mini" data-ame-no-page="1">
-                            <colgroup><col><col style="width:90px"><col style="width:150px"></colgroup>
-                            <thead><tr><th>খাত</th><th class="num">এন্ট্রি</th><th class="num">ক্রয় মূল্য</th></tr></thead>
+                            <colgroup><col><col style="width:72px"><col style="width:72px"><col style="width:130px"></colgroup>
+                            <thead><tr><th>খাত</th><th class="num">এন্ট্রি</th><th class="num">পরিমাণ</th><th class="num">ক্রয় মূল্য</th></tr></thead>
                             <tbody>
-                            <?php foreach ($blk['rows'] as [$cn, $cs]): ?>
-                                <tr><td><?php echo $h($cn); ?></td><td class="num"><?php echo $h($bn((int)$cs['n'])); ?>টি</td><td class="num c-pur"><?php echo $h($mny($cs['cost'])); ?></td></tr>
+                            <?php
+                            $pur_qty_total = 0.0;
+                            foreach ($purchases as $pr) {
+                                $pur_qty_total += (float)($pr['qty'] ?? 0);
+                            }
+                            $pur_qty_total = round($pur_qty_total, 3);
+                            foreach ($blk['rows'] as [$cn, $cs]): ?>
+                                <tr><td><?php echo $h($cn); ?></td><td class="num"><?php echo $h($bn((int)$cs['n'])); ?>টি</td><td class="num c-qty"><?php echo $h($bn($qty_fmt($cs['qty'] ?? 0))); ?></td><td class="num c-pur"><?php echo $h($mny($cs['cost'])); ?></td></tr>
                             <?php endforeach; ?>
                             </tbody>
-                            <tfoot><tr><td>মোট</td><td class="num"><?php echo $h($bn(count($purchases))); ?>টি</td><td class="num"><?php echo $h($mny($total_pur)); ?></td></tr></tfoot>
+                            <tfoot><tr><td>মোট</td><td class="num"><?php echo $h($bn(count($purchases))); ?>টি</td><td class="num c-qty"><?php echo $h($bn($qty_fmt($pur_qty_total))); ?></td><td class="num"><?php echo $h($mny($total_pur)); ?></td></tr></tfoot>
                         </table>
                     </div>
                     <?php elseif ($blk['k'] === 'exp'): ?>

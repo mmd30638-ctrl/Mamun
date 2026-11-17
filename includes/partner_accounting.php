@@ -669,6 +669,7 @@ function pa_ledger_sale_lines($db, $from, $to, int $limit = 200): array
                        " . (pa_table_exists($db, 'customers') ? 'COALESCE(s.customer_id, 0)' : '0') . " AS customer_id,
                        {$product} AS product_name,
                        c.name AS category_name,
+                       COALESCE(si.qty, 0) AS qty,
                        COALESCE(si.sale_price * si.qty, 0) AS sale_amount,
                        COALESCE((si.sale_price - si.purchase_price) * si.qty, 0) AS profit_amount
                 FROM sales s
@@ -703,6 +704,7 @@ function pa_ledger_sale_lines($db, $from, $to, int $limit = 200): array
                 'customer_id' => (int)($row['customer_id'] ?? 0),
                 'product_name' => trim((string)($row['product_name'] ?? '')),
                 'category_name' => trim((string)($row['category_name'] ?? '')),
+                'qty' => (float)($row['qty'] ?? 0),
                 'sale_amount' => pa_money($row['sale_amount'] ?? 0),
                 'profit' => pa_money($row['profit_amount'] ?? 0),
             ];

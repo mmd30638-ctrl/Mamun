@@ -198,6 +198,19 @@ html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sign .psp-sig.signed .psp
 @media screen { #pspStage.psp-stage { align-items: center !important; margin-left: auto; margin-right: auto; } .psp-wrap { overflow-x: hidden; } }
 
 /* সারসংক্ষেপ পাতা — কন্টেন্ট বেশি হলে কেটে যাবে না, ফুটার ওপরে এলোমেলো হবে না */
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-page.psp-page-cats {
+  height: auto !important;
+  min-height: 1123px !important;
+  overflow: visible !important;
+  padding-bottom: 24px !important;
+}
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-page.psp-page-cats .psp-foot {
+  position: static !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin-top: 18px !important;
+}
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-page.psp-page-summary {
   height: auto !important;
   min-height: 1123px !important;

@@ -1,3 +1,9 @@
+# 10.98.990 — স্টেটমেন্ট: বিক্রয়/ক্রয় পণ্য পরিমাণ + খাত সারাংশ
+includes/partner_accounting.php
+modules/accounts/partner_sales_share.php
+assets/css/partner-statement.css
+includes/config.php
+VERSION.txt
 # 10.98.989 — স্টেটমেন্ট: পার্টনার নাম হেডার কাটা পড়া ফিক্স
 assets/css/partner-statement.css
 modules/accounts/partner_sales_share.php
