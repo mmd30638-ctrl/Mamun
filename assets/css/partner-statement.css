@@ -88,6 +88,10 @@ html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec.purchase .pst-table t
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-trow td b { font-size:16.5px !important; font-weight:900 !important; color:#0b3a82 !important; margin-left:4px !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-trow td span { font-size:13px !important; font-weight:800 !important; color:#0e7490 !important; margin-left:10px !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-trow td.hi { color:#15803d !important; font-size:15.5px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-ptrow td { border-top:1.5px dashed #94a3b8 !important; background:#f8fafc !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-trow td.num b,
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-ptrow td.num b { font-size:15.5px !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-cat td span { white-space:normal !important; line-height:1.35 !important; max-height:none !important; float:none !important; display:inline !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set { min-width:0 !important; width:100% !important; border-collapse:collapse !important; table-layout:fixed !important; background:#fff !important; border:2px solid #0d9488 !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th { position:static !important; overflow:visible !important; height:auto !important; min-height:48px !important; background:#fff !important; color:#0b3a82 !important; font-size:13.5px !important; font-weight:900 !important; text-align:left !important; padding:8px 6px !important; line-height:1.3 !important; border-bottom:2px solid #0d9488 !important; vertical-align:bottom !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th.num { text-align:center !important; }
