@@ -1,3 +1,13 @@
+# 10.98.961 — ড্রাফট মেমো: কমপ্লিট না হলে কমিশন/কর্মী হিস্ট্রিতে নয়; ড্রাফট সেভে পুরনো লাইন পurge
+includes/sales/sale_finance.php
+includes/engineer_bill_lock.php
+includes/engineer_statement_post.php
+includes/employee_hub.php
+modules/sales/process_sale.php
+modules/hrm/worker_history.php
+WORKER_SERVICE_LOCK.txt
+includes/config.php
+VERSION.txt
 # 10.98.960 — রিটার্ন: রেজিস্টার ক্রেতা নামে মেমো সার্চ + সাবেক ব্যালেন্স
 includes/return_v2_functions.php
 modules/returns/v2/actions/search_customer_memos.php

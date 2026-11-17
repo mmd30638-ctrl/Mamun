@@ -1270,6 +1270,22 @@ function ame_emp_hub_commission_on_day(array $r, string $day): bool
     return ame_emp_hub_commission_work_day($r) === $day;
 }
 
+function ame_emp_hub_sql_sc_completed_only(): string
+{
+    if (!function_exists('ame_sale_sql_completed_commissions')) {
+        $saleFinance = __DIR__ . '/sales/sale_finance.php';
+        if (is_file($saleFinance)) {
+            require_once $saleFinance;
+        }
+    }
+    if (function_exists('ame_sale_sql_completed_commissions')) {
+        return ame_sale_sql_completed_commissions('s');
+    }
+
+    return " AND (sc.sale_id IS NULL OR sc.sale_id <= 0 OR sc.source_type = 'workshop_job'"
+        . " OR COALESCE(s.status, '') = 'completed')";
+}
+
 function ame_emp_hub_commission_in_range(array $r, string $from, string $to): bool
 {
     if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $from) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $to)) {
@@ -1690,7 +1706,8 @@ function ame_emp_hub_save_work(mysqli $db, array $in): array
              LEFT JOIN workshop_jobs w ON sc.source_type = 'workshop_job' AND w.id = sc.source_id
              WHERE sc.employee_id = ?
                AND TRIM(sc.service_type) = ?
-               AND ABS(sc.service_amount - ?) < 0.009
+               AND ABS(sc.service_amount - ?) < 0.009"
+            . ame_emp_hub_sql_sc_completed_only() . "
                AND (
                     UPPER(TRIM(s.invoice_number)) = UPPER(?)
                     OR UPPER(TRIM(w.job_no)) = UPPER(?)
@@ -2347,7 +2364,8 @@ function ame_emp_hub_pending_service_pay(mysqli $db, array $emp, int $empId, str
             FROM service_commissions sc
             LEFT JOIN sales s ON s.id = sc.sale_id
             WHERE sc.employee_id = ?
-              AND (sc.status IS NULL OR sc.status = '' OR LOWER(sc.status) = 'pending')";
+              AND (sc.status IS NULL OR sc.status = '' OR LOWER(sc.status) = 'pending')"
+            . ame_emp_hub_sql_sc_completed_only();
     if (!$onlyDay) {
         $sql .= ' AND DATE(sc.created_at) <= ?';
     }
@@ -3228,8 +3246,9 @@ function ame_emp_hub_commission_fingerprints(mysqli $db, int $empId): array
          FROM service_commissions sc
          LEFT JOIN sales s ON s.id = sc.sale_id
          LEFT JOIN workshop_jobs w ON sc.source_type = 'workshop_job' AND w.id = sc.source_id
-         WHERE sc.employee_id = ?
-         ORDER BY sc.id ASC"
+         WHERE sc.employee_id = ?"
+            . ame_emp_hub_sql_sc_completed_only() . '
+         ORDER BY sc.id ASC'
     );
     if (!$stmt) {
         return $fps;
@@ -3352,8 +3371,9 @@ function ame_emp_hub_works(mysqli $db, int $empId, string $from, string $to): ar
                     AND s.completed_at <> '0000-00-00 00:00:00'
                     AND DATE(s.completed_at) BETWEEN ? AND ?
                 )
-           )
-         ORDER BY sc.created_at DESC, sc.id DESC";
+           )"
+            . ame_emp_hub_sql_sc_completed_only() . '
+         ORDER BY sc.created_at DESC, sc.id DESC';
     $commissions = @$db->prepare($commissionSql);
     if (!$commissions) {
         $commissionSql = "SELECT sc.id, sc.sale_id, sc.service_amount, sc.commission_rate, sc.commission_amount,
@@ -3365,8 +3385,9 @@ function ame_emp_hub_works(mysqli $db, int $empId, string $from, string $to): ar
          FROM service_commissions sc
          LEFT JOIN sales s ON s.id = sc.sale_id
          LEFT JOIN customers c ON c.id = s.customer_id
-         WHERE sc.employee_id = ? AND DATE(sc.created_at) BETWEEN ? AND ?
-         ORDER BY sc.created_at DESC, sc.id DESC";
+         WHERE sc.employee_id = ? AND DATE(sc.created_at) BETWEEN ? AND ?"
+            . ame_emp_hub_sql_sc_completed_only() . '
+         ORDER BY sc.created_at DESC, sc.id DESC';
         $commissions = @$db->prepare($commissionSql);
         $haveJobDate = false;
     }

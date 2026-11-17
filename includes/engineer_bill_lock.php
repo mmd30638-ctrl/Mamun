@@ -423,6 +423,24 @@ function ame_engineer_bill_record(
     if ($engineer_id <= 0 || $service_amount <= 0) {
         return;
     }
+    if ($sale_id > 0 && $source_type === 'sale_service') {
+        if (function_exists('ame_engineer_statement_sale_completed')) {
+            if (!ame_engineer_statement_sale_completed($db, $sale_id)) {
+                return;
+            }
+        } else {
+            $chk = @$db->prepare("SELECT status FROM sales WHERE id = ? LIMIT 1");
+            if ($chk) {
+                $chk->bind_param('i', $sale_id);
+                $chk->execute();
+                $st = strtolower(trim((string)($chk->get_result()->fetch_assoc()['status'] ?? '')));
+                $chk->close();
+                if ($st !== 'completed') {
+                    return;
+                }
+            }
+        }
+    }
     try {
         if (function_exists('ensure_hrm_schema')) {
             ensure_hrm_schema($db);

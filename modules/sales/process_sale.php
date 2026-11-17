@@ -545,6 +545,16 @@ try {
         $delete_services->execute();
         $delete_services->close();
 
+        if (!function_exists('ame_sale_purge_pending_commissions')) {
+            $saleFinance = __DIR__ . '/../../includes/sales/sale_finance.php';
+            if (is_file($saleFinance)) {
+                require_once $saleFinance;
+            }
+        }
+        if (function_exists('ame_sale_purge_pending_commissions')) {
+            ame_sale_purge_pending_commissions($db, $sale_id);
+        }
+
         $delete_payments = $db->prepare(
             "DELETE FROM sale_payments
              WHERE sale_id = ?

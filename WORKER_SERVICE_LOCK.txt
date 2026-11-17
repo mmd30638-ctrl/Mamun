@@ -1,4 +1,4 @@
-WORKER SERVICE LOCK (AME_WORKER_WORK_LOCK_REV 10.98.886)
+WORKER SERVICE LOCK (AME_WORKER_WORK_LOCK_REV 10.98.961)
 =========================================================
 
 নিয়ম (কোডে লক):
@@ -16,4 +16,6 @@ WORKER SERVICE LOCK (AME_WORKER_WORK_LOCK_REV 10.98.886)
 
 9. POS কার্ট EMP-#### পণ্য (কাজের বিল): ame_sale_merge_cart_work_bills + ameCollectServices — প্যানেল ছাড়া কমিশন।
 
-প্যাচ: Aponshop_10.98.886_PATCH.zip | DB restore টিক করবেন না।
+10. ড্রাফট মেমো: status ≠ completed হলে কমিশন পোস্ট/হিস্ট্রি/লেজারে নয়; ড্রাফট সেভে sale_services বদলালে pending sc মুছে যায় — কমপ্লিটে একবার পোস্ট।
+
+প্যাচ: Aponshop_10.98.961_PATCH.zip | DB restore টিক করবেন না।

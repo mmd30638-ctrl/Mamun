@@ -233,6 +233,9 @@ function ame_engineer_statement_insert(
     string $type,
     int $sourceId
 ): void {
+    if ($saleId > 0 && !ame_engineer_statement_sale_completed($db, $saleId)) {
+        return;
+    }
     if (ame_engineer_statement_has_commission($db, $saleId, $engineerId, $amount, $sourceId)) {
         return;
     }

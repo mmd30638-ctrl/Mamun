@@ -566,6 +566,56 @@ function ame_sale_assert_service_engineers($db, $lines, $is_english)
     $stmt->close();
 }
 
+/**
+ * ড্রাফট মেমো বা সার্ভিস বদলালে পুরনো pending কমিশন সরায় — কর্মী হিস্ট্রিতে ডাবল এড়ায়।
+ */
+function ame_sale_purge_pending_commissions(mysqli $db, int $sale_id): void
+{
+    if ($sale_id <= 0) {
+        return;
+    }
+    $sc = @$db->query("SHOW TABLES LIKE 'service_commissions'");
+    if ($sc instanceof mysqli_result && $sc->num_rows > 0) {
+        $del = @$db->prepare(
+            "DELETE FROM service_commissions
+             WHERE sale_id = ?
+               AND (status IS NULL OR status = '' OR LOWER(status) = 'pending')"
+        );
+        if ($del) {
+            $del->bind_param('i', $sale_id);
+            $del->execute();
+            $del->close();
+        }
+    }
+    if ($sc) {
+        $sc->free();
+    }
+    $we = @$db->query("SHOW TABLES LIKE 'worker_earnings'");
+    if ($we instanceof mysqli_result && $we->num_rows > 0) {
+        $delw = @$db->prepare(
+            "DELETE FROM worker_earnings
+             WHERE sale_id = ?
+               AND COALESCE(paid_amount, 0) < 0.01
+               AND (locked IS NULL OR locked = 0)"
+        );
+        if ($delw) {
+            $delw->bind_param('i', $sale_id);
+            $delw->execute();
+            $delw->close();
+        }
+    }
+    if ($we) {
+        $we->free();
+    }
+}
+
+/** সম্পন্ন বিক্রয় ছাড়া sale_service কমিশন কর্মী লেজার/হিস্ট্রিতে নয়। */
+function ame_sale_sql_completed_commissions(string $salesAlias = 's'): string
+{
+    return " AND (sc.sale_id IS NULL OR sc.sale_id <= 0 OR sc.source_type = 'workshop_job'"
+        . " OR LOWER(COALESCE({$salesAlias}.status, '')) = 'completed')";
+}
+
 function ame_sale_replace_services($db, $sale_id, $lines)
 {
     if (!is_array($lines)) {
@@ -592,6 +642,10 @@ function ame_sale_replace_services($db, $sale_id, $lines)
     $delete->bind_param('i', $sale_id);
     $delete->execute();
     $delete->close();
+
+    if ($db instanceof mysqli && function_exists('ame_sale_purge_pending_commissions')) {
+        ame_sale_purge_pending_commissions($db, (int)$sale_id);
+    }
 
     $stored = [];
     foreach ($lines as $line) {

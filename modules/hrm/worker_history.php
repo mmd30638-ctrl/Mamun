@@ -136,6 +136,7 @@ if (!$print) {
         <label>পর্যন্ত<input type="date" name="to" value="<?php echo $h($to); ?>"></label>
         <button class="wd-btn primary" type="submit">খুঁজুন</button>
     </form>
+    <p class="wd-note" style="margin:0 0 1rem;font-size:0.92rem;color:#555;">খসড়া (ড্রাফট) মেমো <strong>কমপ্লিট</strong> না হওয়া পর্যন্ত কর্মীর কাজে যুক্ত হয় না। একই ড্রাফটে টাকা বদলালে শুধু চূড়ান্ত বিক্রয়ের লাইন গণনায় আসে।</p>
     <?php endif; ?>
     <?php if (!$rows): ?>
     <p class="wd-empty">এই তারিখে কোনো কাজের হিস্ট্রি নেই।</p>
