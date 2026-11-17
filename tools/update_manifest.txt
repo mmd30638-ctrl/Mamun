@@ -1,3 +1,8 @@
+# 10.98.989 — স্টেটমেন্ট: পার্টনার নাম হেডার কাটা পড়া ফিক্স
+assets/css/partner-statement.css
+modules/accounts/partner_sales_share.php
+includes/config.php
+VERSION.txt
 # 10.98.988 — স্টেটমেন্ট সারাংশ: নিচের গণনা এলোমেলো ফিক্স (ফ্লো + মোবাইল)
 assets/css/partner-statement.css
 modules/accounts/partner_sales_share.php

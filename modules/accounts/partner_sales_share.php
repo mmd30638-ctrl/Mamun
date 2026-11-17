@@ -551,7 +551,9 @@ $cols = [
     'expense' => '<col style="width:28px"><col style="width:118px"><col style="width:102px"><col><col style="width:96px">' . $share_cols,
 ];
 $ncols = ['sales' => 6 + count($book_rows), 'purchase' => 7, 'expense' => 5 + count($book_rows)];
-$pcol = max(100, min(150, (int)floor((748 - 200 - 150) / $np)));
+$pcol = $np <= 2
+    ? 195
+    : max(100, min(150, (int)floor((748 - 200 - 150) / $np)));
 $qty_fmt = static function ($q): string {
     $q = (float)$q;
     return rtrim(rtrim(number_format($q, 2, '.', ''), '0'), '.');

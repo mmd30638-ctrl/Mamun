@@ -89,10 +89,10 @@ html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-trow t
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-trow td span { font-size:13px !important; font-weight:800 !important; color:#0e7490 !important; margin-left:10px !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-trow td.hi { color:#15803d !important; font-size:15.5px !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set { min-width:0 !important; width:100% !important; border-collapse:collapse !important; table-layout:fixed !important; background:#fff !important; border:2px solid #0d9488 !important; }
-html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th { position:static !important; overflow:hidden !important; height:52px !important; background:#fff !important; color:#0b3a82 !important; font-size:15.5px !important; font-weight:900 !important; text-align:left !important; padding:0 10px !important; line-height:1.25 !important; border-bottom:2px solid #0d9488 !important; }
-html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th.num,
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th { position:static !important; overflow:visible !important; height:auto !important; min-height:48px !important; background:#fff !important; color:#0b3a82 !important; font-size:13.5px !important; font-weight:900 !important; text-align:left !important; padding:8px 6px !important; line-height:1.3 !important; border-bottom:2px solid #0d9488 !important; vertical-align:bottom !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th.num { text-align:center !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set td.num { text-align:right !important; }
-html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th .nm { background:transparent !important; font-size:15.5px !important; color:inherit !important; display:block !important; overflow:hidden !important; max-height:40px !important; line-height:19px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th .nm { background:transparent !important; font-size:12.5px !important; color:inherit !important; display:block !important; overflow:visible !important; max-height:none !important; line-height:1.35 !important; white-space:normal !important; word-break:break-word !important; overflow-wrap:anywhere !important; text-align:center !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th.psh1 { color:#1d4ed8 !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody td.psh1 { color:#1d4ed8 !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th.psh2 { color:#0f766e !important; }
