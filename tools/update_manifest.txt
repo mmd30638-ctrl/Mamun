@@ -1,3 +1,7 @@
+# 10.98.977 — ফেরত মেমো শেয়ার ছবি: ডান পাশ কাটা ঠিক (capture box)
+assets/js/ame-memo-file.js
+includes/config.php
+VERSION.txt
 # 10.98.976 — ফেরত মেমো: মোবাইল শেয়ার/ডেস্কটপ সাইট কাটা ঠিক
 assets/css/sale-return-memo.css
 assets/js/ame-memo-file.js

@@ -735,6 +735,26 @@
                 val.style.setProperty('word-break', 'break-word', 'important');
                 val.style.setProperty('overflow-wrap', 'anywhere', 'important');
             });
+            clone.querySelectorAll('.memo-table-wrap').forEach(function (wrap) {
+                wrap.style.setProperty('overflow', 'visible', 'important');
+                wrap.style.setProperty('width', '100%', 'important');
+                wrap.style.setProperty('max-width', '100%', 'important');
+            });
+            clone.querySelectorAll('.memo-table').forEach(function (tbl) {
+                tbl.style.setProperty('table-layout', 'fixed', 'important');
+                tbl.style.setProperty('width', '100%', 'important');
+                tbl.style.setProperty('max-width', '100%', 'important');
+            });
+            clone.querySelectorAll('.memo-table .tr, .memo-table td.tr, .memo-table th.tr').forEach(function (cell) {
+                cell.style.setProperty('white-space', 'normal', 'important');
+                cell.style.setProperty('word-break', 'break-word', 'important');
+                cell.style.setProperty('overflow', 'visible', 'important');
+            });
+            clone.querySelectorAll('.memo-sum-row, .rv-settle .sabek-line').forEach(function (row) {
+                row.style.setProperty('flex-wrap', 'wrap', 'important');
+                row.style.setProperty('width', '100%', 'important');
+                row.style.setProperty('max-width', '100%', 'important');
+            });
         }
         clone.querySelectorAll('img.ame-print-logo, .memo-logo').forEach(function (img) {
             img.style.height = '96px';
@@ -816,16 +836,40 @@
         }
     }
 
+    function measureCloneCanvasBox(clone, minW) {
+        var rect = clone.getBoundingClientRect ? clone.getBoundingClientRect() : { width: 0, height: 0 };
+        var w = Math.ceil(Math.max(
+            clone.scrollWidth || 0,
+            clone.offsetWidth || 0,
+            rect.width || 0,
+            minW || 0
+        ));
+        var h = Math.ceil(Math.max(
+            clone.scrollHeight || 0,
+            clone.offsetHeight || 0,
+            rect.height || 0
+        ));
+        return { w: Math.max(w, 280), h: Math.max(h, 120) };
+    }
+
     function capture(node) {
         var clone = prepClone(node);
-            var scale = 2;
+        var scale = 2;
         var spayShot = clone.classList && clone.classList.contains('spay-memo');
         var cpayClone = isCpayReceiptPage();
-        var narrowCapture = spayShot || cpayClone;
-        var narrowW = cpayClone ? cpayMemoCaptureWidth(node) : 420;
-        var boxW = narrowCapture ? Math.ceil(Math.max(clone.scrollWidth, clone.offsetWidth, narrowW)) : A4_CSS_PX;
-        var boxH = Math.ceil(Math.max(clone.scrollHeight, clone.offsetHeight));
+        var returnShot = isSaleReturnMemoPage();
+        var narrowCapture = spayShot || cpayClone || returnShot;
+        var narrowW = (cpayClone || returnShot) ? memoNarrowCaptureWidth(node) : 420;
+        if (returnShot) {
+            narrowW = Math.max(narrowW, 400);
+        }
+        var box = measureCloneCanvasBox(clone, narrowCapture ? narrowW : A4_CSS_PX);
+        var boxW = narrowCapture ? box.w : A4_CSS_PX;
+        var boxH = box.h;
         return waitImages(clone).then(function () {
+            box = measureCloneCanvasBox(clone, narrowCapture ? narrowW : A4_CSS_PX);
+            boxW = narrowCapture ? box.w : A4_CSS_PX;
+            boxH = box.h;
             return window.html2canvas(clone, {
                 scale: scale,
                 backgroundColor: '#ffffff',
@@ -858,7 +902,7 @@
             if (clone.parentNode) {
                 clone.parentNode.removeChild(clone);
             }
-            if (cpayClone) {
+            if (cpayClone && !returnShot) {
                 canvas = trimCanvasWhitespace(canvas);
             }
             return canvas;
