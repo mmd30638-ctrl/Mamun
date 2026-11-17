@@ -607,6 +607,14 @@
         return !!(document.body && document.body.classList.contains('ame-customer-pay-receipt'));
     }
 
+    function isSaleReturnMemoPage() {
+        return !!(document.body && document.body.classList.contains('ame-sale-return-memo'));
+    }
+
+    function memoNarrowCaptureWidth(node) {
+        return cpayMemoCaptureWidth(node);
+    }
+
     function cpayMemoCaptureWidth(node) {
         var root = document.documentElement;
         var vw = Math.round(root.clientWidth || window.innerWidth || 390);
@@ -689,8 +697,9 @@
         var spayShot = node && node.classList && node.classList.contains('spay-memo');
         var cpayShot = isCpayReceiptPage()
             || !!(node && node.classList && node.classList.contains('memo-wrapper') && document.querySelector('.cpay-sheet'));
-        var narrowPx = cpayShot ? cpayMemoCaptureWidth(node) : 420;
-        var useNarrow = spayShot || cpayShot;
+        var returnShot = isSaleReturnMemoPage();
+        var narrowPx = (cpayShot || returnShot) ? memoNarrowCaptureWidth(node) : 420;
+        var useNarrow = spayShot || cpayShot || returnShot;
         clone.style.cssText = [
             'position:absolute',
             'left:0',
@@ -715,6 +724,17 @@
             clone.style.setProperty('box-sizing', 'border-box', 'important');
             clone.style.setProperty('overflow', 'visible', 'important');
             clone.style.setProperty('padding', '16px 14px', 'important');
+        }
+        if (returnShot) {
+            clone.querySelectorAll('.memo-meta-grid').forEach(function (grid) {
+                grid.style.setProperty('grid-template-columns', '1fr', 'important');
+                grid.style.setProperty('width', '100%', 'important');
+                grid.style.setProperty('max-width', '100%', 'important');
+            });
+            clone.querySelectorAll('.memo-meta-item .val').forEach(function (val) {
+                val.style.setProperty('word-break', 'break-word', 'important');
+                val.style.setProperty('overflow-wrap', 'anywhere', 'important');
+            });
         }
         clone.querySelectorAll('img.ame-print-logo, .memo-logo').forEach(function (img) {
             img.style.height = '96px';

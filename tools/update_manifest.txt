@@ -1,3 +1,11 @@
+# 10.98.976 — ফেরত মেমো: মোবাইল শেয়ার/ডেস্কটপ সাইট কাটা ঠিক
+assets/css/sale-return-memo.css
+assets/js/ame-memo-file.js
+assets/js/ame-desktop-site.js
+modules/returns/v2/view.php
+partials/header.php
+includes/config.php
+VERSION.txt
 # 10.98.975 — গ্লোবাল: হোয়াটসঅ্যাপে মেমো ছবি (ame-memo-file.js)
 assets/js/ame-memo-file.js
 partials/footer.php

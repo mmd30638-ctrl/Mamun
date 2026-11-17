@@ -57,7 +57,28 @@ if (str_contains($ame_script_now, '/modules/customers/hire/')):
         }, true);
     </script>
 <?php endif; ?>
+<?php
+$ame_head_script_early = strtolower(str_replace('\\', '/', (string)($_SERVER['SCRIPT_NAME'] ?? '')));
+if (str_contains($ame_head_script_early, '/modules/returns/v2/view.php')):
+?>
+    <script>
+    (function () {
+        document.documentElement.setAttribute('data-ame-memo-standalone', '1');
+        document.documentElement.classList.add('ame-memo-standalone-fit');
+        var m = document.querySelector('meta[name="viewport"]');
+        if (m) {
+            m.setAttribute('content', 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover');
+        }
+    })();
+    </script>
+<?php endif; ?>
     <script src="/assets/js/ame-desktop-site.js?v=<?php echo htmlspecialchars((string)($sys_version ?? '1'), ENT_QUOTES, 'UTF-8'); ?>"></script>
+<?php if (str_contains($ame_head_script_early, '/modules/returns/v2/view.php')): ?>
+    <script>
+    if (typeof window.ameApplySaleDesktopViewport === 'function') { window.ameApplySaleDesktopViewport(); }
+    if (typeof window.ameApplyDeviceClass === 'function') { window.ameApplyDeviceClass(); }
+    </script>
+<?php endif; ?>
     <?php
     if (function_exists('ame_global_responsive_tier_script_echo')) {
         ame_global_responsive_tier_script_echo();
@@ -213,15 +234,6 @@ if (str_contains($ame_script_now, '/modules/customers/hire/')):
     <?php if (str_contains($ame_head_script, '/modules/returns/v2/view.php')): ?>
     <link rel="stylesheet" href="/assets/css/memo-clear.css?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>">
     <link rel="stylesheet" href="/assets/css/sale-return-memo.css?v=<?php echo htmlspecialchars($sys_version ?? '1.0', ENT_QUOTES, 'UTF-8'); ?>">
-  <script>
-  (function () {
-    document.documentElement.setAttribute('data-ame-memo-standalone', '1');
-    var m = document.querySelector('meta[name="viewport"]');
-    if (m) {
-      m.setAttribute('content', 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover');
-    }
-  })();
-  </script>
     <?php endif; ?>
     <?php
     if (!empty($_SESSION['user_id']) && is_file(__DIR__ . '/../includes/sm40_portal.php')) {

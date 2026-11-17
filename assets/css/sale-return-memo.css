@@ -27,7 +27,7 @@ html body.ame-sale-return-memo .rv-wrap {
 html body.ame-sale-return-memo #memo-container,
 html body.ame-sale-return-memo .memo-wrapper {
     width: 100% !important;
-    max-width: 100% !important;
+    max-width: min(100%, 480px) !important;
     margin-left: auto !important;
     margin-right: auto !important;
     box-sizing: border-box !important;
@@ -113,12 +113,24 @@ html.ame-phone-desktop.ame-memo-standalone-fit body.ame-sale-return-memo #memo-c
     border-radius: 12px !important;
 }
 
-html.ame-phone-desktop:not(.ame-memo-standalone-fit) body.ame-sale-return-memo .rv-wrap {
-    max-width: min(var(--srv-memo-max), 92vw) !important;
+html.ame-phone-desktop body.ame-sale-return-memo #main-content,
+html.ame-memo-standalone-fit body.ame-sale-return-memo #main-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    padding-left: max(6px, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(6px, env(safe-area-inset-right, 0px)) !important;
+    overflow-x: clip !important;
 }
 
-@media (min-width: 768px) {
-    html:not(.ame-phone-desktop) body.ame-sale-return-memo .memo-meta-grid {
-        grid-template-columns: 1fr 1fr !important;
-    }
+html body.ame-sale-return-memo:has(#memo-container) #memo-container,
+html body:has(#memo-container).ame-sale-return-memo .memo-wrapper {
+    max-width: min(100%, 480px) !important;
+    width: 100% !important;
+}
+
+/* মোবাইল/ডেস্কটপ সাইট — সবসময় এক কলাম মেটা (ডান পাশ কাটা নয়) */
+html body.ame-sale-return-memo .memo-meta-grid,
+html.ame-phone-desktop body.ame-sale-return-memo .memo-meta-grid {
+    grid-template-columns: 1fr !important;
 }
