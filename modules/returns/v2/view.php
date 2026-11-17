@@ -179,7 +179,7 @@ $meta = $status_meta[$ret['status']] ?? $status_meta['draft'];
     .memo-meta-item .lbl { font-size:13px; color:#0B1E4D; font-weight:800; }
     .memo-meta-item .val { font-weight:800; color:#0F172A; word-break:break-word; }
     .memo-table { width:100%; border-collapse:collapse; margin-bottom:12px; font-size:12px; }
-    .memo-table th { background:#F1F5F9; color:#003F8F; font-weight:800; padding:8px 6px; border-top:1px solid #CBD5E1; border-bottom:1px solid #CBD5E1; text-align:left; }
+    .memo-table th { background:#ECFDF5; color:#047857; font-weight:800; padding:8px 6px; border-top:1px solid #A7F3D0; border-bottom:1px solid #A7F3D0; text-align:left; }
     .memo-table td { padding:7px 6px; border-bottom:1px solid #E2E8F0; color:#1E293B; vertical-align:top; }
     .memo-table .tc { text-align:center; }
     .memo-table .tr { text-align:right; white-space:nowrap; }

@@ -80,6 +80,36 @@ html body.ame-sale-return-memo .memo-table td {
     white-space: normal !important;
 }
 
+/* গ্লোবাল ame-front-colors — #main-content table thead নেভি বাতিল (ফেরত মেমো) */
+html body.ame-sale-return-memo #main-content #memo-container .memo-table thead th,
+html body.ame-sale-return-memo #main-content #memo-container .memo-table thead th *,
+html body.ame-sale-return-memo #main-content #memo-container .memo-table th,
+html body.ame-sale-return-memo #ame-memo-capture-clone .memo-table thead th,
+html body.ame-sale-return-memo #ame-memo-capture-clone .memo-table th {
+    background: #ECFDF5 !important;
+    background-color: #ECFDF5 !important;
+    color: #047857 !important;
+    -webkit-text-fill-color: #047857 !important;
+    border-top-color: #A7F3D0 !important;
+    border-bottom-color: #A7F3D0 !important;
+}
+
+html body.ame-sale-return-memo #memo-container .memo-table th:nth-child(1),
+html body.ame-sale-return-memo #memo-container .memo-table th:nth-child(2),
+html body.ame-sale-return-memo #memo-container .memo-table th:nth-child(3),
+html body.ame-sale-return-memo #memo-container .memo-table th:nth-child(4),
+html body.ame-sale-return-memo #memo-container .memo-table th:nth-child(5),
+html body.ame-sale-return-memo #ame-memo-capture-clone .memo-table th:nth-child(1),
+html body.ame-sale-return-memo #ame-memo-capture-clone .memo-table th:nth-child(2),
+html body.ame-sale-return-memo #ame-memo-capture-clone .memo-table th:nth-child(3),
+html body.ame-sale-return-memo #ame-memo-capture-clone .memo-table th:nth-child(4),
+html body.ame-sale-return-memo #ame-memo-capture-clone .memo-table th:nth-child(5) {
+    background: #ECFDF5 !important;
+    background-color: #ECFDF5 !important;
+    color: #047857 !important;
+    -webkit-text-fill-color: #047857 !important;
+}
+
 html body.ame-sale-return-memo .memo-table .tr {
     white-space: normal !important;
 }
