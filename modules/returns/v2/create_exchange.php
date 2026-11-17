@@ -103,7 +103,7 @@ ame_sales_return_include_nav('exchange');
                 <p class="ex-price-note" id="exPriceNote" role="status"></p>
 
                 <div class="ex-section">
-                    <div class="ex-section-title returned">↩️ ফেরত দেওয়া পণ্য</div>
+                    <div class="ex-section-title returned">↩️ কাস্টমার ফেরত দিচ্ছে</div>
                     <div class="ex-group">
                         <label>পণ্য *</label>
                         <input type="text" id="oldProdSearch" autocomplete="off" placeholder="পণ্যের নাম দিয়ে খুঁজুন...">
@@ -120,7 +120,7 @@ ame_sales_return_include_nav('exchange');
                 </div>
 
                 <div class="ex-section">
-                    <div class="ex-section-title replacement">🎁 বদলি পণ্য</div>
+                    <div class="ex-section-title replacement">🎁 কাস্টমারকে দেওয়া হবে</div>
                     <div class="ex-group">
                         <label>পণ্য *</label>
                         <input type="text" id="newProdSearch" autocomplete="off" placeholder="পণ্যের নাম দিয়ে খুঁজুন...">
@@ -137,8 +137,8 @@ ame_sales_return_include_nav('exchange');
                 </div>
 
                 <div class="ex-calc-box">
-                    <div class="ex-calc-row"><span>ফেরত পণ্যের মূল্য</span><span id="oldValueDisplay">৳0.00</span></div>
-                    <div class="ex-calc-row"><span>বদলি পণ্যের মূল্য</span><span id="newValueDisplay">৳0.00</span></div>
+                    <div class="ex-calc-row"><span>কাস্টমার ফেরত দিচ্ছে (মূল্য)</span><span id="oldValueDisplay">৳0.00</span></div>
+                    <div class="ex-calc-row"><span>কাস্টমারকে দেওয়া হবে (মূল্য)</span><span id="newValueDisplay">৳0.00</span></div>
                     <div class="ex-calc-final" id="finalResultDisplay">সমান মূল্য — কোনো সমন্বয় লাগবে না</div>
                     <div class="ex-balance-box" id="exBalanceBox">
                         <div class="ex-calc-row"><span>সাবেক বকেয়া / ব্যালেন্স</span><span id="exPrevDue">—</span></div>

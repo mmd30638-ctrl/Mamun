@@ -73,6 +73,7 @@ if ($items_stmt) {
     $items_stmt->close();
 }
 
+$ame_is_exchange = (($ret['return_type'] ?? '') === 'exchange');
 $ame_ret_prev = null;
 $ame_ret_cut = round((float)($ret['return_amount'] ?? 0), 2);
 $ame_ret_cut_minus = true;
@@ -81,11 +82,27 @@ $ame_ret_cid = (int)($ret['customer_id'] ?? 0);
 $ame_ret_stored = array_key_exists('previous_due', $ret) && $ret['previous_due'] !== null
     && array_key_exists('balance_after', $ret) && $ret['balance_after'] !== null
     && ($ret['refund_method'] ?? '') === 'customer_balance';
+$ame_apply_exchange_cut = static function (array $retRow) {
+    $adj = round((float)($retRow['customer_adjustment'] ?? 0), 2);
+    return [
+        'cut' => abs($adj),
+        'minus' => $adj < -0.009,
+        'skip_cut' => abs($adj) < 0.009,
+    ];
+};
 if ($ame_ret_stored) {
     $ame_ret_prev = round((float) $ret['previous_due'], 2);
     $ame_ret_after = round((float) $ret['balance_after'], 2);
-    $ame_ret_cut = round((float) ($ret['return_amount'] ?? 0), 2);
-    $ame_ret_cut_minus = true;
+    if ($ame_is_exchange) {
+        $exCut = $ame_apply_exchange_cut($ret);
+        $ame_ret_cut = $exCut['cut'];
+        $ame_ret_cut_minus = $exCut['minus'];
+        $ame_ret_skip_cut_line = $exCut['skip_cut'];
+    } else {
+        $ame_ret_cut = round((float) ($ret['return_amount'] ?? 0), 2);
+        $ame_ret_cut_minus = true;
+        $ame_ret_skip_cut_line = false;
+    }
 } elseif ($ame_ret_cid > 0) {
     $led = $db->prepare('SELECT ref_no, debit, credit FROM customer_ledger WHERE customer_id = ? ORDER BY txn_date ASC, id ASC');
     if ($led) {
@@ -111,6 +128,17 @@ if ($ame_ret_stored) {
         }
         $led->close();
     }
+    if ($ame_is_exchange && $ame_ret_prev !== null && $ame_ret_after !== null) {
+        $exCut = $ame_apply_exchange_cut($ret);
+        if (!isset($ame_ret_skip_cut_line)) {
+            $ame_ret_cut = $exCut['cut'];
+            $ame_ret_cut_minus = $exCut['minus'];
+            $ame_ret_skip_cut_line = $exCut['skip_cut'];
+        }
+    }
+}
+if (!isset($ame_ret_skip_cut_line)) {
+    $ame_ret_skip_cut_line = false;
 }
 $ame_ret_phone = '';
 $ame_ret_code = '';
@@ -140,7 +168,7 @@ $ame_ret_sign = static function (float $n): string {
     $body = number_format(abs($n), 2);
     return ($n < 0 ? '−' : '+') . $body;
 };
-$ame_ret_pct = ($ame_ret_prev !== null && $ame_ret_prev > 0.009 && $ame_ret_cut > 0.009)
+$ame_ret_pct = ($ame_ret_prev !== null && $ame_ret_prev > 0.009 && $ame_ret_cut > 0.009 && empty($ame_ret_skip_cut_line))
     ? round(($ame_ret_cut / $ame_ret_prev) * 100, 2)
     : null;
 
@@ -212,10 +240,22 @@ if (str_starts_with($ame_wa_phone, '0') && strlen($ame_wa_phone) >= 11) {
 }
 $ame_wa_prev = $ame_ret_prev === null ? '' : ame_ui('সাবেক বকেয়া', 'Previous due') . ': ৳' . number_format((float) $ame_ret_prev, 2) . "\n";
 $ame_wa_after = $ame_ret_after === null ? '' : ame_ui('সর্বমোট ব্যালেন্স', 'Total balance') . ': ৳' . number_format((float) $ame_ret_after, 2) . "\n";
-$ame_wa_text = $ame_shop_name . "\n" . ame_ui('বিক্রয় ফেরত', 'Sales return') . ' ' . (string) $ret['return_no']
+$ame_wa_move = '';
+if ($ame_is_exchange) {
+    $wa_adj = round((float)($ret['customer_adjustment'] ?? 0), 2);
+    if (abs($wa_adj) >= 0.01) {
+        $ame_wa_move = ($wa_adj > 0 ? ame_ui('এক্সচেঞ্জ বাড়তি', 'Exchange extra') : ame_ui('এক্সচেঞ্জ ক্রেডিট', 'Exchange credit'))
+            . ': ' . ($wa_adj > 0 ? '+' : '−') . '৳' . number_format(abs($wa_adj), 2) . "\n";
+    }
+} else {
+    $ame_wa_move = ame_ui('ফেরত', 'Return') . ': −৳' . number_format((float) $ret['return_amount'], 2) . "\n";
+}
+$ame_wa_text = $ame_shop_name . "\n"
+    . ($ame_is_exchange ? ame_ui('পণ্য এক্সচেঞ্জ', 'Product exchange') : ame_ui('বিক্রয় ফেরত', 'Sales return'))
+    . ' ' . (string) $ret['return_no']
     . ($ame_sale_invoice !== '' ? "\n" . ame_ui('ইনভয়েস', 'Invoice') . ': ' . $ame_sale_invoice : '')
     . "\n" . $ame_wa_prev
-    . ame_ui('ফেরত', 'Return') . ': −৳' . number_format((float) $ret['return_amount'], 2) . "\n"
+    . $ame_wa_move
     . $ame_wa_after;
 $ame_wa_url = 'https://wa.me/' . $ame_wa_phone . '?text=' . rawurlencode($ame_wa_text);
 $ame_file_base = 'return-' . preg_replace('/[^A-Za-z0-9_-]/', '', (string) $ret['return_no']);
@@ -340,7 +380,20 @@ $ame_file_base = 'return-' . preg_replace('/[^A-Za-z0-9_-]/', '', (string) $ret[
             <?php elseif (($ret['refund_method'] ?? '') === 'customer_balance'): ?>
             <div class="memo-sum-row" style="background:#ECFDF5; border:1px solid #6EE7B7; border-radius:8px; padding:7px 9px; margin-top:6px; color:#047857;">
                 <span>👤 <?php echo ame_ui('সমন্বয় পদ্ধতি', 'Adjustment method'); ?></span>
-                <span style="font-weight:900;"><?php echo ame_ui('গ্রাহক খতিয়ানে সমন্বয়', 'Adjusted on the customer ledger'); ?> (−৳<?php echo number_format((float)$ret['return_amount'], 2); ?>)</span>
+                <span style="font-weight:900;"><?php
+                if ($ame_is_exchange) {
+                    $led_adj = round((float)($ret['customer_adjustment'] ?? 0), 2);
+                    if (abs($led_adj) < 0.01) {
+                        echo ame_ui('গ্রাহক খতিয়ান — সমান মূল্য, সমন্বয় নেই', 'Customer ledger — equal value, no adjustment');
+                    } elseif ($led_adj > 0) {
+                        echo ame_ui('গ্রাহক খতিয়ানে বাড়তি বকেয়া', 'Extra due on customer ledger') . ' (+৳' . number_format($led_adj, 2) . ')';
+                    } else {
+                        echo ame_ui('গ্রাহক খতিয়ানে ক্রেডিট', 'Credit on customer ledger') . ' (−৳' . number_format(abs($led_adj), 2) . ')';
+                    }
+                } else {
+                    echo ame_ui('গ্রাহক খতিয়ানে সমন্বয়', 'Adjusted on the customer ledger') . ' (−৳' . number_format((float)$ret['return_amount'], 2) . ')';
+                }
+                ?></span>
             </div>
             <?php endif; ?>
             <?php if ($ame_ret_prev !== null && $ame_ret_after !== null):
@@ -348,13 +401,25 @@ $ame_file_base = 'return-' . preg_replace('/[^A-Za-z0-9_-]/', '', (string) $ret[
                 $pct_txt = $ame_ret_pct === null ? '' : rtrim(rtrim(number_format($ame_ret_pct, 2), '0'), '.') . '%';
                 $prev_label = $ame_ret_prev > 0.009 ? ame_ui('সাবেক বকেয়া', 'Previous due') : ($ame_ret_prev < -0.009 ? ame_ui('সাবেক জমা', 'Previous deposit') : ame_ui('সাবেক বকেয়া', 'Previous due'));
                 $after_label = ame_ui('সর্বমোট ব্যালেন্স', 'Total balance');
-                $cut_label = $ame_ret_cut_minus ? ame_ui('ফেরত (−)', 'Return (−)') : ame_ui('ফেরত (+)', 'Return (+)');
+                if ($ame_is_exchange) {
+                    $cut_label = $ame_ret_cut_minus
+                        ? ame_ui('এক্সচেঞ্জ সমন্বয় (−)', 'Exchange adj (−)')
+                        : ame_ui('এক্সচেঞ্জ সমন্বয় (+)', 'Exchange adj (+)');
+                } else {
+                    $cut_label = $ame_ret_cut_minus ? ame_ui('ফেরত (−)', 'Return (−)') : ame_ui('ফেরত (+)', 'Return (+)');
+                }
                 $after_txt = abs($ame_ret_after) < 0.009 ? '=' : $ame_ret_sign($ame_ret_after);
-                $formula = $ame_ret_sign($ame_ret_prev) . ' ' . $cut_sign . number_format(abs($ame_ret_cut), 2) . ' = ' . $after_txt;
+                if (!empty($ame_ret_skip_cut_line)) {
+                    $formula = $ame_ret_sign($ame_ret_prev) . ' = ' . $after_txt;
+                } else {
+                    $formula = $ame_ret_sign($ame_ret_prev) . ' ' . $cut_sign . number_format(abs($ame_ret_cut), 2) . ' = ' . $after_txt;
+                }
             ?>
             <div class="rv-settle">
                 <div class="sabek-line"><span><?php echo $prev_label; ?></span><b><?php echo $ame_ret_sign($ame_ret_prev); ?></b></div>
+                <?php if (empty($ame_ret_skip_cut_line)): ?>
                 <div class="sabek-line"><span><?php echo $cut_label; ?></span><b><?php echo $cut_sign . number_format(abs($ame_ret_cut), 2); ?></b></div>
+                <?php endif; ?>
                 <div class="sabek-line rv-settle-now"><span><?php echo $after_label; ?></span><b><?php echo $after_txt; ?></b></div>
                 <div class="rv-settle-proof"><?php echo $formula; ?><?php echo $pct_txt !== '' ? '<br>' . $pct_txt : ''; ?></div>
             </div>
