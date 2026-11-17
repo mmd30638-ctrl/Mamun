@@ -175,12 +175,26 @@ function ame_return_v2_resolve_sale_by_reference(mysqli $db, string $raw): ?arra
     }
 
     $select = "SELECT s.id, s.invoice_number, s.sale_date, s.customer_id, s.customer_type,
-            c.name AS customer_name, c.phone AS customer_phone, c.customer_code, c.receivable_balance
+            s.guest_customer_name, s.guest_customer_phone, s.guest_customer_note,
+            c.name AS registered_customer_name, c.phone AS registered_customer_phone,
+            c.customer_code, c.receivable_balance
      FROM sales s
      LEFT JOIN customers c ON s.customer_id = c.id
      WHERE s.status = 'completed'";
 
-    $fetchById = static function (int $saleId) use ($db, $select): ?array {
+    $hydrate = static function (?array $row): ?array {
+        if (!$row) {
+            return null;
+        }
+        require_once __DIR__ . '/sales/sale_common.php';
+        $row['customer_name'] = ame_sale_display_customer_name($row, false);
+        $row['customer_phone'] = ame_sale_display_customer_phone($row);
+        $row['return_registry'] = ame_sale_row_return_registry_ready($row);
+
+        return $row;
+    };
+
+    $fetchById = static function (int $saleId) use ($db, $select, $hydrate): ?array {
         if ($saleId <= 0) {
             return null;
         }
@@ -192,10 +206,10 @@ function ame_return_v2_resolve_sale_by_reference(mysqli $db, string $raw): ?arra
         $stmt->execute();
         $row = $stmt->get_result()->fetch_assoc();
         $stmt->close();
-        return $row ?: null;
+        return $hydrate($row ?: null);
     };
 
-    $fetchByInvoice = static function (string $invoice) use ($db, $select): ?array {
+    $fetchByInvoice = static function (string $invoice) use ($db, $select, $hydrate): ?array {
         $invoice = trim($invoice);
         if ($invoice === '') {
             return null;
@@ -208,7 +222,7 @@ function ame_return_v2_resolve_sale_by_reference(mysqli $db, string $raw): ?arra
         $stmt->execute();
         $row = $stmt->get_result()->fetch_assoc();
         $stmt->close();
-        return $row ?: null;
+        return $hydrate($row ?: null);
     };
 
     if (ctype_digit($ref)) {
@@ -254,7 +268,7 @@ function ame_return_v2_resolve_sale_by_reference(mysqli $db, string $raw): ?arra
             $row = $stmt->get_result()->fetch_assoc();
             $stmt->close();
             if ($row) {
-                return $row;
+                return $hydrate($row);
             }
         }
     }

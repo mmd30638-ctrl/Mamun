@@ -16,7 +16,9 @@ $customer_id = !empty($_POST['customer_id']) ? (int)$_POST['customer_id'] : null
 $customer_name = trim($_POST['customer_name'] ?? '');
 $sales_type = in_array($_POST['sales_type'] ?? '', ['retail', 'wholesale'], true) ? $_POST['sales_type'] : 'retail';
 if (!$customer_id) {
-    $customer_name = 'রিটেল কাস্টমার';
+    if ($customer_name === '') {
+        $customer_name = 'রিটেল কাস্টমার';
+    }
     $sales_type = 'retail';
 } elseif ($customer_name === '') {
     $customer_name = 'রিটেল কাস্টমার';

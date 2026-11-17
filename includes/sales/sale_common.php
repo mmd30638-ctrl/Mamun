@@ -860,3 +860,61 @@ function ame_sale_guest_snapshot(array $data, $customer_id, $is_english)
         ),
     ];
 }
+
+/** বিক্রয় সম্পন্নের পর অতিথি ক্রেতার নাম/ফোন মেমোতে ও ফেরত-রেজিস্টারে রাখা */
+function ame_sale_apply_guest_snapshot(mysqli $db, int $saleId, array $data, ?int $customerId): void
+{
+    if ($saleId <= 0) {
+        return;
+    }
+    ensure_sales_schema($db);
+    $guest = ame_sale_guest_snapshot($data, $customerId, false);
+  $stmt = $db->prepare(
+        'UPDATE sales SET guest_customer_name = ?, guest_customer_phone = ?, guest_customer_note = ? WHERE id = ? LIMIT 1'
+    );
+    if (!$stmt) {
+        return;
+    }
+    $stmt->bind_param(
+        'sssi',
+        $guest['name'],
+        $guest['phone'],
+        $guest['note'],
+        $saleId
+    );
+    $stmt->execute();
+    $stmt->close();
+}
+
+/** ফেরত/এক্সচেঞ্জ UI-এর জন্য প্রদর্শন নাম (নিবন্ধিত + অতিথি) */
+function ame_sale_display_customer_name(array $row, bool $english = false): string
+{
+    $name = trim((string)($row['registered_customer_name'] ?? $row['customer_name'] ?? ''));
+    if ($name === '') {
+        $name = trim((string)($row['guest_customer_name'] ?? ''));
+    }
+    if ($name === '') {
+        return $english ? 'Retail Customer' : 'খুচরা ক্রেতা';
+    }
+
+    return $name;
+}
+
+function ame_sale_display_customer_phone(array $row): string
+{
+    $phone = trim((string)($row['registered_customer_phone'] ?? $row['customer_phone'] ?? ''));
+    if ($phone === '') {
+        $phone = trim((string)($row['guest_customer_phone'] ?? ''));
+    }
+
+    return $phone;
+}
+
+function ame_sale_row_return_registry_ready(array $row): bool
+{
+    if (!empty($row['customer_id'])) {
+        return true;
+    }
+
+    return trim((string)($row['guest_customer_name'] ?? '')) !== '';
+}

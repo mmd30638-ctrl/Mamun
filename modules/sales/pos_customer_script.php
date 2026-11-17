@@ -79,10 +79,19 @@
         return !!(retailRadio && retailRadio.checked);
     }
 
+    function paintReturnRegistryHint() {
+        var hint = document.getElementById('ameReturnRegistryHint');
+        if (!hint) {
+            return;
+        }
+        hint.hidden = isRegisteredUi() || isSupplierUi();
+    }
+
     function setRegisteredUi(on) {
         if (picker) {
             picker.classList.toggle('is-registered', !!on);
         }
+        paintReturnRegistryHint();
         /*
          * নতুন ক্রেতা যোগ করার বোতাম এখন সবসময় দেখা যাবে (রিটেইল/নিবন্ধিত
          * দুই মোডেই) — আগে শুধু "নিবন্ধিত" মোডে দেখাত।
@@ -1106,5 +1115,27 @@
             });
         });
     }
+
+    window.amePosGuestSnapshot = function () {
+        if (isRegisteredUi() && select && select.value) {
+            return { name: '', phone: '', note: '' };
+        }
+        var info = searchInput ? String(searchInput.value || '').trim() : '';
+        var hidden = ensureGuestNameHidden();
+        var phoneEl = document.getElementById('guestCustomerPhone');
+        var noteEl = document.getElementById('guestCustomerNote');
+        var name = hidden && hidden.value ? String(hidden.value).trim() : info;
+        if (!name && info) {
+            name = info;
+            if (hidden) {
+                hidden.value = info;
+            }
+        }
+        return {
+            name: name,
+            phone: phoneEl ? String(phoneEl.value || '').trim() : '',
+            note: noteEl ? String(noteEl.value || '').trim() : ''
+        };
+    };
 })();
 </script>

@@ -332,6 +332,15 @@
     font-weight: 700;
 }
 
+.ame-return-registry-hint {
+    grid-column: 1 / -1;
+    margin: 4px 0 0;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #0f766e;
+}
+
 .ame-pos-total {
     margin: 16px 0;
     padding: 18px;

@@ -75,6 +75,7 @@ echo json_encode([
         'sale_date' => date('d-m-Y', strtotime($sale['sale_date'] ?? 'now')),
         'customer_id' => $sale['customer_id'] ? (int)$sale['customer_id'] : null,
         'customer_name' => $sale['customer_name'] ?: 'Retail Customer',
+        'return_registry' => !empty($sale['return_registry']),
         'customer_code' => $sale['customer_code'] ?? '',
         'customer_phone' => $sale['customer_phone'] ?? '',
         'customer_balance' => (float)($sale['receivable_balance'] ?? 0),
