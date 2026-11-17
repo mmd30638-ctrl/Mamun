@@ -1,3 +1,15 @@
+# 10.98.959 — রিভার্ট: বিক্রয় রিটার্ন রেজিস্ট্রি (958) বাতিল — আগের POS/রিটার্ন
+includes/sales/sale_common.php
+modules/sales/process_sale.php
+assets/js/pos-payment.js
+modules/sales/pos_workspace.php
+modules/sales/pos_customer_script.php
+modules/sales/pos_style.php
+includes/return_v2_functions.php
+modules/returns/v2/actions/search_invoice.php
+modules/returns/v2/actions/save_invoice_return.php
+includes/config.php
+VERSION.txt
 # 10.98.957 — SM40 শোনার পেজ (404 ঠিক) + প্যাচে ফাইল অন্তর্ভুক্ত
 sm40_listen.php
 modules/sm40/listen.php
