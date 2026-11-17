@@ -1,3 +1,8 @@
+# 10.98.984 — পার্টনার প্রোফাইল: হিরো আইকন + শিট
+modules/accounts/partner_accounting.php
+assets/css/partner-accounting.css
+includes/config.php
+VERSION.txt
 # 10.98.983 — নিট লাভ: অটো ব্যালেন্স, পরিশোধ/বণ্টন UI বাতিল
 modules/accounts/partner_accounting.php
 assets/css/partner-accounting.css

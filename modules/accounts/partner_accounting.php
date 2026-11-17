@@ -65,6 +65,14 @@ if ($pcat !== '' && !in_array($pcat, $shared_cats, true)) {
 }
 $reserve = pa_reserve_accounts($db);
 $capital_rows = pa_capital_history($db, $bounds['from'], $bounds['to']);
+$pa_month_draw = [];
+foreach ($capital_rows as $cr) {
+    if ((string)($cr['type'] ?? '') !== 'capital_withdrawal') {
+        continue;
+    }
+    $draw_pid = (int)($cr['partner_id'] ?? 0);
+    $pa_month_draw[$draw_pid] = round(($pa_month_draw[$draw_pid] ?? 0) + pa_money($cr['amount'] ?? 0), 2);
+}
 $tab = (string)($_GET['tab'] ?? 'capital');
 if (!in_array($tab, ['capital', 'draw', 'bank', 'stmt'], true)) {
     $tab = 'capital';
@@ -241,7 +249,51 @@ include '../../partials/header.php';
             <a class="pa-btn ghost" href="partner_accounting_statement.php?month=<?php echo htmlspecialchars($ym); ?>">স্টেটমেন্ট</a>
             <a class="pa-btn ghost" href="partner_accounting_ledger.php?month=<?php echo htmlspecialchars($ym); ?>">লেজার</a>
         </div>
+        <?php if ($dash['partners']): ?>
+        <nav class="pa-partner-toolbar no-print" aria-label="পার্টনার প্রোফাইল">
+            <span class="pa-partner-toolbar-lbl">পার্টনার</span>
+            <div class="pa-partner-chips">
+                <?php foreach ($dash['partners'] as $pa_tool_p):
+                    $pa_tid = (int)$pa_tool_p['id'];
+                    $pa_tnm = trim((string)$pa_tool_p['name']);
+                    $pa_tinit = function_exists('mb_substr') ? mb_substr($pa_tnm, 0, 1, 'UTF-8') : substr($pa_tnm, 0, 1);
+                    $pa_tcap = pa_partner_capital($db, $pa_tid, $bounds['to']);
+                    $pa_tbook = (float)($pa_books[$pa_tid]['total'] ?? 0);
+                    $pa_tdraw = (float)($pa_month_draw[$pa_tid] ?? 0);
+                    $pa_tst = strtolower((string)($pa_tool_p['status'] ?? 'active'));
+                    ?>
+                <button type="button" class="pa-partner-chip<?php echo $pa_tst === 'active' ? '' : ' is-muted'; ?>"
+                    data-pa-profile="1"
+                    data-pid="<?php echo $pa_tid; ?>"
+                    data-name="<?php echo htmlspecialchars($pa_tnm, ENT_QUOTES, 'UTF-8'); ?>"
+                    data-phone="<?php echo htmlspecialchars(trim((string)($pa_tool_p['phone'] ?? '')), ENT_QUOTES, 'UTF-8'); ?>"
+                    data-address="<?php echo htmlspecialchars(trim((string)($pa_tool_p['address'] ?? '')), ENT_QUOTES, 'UTF-8'); ?>"
+                    data-share="<?php echo htmlspecialchars(number_format((float)$pa_tool_p['share_percentage'], 2, '.', ''), ENT_QUOTES, 'UTF-8'); ?>"
+                    data-capital="<?php echo htmlspecialchars(pa_taka($pa_tcap['total']), ENT_QUOTES, 'UTF-8'); ?>"
+                    data-balance="<?php echo htmlspecialchars(pa_taka($pa_tbook), ENT_QUOTES, 'UTF-8'); ?>"
+                    data-draw="<?php echo htmlspecialchars(pa_taka($pa_tdraw), ENT_QUOTES, 'UTF-8'); ?>"
+                    data-status="<?php echo htmlspecialchars($pa_tst === 'active' ? 'সক্রিয়' : ($pa_tst === 'exited' ? 'প্রস্থান' : 'নিষ্ক্রিয়'), ENT_QUOTES, 'UTF-8'); ?>"
+                    data-edit="<?php echo htmlspecialchars(pa_partner_edit_href($ym, $pa_tid), ENT_QUOTES, 'UTF-8'); ?>"
+                    aria-label="<?php echo htmlspecialchars($pa_tnm . ' প্রোফাইল', ENT_QUOTES, 'UTF-8'); ?>">
+                    <span class="pa-partner-av" aria-hidden="true"><?php echo htmlspecialchars($pa_tinit); ?></span>
+                    <span class="pa-partner-chip-name"><?php echo htmlspecialchars($pa_tnm); ?></span>
+                </button>
+                <?php endforeach; ?>
+            </div>
+        </nav>
+        <?php endif; ?>
     </div>
+    <dialog class="pa-partner-sheet no-print" id="paPartnerSheet" aria-labelledby="paPartnerSheetTitle">
+        <div class="pa-partner-sheet-head">
+            <h3 id="paPartnerSheetTitle">পার্টনার প্রোফাইল</h3>
+            <button type="button" class="pa-partner-sheet-x" data-pa-sheet-close="1" aria-label="বন্ধ">×</button>
+        </div>
+        <div class="pa-partner-sheet-body" id="paPartnerSheetBody"></div>
+        <div class="pa-partner-sheet-foot">
+            <a class="pa-btn primary" id="paPartnerSheetEdit" href="#">এডিট / সব তথ্য</a>
+            <button type="button" class="pa-btn soft" data-pa-sheet-close="1">বন্ধ</button>
+        </div>
+    </dialog>
 
     <?php if (isset($flash_ok[$ok])): ?>
         <div class="pa-alert ok"><?php echo htmlspecialchars($flash_ok[$ok]); ?></div>
@@ -558,7 +610,6 @@ include '../../partials/header.php';
                                 <td class="num" data-label="নিট লাভের অংশ"><?php echo pa_taka($slice_cut['net']); ?></td>
                                 <td class="num pa-bal-cell" data-label="বর্তমান ব্যালেন্স">
                                     <?php
-                                    $pid = (int)$a['partner']['id'];
                                     $book_total = (float)($pa_books[$pid]['total'] ?? 0);
                                     ?>
                                     <b><?php echo pa_taka($book_total); ?></b>
@@ -570,7 +621,7 @@ include '../../partials/header.php';
                     </tbody>
                 </table>
             </div>
-            <p class="pa-auto-profit-note no-print">নিট লাভের অংশ ইতিমধ্যে লেজার বইতে আছে — আলাদা «লাভ বণ্টন» বা «পরিশোধ» চাপার দরকার নেই। ব্যালেন্স সমন্বয় শুধু <a href="<?php echo htmlspecialchars(pa_partner_edit_href($ym, (int)($dash['active'][0]['partner']['id'] ?? 0))); ?>">পার্টনার এডিট</a> বা স্টেটমেন্টে।</p>
+            <p class="pa-auto-profit-note no-print">নিট লাভের অংশ লেজার বইতে স্বয়ংক্রিয় যোগ হয় — «লাভ বণ্টন» বা «পরিশোধ» বাটন আর নেই। টাকা তুললে উপরের <strong>উত্তোলন</strong> ট্যাবে লিখুন, ব্যালেন্স কমবে।</p>
         <?php endif; ?>
     </section>
 
@@ -684,68 +735,6 @@ include '../../partials/header.php';
                         </tr>
                     </tfoot>
                 </table>
-            </div>
-        <?php endif; ?>
-    </section>
-
-    <?php
-    $month_draw = [];
-    foreach ($capital_rows as $cr) {
-        if ((string)($cr['type'] ?? '') !== 'capital_withdrawal') {
-            continue;
-        }
-        $draw_pid = (int)($cr['partner_id'] ?? 0);
-        $month_draw[$draw_pid] = round(($month_draw[$draw_pid] ?? 0) + pa_money($cr['amount'] ?? 0), 2);
-    }
-    ?>
-    <section class="pa-panel">
-        <div class="pa-head">
-            <div>
-                <h2>পার্টনার প্রোফাইল</h2>
-                <div class="sub">শেয়ার, বর্তমান মূলধন এবং এই মাসের লভ্যাংশ উত্তোলন।</div>
-            </div>
-        </div>
-        <?php if (!$dash['partners']): ?>
-            <div class="pa-empty">এখনো পার্টনার নেই। ক্যাপিটাল ট্যাবে নাম যোগ করুন।</div>
-        <?php else: ?>
-            <div class="pa-people">
-                <?php foreach ($dash['partners'] as $p):
-                    $cap = pa_partner_capital($db, (int)$p['id'], $bounds['to']);
-                    $row = null;
-                    foreach ($dash['active'] as $a) {
-                        if ((int)$a['partner']['id'] === (int)$p['id']) { $row = $a; break; }
-                    }
-                    $nm = trim((string)$p['name']);
-                    $initial = function_exists('mb_substr') ? mb_substr($nm, 0, 1, 'UTF-8') : substr($nm, 0, 1);
-                    $role = trim((string)($p['partner_type'] ?? ''));
-                    if ($role === '' || $role === 'equity') {
-                        $role = 'ইক্যুইটি পার্টনার';
-                    }
-                    $st = strtolower((string)($p['status'] ?? 'active'));
-                    ?>
-                    <article class="pa-person">
-                        <div class="pa-avatar" aria-hidden="true"><?php echo htmlspecialchars($initial); ?></div>
-                        <div>
-                            <strong><a class="pa-name" href="<?php echo htmlspecialchars(pa_partner_edit_href($ym, (int)$p['id'])); ?>"><?php echo htmlspecialchars($nm); ?></a></strong>
-                            <?php if (trim((string)($p['phone'] ?? '')) !== ''): ?>
-                                <div class="meta"><?php echo htmlspecialchars((string)$p['phone']); ?></div>
-                            <?php endif; ?>
-                            <?php if (trim((string)($p['address'] ?? '')) !== ''): ?>
-                                <div class="meta"><?php echo htmlspecialchars((string)$p['address']); ?></div>
-                            <?php endif; ?>
-                            <div class="role"><?php echo htmlspecialchars($role); ?></div>
-                            <div class="share"><?php echo rtrim(rtrim(number_format((float)$p['share_percentage'], 2), '0'), '.'); ?>% শেয়ার</div>
-                            <div class="meta">মূলধন <?php echo pa_taka($cap['total']); ?></div>
-                            <div class="meta">এই মাসে উত্তোলন <?php echo pa_taka($month_draw[(int)$p['id']] ?? 0); ?></div>
-                            <?php if ($row): ?>
-                                <span class="pa-badge <?php echo htmlspecialchars($row['status']['key']); ?>"><?php echo htmlspecialchars($row['status']['label']); ?></span>
-                            <?php else: ?>
-                                <span class="pa-badge <?php echo $st === 'active' ? 'on' : 'off'; ?>"><?php echo $st === 'active' ? 'সক্রিয়' : 'নিষ্ক্রিয়'; ?></span>
-                            <?php endif; ?>
-                            <div class="no-print" style="margin-top:8px;"><a class="pa-btn soft" href="<?php echo htmlspecialchars(pa_partner_edit_href($ym, (int)$p['id'])); ?>">এডিট</a></div>
-                        </div>
-                    </article>
-                <?php endforeach; ?>
             </div>
         <?php endif; ?>
     </section>
@@ -1438,6 +1427,52 @@ include '../../partials/header.php';
     document.addEventListener('click', function (ev) {
         if (ev.target.closest && ev.target.closest('[data-pa-acct]')) return;
         document.querySelectorAll('.pa-acct-list').forEach(function (el) { el.setAttribute('hidden', ''); });
+    });
+})();
+(function () {
+    var sheet = document.getElementById('paPartnerSheet');
+    var body = document.getElementById('paPartnerSheetBody');
+    var title = document.getElementById('paPartnerSheetTitle');
+    var edit = document.getElementById('paPartnerSheetEdit');
+    if (!sheet || !body) return;
+    function esc(s) {
+        return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+    function closeSheet() {
+        if (typeof sheet.close === 'function') sheet.close();
+        else sheet.removeAttribute('open');
+    }
+    function openFrom(btn) {
+        var name = btn.getAttribute('data-name') || '';
+        var phone = btn.getAttribute('data-phone') || '';
+        var addr = btn.getAttribute('data-address') || '';
+        var share = btn.getAttribute('data-share') || '';
+        title.textContent = name;
+        var row = function (label, val) {
+            return '<div class="pa-profile-row"><dt>' + esc(label) + '</dt><dd>' + val + '</dd></div>';
+        };
+        var html = '<dl class="pa-profile-dl">';
+        if (phone) html += row('ফোন', esc(phone));
+        if (addr) html += row('ঠিকানা', esc(addr));
+        html += row('শেয়ার', esc(share) + '%');
+        html += row('মূলধন', esc(btn.getAttribute('data-capital')));
+        html += row('ব্যালেন্স', '<strong>' + esc(btn.getAttribute('data-balance')) + '</strong>');
+        html += row('এই মাসে উত্তোলন', esc(btn.getAttribute('data-draw')));
+        html += row('স্ট্যাটাস', esc(btn.getAttribute('data-status')));
+        html += '</dl>';
+        body.innerHTML = html;
+        if (edit) edit.setAttribute('href', btn.getAttribute('data-edit') || '#');
+        if (typeof sheet.showModal === 'function') sheet.showModal();
+        else sheet.setAttribute('open', 'open');
+    }
+    document.querySelectorAll('[data-pa-profile]').forEach(function (btn) {
+        btn.addEventListener('click', function () { openFrom(btn); });
+    });
+    document.querySelectorAll('[data-pa-sheet-close]').forEach(function (btn) {
+        btn.addEventListener('click', closeSheet);
+    });
+    sheet.addEventListener('click', function (ev) {
+        if (ev.target === sheet) closeSheet();
     });
 })();
 </script>
