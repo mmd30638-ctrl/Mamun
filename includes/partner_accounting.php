@@ -2189,7 +2189,16 @@ function pa_statement_period_summary($db, string $ym, string $from, string $to, 
             }
         }
         $other = round($tot - $open - $gross + $ecut + $draw, 2);
-        $rows[] = ['p' => $pp, 'open' => $open, 'profit' => $gross, 'exp' => $ecut, 'draw' => $draw, 'other' => $other, 'total' => $tot];
+        $rows[] = [
+            'p' => $pp,
+            'open' => $open,
+            'profit' => $gross,
+            'exp' => $ecut,
+            'net' => (float)$slice['net'],
+            'draw' => $draw,
+            'other' => $other,
+            'total' => $tot,
+        ];
         $sum_open += $open;
         $sum_profit += $gross;
         $sum_exp += $ecut;

@@ -375,12 +375,13 @@ include '../../partials/header.php';
                     <?php foreach ($dash['active'] as $a):
                         $pid = (int)$a['partner']['id'];
                         $slice = $pa_period_cuts[$pid] ?? ['gross' => 0.0, 'expense' => 0.0, 'net' => 0.0];
-                        $open = pa_opening($db, $a['partner'], $ym);
+                        $open_pack = pa_opening($db, $a['partner'], $ym);
+                        $open_bal = (float)($open_pack['opening'] ?? 0);
                         $book_total = (float)($pa_books[$pid]['total'] ?? 0);
                         ?>
                     <tr>
                         <td data-label="পার্টনার"><a class="pa-link" href="<?php echo htmlspecialchars(pa_partner_edit_href($ym, $pid)); ?>"><?php echo htmlspecialchars($a['partner']['name']); ?></a></td>
-                        <td class="num" data-label="সাবেক ব্যালেন্স"><?php echo pa_taka($open); ?></td>
+                        <td class="num" data-label="সাবেক ব্যালেন্স"><?php echo pa_taka($open_bal); ?></td>
                         <td class="num" data-label="রেঞ্জে লাভের অংশ"><?php echo pa_taka($slice['gross']); ?></td>
                         <td class="num pa-cut" data-label="রেঞ্জে খরচ কাটা"><?php echo pa_taka($slice['expense']); ?></td>
                         <td class="num" data-label="রেঞ্জে নিট"><?php echo pa_taka($slice['net']); ?></td>

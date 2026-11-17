@@ -1,3 +1,11 @@
+# 10.98.987 — স্টেটমেন্ট: বিক্রয়→খরচ→৬-কলাম সাবেক/+/− (ড্যাশবোর্ড মিল)
+includes/partner_accounting.php
+modules/accounts/partner_accounting.php
+modules/accounts/partner_sales_share.php
+modules/accounts/PA_REPORT_STANDARD.md
+assets/css/partner-sales-share.css
+includes/config.php
+VERSION.txt
 # 10.98.986 — তারিখ বাছাই → এক ক্লিকে স্টেটমেন্ট (PA-INTL-100 রেঞ্জ মিল)
 includes/partner_accounting.php
 modules/accounts/partner_accounting.php

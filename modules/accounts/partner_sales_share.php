@@ -67,7 +67,7 @@ $ym_key = str_replace('-', '', $first_m);
 $exp_cats = pa_expense_categories();
 $expenses = [];
 $total_exp = 0.0;
-if ($partial_range) {
+if (!$multi_month) {
     $exp_pack = pa_expense_lines($db, $from, $to, 2000);
     foreach ($exp_pack['lines'] as $row) {
         $sh = [];
@@ -167,53 +167,27 @@ foreach ($purchases as $r) {
 }
 $total_pur = round($total_pur, 2);
 
-$book_rows = [];
 $wd_items = [];
-$sum_open = $sum_profit = $sum_exp = $sum_other = $sum_draw = $sum_total = 0.0;
 foreach ($partners as $pp) {
-    $open = (float)pa_partner_book($db, $pp, $first_m)['opening'];
-    $tot = (float)pa_partner_book($db, $pp, $last_m)['total'];
-    $gross = 0.0;
-    $ecut = 0.0;
-    foreach ($months as $m) {
-        $cut = pa_partner_month_cut($db, $month_data[$m], $pp);
-        $gross += (float)$cut['gross'];
-        $ecut += (float)$cut['expense'];
-    }
-    $gross = round($gross, 2);
-    $ecut = round($ecut, 2);
-    $other = round($tot - $open - $gross + $ecut, 2);
-    $draw = 0.0;
     foreach ($months as $m) {
         $wd = pa_book_withdrawals((array)(pa_partner_book($db, $pp, $m)['lines'] ?? []));
-        $draw = round($draw + $wd['withdrawn'], 2);
         foreach ($wd['items'] as $wi) {
+            $d = substr((string)($wi['date'] ?? ''), 0, 10);
+            if ($d !== '' && ($d < $from || $d > $to)) {
+                continue;
+            }
             $wi['partner'] = (string)$pp['name'];
             $wi['pid'] = (int)$pp['id'];
             $wd_items[] = $wi;
         }
     }
-    $rest = round($other + $draw, 2);
-    $book_rows[] = ['p' => $pp, 'open' => $open, 'profit' => $gross, 'exp' => $ecut, 'draw' => $draw, 'other' => $rest, 'total' => $tot];
-    $sum_open += $open;
-    $sum_profit += $gross;
-    $sum_exp += $ecut;
-    $sum_draw += $draw;
-    $sum_other += $rest;
-    $sum_total += $tot;
 }
 usort($wd_items, static function ($a, $b) {
     return strcmp((string)$a['date'], (string)$b['date']);
 });
-if ($partial_range && !$multi_month) {
-    $wd_f = [];
-    foreach ($wd_items as $wi) {
-        $d = substr((string)($wi['date'] ?? ''), 0, 10);
-        if ($d >= $from && $d <= $to) {
-            $wd_f[] = $wi;
-        }
-    }
-    $wd_items = $wd_f;
+$book_rows = [];
+$sum_open = $sum_profit = $sum_exp = $sum_other = $sum_draw = $sum_total = 0.0;
+if (!$multi_month) {
     $stmt_sum = pa_statement_period_summary($db, $ym, $from, $to, $partners, $pcts);
     $book_rows = $stmt_sum['rows'];
     $sum_open = (float)$stmt_sum['sums']['open'];
@@ -222,6 +196,42 @@ if ($partial_range && !$multi_month) {
     $sum_draw = (float)$stmt_sum['sums']['draw'];
     $sum_other = (float)$stmt_sum['sums']['other'];
     $sum_total = (float)$stmt_sum['sums']['total'];
+} else {
+    foreach ($partners as $pp) {
+        $open = (float)(pa_opening($db, $pp, $first_m)['opening'] ?? 0);
+        $tot = (float)pa_partner_book($db, $pp, $last_m)['total'];
+        $gross = 0.0;
+        $ecut = 0.0;
+        foreach ($months as $m) {
+            $cut = pa_partner_month_cut($db, $month_data[$m], $pp);
+            $gross += (float)$cut['gross'];
+            $ecut += (float)$cut['expense'];
+        }
+        $gross = round($gross, 2);
+        $ecut = round($ecut, 2);
+        $draw = 0.0;
+        foreach ($months as $m) {
+            $wd = pa_book_withdrawals((array)(pa_partner_book($db, $pp, $m)['lines'] ?? []));
+            $draw = round($draw + $wd['withdrawn'], 2);
+        }
+        $other = round($tot - $open - $gross + $ecut + $draw, 2);
+        $book_rows[] = [
+            'p' => $pp,
+            'open' => $open,
+            'profit' => $gross,
+            'exp' => $ecut,
+            'net' => round($gross - $ecut, 2),
+            'draw' => $draw,
+            'other' => $other,
+            'total' => $tot,
+        ];
+        $sum_open += $open;
+        $sum_profit += $gross;
+        $sum_exp += $ecut;
+        $sum_draw += $draw;
+        $sum_other += $other;
+        $sum_total += $tot;
+    }
 }
 $sum_open = round($sum_open, 2);
 $sum_profit = round($sum_profit, 2);
@@ -268,7 +278,7 @@ $doc_in = (string)($_GET['doc'] ?? 'all');
 $doc = in_array($doc_in, ['all', 'sales', 'purchase', 'expense'], true) ? $doc_in : 'all';
 $PER_PAGE = 20;
 $uncat = 'অন্যান্য খাত';
-$sec_list = $doc === 'all' ? ['sales', 'purchase', 'expense'] : [$doc];
+$sec_list = $doc === 'all' ? ['sales', 'expense', 'purchase'] : [$doc];
 
 $sales_rows = [];
 foreach ($lines as $i => $r) {
@@ -483,8 +493,9 @@ $ver = htmlspecialchars(defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '1', 
 
 $net_profit_rows = [];
 foreach ($book_rows as $br) {
-    $net_profit_rows[] = round($br['profit'] - $br['exp'], 2);
+    $net_profit_rows[] = isset($br['net']) ? round((float)$br['net'], 2) : round($br['profit'] - $br['exp'], 2);
 }
+$sum_period_net = round($sum_profit - $sum_exp, 2);
 $sum_net = round($sum_profit - $sum_exp, 2);
 
 $sum_word = ($multi_month || $partial_range) ? 'এ সময়ের' : 'এ মাসের';
@@ -774,8 +785,44 @@ include '../../partials/header.php';
                     <div class="psp-sec-title">
                         <span class="psp-sec-dot"></span>
                         <span class="psp-sec-name">পার্টনার হিসাবের সারসংক্ষেপ</span>
-                        <span class="psp-sec-sub"><?php echo $h($month_label); ?></span>
+                        <span class="psp-sec-sub"><?php echo $h($range_on ? $period : $month_label); ?></span>
                     </div>
+                    <table class="pst-period" data-ame-no-page="1">
+                        <thead>
+                            <tr>
+                                <th>পার্টনার</th>
+                                <th class="num">সাবেক ব্যালেন্স</th>
+                                <th class="num">(+) লাভের অংশ</th>
+                                <th class="num">(−) খরচ কাটা</th>
+                                <th class="num">= সময়কাল নিট</th>
+                                <th class="num">মাস শেষ ব্যালেন্স</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($book_rows as $bi => $br):
+                            $net = isset($br['net']) ? (float)$br['net'] : round((float)$br['profit'] - (float)$br['exp'], 2); ?>
+                            <tr>
+                                <td class="nm psh psh<?php echo ($bi % 4) + 1; ?>"><?php echo $h($br['p']['name']); ?></td>
+                                <td class="num"><?php echo $h($mny($br['open'])); ?></td>
+                                <td class="num pos"><?php echo $h($sgn($br['profit'], '+')); ?></td>
+                                <td class="num neg"><?php echo $h($sgn($br['exp'], '-')); ?></td>
+                                <td class="num <?php echo $tone($net); ?>"><?php echo $h($mny($net)); ?></td>
+                                <td class="num hi"><?php echo $h($mny($br['total'])); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><b>মোট</b></td>
+                                <td class="num"><?php echo $h($mny($sum_open)); ?></td>
+                                <td class="num pos"><?php echo $h($sgn($sum_profit, '+')); ?></td>
+                                <td class="num neg"><?php echo $h($sgn($sum_exp, '-')); ?></td>
+                                <td class="num <?php echo $tone($sum_period_net); ?>"><b><?php echo $h($mny($sum_period_net)); ?></b></td>
+                                <td class="num"><b><?php echo $h($mny($sum_total)); ?></b></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <p class="psp-period-hint">উপরে বিক্রয়/খরচের তালিকায় প্রতি লাইনে পার্টনারের অংশ। নিচে প্লাস/মাইনাস সারসংক্ষেপ — সাবেক + লাভ − খরচ − উত্তোলন (সব অংক সার্ভার)।</p>
                     <table class="pst-set" data-ame-no-page="1">
                         <colgroup><col><?php foreach ($book_rows as $br): ?><col style="width:<?php echo (int)$pcol; ?>px"><?php endforeach; ?><col style="width:150px"></colgroup>
                         <thead>

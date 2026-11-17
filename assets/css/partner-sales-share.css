@@ -47,6 +47,14 @@ html body #main-content#main-content .psp-btn:disabled { opacity: .55; }
 .psp-sec-dot { flex: 0 0 auto; width: 10px; height: 10px; border-radius: 3px; background: #1d4ed8; }
 .psp-sec.exp .psp-sec-dot { background: #be123c; }
 .psp-sec.set .psp-sec-dot { background: #0d9488; }
+.pst-period { width: 100%; border-collapse: collapse; margin: 0 0 12px; table-layout: fixed; }
+.pst-period th { background: #ecfdf5; color: #0f766e; font-size: 11px; font-weight: 900; padding: 8px 6px; border: 1px solid #99f6e4; text-align: left; }
+.pst-period th.num { text-align: right; }
+.pst-period td { padding: 8px 6px; border: 1px solid #e2e8f0; font-size: 12px; font-weight: 700; }
+.pst-period td.num { text-align: right; white-space: nowrap; }
+.pst-period td.nm { font-weight: 900; color: #0b1e4d; }
+.pst-period tfoot td { background: #f8fafc; border-top: 2px solid #0d9488; }
+.psp-period-hint { margin: 0 0 14px; font-size: 11.5px; line-height: 1.45; color: #475569; font-weight: 600; }
 .psp-sec-name { font-size: 14.5px; font-weight: 900; color: #0b1e4d; }
 .psp-sec-sub { font-size: 11.5px; color: #64748b; font-weight: 700; flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .psp-sec-count { flex: 0 0 auto; font-size: 11.5px; font-weight: 800; color: #1e3a8a; background: #eaf1ff; border-radius: 999px; padding: 3px 10px; }
