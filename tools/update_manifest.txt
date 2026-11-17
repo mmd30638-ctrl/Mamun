@@ -1,3 +1,7 @@
+# 10.98.971 — কর্মী: বেতন দেওয়ার পর কার্ড ব্যালেন্স ০
+includes/employee_hub.php
+includes/config.php
+VERSION.txt
 # 10.98.970 — ফেরত/এক্সচেঞ্জ: add_ledger_entry ফিক্স + কাস্টমার ব্যালেন্স
 includes/return_v2_functions.php
 modules/returns/v2/actions/save_exchange.php

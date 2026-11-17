@@ -1520,7 +1520,9 @@ function ame_emp_hub_list(mysqli $db, array $filters): array
             'deposit' => $seeMoney ? $deposit : null,
             'balance' => $seeMoney ? ame_emp_hub_balance($e, $tw, $todaySalary) : null,
             'today_balance' => $seeMoney
-                ? round(ame_emp_hub_today_net($tw, $todaySalary) + ame_emp_hub_box_sum($db, (int)$e['id'], 'balance'), 2)
+                ? (!empty($payDue['settled'])
+                    ? 0.0
+                    : round(ame_emp_hub_today_net($tw, $todaySalary) + ame_emp_hub_box_sum($db, (int)$e['id'], 'balance'), 2))
                 : null,
             'today_paid' => $seeMoney ? (float)$payDue['paid'] : null,
             'today_due' => $seeMoney ? (float)$payDue['due'] : null,
