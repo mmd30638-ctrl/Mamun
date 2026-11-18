@@ -498,21 +498,35 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
             }
         }
 
-        /* হোয়াটসঅ্যাপ/ডেস্কটপ ইন-অ্যাপ ব্রাউজার: ১৩৬৬ স্কেল বন্ধ, মেমো মাঝখানে */
-        html.ame-memo-standalone-fit body.ame-sales-invoice-page {
+        /* কম্পিউটার / হোয়াটসঅ্যাপ ওয়েবভিউ: অর্ধেক ফাঁকা ঠিক — পূর্ণ প্রস্থ, মেমো মাঝখানে */
+        html.ame-memo-standalone-fit,
+        html.ame-memo-standalone-fit body.ame-sales-invoice-page,
+        html.ame-phone-desktop.ame-memo-standalone-fit body.ame-sales-invoice-page {
             width: 100% !important;
             max-width: 100% !important;
+            min-width: 0 !important;
+            margin: 0 !important;
+            transform: none !important;
+            zoom: 1 !important;
             overflow-x: hidden !important;
+        }
+        html.ame-memo-standalone-fit body.ame-sales-invoice-page {
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
+            min-height: 100vh !important;
+            background: #E8EEF5 !important;
         }
-        html.ame-memo-standalone-fit body.ame-sales-invoice-page .inv-action-bar,
-        html.ame-memo-standalone-fit body.ame-sales-invoice-page #memo-container.memo-wrapper {
-            width: 100% !important;
+        html body.ame-sales-invoice-page .inv-action-bar,
+        html body.ame-sales-invoice-page #memo-container.memo-wrapper {
+            width: min(100%, <?php echo $max_width; ?>) !important;
             max-width: <?php echo $max_width; ?> !important;
             margin-left: auto !important;
             margin-right: auto !important;
+            transform: none !important;
+            position: relative !important;
+            left: auto !important;
+            right: auto !important;
         }
     </style>
 </head>
@@ -809,6 +823,39 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
                 }, 400);
             }
         });
+    })();
+    </script>
+    <script>
+    (function () {
+        function ameInvoiceDesktopFill() {
+            var body = document.body;
+            if (!body || !body.classList.contains('ame-sales-invoice-page')) {
+                return;
+            }
+            var root = document.documentElement;
+            root.setAttribute('data-ame-memo-standalone', '1');
+            root.classList.add('ame-memo-standalone-fit');
+            root.classList.remove('ame-phone-desktop');
+            try {
+                window.AME_SALE_DESKTOP_SITE = false;
+                delete window.AME_SALE_DESKTOP_FIT;
+            } catch (e) {}
+            var meta = document.querySelector('meta[name="viewport"]');
+            if (meta) {
+                meta.setAttribute('content', 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover');
+            }
+            root.style.width = '100%';
+            body.style.width = '100%';
+            body.style.maxWidth = '100%';
+        }
+        ameInvoiceDesktopFill();
+        document.addEventListener('DOMContentLoaded', ameInvoiceDesktopFill);
+        window.addEventListener('resize', ameInvoiceDesktopFill);
+        window.addEventListener('orientationchange', function () {
+            setTimeout(ameInvoiceDesktopFill, 50);
+        });
+        setTimeout(ameInvoiceDesktopFill, 120);
+        setTimeout(ameInvoiceDesktopFill, 600);
     })();
     </script>
 <?php include __DIR__ . '/../../partials/confirm_actions.php'; ?>

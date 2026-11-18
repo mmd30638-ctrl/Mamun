@@ -5,6 +5,18 @@ body.ame-due-reminder-page #main-content {
   overflow-x: hidden;
 }
 
+html body.ame-sales-invoice-page {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  overflow-x: hidden !important;
+}
+html body.ame-sales-invoice-page #memo-container,
+html body.ame-sales-invoice-page .memo-wrapper {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  transform: none !important;
+}
 #memo-container,
 .memo-wrapper,
 .invoice-box,

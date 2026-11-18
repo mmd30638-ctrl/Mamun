@@ -46,6 +46,9 @@
         if (b.classList.contains('ame-sale-return-memo')) {
             return true;
         }
+        if (b.classList.contains('ame-sales-invoice-page')) {
+            return true;
+        }
         if (b.getAttribute('data-ame-memo-standalone') === '1') {
             return true;
         }
