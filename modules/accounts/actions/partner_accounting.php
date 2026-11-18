@@ -13,6 +13,12 @@ $month = pa_month((string)($_POST['month'] ?? date('Y-m')));
 $ym = $month['ym'];
 $back = '/modules/accounts/partner_accounting.php?month=' . rawurlencode($ym);
 
+function pa_action_back(string $ym, string $tab = 'draw'): string
+{
+    $tab = in_array($tab, ['draw', 'capital', 'bank', 'stmt'], true) ? $tab : 'draw';
+    return '/modules/accounts/partner_accounting.php?month=' . rawurlencode($ym) . '&tab=' . rawurlencode($tab);
+}
+
 function pa_go($url, $ok = '', $err = '')
 {
     $sep = strpos($url, '?') === false ? '?' : '&';
@@ -188,15 +194,48 @@ try {
         pa_go($back, 'category');
     }
 
+    if ($action === 'add_expense_category') {
+        $name = trim((string)($_POST['name'] ?? ''));
+        if ($name === '') {
+            pa_go(pa_action_back($ym, 'draw'), '', 'expense_cat');
+        }
+        try {
+            pa_expense_category_create($db, $name);
+            pa_audit($db, 'create', 'expense_category', 0, $ym, $name);
+            log_activity('Partner expense category', 'PartnerAccounting', $name);
+            pa_go(pa_action_back($ym, 'draw'), 'expense_cat');
+        } catch (Throwable $e) {
+            error_log('add_expense_category: ' . $e->getMessage());
+            pa_go(pa_action_back($ym, 'draw'), '', 'expense_cat');
+        }
+    }
+
+    if ($action === 'remove_expense_category') {
+        $cid = (int)($_POST['category_id'] ?? 0);
+        if ($cid <= 0) {
+            pa_go(pa_action_back($ym, 'draw'), '', 'expense_cat');
+        }
+        try {
+            pa_expense_category_deactivate($db, $cid);
+            pa_audit($db, 'update', 'expense_category', $cid, $ym, 'বাতিল');
+            pa_go(pa_action_back($ym, 'draw'), 'expense_cat_del');
+        } catch (Throwable $e) {
+            error_log('remove_expense_category: ' . $e->getMessage());
+            pa_go(pa_action_back($ym, 'draw'), '', 'expense_cat');
+        }
+    }
+
     if ($action === 'save_expense') {
+        $retTab = (string)($_POST['return_tab'] ?? 'draw');
+        $expBack = pa_action_back($ym, $retTab);
         if (!pa_amount_ok($_POST['amount'] ?? '')) {
-            pa_go($back, '', 'expense');
+            pa_go($expBack, '', 'expense');
         }
         $amount = pa_money($_POST['amount']);
-        $cats = pa_expense_categories();
-        $cat = (string)($_POST['category'] ?? 'other');
-        if (!isset($cats[$cat])) {
-            $cat = 'other';
+        $cats = pa_expense_categories($db);
+        $cat = trim((string)($_POST['category'] ?? ''));
+        if ($cat === '' || !isset($cats[$cat])) {
+            pa_go($expBack, '', 'expense_cat_pick');
         }
         $methods = pa_payment_methods();
         $method = (string)($_POST['payment_method'] ?? 'cash');
@@ -217,14 +256,15 @@ try {
             ? partnership_valid_date((string)($_POST['expense_date'] ?? ''))
             : date('Y-m-d');
         if ($date > date('Y-m-d')) {
-            pa_go($back, '', 'future');
+            pa_go($expBack, '', 'future');
         }
         $note = $cut($_POST['note'] ?? '', 255);
         $token = substr(trim((string)($_POST['idempotency_token'] ?? '')), 0, 80);
         $period = substr($date, 0, 7);
         if (pa_month_locked($db, $period)) {
-            pa_go($back, '', 'closed');
+            pa_go($expBack, '', 'closed');
         }
+        $periodBack = pa_action_back($period, $retTab);
         if ($token !== '') {
             $dup = $db->prepare("SELECT id FROM partner_acct_expenses WHERE idempotency_token = ? LIMIT 1");
             if ($dup) {
@@ -233,27 +273,27 @@ try {
                 $hit = $dup->get_result()->fetch_assoc();
                 $dup->close();
                 if ($hit) {
-                    pa_go('/modules/accounts/partner_accounting.php?month=' . rawurlencode($period), 'expense');
+                    pa_go($periodBack, 'expense');
                 }
             }
         }
         $receiptPath = null;
         if (!empty($_FILES['receipt']['tmp_name']) && ($_FILES['receipt']['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_OK) {
             if ((int)($_FILES['receipt']['size'] ?? 0) > 5 * 1024 * 1024) {
-                pa_go($back, '', 'receipt_size');
+                pa_go($expBack, '', 'receipt_size');
             }
             $mime = (new finfo(FILEINFO_MIME_TYPE))->file($_FILES['receipt']['tmp_name']);
             $exts = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp', 'application/pdf' => 'pdf'];
             if (!isset($exts[$mime])) {
-                pa_go($back, '', 'receipt_type');
+                pa_go($expBack, '', 'receipt_type');
             }
             $dir = dirname(__DIR__, 3) . '/uploads/partner_expenses';
             if (!is_dir($dir) && !mkdir($dir, 0755, true) && !is_dir($dir)) {
-                pa_go($back, '', 'save');
+                pa_go($expBack, '', 'save');
             }
             $fname = 'pex_' . date('YmdHis') . '_' . bin2hex(random_bytes(4)) . '.' . $exts[$mime];
             if (!move_uploaded_file($_FILES['receipt']['tmp_name'], $dir . '/' . $fname)) {
-                pa_go($back, '', 'save');
+                pa_go($expBack, '', 'save');
             }
             $receiptPath = '/uploads/partner_expenses/' . $fname;
         }
@@ -261,7 +301,7 @@ try {
         $voucher = pa_next_expense_voucher($db, $period);
         $stmt = $db->prepare("INSERT INTO partner_acct_expenses (expense_date, category, description, amount, period_ym, reference, note, created_by, voucher_no, payee, payment_method, receipt_path, status, idempotency_token) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,'active',?)");
         if (!$stmt) {
-            pa_go($back, '', 'save');
+            pa_go($expBack, '', 'save');
         }
         $tokenOrNull = $token !== '' ? $token : null;
         $stmt->bind_param('sssdsssisssss', $date, $cat, $desc, $amount, $period, $reference, $note, $uid, $voucher, $payee, $method, $receiptPath, $tokenOrNull);
@@ -270,7 +310,7 @@ try {
         $stmt->close();
         pa_audit($db, 'create', 'expense', $eid, $period, $voucher . ' ' . $desc . ' ' . $amount);
         log_activity('Partner expense', 'PartnerAccounting', $voucher . ' ' . $desc);
-        pa_go('/modules/accounts/partner_accounting.php?month=' . rawurlencode($period), 'expense');
+        pa_go($periodBack, 'expense');
     }
 
     if ($action === 'delete_expense' || $action === 'void_expense') {

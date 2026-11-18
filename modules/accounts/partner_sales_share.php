@@ -64,7 +64,7 @@ $partial_range = $range_on && ($from > $first_bounds['from'] || $to < $last_boun
 
 $ym_key = str_replace('-', '', $first_m);
 
-$exp_cats = pa_expense_categories();
+$exp_cats = pa_expense_category_labels($db);
 $expenses = [];
 $total_exp = 0.0;
 if (!$multi_month) {

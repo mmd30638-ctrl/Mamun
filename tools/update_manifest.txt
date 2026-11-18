@@ -552,3 +552,13 @@ VERSION.txt
 modules/accounts/partner_accounting.php
 includes/config.php
 VERSION.txt
+# 10.98.1013 — পার্টনার খরচ: খাত যোগ/বাতিল (ডাইনামিক), পুরনো হার্ডকোড বাদ
+includes/partner_accounting.php
+includes/partner_expense_ui.php
+modules/accounts/partner_accounting.php
+modules/accounts/actions/partner_accounting.php
+modules/accounts/partner_expense_export.php
+modules/accounts/partner_expense_voucher.php
+modules/accounts/partner_sales_share.php
+includes/config.php
+VERSION.txt

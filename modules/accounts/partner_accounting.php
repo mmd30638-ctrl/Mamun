@@ -19,7 +19,8 @@ $m = $dash['month'];
 $bounds = $m['bounds'];
 $ym = $bounds['ym'];
 $selected = $invoice_id ? pa_find_invoice($db, $invoice_id, $ym) : ($m['invoices'][0] ?? null);
-$cats = pa_expense_categories();
+$exp_cat_active = pa_expense_categories($db);
+$cats = pa_expense_category_labels($db);
 $methods = pa_payment_methods();
 $locked = !empty($dash['locked']);
 $closed = !empty($dash['closed']);
@@ -29,6 +30,8 @@ $flash_ok = [
     'balance' => 'পার্টনারের ব্যালেন্স বদলেছে। স্টেটমেন্টের মোট এমাউন্ট এখন এই সংখ্যা।',
     'category' => 'ক্যাটাগরি যুক্ত হয়েছে। এই খাতের লাভ এখন নিজে থেকে লাভের অংশে ঢুকবে।',
     'expense' => 'খরচ সেভ হয়েছে। নেট লাভ আপডেট হয়েছে।',
+    'expense_cat' => 'খরচের খাত যোগ হয়েছে। নতুন খরচে এখন এটি বেছে নিতে পারবেন।',
+    'expense_cat_del' => 'খরচের খাত বাতিল হয়েছে। নতুন খরচে আর দেখাবে না।',
     'payment' => 'পেমেন্ট সেভ হয়েছে। লেজার আপডেট হয়েছে।',
     'distributed' => 'নিট লাভ পার্টনারদের লেজারে জমা হয়েছে।',
     'capital' => 'মূলধন লেজারে সেভ হয়েছে।',
@@ -44,6 +47,8 @@ $flash_err = [
     'category' => 'ক্যাটাগরি বদলানো যায়নি।',
     'share' => 'সক্রিয় পার্টনারদের শেয়ার মোট ১০০% ছাড়াতে পারে না।',
     'expense' => 'খরচের পরিমাণ দিন।',
+    'expense_cat' => 'খাতের নাম লিখুন।',
+    'expense_cat_pick' => 'খরচের খাত বেছে নিন। আগে খাত যোগ করুন।',
     'future' => 'ভবিষ্যতের তারিখে খরচ লেখা যাবে না।',
     'receipt_size' => 'রসিদ সর্বোচ্চ ৫ MB হতে পারবে।',
     'receipt_type' => 'রসিদ জেপিজি, পিএনজি, ওয়েবপি বা পিডিএফ দিন।',
@@ -524,7 +529,7 @@ include '../../partials/header.php';
         <?php /* 10.98.714 */ if (!$locked): ?>
         <details class="pa-exp-add no-print" id="paExpAddBox">
             <summary class="pa-btn red">+ নতুন খরচ যোগ করুন</summary>
-            <?php echo pa_expense_form_html($ym, $cats, 'paExpAdd'); ?>
+            <?php echo pa_expense_form_html($ym, $exp_cat_active, 'paExpAdd', 'capital'); ?>
         </details>
         <?php else: ?>
         <div class="pa-empty no-print">এই মাস বন্ধ আছে, তাই নতুন খরচ যোগ করা যাবে না। মাস আবার খুলে যোগ করুন।</div>
@@ -1088,21 +1093,34 @@ include '../../partials/header.php';
         <div class="pa-head">
             <div>
                 <h2>পার্টনারশিপ খরচ · <?php echo htmlspecialchars($bounds['label']); ?></h2>
-                <div class="sub">অফিস, ভাড়া, যাতায়াত — পণ্য খরচ নয়। সেভ হলে এই খরচ দুজনের লাভের অংশ থেকে শেয়ার অনুযায়ী কাটে।</div>
+                <div class="sub">পণ্য ক্রয়ের খরচ নয় — অফিস/অন্যান্য খরচ। সেভ হলে পার্টনারদের লাভের অংশ থেকে শেয়ার অনুযায়ী কাটে।</div>
             </div>
             <form method="GET" class="pa-month-form no-print">
                 <input type="hidden" name="month" value="<?php echo htmlspecialchars($ym); ?>">
+                <input type="hidden" name="tab" value="draw">
                 <select name="ecat" onchange="this.form.submit()">
                     <option value="">সব খাত</option>
-                    <?php $ecat = (string)($_GET['ecat'] ?? ''); foreach ($cats as $k => $lab): ?>
+                    <?php
+                    $ecat = (string)($_GET['ecat'] ?? '');
+                    $ecat_opts = $exp_cat_active;
+                    foreach ($m['expenses'] as $er) {
+                        $ek = (string)($er['category'] ?? '');
+                        if ($ek !== '' && !isset($ecat_opts[$ek])) {
+                            $ecat_opts[$ek] = $cats[$ek] ?? $ek;
+                        }
+                    }
+                    foreach ($ecat_opts as $k => $lab): ?>
                         <option value="<?php echo htmlspecialchars($k); ?>"<?php echo $ecat === $k ? ' selected' : ''; ?>><?php echo htmlspecialchars($lab); ?></option>
                     <?php endforeach; ?>
                 </select>
             </form>
         </div>
+        <?php if (!$locked): ?>
+            <?php echo pa_expense_category_manager_html($db, $ym, $exp_cat_active); ?>
+        <?php endif; ?>
         <?php
         $exp_rows = $m['expenses'];
-        if ($ecat !== '' && isset($cats[$ecat])) {
+        if ($ecat !== '') {
             $exp_rows = array_values(array_filter($exp_rows, static function ($e) use ($ecat) {
                 return ($e['category'] ?? '') === $ecat;
             }));
@@ -1132,7 +1150,7 @@ include '../../partials/header.php';
 
         <?php if (!$locked): ?>
             <h3 class="pa-exp-h">নতুন খরচ যোগ</h3>
-            <?php echo pa_expense_form_html($ym, $cats, 'paExpAdd2'); ?>
+            <?php echo pa_expense_form_html($ym, $exp_cat_active, 'paExpAdd2'); ?>
         <?php endif; ?>
 
         <h2 style="margin-top:16px;">উত্তোলন</h2>

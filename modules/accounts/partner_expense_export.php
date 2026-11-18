@@ -9,7 +9,7 @@ ensure_partner_accounting_schema($db);
 $month = pa_month((string)($_GET['month'] ?? date('Y-m')));
 $ym = $month['ym'];
 $cat = (string)($_GET['ecat'] ?? '');
-$cats = pa_expense_categories();
+$cats = pa_expense_category_labels($db);
 $methods = pa_payment_methods();
 $rows = pa_month_expenses($db, $ym, $cat);
 $voided = pa_month_voided_expenses($db, $ym);

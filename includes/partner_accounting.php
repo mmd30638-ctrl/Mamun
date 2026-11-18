@@ -197,6 +197,17 @@ function ensure_partner_accounting_schema($db)
             updated_at DATETIME NULL,
             UNIQUE KEY uniq_partner_period (partner_id, period_ym)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+
+        $db->query("CREATE TABLE IF NOT EXISTS partner_expense_categories (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            slug VARCHAR(40) NOT NULL,
+            name VARCHAR(100) NOT NULL,
+            sort_order INT NOT NULL DEFAULT 0,
+            is_active TINYINT(1) NOT NULL DEFAULT 1,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE KEY uniq_slug (slug),
+            INDEX idx_active (is_active, sort_order)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
     } catch (Throwable $e) {
         error_log('ensure_partner_accounting_schema: ' . $e->getMessage());
     }
@@ -242,7 +253,8 @@ function pa_month_locked($db, $ym)
     return pa_month_status($db, $ym) === 'closed' && !pa_is_admin();
 }
 
-function pa_expense_categories()
+/** পুরনো হার্ডকোড — শুধু আগের খরচের লেবেল দেখানোর জন্য। */
+function pa_expense_categories_legacy(): array
 {
     return [
         'office' => 'অফিস খরচ',
@@ -254,6 +266,124 @@ function pa_expense_categories()
         'marketing' => 'মার্কেটিং',
         'other' => 'অন্যান্য',
     ];
+}
+
+/**
+ * সক্রিয় খরচের খাত (slug => নাম) — DB থেকে; খালি থাকলে ব্যবহারকারী নিজে যোগ করবেন।
+ *
+ * @return array<string, string>
+ */
+function pa_expense_categories($db = null): array
+{
+    if (!$db instanceof mysqli) {
+        return [];
+    }
+    ensure_partner_accounting_schema($db);
+    $out = [];
+    $res = @$db->query(
+        'SELECT slug, name FROM partner_expense_categories
+         WHERE is_active = 1
+         ORDER BY sort_order ASC, name ASC'
+    );
+    if ($res) {
+        while ($row = $res->fetch_assoc()) {
+            $slug = trim((string)($row['slug'] ?? ''));
+            $name = trim((string)($row['name'] ?? ''));
+            if ($slug !== '' && $name !== '') {
+                $out[$slug] = $name;
+            }
+        }
+        $res->free();
+    }
+    return $out;
+}
+
+/** টেবিল/ফিল্টার: সক্রিয় + পুরনো স্লাগ লেবেল */
+function pa_expense_category_labels($db): array
+{
+    return array_merge(pa_expense_categories_legacy(), pa_expense_categories($db));
+}
+
+/**
+ * @return list<array{id:int,slug:string,name:string,sort_order:int,is_active:int}>
+ */
+function pa_expense_category_list($db, bool $active_only = true): array
+{
+    if (!$db instanceof mysqli) {
+        return [];
+    }
+    ensure_partner_accounting_schema($db);
+    $sql = 'SELECT id, slug, name, sort_order, is_active FROM partner_expense_categories';
+    if ($active_only) {
+        $sql .= ' WHERE is_active = 1';
+    }
+    $sql .= ' ORDER BY sort_order ASC, name ASC';
+    $res = @$db->query($sql);
+    $rows = [];
+    if ($res) {
+        while ($row = $res->fetch_assoc()) {
+            $rows[] = [
+                'id' => (int)($row['id'] ?? 0),
+                'slug' => (string)($row['slug'] ?? ''),
+                'name' => (string)($row['name'] ?? ''),
+                'sort_order' => (int)($row['sort_order'] ?? 0),
+                'is_active' => (int)($row['is_active'] ?? 1),
+            ];
+        }
+        $res->free();
+    }
+    return $rows;
+}
+
+function pa_expense_category_create($db, string $name): int
+{
+    $name = trim($name);
+    if ($name === '') {
+        throw new InvalidArgumentException('খরচের খাতের নাম দিন।');
+    }
+    ensure_partner_accounting_schema($db);
+    if (function_exists('mb_substr')) {
+        $name = mb_substr($name, 0, 100, 'UTF-8');
+    } else {
+        $name = substr($name, 0, 100);
+    }
+    $bootSlug = 'boot_' . bin2hex(random_bytes(6));
+    $stmt = $db->prepare(
+        'INSERT INTO partner_expense_categories (slug, name, sort_order, is_active) VALUES (?, ?, 0, 1)'
+    );
+    if (!$stmt) {
+        throw new RuntimeException('খাত সেভ করা যায়নি।');
+    }
+    $stmt->bind_param('ss', $bootSlug, $name);
+    $stmt->execute();
+    $id = (int)$db->insert_id;
+    $stmt->close();
+    if ($id <= 0) {
+        throw new RuntimeException('খাত সেভ করা যায়নি।');
+    }
+    $slug = 'c' . $id;
+    $up = $db->prepare('UPDATE partner_expense_categories SET slug = ? WHERE id = ?');
+    if ($up) {
+        $up->bind_param('si', $slug, $id);
+        $up->execute();
+        $up->close();
+    }
+    return $id;
+}
+
+function pa_expense_category_deactivate($db, int $id): void
+{
+    $id = (int)$id;
+    if ($id <= 0) {
+        throw new InvalidArgumentException('খাত পাওয়া যায়নি।');
+    }
+    $stmt = $db->prepare('UPDATE partner_expense_categories SET is_active = 0 WHERE id = ?');
+    if (!$stmt) {
+        throw new RuntimeException('খাত বাতিল করা যায়নি।');
+    }
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $stmt->close();
 }
 
 function pa_payment_methods()
@@ -801,7 +931,7 @@ function pa_expense_lines($db, $from, $to, int $limit = 200): array
         $raw = $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
         $stmt->close();
         $pcts = pa_active_share_pcts($db);
-        $cats = pa_expense_categories();
+        $cats = pa_expense_category_labels($db);
         $total = 0.0;
         $shares = [];
         foreach ($pcts as $pid => $pct) {
@@ -1124,7 +1254,7 @@ function pa_expense_by_id($db, $id)
 function pa_month_expenses($db, $ym, $category = '')
 {
     try {
-        if ($category !== '' && isset(pa_expense_categories()[$category])) {
+        if ($category !== '') {
             $stmt = $db->prepare("SELECT * FROM partner_acct_expenses WHERE COALESCE(status,'active') <> 'void' AND period_ym = ? AND category = ? ORDER BY expense_date ASC, id ASC");
             if (!$stmt) {
                 return [];
@@ -1856,7 +1986,7 @@ function pa_partner_book($db, array $partner, string $ym): array
             'minus' => 0.0,
         ];
     }
-    $cats = pa_expense_categories();
+    $cats = pa_expense_category_labels($db);
     foreach ($month['expenses'] as $ex) {
         $share = pa_share_cuts(0, (float)($ex['amount'] ?? 0), $pcts);
         $minus = (float)($share[$id]['expense'] ?? 0);

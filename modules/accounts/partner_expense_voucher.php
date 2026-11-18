@@ -14,7 +14,7 @@ if (!$row) {
 $h = static function ($v) {
     return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
 };
-$cats = pa_expense_categories();
+$cats = pa_expense_category_labels($db);
 $methods = pa_payment_methods();
 $shop = function_exists('shop_name') ? shop_name() : 'APONSHOP';
 $logo = function_exists('shop_logo_url') ? shop_logo_url('/assets/img/header-logo.png') : '/assets/img/header-logo.png';

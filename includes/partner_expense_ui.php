@@ -1,7 +1,64 @@
 <?php
-/* 10.98.715 · 10.98.714 — পার্টনারশিপ খরচের ফর্ম, তালিকা ও বাতিল-খরচ (শুধু দেখানো; হিসাবের কোড নয়) */
+/* 10.98.1013 — খরচের খাত যোগ/বাতিল; 10.98.715 — ফর্ম, তালিকা */
+require_once __DIR__ . '/partner_accounting.php';
 
-function pa_expense_form_html($ym, array $cats, $formId = 'paExpAdd')
+function pa_expense_category_manager_html(mysqli $db, string $ym, array $activeCats): string
+{
+    $h = static function ($v) {
+        return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
+    };
+    $rows = pa_expense_category_list($db, true);
+    ob_start();
+    ?>
+    <section class="pa-exp-cat-mgr no-print" id="paExpCatMgr">
+        <h3 class="pa-exp-h">খরচের খাত</h3>
+        <p class="sub" style="margin:0 0 10px;">পুরনো নির্ধারিত খাত আর নেই — নিজে খাতের নাম লিখে যোগ করুন। বাতিল করলে নতুন খরচে দেখাবে না; আগের খরচের রেকর্ড যেমন আছে।</p>
+        <?php if ($rows): ?>
+        <ul class="pa-exp-cat-list">
+            <?php foreach ($rows as $row): ?>
+                <li>
+                    <span><?php echo $h($row['name']); ?></span>
+                    <form method="POST" action="actions/partner_accounting.php" class="inline" data-pa-exp-cat-del="1">
+                        <?php echo csrf_field(); ?>
+                        <input type="hidden" name="action" value="remove_expense_category">
+                        <input type="hidden" name="month" value="<?php echo $h($ym); ?>">
+                        <input type="hidden" name="category_id" value="<?php echo (int)$row['id']; ?>">
+                        <button type="submit" class="pa-btn soft">বাতিল</button>
+                    </form>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <?php else: ?>
+        <div class="pa-empty" style="margin-bottom:10px;">এখনও কোনো খাত নেই। নিচে নাম লিখে প্রথম খাত যোগ করুন।</div>
+        <?php endif; ?>
+        <form method="POST" action="actions/partner_accounting.php" class="pa-form pa-exp-cat-add">
+            <?php echo csrf_field(); ?>
+            <input type="hidden" name="action" value="add_expense_category">
+            <input type="hidden" name="month" value="<?php echo $h($ym); ?>">
+            <label class="wide">নতুন খাতের নাম
+                <input type="text" name="name" maxlength="100" placeholder="যেমন: অফিস খরচ, ভাড়া, বিদ্যুৎ" required>
+            </label>
+            <button type="submit" class="pa-btn red">খাত যোগ করুন</button>
+        </form>
+    </section>
+    <script>
+    (function () {
+        document.querySelectorAll('form[data-pa-exp-cat-del]').forEach(function (f) {
+            if (f.dataset.bound) return;
+            f.dataset.bound = '1';
+            f.addEventListener('submit', function (e) {
+                if (!window.confirm('এই খাত বাতিল করবেন? নতুন খরচে আর আসবে না।')) {
+                    e.preventDefault();
+                }
+            });
+        });
+    })();
+    </script>
+    <?php
+    return (string)ob_get_clean();
+}
+
+function pa_expense_form_html($ym, array $cats, $formId = 'paExpAdd', $returnTab = 'draw')
 {
     $h = static function ($v) {
         return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
@@ -12,13 +69,18 @@ function pa_expense_form_html($ym, array $cats, $formId = 'paExpAdd')
         <?php echo csrf_field(); ?>
         <input type="hidden" name="action" value="save_expense">
         <input type="hidden" name="month" value="<?php echo $h($ym); ?>">
+        <input type="hidden" name="return_tab" value="<?php echo $h(in_array($returnTab, ['draw', 'capital', 'bank', 'stmt'], true) ? $returnTab : 'draw'); ?>">
         <input type="hidden" name="idempotency_token" value="<?php echo $h(bin2hex(random_bytes(16))); ?>">
         <label>তারিখ<input type="date" name="expense_date" value="<?php echo $h(date('Y-m-d')); ?>" max="<?php echo $h(date('Y-m-d')); ?>" required></label>
         <label>খাত
-            <select name="category">
-                <?php foreach ($cats as $k => $lab): ?>
-                    <option value="<?php echo $h($k); ?>"><?php echo $h($lab); ?></option>
-                <?php endforeach; ?>
+            <select name="category" required<?php echo $cats === [] ? ' disabled' : ''; ?>>
+                <?php if ($cats === []): ?>
+                    <option value="">— আগে খাত যোগ করুন —</option>
+                <?php else: ?>
+                    <?php foreach ($cats as $k => $lab): ?>
+                        <option value="<?php echo $h($k); ?>"><?php echo $h($lab); ?></option>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </select>
         </label>
         <label>টাকা<input type="number" step="0.01" min="0.01" name="amount" placeholder="0.00" inputmode="decimal" required></label>
@@ -34,7 +96,7 @@ function pa_expense_form_html($ym, array $cats, $formId = 'paExpAdd')
         <label class="wide">বিবরণ<input type="text" name="description" maxlength="255" placeholder="কীসের খরচ"></label>
         <label class="wide">নোট<input type="text" name="note" maxlength="255" placeholder="ঐচ্ছিক"></label>
         <label class="wide"><?php echo ame_l('রসিদ / ছবি (জেপিজি, পিএনজি, ওয়েবপি, পিডিএফ · সর্বোচ্চ ৫ এমবি)','Receipt / photo (JPG, PNG, WEBP, PDF · max 5 MB)'); ?><input type="file" name="receipt" accept=".jpg,.jpeg,.png,.webp,.pdf"></label>
-        <button type="submit" class="pa-btn red wide">খরচ সাবমিট করুন</button>
+        <button type="submit" class="pa-btn red wide"<?php echo $cats === [] ? ' disabled' : ''; ?>>খরচ সাবমিট করুন</button>
     </form>
     <?php
     return (string)ob_get_clean();
