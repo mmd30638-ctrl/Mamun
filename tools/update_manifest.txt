@@ -526,3 +526,10 @@ modules/sales/draft_query.php
 includes/sales/sale_admin_edit.php
 modules/reports/process_invoice_edit.php
 assets/js/pos-draft.js
+# 10.98.1009 — ড্রাফটে আনুন → POS সাম্প্রতিক বিক্রয় ড্রাফট মডিউল + reopen সেভ ঠিক
+modules/reports/process_invoice_edit.php
+modules/reports/invoice_edit.php
+assets/js/pos-draft.js
+modules/sales/pos_draft_style.php
+includes/config.php
+VERSION.txt

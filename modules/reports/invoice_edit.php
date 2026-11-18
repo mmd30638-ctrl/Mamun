@@ -227,6 +227,7 @@ html body #main-content#main-content .iedit .iedit-memo-meta span { font-size: 1
     <?php endif; ?>
 
     <form method="post" action="/modules/reports/process_invoice_edit.php" id="ieditForm">
+        <input type="hidden" name="intent_save_action" id="ieditIntentSave" value="">
         <?php echo csrf_field(); ?>
         <input type="hidden" name="sale_id" value="<?php echo (int)$sale['id']; ?>">
 
@@ -762,6 +763,10 @@ html body #main-content#main-content .iedit .iedit-memo-meta span { font-size: 1
             if (!window.confirm(<?php echo json_encode($t('মেমো ড্রাফটে আনলে পুরনো ক্রেতার লেজার/ক্যাশ/স্টক রিভার্স হবে। POS-এ গিয়ে আবার সম্পন্ন করতে হবে। চালাবেন?', 'Reopening reverses ledger, cash and stock for the old customer. You must complete again on POS. Continue?'), JSON_UNESCAPED_UNICODE); ?>)) {
                 ev.preventDefault();
                 return;
+            }
+            var intentSave = document.getElementById('ieditIntentSave');
+            if (intentSave) {
+                intentSave.value = 'reopen_draft';
             }
         }
         if (sub && sub.name === 'save_action' && sub.value === 'void_lines') {

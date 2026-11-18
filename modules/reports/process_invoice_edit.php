@@ -22,9 +22,18 @@ $is_english = function_exists('current_lang') && current_lang() === 'en';
 $sale_id = (int)($_POST['sale_id'] ?? 0);
 $back = '/modules/reports/invoice_edit.php?id=' . $sale_id;
 $save_action = (string)($_POST['save_action'] ?? 'customer');
+$intent_action = strtolower(trim((string)($_POST['intent_save_action'] ?? '')));
+if ($intent_action === 'reopen_draft') {
+    $save_action = 'reopen_draft';
+}
 $user_id = (int)$_SESSION['user_id'];
 $postItems = is_array($_POST['items'] ?? null) ? $_POST['items'] : [];
-if (ame_sale_admin_post_has_voided_lines($postItems)) {
+/* বাতিল চিহ্ন থাকলে কাস্টমার সেভ → void_lines; ড্রাফটে আনুন অক্ষত থাকবে */
+if (
+    ame_sale_admin_post_has_voided_lines($postItems)
+    && $save_action !== 'reopen_draft'
+    && $save_action !== 'void_lines'
+) {
     $save_action = 'void_lines';
 }
 
@@ -79,10 +88,10 @@ try {
                     : 'শুধু সুপার এডমিন সম্পন্ন ইনভয়েস ড্রাফটে আনতে পারেন।'
             );
         }
-        if (!is_file(__DIR__ . '/../../includes/sales/sale_exchange.php')) {
-            throw new RuntimeException('Exchange module missing.');
+        $exchangeFile = __DIR__ . '/../../includes/sales/sale_exchange.php';
+        if (is_file($exchangeFile)) {
+            require_once $exchangeFile;
         }
-        require_once __DIR__ . '/../../includes/sales/sale_exchange.php';
         $out = ame_sale_admin_reopen_to_draft($db, $sale, $user_id, $is_english);
         $db->commit();
         $started = false;
@@ -90,7 +99,11 @@ try {
             ? ('Invoice ' . $out['invoice_number'] . ' is draft again. Ledger and stock were reversed — finish sale on POS.')
             : ('ইনভয়েস ' . $out['invoice_number'] . ' ড্রাফটে এসেছে। লেজার ও স্টক রিভার্স হয়েছে — POS থেকে আবার সম্পন্ন করুন।');
         $_SESSION['user_flash_ok'] = 1;
-        header('Location: /modules/sales/pos.php?draft=' . (int)$out['sale_id'] . '&open_drafts=1');
+        header(
+            'Location: /modules/sales/pos.php?draft='
+            . (int)$out['sale_id']
+            . '&open_drafts=1&reopened=1'
+        );
         exit;
     }
     if ($save_action === 'void_lines') {

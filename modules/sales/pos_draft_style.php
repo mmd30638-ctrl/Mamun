@@ -197,6 +197,12 @@
     background: var(--pos-c-e3f2fd);
 }
 
+#draftDrawer .pos-recent-draft-row.is-reopened-highlight .pos-recent-cust-name {
+    border-color: #0f766e;
+    background: #ecfdf5;
+    box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.25);
+}
+
 .pos-recent-cust-name,
 .pos-recent-cashier {
     display: block;

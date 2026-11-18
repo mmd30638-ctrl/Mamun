@@ -722,9 +722,20 @@
         }
     }
 
+    var highlightDraftId = '';
+
     function renderDraftList(drafts) {
         draftCache = Array.isArray(drafts) ? drafts : [];
-        draftPage = 0;
+        if (highlightDraftId) {
+            const focusIdx = draftCache.findIndex(function (draft) {
+                return String(draft.id) === String(highlightDraftId);
+            });
+            draftPage = focusIdx >= 0
+                ? Math.floor(focusIdx / DRAFT_PAGE_SIZE)
+                : 0;
+        } else {
+            draftPage = 0;
+        }
         paintDraftPage();
     }
 
@@ -741,6 +752,12 @@
         draftCache.slice(start, start + DRAFT_PAGE_SIZE).forEach(function (draft) {
             const row = document.createElement('tr');
             row.className = 'pos-recent-draft-row';
+            if (
+                highlightDraftId
+                && String(draft.id) === String(highlightDraftId)
+            ) {
+                row.classList.add('is-reopened-highlight');
+            }
             row.tabIndex = 0;
             row.title = words.edit;
             row.setAttribute('role', 'button');
@@ -1049,10 +1066,14 @@
 
         if (draftIcon && typeof setRecentChoice === 'function') {
             setRecentChoice(draftIcon);
-            draftIcon.click();
+        }
+        if (typeof window.amePosSyncMemoButton === 'function') {
+            window.amePosSyncMemoButton(true);
         }
 
-        hideDrawer();
+        if (!window.__ameKeepDraftDrawerOpen) {
+            hideDrawer();
+        }
     }
 
     async function loadDraft(draftId) {
@@ -1341,6 +1362,21 @@
         showDrawer();
     };
 
+    /** রি-ওপেন / ড্রাফটে আনুন — সাম্প্রতিক বিক্রয় = ড্রাফট + তালিকা খোলা */
+    window.amePosEnterDraftModule = function (openList) {
+        if (draftIcon) {
+            setRecentChoice(draftIcon);
+        }
+        if (typeof window.amePosSyncMemoButton === 'function') {
+            window.amePosSyncMemoButton(true);
+        }
+        hideFlyout();
+        hideCompleteDrawer();
+        if (openList !== false) {
+            showDrawer();
+        }
+    };
+
     window.ameOpenCompleteList = function () {
         hideFlyout();
         hideCompleteDrawer();
@@ -1408,16 +1444,48 @@
 
     var urlParams = new URLSearchParams(window.location.search);
     var pendingDraft = urlParams.get('draft');
+    highlightDraftId = pendingDraft || '';
     var openDrafts = urlParams.get('open_drafts');
+    var reopenedFromInvoice = urlParams.get('reopened') === '1';
+    var enterDraftModule = openDrafts === '1' || reopenedFromInvoice;
+
+    function cleanReopenQueryFromUrl() {
+        if (!enterDraftModule || !window.history || !window.history.replaceState) {
+            return;
+        }
+        var clean = new URL(window.location.href);
+        clean.searchParams.delete('open_drafts');
+        clean.searchParams.delete('reopened');
+        window.history.replaceState({}, '', clean.pathname + clean.search + clean.hash);
+    }
+
+    if (pendingDraft && enterDraftModule) {
+        window.__ameKeepDraftDrawerOpen = true;
+        if (typeof window.amePosEnterDraftModule === 'function') {
+            window.amePosEnterDraftModule(false);
+        }
+    }
+
     if (pendingDraft) {
         loadDraft(pendingDraft).finally(function () {
+            window.__ameKeepDraftDrawerOpen = false;
             loadDraftList().finally(function () {
-                if (openDrafts === '1' && typeof showDrawer === 'function') {
-                    showDrawer();
+                if (enterDraftModule) {
+                    if (typeof window.amePosEnterDraftModule === 'function') {
+                        window.amePosEnterDraftModule(true);
+                    } else {
+                        showDrawer();
+                    }
+                    cleanReopenQueryFromUrl();
                 }
             });
         });
-    } else if (openDrafts === '1' && typeof showDrawer === 'function') {
-        showDrawer();
+    } else if (enterDraftModule) {
+        if (typeof window.amePosEnterDraftModule === 'function') {
+            window.amePosEnterDraftModule(true);
+        } else {
+            showDrawer();
+        }
+        cleanReopenQueryFromUrl();
     }
 })();
