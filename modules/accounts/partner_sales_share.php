@@ -534,6 +534,11 @@ foreach ($book_rows as $br) {
 }
 $sum_period_net = round($sum_profit - $sum_exp, 2);
 $sum_net = round($sum_profit - $sum_exp, 2);
+$carry_rows = [];
+foreach ($book_rows as $br) {
+    $carry_rows[] = round((float)$br['open'] + (float)$br['profit'], 2);
+}
+$sum_carry = round($sum_open + $sum_profit, 2);
 
 $sum_word = ($multi_month || $partial_range) ? 'এ সময়ের' : 'এ মাসের';
 $doc_meta = [
@@ -575,6 +580,7 @@ foreach ($book_rows as $i => $br) {
         . (abs($br['other']) > 0.009 ? (' ' . ($br['other'] < 0 ? '−' : '+') . ' অন্যান্য ' . $mny(abs($br['other']))) : '')
         . ' = ' . $mny($br['total']);
 }
+$share_lines[] = 'মুখ্য যোগফল (সাবেক + লাভ): ' . $mny($sum_carry);
 $share_lines[] = $sum_word . ' নিট লাভ (লাভ − খরচ): ' . $mny($sum_net);
 $share_lines[] = 'দুজনের সর্বমোট ব্যালেন্স: ' . $mny($sum_total);
 $share_text = implode("\n", $share_lines);
@@ -910,6 +916,33 @@ include '../../partials/header.php';
                         <span class="psp-sec-name">পার্টনার হিসাবের সারসংক্ষেপ</span>
                         <span class="psp-sec-sub"><?php echo $h($range_on ? $period : $month_label); ?></span>
                     </div>
+                    <div class="psp-face-wrap" data-ame-no-page="1">
+                        <p class="psp-face-title">পার্টনারভিত্তিক মুখ্য যোগফল <small>সাবেক ব্যালেন্স + <?php echo $h($sum_word); ?> লাভের অংশ</small></p>
+                        <div class="psp-face-grid">
+                        <?php foreach ($book_rows as $bi => $br):
+                            $carry = round((float)$br['open'] + (float)$br['profit'], 2); ?>
+                            <div class="psp-face psh psh<?php echo ($bi % 4) + 1; ?>">
+                                <div class="psp-face-name"><?php echo $h($br['p']['name']); ?></div>
+                                <div class="psp-face-line">
+                                    <span class="lbl">সাবেক</span>
+                                    <span class="amt"><?php echo $h($mny($br['open'])); ?></span>
+                                </div>
+                                <div class="psp-face-line plus">
+                                    <span class="lbl">+ <?php echo $h($sum_word); ?> লাভ</span>
+                                    <span class="amt"><?php echo $h($sgn($br['profit'], '+')); ?></span>
+                                </div>
+                                <div class="psp-face-eq">
+                                    <span class="lbl">= মুখ্য যোগফল</span>
+                                    <span class="amt"><b><?php echo $h($mny($carry)); ?></b></span>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                        </div>
+                        <div class="psp-face-total">
+                            <span>দুজনের মোট সাবেক + লাভ</span>
+                            <b><?php echo $h($mny($sum_open)); ?> + <?php echo $h($mny($sum_profit)); ?> = <?php echo $h($mny($sum_carry)); ?></b>
+                        </div>
+                    </div>
                     <table class="pst-period" data-ame-no-page="1">
                         <thead>
                             <tr>
@@ -966,6 +999,11 @@ include '../../partials/header.php';
                                 <?php foreach ($book_rows as $br): ?><td class="num pos"><?php echo $h($sgn($br['profit'], '+')); ?></td><?php endforeach; ?>
                                 <td class="num tot pos"><?php echo $h($sgn($sum_profit, '+')); ?></td>
                             </tr>
+                            <tr class="r-carry">
+                                <td class="lbl">(=) সাবেক + লাভ <small>মুখ্য যোগফল</small></td>
+                                <?php foreach ($carry_rows as $ci => $cv): ?><td class="num psh psh<?php echo ($ci % 4) + 1; ?>"><b><?php echo $h($mny($cv)); ?></b></td><?php endforeach; ?>
+                                <td class="num tot hi"><b><?php echo $h($mny($sum_carry)); ?></b></td>
+                            </tr>
                             <tr>
                                 <td class="lbl">(−) <?php echo $h($sum_word); ?> খরচ <small>শেয়ার অনুযায়ী</small></td>
                                 <?php foreach ($book_rows as $br): ?><td class="num neg"><?php echo $h($sgn($br['exp'], '-')); ?></td><?php endforeach; ?>
@@ -1001,7 +1039,9 @@ include '../../partials/header.php';
                         <?php foreach ($book_rows as $bi => $br): ?>
                         <div class="cl-row psh psh<?php echo ($bi % 4) + 1; ?>"><span class="k"><?php echo $h($br['p']['name']); ?></span><span class="v"><?php echo $h($mny($br['open'])); ?> + <?php echo $h($mny($br['profit'])); ?> − <?php echo $h($mny($br['exp'])); ?> − <?php echo $h($mny($br['draw'])); ?><?php echo $show_other ? ' ' . ($br['other'] < 0 ? '−' : '+') . ' ' . $h($mny(abs($br['other']))) : ''; ?> = <b><?php echo $h($mny($br['total'])); ?></b></span></div>
                         <?php endforeach; ?>
-                        <div class="cl-net"><span class="k"><?php echo $h($sum_word); ?> নিট লাভ <small>(লাভ − খরচ)</small></span><span class="v"><?php echo $h($mny($sum_profit)); ?> − <?php echo $h($mny($sum_exp)); ?> = <b class="<?php echo $tone($sum_net); ?>"><?php echo $h($mny($sum_net)); ?></b></span></div>
+                        <div class="cl-net cl-carry"><span class="k">মুখ্য যোগফল <small>সাবেক + <?php echo $h($sum_word); ?> লাভ</small></span><span class="v"><?php echo $h($mny($sum_open)); ?> + <?php echo $h($mny($sum_profit)); ?> = <b class="pos"><?php echo $h($mny($sum_carry)); ?></b></span></div>
+                        <div class="cl-net cl-net-period"><span class="k"><?php echo $h($sum_word); ?> নিট লাভ <small>(লাভ − খরচ)</small></span><span class="v"><?php echo $h($mny($sum_profit)); ?> − <?php echo $h($mny($sum_exp)); ?> = <b class="<?php echo $tone($sum_net); ?>"><?php echo $h($mny($sum_net)); ?></b></span></div>
+                        <div class="cl-net cl-grand-bal"><span class="k">সর্বমোট ব্যালেন্স <small>মাস শেষ</small></span><span class="v"><b><?php echo $h($mny($sum_total)); ?></b></span></div>
                     </div>
                     <?php if ($partial_range): ?><div class="psp-formula note">PA-INTL-100 · সব অংক সার্ভার থেকে — সময়কাল <?php echo $h($period); ?>। বিক্রয় লাভ, ক্রয়, খরচ বিবরণ ও সারসংক্ষেপ একই তারিখ সীমায়।</div><?php endif; ?>
                 </div>

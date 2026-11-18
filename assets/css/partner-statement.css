@@ -150,6 +150,25 @@ html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net .v { font-si
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net .v b { font-size:23px !important; font-weight:900 !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net .v b.pos { color:#15803d !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net .v b.neg { color:#be123c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net.cl-carry { border-color:#1d4ed8 !important; background:#f8fbff !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net.cl-carry .k { color:#1d4ed8 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net.cl-grand-bal { border-color:#b45309 !important; background:#fffbeb !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net.cl-grand-bal .k { color:#b45309 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net.cl-grand-bal .v b { color:#b45309 !important; font-size:26px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net.cl-net-period { border-color:#0d9488 !important; border-width:2px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-wrap { margin:0 0 14px !important; padding:12px 14px !important; border:2px solid #1d4ed8 !important; border-radius:12px !important; background:#f8fbff !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-title { margin:0 0 10px !important; font-size:17px !important; font-weight:900 !important; color:#0b3a82 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-title small { display:block !important; font-size:13px !important; font-weight:700 !important; color:#475569 !important; margin-top:3px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-grid { display:grid !important; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)) !important; gap:10px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face { border:1.5px solid #bfd3f2 !important; border-radius:10px !important; padding:10px 12px !important; background:#fff !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-name { font-size:15px !important; font-weight:900 !important; margin-bottom:8px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-line { display:flex !important; justify-content:space-between !important; font-size:14px !important; font-weight:800 !important; padding:2px 0 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-line.plus .amt { color:#15803d !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-eq { display:flex !important; justify-content:space-between !important; margin-top:6px !important; padding-top:8px !important; border-top:2px dashed #94a3b8 !important; font-size:15px !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-eq .amt b { font-size:20px !important; color:#1d4ed8 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-total { margin-top:10px !important; padding-top:10px !important; border-top:2px solid #1d4ed8 !important; display:flex !important; flex-wrap:wrap !important; justify-content:space-between !important; gap:8px !important; font-weight:900 !important; font-size:15px !important; color:#0b3a82 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-total b { font-size:18px !important; color:#1d4ed8 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody tr.r-carry td { background:#f8fbff !important; border-top:2px solid #1d4ed8 !important; border-bottom:2px solid #1d4ed8 !important; font-weight:900 !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-formula { margin-top:8px !important; font-size:13.5px !important; height:auto !important; min-height:18px !important; color:#0e7490 !important; font-weight:700 !important; white-space:normal !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-formula.note { color:#be123c !important; margin-top:6px !important; }
 html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-minis { display:block !important; margin-top:0 !important; }
