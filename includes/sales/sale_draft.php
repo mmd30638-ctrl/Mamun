@@ -3,6 +3,13 @@
  * বিক্রয় Draft সংরক্ষণ ও মালিকানা Engine
  */
 
+function ame_sale_draft_require_finance(): void
+{
+    if (!function_exists('ame_sale_replace_services')) {
+        require_once __DIR__ . '/sale_finance.php';
+    }
+}
+
 function ame_draft_find(
     $db,
     $draft_id,
@@ -133,6 +140,7 @@ function ame_draft_store_service(
     $service_type,
     $service_amount
 ) {
+    ame_sale_draft_require_finance();
     $lines = [];
 
     if ($service_amount > 0) {
@@ -148,6 +156,7 @@ function ame_draft_store_service(
 
 function ame_draft_store_services($db, $draft_id, $lines)
 {
+    ame_sale_draft_require_finance();
     ame_sale_replace_services($db, $draft_id, $lines);
 }
 

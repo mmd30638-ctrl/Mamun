@@ -1392,8 +1392,19 @@
     };
 
     window.amePosSetCompleteMemo = function () {
+        if (typeof window.amePosSetCompleteMode === 'function') {
+            window.amePosSetCompleteMode();
+            return;
+        }
         if (completeIcon) {
             setRecentChoice(completeIcon);
+        }
+        if (typeof window.amePosSyncMemoButton === 'function') {
+            window.amePosSyncMemoButton(false);
+        }
+        var mode = document.getElementById('amePosSaleMode');
+        if (mode) {
+            mode.value = 'complete';
         }
     };
 

@@ -411,33 +411,35 @@ html body.ame-pos-terminal-page #main-content .pos-draft-drawer .pos-recent-tabl
         if (!idBox || Number(idBox.value) !== Number(draftId)) {
             return;
         }
-        if (complete) {
+        if (typeof window.amePosSetCompleteMode === 'function') {
+            window.amePosSetCompleteMode();
+        } else if (complete) {
             setChoice(complete);
         } else {
             setSaleMode(false);
         }
+        syncMemoButton(false);
         if (typeof window.submitFinalSale === 'function') {
             window.submitFinalSale();
         }
     };
 
+  /** সাম্প্রতিক বিক্রয় সিলেক্টর — শুধু hidden mode; stale CSS ক্লাসে কমপ্লিট আটকাবে না */
     window.amePosIsDraftMemo = function () {
         var mode = byId('amePosSaleMode');
-        if (mode && String(mode.value || '').toLowerCase() === 'draft') {
-            return true;
+        if (mode) {
+            return String(mode.value || '').toLowerCase() === 'draft';
         }
-        if (draft && draft.classList.contains('is-active')) {
-            return true;
+        return Boolean(draft && draft.classList.contains('is-active'));
+    };
+
+    window.amePosSetCompleteMode = function () {
+        if (complete) {
+            setChoice(complete);
+        } else {
+            setSaleMode(false);
         }
-        var current = byId('amePosRecentCurrent');
-        if (current) {
-            var label = String(current.textContent || '').replace(/\s+/g, ' ').trim();
-        if (label === 'ড্রাফট' || label.toLowerCase() === 'draft') {
-            return true;
-        }
-        }
-        var memoBtn = byId('amePosCompleteBtn');
-        return Boolean(memoBtn && memoBtn.classList.contains('is-draft'));
+        syncMemoButton(false);
     };
 
     var completeSaleBtn = byId('amePosCompleteBtn');

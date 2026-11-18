@@ -533,3 +533,11 @@ assets/js/pos-draft.js
 modules/sales/pos_draft_style.php
 includes/config.php
 VERSION.txt
+# 10.98.1010 — reopen: sale_finance লোড + POS কমপ্লিট মোড ঠিক
+includes/sales/sale_draft.php
+includes/sales/sale_admin_edit.php
+modules/reports/process_invoice_edit.php
+modules/sales/pos_recent_boot.php
+assets/js/pos-draft.js
+includes/config.php
+VERSION.txt

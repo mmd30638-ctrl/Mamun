@@ -222,6 +222,12 @@ function ame_sale_admin_rewrite_payload_from_sale(
  */
 function ame_sale_admin_reopen_to_draft(mysqli $db, array $sale, int $user_id, bool $is_english): array
 {
+    if (!function_exists('ame_draft_store_services')) {
+        require_once __DIR__ . '/sale_draft.php';
+    }
+    if (!function_exists('ame_sale_replace_services')) {
+        require_once __DIR__ . '/sale_finance.php';
+    }
     $sale_id = (int)($sale['id'] ?? 0);
     if ($sale_id <= 0) {
         throw new RuntimeException($is_english ? 'Invoice not found.' : 'ইনভয়েস পাওয়া যায়নি।');

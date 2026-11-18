@@ -3,6 +3,8 @@ require_once __DIR__ . '/../../includes/config.php';
 require_once __DIR__ . '/../../includes/lang_helper.php';
 require_once __DIR__ . '/../../includes/sales/sale_common.php';
 require_once __DIR__ . '/../../includes/sales/sale_admin_edit.php';
+require_once __DIR__ . '/../../includes/sales/sale_draft.php';
+require_once __DIR__ . '/../../includes/sales/sale_finance.php';
 
 if (empty($_SESSION['user_id'])) {
     header('Location: /login.php');
