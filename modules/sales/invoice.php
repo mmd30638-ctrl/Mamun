@@ -643,6 +643,10 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
             <span><?php echo ame_ui('ছবি', 'Image'); ?></span>
         </button>
 
+        <button type="button" class="inv-btn inv-btn-img" id="invCopyMemoDetails" title="<?php echo ame_ui('মেমোর বিবরণ কপি', 'Copy memo details'); ?>">
+            <span><?php echo ame_ui('কপি', 'Copy'); ?></span>
+        </button>
+
         <button type="button" class="inv-btn inv-btn-share" data-inv-act="share" title="শেয়ার করুন">
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m8 11 7-3M8 13l7 3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
             <span><?php echo ame_ui('শেয়ার', 'Share'); ?></span>
@@ -899,6 +903,29 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
                 }
             });
         });
+
+        var invMemoCopyText = <?php echo json_encode($wa_text, JSON_UNESCAPED_UNICODE); ?>;
+        var invCopyBtn = document.getElementById('invCopyMemoDetails');
+        if (invCopyBtn && invMemoCopyText) {
+            invCopyBtn.addEventListener('click', function () {
+                var okLabel = <?php echo json_encode(ame_ui('কপি হয়েছে', 'Copied'), JSON_UNESCAPED_UNICODE); ?>;
+                var baseLabel = <?php echo json_encode(ame_ui('কপি', 'Copy'), JSON_UNESCAPED_UNICODE); ?>;
+                var done = function () {
+                    invCopyBtn.querySelector('span').textContent = okLabel;
+                    window.setTimeout(function () {
+                        invCopyBtn.querySelector('span').textContent = baseLabel;
+                    }, 2000);
+                };
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(invMemoCopyText).then(done).catch(function () {
+                        window.prompt('Copy:', invMemoCopyText);
+                    });
+                    return;
+                }
+                window.prompt('Copy:', invMemoCopyText);
+                done();
+            });
+        }
 
         // স্বয়ংক্রিয় ট্রিগার (শুধু ইচ্ছাকৃত — বিক্রয় কমপ্লিটের পর শেয়ার শিট খোলে না)
         window.addEventListener('DOMContentLoaded', function () {

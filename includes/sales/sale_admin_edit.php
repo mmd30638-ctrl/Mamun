@@ -8,7 +8,246 @@
 
 function ame_sale_admin_is_admin(): bool
 {
+    if (!function_exists('ame_is_admin_like')) {
+        $sa = dirname(__DIR__) . '/super_admin.php';
+        if (is_file($sa)) {
+            require_once $sa;
+        }
+    }
+    if (function_exists('ame_is_admin_like')) {
+        return ame_is_admin_like();
+    }
     return isset($_SESSION['role']) && strtolower((string)$_SESSION['role']) === 'admin';
+}
+
+function ame_sale_admin_can_reopen(): bool
+{
+    if (!function_exists('ame_is_super_admin')) {
+        $sa = dirname(__DIR__) . '/super_admin.php';
+        if (is_file($sa)) {
+            require_once $sa;
+        }
+    }
+    return function_exists('ame_is_super_admin') && ame_is_super_admin();
+}
+
+function ame_sale_admin_effective_customer_id(array $data): int
+{
+    $type = trim((string)($data['customer_type'] ?? ''));
+    if (strcasecmp($type, 'Retail') === 0) {
+        return 0;
+    }
+    return max(0, (int)($data['customer_id'] ?? 0));
+}
+
+function ame_sale_admin_customer_identity_changed(array $sale, array $customerData): bool
+{
+    $old = max(0, (int)($sale['customer_id'] ?? 0));
+    $new = ame_sale_admin_effective_customer_id($customerData);
+  if ($old !== $new) {
+        return true;
+    }
+    $old_type = strtolower(trim((string)($sale['customer_type'] ?? 'Registered')));
+    $new_type = strtolower(trim((string)($customerData['customer_type'] ?? 'Registered')));
+    if ($old_type !== $new_type && ($old <= 0 || $new <= 0)) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * @return list<array<string, mixed>>
+ */
+function ame_sale_admin_cart_from_sale_db(mysqli $db, int $sale_id): array
+{
+    $sale_id = (int)$sale_id;
+    $cart = [];
+    $st = @$db->prepare(
+        "SELECT si.product_id, si.qty, si.sale_price,
+                COALESCE(NULLIF(si.item_name, ''), p.name, '') AS item_name
+         FROM sale_items si
+         LEFT JOIN products p ON p.id = si.product_id
+         WHERE si.sale_id = ?
+         ORDER BY si.id ASC"
+    );
+    if (!$st) {
+        return $cart;
+    }
+    $st->bind_param('i', $sale_id);
+    $st->execute();
+    $rows = $st->get_result()->fetch_all(MYSQLI_ASSOC) ?: [];
+    $st->close();
+    foreach ($rows as $row) {
+        $pid = (int)($row['product_id'] ?? 0);
+        $qty = (float)($row['qty'] ?? 0);
+        if ($qty <= 0) {
+            continue;
+        }
+        $cart[] = [
+            'product_id' => $pid,
+            'id' => $pid > 0 ? $pid : 0,
+            'qty' => $qty,
+            'current_price' => round((float)($row['sale_price'] ?? 0), 2),
+            'name' => (string)($row['item_name'] ?? ''),
+            'is_custom' => $pid <= 0,
+        ];
+    }
+    return $cart;
+}
+
+/**
+ * Full rewrite payload from DB (customer switch with ledger reversal via rewrite).
+ *
+ * @param array<string, mixed> $customerData
+ * @return array<string, mixed>
+ */
+function ame_sale_admin_rewrite_payload_from_sale(
+    mysqli $db,
+    array $sale,
+    array $customerData,
+    bool $is_english
+): array {
+    $sale_id = (int)($sale['id'] ?? 0);
+    $cart = ame_sale_admin_cart_from_sale_db($db, $sale_id);
+    $services = ame_sale_admin_services_payload_from_sale($db, $sale_id);
+    if ($cart === [] && $services === []) {
+        throw new InvalidArgumentException(
+            $is_english
+                ? 'This invoice has no product or service lines to save.'
+                : 'এই ইনভয়েসে কোনো পণ্য বা সার্ভিস লাইন নেই।'
+        );
+    }
+    $payments = ame_sale_admin_payments_payload_from_sale($db, $sale);
+    $exchange = [];
+    if (!function_exists('ame_sale_load_exchange_items') && is_file(__DIR__ . '/sale_exchange.php')) {
+        require_once __DIR__ . '/sale_exchange.php';
+    }
+    if (function_exists('ame_sale_load_exchange_items')) {
+        $exchange = ame_sale_load_exchange_items($db, $sale_id);
+    }
+    return array_merge(
+        $customerData,
+        $payments,
+        [
+            'cart' => $cart,
+            'services' => $services,
+            'discount' => round((float)($sale['discount'] ?? 0), 2),
+            'vat_percent' => round((float)($sale['vat_percent'] ?? 0), 2),
+            'rounding' => round((float)($sale['rounding_amount'] ?? 0), 2),
+            'exchange_items' => $exchange,
+            'adjust_due' => !empty($customerData['adjust_due'])
+                || abs((float)($sale['due_adjustment_amount'] ?? 0)) > 0.009,
+        ]
+    );
+}
+
+/**
+ * সুপার এডমিন: সম্পন্ন মেমো → ড্রাফট (লেজার/স্টক/ক্যাশ রিভার্স), POS থেকে পুনঃসম্পন্ন।
+ *
+ * @param array<string, mixed> $sale
+ * @return array{sale_id: int, invoice_number: string}
+ */
+function ame_sale_admin_reopen_to_draft(mysqli $db, array $sale, int $user_id, bool $is_english): array
+{
+    $sale_id = (int)($sale['id'] ?? 0);
+    if ($sale_id <= 0) {
+        throw new RuntimeException($is_english ? 'Invoice not found.' : 'ইনভয়েস পাওয়া যায়নি।');
+    }
+    $status = strtolower(trim((string)($sale['status'] ?? '')));
+    if ($status !== 'completed') {
+        throw new InvalidArgumentException(
+            $is_english
+                ? 'Only a completed invoice can be reopened as draft.'
+                : 'শুধু সম্পন্ন ইনভয়েস ড্রাফটে আনা যায়।'
+        );
+    }
+    $returned = ame_sale_admin_returned_qty_map($db, $sale_id);
+    foreach ($returned as $rq) {
+        if ($rq > 0.0001) {
+            throw new InvalidArgumentException(
+                $is_english
+                    ? 'Invoices with product returns cannot be reopened here — handle via return memo first.'
+                    : 'ফেরতসহ ইনভয়েস এখানে ড্রাফটে আনা যায় না — আগে ফেরত মেমো ঠিক করুন।'
+            );
+        }
+    }
+
+    $cart = ame_sale_admin_cart_from_sale_db($db, $sale_id);
+    $services = ame_sale_admin_services_payload_from_sale($db, $sale_id);
+    $payments = ame_sale_admin_payments_payload_from_sale($db, $sale);
+    $exchange = [];
+    if (!function_exists('ame_sale_load_exchange_items') && is_file(__DIR__ . '/sale_exchange.php')) {
+        require_once __DIR__ . '/sale_exchange.php';
+    }
+    if (function_exists('ame_sale_load_exchange_items')) {
+        $exchange = ame_sale_load_exchange_items($db, $sale_id);
+    }
+
+    ame_sale_admin_unwind($db, $sale, $is_english);
+
+    $invoice_number = (string)($sale['invoice_number'] ?? ('#' . $sale_id));
+    $note = trim((string)($sale['draft_note'] ?? ''));
+    $stamp = date('Y-m-d H:i:s');
+    $reopen_line = ($is_english ? 'Reopened to draft ' : 'ড্রাফটে আনা ') . $stamp . ' (user ' . $user_id . ')';
+    $draft_note = $note === '' ? $reopen_line : ($note . "\n" . $reopen_line);
+
+    $up = $db->prepare(
+        "UPDATE sales SET
+            status = 'draft',
+            completed_at = NULL,
+            draft_note = ?
+         WHERE id = ?"
+    );
+    if (!$up) {
+        throw new RuntimeException($is_english ? 'Could not mark draft.' : 'ড্রাফট স্থিতি সেট করা যায়নি।');
+    }
+    $up->bind_param('si', $draft_note, $sale_id);
+    $up->execute();
+    $up->close();
+
+    if (!function_exists('ame_draft_store_items')) {
+        require_once __DIR__ . '/sale_draft.php';
+    }
+    if ($cart !== []) {
+        $inventory = ame_sale_prepare_items($db, $cart, $is_english, false);
+        ame_draft_store_items($db, $sale_id, $inventory['items']);
+    }
+    if ($services !== []) {
+        ame_draft_store_services($db, $sale_id, $services);
+    }
+    if (!empty($payments['payments'])) {
+        ame_draft_store_payments($db, $sale_id, $payments['payments'], $user_id);
+    }
+    if ($exchange !== [] && function_exists('ame_sale_store_exchange_items')) {
+        $cust = (int)($sale['customer_id'] ?? 0);
+        ame_sale_store_exchange_items($db, $sale_id, $exchange, false, $cust > 0 ? $cust : null, $is_english);
+        if (function_exists('ame_sale_set_exchange_columns')) {
+            $ex_total = 0.0;
+            foreach ($exchange as $ex) {
+                $ex_total += (float)($ex['line_total'] ?? 0);
+            }
+            ame_sale_set_exchange_columns($db, $sale_id, $ex_total, (float)($sale['cash_paid_amount'] ?? 0));
+        }
+    }
+
+    if (function_exists('log_activity')) {
+        log_activity(
+            $is_english ? 'Sale reopened to draft' : 'বিক্রয় ড্রাফটে আনা',
+            'Sales',
+            $invoice_number,
+            [
+                'action_type' => 'reopen',
+                'entity_type' => 'invoice',
+                'entity_id' => (string)$sale_id,
+                'reference' => $invoice_number,
+            ]
+        );
+    }
+
+    return [
+        'sale_id' => $sale_id,
+        'invoice_number' => $invoice_number,
+    ];
 }
 
 /**

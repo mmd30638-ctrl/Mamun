@@ -22,6 +22,7 @@ $is_english = function_exists('current_lang') && current_lang() === 'en';
 $sale_id = (int)($_POST['sale_id'] ?? 0);
 $back = '/modules/reports/invoice_edit.php?id=' . $sale_id;
 $save_action = (string)($_POST['save_action'] ?? 'customer');
+$user_id = (int)$_SESSION['user_id'];
 
 $fail = static function (string $msg) use ($back): void {
     $_SESSION['user_flash'] = $msg;
@@ -66,6 +67,28 @@ $started = false;
 try {
     $db->begin_transaction();
     $started = true;
+    if ($save_action === 'reopen_draft') {
+        if (!ame_sale_admin_can_reopen()) {
+            throw new InvalidArgumentException(
+                $is_english
+                    ? 'Only Super Admin can reopen a completed invoice to draft.'
+                    : 'শুধু সুপার এডমিন সম্পন্ন ইনভয়েস ড্রাফটে আনতে পারেন।'
+            );
+        }
+        if (!is_file(__DIR__ . '/../../includes/sales/sale_exchange.php')) {
+            throw new RuntimeException('Exchange module missing.');
+        }
+        require_once __DIR__ . '/../../includes/sales/sale_exchange.php';
+        $out = ame_sale_admin_reopen_to_draft($db, $sale, $user_id, $is_english);
+        $db->commit();
+        $started = false;
+        $_SESSION['user_flash'] = $is_english
+            ? ('Invoice ' . $out['invoice_number'] . ' is draft again. Ledger and stock were reversed — finish sale on POS.')
+            : ('ইনভয়েস ' . $out['invoice_number'] . ' ড্রাফটে এসেছে। লেজার ও স্টক রিভার্স হয়েছে — POS থেকে আবার সম্পন্ন করুন।');
+        $_SESSION['user_flash_ok'] = 1;
+        header('Location: /modules/sales/pos.php?draft=' . (int)$out['sale_id']);
+        exit;
+    }
     if ($save_action === 'void_lines') {
         if (!is_file(__DIR__ . '/../../includes/sales/sale_exchange.php')) {
             throw new RuntimeException('Exchange module missing.');
@@ -78,7 +101,6 @@ try {
             is_array($_POST['items'] ?? null) ? $_POST['items'] : [],
             $is_english
         );
-        $user_id = (int)$_SESSION['user_id'];
         $out = ame_sale_admin_rewrite($db, $sale, $payload, $user_id, $is_english);
         $db->commit();
         $started = false;
@@ -104,12 +126,43 @@ try {
         exit;
     }
 
+    if (ame_sale_admin_customer_identity_changed($sale, $customerData)) {
+        if (!is_file(__DIR__ . '/../../includes/sales/sale_exchange.php')) {
+            throw new RuntimeException('Exchange module missing.');
+        }
+        require_once __DIR__ . '/../../includes/sales/sale_exchange.php';
+        $payload = ame_sale_admin_rewrite_payload_from_sale($db, $sale, $customerData, $is_english);
+        $out = ame_sale_admin_rewrite($db, $sale, $payload, $user_id, $is_english);
+        $db->commit();
+        $started = false;
+        $_SESSION['user_flash'] = $is_english
+            ? (
+                'Invoice ' . $out['invoice_number']
+                . ' customer changed. Old ledger reversed; new customer billed. Net ৳'
+                . number_format((float)$out['net_payable'], 2)
+                . ', due ৳'
+                . number_format((float)$out['due_amount'], 2)
+                . '.'
+            )
+            : (
+                'ইনভয়েস ' . $out['invoice_number']
+                . ' কাস্টমার বদলেছে। পুরনো লেজার রিভার্স, নতুন ক্রেতায় বিল। নেট ৳'
+                . number_format((float)$out['net_payable'], 2)
+                . ', বাকি ৳'
+                . number_format((float)$out['due_amount'], 2)
+                . '।'
+            );
+        $_SESSION['user_flash_ok'] = 1;
+        header('Location: /modules/reports/sales_report.php?q=' . rawurlencode((string)$out['invoice_number']));
+        exit;
+    }
+
     $out = ame_sale_admin_reassign($db, $sale, $customerData, $is_english);
     $db->commit();
     $started = false;
     $_SESSION['user_flash'] = $is_english
-        ? ('Invoice ' . $out['invoice_number'] . ' customer updated. Amounts were not changed.')
-        : ('ইনভয়েস ' . $out['invoice_number'] . ' এর কাস্টমার আপডেট হয়েছে। কোনো টাকা বদলেনি।');
+        ? ('Invoice ' . $out['invoice_number'] . ' customer details updated (same account; amounts unchanged).')
+        : ('ইনভয়েস ' . $out['invoice_number'] . ' ক্রেতার তথ্য আপডেট (একই অ্যাকাউন্ট; টাকা অপরিবর্তিত)।');
     $_SESSION['user_flash_ok'] = 1;
     header('Location: /modules/reports/sales_report.php?q=' . rawurlencode((string)$out['invoice_number']));
     exit;

@@ -6,6 +6,8 @@ require_once __DIR__ . '/../../includes/account_functions.php';
 require_once __DIR__ . '/../../includes/lang_helper.php';
 require_once __DIR__ . '/../../includes/sales/sale_common.php';
 require_once __DIR__ . '/../../includes/sales/sale_admin_edit.php';
+require_once __DIR__ . '/../../includes/super_admin.php';
+require_once __DIR__ . '/../../includes/sales/sale_memo_copy.php';
 
 if (empty($_SESSION['user_id'])) {
     header('Location: /login.php');
@@ -121,6 +123,8 @@ $shop_addr = function_exists('shop_address') ? trim((string)shop_address()) : ''
 $shop_tel = function_exists('shop_phone') ? trim((string)shop_phone()) : '';
 $memo_when = date('d-m-Y', strtotime($sale_day)) . ' ' . $sale_time;
 $returned_map = ame_sale_admin_returned_qty_map($db, $id);
+$can_reopen = ame_sale_admin_can_reopen();
+$memo_plain = ame_sale_memo_plaintext($db, $id, $en);
 
 $flash = (string)($_SESSION['user_flash'] ?? '');
 $flash_ok = (int)($_SESSION['user_flash_ok'] ?? 0);
@@ -155,6 +159,7 @@ $t = static function (string $bn, string $eng) use ($en): string {
 .iedit .btn.green { background: linear-gradient(135deg, #0E8F52, #087F3D); }
 .iedit .btn.ghost { background: #fff; color: #003F8F; border: 2px solid #003F8F; }
 .iedit .btn.danger { background: #fff; color: #C62828; border: 2px solid #C62828; }
+.iedit .btn.warn { background: #fff7ed; color: #c2410c; border: 2px solid #ea580c; }
 .iedit .row-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
 .iedit .totals { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
 .iedit .tot { background: #F0F7FF; border-radius: 10px; padding: 10px; }
@@ -216,7 +221,7 @@ html body #main-content#main-content .iedit .iedit-memo-meta span { font-size: 1
         </div>
     </div>
     <h1><?php echo $h($t('ইনভয়েস সম্পাদনা', 'Edit invoice')); ?></h1>
-    <p class="sub"><?php echo $h($invoice); ?> · <?php echo $h($t('কাস্টমার বদলানো যায়। পণ্য বাতিল করলে মেমো থেকে সরবে — বিল, বাকি, স্টক ও হিসাব আপডেট হবে।', 'You can change the customer. Cancelling a product removes it from the memo — bill, due, stock and ledger update.')); ?></p>
+    <p class="sub"><?php echo $h($invoice); ?> · <?php echo $h($t('কাস্টমার বদলালে পুরনো লেজার রিভার্স ও নতুন ক্রেতায় বিল লাগবে। পণ্য বাতিল করলে মেমো থেকে সরবে। সুপার এডমিন পূর্ণ এডিটের জন্য মেমো ড্রাফটে আনতে পারেন।', 'Changing customer reverses the old ledger and bills the new one. Line cancel updates stock and balances. Super Admin can reopen to POS draft for full edit.')); ?></p>
     <?php if ($flash !== ''): ?>
         <div class="iedit-flash <?php echo $flash_ok ? 'ok' : 'bad'; ?>"><?php echo $h($flash); ?></div>
     <?php endif; ?>
@@ -389,8 +394,12 @@ html body #main-content#main-content .iedit .iedit-memo-meta span { font-size: 1
         </div>
 
         <div class="row-actions">
+            <button type="button" class="btn ghost" id="ieditCopyMemo"<?php echo !empty($memo_plain['ok']) ? '' : ' disabled'; ?>><?php echo $h($t('মেমো বিবরণ কপি', 'Copy memo details')); ?></button>
+            <?php if ($can_reopen && strtolower((string)($sale['status'] ?? '')) === 'completed'): ?>
+                <button type="submit" name="save_action" value="reopen_draft" class="btn warn" id="ieditReopenDraft"><?php echo $h($t('ড্রাফটে আনুন (POS)', 'Reopen as draft (POS)')); ?></button>
+            <?php endif; ?>
             <button type="submit" name="save_action" value="void_lines" class="btn danger" id="ieditVoidSave" disabled><?php echo $h($t('পণ্য বাতিল সেভ', 'Save cancelled lines')); ?></button>
-            <button type="submit" name="save_action" value="customer" class="btn green"><?php echo $h($t('কাস্টমার সেভ করুন', 'Save customer')); ?></button>
+            <button type="submit" name="save_action" value="customer" class="btn green" id="ieditCustomerSave"><?php echo $h($t('কাস্টমার সেভ করুন', 'Save customer')); ?></button>
             <a class="btn ghost" href="/modules/reports/sales_report.php?q=<?php echo $h(rawurlencode($invoice)); ?>"><?php echo $h($t('রিপোর্টে ফিরুন', 'Back to report')); ?></a>
             <a class="btn ghost" href="/modules/sales/invoice.php?id=<?php echo (int)$sale['id']; ?>"><?php echo $h($t('প্রিন্ট মেমো', 'Print memo')); ?></a>
         </div>
@@ -398,6 +407,31 @@ html body #main-content#main-content .iedit .iedit-memo-meta span { font-size: 1
 </div>
 <script>
 (function () {
+    var memoCopyText = <?php echo json_encode($memo_plain['text'] ?? '', JSON_UNESCAPED_UNICODE); ?>;
+    var origCusId = <?php echo json_encode($cid > 0 ? (string)$cid : '0'); ?>;
+    var origCusType = <?php echo json_encode($cid > 0 ? 'Registered' : 'Retail', JSON_UNESCAPED_UNICODE); ?>;
+    var copyBtn = document.getElementById('ieditCopyMemo');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', function () {
+            if (!memoCopyText) {
+                return;
+            }
+            var done = function () {
+                copyBtn.textContent = <?php echo json_encode($t('কপি হয়েছে ✓', 'Copied ✓'), JSON_UNESCAPED_UNICODE); ?>;
+                window.setTimeout(function () {
+                    copyBtn.textContent = <?php echo json_encode($t('মেমো বিবরণ কপি', 'Copy memo details'), JSON_UNESCAPED_UNICODE); ?>;
+                }, 2200);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(memoCopyText).then(done).catch(function () {
+                    window.prompt(<?php echo json_encode($t('কপি করুন:', 'Copy:'), JSON_UNESCAPED_UNICODE); ?>, memoCopyText);
+                });
+                return;
+            }
+            window.prompt(<?php echo json_encode($t('কপি করুন:', 'Copy:'), JSON_UNESCAPED_UNICODE); ?>, memoCopyText);
+            done();
+        });
+    }
     var itemBox = document.getElementById('ieditItems');
     var svcBox = document.getElementById('ieditServices');
     var money = function (n) { return '৳' + (Math.round(n * 100) / 100).toFixed(2); };
@@ -706,10 +740,38 @@ html body #main-content#main-content .iedit .iedit-memo-meta span { font-size: 1
             recalc();
         }
     });
+    function effectiveCusId() {
+        var typeEl = document.getElementById('ieditType');
+        if (typeEl && typeEl.value === 'Retail') {
+            return '0';
+        }
+        var hid = document.getElementById('ieditCusId');
+        return hid && hid.value ? String(hid.value) : '0';
+    }
+    function customerIdentityChanged() {
+        var typeEl = document.getElementById('ieditType');
+        var typeNow = typeEl ? typeEl.value : origCusType;
+        if (typeNow !== origCusType) {
+            return true;
+        }
+        return effectiveCusId() !== String(origCusId);
+    }
     document.getElementById('ieditForm').addEventListener('submit', function (ev) {
         var sub = ev.submitter;
+        if (sub && sub.name === 'save_action' && sub.value === 'reopen_draft') {
+            if (!window.confirm(<?php echo json_encode($t('মেমো ড্রাফটে আনলে পুরনো ক্রেতার লেজার/ক্যাশ/স্টক রিভার্স হবে। POS-এ গিয়ে আবার সম্পন্ন করতে হবে। চালাবেন?', 'Reopening reverses ledger, cash and stock for the old customer. You must complete again on POS. Continue?'), JSON_UNESCAPED_UNICODE); ?>)) {
+                ev.preventDefault();
+                return;
+            }
+        }
         if (sub && sub.name === 'save_action' && sub.value === 'void_lines') {
             if (!window.confirm(<?php echo json_encode($t('বাতিল পণ্য সেভ করলে বিল, বাকি, স্টক ও হিসাব নতুন করে ঠিক হবে। চালিয়ে যাবেন?', 'Saving cancelled lines will recalculate bill, due, stock and ledger. Continue?'), JSON_UNESCAPED_UNICODE); ?>)) {
+                ev.preventDefault();
+                return;
+            }
+        }
+        if (sub && sub.name === 'save_action' && sub.value === 'customer' && customerIdentityChanged()) {
+            if (!window.confirm(<?php echo json_encode($t('কাস্টমার বদলালে পুরনো ক্রেতার বকেয়া/পরিশোধ রিভার্স ও নতুন ক্রেতায় এই বিল লাগবে। চালাবেন?', 'Changing customer reverses the old party balance and applies this bill to the new one. Continue?'), JSON_UNESCAPED_UNICODE); ?>)) {
                 ev.preventDefault();
                 return;
             }

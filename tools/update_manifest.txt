@@ -509,3 +509,9 @@ includes/config.php
 VERSION.txt
 # 10.98.1005 — /get/ প্যাচ: সার্ভারে জিপ না থাকলে GitHub raw রিডাইরেক্ট
 get.php
+# 10.98.1006 — মেমো ড্রাফট রি-ওপেন, কাস্টমার স্যুইচ লেজার রিভার্স, মেমো কপি
+includes/sales/sale_admin_edit.php
+includes/sales/sale_memo_copy.php
+modules/reports/process_invoice_edit.php
+modules/reports/invoice_edit.php
+modules/sales/invoice.php
