@@ -1406,10 +1406,18 @@
         }
     });
 
-    var pendingDraft = new URLSearchParams(window.location.search).get('draft');
+    var urlParams = new URLSearchParams(window.location.search);
+    var pendingDraft = urlParams.get('draft');
+    var openDrafts = urlParams.get('open_drafts');
     if (pendingDraft) {
         loadDraft(pendingDraft).finally(function () {
-            loadDraftList();
+            loadDraftList().finally(function () {
+                if (openDrafts === '1' && typeof showDrawer === 'function') {
+                    showDrawer();
+                }
+            });
         });
+    } else if (openDrafts === '1' && typeof showDrawer === 'function') {
+        showDrawer();
     }
 })();

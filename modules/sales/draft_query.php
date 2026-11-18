@@ -80,29 +80,10 @@ try {
             WHERE s.status = 'draft'
         ";
 
-        $types = '';
-        $params = [];
-        $store_id = function_exists('current_store_id') ? current_store_id() : 0;
-        $default_store = function_exists('ame_default_store_id') ? ame_default_store_id($db) : 0;
-        if ($store_id > 0) {
-            /* পুরনো/রি-ওপেন ড্রাফটে store_id NULL থাকতে পারে — সব কাউন্টারে দেখা উচিত */
-            $sql .= ' AND (s.store_id = ? OR s.store_id IS NULL OR s.store_id = 0)';
-            $types .= 'i';
-            $params[] = $store_id;
-        }
-
-        $sql .= ' ORDER BY COALESCE(s.updated_at, s.created_at, s.sale_date) DESC LIMIT 80';
+        /* POS ড্রাফট ডেস্ক শেয়ার্ড — স্টোর আলাদা করলে রি-ওপেন মেমো লুকিয়ে যাবে না */
+        $sql .= ' ORDER BY COALESCE(s.updated_at, s.created_at, s.sale_date) DESC, s.id DESC LIMIT 120';
 
         $stmt = $db->prepare($sql);
-
-        if ($types !== '') {
-            $bind = [$types];
-            foreach ($params as $i => $value) {
-                $bind[] = &$params[$i];
-            }
-            call_user_func_array([$stmt, 'bind_param'], $bind);
-        }
-
         $stmt->execute();
         $result = $stmt->get_result();
 

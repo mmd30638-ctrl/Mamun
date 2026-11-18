@@ -78,6 +78,59 @@ function ame_sale_admin_customer_identity_changed(array $sale, array $customerDa
 /**
  * @return list<array<string, mixed>>
  */
+/**
+ * @return list<array<string, mixed>>
+ */
+function ame_sale_admin_snapshot_sale_items(mysqli $db, int $sale_id): array
+{
+    $sale_id = (int)$sale_id;
+    $st = @$db->prepare(
+        'SELECT product_id, item_name, qty, sale_price, purchase_price, unit_id, base_qty
+         FROM sale_items WHERE sale_id = ? ORDER BY id ASC'
+    );
+    if (!$st) {
+        $st = @$db->prepare(
+            'SELECT product_id, item_name, qty, sale_price, purchase_price
+             FROM sale_items WHERE sale_id = ? ORDER BY id ASC'
+        );
+    }
+    if (!$st) {
+        return [];
+    }
+    $st->bind_param('i', $sale_id);
+    $st->execute();
+    $rows = $st->get_result()->fetch_all(MYSQLI_ASSOC) ?: [];
+    $st->close();
+    return $rows;
+}
+
+function ame_sale_admin_restore_draft_item_rows(mysqli $db, int $sale_id, array $rows): void
+{
+    $sale_id = (int)$sale_id;
+    if (!function_exists('ame_draft_store_items')) {
+        require_once __DIR__ . '/sale_draft.php';
+    }
+    $items = [];
+    foreach ($rows as $row) {
+        $pid = (int)($row['product_id'] ?? 0);
+        $qty = (float)($row['qty'] ?? 0);
+        if ($qty <= 0) {
+            continue;
+        }
+        $items[] = [
+            'product_id' => $pid > 0 ? $pid : null,
+            'name' => (string)($row['item_name'] ?? ''),
+            'quantity' => $qty,
+            'purchase_price' => (float)($row['purchase_price'] ?? 0),
+            'sale_price' => (float)($row['sale_price'] ?? 0),
+            'is_custom' => $pid <= 0,
+            'unit_id' => (int)($row['unit_id'] ?? 0),
+            'base_qty' => isset($row['base_qty']) ? (float)$row['base_qty'] : $qty,
+        ];
+    }
+    ame_draft_store_items($db, $sale_id, $items);
+}
+
 function ame_sale_admin_cart_from_sale_db(mysqli $db, int $sale_id): array
 {
     $sale_id = (int)$sale_id;
@@ -192,7 +245,7 @@ function ame_sale_admin_reopen_to_draft(mysqli $db, array $sale, int $user_id, b
         }
     }
 
-    $cart = ame_sale_admin_cart_from_sale_db($db, $sale_id);
+    $item_snapshot = ame_sale_admin_snapshot_sale_items($db, $sale_id);
     $services = ame_sale_admin_services_payload_from_sale($db, $sale_id);
     $payments = ame_sale_admin_payments_payload_from_sale($db, $sale);
     $exchange = [];
@@ -205,10 +258,16 @@ function ame_sale_admin_reopen_to_draft(mysqli $db, array $sale, int $user_id, b
 
     ame_sale_admin_unwind($db, $sale, $is_english);
 
-    $invoice_number = (string)($sale['invoice_number'] ?? ('#' . $sale_id));
+    $old_invoice = trim((string)($sale['invoice_number'] ?? ''));
+    if ($old_invoice === '') {
+        $old_invoice = 'INV-' . $sale_id;
+    }
+    $draft_number = 'DRF-' . str_replace('-', '', date('Ymd')) . '-' . str_pad((string)$sale_id, 6, '0', STR_PAD_LEFT);
+    $invoice_number = $draft_number;
     $note = trim((string)($sale['draft_note'] ?? ''));
     $stamp = date('Y-m-d H:i:s');
-    $reopen_line = ($is_english ? 'Reopened to draft ' : 'ড্রাফটে আনা ') . $stamp . ' (user ' . $user_id . ')';
+    $reopen_line = ($is_english ? 'Reopened to draft ' : 'ড্রাফটে আনা ') . $stamp . ' (user ' . $user_id . ')'
+        . ($is_english ? ' | was ' : ' | পূর্বে ') . $old_invoice;
     $draft_note = $note === '' ? $reopen_line : ($note . "\n" . $reopen_line);
 
     $storeFile = dirname(__DIR__) . '/store_functions.php';
@@ -227,6 +286,7 @@ function ame_sale_admin_reopen_to_draft(mysqli $db, array $sale, int $user_id, b
         $up = $db->prepare(
             "UPDATE sales SET
                 status = 'draft',
+                invoice_number = ?,
                 completed_at = NULL,
                 draft_note = ?,
                 updated_at = NOW()
@@ -236,6 +296,7 @@ function ame_sale_admin_reopen_to_draft(mysqli $db, array $sale, int $user_id, b
         $up = $db->prepare(
             "UPDATE sales SET
                 status = 'draft',
+                invoice_number = ?,
                 completed_at = NULL,
                 draft_note = ?
              WHERE id = ?"
@@ -244,16 +305,12 @@ function ame_sale_admin_reopen_to_draft(mysqli $db, array $sale, int $user_id, b
     if (!$up) {
         throw new RuntimeException($is_english ? 'Could not mark draft.' : 'ড্রাফট স্থিতি সেট করা যায়নি।');
     }
-    $up->bind_param('si', $draft_note, $sale_id);
+    $up->bind_param('ssi', $draft_number, $draft_note, $sale_id);
     $up->execute();
     $up->close();
 
-    if (!function_exists('ame_draft_store_items')) {
-        require_once __DIR__ . '/sale_draft.php';
-    }
-    if ($cart !== []) {
-        $inventory = ame_sale_prepare_items($db, $cart, $is_english, false);
-        ame_draft_store_items($db, $sale_id, $inventory['items']);
+    if ($item_snapshot !== []) {
+        ame_sale_admin_restore_draft_item_rows($db, $sale_id, $item_snapshot);
     }
     if ($services !== []) {
         ame_draft_store_services($db, $sale_id, $services);
@@ -263,7 +320,7 @@ function ame_sale_admin_reopen_to_draft(mysqli $db, array $sale, int $user_id, b
     }
     if ($exchange !== [] && function_exists('ame_sale_store_exchange_items')) {
         $cust = (int)($sale['customer_id'] ?? 0);
-        ame_sale_store_exchange_items($db, $sale_id, $exchange, false, $cust > 0 ? $cust : null, $is_english);
+        ame_sale_store_exchange_items($db, $sale_id, $exchange, false, $cust, $is_english);
         if (function_exists('ame_sale_set_exchange_columns')) {
             $ex_total = 0.0;
             foreach ($exchange as $ex) {

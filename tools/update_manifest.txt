@@ -521,3 +521,8 @@ assets/js/pos-draft.js
 includes/sales/sale_admin_edit.php
 modules/reports/process_invoice_edit.php
 modules/reports/invoice_edit.php
+# 10.98.1008 — রি-ওপেন ড্রাফট: DRF নম্বর, সব স্টোর লিস্ট, পণ্য সরাসরি রিস্টোর
+modules/sales/draft_query.php
+includes/sales/sale_admin_edit.php
+modules/reports/process_invoice_edit.php
+assets/js/pos-draft.js

@@ -90,7 +90,7 @@ try {
             ? ('Invoice ' . $out['invoice_number'] . ' is draft again. Ledger and stock were reversed — finish sale on POS.')
             : ('ইনভয়েস ' . $out['invoice_number'] . ' ড্রাফটে এসেছে। লেজার ও স্টক রিভার্স হয়েছে — POS থেকে আবার সম্পন্ন করুন।');
         $_SESSION['user_flash_ok'] = 1;
-        header('Location: /modules/sales/pos.php?draft=' . (int)$out['sale_id']);
+        header('Location: /modules/sales/pos.php?draft=' . (int)$out['sale_id'] . '&open_drafts=1');
         exit;
     }
     if ($save_action === 'void_lines') {
