@@ -563,6 +563,14 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
             position: relative !important;
             left: auto !important;
             right: auto !important;
+            z-index: 1 !important;
+        }
+        #ame-memo-capture-host {
+            position: absolute !important;
+            width: 0 !important;
+            height: 0 !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
         }
     </style>
 </head>

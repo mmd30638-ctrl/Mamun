@@ -25,6 +25,26 @@
             || appPath() === '/login.php';
     }
 
+    function isMemoStandalonePage() {
+        var path = appPath().toLowerCase();
+        if (/\/modules\/sales\/invoice\.php$/i.test(path)) {
+            return true;
+        }
+        if (/\/modules\/purchase\/memo_digital\.php$/i.test(path)) {
+            return true;
+        }
+        var body = document.body;
+        if (!body) {
+            return false;
+        }
+        if (body.getAttribute('data-ame-memo-standalone') === '1') {
+            return true;
+        }
+        return body.classList.contains('ame-sales-invoice-page')
+            || body.classList.contains('ame-memo-sheet-page')
+            || body.classList.contains('ame-customer-pay-receipt');
+    }
+
     function isHomePath(path) {
         return path === '/' || path === '/index.php' || path === '/m' || path === '/m/';
     }
@@ -192,7 +212,7 @@
     }
 
     function init() {
-        if (!document.body || isLoginPage()) return;
+        if (!document.body || isLoginPage() || isMemoStandalonePage()) return;
         rememberPage();
         document.body.classList.add('ame-premium-ui');
         if (isHomePath(appPath())) {

@@ -3,6 +3,23 @@ if (!empty($_SERVER['DOCUMENT_ROOT']) && is_file($_SERVER['DOCUMENT_ROOT'] . '/a
 /**
  * প্রতিটা HTML পেজে রেসপন্সিভ CSS/JS ঢোকায় — হেডার/ফুটার না থাকলেও।
  */
+function ame_responsive_inject_skip_memo(string $html): bool
+{
+    if (stripos($html, 'data-ame-memo-standalone="1"') !== false) {
+        return true;
+    }
+    if (preg_match('/\bame-sales-invoice-page\b/', $html)) {
+        return true;
+    }
+    if (preg_match('/\bame-memo-sheet-page\b/', $html)) {
+        return true;
+    }
+    if (preg_match('/\bame-customer-pay-receipt\b/', $html)) {
+        return true;
+    }
+    return false;
+}
+
 function ame_responsive_inject($html)
 {
     if (!is_string($html) || $html === '') {
@@ -22,6 +39,10 @@ function ame_responsive_inject($html)
 
     if (function_exists('ame_i18n_apply')) {
         $html = ame_i18n_apply($html);
+    }
+
+    if (ame_responsive_inject_skip_memo($html)) {
+        return $html;
     }
 
     $ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '5.20';

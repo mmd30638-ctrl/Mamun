@@ -710,11 +710,11 @@
         var narrowPx = (cpayShot || returnShot || salesShot) ? memoNarrowCaptureWidth(node) : 420;
         var useNarrow = spayShot || cpayShot || returnShot || salesShot;
         clone.style.cssText = [
-            'position:fixed',
-            'left:-10000px',
+            'position:absolute',
+            'left:0',
             'top:0',
             'z-index:-1',
-            'visibility:hidden',
+            'opacity:1',
             'pointer-events:none',
             'width:' + (useNarrow ? (narrowPx + 'px') : (A4_CSS_PX + 'px')),
             'max-width:' + (useNarrow ? (narrowPx + 'px') : (A4_CSS_PX + 'px')),
@@ -816,7 +816,15 @@
         if (inkShot) {
             paintSeenColors(node, clone);
         }
-        document.body.appendChild(clone);
+        var captureHost = document.getElementById('ame-memo-capture-host');
+        if (!captureHost) {
+            captureHost = document.createElement('div');
+            captureHost.id = 'ame-memo-capture-host';
+            captureHost.setAttribute('aria-hidden', 'true');
+            captureHost.style.cssText = 'position:absolute;left:0;top:0;width:0;height:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;';
+            document.body.appendChild(captureHost);
+        }
+        captureHost.appendChild(clone);
         return clone;
     }
 
