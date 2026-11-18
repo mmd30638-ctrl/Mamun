@@ -5,17 +5,37 @@ body.ame-due-reminder-page #main-content {
   overflow-x: hidden;
 }
 
+html.ame-memo-standalone-fit:has(body.ame-sales-invoice-page),
+html[data-ame-memo-standalone="1"]:has(body.ame-sales-invoice-page) {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 100%;
+  background: #E8EEF5 !important;
+  overflow-x: hidden !important;
+}
 html body.ame-sales-invoice-page {
   width: 100% !important;
   max-width: 100% !important;
   margin: 0 auto !important;
   overflow-x: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
 }
+html body.ame-sales-invoice-page .ame-invoice-memo-shell,
 html body.ame-sales-invoice-page #memo-container,
 html body.ame-sales-invoice-page .memo-wrapper {
   margin-left: auto !important;
   margin-right: auto !important;
   transform: none !important;
+}
+html body.ame-sales-invoice-page #memo-container[data-ame-fit="1"],
+html body.ame-sales-invoice-page .memo-wrapper[data-ame-fit="1"] {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  width: min(480px, calc(100vw - 24px)) !important;
+  height: auto !important;
 }
 #memo-container,
 .memo-wrapper,

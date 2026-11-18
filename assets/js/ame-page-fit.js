@@ -839,10 +839,19 @@
     ));
   }
 
+  function skipSalesInvoiceFit() {
+    var path = (location.pathname || '').toLowerCase();
+    if (path.indexOf('/modules/sales/invoice.php') >= 0) {
+      return true;
+    }
+    var body = document.body;
+    return !!(body && body.classList.contains('ame-sales-invoice-page'));
+  }
+
   function boot() {
     hideHomeTools();
     releaseRunningText();
-    if (skipCustomerPayFit()) {
+    if (skipCustomerPayFit() || skipSalesInvoiceFit()) {
       return;
     }
     root = rootEl();

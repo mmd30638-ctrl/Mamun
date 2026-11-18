@@ -95,6 +95,7 @@ $max_width = ($paper_width === 'A4') ? '720px' : '480px';
 $paper_class = ($paper_width === 'A4')
     ? 'ame-paper-a4'
     : (($paper_width === '58mm') ? 'ame-paper-58mm' : 'ame-paper-80mm');
+$ame_ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.847';
 
 // কাস্টমার তথ্য
 $c_name = trim((string)($sale['customer_name'] ?? ''));
@@ -212,9 +213,14 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
         }
     })();
     </script>
+    <script src="/assets/js/ame-desktop-site.js?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>"></script>
+    <script>
+    if (typeof window.ameApplySaleDesktopViewport === 'function') { window.ameApplySaleDesktopViewport(); }
+    </script>
     <title><?php echo ame_ui('ইনভয়েস', 'Invoice'); ?> #<?php echo htmlspecialchars($inv_no, ENT_QUOTES, 'UTF-8'); ?> - <?php echo htmlspecialchars($shop['shop_name'] ?? 'Aponshop', ENT_QUOTES, 'UTF-8'); ?></title>
     <link rel="stylesheet" href="/assets/css/ame-front-colors.css">
-    <link rel="stylesheet" href="/assets/css/memo-clear.css?v=10.98.847">
+    <link rel="stylesheet" href="/assets/css/memo-clear.css?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>">
+    <link rel="stylesheet" href="/assets/css/invoice-print-fix.css?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>">
     <style>
         * { box-sizing: border-box; }
         body {
@@ -225,6 +231,9 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
             padding: 20px 10px 40px;
             font-size: 13px;
             line-height: 1.5;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: clip;
         }
 
         /* প্রিন্ট ও একশন বার */
@@ -500,6 +509,13 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
 
         /* কম্পিউটার / হোয়াটসঅ্যাপ ওয়েবভিউ: অর্ধেক ফাঁকা ঠিক — পূর্ণ প্রস্থ, মেমো মাঝখানে */
         html.ame-memo-standalone-fit,
+        html[data-ame-memo-standalone="1"] {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-height: 100%;
+            background: #E8EEF5 !important;
+        }
+        html.ame-memo-standalone-fit,
         html.ame-memo-standalone-fit body.ame-sales-invoice-page,
         html.ame-phone-desktop.ame-memo-standalone-fit body.ame-sales-invoice-page {
             width: 100% !important;
@@ -517,6 +533,15 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
             min-height: 100vh !important;
             background: #E8EEF5 !important;
         }
+        .ame-invoice-memo-shell {
+            width: 100%;
+            max-width: <?php echo $max_width; ?>;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+        }
+        html body.ame-sales-invoice-page .ame-invoice-memo-shell,
         html body.ame-sales-invoice-page .inv-action-bar,
         html body.ame-sales-invoice-page #memo-container.memo-wrapper {
             width: min(100%, <?php echo $max_width; ?>) !important;
@@ -532,6 +557,7 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
 </head>
 <body class="ame-sales-invoice-page <?php echo htmlspecialchars($paper_class, ENT_QUOTES, 'UTF-8'); ?>" data-paper="<?php echo htmlspecialchars((string)$paper_width, ENT_QUOTES, 'UTF-8'); ?>" data-ame-memo-standalone="1">
 
+    <div class="ame-invoice-memo-shell">
     <!-- শীর্ষ একশন বার (প্রিন্ট, শেয়ার, ডাউনলোড) -->
     <nav class="inv-action-bar no-print" aria-label="<?php echo ame_ui('ইনভয়েস অপশন', 'Invoice options'); ?>">
         <button type="button" class="inv-btn inv-btn-print" data-inv-act="print-image" title="প্রিন্ট করুন">
@@ -761,9 +787,10 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
             ?>
         </div>
     </div>
+    </div>
 
     <!-- স্ক্রিপ্ট লোডার -->
-    <script src="/assets/js/ame-memo-file.js?v=10.98.847"></script>
+    <script src="/assets/js/ame-memo-file.js?v=<?php echo htmlspecialchars($ame_ver, ENT_QUOTES, 'UTF-8'); ?>"></script>
     <script>
     (function () {
         var saleId = <?php echo (int)$sale_id; ?>;
@@ -840,6 +867,9 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
                 window.AME_SALE_DESKTOP_SITE = false;
                 delete window.AME_SALE_DESKTOP_FIT;
             } catch (e) {}
+            if (typeof window.ameApplySaleDesktopViewport === 'function') {
+                window.ameApplySaleDesktopViewport();
+            }
             var meta = document.querySelector('meta[name="viewport"]');
             if (meta) {
                 meta.setAttribute('content', 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover');
@@ -859,6 +889,5 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
     })();
     </script>
 <?php include __DIR__ . '/../../partials/confirm_actions.php'; ?>
-<?php include __DIR__ . '/../../partials/page_fit.php'; ?>
 </body>
 </html>

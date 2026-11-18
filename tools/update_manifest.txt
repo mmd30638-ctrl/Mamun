@@ -1,6 +1,7 @@
-# 10.98.997 — বিক্রয় মেমো: কম্পিউটারে অর্ধেক ফাঁকা (ডেস্কটপ ভিউ) ঠিক
+# 10.98.998 — বিক্রয় মেমো: PC তে ডান পাশ খালি — সেন্টার + পূর্ণ ব্যাকগ্রাউন্ড
 modules/sales/invoice.php
 assets/js/ame-desktop-site.js
+assets/js/ame-page-fit.js
 assets/css/invoice-print-fix.css
 includes/config.php
 VERSION.txt
