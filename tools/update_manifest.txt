@@ -500,3 +500,6 @@ modules/reports/invoice_edit.php
 modules/reports/process_invoice_edit.php
 modules/sales/history.php
 modules/reports/sales_report.php
+# 10.98.1003 — বিক্রয় ইনভয়েস: ১৫ পণ্য লাইনের পর পৃষ্ঠা ব্রেক
+modules/sales/invoice.php
+assets/css/invoice-print-fix.css

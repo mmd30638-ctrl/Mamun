@@ -75,6 +75,16 @@ while ($it = $items_res->fetch_assoc()) {
 }
 $items_stmt->close();
 
+$memo_items_per_page = 15;
+if ($items === []) {
+    $memo_item_chunks = [[]];
+} elseif (count($items) > $memo_items_per_page) {
+    $memo_item_chunks = array_chunk($items, $memo_items_per_page);
+} else {
+    $memo_item_chunks = [$items];
+}
+$memo_item_page_total = count($memo_item_chunks);
+
 // পুরাতন ব্যাটারি এক্সচেঞ্জ আইটেম (যদি থাকে)
 if (!function_exists('ame_sale_load_exchange_items')) {
     require_once '../../includes/sales/sale_exchange.php';
@@ -419,6 +429,44 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
         .memo-table .tr { text-align: right; }
         .memo-table .sku-text { display: none; }
 
+        /* পণ্য ১৫ লাইনের পর পরবর্তী পৃষ্ঠা (প্রিন্ট / স্ক্রিন) */
+        .memo-items-sheet-break {
+            break-after: page;
+            page-break-after: always;
+        }
+        .memo-sheet-cont {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+            margin: 0 0 10px;
+            padding: 7px 10px;
+            background: #F1F5F9;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 800;
+            color: #003F8F;
+        }
+        @media screen {
+            .memo-items-sheet-break {
+                margin-bottom: 22px;
+                padding-bottom: 16px;
+                border-bottom: 2px dashed #94A3B8;
+            }
+        }
+        @media print {
+            .memo-wrapper,
+            #memo-container.memo-wrapper {
+                overflow: visible !important;
+                max-height: none !important;
+            }
+            .memo-items-sheet-break {
+                page-break-after: always;
+                break-after: page;
+            }
+        }
+
         /* সামারি ও মোট হিসাব ব্লক */
         .memo-summary {
             border-top: 1px solid #CBD5E1;
@@ -662,37 +710,55 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
             <?php endif; ?>
         </div>
 
-        <!-- পণ্যের তালিকা টেবিল -->
-        <table class="memo-table">
-            <thead>
-                <tr>
-                    <th style="width: 28px;" class="tc"><?php echo ame_ui('নং', 'No.'); ?></th>
-                    <th><?php echo ame_ui('বিবরণ', 'Description'); ?></th>
-                    <th style="width: 48px;" class="tc"><?php echo ame_ui('পরিমাণ', 'Qty'); ?></th>
-                    <th style="width: 70px;" class="tr"><?php echo ame_ui('দর', 'Rate'); ?></th>
-                    <th style="width: 80px;" class="tr"><?php echo ame_ui('মোট', 'Total'); ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (empty($items)): ?>
-                <tr>
-                    <td colspan="5" class="tc" style="padding: 12px; color: #0B1E4D; font-weight: 800;"><?php echo ame_ui('কোনো পণ্য তালিকাভুক্ত নেই', 'No product is listed'); ?></td>
-                </tr>
-                <?php else: ?>
-                <?php $sl = 1; foreach ($items as $row): ?>
-                <tr>
-                    <td class="tc"><?php echo $sl++; ?></td>
-                    <td>
-                        <span style="font-weight: 600;"><?php echo htmlspecialchars($row['name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></span>
-                    </td>
-                    <td class="tc"><?php echo htmlspecialchars((string)($row['qty'] ?? 1), ENT_QUOTES, 'UTF-8'); ?></td>
-                    <td class="tr"><?php echo number_format((float)($row['sale_price'] ?? 0), 2); ?></td>
-                    <td class="tr" style="font-weight: 700;"><?php echo number_format((float)($row['sale_price'] ?? 0) * (float)($row['qty'] ?? 1), 2); ?></td>
-                </tr>
-                <?php endforeach; ?>
-                <?php endif; ?>
-            </tbody>
-        </table>
+        <!-- পণ্যের তালিকা — ১৫ লাইনের বেশি হলে পরবর্তী পৃষ্ঠায় -->
+        <?php
+        $memo_sl = 1;
+        foreach ($memo_item_chunks as $chunk_idx => $chunk_rows):
+            $chunk_page = (int)$chunk_idx + 1;
+            $chunk_break = $chunk_page < $memo_item_page_total;
+            ?>
+        <div class="memo-items-sheet<?php echo $chunk_break ? ' memo-items-sheet-break' : ''; ?>">
+            <?php if ($chunk_idx > 0): ?>
+            <div class="memo-sheet-cont">
+                <span>#<?php echo htmlspecialchars($inv_no, ENT_QUOTES, 'UTF-8'); ?></span>
+                <span><?php echo ame_ui(
+                    'পৃষ্ঠা ' . $chunk_page . ' / ' . $memo_item_page_total . ' — অব্যাহত',
+                    'Page ' . $chunk_page . ' / ' . $memo_item_page_total . ' — continued'
+                ); ?></span>
+            </div>
+            <?php endif; ?>
+            <table class="memo-table memo-table-items">
+                <thead>
+                    <tr>
+                        <th style="width: 28px;" class="tc"><?php echo ame_ui('নং', 'No.'); ?></th>
+                        <th><?php echo ame_ui('বিবরণ', 'Description'); ?></th>
+                        <th style="width: 48px;" class="tc"><?php echo ame_ui('পরিমাণ', 'Qty'); ?></th>
+                        <th style="width: 70px;" class="tr"><?php echo ame_ui('দর', 'Rate'); ?></th>
+                        <th style="width: 80px;" class="tr"><?php echo ame_ui('মোট', 'Total'); ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if ($chunk_rows === []): ?>
+                    <tr>
+                        <td colspan="5" class="tc" style="padding: 12px; color: #0B1E4D; font-weight: 800;"><?php echo ame_ui('কোনো পণ্য তালিকাভুক্ত নেই', 'No product is listed'); ?></td>
+                    </tr>
+                    <?php else: ?>
+                    <?php foreach ($chunk_rows as $row): ?>
+                    <tr>
+                        <td class="tc"><?php echo $memo_sl++; ?></td>
+                        <td>
+                            <span style="font-weight: 600;"><?php echo htmlspecialchars($row['name'] ?? '', ENT_QUOTES, 'UTF-8'); ?></span>
+                        </td>
+                        <td class="tc"><?php echo htmlspecialchars((string)($row['qty'] ?? 1), ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td class="tr"><?php echo number_format((float)($row['sale_price'] ?? 0), 2); ?></td>
+                        <td class="tr" style="font-weight: 700;"><?php echo number_format((float)($row['sale_price'] ?? 0) * (float)($row['qty'] ?? 1), 2); ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+        <?php endforeach; ?>
 
         <!-- পুরাতন ব্যাটারি এক্সচেঞ্জ (যদি থাকে) -->
         <?php if (!empty($ex_rows)): ?>

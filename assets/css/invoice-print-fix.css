@@ -211,5 +211,16 @@ body.ame-due-reminder-page .ame-fit-launch,
     max-width: 100% !important;
     box-shadow: none !important;
     border: none !important;
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  html body.ame-sales-invoice-page #memo-container.memo-wrapper .memo-items-sheet-break {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+  html body.ame-sales-invoice-page #memo-container.memo-wrapper .memo-items-sheet-break:last-of-type {
+    page-break-after: auto !important;
+    break-after: auto !important;
   }
 }
