@@ -72,6 +72,10 @@ try {
             $st = fam_run($db, 'UPDATE family_contacts SET group_id=NULLIF(?,0), name=?, mobile=?, alt_mobile=?, address=?, email=?, profession=?, organization=?, relation_note=?, notes=? WHERE id=?', 'isssssssssi', array_merge($fields, [$id]));
         } else {
             $st = fam_run($db, 'INSERT INTO family_contacts (group_id,name,mobile,alt_mobile,address,email,profession,organization,relation_note,notes) VALUES (NULLIF(?,0),?,?,?,?,?,?,?,?,?)', 'isssssssss', $fields);
+            if ((int)$db->insert_id < 1) {
+                $st->close();
+                fam_go($back, '', 'পরিচিত সংরক্ষণ হয়নি। আবার চেষ্টা করুন।');
+            }
         }
         $st->close();
         fam_go($back, 'পরিচিত সংরক্ষণ হয়েছে।');
@@ -111,13 +115,23 @@ try {
         }
         $mid = $id > 0 ? $id : (int)$db->insert_id;
         $st->close();
+        if ($mid < 1) {
+            fam_go($back, '', 'সদস্য সংরক্ষণ হয়নি। আবার চেষ্টা করুন।');
+        }
         if ($dob) {
-            $nb = fam_next_birthday($dob);
-            if ($nb) {
-                fam_sync_event('birthday', 'জন্মদিন: ' . $name, $nb['next'], $mid, 'member', $mid);
+            try {
+                $nb = fam_next_birthday($dob);
+                if ($nb) {
+                    fam_sync_event('birthday', 'জন্মদিন: ' . $name, $nb['next'], $mid, 'member', $mid);
+                }
+            } catch (Throwable $syncErr) {
+                error_log('family member birthday sync: ' . $syncErr->getMessage());
             }
         }
-        fam_go('/modules/family/member.php?id=' . $mid, 'সদস্য সংরক্ষণ হয়েছে।');
+        $dest = (str_contains($back, 'members.php') && $id < 1)
+            ? $back
+            : '/modules/family/member.php?id=' . $mid;
+        fam_go($dest, 'সদস্য সংরক্ষণ হয়েছে।');
     }
 
     if ($do === 'member_delete') {

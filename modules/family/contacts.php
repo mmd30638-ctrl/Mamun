@@ -31,7 +31,7 @@ $rows = fam_rows($sql);
 <?php if (fam_can_write()): ?>
 <section class="fam-panel">
   <h2><?php echo $edit ? 'সম্পাদনা' : 'নতুন পরিচিত'; ?></h2>
-  <form class="fam-form" method="post" action="process.php">
+  <form class="fam-form" method="post" action="/modules/family/process.php">
     <?php echo csrf_field(); ?>
     <input type="hidden" name="do" value="contact_save">
     <input type="hidden" name="back" value="/modules/family/contacts.php">
@@ -67,7 +67,7 @@ $rows = fam_rows($sql);
         <?php echo fam_tel_btns($c['mobile'] ?: $c['alt_mobile']); ?>
         <?php if (fam_can_write()): ?>
           <a class="fam-mini" href="contacts.php?id=<?php echo (int)$c['id']; ?>">সম্পাদনা</a>
-          <form method="post" action="process.php" style="display:inline" onsubmit="return confirm('মুছবেন?')">
+          <form method="post" action="/modules/family/process.php" style="display:inline" onsubmit="return confirm('মুছবেন?')">
             <?php echo csrf_field(); ?>
             <input type="hidden" name="do" value="contact_delete">
             <input type="hidden" name="back" value="/modules/family/contacts.php">

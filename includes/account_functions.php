@@ -624,6 +624,12 @@ function ensure_accounts_schema($db) {
         is_active TINYINT(1) NOT NULL DEFAULT 1,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    if (!function_exists('ame_family_ensure') && is_file(__DIR__ . '/family_schema.php')) {
+        require_once __DIR__ . '/family_schema.php';
+    }
+    if (function_exists('ame_family_ensure')) {
+        ame_family_ensure($db);
+    }
 
     $db->query("CREATE TABLE IF NOT EXISTS expense_categories (
         id INT AUTO_INCREMENT PRIMARY KEY,

@@ -21,7 +21,7 @@ if ($q !== '') {
 <?php if (fam_can_write()): ?>
 <section class="fam-panel">
   <h2><?php echo $edit ? ame_pair('সদস্য সম্পাদনা', 'Edit member') : ame_pair('নতুন সদস্য', 'New member'); ?></h2>
-  <form class="fam-form" method="post" action="process.php">
+  <form class="fam-form" method="post" action="/modules/family/process.php">
     <?php echo csrf_field(); ?>
     <input type="hidden" name="do" value="member_save">
     <input type="hidden" name="back" value="/modules/family/members.php">

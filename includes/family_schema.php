@@ -40,6 +40,19 @@ function ensure_family_schema(mysqli $db): void
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         KEY group_id (group_id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+    foreach ([
+        'group_id' => 'INT NULL',
+        'mobile' => 'VARCHAR(30) DEFAULT NULL',
+        'alt_mobile' => 'VARCHAR(30) DEFAULT NULL',
+        'address' => 'TEXT NULL',
+        'email' => 'VARCHAR(120) DEFAULT NULL',
+        'profession' => 'VARCHAR(120) DEFAULT NULL',
+        'organization' => 'VARCHAR(120) DEFAULT NULL',
+        'relation_note' => 'VARCHAR(80) DEFAULT NULL',
+        'notes' => 'TEXT NULL',
+    ] as $col => $def) {
+        fam_ensure_column($db, 'family_contacts', $col, $def);
+    }
 
     $db->query("CREATE TABLE IF NOT EXISTS family_members (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -70,6 +83,8 @@ function ensure_family_schema(mysqli $db): void
     fam_ensure_column($db, 'family_members', 'important_info', 'TEXT NULL');
     fam_ensure_column($db, 'family_members', 'role', "VARCHAR(30) NOT NULL DEFAULT 'other'");
     fam_ensure_column($db, 'family_members', 'is_active', 'TINYINT(1) NOT NULL DEFAULT 1');
+    fam_ensure_column($db, 'family_events', 'ref_kind', 'VARCHAR(40) DEFAULT NULL');
+    fam_ensure_column($db, 'family_events', 'ref_id', 'INT NULL');
 
     $db->query("CREATE TABLE IF NOT EXISTS family_doctors (
         id INT AUTO_INCREMENT PRIMARY KEY,

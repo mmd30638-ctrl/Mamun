@@ -1,3 +1,11 @@
+# 10.98.995 — পারিবারিক: পরিচিত/সদস্য সংরক্ষণ + স্কিমা ঠিক
+modules/family/process.php
+modules/family/contacts.php
+modules/family/members.php
+includes/family_schema.php
+includes/account_functions.php
+includes/config.php
+VERSION.txt
 # 10.98.994 — বিক্রয় মেমো: হোয়াটসঅ্যাপ ডেস্কটপে ডান ফাঁকা ঠিক
 modules/sales/invoice.php
 assets/js/ame-desktop-site.js
