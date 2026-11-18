@@ -200,16 +200,10 @@ if (isset($db) && $db instanceof mysqli) {
     }
     .ame-pos-table-wrap {
         overflow-x: auto;
-        overflow-y: auto;
-        /* কার্ট বক্সের শুরুর জায়গা প্রায় ২০টা পণ্যের সারি দেখানোর মতো বড়
-           রাখা হয়েছে, যাতে বেশিরভাগ বিক্রয়ে স্ক্রল ছাড়াই সব পণ্য দেখা যায়।
-           ২০টার বেশি পণ্য যোগ হলে বক্সটা max-height পর্যন্ত আরও বড় হতে
-           থাকবে, তারপর ভিতরে স্ক্রল হবে। vh-ভিত্তিক সীমা বাদ দেওয়া হয়েছে
-           কারণ ছোট/মাঝারি স্ক্রিনে তা আসল প্রয়োজনের চেয়ে ছোট হয়ে যাচ্ছিল।
-           (আসল মান responsive-fix.css-এ — ওটা সবার শেষে লোড হয় বলে এখানকার
-           মান তার সাথে মিলিয়ে রাখা আছে) */
+        overflow-y: visible;
         min-height: 0;
         max-height: none;
+        height: auto;
         border: 1px solid var(--pos-c-cfd6de);
         background: var(--brand-white);
     }
@@ -737,7 +731,7 @@ if (isset($db) && $db instanceof mysqli) {
                         </td>
                     </tr>
                 </tbody>
-                <tfoot id="cart-lines-foot" hidden>
+                <tfoot id="cart-lines-foot">
                     <tr class="ame-pos-cart-total-row">
                         <td colspan="7" class="ame-pos-cart-total-label"><?php echo $escape($words['cart_lines_total']); ?></td>
                         <td id="cartLinesTotal" class="ame-pos-cart-total-val">0.00</td>

@@ -155,6 +155,7 @@ if ($ame_is_pos) {
     echo '<link rel="stylesheet" href="/assets/css/pos-charge-line.css?v=' . $ame_lock_ver . '" id="amePosChargeLine">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-charge-unified.css?v=' . $ame_lock_ver . '" id="amePosChargeUnified">' . "\n";
     echo '<link rel="stylesheet" href="/assets/css/ame-pos-device-tier.css?v=' . $ame_lock_ver . '" id="amePosDeviceTier">' . "\n";
+    echo '<link rel="stylesheet" href="/assets/css/ame-pos-cart-auto-expand.css?v=' . $ame_lock_ver . '" id="amePosCartAutoExpand">' . "\n";
 }
 ?>
 <script>

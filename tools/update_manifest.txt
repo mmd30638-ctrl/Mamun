@@ -492,3 +492,5 @@ get.php
 .htaccess
 VERSION.txt
 APONSHOP_STACK_UPDATE.txt
+# 10.98.1001 — বিক্রয় কার্ট: নো স্ক্রল অটো-এক্সপ্যান্ড + স্থায়ী মোট অ্যামাউন্ট রো
+assets/css/ame-pos-cart-auto-expand.css
