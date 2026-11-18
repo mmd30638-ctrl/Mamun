@@ -7,6 +7,17 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/includes/pack_zip.php';
 
+/** GitHub-এ থাকা প্যাচ — সার্ভারে জিপ না থাকলে /get/ এখানে পাঠায় */
+const AME_PATCH_GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/mmd30638-ctrl/Mamun/cursor/global-responsive-architecture-ab1e/downloads/';
+
+function ame_patch_github_raw_url(string $file): string
+{
+    if (preg_match('/^Aponshop_\d+\.\d+\.\d+_(PATCH|FULL_STACK|LIVE)\.zip$/i', $file) !== 1) {
+        return '';
+    }
+    return AME_PATCH_GITHUB_RAW_BASE . rawurlencode($file);
+}
+
 while (ob_get_level() > 0) {
     ob_end_clean();
 }
@@ -77,6 +88,9 @@ if ($path === null) {
             }
         }
     }
+    if ($fallbackUrl === '') {
+        $fallbackUrl = ame_patch_github_raw_url($file);
+    }
     if ($fallbackUrl !== '') {
         header('Location: ' . $fallbackUrl, true, 302);
         header('Cache-Control: no-store');
@@ -84,7 +98,11 @@ if ($path === null) {
     }
     http_response_code(404);
     header('Content-Type: text/plain; charset=UTF-8');
-    echo '❌ ZIP এখনও সার্ভারে নেই। Hostinger ফাইল ম্যানেজারে public_html/downloads/' . $file . ' (≈৫৫ KB) আপলোড করুন।';
+    $gh = ame_patch_github_raw_url($file);
+    echo '❌ ZIP এখনও সার্ভারে নেই। Hostinger ফাইল ম্যানেজারে public_html/downloads/' . $file . ' আপলোড করুন।';
+    if ($gh !== '') {
+        echo "\n\nসরাসরি ডাউনলোড:\n" . $gh;
+    }
     exit;
 }
 

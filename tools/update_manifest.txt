@@ -507,3 +507,5 @@ assets/css/invoice-print-fix.css
 assets/js/ame-memo-file.js
 includes/config.php
 VERSION.txt
+# 10.98.1005 — /get/ প্যাচ: সার্ভারে জিপ না থাকলে GitHub raw রিডাইরেক্ট
+get.php
