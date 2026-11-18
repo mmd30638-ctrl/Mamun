@@ -40,6 +40,26 @@ function ame_sale_admin_effective_customer_id(array $data): int
     return max(0, (int)($data['customer_id'] ?? 0));
 }
 
+function ame_sale_admin_post_has_voided_lines(array $postItems): bool
+{
+    if (!is_array($postItems)) {
+        return false;
+    }
+    foreach ($postItems as $row) {
+        if (!is_array($row)) {
+            continue;
+        }
+        $void = $row['void'] ?? null;
+        if ($void === 1 || $void === '1' || $void === true) {
+            return true;
+        }
+        if (is_string($void) && strtolower(trim($void)) === 'on') {
+            return true;
+        }
+    }
+    return false;
+}
+
 function ame_sale_admin_customer_identity_changed(array $sale, array $customerData): bool
 {
     $old = max(0, (int)($sale['customer_id'] ?? 0));
@@ -191,13 +211,36 @@ function ame_sale_admin_reopen_to_draft(mysqli $db, array $sale, int $user_id, b
     $reopen_line = ($is_english ? 'Reopened to draft ' : 'ড্রাফটে আনা ') . $stamp . ' (user ' . $user_id . ')';
     $draft_note = $note === '' ? $reopen_line : ($note . "\n" . $reopen_line);
 
-    $up = $db->prepare(
-        "UPDATE sales SET
-            status = 'draft',
-            completed_at = NULL,
-            draft_note = ?
-         WHERE id = ?"
-    );
+    $storeFile = dirname(__DIR__) . '/store_functions.php';
+    if (is_file($storeFile)) {
+        require_once $storeFile;
+    }
+    if (function_exists('ame_sales_set_store')) {
+        ame_sales_set_store($db, $sale_id);
+    }
+
+    $sales_cols = function_exists('ame_schema_columns')
+        ? ame_schema_columns($db, 'sales')
+        : [];
+    $has_updated = !empty($sales_cols['updated_at']);
+    if ($has_updated) {
+        $up = $db->prepare(
+            "UPDATE sales SET
+                status = 'draft',
+                completed_at = NULL,
+                draft_note = ?,
+                updated_at = NOW()
+             WHERE id = ?"
+        );
+    } else {
+        $up = $db->prepare(
+            "UPDATE sales SET
+                status = 'draft',
+                completed_at = NULL,
+                draft_note = ?
+             WHERE id = ?"
+        );
+    }
     if (!$up) {
         throw new RuntimeException($is_english ? 'Could not mark draft.' : 'ড্রাফট স্থিতি সেট করা যায়নি।');
     }
@@ -343,7 +386,10 @@ function ame_sale_admin_cart_from_post_items(mysqli $db, int $sale_id, array $po
         if (!is_array($row)) {
             continue;
         }
-        if (!empty($row['void'])) {
+        $void = $row['void'] ?? null;
+        $is_void = $void === 1 || $void === '1' || $void === true
+            || (is_string($void) && strtolower(trim($void)) === 'on');
+        if ($is_void) {
             $voided++;
             continue;
         }
@@ -1061,7 +1107,7 @@ function ame_sale_admin_rewrite(mysqli $db, array $sale, array $data, int $user_
 
     $customer = ame_sale_customer($db, $customer_id, $is_english);
     $payment_data = ame_sale_payments($db, $data, $is_english);
-    $inventory = ame_sale_prepare_items($db, $data['cart'] ?? [], $is_english);
+    $inventory = ame_sale_prepare_items($db, $data['cart'] ?? [], $is_english, false);
     $subtotal = (float)$inventory['subtotal'];
     $vat_amount = round(($subtotal * $vat_percent) / 100, 2);
     $gross_bill = round($subtotal + $vat_amount + $service_amount, 2);

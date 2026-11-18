@@ -67,6 +67,7 @@ try {
             SELECT
                 s.id,
                 s.customer_id,
+                s.invoice_number,
                 c.customer_code,
                 COALESCE(
                     NULLIF(c.name, ''),
@@ -84,16 +85,13 @@ try {
         $store_id = function_exists('current_store_id') ? current_store_id() : 0;
         $default_store = function_exists('ame_default_store_id') ? ame_default_store_id($db) : 0;
         if ($store_id > 0) {
-            if ($store_id === $default_store) {
-                $sql .= ' AND (s.store_id = ? OR s.store_id IS NULL)';
-            } else {
-                $sql .= ' AND s.store_id = ?';
-            }
+            /* পুরনো/রি-ওপেন ড্রাফটে store_id NULL থাকতে পারে — সব কাউন্টারে দেখা উচিত */
+            $sql .= ' AND (s.store_id = ? OR s.store_id IS NULL OR s.store_id = 0)';
             $types .= 'i';
             $params[] = $store_id;
         }
 
-        $sql .= ' ORDER BY s.updated_at DESC LIMIT 50';
+        $sql .= ' ORDER BY COALESCE(s.updated_at, s.created_at, s.sale_date) DESC LIMIT 80';
 
         $stmt = $db->prepare($sql);
 
@@ -111,13 +109,17 @@ try {
         $drafts = [];
 
         while ($draft = $result->fetch_assoc()) {
+            $label = (string)$draft['customer_name'];
+            $inv = trim((string)($draft['invoice_number'] ?? ''));
+            if ($inv !== '') {
+                $label .= ' · ' . $inv;
+            }
             $drafts[] = [
                 'id' => (int)$draft['id'],
                 'customer_id' => $draft['customer_id']
                     ? (int)$draft['customer_id']
                     : null,
-                'customer_name' =>
-                    (string)$draft['customer_name'],
+                'customer_name' => $label,
                 'customer_code' =>
                     (string)($draft['customer_code'] ?? '')
             ];

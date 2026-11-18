@@ -770,10 +770,25 @@ html body #main-content#main-content .iedit .iedit-memo-meta span { font-size: 1
                 return;
             }
         }
-        if (sub && sub.name === 'save_action' && sub.value === 'customer' && customerIdentityChanged()) {
-            if (!window.confirm(<?php echo json_encode($t('কাস্টমার বদলালে পুরনো ক্রেতার বকেয়া/পরিশোধ রিভার্স ও নতুন ক্রেতায় এই বিল লাগবে। চালাবেন?', 'Changing customer reverses the old party balance and applies this bill to the new one. Continue?'), JSON_UNESCAPED_UNICODE); ?>)) {
-                ev.preventDefault();
-                return;
+        if (sub && sub.name === 'save_action' && sub.value === 'customer') {
+            var voidedAny = false;
+            if (itemBox) {
+                itemBox.querySelectorAll('tr').forEach(function (tr) {
+                    if (isVoided(tr)) { voidedAny = true; }
+                });
+            }
+            if (voidedAny) {
+                if (sub.value !== 'void_lines') {
+                    if (!window.confirm(<?php echo json_encode($t('বাতিল চিহ্নিত পণ্য আছে — সেভ করলে বিল/স্টক/লেজার আপডেট হবে। চালাবেন?', 'Cancelled lines are marked — saving will update bill, stock and ledger. Continue?'), JSON_UNESCAPED_UNICODE); ?>)) {
+                        ev.preventDefault();
+                        return;
+                    }
+                }
+            } else if (customerIdentityChanged()) {
+                if (!window.confirm(<?php echo json_encode($t('কাস্টমার বদলালে পুরনো ক্রেতার বকেয়া/পরিশোধ রিভার্স ও নতুন ক্রেতায় এই বিল লাগবে। চালাবেন?', 'Changing customer reverses the old party balance and applies this bill to the new one. Continue?'), JSON_UNESCAPED_UNICODE); ?>)) {
+                    ev.preventDefault();
+                    return;
+                }
             }
         }
         this.querySelectorAll('button[type="submit"]').forEach(function (b) { b.disabled = true; });

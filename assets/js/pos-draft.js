@@ -1408,6 +1408,8 @@
 
     var pendingDraft = new URLSearchParams(window.location.search).get('draft');
     if (pendingDraft) {
-        loadDraft(pendingDraft);
+        loadDraft(pendingDraft).finally(function () {
+            loadDraftList();
+        });
     }
 })();

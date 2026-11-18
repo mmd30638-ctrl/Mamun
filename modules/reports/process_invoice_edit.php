@@ -23,6 +23,10 @@ $sale_id = (int)($_POST['sale_id'] ?? 0);
 $back = '/modules/reports/invoice_edit.php?id=' . $sale_id;
 $save_action = (string)($_POST['save_action'] ?? 'customer');
 $user_id = (int)$_SESSION['user_id'];
+$postItems = is_array($_POST['items'] ?? null) ? $_POST['items'] : [];
+if (ame_sale_admin_post_has_voided_lines($postItems)) {
+    $save_action = 'void_lines';
+}
 
 $fail = static function (string $msg) use ($back): void {
     $_SESSION['user_flash'] = $msg;
@@ -98,7 +102,7 @@ try {
             $db,
             $sale,
             $customerData,
-            is_array($_POST['items'] ?? null) ? $_POST['items'] : [],
+            $postItems,
             $is_english
         );
         $out = ame_sale_admin_rewrite($db, $sale, $payload, $user_id, $is_english);
@@ -122,7 +126,7 @@ try {
                 . '।'
             );
         $_SESSION['user_flash_ok'] = 1;
-        header('Location: /modules/reports/sales_report.php?q=' . rawurlencode((string)$out['invoice_number']));
+        header('Location: /modules/sales/invoice.php?id=' . (int)$out['sale_id'] . '&edited=1');
         exit;
     }
 

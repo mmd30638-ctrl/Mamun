@@ -515,3 +515,9 @@ includes/sales/sale_memo_copy.php
 modules/reports/process_invoice_edit.php
 modules/reports/invoice_edit.php
 modules/sales/invoice.php
+# 10.98.1007 — ড্রাফট লিস্ট ফিক্স (store_id) + পণ্য বাতিল সেভ ঠিক
+modules/sales/draft_query.php
+assets/js/pos-draft.js
+includes/sales/sale_admin_edit.php
+modules/reports/process_invoice_edit.php
+modules/reports/invoice_edit.php
