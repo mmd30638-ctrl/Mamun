@@ -611,6 +611,14 @@
         return !!(document.body && document.body.classList.contains('ame-sale-return-memo'));
     }
 
+    function isSalesInvoiceMemoPage() {
+        return !!(document.body && document.body.classList.contains('ame-sales-invoice-page'));
+    }
+
+    function isPurchaseMemoSheetPage() {
+        return !!(document.body && document.body.classList.contains('ame-memo-sheet-page'));
+    }
+
     function memoNarrowCaptureWidth(node) {
         return cpayMemoCaptureWidth(node);
     }
@@ -698,13 +706,16 @@
         var cpayShot = isCpayReceiptPage()
             || !!(node && node.classList && node.classList.contains('memo-wrapper') && document.querySelector('.cpay-sheet'));
         var returnShot = isSaleReturnMemoPage();
-        var narrowPx = (cpayShot || returnShot) ? memoNarrowCaptureWidth(node) : 420;
-        var useNarrow = spayShot || cpayShot || returnShot;
+        var salesShot = isSalesInvoiceMemoPage() || isPurchaseMemoSheetPage();
+        var narrowPx = (cpayShot || returnShot || salesShot) ? memoNarrowCaptureWidth(node) : 420;
+        var useNarrow = spayShot || cpayShot || returnShot || salesShot;
         clone.style.cssText = [
-            'position:absolute',
-            'left:0',
+            'position:fixed',
+            'left:-10000px',
             'top:0',
             'z-index:-1',
+            'visibility:hidden',
+            'pointer-events:none',
             'width:' + (useNarrow ? (narrowPx + 'px') : (A4_CSS_PX + 'px')),
             'max-width:' + (useNarrow ? (narrowPx + 'px') : (A4_CSS_PX + 'px')),
             'background:#ffffff',
@@ -858,10 +869,14 @@
         var spayShot = clone.classList && clone.classList.contains('spay-memo');
         var cpayClone = isCpayReceiptPage();
         var returnShot = isSaleReturnMemoPage();
-        var narrowCapture = spayShot || cpayClone || returnShot;
-        var narrowW = (cpayClone || returnShot) ? memoNarrowCaptureWidth(node) : 420;
+        var salesShot = isSalesInvoiceMemoPage() || isPurchaseMemoSheetPage();
+        var narrowCapture = spayShot || cpayClone || returnShot || salesShot;
+        var narrowW = (cpayClone || returnShot || salesShot) ? memoNarrowCaptureWidth(node) : 420;
         if (returnShot) {
             narrowW = Math.max(narrowW, 400);
+        }
+        if (salesShot) {
+            narrowW = Math.max(narrowW, 300);
         }
         var box = measureCloneCanvasBox(clone, narrowCapture ? narrowW : A4_CSS_PX);
         var boxW = narrowCapture ? box.w : A4_CSS_PX;

@@ -1,3 +1,7 @@
+# 10.98.999 — বিক্রয়/ক্রয় মেমো: Chrome PC হোয়াটসঅ্যাপ — ডান খালি ঠিক
+modules/purchase/memo_digital.php
+assets/css/ame-memo-sheet.css
+assets/js/ame-memo-file.js
 # 10.98.998 — বিক্রয় মেমো: PC তে ডান পাশ খালি — সেন্টার + পূর্ণ ব্যাকগ্রাউন্ড
 modules/sales/invoice.php
 assets/js/ame-desktop-site.js

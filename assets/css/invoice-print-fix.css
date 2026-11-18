@@ -6,14 +6,17 @@ body.ame-due-reminder-page #main-content {
 }
 
 html.ame-memo-standalone-fit:has(body.ame-sales-invoice-page),
-html[data-ame-memo-standalone="1"]:has(body.ame-sales-invoice-page) {
+html.ame-memo-standalone-fit:has(body.ame-memo-sheet-page),
+html[data-ame-memo-standalone="1"]:has(body.ame-sales-invoice-page),
+html[data-ame-memo-standalone="1"]:has(body.ame-memo-sheet-page) {
   width: 100% !important;
   max-width: 100% !important;
   min-height: 100%;
   background: #E8EEF5 !important;
   overflow-x: hidden !important;
 }
-html body.ame-sales-invoice-page {
+html body.ame-sales-invoice-page,
+html body.ame-memo-sheet-page {
   width: 100% !important;
   max-width: 100% !important;
   margin: 0 auto !important;
@@ -23,8 +26,11 @@ html body.ame-sales-invoice-page {
   align-items: center !important;
 }
 html body.ame-sales-invoice-page .ame-invoice-memo-shell,
+html body.ame-memo-sheet-page .ame-invoice-memo-shell,
 html body.ame-sales-invoice-page #memo-container,
-html body.ame-sales-invoice-page .memo-wrapper {
+html body.ame-memo-sheet-page #memo-container,
+html body.ame-sales-invoice-page .memo-wrapper,
+html body.ame-memo-sheet-page .memo-wrapper {
   margin-left: auto !important;
   margin-right: auto !important;
   transform: none !important;
@@ -36,6 +42,9 @@ html body.ame-sales-invoice-page .memo-wrapper[data-ame-fit="1"] {
   top: auto !important;
   width: min(480px, calc(100vw - 24px)) !important;
   height: auto !important;
+}
+html.ame-memo-standalone-fit body.ame-sales-invoice-page .ame-invoice-viewport-bg {
+  display: block !important;
 }
 #memo-container,
 .memo-wrapper,
@@ -56,6 +65,14 @@ html body.ame-sales-invoice-page .memo-wrapper[data-ame-fit="1"] {
   border-radius: 10px !important;
   line-height: 1.45 !important;
   overflow: hidden !important;
+}
+
+html body.ame-sales-invoice-page #memo-container,
+html body.ame-sales-invoice-page #memo-container.memo-wrapper,
+html body.ame-memo-sheet-page #memo-container,
+html body.ame-memo-sheet-page #memo-container.memo-wrapper {
+  width: min(480px, calc(100% - 24px)) !important;
+  max-width: 100% !important;
 }
 
 .ame-centered-overlay #spayMemo,

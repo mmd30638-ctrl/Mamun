@@ -844,8 +844,14 @@
     if (path.indexOf('/modules/sales/invoice.php') >= 0) {
       return true;
     }
+    if (path.indexOf('/modules/purchase/memo_digital.php') >= 0) {
+      return true;
+    }
     var body = document.body;
-    return !!(body && body.classList.contains('ame-sales-invoice-page'));
+    return !!(body && (
+      body.classList.contains('ame-sales-invoice-page')
+      || body.classList.contains('ame-memo-sheet-page')
+    ));
   }
 
   function boot() {

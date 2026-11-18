@@ -515,6 +515,17 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
             min-height: 100%;
             background: #E8EEF5 !important;
         }
+        .ame-invoice-viewport-bg {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #E8EEF5;
+            z-index: -2;
+            pointer-events: none;
+        }
         html.ame-memo-standalone-fit,
         html.ame-memo-standalone-fit body.ame-sales-invoice-page,
         html.ame-phone-desktop.ame-memo-standalone-fit body.ame-sales-invoice-page {
@@ -556,6 +567,7 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
     </style>
 </head>
 <body class="ame-sales-invoice-page <?php echo htmlspecialchars($paper_class, ENT_QUOTES, 'UTF-8'); ?>" data-paper="<?php echo htmlspecialchars((string)$paper_width, ENT_QUOTES, 'UTF-8'); ?>" data-ame-memo-standalone="1">
+    <div class="ame-invoice-viewport-bg" aria-hidden="true"></div>
 
     <div class="ame-invoice-memo-shell">
     <!-- শীর্ষ একশন বার (প্রিন্ট, শেয়ার, ডাউনলোড) -->
@@ -867,7 +879,9 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
                 window.AME_SALE_DESKTOP_SITE = false;
                 delete window.AME_SALE_DESKTOP_FIT;
             } catch (e) {}
-            if (typeof window.ameApplySaleDesktopViewport === 'function') {
+            if (typeof window.ameMemoStandaloneViewportReset === 'function') {
+                window.ameMemoStandaloneViewportReset();
+            } else if (typeof window.ameApplySaleDesktopViewport === 'function') {
                 window.ameApplySaleDesktopViewport();
             }
             var meta = document.querySelector('meta[name="viewport"]');

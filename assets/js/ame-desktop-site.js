@@ -49,6 +49,9 @@
         if (b.classList.contains('ame-sales-invoice-page')) {
             return true;
         }
+        if (b.classList.contains('ame-memo-sheet-page')) {
+            return true;
+        }
         if (b.getAttribute('data-ame-memo-standalone') === '1') {
             return true;
         }
@@ -58,30 +61,54 @@
         if (/\/modules\/sales\/invoice\.php$/i.test(String(location.pathname || ''))) {
             return true;
         }
+        if (/\/modules\/purchase\/memo_digital\.php$/i.test(String(location.pathname || ''))) {
+            return true;
+        }
         if (document.getElementById('memo-container') && document.querySelector('.inv-action-bar')) {
             return true;
         }
         return false;
     }
 
+    window.ameMemoStandaloneViewportReset = function ameMemoStandaloneViewportReset() {
+        var root = document.documentElement;
+        root.setAttribute('data-ame-memo-standalone', '1');
+        root.classList.add('ame-memo-standalone-fit');
+        root.classList.remove('ame-phone-desktop');
+        window.AME_SALE_DESKTOP_SITE = false;
+        try {
+            delete window.AME_SALE_DESKTOP_FIT;
+        } catch (e) {}
+        var metaMemo = document.querySelector('meta[name="viewport"]');
+        if (metaMemo) {
+            metaMemo.setAttribute(
+                'content',
+                'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover'
+            );
+        }
+        root.style.width = '100%';
+        root.style.maxWidth = '100%';
+        root.style.margin = '0';
+        root.style.transform = 'none';
+        if (document.body) {
+            document.body.style.width = '100%';
+            document.body.style.maxWidth = '100%';
+            document.body.style.marginLeft = 'auto';
+            document.body.style.marginRight = 'auto';
+            document.body.style.transform = 'none';
+        }
+    }
+
     window.ameApplySaleDesktopViewport = function () {
+        if (ameMemoStandaloneNoDesktopViewport()) {
+            ameMemoStandaloneViewportReset();
+            return;
+        }
         if (!window.amePhoneDesktopSite()) {
             return;
         }
         window.AME_SALE_DESKTOP_SITE = true;
         document.documentElement.classList.add('ame-phone-desktop');
-        if (ameMemoStandaloneNoDesktopViewport()) {
-            document.documentElement.classList.add('ame-memo-standalone-fit');
-            var metaMemo = document.querySelector('meta[name="viewport"]');
-            if (metaMemo) {
-                metaMemo.setAttribute(
-                    'content',
-                    'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover'
-                );
-            }
-            window.AME_SALE_DESKTOP_SITE = false;
-            return;
-        }
         var design = 1366;
         if (!window.AME_SALE_DESKTOP_FIT) {
             var fitNow = window.innerWidth || screen.width || design;

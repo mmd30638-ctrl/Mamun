@@ -43,22 +43,40 @@ $file_base = 'purchase-' . preg_replace('/[^A-Za-z0-9_-]+/', '-', (string) ($mem
 $party = (string) ($partyRow['name'] ?? '');
 ?>
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" data-ame-memo-standalone="1" class="ame-memo-standalone-fit">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover">
+    <script>
+    (function () {
+        var root = document.documentElement;
+        root.setAttribute('data-ame-memo-standalone', '1');
+        root.classList.add('ame-memo-standalone-fit');
+        var meta = document.querySelector('meta[name="viewport"]');
+        if (meta) {
+            meta.setAttribute('content', 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover');
+        }
+    })();
+    </script>
+    <script src="/assets/js/ame-desktop-site.js?v=<?php echo $ver; ?>"></script>
+    <script>
+    if (typeof window.ameApplySaleDesktopViewport === 'function') { window.ameApplySaleDesktopViewport(); }
+    </script>
     <title><?php echo $memo ? 'ক্রয় মেমো #' . ame_purchase_memo_h($memo['memo_no']) : 'ক্রয় মেমো'; ?> - <?php echo ame_purchase_memo_h($shop_name); ?></title>
     <link rel="stylesheet" href="/assets/css/ame-front-colors.css">
+    <link rel="stylesheet" href="/assets/css/memo-clear.css?v=<?php echo $ver; ?>">
     <link rel="stylesheet" href="/assets/css/ame-memo-sheet.css?v=<?php echo $ver; ?>">
     <link rel="stylesheet" href="/assets/css/invoice-print-fix.css?v=<?php echo $ver; ?>">
 </head>
-<body class="ame-memo-sheet-page ame-paper-80mm" data-paper="80mm">
+<body class="ame-memo-sheet-page ame-paper-80mm" data-paper="80mm" data-ame-memo-standalone="1">
+    <div class="ame-invoice-viewport-bg" aria-hidden="true"></div>
 <?php if (!$memo): ?>
     <div class="ame-memo-missing">
         <p>ক্রয়ের মেমো পাওয়া যায়নি।</p>
         <a href="add.php">নতুন ক্রয়</a>
     </div>
 <?php else: ?>
+    <div class="ame-invoice-memo-shell">
     <?php if (!empty($_GET['ok'])): ?>
     <div class="ame-pay-ok no-print">
         <div style="font-size:36px;line-height:1;">✓</div>
@@ -91,6 +109,7 @@ $party = (string) ($partyRow['name'] ?? '');
     </nav>
 
     <?php ame_purchase_memo_render_sheet($db, $memo); ?>
+    </div>
 
     <script src="/assets/js/ame-memo-file.js?v=<?php echo $ver; ?>"></script>
     <script>
@@ -127,6 +146,31 @@ $party = (string) ($partyRow['name'] ?? '');
                     }
                 }, 400);
             }
+        });
+    })();
+    </script>
+    <script>
+    (function () {
+        function amePurchaseMemoDesktopFill() {
+            var body = document.body;
+            if (!body || !body.classList.contains('ame-memo-sheet-page')) {
+                return;
+            }
+            var root = document.documentElement;
+            root.setAttribute('data-ame-memo-standalone', '1');
+            root.classList.add('ame-memo-standalone-fit');
+            root.classList.remove('ame-phone-desktop');
+            if (typeof window.ameMemoStandaloneViewportReset === 'function') {
+                window.ameMemoStandaloneViewportReset();
+            } else if (typeof window.ameApplySaleDesktopViewport === 'function') {
+                window.ameApplySaleDesktopViewport();
+            }
+        }
+        amePurchaseMemoDesktopFill();
+        document.addEventListener('DOMContentLoaded', amePurchaseMemoDesktopFill);
+        window.addEventListener('resize', amePurchaseMemoDesktopFill);
+        window.addEventListener('orientationchange', function () {
+            setTimeout(amePurchaseMemoDesktopFill, 50);
         });
     })();
     </script>
