@@ -67,6 +67,9 @@ try {
         if ($name === '') {
             fam_go($back, '', 'নাম লাগবে।');
         }
+        if ($gid < 1) {
+            fam_go($back, '', 'গ্রুপ নির্বাচন করুন — তারপর ডান পাশে ওই গ্রুপের তালিকায় দেখাবে।');
+        }
         $fields = [$gid, $name, fam_post('mobile'), fam_post('alt_mobile'), fam_post('address'), fam_post('email'), fam_post('profession'), fam_post('organization'), fam_post('relation_note'), fam_post('notes')];
         if ($id > 0) {
             $st = fam_run($db, 'UPDATE family_contacts SET group_id=NULLIF(?,0), name=?, mobile=?, alt_mobile=?, address=?, email=?, profession=?, organization=?, relation_note=?, notes=? WHERE id=?', 'isssssssssi', array_merge($fields, [$id]));

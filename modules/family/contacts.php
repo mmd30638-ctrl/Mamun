@@ -5,6 +5,15 @@ fam_open('fam_title_contacts', 'fam_lead_contacts');
 $q = trim((string)($_GET['q'] ?? ''));
 $g = (int)($_GET['g'] ?? 0);
 $edit = !empty($_GET['id']) ? fam_one('SELECT * FROM family_contacts WHERE id=' . (int)$_GET['id']) : null;
+$backQs = [];
+if ($g > 0) {
+    $backQs['g'] = (string)$g;
+}
+if ($q !== '') {
+    $backQs['q'] = $q;
+}
+$backHref = '/modules/family/contacts.php' . ($backQs ? ('?' . http_build_query($backQs)) : '');
+
 $sql = 'SELECT c.*, g.name AS gname FROM family_contacts c LEFT JOIN family_groups g ON g.id=c.group_id WHERE 1';
 if ($g) {
     $sql .= ' AND c.group_id=' . $g;
@@ -15,6 +24,58 @@ if ($q !== '') {
 }
 $sql .= ' ORDER BY c.name';
 $rows = fam_rows($sql);
+
+$groupSections = [];
+$activeGroupName = '';
+if ($g > 0) {
+    foreach (fam_groups() as $gr) {
+        if ((int)$gr['id'] === $g) {
+            $activeGroupName = (string)$gr['name'];
+            break;
+        }
+    }
+    if ($activeGroupName !== '') {
+        $groupSections[] = ['id' => $g, 'name' => $activeGroupName, 'rows' => $rows];
+    } else {
+        $groupSections[] = ['id' => $g, 'name' => 'নির্বাচিত গ্রুপ', 'rows' => $rows];
+    }
+} else {
+    $allSql = 'SELECT c.*, g.name AS gname FROM family_contacts c LEFT JOIN family_groups g ON g.id=c.group_id WHERE 1';
+    if ($q !== '') {
+        $l = fam_db()->real_escape_string($q);
+        $allSql .= " AND (c.name LIKE '%$l%' OR c.mobile LIKE '%$l%' OR c.relation_note LIKE '%$l%' OR c.profession LIKE '%$l%' OR c.organization LIKE '%$l%')";
+    }
+    $allSql .= ' ORDER BY g.name IS NULL, g.name, c.name';
+    $allRows = fam_rows($allSql);
+    $bucket = [];
+    foreach ($allRows as $c) {
+        $gid = (int)($c['group_id'] ?? 0);
+        if (!isset($bucket[$gid])) {
+            $lbl = $gid > 0 ? (string)($c['gname'] ?? 'গ্রুপ') : 'গ্রুপ নির্ধারণ নেই';
+            $bucket[$gid] = ['id' => $gid, 'name' => $lbl, 'rows' => []];
+        }
+        $bucket[$gid]['rows'][] = $c;
+    }
+    foreach (fam_groups() as $gr) {
+        $gid = (int)$gr['id'];
+        if (!empty($bucket[$gid]['rows'])) {
+            $bucket[$gid]['name'] = (string)$gr['name'];
+            $groupSections[] = $bucket[$gid];
+            unset($bucket[$gid]);
+        }
+    }
+    if (!empty($bucket[0]['rows'] ?? [])) {
+        $groupSections[] = $bucket[0];
+        unset($bucket[0]);
+    }
+    foreach ($bucket as $sec) {
+        if (!empty($sec['rows'])) {
+            $groupSections[] = $sec;
+        }
+    }
+}
+
+$formGroup = $edit ? ($edit['group_id'] ?? null) : ($g > 0 ? $g : null);
 ?>
 <header class="fam-desk-hero">
   <p class="fam-desk-kicker">পারিবারিক খাতা</p>
@@ -34,10 +95,10 @@ $rows = fam_rows($sql);
   <form class="fam-form" method="post" action="/modules/family/process.php">
     <?php echo csrf_field(); ?>
     <input type="hidden" name="do" value="contact_save">
-    <input type="hidden" name="back" value="/modules/family/contacts.php">
+    <input type="hidden" name="back" value="<?php echo esc_html($backHref); ?>">
     <input type="hidden" name="id" value="<?php echo (int)($edit['id'] ?? 0); ?>">
     <label>নাম<input name="name" required value="<?php echo esc_html($edit['name'] ?? ''); ?>"></label>
-    <label>গ্রুপ<select name="group_id"><?php echo fam_group_opts($edit['group_id'] ?? null); ?></select></label>
+    <label>গ্রুপ<select name="group_id" required><?php echo fam_group_opts($formGroup); ?></select></label>
     <div class="row2">
       <label>মোবাইল<input name="mobile" value="<?php echo esc_html($edit['mobile'] ?? ''); ?>"></label>
       <label>বিকল্প নম্বর<input name="alt_mobile" value="<?php echo esc_html($edit['alt_mobile'] ?? ''); ?>"></label>
@@ -54,30 +115,41 @@ $rows = fam_rows($sql);
   </form>
 </section>
 <?php endif; ?>
-<section class="fam-panel">
-  <h2><?php echo count($rows); ?> জন</h2>
-  <?php if (!$rows) echo fam_empty('কোনো পরিচিত নেই।'); ?>
-  <?php foreach ($rows as $c): ?>
-    <div class="fam-row">
-      <div>
-        <strong><?php echo esc_html($c['name']); ?></strong>
-        <small><?php echo esc_html(trim(($c['gname'] ?? '') . ' · ' . ($c['relation_note'] ?? '') . ' · ' . ($c['profession'] ?? ''), ' ·')); ?></small>
+<section class="fam-panel fam-contacts-list">
+  <h2><?php echo count($rows); ?> জন<?php echo $g > 0 && $activeGroupName !== '' ? ' · ' . esc_html($activeGroupName) : ''; ?></h2>
+  <?php if (!$rows): ?>
+    <?php echo fam_empty($g > 0 ? 'এই গ্রুপে এখনো কাউকে যোগ করেননি। বামের ফর্মে গ্রুপ সিলেক্ট করে সংরক্ষণ করুন।' : 'কোনো পরিচিত নেই।'); ?>
+  <?php else: ?>
+    <?php foreach ($groupSections as $sec): ?>
+      <div class="fam-grp-block">
+        <h3 class="fam-grp-hd">
+          <span><?php echo esc_html($sec['name']); ?></span>
+          <em><?php echo count($sec['rows']); ?> জন</em>
+        </h3>
+        <?php foreach ($sec['rows'] as $c): ?>
+        <div class="fam-row">
+          <div>
+            <strong><?php echo esc_html($c['name']); ?></strong>
+            <small><?php echo esc_html(trim(($c['relation_note'] ?? '') . ' · ' . ($c['profession'] ?? ''), ' ·')); ?></small>
+          </div>
+          <div>
+            <?php echo fam_tel_btns($c['mobile'] ?: $c['alt_mobile']); ?>
+            <?php if (fam_can_write()): ?>
+              <a class="fam-mini" href="contacts.php?id=<?php echo (int)$c['id']; ?><?php echo $g ? '&g=' . $g : ''; ?>">সম্পাদনা</a>
+              <form method="post" action="/modules/family/process.php" style="display:inline" onsubmit="return confirm('মুছবেন?')">
+                <?php echo csrf_field(); ?>
+                <input type="hidden" name="do" value="contact_delete">
+                <input type="hidden" name="back" value="<?php echo esc_html($backHref); ?>">
+                <input type="hidden" name="id" value="<?php echo (int)$c['id']; ?>">
+                <button class="fam-mini" type="submit">মুছুন</button>
+              </form>
+            <?php endif; ?>
+          </div>
+        </div>
+        <?php endforeach; ?>
       </div>
-      <div>
-        <?php echo fam_tel_btns($c['mobile'] ?: $c['alt_mobile']); ?>
-        <?php if (fam_can_write()): ?>
-          <a class="fam-mini" href="contacts.php?id=<?php echo (int)$c['id']; ?>">সম্পাদনা</a>
-          <form method="post" action="/modules/family/process.php" style="display:inline" onsubmit="return confirm('মুছবেন?')">
-            <?php echo csrf_field(); ?>
-            <input type="hidden" name="do" value="contact_delete">
-            <input type="hidden" name="back" value="/modules/family/contacts.php">
-            <input type="hidden" name="id" value="<?php echo (int)$c['id']; ?>">
-            <button class="fam-mini" type="submit">মুছুন</button>
-          </form>
-        <?php endif; ?>
-      </div>
-    </div>
-  <?php endforeach; ?>
+    <?php endforeach; ?>
+  <?php endif; ?>
 </section>
 </div>
 <?php fam_close(); include __DIR__ . '/../../partials/footer.php'; ?>

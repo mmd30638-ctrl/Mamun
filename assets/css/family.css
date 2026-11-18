@@ -392,6 +392,23 @@
   background: #e8eef6;
 }
 .fam-chip.on { background: #003F8F !important; color: #ffffff !important; }
+.fam-contacts-list .fam-grp-block { margin-bottom: 14px; border: 1px solid #c5d4e8; border-radius: 12px; overflow: hidden; background: #f8fafc; }
+.fam-contacts-list .fam-grp-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 12px;
+  background: linear-gradient(90deg, #e8f0fc 0%, #f8fafc 100%);
+  border-bottom: 1px solid #c5d4e8;
+  font-size: 14px;
+  font-weight: 900;
+  color: #003F8F;
+}
+.fam-contacts-list .fam-grp-hd em { font-style: normal; font-size: 12px; font-weight: 800; color: #0f766e; }
+.fam-contacts-list .fam-grp-block .fam-row { background: #fff; margin: 0; border-radius: 0; border-bottom: 1px solid #e2e8f0; }
+.fam-contacts-list .fam-grp-block .fam-row:last-child { border-bottom: none; }
 
 .fam-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
 .fam-cal b { font-size: 12px; text-align: center; color: #003F8F; font-weight: 800; }

@@ -1,4 +1,10 @@
-# 10.98.995 — পারিবারিক: পরিচিত/সদস্য সংরক্ষণ + স্কিমা ঠিক
+# 10.98.996 — পরিচিত: গ্রুপ অনুযায়ী ডান পাশে তালিকা
+modules/family/contacts.php
+modules/family/process.php
+assets/css/family.css
+includes/config.php
+VERSION.txt
+# 10.98.995 — পারিবারিক: পরিচিত/সদস্য সংরক্ষণ + স্কিমা 
 modules/family/process.php
 modules/family/contacts.php
 modules/family/members.php
