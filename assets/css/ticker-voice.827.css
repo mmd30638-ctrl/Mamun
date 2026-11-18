@@ -1,0 +1,230 @@
+/**
+ * APONSHOP 8.27 — চলমান লেখা every page, not only payment / scrolling_text.
+ * Native <marquee> freezes under ame-if-live display:block and body overflow-x.
+ * Dock uses .ame-run-* (no "ticker" in the class) so inventory-first CSS cannot freeze it.
+ * CSS keyframes are fallback; JS rAF drives transform when the overlay script loads.
+ */
+@keyframes ame-run-827 {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+html body.ame-saas-os .ame-run-dock,
+html body.ame-premium-ui .ame-run-dock,
+html body.ame-if-live .ame-run-dock,
+html body .ame-run-dock {
+  position: relative !important;
+  top: auto !important;
+  left: 0 !important;
+  right: auto !important;
+  display: block !important;
+  visibility: visible !important;
+  margin: 0 !important;
+  padding: 0 12px !important;
+  background: #003F8F !important;
+  border: 0 !important;
+  border-bottom: 1px solid #002A63 !important;
+  border-radius: 0 !important;
+  z-index: 4 !important;
+  overflow: hidden !important;
+  max-width: none !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  line-height: 40px !important;
+  white-space: nowrap !important;
+  transform: none !important;
+  animation: none !important;
+  font-family: "Noto Sans Bengali", "Outfit", sans-serif !important;
+}
+
+html body .ame-run-host {
+  display: block !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  line-height: 40px !important;
+  max-width: none !important;
+  isolation: isolate;
+}
+
+html body.ame-saas-os .ame-run-line,
+html body.ame-if-live .ame-run-line,
+html body .ame-run-line {
+  display: inline-block !important;
+  width: max-content !important;
+  max-width: none !important;
+  height: 40px !important;
+  line-height: 40px !important;
+  white-space: nowrap !important;
+  vertical-align: top !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  cursor: pointer;
+  animation: ame-run-827 28s linear infinite;
+}
+
+html body .ame-run-line span {
+  padding-right: 3rem !important;
+  white-space: nowrap !important;
+  display: inline !important;
+  line-height: 40px !important;
+  height: auto !important;
+}
+
+html body .ame-run-btns,
+html body #ameTickerPlay,
+html body #ameTickerStop,
+html body #ameTickerStatus {
+  display: none !important;
+}
+
+html body .ame-run-btns button {
+  border: 0 !important;
+  border-radius: 999px !important;
+  padding: 0.45rem 0.95rem !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  cursor: pointer !important;
+  font-family: "Noto Sans Bengali", "Outfit", sans-serif !important;
+}
+
+#ameTickerPlay {
+  background: #003F8F !important;
+  color: #fff !important;
+}
+
+#ameTickerStop {
+  background: #fff !important;
+  color: #003F8F !important;
+}
+
+#ameTickerStatus {
+  margin: 0 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  width: 100% !important;
+}
+
+html body marquee[data-ame-run-hid],
+html body [data-ame-run-hid] {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+html body:has(#ameRunDock) marquee:not([data-ame-keep]) {
+  display: none !important;
+}
+
+html body:has(#ameTickerBar) .ame-run-dock {
+  display: none !important;
+}
+
+/* বিক্রয় পেজে উপরের চলমান লেখা থাকবে। নিচের ডক ও ডেস্কের দ্বিতীয় দৌড়ানো লেখা বাতিল। */
+html body.ame-pos-terminal-page:not(.ame-purchase-desk):not(.ame-purchase-terminal-page) #ameRunDock,
+html body.ame-pos-terminal-page:not(.ame-purchase-desk):not(.ame-purchase-terminal-page) .ame-desk-marquee {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  flex: 0 0 0 !important;
+}
+html body.ame-sales-pro.ame-pos-terminal-page #main-content#main-content .ame-sale-desk .ame-desk-bar {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+html body.ame-sales-pro.ame-pos-terminal-page #main-content#main-content .ame-sale-desk .ame-desk-bar .ame-desk-marquee,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content#main-content .ame-sale-desk .ame-desk-bar .ame-desk-marquee-viewport,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content#main-content .ame-sale-desk .ame-desk-bar .ame-desk-marquee-track,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content#main-content .ame-sale-desk .ame-desk-bar .ame-desk-marquee-text {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  flex: 0 0 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  animation: none !important;
+  overflow: hidden !important;
+}
+
+/* চলমান লেখা আইকন সারির উপরে, আইকনগুলো নিচে। */
+html body .master-header-fixed:has(#ameTickerBar),
+html body .master-header-fixed:has(#ameRunDock) {
+  flex-wrap: wrap !important;
+  height: auto !important;
+  align-content: flex-start !important;
+}
+html body .master-header-fixed > #ameRunDock {
+  position: relative !important;
+  top: auto !important;
+  left: 0 !important;
+  order: -10 !important;
+  flex: 1 0 100% !important;
+  width: 100% !important;
+  z-index: 4 !important;
+}
+html body #ameTickerBar,
+html body #ameTickerBar[data-ame-run-hid] {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  top: auto !important;
+  left: 0 !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  line-height: 40px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  order: -10 !important;
+  flex: 1 0 100% !important;
+  width: 100% !important;
+  z-index: 3 !important;
+  transform: none !important;
+}
+html body #ameTickerBar .ame-tbar-track-wrap,
+html body #ameTickerBar .ame-tbar-item,
+html body #ameTickerBar .ame-tbar-sep {
+  line-height: 40px !important;
+  height: auto !important;
+  white-space: nowrap !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+html body:has(#ameRunDock):not(:has(#ameTickerBar)) #main-content {
+  padding-top: var(--ame-header-h, 94px) !important;
+}
+html body:has(#ameTickerBar) #ameDutyPanel {
+  top: calc(var(--ame-header-h, 108px) + 6px) !important;
+}
+
+.ame-voice-bar,
+.ame-scroll-dock,
+.ame-ticker-dock,
+.ame-ticker-run,
+.ame-scroll-track {
+  display: none !important;
+}

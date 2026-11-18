@@ -1,0 +1,658 @@
+/* ame-purchase-pro 10.98.92 — kill empty-cart half-screen; phone/tablet/pc */
+body.ame-purchase-pro {
+  --p-navy: #0B1E4D;
+  --p-sky: #0284C7;
+  --p-sky-soft: #F0F9FF;
+  --p-sky-border: #7DD3FC;
+  --p-amber: #D97706;
+  --p-amber-soft: #FFFBEB;
+  --p-ok: #059669;
+  --p-text: #0F172A;
+  --p-muted: #64748B;
+  --p-line: #E2E8F0;
+  --p-radius: 10px;
+}
+
+/* CRITICAL: pos-terminal.css forces min-height ~58–62vh on .ame-pos-table-wrap
+   → empty cart looks like half a blank screen. Override hard. */
+body.ame-purchase-pro .ame-pur-pro .ame-pos-table-wrap,
+body.ame-purchase-pro.ame-purchase-terminal-page .ame-pos-table-wrap,
+body.ame-purchase-terminal-page.ame-purchase-pro .ame-pos-table-wrap,
+body.ame-pos-terminal-page.ame-purchase-pro .ame-pos-table-wrap {
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  flex: 0 0 auto !important;
+}
+
+body.ame-purchase-pro .ame-pur-pro .ame-pos-page,
+body.ame-purchase-pro .ame-pos-page.ame-pur-pro,
+body.ame-purchase-pro.ame-pos-terminal-page .ame-pos-page {
+  min-height: 0 !important;
+}
+
+body.ame-purchase-pro .ame-pur-pro .pc-empty-cart {
+  padding: 8px 6px !important;
+  font-size: 12px !important;
+  color: var(--p-muted) !important;
+  line-height: 1.3 !important;
+}
+
+/* When cart empty — tiny strip only */
+body.ame-purchase-pro.is-cart-empty .ame-pur-pro .ame-pos-table-wrap,
+body.ame-purchase-pro .ame-pur-pro .ame-pos-table-wrap.is-empty {
+  max-height: 72px !important;
+  min-height: 0 !important;
+}
+
+/* ===== PHONE (<768) ===== */
+body.ame-purchase-pro.ame-device-phone #main-content,
+html.ame-device-phone body.ame-purchase-pro #main-content {
+  padding: 4px 6px 88px !important;
+}
+body.ame-purchase-pro.ame-device-phone .ame-pur-pro .ame-pos-shell,
+html.ame-device-phone body.ame-purchase-pro .ame-pur-pro .ame-pos-shell {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  background: #F8FAFC !important;
+  align-items: stretch !important;
+}
+body.ame-purchase-pro.ame-device-phone .ame-pur-pro .ame-pos-card,
+html.ame-device-phone body.ame-purchase-pro .ame-pur-pro .ame-pos-card {
+  padding: 6px 8px !important;
+  margin: 0 !important;
+  border: 1px solid var(--p-line) !important;
+  border-radius: var(--p-radius) !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+body.ame-purchase-pro.ame-device-phone .ame-pur-pro .ame-pos-term-title,
+html.ame-device-phone body.ame-purchase-pro .ame-pur-pro .ame-pos-term-title {
+  display: none !important;
+}
+body.ame-purchase-pro.ame-device-phone .ame-pur-pro .ame-pos-term-bar,
+html.ame-device-phone body.ame-purchase-pro .ame-pur-pro .ame-pos-term-bar {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 6px !important;
+}
+body.ame-purchase-pro.ame-device-phone .ame-pur-pro .ame-pos-table-wrap,
+html.ame-device-phone body.ame-purchase-pro .ame-pur-pro .ame-pos-table-wrap {
+  max-height: 28dvh !important;
+  min-height: 0 !important;
+  overflow: auto !important;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--p-line) !important;
+  border-radius: 8px !important;
+}
+body.ame-purchase-pro.ame-device-phone.is-cart-empty .ame-pur-pro .ame-pos-table-wrap,
+html.ame-device-phone body.ame-purchase-pro.is-cart-empty .ame-pur-pro .ame-pos-table-wrap {
+  max-height: 120px !important;
+}
+body.ame-purchase-pro.ame-device-phone .ame-pur-pro .ame-pos-calc-row,
+html.ame-device-phone body.ame-purchase-pro .ame-pur-pro .ame-pos-calc-row {
+  grid-template-columns: 84px minmax(0,1fr) !important;
+  gap: 4px !important;
+  margin: 0 0 3px !important;
+}
+body.ame-purchase-pro.ame-device-phone .ame-pur-pro .ame-pc-top-meta,
+html.ame-device-phone body.ame-purchase-pro .ame-pur-pro .ame-pc-top-meta {
+  grid-template-columns: 1fr 1fr !important;
+  gap: 4px !important;
+  padding: 4px 6px !important;
+  margin-bottom: 4px !important;
+}
+body.ame-purchase-pro.ame-device-phone .ame-pur-sticky-dock,
+body.ame-purchase-pro.ame-device-phone .ame-pur-dock,
+html.ame-device-phone body.ame-purchase-pro .ame-pur-sticky-dock,
+html.ame-device-phone body.ame-purchase-pro .ame-pur-dock {
+  display: flex !important;
+}
+
+/* ===== TABLET (768–1023) ===== */
+body.ame-purchase-pro.ame-device-tablet #main-content,
+html.ame-device-tablet body.ame-purchase-pro #main-content {
+  padding: 8px 10px 20px !important;
+}
+body.ame-purchase-pro.ame-device-tablet .ame-pur-pro .ame-pos-shell,
+html.ame-device-tablet body.ame-purchase-pro .ame-pur-pro .ame-pos-shell {
+  display: grid !important;
+  grid-template-columns: 1.15fr 0.85fr !important;
+  gap: 10px !important;
+  align-items: start !important;
+}
+body.ame-purchase-pro.ame-device-tablet .ame-pur-pro .ame-pos-table-wrap,
+html.ame-device-tablet body.ame-purchase-pro .ame-pur-pro .ame-pos-table-wrap {
+  max-height: 40dvh !important;
+  min-height: 0 !important;
+}
+body.ame-purchase-pro.ame-device-tablet.is-cart-empty .ame-pur-pro .ame-pos-table-wrap {
+  max-height: 80px !important;
+}
+body.ame-purchase-pro.ame-device-tablet .ame-pur-sticky-dock,
+body.ame-purchase-pro.ame-device-tablet .ame-pur-dock {
+  display: none !important;
+}
+
+/* ===== PC (>=1024) ===== */
+body.ame-purchase-pro.ame-device-pc #main-content,
+html.ame-device-pc body.ame-purchase-pro #main-content {
+  padding: 12px 16px 24px !important;
+}
+body.ame-purchase-pro.ame-device-pc .ame-pur-pro .ame-pos-shell,
+html.ame-device-pc body.ame-purchase-pro .ame-pur-pro .ame-pos-shell {
+  display: grid !important;
+  grid-template-columns: 1.4fr 0.9fr !important;
+  gap: 14px !important;
+  align-items: start !important;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+body.ame-purchase-pro.ame-device-pc .ame-pur-pro .ame-pos-term-bar,
+html.ame-device-pc body.ame-purchase-pro .ame-pur-pro .ame-pos-term-bar {
+  display: grid !important;
+  grid-template-columns: 1.2fr 1fr auto !important;
+  gap: 10px !important;
+}
+body.ame-purchase-pro.ame-device-pc .ame-pur-pro .ame-pos-term-title,
+html.ame-device-pc body.ame-purchase-pro .ame-pur-pro .ame-pos-term-title {
+  display: flex !important;
+}
+body.ame-purchase-pro.ame-device-pc .ame-pur-pro .ame-pos-table-wrap,
+html.ame-device-pc body.ame-purchase-pro .ame-pur-pro .ame-pos-table-wrap {
+  max-height: 42vh !important;
+  min-height: 0 !important;
+}
+body.ame-purchase-pro.ame-device-pc.is-cart-empty .ame-pur-pro .ame-pos-table-wrap {
+  max-height: 96px !important;
+}
+body.ame-purchase-pro.ame-device-pc .ame-pur-sticky-dock,
+body.ame-purchase-pro.ame-device-pc .ame-pur-dock {
+  display: none !important;
+}
+
+/* Shared look */
+body.ame-purchase-pro .ame-pur-pro .ame-pos-card-title {
+  display: inline-flex !important;
+  align-items: center;
+  padding: 3px 10px !important;
+  margin: 0 0 6px !important;
+  background: var(--p-navy) !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-radius: 999px !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
+body.ame-purchase-pro .ame-pur-pro .ame-pos-calc-row label,
+body.ame-purchase-pro .ame-pur-pro .ame-pc-top-meta label,
+body.ame-purchase-pro .ame-pur-pro .ame-pos-summary label {
+  margin: 0 !important;
+  padding: 3px 6px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+  color: var(--p-navy) !important;
+  -webkit-text-fill-color: var(--p-navy) !important;
+  background: var(--p-sky-soft) !important;
+  border: 1px solid var(--p-sky-border) !important;
+  border-radius: 999px !important;
+}
+body.ame-purchase-pro .ame-pur-pro .ame-pos-calc-row {
+  display: grid !important;
+  grid-template-columns: 96px minmax(0,1fr) !important;
+  gap: 6px !important;
+  align-items: center !important;
+  margin: 0 0 4px !important;
+}
+body.ame-purchase-pro .ame-pur-pro .ame-pos-calc-row input,
+body.ame-purchase-pro .ame-pur-pro .ame-pos-calc-row select,
+body.ame-purchase-pro .ame-pur-pro .ame-pos-summary input,
+body.ame-purchase-pro .ame-pur-pro .ame-pos-summary select {
+  min-height: 34px !important;
+  border: 1.5px solid #CBD5E1 !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  color: var(--p-text) !important;
+  -webkit-text-fill-color: var(--p-text) !important;
+  font-size: 13px !important;
+  padding: 4px 8px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+body.ame-purchase-pro .ame-pur-pro #productSearch,
+body.ame-purchase-pro .ame-pur-pro #supplierSearch {
+  min-height: 38px !important;
+  border: 1.5px solid var(--p-sky-border) !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  color: var(--p-text) !important;
+}
+body.ame-purchase-pro .ame-pur-pro .ame-pos-term-hist {
+  background: var(--p-sky) !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  min-height: 36px !important;
+  font-weight: 800 !important;
+}
+body.ame-purchase-pro .ame-pur-pro .ame-pos-recent-select {
+  background: var(--p-amber-soft) !important;
+  color: #92400E !important;
+  -webkit-text-fill-color: #92400E !important;
+  border: 1px solid #FCD34D !important;
+  border-radius: 8px !important;
+  font-weight: 800 !important;
+}
+body.ame-purchase-pro .ame-pur-pro .table-pos thead th {
+  background: var(--p-navy) !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  font-size: 10px !important;
+  padding: 6px 4px !important;
+  white-space: nowrap;
+  position: sticky; top: 0; z-index: 2;
+}
+body.ame-purchase-pro .ame-pur-pro .ame-pc-ledger,
+body.ame-purchase-pro .ame-pur-pro .ame-pc-balance-box {
+  background: var(--p-amber-soft) !important;
+  border: 1px solid #FCD34D !important;
+  border-radius: 8px !important;
+  padding: 6px 8px !important;
+}
+body.ame-purchase-pro .ame-pur-pro .ame-pc-ledger-formula {
+  color: #92400E !important;
+  -webkit-text-fill-color: #92400E !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+}
+body.ame-purchase-pro .ame-pur-pro .ame-pos-complete,
+body.ame-purchase-pro .ame-pur-pro .ame-pos-complete.is-draft {
+  background: var(--p-ok) !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-radius: 10px !important;
+  min-height: 42px !important;
+  font-weight: 800 !important;
+  border: none !important;
+}
+
+/* Draft / status chips — readable */
+body.ame-purchase-pro .badge-draft,
+body.ame-purchase-pro .pos-status-draft,
+body.ame-purchase-pro [data-status="draft"],
+body.ame-purchase-pro .badge-warning,
+body.ame-purchase-pro .bg-purple,
+body.ame-purchase-pro .badge-purple,
+body.ame-purchase-pro .text-bg-purple,
+body.ame-purchase-pro .badge:not(.badge-success):not(.badge-complete) {
+  background: #FEF3C7 !important;
+  color: #92400E !important;
+  -webkit-text-fill-color: #92400E !important;
+  border: 1px solid #F59E0B !important;
+  font-weight: 800 !important;
+  font-size: 11px !important;
+  padding: 3px 8px !important;
+  border-radius: 999px !important;
+}
+body.ame-purchase-pro .badge-complete,
+body.ame-purchase-pro .pos-status-complete,
+body.ame-purchase-pro [data-status="complete"],
+body.ame-purchase-pro .badge-success {
+  background: var(--p-ok) !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
+/* Sticky dock (JS class: ame-pur-sticky-dock) */
+body.ame-purchase-pro .ame-pur-sticky-dock,
+body.ame-purchase-pro .ame-pur-dock {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 500050;
+  display: none;
+  gap: 8px;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  background: rgba(255,255,255,0.97);
+  border-top: 1px solid var(--p-line);
+  box-shadow: 0 -4px 16px rgba(15,23,42,0.08);
+}
+body.ame-purchase-pro .ame-pur-sticky-dock .ame-pur-dock-total,
+body.ame-purchase-pro .ame-pur-dock .ame-pur-dock-total {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  background: var(--p-navy); color: #fff !important; -webkit-text-fill-color: #fff !important;
+  border-radius: 10px; font-weight: 800; font-size: 13px; min-height: 42px;
+}
+body.ame-purchase-pro .ame-pur-sticky-dock button,
+body.ame-purchase-pro .ame-pur-dock button {
+  flex: 1.2; min-height: 42px; border: none; border-radius: 10px;
+  background: var(--p-ok); color: #fff !important; font-weight: 800;
+}
+
+/* Media fallbacks if JS late — still kill 62vh */
+@media (max-width: 767.98px) {
+  body.ame-purchase-pro #main-content { padding: 4px 6px 88px !important; }
+  body.ame-purchase-pro .ame-pur-pro .ame-pos-shell { display: flex !important; flex-direction: column !important; }
+  body.ame-purchase-pro .ame-pur-pro .ame-pos-table-wrap {
+    min-height: 0 !important;
+    max-height: 28dvh !important;
+  }
+  body.ame-purchase-pro.is-cart-empty .ame-pur-pro .ame-pos-table-wrap { max-height: 120px !important; }
+  body.ame-purchase-pro .ame-pur-sticky-dock,
+  body.ame-purchase-pro .ame-pur-dock { display: flex !important; }
+  body.ame-purchase-pro .ame-pur-pro .ame-pos-term-title { display: none !important; }
+}
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  body.ame-purchase-pro .ame-pur-pro .ame-pos-shell {
+    display: grid !important; grid-template-columns: 1.15fr 0.85fr !important; gap: 10px !important;
+  }
+  body.ame-purchase-pro .ame-pur-pro .ame-pos-table-wrap { min-height: 0 !important; max-height: 40dvh !important; }
+  body.ame-purchase-pro .ame-pur-sticky-dock,
+  body.ame-purchase-pro .ame-pur-dock { display: none !important; }
+}
+@media (min-width: 1024px) {
+  body.ame-purchase-pro .ame-pur-pro .ame-pos-shell {
+    display: grid !important; grid-template-columns: 1.4fr 0.9fr !important; gap: 14px !important;
+  }
+  body.ame-purchase-pro .ame-pur-pro .ame-pos-table-wrap { min-height: 0 !important; max-height: 42vh !important; }
+  body.ame-purchase-pro .ame-pur-sticky-dock,
+  body.ame-purchase-pro .ame-pur-dock { display: none !important; }
+}
+
+
+/* ===== 10.98.92: touch phone must NEVER look like desktop half-page ===== */
+@media (hover: none) and (pointer: coarse) {
+  body.ame-purchase-pro #main-content {
+    padding: 4px 6px 88px !important;
+  }
+  body.ame-purchase-pro .ame-pur-pro .ame-pos-shell {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    gap: 6px !important;
+  }
+  body.ame-purchase-pro .ame-pur-pro .ame-pos-term-title {
+    display: none !important;
+  }
+  body.ame-purchase-pro .ame-pur-pro .ame-pos-table-wrap,
+  body.ame-purchase-pro.ame-purchase-terminal-page .ame-pos-table-wrap,
+  body.ame-purchase-terminal-page .ame-pos-table-wrap {
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: 26dvh !important;
+  }
+  body.ame-purchase-pro.is-cart-empty .ame-pur-pro .ame-pos-table-wrap,
+  body.ame-purchase-pro .ame-pur-pro .ame-pos-table-wrap.is-empty {
+    max-height: 120px !important;
+    min-height: 0 !important;
+  }
+  body.ame-purchase-pro .ame-pur-sticky-dock,
+  body.ame-purchase-pro .ame-pur-dock {
+    display: flex !important;
+  }
+}
+
+/* html class set by early script — win over deferred JS */
+html.ame-device-phone body.ame-purchase-pro .ame-pur-pro .ame-pos-shell,
+html[data-ame-device="phone"] body.ame-purchase-pro .ame-pur-pro .ame-pos-shell {
+  display: flex !important;
+  flex-direction: column !important;
+  grid-template-columns: none !important;
+}
+html.ame-device-phone body.ame-purchase-pro .ame-pos-table-wrap,
+html[data-ame-device="phone"] body.ame-purchase-pro .ame-pos-table-wrap {
+  min-height: 0 !important;
+  max-height: 26dvh !important;
+}
+html.ame-device-phone body.ame-purchase-pro.is-cart-empty .ame-pos-table-wrap,
+html[data-ame-device="phone"] body.ame-purchase-pro.is-cart-empty .ame-pos-table-wrap {
+  max-height: 120px !important;
+}
+
+
+/* ===== 10.98.92: desktop mode = FULL desktop (not half-broken) ===== */
+html.ame-device-pc body.ame-purchase-pro .ame-pur-pro .ame-pos-shell,
+html[data-ame-device="pc"] body.ame-purchase-pro .ame-pur-pro .ame-pos-shell,
+body.ame-purchase-pro.ame-device-pc .ame-pur-pro .ame-pos-shell {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.9fr) !important;
+  gap: 16px !important;
+  align-items: start !important;
+  max-width: 1440px !important;
+  margin: 0 auto !important;
+  min-height: calc(100vh - 120px) !important;
+}
+html.ame-device-pc body.ame-purchase-pro .ame-pur-pro .ame-pos-term-cart,
+html[data-ame-device="pc"] body.ame-purchase-pro .ame-pur-pro .ame-pos-term-cart {
+  min-height: 0 !important;
+}
+/* Empty cart on PC: short strip — never 62vh blank half */
+html.ame-device-pc body.ame-purchase-pro .ame-pos-table-wrap,
+html[data-ame-device="pc"] body.ame-purchase-pro .ame-pos-table-wrap,
+body.ame-purchase-pro.ame-device-pc .ame-pos-table-wrap {
+  min-height: 0 !important;
+  max-height: 46vh !important;
+  height: auto !important;
+}
+html.ame-device-pc body.ame-purchase-pro.is-cart-empty .ame-pos-table-wrap,
+html[data-ame-device="pc"] body.ame-purchase-pro.is-cart-empty .ame-pos-table-wrap,
+body.ame-purchase-pro.ame-device-pc.is-cart-empty .ame-pos-table-wrap {
+  max-height: 88px !important;
+  min-height: 0 !important;
+}
+/* Summary column fills right side properly */
+html.ame-device-pc body.ame-purchase-pro .ame-pur-pro .ame-pos-summary,
+html[data-ame-device="pc"] body.ame-purchase-pro .ame-pur-pro .ame-pos-summary {
+  position: sticky !important;
+  top: 8px !important;
+  align-self: start !important;
+}
+
+
+/* ===== 10.98.92 HARD RULE =====
+   Mobile treated as desktop must NOT go half-broken.
+   Real phone → always one-column compact; never desktop grid / never 62vh blank. */
+
+/* 1) Kill pos-terminal empty half on purchase ALWAYS */
+body.ame-purchase-pro .ame-pos-table-wrap,
+body.ame-purchase-pro.ame-purchase-terminal-page .ame-pos-table-wrap,
+body.ame-purchase-terminal-page.ame-purchase-pro .ame-pos-table-wrap,
+body.ame-pos-terminal-page.ame-purchase-pro .ame-pos-table-wrap {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+/* 2) Touch phone OR mobile UA class → phone UI even if width looks like desktop */
+html.ame-is-phone body.ame-purchase-pro .ame-pur-pro .ame-pos-shell,
+html.ame-force-phone body.ame-purchase-pro .ame-pur-pro .ame-pos-shell,
+body.ame-purchase-pro.ame-force-phone .ame-pur-pro .ame-pos-shell {
+  display: flex !important;
+  flex-direction: column !important;
+  grid-template-columns: none !important;
+  gap: 6px !important;
+  min-height: 0 !important;
+}
+html.ame-is-phone body.ame-purchase-pro .ame-pos-table-wrap,
+html.ame-force-phone body.ame-purchase-pro .ame-pos-table-wrap,
+body.ame-purchase-pro.ame-force-phone .ame-pos-table-wrap {
+  min-height: 0 !important;
+  max-height: 26dvh !important;
+  height: auto !important;
+}
+html.ame-is-phone body.ame-purchase-pro.is-cart-empty .ame-pos-table-wrap,
+html.ame-force-phone body.ame-purchase-pro.is-cart-empty .ame-pos-table-wrap,
+body.ame-purchase-pro.ame-force-phone.is-cart-empty .ame-pos-table-wrap {
+  max-height: 120px !important;
+}
+html.ame-is-phone body.ame-purchase-pro .ame-pos-term-title,
+html.ame-force-phone body.ame-purchase-pro .ame-pos-term-title,
+body.ame-purchase-pro.ame-force-phone .ame-pos-term-title {
+  display: none !important;
+}
+html.ame-is-phone body.ame-purchase-pro #main-content,
+html.ame-force-phone body.ame-purchase-pro #main-content,
+body.ame-purchase-pro.ame-force-phone #main-content {
+  padding: 4px 6px 88px !important;
+}
+html.ame-is-phone body.ame-purchase-pro .ame-pur-sticky-dock,
+html.ame-is-phone body.ame-purchase-pro .ame-pur-dock,
+html.ame-force-phone body.ame-purchase-pro .ame-pur-sticky-dock,
+body.ame-purchase-pro.ame-force-phone .ame-pur-sticky-dock {
+  display: flex !important;
+}
+
+/* 3) Coarse pointer (all phones) — same, beats desktop-site width */
+@media (hover: none) and (pointer: coarse) {
+  body.ame-purchase-pro .ame-pur-pro .ame-pos-shell {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    min-height: 0 !important;
+  }
+  body.ame-purchase-pro .ame-pos-table-wrap {
+    min-height: 0 !important;
+    max-height: 26dvh !important;
+    height: auto !important;
+  }
+  body.ame-purchase-pro.is-cart-empty .ame-pos-table-wrap {
+    max-height: 120px !important;
+  }
+  body.ame-purchase-pro .ame-pos-term-title { display: none !important; }
+  body.ame-purchase-pro .ame-pur-sticky-dock,
+  body.ame-purchase-pro .ame-pur-dock { display: flex !important; }
+  body.ame-purchase-pro #main-content { padding: 4px 6px 88px !important; }
+}
+
+/* 4) True desktop only: fine pointer + wide + NOT phone-forced */
+@media (hover: hover) and (pointer: fine) and (min-width: 1100px) {
+  html:not(.ame-is-phone):not(.ame-force-phone) body.ame-purchase-pro:not(.ame-force-phone) .ame-pur-pro .ame-pos-shell {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.9fr) !important;
+    gap: 16px !important;
+    align-items: start !important;
+    max-width: 1440px !important;
+    margin: 0 auto !important;
+  }
+  html:not(.ame-is-phone):not(.ame-force-phone) body.ame-purchase-pro:not(.ame-force-phone) .ame-pos-table-wrap {
+    min-height: 0 !important;
+    max-height: 46vh !important;
+  }
+  html:not(.ame-is-phone):not(.ame-force-phone) body.ame-purchase-pro.is-cart-empty:not(.ame-force-phone) .ame-pos-table-wrap {
+    max-height: 88px !important;
+  }
+}
+
+
+/* 10.98.92: after adding products (even if expense added first), cart must expand */
+body.ame-purchase-pro .ame-pos-table-wrap:not(.is-empty),
+html.ame-is-phone body.ame-purchase-pro .ame-pos-table-wrap:not(.is-empty),
+html.ame-force-phone body.ame-purchase-pro .ame-pos-table-wrap:not(.is-empty),
+body.ame-purchase-pro.ame-force-phone .ame-pos-table-wrap:not(.is-empty) {
+  max-height: min(42dvh, 420px) !important;
+  min-height: 96px !important;
+  overflow: auto !important;
+}
+body.ame-purchase-pro .pc-results.open {
+  display: block !important;
+  z-index: 600000 !important;
+}
+body.ame-purchase-pro .ame-pos-term-top,
+body.ame-purchase-pro .ame-pos-term-bar,
+body.ame-purchase-pro .ame-pos-term-search,
+body.ame-purchase-pro .pc-search-rel {
+  overflow: visible !important;
+}
+
+
+/* ===== 10.98.92 professional labels + visible product cart ===== */
+body.ame-purchase-pro .ame-pc-field-label {
+  display: flex !important;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 4px !important;
+  font-weight: 800 !important;
+  color: #0B1E4D !important;
+  font-size: 13px !important;
+}
+body.ame-purchase-pro .ame-pc-bn { color: #0B1E4D !important; }
+body.ame-purchase-pro .ame-pc-en,
+body.ame-purchase-pro .ame-pc-en-inline,
+body.ame-purchase-pro .ame-pc-en-th {
+  color: #64748B !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  -webkit-text-fill-color: #64748B !important;
+}
+body.ame-purchase-pro .ame-pc-field-hint {
+  margin: 4px 0 0 !important;
+  font-size: 11px !important;
+  color: #64748B !important;
+  font-weight: 600 !important;
+}
+body.ame-purchase-pro .ame-pc-search-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 10px !important;
+  align-items: start !important;
+}
+@media (min-width: 900px) {
+  body.ame-purchase-pro .ame-pc-search-grid {
+    grid-template-columns: 1.2fr 1fr auto !important;
+  }
+}
+body.ame-purchase-pro .ame-pos-term-controls {
+  display: block !important;
+  overflow: visible !important;
+}
+body.ame-purchase-pro #productSearch,
+body.ame-purchase-pro #supplierSearch {
+  min-height: 44px !important;
+  font-size: 14px !important;
+}
+/* Product cart MUST have room — never a 50px slit */
+body.ame-purchase-pro .ame-pos-term-cart {
+  overflow: visible !important;
+  min-height: 160px !important;
+}
+body.ame-purchase-pro .ame-pos-table-wrap,
+body.ame-purchase-pro .ame-pos-table-wrap.is-empty,
+html.ame-is-phone body.ame-purchase-pro .ame-pos-table-wrap,
+html.ame-force-phone body.ame-purchase-pro .ame-pos-table-wrap,
+body.ame-purchase-pro.is-cart-empty .ame-pos-table-wrap {
+  min-height: 140px !important;
+  max-height: min(46dvh, 480px) !important;
+  height: auto !important;
+  overflow: auto !important;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+}
+body.ame-purchase-pro .ame-pos-table-wrap:not(.is-empty) {
+  min-height: 180px !important;
+  max-height: min(50dvh, 520px) !important;
+}
+body.ame-purchase-pro .pc-empty-cart {
+  padding: 28px 12px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #64748B !important;
+}
+body.ame-purchase-pro .table-pos tbody td {
+  background: #fff !important;
+  color: #0F172A !important;
+  font-size: 12px !important;
+  vertical-align: middle !important;
+}
+body.ame-purchase-pro .ame-pos-line-input {
+  min-height: 34px !important;
+  width: 100% !important;
+  max-width: 88px !important;
+  border: 1px solid #CBD5E1 !important;
+  border-radius: 6px !important;
+  background: #fff !important;
+  color: #0F172A !important;
+}
+body.ame-purchase-pro .pc-results {
+  z-index: 700000 !important;
+}

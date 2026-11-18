@@ -1,0 +1,525 @@
+/* Header: menu, home, sales, payment note, take payment, expense. */
+
+html body .master-header-fixed .hdr-btn-group {
+    gap: 8px !important;
+    max-width: min(100%, 78vw) !important;
+}
+
+html body .master-header-fixed .hdr-icon-btn,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn {
+    flex: 0 0 32px !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 5px var(--hdr-icon-shadow), inset 0 1px 0 var(--hdr-icon-shadow-inset) !important;
+    opacity: 1 !important;
+    background: linear-gradient(145deg, var(--hdr-icon-green-1), var(--hdr-icon-green-2)) !important;
+    color: var(--hdr-icon-text-green) !important;
+    border: 1px solid var(--hdr-icon-border) !important;
+    transition: transform .15s ease, box-shadow .15s ease, filter .15s ease !important;
+}
+html body .master-header-fixed .hdr-icon-btn:hover,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn:hover,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn:hover {
+    opacity: 1 !important;
+    filter: brightness(1.08);
+    background-image: none !important;
+    transform: translateY(-1px) scale(1.05) !important;
+    box-shadow: 0 4px 9px var(--hdr-icon-shadow-hover), inset 0 1px 0 var(--hdr-icon-shadow-hover-inset) !important;
+}
+html body .master-header-fixed .hdr-icon-btn:active {
+    filter: brightness(0.92);
+    transform: translateY(0) scale(0.97) !important;
+}
+html body .master-header-fixed .hdr-icon-btn svg {
+    width: 18px !important;
+    height: 18px !important;
+    filter: drop-shadow(0 1px 1px var(--hdr-icon-svg-shadow));
+}
+
+html body .master-header-fixed .hdr-icon-btn.hdr-i-menu,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-menu,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-menu {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    flex-basis: 36px !important;
+    background: linear-gradient(145deg, var(--hdr-icon-amber-1), var(--hdr-icon-amber-2)) !important;
+    color: var(--hdr-icon-text-amber) !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-home,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-home,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-home {
+    background: linear-gradient(145deg, var(--hdr-icon-sky-1), var(--hdr-icon-sky-2)) !important;
+    color: var(--hdr-icon-text-sky) !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-sales,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-sales,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-sales {
+    background: linear-gradient(145deg, var(--hdr-icon-green-1), var(--hdr-icon-green-2)) !important;
+    color: var(--hdr-icon-text-green) !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-bell,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-bell,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-bell {
+    display: inline-flex !important;
+    background: linear-gradient(145deg, var(--hdr-icon-red-1), var(--hdr-icon-red-2)) !important;
+    color: var(--hdr-icon-text-red) !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-bell.has-alert {
+    animation: ame-hdr-bell-pulse 1.8s ease-in-out infinite;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-due8,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-due8,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-due8 {
+    display: inline-flex !important;
+    background: linear-gradient(145deg, #fb923c, #c2410c) !important;
+    color: #fff7ed !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-due8.has-alert {
+    animation: ame-hdr-bell-pulse 1.8s ease-in-out infinite;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-due8.is-off {
+    background: linear-gradient(145deg, #94a3b8, #64748b) !important;
+    color: #f8fafc !important;
+    animation: none !important;
+}
+@keyframes ame-hdr-bell-pulse {
+    0%, 100% { box-shadow: 0 2px 5px var(--hdr-bell-pulse-1), inset 0 1px 0 var(--hdr-icon-shadow-inset); }
+    50% { box-shadow: 0 2px 5px var(--hdr-bell-pulse-1), 0 0 0 5px var(--hdr-bell-pulse-2); }
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-pay,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-pay,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-pay {
+    display: inline-flex !important;
+    background: linear-gradient(145deg, var(--hdr-icon-cyan-1), var(--hdr-icon-cyan-2)) !important;
+    color: var(--hdr-icon-text-cyan) !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-expense,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-expense,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-expense {
+    display: inline-flex !important;
+    background: linear-gradient(145deg, var(--hdr-icon-violet-1), var(--hdr-icon-violet-2)) !important;
+    color: var(--hdr-icon-text-violet) !important;
+}
+
+/* ⭐ নতুন — শর্টকাটে কাস্টমার যোগ */
+html body .master-header-fixed .hdr-icon-btn.hdr-i-custadd,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-custadd,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-custadd {
+    display: inline-flex !important;
+    background: linear-gradient(145deg, var(--hdr-icon-pink-1), var(--hdr-icon-pink-2)) !important;
+    color: var(--hdr-icon-text-pink) !important;
+}
+/* ⭐ নতুন — কর্মীর পেমেন্ট */
+html body .master-header-fixed .hdr-icon-btn.hdr-i-staffpay,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-staffpay,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-staffpay {
+    display: inline-flex !important;
+    background: linear-gradient(145deg, var(--hdr-icon-teal-1), var(--hdr-icon-teal-2)) !important;
+    color: var(--hdr-icon-text-teal) !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-live,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-live,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-live {
+    display: inline-flex !important;
+    background: linear-gradient(145deg, #22c55e, #15803d) !important;
+    color: #f0fdf4 !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-duty,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-duty,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-duty {
+    display: inline-flex !important;
+    background: linear-gradient(145deg, #4ade80, #15803d) !important;
+    color: #f0fdf4 !important;
+}
+/* ⭐ নতুন — সাধারণ লেনদেন */
+html body .master-header-fixed .hdr-icon-btn.hdr-i-txn,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-txn,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-txn {
+    display: inline-flex !important;
+    background: linear-gradient(145deg, var(--hdr-icon-indigo-1), var(--hdr-icon-indigo-2)) !important;
+    color: var(--hdr-icon-text-indigo) !important;
+}
+/* ⭐ নতুন — প্রোডাক্ট স্টক নোটিফিকেশন (আগে hdr-i-stock ক্লাসটা এই ফাইলেই
+   display:none করা ছিল, নিচে display:none তালিকা থেকে বাদ দিয়ে এখানে
+   দৃশ্যমান করা হলো) */
+html body .master-header-fixed .hdr-icon-btn.hdr-i-stock,
+html body.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-stock,
+html body.ame-saas-os .master-header-fixed .hdr-icon-btn.hdr-i-stock {
+    display: inline-flex !important;
+    background: linear-gradient(145deg, var(--hdr-icon-orange-1), var(--hdr-icon-orange-2)) !important;
+    color: var(--hdr-icon-text-orange) !important;
+}
+html body .master-header-fixed .hdr-icon-btn.hdr-i-stock.has-alert {
+    animation: ame-hdr-stock-pulse 1.8s ease-in-out infinite;
+}
+html body .master-header-fixed .hdr-stock-wrap {
+    position: relative !important;
+    display: inline-flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    height: 32px !important;
+    gap: 0 !important;
+    overflow: visible !important;
+}
+html body .master-header-fixed .hdr-stock-wrap .hdr-i-stock {
+    border-radius: 10px 0 0 10px !important;
+}
+html body .master-header-fixed .hdr-stock-free {
+    position: static !important;
+    z-index: 3 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 32px !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    margin: 0 0 0 -1px !important;
+    padding: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+    border-radius: 0 10px 10px 0 !important;
+    background: #e2e8f0 !important;
+    color: #64748b !important;
+    -webkit-text-fill-color: #64748b !important;
+    cursor: pointer !important;
+    box-shadow: none !important;
+}
+html body .master-header-fixed .hdr-stock-free svg {
+    width: 18px !important;
+    height: 18px !important;
+}
+html body .master-header-fixed .hdr-stock-free.is-on {
+    background: #047857 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+@keyframes ame-hdr-stock-pulse {
+    0%, 100% { box-shadow: 0 2px 5px var(--hdr-stock-pulse-1), inset 0 1px 0 var(--hdr-icon-shadow-inset); }
+    50% { box-shadow: 0 2px 5px var(--hdr-stock-pulse-1), 0 0 0 5px var(--hdr-stock-pulse-2); }
+}
+
+html body .master-header-fixed .hdr-icon-btn.hdr-i-back,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-pulse,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-full,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-lang,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-calc,
+html body .master-header-fixed .hdr-icon-btn.hdr-i-net,
+html body .master-header-fixed .hdr-store-switch,
+html body .master-header-fixed .hdr-store-manage {
+    display: none !important;
+}
+
+html body .master-header-fixed .hdr-clock,
+html body.ame-premium-ui .master-header-fixed .hdr-clock,
+html body.ame-saas-os .master-header-fixed .hdr-clock {
+    color: var(--hdr-clock, #2DD4BF) !important;
+    background: rgba(0, 0, 0, 0.55) !important;
+    border-color: color-mix(in srgb, var(--hdr-clock, #2DD4BF) 42%, transparent) !important;
+}
+html body .master-header-fixed .hdr-clock small,
+html body.ame-premium-ui .master-header-fixed .hdr-clock small,
+html body.ame-saas-os .master-header-fixed .hdr-clock small,
+html body.ame-premium-ui .master-header-fixed .hdr-clock,
+html body.ame-saas-os .master-header-fixed .hdr-clock {
+    color: var(--hdr-clock, #2DD4BF) !important;
+}
+html body.ame-premium-ui .master-header-fixed .hdr-clock small,
+html body.ame-saas-os .master-header-fixed .hdr-clock small {
+    color: color-mix(in srgb, var(--hdr-clock, #2DD4BF) 72%, #ffffff) !important;
+}
+
+@media (max-width: 640px) {
+    html body .master-header-fixed .hdr-icon-btn {
+        width: 30px !important;
+        height: 30px !important;
+        min-width: 30px !important;
+        flex-basis: 30px !important;
+    }
+    html body .master-header-fixed .hdr-icon-btn.hdr-i-menu {
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        flex-basis: 34px !important;
+    }
+}
+
+.sb-quick {
+    margin: 0 0 14px;
+    padding: 0 0 10px;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+.sb-quick-label {
+    margin: 0 0 8px;
+    padding: 0 4px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #64748b;
+}
+.sb-quick .direct-link {
+    position: relative;
+}
+.sb-quick-badge {
+    margin-left: auto;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #b91c1c;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.sb-quick-badge-stock { background: #c2410c; }
+.sb-quick-dot {
+    margin-left: auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: #16a34a;
+}
+#ame-net-icon.is-off .sb-quick-dot { background: #dc2626; }
+.sb-store-switch {
+    margin: 6px 4px 0;
+}
+.sb-store-switch label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #0b1e4d;
+}
+.sb-store-switch select {
+    flex: 1;
+    min-height: 36px;
+    border: 1px solid #d9dee5;
+    border-radius: 8px;
+    background: #fff;
+    color: #000;
+    font-weight: 700;
+}
+
+html body .custom-sidebar .sb-theme-open,
+html body.ame-premium-ui .custom-sidebar .sb-theme-open,
+html body.ame-saas-os .custom-sidebar .sb-theme-open {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin: 0 0 14px !important;
+    padding: 11px 12px !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    cursor: pointer !important;
+    text-align: left !important;
+    background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 58%, #c9a227 100%) !important;
+    color: #fff !important;
+    box-shadow: 0 8px 18px rgba(29, 78, 216, 0.28) !important;
+    filter: none !important;
+    text-decoration: none !important;
+}
+html body .custom-sidebar a.sb-atlas-open,
+html body.ame-premium-ui .custom-sidebar a.sb-atlas-open,
+html body.ame-saas-os .custom-sidebar a.sb-atlas-open,
+html body.ame-if-live .custom-sidebar a.sb-atlas-open,
+html body.ame-if-dash .custom-sidebar a.sb-atlas-open,
+html body .sidebar-menu-body a.sb-atlas-open {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin: 0 0 8px !important;
+    padding: 11px 12px !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    cursor: pointer !important;
+    text-align: left !important;
+    background: linear-gradient(135deg, #0B3A82 0%, #4C1D95 100%) !important;
+    color: #fff !important;
+    box-shadow: 0 8px 18px rgba(15, 118, 110, 0.28) !important;
+    filter: none !important;
+    text-decoration: none !important;
+}
+html body .custom-sidebar .sb-theme-copy strong,
+html body.ame-premium-ui .custom-sidebar .sb-theme-copy strong,
+html body.ame-saas-os .custom-sidebar .sb-theme-copy strong,
+html body.ame-if-live .custom-sidebar a.sb-atlas-open strong,
+html body .sidebar-menu-body a.sb-atlas-open strong {
+    color: #fff !important;
+}
+html body .custom-sidebar .sb-theme-copy small,
+html body.ame-premium-ui .custom-sidebar .sb-theme-copy small,
+html body.ame-saas-os .custom-sidebar .sb-theme-copy small,
+html body.ame-if-live .custom-sidebar a.sb-atlas-open small,
+html body .sidebar-menu-body a.sb-atlas-open small {
+    color: rgba(255, 255, 255, 0.88) !important;
+}
+html body .custom-sidebar .sb-theme-swatch,
+html body.ame-premium-ui .custom-sidebar .sb-theme-swatch,
+html body.ame-saas-os .custom-sidebar .sb-theme-swatch {
+    background: #fff !important;
+}
+
+/* Shop home is a framed photo gallery — never a mint KPI dashboard. */
+html body.ame-home-gallery,
+html body.ame-home-gallery.ame-saas-os,
+html body.ame-home-gallery.ame-premium-ui,
+html body.ame-home-gallery.ame-if-dash,
+html body.ame-home-gallery.ame-if-live {
+    background:
+        radial-gradient(900px 420px at 8% -10%, rgba(201, 162, 39, 0.16), transparent 55%),
+        radial-gradient(700px 380px at 108% 110%, rgba(138, 106, 50, 0.12), transparent 50%),
+        linear-gradient(180deg, #f7f1e4 0%, #efe4cc 48%, #f8f3e8 100%) !important;
+}
+html body.ame-home-gallery .if-dash-welcome,
+html body.ame-home-gallery .ame-home-dashboard,
+html body.ame-home-gallery .ame-home-kpis,
+html body.ame-home-gallery .ame-home-grid {
+    display: none !important;
+}
+html body.ame-home-gallery #main-content,
+html body.ame-home-gallery .ame-if-canvas {
+    background: transparent !important;
+    width: 100% !important;
+    max-width: none !important;
+}
+html body.ame-home-gallery .hm-banner-wrap,
+html body.ame-home-gallery.ame-if-live .hm-banner-wrap {
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    color: inherit !important;
+}
+
+html body .custom-sidebar form.sb-pct-switch,
+html body.ame-premium-ui .custom-sidebar form.sb-pct-switch,
+html body.ame-saas-os .custom-sidebar form.sb-pct-switch {
+    display: block !important;
+    margin: 0 0 12px !important;
+}
+html body .custom-sidebar form.sb-pct-switch button,
+html body.ame-premium-ui .custom-sidebar form.sb-pct-switch button,
+html body.ame-saas-os .custom-sidebar form.sb-pct-switch button {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 10px 12px !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    cursor: pointer !important;
+    text-align: left !important;
+    background: #0b5cad !important;
+    color: #fff !important;
+    font: inherit !important;
+    box-shadow: 0 8px 18px rgba(11, 92, 173, 0.28) !important;
+}
+html body .custom-sidebar form.sb-pct-switch.is-off button {
+    background: #475569 !important;
+    box-shadow: none !important;
+}
+html body .custom-sidebar form.sb-pct-switch .sb-pct-copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+    line-height: 1.25;
+}
+html body .custom-sidebar form.sb-pct-switch .sb-pct-copy strong {
+    font-size: 14px;
+    font-weight: 800;
+}
+html body .custom-sidebar form.sb-pct-switch .sb-pct-copy small {
+    font-size: 11px;
+    font-weight: 700;
+    opacity: 0.92;
+}
+html body .custom-sidebar form.sb-pct-switch .sb-pct-pill {
+    flex-shrink: 0;
+    border-radius: 999px;
+    background: #fff;
+    color: #0b5cad;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 4px 8px;
+}
+
+/* 10.98.655 — ছাড় পার্সেন্ট আলাদা চালু/বন্ধ। চালু থাকলে বন্ধ না করা পর্যন্ত থাকে। */
+html body .custom-sidebar .sb-pct-card,
+html body.ame-premium-ui .custom-sidebar .sb-pct-card,
+html body.ame-saas-os .custom-sidebar .sb-pct-card {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: auto !important;
+    margin: 0 0 12px !important;
+    padding: 10px 12px !important;
+    border-radius: 14px !important;
+    background: #0b5cad !important;
+    color: #fff !important;
+    box-shadow: 0 8px 18px rgba(11, 92, 173, 0.28) !important;
+}
+html body .custom-sidebar .sb-pct-card.is-off {
+    background: #475569 !important;
+    box-shadow: none !important;
+}
+html body .custom-sidebar .sb-pct-card .sb-pct-copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+    line-height: 1.25;
+}
+html body .custom-sidebar .sb-pct-card .sb-pct-copy strong {
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff !important;
+}
+html body .custom-sidebar .sb-pct-card .sb-pct-copy small {
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff !important;
+    opacity: 0.92;
+}
+html body .custom-sidebar .sb-pct-card .sb-pct-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-shrink: 0;
+}
+html body .custom-sidebar .sb-pct-card .sb-pct-actions form {
+    margin: 0;
+}
+html body .custom-sidebar .sb-pct-card .sb-pct-pill {
+    min-width: 64px;
+    min-height: 32px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1.5px solid #fff;
+    background: transparent;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+html body .custom-sidebar .sb-pct-card .sb-pct-pill.is-pick {
+    background: #fff;
+    color: #0b5cad;
+}

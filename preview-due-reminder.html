@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="bn" style="--ame-header-h:56px">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ক্রেতার বাকি পরিশোধের তারিখ</title>
+  <link rel="stylesheet" href="/assets/css/ame-front-colors.css?v=10.98.474">
+  <link rel="stylesheet" href="/assets/css/front-desk-lock.819.css?v=10.98.474">
+  <link rel="stylesheet" href="/assets/css/due-reminder.css?v=10.98.474">
+  <style>
+    body { margin: 0; }
+    .master-header-fixed {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999999;
+      height: 56px; background: #0b2a5a; color: #fff;
+      display: flex; align-items: center; padding: 0 12px; font-weight: 800;
+    }
+    #main-content { min-height: 100vh; padding: 68px 12px 12px; }
+  </style>
+</head>
+<body class="ame-due-reminder-page">
+  <header class="master-header-fixed">APONSHOP · বাকি নোটিফিকেশন</header>
+  <div id="main-content">
+    <div class="ame-due-page ame-due-notify">
+      <h1>ক্রেতার বাকি পরিশোধের তারিখ</h1>
+      <form class="ame-due-filter" onsubmit="return false;">
+        <input type="date" value="2025-02-15">
+        <input type="date" value="2026-10-06">
+        <input class="ame-due-search" type="search" placeholder="আইডি/নাম/মোবাইল">
+        <button type="button">খুঁজুন</button>
+      </form>
+      <div class="ame-due-banner">15/02/2025 হতে 06/10/2026 তারিখে ক্রেতার বাকি পরিশোধের তারিখ</div>
+      <div class="ame-due-table-wrap">
+        <table class="ame-due-table">
+          <thead>
+            <tr>
+              <th class="ame-due-check"><input type="checkbox"></th>
+              <th>#</th><th>আইডি</th><th>নাম</th><th>মোবাইল</th>
+              <th>পরিশোধের তারিখ</th><th>নোট</th><th>টাকা</th><th>বাকি</th>
+              <th>সর্বশেষ পরিশোধ</th><th>আজকের আদায়করণ</th><th>অবস্থা</th><th>কাজ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="ame-due-tr" id="row-832">
+              <td class="ame-due-check" data-label=""><input type="checkbox" checked></td>
+              <td data-label="ক্রম">1</td>
+              <td data-label="আইডি"><button type="button" class="ame-due-code" data-due-info="832">832/</button></td>
+              <td class="ame-due-name-cell" data-label="নাম">মোঃ ইদুর আলী</td>
+              <td data-label="মোবাইল">01747843185</td>
+              <td data-label="পরিশোধের তারিখ">15/02/2025</td>
+              <td data-label="নোট">—</td>
+              <td data-label="টাকা">12000</td>
+              <td data-label="বাকি">25040</td>
+              <td class="ame-due-last" data-label="সর্বশেষ পরিশোধ">তারিখ:26/06/2024, টাকা:4000</td>
+              <td class="ame-due-today" id="today-832" data-label="আজকের আদায়করণ">মোবাইল বন্ধ</td>
+              <td class="ame-due-status" data-label="অবস্থা">
+                <label><input type="radio" name="out-832"></label>
+                <label><input type="radio" name="out-832"></label>
+                <label><input type="radio" name="out-832" checked></label>
+              </td>
+              <td class="ame-due-cmd" data-label="কাজ">
+                <button type="button" class="ame-due-edit" data-due-edit="1" data-id="832" data-code="832/" data-name="মোঃ ইদুর আলী" data-total="25040" data-expected="12000" data-date="2025-02-15" data-note="">সংশোধন</button>
+                <button type="button" class="ame-due-del" data-due-del="832" title="মুছুন">🗑</button>
+              </td>
+            </tr>
+            <tr class="ame-due-tr" id="row-694">
+              <td class="ame-due-check" data-label=""><input type="checkbox" checked></td>
+              <td data-label="ক্রম">2</td>
+              <td data-label="আইডি"><button type="button" class="ame-due-code" data-due-info="694">694/</button></td>
+              <td class="ame-due-name-cell" data-label="নাম">মোঃ সাকির মিয়া</td>
+              <td data-label="মোবাইল">01731942835</td>
+              <td data-label="পরিশোধের তারিখ">30/03/2025</td>
+              <td data-label="নোট">—</td>
+              <td data-label="টাকা">10000</td>
+              <td data-label="বাকি">11000</td>
+              <td class="ame-due-last" data-label="সর্বশেষ পরিশোধ">তারিখ:03/02/2024, টাকা:5000</td>
+              <td class="ame-due-today" id="today-694" data-label="আজকের আদায়করণ">কথা হয়েছে</td>
+              <td class="ame-due-status" data-label="অবস্থা">
+                <label><input type="radio" name="out-694"></label>
+                <label><input type="radio" name="out-694" checked></label>
+                <label><input type="radio" name="out-694"></label>
+              </td>
+              <td class="ame-due-cmd" data-label="কাজ">
+                <button type="button" class="ame-due-edit">সংশোধন</button>
+                <button type="button" class="ame-due-del" title="মুছুন">🗑</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="ame-due-smsbar">
+        <label class="ame-due-sms-tick">
+          <input type="checkbox" checked>
+          নির্বাচিত গ্রাহকদের বার্তা পাঠানোর ঘরে টিক দিন
+        </label>
+        <div class="ame-due-sms-btns">
+          <button type="button" class="ame-due-sms-edit">বার্তা সংশোধন</button>
+          <button type="button" class="ame-due-sms-send">বার্তা পাঠান</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ame-due-edit-overlay is-open" id="ameDueEditOverlay" aria-hidden="false">
+      <div class="ame-due-edit-card">
+        <h3>বাকি তারিখ সংশোধন</h3>
+        <div class="ame-due-edit-grid">
+          <div class="ame-due-edit-field is-id"><label>আইডি</label><input id="ameDueEditCode" value="832/" readonly></div>
+          <div class="ame-due-edit-field is-name"><label>নাম</label><input id="ameDueEditName" value="মোঃ ইদুর আলী" readonly></div>
+          <div class="ame-due-edit-field is-due"><label>বাকি</label><input id="ameDueEditTotal" value="25040" readonly></div>
+          <div class="ame-due-edit-field is-expect"><label>প্রত্যাশিত টাকা</label><input id="ameDueEditExpected" value="12000"></div>
+          <div class="ame-due-edit-field is-left"><label>অবশিষ্ট বাকি</label><input id="ameDueEditRemaining" value="13040" readonly></div>
+          <div class="ame-due-edit-field is-date"><label>প্রদানের তারিখ</label><input type="date" id="ameDueEditDate" value="2025-02-15"></div>
+          <div class="ame-due-edit-field is-note"><label>নোট</label><input id="ameDueEditNote" value="মোবাইল বন্ধ"></div>
+        </div>
+        <div class="ame-due-edit-actions">
+          <button type="button" class="ame-due-edit-close" id="ameDueEditClose">বন্ধ</button>
+          <button type="button" class="ame-due-edit-save">আপডেট</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ame-due-info-overlay" id="ameDueInfoOverlay" aria-hidden="true">
+      <div class="ame-due-info-card">
+        <h3>ক্রেতার তথ্য</h3>
+        <div class="ame-due-info-grid">
+          <div class="ame-due-info-rows" id="ameDueInfoRows"></div>
+        </div>
+        <div class="ame-due-info-bar"><button type="button" class="ame-due-info-close" id="ameDueInfoClose">বন্ধ</button></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('click', function (ev) {
+      var t = ev.target;
+      if (t.closest && t.closest('[data-due-info]')) {
+        var id = t.closest('[data-due-info]').getAttribute('data-due-info');
+        var rows = document.getElementById('ameDueInfoRows');
+        rows.innerHTML = '<div class="ame-due-info-row"><span>আইডি</span><span>' + id + '/</span></div>' +
+          '<div class="ame-due-info-row"><span>নাম</span><span>মোঃ সাকির মিয়া</span></div>' +
+          '<div class="ame-due-info-row"><span>পিতার নাম</span><span>মৃত</span></div>' +
+          '<div class="ame-due-info-row"><span>মোবাইল</span><span>01731942835</span></div>' +
+          '<div class="ame-due-info-row"><span>জামিনদারের নাম</span><span>বুধ সরকার</span></div>' +
+          '<div class="ame-due-info-row"><span>জামিনদারের মোবাইল</span><span>0172726689</span></div>' +
+          '<div class="ame-due-info-row"><span>বাকি</span><span>11000</span></div>';
+        document.getElementById('ameDueInfoOverlay').classList.add('is-open');
+      }
+      if (t.closest && t.closest('[data-due-edit]')) {
+        var b = t.closest('[data-due-edit]');
+        document.getElementById('ameDueEditCode').value = b.getAttribute('data-code') || '832/';
+        document.getElementById('ameDueEditName').value = b.getAttribute('data-name') || '';
+        document.getElementById('ameDueEditTotal').value = b.getAttribute('data-total') || '';
+        document.getElementById('ameDueEditExpected').value = b.getAttribute('data-expected') || '';
+        document.getElementById('ameDueEditRemaining').value = String(Number(b.getAttribute('data-total')||0) - Number(b.getAttribute('data-expected')||0));
+        document.getElementById('ameDueEditDate').value = b.getAttribute('data-date') || '';
+        document.getElementById('ameDueEditOverlay').classList.add('is-open');
+      }
+      if (t.id === 'ameDueEditClose' || t.id === 'ameDueEditOverlay') {
+        document.getElementById('ameDueEditOverlay').classList.remove('is-open');
+      }
+      if (t.id === 'ameDueInfoClose' || t.id === 'ameDueInfoOverlay') {
+        document.getElementById('ameDueInfoOverlay').classList.remove('is-open');
+      }
+      if (t.closest && t.closest('[data-due-del]')) {
+        if (confirm('এই বাকি পরিশোধের তারিখ বাতিল করবেন?')) {
+          var row = t.closest('tr');
+          if (row) row.remove();
+        }
+      }
+    });
+    document.addEventListener('mouseover', function (ev) {
+      var del = ev.target.closest && ev.target.closest('.ame-due-del');
+      if (del && del.closest('tr')) del.closest('tr').classList.add('is-del-hover');
+    });
+    document.addEventListener('mouseout', function (ev) {
+      var del = ev.target.closest && ev.target.closest('.ame-due-del');
+      if (del && del.closest('tr')) del.closest('tr').classList.remove('is-del-hover');
+    });
+    function fitDueTable() {
+      var wrap = document.querySelector('.ame-due-table-wrap');
+      var table = wrap && wrap.querySelector('table.ame-due-table');
+      if (!wrap || !table) return;
+      table.style.zoom = '1';
+      var tw = table.scrollWidth || table.offsetWidth;
+      var ww = wrap.clientWidth;
+      if (tw > ww && ww > 40) table.style.zoom = String(Math.max(0.28, ww / tw));
+    }
+    fitDueTable();
+    window.addEventListener('resize', fitDueTable);
+  </script>
+</body>
+</html>

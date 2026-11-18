@@ -1,0 +1,31 @@
+.krx { color: var(--ds-text, #111); background: var(--ds-surface-2, #f4f7fb); }
+.krx-top, .krx-tools, .krx-bar, .krx-search, .krx-note { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 10px; }
+.krx-top h1 { margin: 0; font-size: 1.35rem; }
+.krx-top p, .krx-prog { margin: 0; font-weight: 800; }
+.krx-back { font-weight: 800; }
+.krx-main { display: grid; grid-template-columns: 240px 1fr; gap: 10px; padding: 0 10px 12px; }
+.krx-side { background: #fff; border: 1px solid var(--ds-border, #d5dbe3); border-radius: 12px; padding: 10px; max-height: 70vh; overflow: auto; }
+.krx-side h2 { margin: 12px 0 6px; font-size: 1rem; }
+.krx-side button, .krx-side p { display: block; width: 100%; text-align: left; margin: 0 0 6px; }
+.krx-stage { min-width: 0; }
+.krx-sheet { position: relative; background: #fff; border-radius: 12px; min-height: 50vh; overflow: auto; display: flex; justify-content: center; gap: 8px; padding: 8px; }
+.krx-sheet canvas, .krx-sheet img { max-width: 100%; height: auto; background: #fff; }
+.krx-leaf { white-space: pre-wrap; padding: 16px; font-size: 1.15rem; line-height: 1.7; width: 100%; }
+.krx-empty { padding: 24px; font-weight: 800; }
+.krx-ocr { display: none; }
+.krx button, .krx input, .krx select, .krx textarea { min-height: 44px; font: inherit; }
+.krx button { border: 0; border-radius: 10px; background: var(--brand-navy, #0b1e4d); color: #fff; font-weight: 800; padding: 8px 12px; }
+.krx-mini { display: flex; gap: 6px; }
+.krx.is-night { background: #12161c; color: #f5f7fb; }
+.krx.is-night .krx-side, .krx.is-night .krx-sheet { background: #1c2430; color: #f5f7fb; }
+.krx.is-flip .krx-sheet { animation: krxFlip .28s ease; }
+@keyframes krxFlip { from { transform: rotateY(-8deg); opacity: .6; } to { transform: none; opacity: 1; } }
+@media (max-width: 800px) {
+  .krx-main { grid-template-columns: 1fr; }
+  .krx-side { display: none; max-height: none; }
+  .krx-side.is-open { display: block; }
+  .krx-bar { position: sticky; bottom: 0; background: #fff; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .krx.is-flip .krx-sheet { animation: none; }
+}

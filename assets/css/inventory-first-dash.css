@@ -1,0 +1,183 @@
+/* Inventory First dashboard system — dashboards only. v10.95 */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap");
+
+body.ame-if-dash {
+    --if-ink: #123526;
+    --if-muted: #3d5c48;
+    --if-leaf: #1b6b34;
+    --if-paper: #ffffff;
+    --if-line: rgba(18, 53, 38, 0.10);
+    --if-shadow: 0 10px 28px rgba(18, 53, 38, 0.08);
+    font-family: "Outfit", "Noto Sans Bengali", "Segoe UI", sans-serif !important;
+    color: var(--if-ink) !important;
+    background-color: #e7f4e6 !important;
+    background-image: url("/assets/img/leaf-layout.jpg") !important;
+    background-size: cover !important;
+    background-position: left center !important;
+    background-attachment: fixed !important;
+}
+
+body.ame-if-dash #main-content {
+    background: transparent !important;
+    color: var(--if-ink) !important;
+}
+
+body.ame-if-dash .if-dash-welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 6px 4px 16px;
+}
+body.ame-if-dash .if-dash-welcome h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--if-ink);
+}
+body.ame-if-dash .if-dash-welcome p {
+    margin: 4px 0 0;
+    color: var(--if-muted);
+    font-weight: 600;
+}
+body.ame-if-dash .if-dash-welcome em {
+    font-style: italic;
+    font-weight: 700;
+    color: var(--if-leaf);
+    font-size: 15px;
+}
+
+body.ame-if-dash .card,
+body.ame-if-dash .panel,
+body.ame-if-dash .studio-panel,
+body.ame-if-dash .smt-panel,
+body.ame-if-dash .earn-panel,
+body.ame-if-dash .earn-kpi,
+body.ame-if-dash .pulse-kpi,
+body.ame-if-dash .smt-kpi,
+body.ame-if-dash .rd-kpi-box,
+body.ame-if-dash .fd-kpi-box,
+body.ame-if-dash .hd-card,
+body.ame-if-dash .rd-nav-card,
+body.ame-if-dash .rd-recent,
+body.ame-if-dash .fd-section,
+body.ame-if-dash .pulse-act,
+body.ame-if-dash .earn-table-wrap,
+body.ame-if-dash .smt-row,
+body.ame-if-dash [class$="-wrap"] > .card {
+    background: var(--if-paper) !important;
+    background-image: none !important;
+    color: var(--if-ink) !important;
+    border: 1px solid var(--if-line) !important;
+    border-radius: 18px !important;
+    box-shadow: var(--if-shadow) !important;
+}
+
+body.ame-if-dash .rd-kpi-box .lbl,
+body.ame-if-dash .fd-kpi-box .lbl,
+body.ame-if-dash .pulse-kpi span,
+body.ame-if-dash .smt-kpi span,
+body.ame-if-dash .earn-kpi small,
+body.ame-if-dash .hd-card .lbl {
+    color: var(--if-muted) !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 1 !important;
+}
+
+body.ame-if-dash .rd-kpi-box .val,
+body.ame-if-dash .fd-kpi-box .val,
+body.ame-if-dash .pulse-kpi b,
+body.ame-if-dash .smt-kpi b,
+body.ame-if-dash .earn-kpi b,
+body.ame-if-dash .hd-card .num {
+    color: var(--if-ink) !important;
+    font-size: 22px !important;
+    font-weight: 800 !important;
+}
+
+body.ame-if-dash .pulse-kpis,
+body.ame-if-dash .smt-kpis,
+body.ame-if-dash .earn-kpis,
+body.ame-if-dash .rd-kpi-grid,
+body.ame-if-dash .fd-kpi-grid,
+body.ame-if-dash .hd-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+}
+
+body.ame-if-dash .studio-hero,
+body.ame-if-dash .earn-hero {
+    display: none !important;
+}
+
+body.ame-if-dash .studio-shell,
+body.ame-if-dash .earn-shell,
+body.ame-if-dash .rd-wrap,
+body.ame-if-dash .fd-wrap,
+body.ame-if-dash .hd-wrap {
+    background: transparent !important;
+    box-shadow: none !important;
+    max-width: 1240px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body.ame-if-dash h1,
+body.ame-if-dash h2,
+body.ame-if-dash h3 {
+    color: var(--if-ink) !important;
+}
+
+body.ame-if-dash table {
+    background: transparent !important;
+}
+body.ame-if-dash table thead tr,
+body.ame-if-dash table th {
+    background: #f3fbf3 !important;
+    color: var(--if-ink) !important;
+}
+body.ame-if-dash table tbody tr:nth-child(even) {
+    background: #f7fcf6 !important;
+}
+
+body.ame-if-dash .btn-success,
+body.ame-if-dash .smt-btn,
+body.ame-if-dash .rd-add-btn,
+body.ame-if-dash .fd-add-btn,
+body.ame-if-dash .earn-btn:not(.ghost):not(.warn) {
+    background: linear-gradient(135deg, #123526, #1b6b34) !important;
+    color: #f7fcf6 !important;
+    border-radius: 12px !important;
+    border: 0 !important;
+}
+
+body.ame-if-dash .custom-sidebar {
+    --sb-bg: rgba(243, 251, 243, 0.97);
+    --sb-bg-2: #e7f6e8;
+    --sb-text: #123526;
+    --sb-accent: #1b6b34;
+}
+body.ame-if-dash .direct-link.active,
+body.ame-if-dash .menu-list a.active {
+    background: #1b6b34 !important;
+    color: #fff !important;
+    border-radius: 12px !important;
+}
+
+body.ame-if-dash .master-header-fixed {
+    background: linear-gradient(135deg, #123526 0%, #1b6b34 100%) !important;
+    border-bottom: 3px solid #c5e86a !important;
+}
+
+@media (max-width: 767px) {
+    body.ame-if-dash {
+        background-attachment: scroll !important;
+        background-position: left top !important;
+    }
+    body.ame-if-dash .if-dash-welcome h2 { font-size: 20px; }
+}

@@ -1,0 +1,123 @@
+/* Right-side sale payment stays tucked on the edge until the arrow is used. */
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-shell .ame-pos-grid,
+html body.ame-pos-terminal-page #main-content .ame-pos-page.ame-sale-pro .ame-pos-shell .ame-pos-grid {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #amePosPay {
+  position: fixed !important;
+  top: calc(58px + env(safe-area-inset-top, 0px));
+  right: 0;
+  bottom: env(safe-area-inset-bottom, 0px);
+  width: min(420px, calc(100vw - 48px));
+  max-width: calc(100vw - 48px);
+  margin: 0 !important;
+  z-index: 900000 !important;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #ffffff !important;
+  border-radius: 14px 0 0 14px;
+  box-shadow: -16px 0 36px rgba(15, 35, 80, 0.18);
+  transform: translateX(110%) !important;
+  transition: transform 0.22s ease;
+  pointer-events: none;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #amePosPay.is-open {
+  transform: none !important;
+  pointer-events: auto;
+}
+
+html body.ame-pos-terminal-page #amePosPay input:not([readonly]),
+html body.ame-pos-terminal-page #amePosPay textarea:not([readonly]) {
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+  -webkit-user-select: text !important;
+  user-select: text !important;
+}
+
+html body.ame-pos-terminal-page #amePosPay .ame-desk-box h3,
+html body.ame-pos-terminal-page #amePosPay .ame-desk-card-head {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 13px !important;
+  line-height: 1.3 !important;
+}
+
+html body.ame-pos-terminal-page #amePosPay .ame-desk-box h3 svg,
+html body.ame-pos-terminal-page #amePosPay .ame-desk-card-head svg,
+html body.ame-pos-terminal-page #amePosPay #amePosCompleteBtn svg,
+html body.ame-pos-terminal-page #amePosPay .ame-desk-draft svg {
+  width: 16px !important;
+  height: 16px !important;
+  max-width: 16px !important;
+  max-height: 16px !important;
+  flex: 0 0 16px !important;
+}
+
+html body.ame-pos-terminal-page .ame-pay-dock-tab {
+  position: fixed;
+  z-index: 900001 !important;
+  top: 42%;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 44px;
+  min-height: 96px;
+  padding: 10px 4px;
+  border: 0;
+  border-radius: 14px 0 0 14px;
+  background: #0b3d91;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  font: 800 13px/1.1 'Noto Sans Bengali', 'Segoe UI', sans-serif;
+  cursor: pointer;
+  box-shadow: -6px 8px 18px rgba(11, 61, 145, 0.28);
+}
+
+html body.ame-pos-terminal-page .ame-pay-dock-tab .ame-pay-dock-arrow {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+html body.ame-pos-terminal-page .ame-pay-dock-tab .ame-pay-dock-word {
+  writing-mode: vertical-rl;
+  letter-spacing: 0.06em;
+}
+
+html body.ame-pos-terminal-page.ame-pay-open .ame-pay-dock-tab {
+  border-radius: 14px 0 0 14px;
+  background: #0f766e;
+  box-shadow: -6px 8px 18px rgba(15, 118, 110, 0.28);
+}
+
+@media (max-width: 900px) {
+  html body.ame-pos-terminal-page .ame-pay-dock-tab {
+    top: auto !important;
+    bottom: calc(70px + env(safe-area-inset-bottom, 0px)) !important;
+    right: max(0px, env(safe-area-inset-right, 0px)) !important;
+    z-index: 900001 !important;
+  }
+
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk #amePosPay {
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: min(88dvh, 720px) !important;
+    border-radius: 16px 16px 0 0 !important;
+    transform: translateY(110%) !important;
+  }
+
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk #amePosPay.is-open {
+    transform: none !important;
+  }
+}

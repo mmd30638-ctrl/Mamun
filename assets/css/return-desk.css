@@ -1,0 +1,100 @@
+/* Sales return pages: white icon boxes, black fronts. */
+html body.ame-return-desk.ame-premium-ui .master-header-fixed .hdr-icon-btn,
+html body.ame-return-desk .master-header-fixed .hdr-icon-btn.hdr-i-menu,
+html body.ame-return-desk.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-menu,
+html body.ame-return-desk .master-header-fixed .hdr-icon-btn.hdr-i-home,
+html body.ame-return-desk.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-home,
+html body.ame-return-desk .master-header-fixed .hdr-icon-btn.hdr-i-return,
+html body.ame-return-desk.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-return,
+html body.ame-return-desk .master-header-fixed .hdr-icon-btn.hdr-i-sales,
+html body.ame-return-desk.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-sales,
+html body.ame-return-desk .master-header-fixed .hdr-icon-btn.hdr-i-keys,
+html body.ame-return-desk.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-keys,
+html body.ame-return-desk .master-header-fixed .hdr-icon-btn.hdr-i-duty,
+html body.ame-return-desk.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-duty,
+html body.ame-return-desk .master-header-fixed .hdr-icon-btn.hdr-i-custadd,
+html body.ame-return-desk.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-custadd,
+html body.ame-return-desk .master-header-fixed .hdr-icon-btn.hdr-i-bell,
+html body.ame-return-desk.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-bell,
+html body.ame-return-desk .master-header-fixed .hdr-icon-btn.hdr-i-pay,
+html body.ame-return-desk.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-pay,
+html body.ame-return-desk .master-header-fixed .hdr-icon-btn.hdr-i-txn,
+html body.ame-return-desk.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-txn,
+html body.ame-return-desk .master-header-fixed .hdr-icon-btn.hdr-i-live,
+html body.ame-return-desk.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-live,
+html body.ame-return-desk .master-header-fixed .hdr-icon-btn.hdr-i-staffpay,
+html body.ame-return-desk.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-staffpay,
+html body.ame-return-desk .master-header-fixed .hdr-icon-btn.hdr-i-stock,
+html body.ame-return-desk.ame-premium-ui .master-header-fixed .hdr-icon-btn.hdr-i-stock {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+  border: 2px solid #111111 !important;
+  box-shadow: none !important;
+}
+
+html body.ame-return-desk #main-content#main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.hm-banner-arrow):not(.hm-banner-dot),
+html body.ame-return-desk #main-content#main-content button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn) *,
+html body.ame-return-desk #main-content#main-content a.btn:not(.hdr-icon-btn),
+html body.ame-return-desk #main-content#main-content .sr-result-item,
+html body.ame-return-desk #main-content#main-content .sr-result-item small {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+  border-color: #111111 !important;
+}
+
+html body.ame-return-desk .ame-confirm-acts,
+html body.ame-return-desk .ame-confirm-acts button,
+html body.ame-return-desk .ame-confirm-acts button *,
+html body.ame-return-desk .ame-confirm-acts .ame-c-home,
+html body.ame-return-desk .ame-confirm-acts .ame-c-ico {
+  background: #ffffff !important;
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+  border-color: #111111 !important;
+}
+html body.ame-return-desk .ame-confirm-acts .ame-c-ico svg {
+  stroke: #111111 !important;
+}
+html body.ame-return-desk .menu-icon-chip,
+html body.ame-return-desk .sb-sub-icon-chip {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border-color: #111111 !important;
+}
+
+html body.ame-return-desk #main-content#main-content .sr-price-modes {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 4px !important;
+  margin: 0 0 8px !important;
+}
+html body.ame-return-desk #main-content#main-content .sr-price-modes > span {
+  grid-column: 1 / -1 !important;
+  font-size: 11px !important;
+  line-height: 1.1 !important;
+}
+html body.ame-return-desk:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content .sr-price-modes button:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item):not(.hm-banner-arrow):not(.hm-banner-dot):not([data-ame-c]) {
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 32px !important;
+  height: auto !important;
+  padding: 4px 2px !important;
+  font-size: 12px !important;
+  line-height: 1.1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+  border: 1.5px solid #111111 !important;
+}
+html body.ame-return-desk:not(.ame-sales-pro):not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page):not(.ame-emp-hub) #main-content#main-content .sr-price-modes button.is-on:not(.hdr-icon-btn) {
+  border-width: 2.5px !important;
+  text-decoration: underline !important;
+  font-weight: 900 !important;
+}

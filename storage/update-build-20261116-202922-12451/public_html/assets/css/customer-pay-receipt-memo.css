@@ -1,0 +1,433 @@
+/* কাস্টমার পেমেন্ট / উত্তোলন রসিদ — একই লেআউট (memo-clear.css রঙের সাথে) */
+:root {
+    --cpay-memo-max: min(100%, 480px);
+}
+body.ame-cpay-memo--a4 {
+    --cpay-memo-max: min(100%, 720px);
+}
+
+* { box-sizing: border-box; }
+
+body.ame-customer-pay-receipt {
+    font-family: "Noto Sans Bengali", "Segoe UI", Arial, sans-serif;
+    background: #E8EEF5;
+    color: #111827;
+    margin: 0;
+    padding: 20px 10px calc(40px + env(safe-area-inset-bottom, 0px));
+    font-size: 13px;
+    line-height: 1.5;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+body.ame-customer-pay-receipt .inv-action-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 0 auto 16px;
+    max-width: var(--cpay-memo-max);
+    flex-wrap: wrap;
+}
+
+body.ame-customer-pay-receipt .inv-btn {
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 1px solid #D1D5DB;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #003F8F;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    text-decoration: none !important;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: inherit;
+}
+
+body.ame-customer-pay-receipt .inv-btn-print { background: #003F8F; color: #ffffff; border-color: #003F8F; }
+body.ame-customer-pay-receipt .inv-btn-pdf { background: #04933A; color: #ffffff; border-color: #04933A; }
+body.ame-customer-pay-receipt .inv-btn-img { background: #4F46E5; color: #ffffff; border-color: #4F46E5; }
+body.ame-customer-pay-receipt .inv-btn-share { background: #0284C7; color: #ffffff; border-color: #0284C7; }
+body.ame-customer-pay-receipt .inv-btn-wa { background: #25D366; color: #ffffff; border-color: #25D366; }
+body.ame-customer-pay-receipt .inv-btn-tg { background: #229ED9; color: #ffffff; border-color: #229ED9; }
+body.ame-customer-pay-receipt .inv-btn-back { background: #ffffff; color: #374151; border-color: #D1D5DB; }
+
+body.ame-customer-pay-receipt .pay-share-hint {
+    max-width: var(--cpay-memo-max);
+    margin: -6px auto 14px;
+    text-align: center;
+    color: #0B3D91;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+body.ame-customer-pay-receipt .memo-wrapper {
+    background: #ffffff;
+    width: 100%;
+    max-width: var(--cpay-memo-max);
+    margin: 0 auto;
+    padding: 24px 20px;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    border: 1px solid #E5E7EB;
+}
+
+body.ame-customer-pay-receipt .memo-head {
+    text-align: center;
+    border-bottom: 2px dashed #003F8F;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+}
+
+body.ame-customer-pay-receipt .memo-shop-name {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0 0 4px;
+    line-height: 1.25;
+}
+
+body.ame-customer-pay-receipt .memo-shop-desc,
+body.ame-customer-pay-receipt .memo-shop-phone {
+    margin: 0;
+    font-weight: 800;
+}
+
+body.ame-customer-pay-receipt .memo-badge {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+body.ame-customer-pay-receipt .memo-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+}
+
+body.ame-customer-pay-receipt .memo-meta-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+body.ame-customer-pay-receipt .memo-meta-item .lbl { flex: 0 0 auto; }
+body.ame-customer-pay-receipt .memo-meta-item .val { text-align: right; min-width: 0; }
+
+body.ame-customer-pay-receipt #memo-container .memo-table,
+body.ame-customer-pay-receipt #ame-memo-capture-clone .memo-table,
+body.ame-customer-pay-receipt #memo-container .memo-table tbody,
+body.ame-customer-pay-receipt #ame-memo-capture-clone .memo-table tbody,
+body.ame-customer-pay-receipt #memo-container .memo-table tr,
+body.ame-customer-pay-receipt #ame-memo-capture-clone .memo-table tr {
+    display: block;
+    width: 100%;
+}
+
+body.ame-customer-pay-receipt #memo-container .memo-table thead,
+body.ame-customer-pay-receipt #ame-memo-capture-clone .memo-table thead {
+    display: none;
+}
+
+body.ame-customer-pay-receipt #memo-container .memo-table tr,
+body.ame-customer-pay-receipt #ame-memo-capture-clone .memo-table tr {
+    padding: 4px 0 8px;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+body.ame-customer-pay-receipt #memo-container .memo-table td,
+body.ame-customer-pay-receipt #ame-memo-capture-clone .memo-table td {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    padding: 3px 0;
+    text-align: right !important;
+}
+
+body.ame-customer-pay-receipt #memo-container .memo-table td::before,
+body.ame-customer-pay-receipt #ame-memo-capture-clone .memo-table td::before {
+    content: attr(data-k);
+    font-weight: 800;
+    text-align: left;
+    flex: 0 0 auto;
+}
+
+body.ame-customer-pay-receipt #memo-container .memo-table td:nth-child(1)::before,
+body.ame-customer-pay-receipt #ame-memo-capture-clone .memo-table td:nth-child(1)::before {
+    color: #1D4ED8 !important;
+    -webkit-text-fill-color: #1D4ED8 !important;
+}
+
+body.ame-customer-pay-receipt #memo-container .memo-table td:nth-child(2)::before,
+body.ame-customer-pay-receipt #ame-memo-capture-clone .memo-table td:nth-child(2)::before {
+    color: #0F766E !important;
+    -webkit-text-fill-color: #0F766E !important;
+}
+
+body.ame-customer-pay-receipt #memo-container .memo-table td:nth-child(3)::before,
+body.ame-customer-pay-receipt #ame-memo-capture-clone .memo-table td:nth-child(3)::before {
+    color: #C2410C !important;
+    -webkit-text-fill-color: #C2410C !important;
+}
+
+body.ame-customer-pay-receipt #memo-container .memo-table td:nth-child(4)::before,
+body.ame-customer-pay-receipt #ame-memo-capture-clone .memo-table td:nth-child(4)::before {
+    color: #6D28D9 !important;
+    -webkit-text-fill-color: #6D28D9 !important;
+}
+
+body.ame-customer-pay-receipt .cpay-val { text-align: right; min-width: 0; }
+body.ame-customer-pay-receipt .sku-text {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: #0369A1;
+}
+
+body.ame-customer-pay-receipt .memo-summary {
+    border-top: 1px solid #CBD5E1;
+    padding-top: 8px;
+}
+
+body.ame-customer-pay-receipt .memo-sum-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 3px 0;
+}
+
+body.ame-customer-pay-receipt .memo-sum-row.sabek-box {
+    flex-direction: column;
+    align-items: stretch;
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-top: 6px;
+}
+
+body.ame-customer-pay-receipt .sabek-line,
+body.ame-customer-pay-receipt .total-due-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+}
+
+body.ame-customer-pay-receipt .sabek-line span:last-child,
+body.ame-customer-pay-receipt .total-due-line span:last-child,
+body.ame-customer-pay-receipt .memo-sum-row > span:last-child {
+    text-align: right;
+    white-space: nowrap;
+}
+
+body.ame-customer-pay-receipt .memo-foot {
+    text-align: center;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px dashed #CBD5E1;
+}
+
+body.ame-customer-pay-receipt .cpay-sheet {
+    width: 100%;
+    max-width: var(--cpay-memo-max);
+    margin: 0 auto;
+}
+
+body.ame-customer-pay-receipt .cpay-sheet .memo-wrapper,
+body.ame-customer-pay-receipt .cpay-sheet .notify-box {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+}
+
+body.ame-customer-pay-receipt .notify-box {
+    margin: 14px 0 0;
+    padding: 16px 20px;
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+}
+
+body.ame-customer-pay-receipt .memo-missing {
+    max-width: var(--cpay-memo-max);
+    margin: 40px auto;
+    padding: 24px;
+    background: #fff;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid #E5E7EB;
+}
+
+body.ame-customer-pay-receipt #cpayReverse {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+    width: 100%;
+}
+
+body.ame-customer-pay-receipt #cpayReverse > strong {
+    color: #9F1239;
+    font-size: 16px;
+}
+
+body.ame-customer-pay-receipt #cpayReverse > p {
+    margin: 0;
+    color: #1D4ED8;
+    font-weight: 800;
+}
+
+body.ame-customer-pay-receipt .cpay-reason {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+body.ame-customer-pay-receipt .cpay-reason label {
+    margin: 0;
+    color: #C2410C;
+    font-weight: 800;
+    flex: 0 0 auto;
+}
+
+body.ame-customer-pay-receipt .cpay-reason input {
+    flex: 1;
+    min-width: 0;
+    text-align: right;
+    color: #9A3412;
+    font-weight: 800;
+    border: 1.5px solid #C2410C !important;
+}
+
+body.ame-customer-pay-receipt #cpayReverse .ame-pay-sec {
+    display: grid !important;
+    grid-template-columns: minmax(0, 46%) minmax(0, 1fr) !important;
+    gap: 8px 10px !important;
+    align-items: center !important;
+    margin: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+body.ame-customer-pay-receipt #cpayReverse .ame-pay-sec-kicker {
+    margin: 0 !important;
+    color: #7C3AED !important;
+    -webkit-text-fill-color: #7C3AED !important;
+}
+
+body.ame-customer-pay-receipt #cpayReverse .ame-pay-sec-code {
+    width: auto !important;
+    margin: 0 !important;
+    justify-self: stretch;
+    text-align: right !important;
+    font-size: 22px !important;
+    letter-spacing: .08em !important;
+    padding: 4px 8px !important;
+}
+
+body.ame-customer-pay-receipt #cpayReverse .ame-pay-sec-click-hint,
+body.ame-customer-pay-receipt #cpayReverse .ame-pay-sec-hint {
+    grid-column: 1 / -1;
+    margin: 0 !important;
+}
+
+body.ame-customer-pay-receipt #cpayReverse .ame-pay-sec-click-hint {
+    color: #0F766E !important;
+    -webkit-text-fill-color: #0F766E !important;
+}
+
+body.ame-customer-pay-receipt #cpayReverse .ame-pay-sec-hint {
+    color: #0369A1 !important;
+    -webkit-text-fill-color: #0369A1 !important;
+}
+
+body.ame-customer-pay-receipt #cpayReverse .ame-pay-sec-lbl {
+    display: block !important;
+    margin: 0 !important;
+    color: #9F1239 !important;
+    -webkit-text-fill-color: #9F1239 !important;
+}
+
+body.ame-customer-pay-receipt #cpayReverse .ame-pay-sec-input {
+    width: 100% !important;
+    min-height: 42px !important;
+    margin: 0 !important;
+    text-align: right !important;
+}
+
+body.ame-customer-pay-receipt #cpayReverse button[type="submit"] {
+    align-self: stretch;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+body.ame-customer-pay-receipt .no-memo-print { display: none !important; }
+
+@media print {
+    body.ame-customer-pay-receipt .no-print,
+    body.ame-customer-pay-receipt .no-memo-print { display: none !important; }
+    body.ame-customer-pay-receipt {
+        background: #fff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    body.ame-customer-pay-receipt .memo-wrapper {
+        box-shadow: none !important;
+        border: none !important;
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    html:not(.ame-phone-desktop) body.ame-customer-pay-receipt {
+        padding-left: max(8px, env(safe-area-inset-left, 0px));
+        padding-right: max(8px, env(safe-area-inset-right, 0px));
+    }
+    html:not(.ame-phone-desktop) body.ame-customer-pay-receipt .memo-wrapper {
+        padding: 18px 14px;
+        border-radius: 12px;
+    }
+    html:not(.ame-phone-desktop) body.ame-customer-pay-receipt .memo-shop-name {
+        font-size: clamp(1rem, 4.8vw, 1.25rem);
+    }
+    html:not(.ame-phone-desktop) body.ame-customer-pay-receipt .inv-action-bar {
+        gap: 6px;
+    }
+    html:not(.ame-phone-desktop) body.ame-customer-pay-receipt .inv-btn {
+        flex: 1 1 calc(50% - 6px);
+        min-width: 0;
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 992px) {
+    body.ame-customer-pay-receipt .inv-action-bar {
+        gap: 10px;
+    }
+}
+
+html.ame-phone-desktop body.ame-customer-pay-receipt .cpay-sheet,
+html.ame-phone-desktop body.ame-customer-pay-receipt .inv-action-bar,
+html.ame-phone-desktop body.ame-customer-pay-receipt .pay-share-hint {
+    max-width: min(var(--cpay-memo-max), 92vw);
+}

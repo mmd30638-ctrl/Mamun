@@ -1,0 +1,134 @@
+.acc-share-bar {
+    position: sticky;
+    top: 64px;
+    z-index: 40;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    padding: 8px 12px 4px;
+    pointer-events: none;
+}
+.acc-share-bar .acc-share-btn { pointer-events: auto; }
+.acc-share-btn {
+    border: 0;
+    border-radius: 10px;
+    padding: 9px 14px;
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(11, 30, 77, 0.12);
+}
+.acc-share-print {
+    background: #fff;
+    color: #0B1E4D;
+    border: 1px solid #CFE3F7 !important;
+}
+.acc-share-send {
+    background: linear-gradient(135deg, #0B1E4D, #0091EA);
+    color: #fff;
+}
+.acc-share-sheet {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 30, 77, 0.45);
+    z-index: 11000;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+}
+.acc-share-sheet[hidden] { display: none !important; }
+.acc-share-card {
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 16px 40px rgba(11, 30, 77, 0.25);
+}
+.acc-share-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #0B1E4D;
+    margin-bottom: 6px;
+}
+.acc-share-x {
+    border: 0;
+    background: transparent;
+    font-size: 26px;
+    line-height: 1;
+    color: #64748B;
+    cursor: pointer;
+}
+.acc-share-hint {
+    margin: 0 0 12px;
+    font-size: 12.5px;
+    color: #64748B;
+    line-height: 1.45;
+}
+.acc-share-opt {
+    width: 100%;
+    margin-bottom: 8px;
+    border: 1px solid #E3EEF8;
+    background: #F8FBFF;
+    color: #0B1E4D;
+    border-radius: 10px;
+    padding: 12px;
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left;
+}
+.acc-share-msg {
+    margin-top: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #1B5E20;
+    text-align: center;
+}
+.acc-print-banner { display: none; }
+
+@media print {
+    .acc-print-banner {
+        display: flex !important;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: baseline;
+        border-bottom: 2px solid #0B1E4D;
+        padding-bottom: 8px;
+        margin-bottom: 14px;
+        color: #0B1E4D;
+        font-size: 13px;
+    }
+    .master-header-fixed,
+    #mySidebar,
+    .custom-sidebar,
+    .sidebar-backdrop,
+    .acc-share-bar,
+    .acc-share-sheet,
+    .no-print,
+    .acc-print-hide,
+    .hdr-icon-btn,
+    #ameClockEditBox,
+    .ame-tbar,
+    form:not(.acc-print-keep),
+    .pu-form,
+    .cmd-btn,
+    .action-menu-btn {
+        display: none !important;
+    }
+    #main-content,
+    .ame-print-root {
+        margin: 0 !important;
+        padding: 8px !important;
+        width: 100% !important;
+        max-width: none !important;
+    }
+    body, html {
+        background: #fff !important;
+        color: #111 !important;
+    }
+    a { color: #111 !important; text-decoration: none !important; }
+}

@@ -1,0 +1,216 @@
+/* 10.98.336 — কর্মী আর্কাইভ, চিরতরে সরানো ও সুপার অ্যাডমিন */
+
+.ame-staff-page {
+    max-width: 1100px;
+    margin: 0 auto 3rem;
+    padding: 16px 14px 48px;
+    color: #111827;
+}
+.ame-staff-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 40px;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: #EFE6D4;
+    color: #3D2A12 !important;
+    border: 1px solid #D4C4A8;
+    text-decoration: none !important;
+    font-weight: 800;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+.ame-staff-hero {
+    background: #EFE6D4;
+    color: #3D2A12;
+    border: 1px solid #D4C4A8;
+    border-radius: 18px;
+    padding: 22px 20px;
+    margin-bottom: 16px;
+    box-shadow: none;
+}
+.ame-sa-hero {
+    background: #EFE6D4;
+}
+.ame-staff-kicker {
+    margin: 0 0 6px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    opacity: 0.85;
+}
+.ame-staff-hero h1 {
+    margin: 0 0 8px;
+    font-size: 1.55rem;
+    font-weight: 800;
+}
+.ame-staff-hero p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    opacity: 0.94;
+    font-weight: 600;
+}
+.ame-staff-card {
+    background: #fff;
+    border: 1px solid #D7DEE8;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(11, 30, 77, 0.06);
+    margin-bottom: 14px;
+}
+.ame-staff-card-h {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #F4F7FB;
+    border-bottom: 1px solid #E8EEF5;
+    font-weight: 800;
+    color: #3D2A12;
+}
+.ame-staff-card-h a {
+    color: #04933A;
+    font-weight: 800;
+    text-decoration: none;
+}
+.ame-staff-empty,
+.ame-staff-note,
+.ame-staff-muted {
+    padding: 18px 16px;
+    color: #667085;
+    font-weight: 700;
+}
+.ame-staff-note {
+    font-size: 13px;
+}
+.ame-staff-table-wrap {
+    overflow-x: auto;
+}
+.ame-staff-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+.ame-staff-table th,
+.ame-staff-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #EEF3F8;
+    font-weight: 700;
+}
+.ame-staff-table th {
+    color: #667085;
+    font-size: 12px;
+    background: #F8FAFC;
+}
+.ame-staff-code {
+    font-family: ui-monospace, monospace;
+    color: #6D28D9;
+}
+.ame-staff-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-end;
+}
+.ame-staff-restore {
+    border: 0;
+    border-radius: 10px;
+    background: #04933A;
+    color: #fff;
+    font-weight: 800;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: inherit;
+}
+.ame-staff-purge {
+    border: 0;
+    border-radius: 10px;
+    background: #b91c1c;
+    color: #fff !important;
+    font-weight: 800;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    margin-left: 6px;
+    text-decoration: none !important;
+}
+.ame-staff-muted-btn {
+    border: 1px solid #D7DEE8;
+    border-radius: 10px;
+    background: #fff;
+    color: #667085;
+    font-weight: 700;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: inherit;
+}
+.ame-staff-ok,
+.ame-staff-err {
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+.ame-staff-ok { background: #ecfdf3; color: #047857; }
+.ame-staff-err { background: #fef2f2; color: #b91c1c; }
+.ame-staff-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 12px;
+}
+.ame-sa-duties {
+    margin: 0;
+    padding: 12px 16px 16px 34px;
+    line-height: 1.55;
+    font-weight: 700;
+    color: #111827;
+}
+.ame-sa-duties li { margin: 6px 0; }
+.ame-sa-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 0 16px 16px;
+}
+.ame-sa-links a {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: #F4F7FB;
+    border: 1px solid #D7DEE8;
+    color: #003F8F !important;
+    font-weight: 800;
+    text-decoration: none !important;
+    font-size: 13px;
+}
+.ame-sa-kpi {
+    margin: 0;
+    padding: 18px 16px 4px;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #04933A;
+}
+.ame-sa-kpi span {
+    display: block;
+    font-size: 13px;
+    color: #667085;
+}
+@media (max-width: 760px) {
+    .ame-staff-grid { grid-template-columns: 1fr; }
+    .ame-sa-links { grid-template-columns: 1fr; }
+}
+
+@media print {
+    .ame-staff-home { display: none !important; }
+}

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /login.php
+Allow: /favicon.ico
+Allow: /favicon.png
+Disallow: /

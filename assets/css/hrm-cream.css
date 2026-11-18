@@ -1,0 +1,171 @@
+/* 10.98.399 — কর্মী মডিউল: কালো/নীল বক্স বাতিল, হালকা ক্রিম */
+html body.ame-hrm-page #main-content {
+  --hrm-cream: #EFE6D4;
+  --hrm-cream-ink: #3D2A12;
+  --hrm-cream-line: #D4C4A8;
+}
+
+html body.ame-hrm-page #main-content table thead tr,
+html body.ame-hrm-page #main-content table thead th,
+html body.ame-hrm-page #main-content table th,
+html body.ame-hrm-page #main-content table tr[style*="background: var(--dark-blue)"],
+html body.ame-hrm-page #main-content table tr[style*="background:var(--dark-blue)"] {
+  background: #EFE6D4 !important;
+  background-color: #EFE6D4 !important;
+  background-image: none !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+}
+
+html body.ame-hrm-page #main-content .earn-table th,
+html body.ame-hrm-page #main-content .earn-chip,
+html body.ame-hrm-page #main-content .earn-nav a.on,
+html body.ame-hrm-page #main-content .earn-btn,
+html body.ame-hrm-page #main-content .earn-due-hero,
+html body.ame-hrm-page #main-content .wd button,
+html body.ame-hrm-page #main-content .wd-note,
+html body.ame-hrm-page #main-content .ame-staff-hero,
+html body.ame-hrm-page #main-content .ame-sa-hero,
+html body.ame-hrm-page #main-content .adv-hero,
+html body.ame-hrm-page #main-content .sp-net,
+html body.ame-hrm-page #main-content .ws-card.keep,
+html body.ame-hrm-page #main-content .ws-slip-top,
+html body.ame-hrm-page #main-content .eprof-c2,
+html body.ame-hrm-page #main-content .elg-c2,
+html body.ame-hrm-page #main-content .dp-c2 {
+  background: #EFE6D4 !important;
+  background-color: #EFE6D4 !important;
+  background-image: none !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  border: 1px solid #D4C4A8 !important;
+  box-shadow: none !important;
+}
+
+html body.ame-hrm-page #main-content .ame-staff-hero *,
+html body.ame-hrm-page #main-content .ame-sa-hero *,
+html body.ame-hrm-page #main-content .adv-hero *,
+html body.ame-hrm-page #main-content .sp-net *,
+html body.ame-hrm-page #main-content .ws-card.keep *,
+html body.ame-hrm-page #main-content .ws-slip-top * {
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+}
+
+html body.ame-hrm-page #main-content .hd-top-header a,
+html body.ame-hrm-page #main-content .sp-nav a,
+html body.ame-hrm-page #main-content .wl-nav a,
+html body.ame-hrm-page #main-content .dr-nav a,
+html body.ame-hrm-page #main-content .sp-mode.on,
+html body.ame-hrm-page #main-content .sp-go,
+html body.ame-hrm-page #main-content .wl-go,
+html body.ame-hrm-page #main-content .dr-go,
+html body.ame-hrm-page #main-content .lv-btn,
+html body.ame-hrm-page #main-content .lv-filter-tabs a.active,
+html body.ame-hrm-page #main-content .rpt-filter button,
+html body.ame-hrm-page #main-content .elg-save-btn,
+html body.ame-hrm-page #main-content .ws-month button,
+html body.ame-hrm-page #main-content .ws-btn,
+html body.ame-hrm-page #main-content .ws-stmt-actions a,
+html body.ame-hrm-page #main-content .ws-stmt-actions button,
+html body.ame-hrm-page #main-content .ame-staff-home,
+html body.ame-hrm-page #main-content .emp-radio:has(input:checked),
+html body.ame-hrm-page #main-content .emp-pay-icon:has(input:checked) {
+  background: #EFE6D4 !important;
+  background-color: #EFE6D4 !important;
+  background-image: none !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  border: 1px solid #D4C4A8 !important;
+  box-shadow: none !important;
+}
+
+html body.ame-hrm-page #main-content .emp-radio:has(input:checked) .ame-pair strong,
+html body.ame-hrm-page #main-content .emp-radio:has(input:checked) .ame-pair em,
+html body.ame-hrm-page #main-content .emp-pay-icon:has(input:checked) strong,
+html body.ame-hrm-page #main-content .emp-pay-icon:has(input:checked) em {
+  color: #3D2A12 !important;
+}
+
+html body.ame-hrm-page #main-content button.emp-save,
+html body.ame-hrm-page.ame-premium-ui form.card.emp-desk button.emp-save[type="submit"] {
+  background: #EFE6D4 !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  border: 1px solid #D4C4A8 !important;
+}
+
+html body.ame-hrm-page #main-content button.emp-save .ame-pair,
+html body.ame-hrm-page #main-content button.emp-save .ame-pair strong,
+html body.ame-hrm-page #main-content button.emp-save .ame-pair em,
+html body.ame-hrm-page #main-content button.emp-save .ame-wait-label,
+html body.ame-hrm-page #main-content button.emp-save .ame-wait-label strong,
+html body.ame-hrm-page #main-content button.emp-save .ame-wait-label em {
+  color: #3D2A12 !important;
+}
+
+html body.ame-hrm-page #main-content [style*="background:#000"],
+html body.ame-hrm-page #main-content [style*="background: #000"],
+html body.ame-hrm-page #main-content [style*="background:#0b1e4d"],
+html body.ame-hrm-page #main-content [style*="background: #0b1e4d"],
+html body.ame-hrm-page #main-content [style*="background:#0B1E4D"],
+html body.ame-hrm-page #main-content [style*="background:#003F8F"],
+html body.ame-hrm-page #main-content [style*="background: #003F8F"],
+html body.ame-hrm-page #main-content [style*="background:#0F3D26"],
+html body.ame-hrm-page #main-content [style*="background: #0F3D26"],
+html body.ame-hrm-page #main-content [style*="background:#111"],
+html body.ame-hrm-page #main-content [style*="background: #111"],
+html body.ame-hrm-page #main-content [style*="background: var(--dark-blue)"],
+html body.ame-hrm-page #main-content [style*="background:var(--dark-blue)"] {
+  background: #EFE6D4 !important;
+  background-color: #EFE6D4 !important;
+  background-image: none !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  border-color: #D4C4A8 !important;
+}
+
+html body.ame-hrm-page #main-content .ame-hard-delete-btn,
+html body.ame-hrm-page #main-content [data-ame-hard-delete] button,
+html body.ame-hrm-page #main-content button[style*="#B71C1C"],
+html body.ame-hrm-page #main-content a[style*="#B71C1C"],
+html body.ame-hrm-page #main-content .sp-submit,
+html body.ame-hrm-page #main-content button.sp-submit,
+html body.ame-hrm-page #main-content .ws-pay,
+html body.ame-hrm-page #main-content a[style*="background:#15803d"],
+html body.ame-hrm-page #main-content a[style*="background: #15803d"] {
+  background: #15803d !important;
+  background-color: #15803d !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #15803d !important;
+}
+
+html body.ame-hrm-page #main-content .ame-hard-delete-btn,
+html body.ame-hrm-page #main-content [data-ame-hard-delete] button,
+html body.ame-hrm-page #main-content button[style*="#B71C1C"] {
+  background: #B71C1C !important;
+  background-color: #B71C1C !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #B71C1C !important;
+}
+
+html body.ame-hrm-page #main-content .earn-btn.ghost {
+  background: #fff !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  border: 1.5px solid #D4C4A8 !important;
+}
+html body.ame-hrm-page #main-content .earn-btn.warn {
+  background: #be123c !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border-color: #be123c !important;
+}
+html body.ame-hrm-page #main-content .wd .wd-del {
+  background: #fff !important;
+  color: #9f1239 !important;
+  -webkit-text-fill-color: #9f1239 !important;
+  border: 1px solid #fecdd3 !important;
+}

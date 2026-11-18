@@ -1,0 +1,1090 @@
+/* সাপ্লায়ার পেমেন্ট — দোকানের ব্র্যান্ড রং। আলাদা প্যালেট নেই। */
+.spay {
+  padding: 12px;
+  color: var(--brand-text, #111);
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.spay h1, .spay h2 {
+  margin: 0 0 10px;
+  color: var(--brand-navy, #0B1E4D);
+  font-size: 22px;
+  line-height: 1.3;
+}
+.spay-kpis {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.spay-kpi {
+  background: var(--brand-bg, #fff);
+  border: 1.5px solid var(--brand-border, #5C6B80);
+  border-radius: 10px;
+  padding: 8px 10px;
+  min-height: 64px;
+}
+.spay-kpi span {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--brand-navy, #0B1E4D);
+  line-height: 1.3;
+}
+.spay-kpi strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 16px;
+  color: #111;
+  line-height: 1.25;
+}
+.spay-kpi.danger strong { color: var(--brand-danger, #D32F2F); }
+.spay-kpi.ok strong { color: var(--brand-success, #0E8F52); }
+.spay-card {
+  background: var(--brand-bg, #fff);
+  border: 1.5px solid var(--brand-border, #5C6B80);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.spay-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px 12px;
+}
+.spay label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--brand-navy, #0B1E4D);
+}
+.spay input[type="text"],
+.spay input[type="search"],
+.spay input[type="number"],
+.spay input[type="date"],
+.spay input[type="file"],
+.spay select,
+.spay textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 42px;
+  padding: 8px 10px;
+  border: 1.5px solid #5C6B80;
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+  font-size: 16px;
+  line-height: 1.35;
+  text-align: center;
+}
+.spay textarea { min-height: 72px; text-align: center; }
+.spay input:focus, .spay select:focus, .spay textarea:focus {
+  outline: 3px solid var(--brand-accent, #0091EA);
+  border-color: var(--brand-navy, #0B1E4D);
+}
+.spay-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1.5px solid var(--brand-navy, #0B1E4D);
+  background: #fff;
+  color: var(--brand-navy, #0B1E4D);
+  font-weight: 800;
+  font-size: 15px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.spay-btn.primary {
+  background: var(--brand-success, #0E8F52);
+  border-color: var(--brand-success, #0E8F52);
+  color: #fff;
+  min-height: 52px;
+  font-size: 17px;
+  width: 100%;
+}
+.spay-submit-near {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.spay-submit-near .spay-btn.primary {
+  width: auto;
+  min-width: 220px;
+}
+.spay-btn.warn {
+  background: var(--brand-danger, #D32F2F);
+  border-color: var(--brand-danger, #D32F2F);
+  color: #fff;
+}
+.spay-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.spay-hit, .spay-modes label {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid var(--brand-border, #d5dbe3);
+  cursor: pointer;
+  text-align: left;
+}
+.spay-hit.is-on, .spay-hit:hover { background: #e8f1fb; }
+.spay-table-wrap { overflow-x: auto; }
+.spay table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.spay th {
+  background: var(--brand-navy, #0B1E4D);
+  color: #fff;
+  padding: 8px;
+  text-align: center;
+}
+.spay td {
+  padding: 8px;
+  border-bottom: 1px solid var(--brand-border, #d5dbe3);
+  text-align: center;
+  color: #111;
+  background: #fff;
+}
+.spay-error {
+  background: #fff;
+  color: var(--brand-danger, #D32F2F);
+  border: 1.5px solid var(--brand-danger, #D32F2F);
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+.spay-live {
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+  color: var(--brand-navy, #0B1E4D);
+}
+.spay-muted { color: var(--brand-muted, #3D4D63); font-size: 13px; font-weight: 700; }
+.spay-receipt-head { text-align: center; margin-bottom: 12px; }
+.spay-receipt-head img { width: 64px; height: 64px; object-fit: contain; }
+@media (max-width: 900px) {
+  .spay-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .spay-grid { grid-template-columns: 1fr; }
+}
+.spay-hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: #0B3A82;
+  color: #fff;
+  border-radius: 16px;
+  padding: 18px 16px;
+  margin: 12px 0;
+}
+.spay-hero h2, .spay-hero p { margin: 0 0 6px; color: #fff; }
+.spay-hero h2 { font-size: 28px; }
+.spay-hero p { font-size: 16px; }
+.spay-hero-due { min-width: 180px; text-align: right; }
+.spay-hero-due span { display: block; font-size: 14px; font-weight: 800; }
+.spay-hero-due strong { display: block; font-size: 36px; line-height: 1.1; }
+.spay-live-row { display: flex; flex-wrap: wrap; gap: 12px; font-size: 18px; font-weight: 800; color: #142016; }
+.spay-live-row b { color: #0B3A82; font-size: 22px; }
+.spay-pay-go { display: inline-flex; min-height: 56px; font-size: 18px; margin: 8px 0 14px; background: #4C1D95 !important; color: #fff !important; }
+.spay-badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-weight: 800; font-size: 13px; color: #fff; }
+.spay-badge.paid { background: #15803D; }
+.spay-badge.partial { background: #4C1D95; }
+.spay-badge.due { background: #C62828; }
+.spay-amt { font-weight: 800; font-size: 16px; }
+.spay-kpi strong { font-size: 26px; }
+@media (max-width: 700px) {
+  .spay-hero-due { text-align: left; }
+  .spay-hero h2 { font-size: 22px; }
+  .spay-hero-due strong { font-size: 28px; }
+}
+@media print {
+  body * { visibility: hidden !important; }
+  #spReceipt, #spReceipt * { visibility: visible !important; }
+  #spReceipt { position: absolute; left: 0; top: 0; width: 100%; background: #fff; color: #142016; }
+  .sidebar, .hdr, header, .master-header-fixed, .spay-no-print, .menu-head, #sidebar, nav, footer { display: none !important; }
+  .spay { max-width: none; padding: 0; }
+}
+@page { size: A4; margin: 12mm; }
+.spay-slip { max-width: 80mm; }
+#ame-memo-capture-clone .spay-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+#ame-memo-capture-clone .spay-receipt-head {
+  text-align: center !important;
+}
+#ame-memo-capture-clone .spay-receipt-head img {
+  width: auto !important;
+  height: 96px !important;
+  max-width: 280px !important;
+}
+#spayShareBar .spay-btn.primary {
+  width: auto;
+  min-width: 140px;
+}
+
+/* 10.98.479 — সরবরাহকারী পেমেন্ট: সব বক্স সাদা; রং শুধু ফ্রন্টে */
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #0f172a !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay h1 {
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  background: transparent !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-hero,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-card,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-error,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-table-wrap,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay form.spay-card {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-hero {
+  color: #0f172a !important;
+  border: 1.5px solid #003f8f !important;
+  border-radius: 12px !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-hero h2 {
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  background: transparent !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-hero p {
+  color: #0e7490 !important;
+  -webkit-text-fill-color: #0e7490 !important;
+  background: transparent !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-hero-due span {
+  color: #7c3aed !important;
+  -webkit-text-fill-color: #7c3aed !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-hero-due strong {
+  color: #be185d !important;
+  -webkit-text-fill-color: #be185d !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-card {
+  border: 1.5px solid #003f8f !important;
+  color: #0f172a !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-card h2 {
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  background: transparent !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi {
+  border: 1.5px solid #94a3b8 !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi:nth-child(1) { border-color: #003f8f !important; }
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi:nth-child(1) span { color: #003f8f !important; -webkit-text-fill-color: #003f8f !important; }
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi:nth-child(2) { border-color: #15803d !important; }
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi:nth-child(2) span { color: #15803d !important; -webkit-text-fill-color: #15803d !important; }
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi:nth-child(3) { border-color: #be185d !important; }
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi:nth-child(3) span { color: #be185d !important; -webkit-text-fill-color: #be185d !important; }
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi:nth-child(4) { border-color: #c2410c !important; }
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi:nth-child(4) span { color: #c2410c !important; -webkit-text-fill-color: #c2410c !important; }
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi:nth-child(5) { border-color: #0e7490 !important; }
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi:nth-child(5) span { color: #0e7490 !important; -webkit-text-fill-color: #0e7490 !important; }
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi:nth-child(6) { border-color: #7c3aed !important; }
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi:nth-child(6) span { color: #7c3aed !important; -webkit-text-fill-color: #7c3aed !important; }
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi:nth-child(7) { border-color: #0f766e !important; }
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi:nth-child(7) span { color: #0f766e !important; -webkit-text-fill-color: #0f766e !important; }
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi strong {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  background: transparent !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi.ok strong {
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-kpi.danger strong {
+  color: #be185d !important;
+  -webkit-text-fill-color: #be185d !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-live-row {
+  color: #0e7490 !important;
+  -webkit-text-fill-color: #0e7490 !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-live-row b {
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-muted {
+  color: #64748b !important;
+  -webkit-text-fill-color: #64748b !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay label {
+  color: #0e7490 !important;
+  -webkit-text-fill-color: #0e7490 !important;
+  background: transparent !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="file"]):not([type="color"]):not([type="range"]):not([type="image"]),
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay select,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay textarea {
+  background: #ffffff !important;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  border: 1.5px solid #0e7490 !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-error {
+  color: #b91c1c !important;
+  -webkit-text-fill-color: #b91c1c !important;
+  border: 1.5px solid #b91c1c !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay table,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay table thead,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay table thead th,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay table thead td,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay table thead th *,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay table tbody td,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay table tbody tr:nth-child(even) td {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay table thead th,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay table thead th * {
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  border-bottom: 1.5px solid #003f8f !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay table tbody td {
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-amt {
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-badge {
+  background: #ffffff !important;
+  border: 1.5px solid currentColor !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-badge.paid {
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+  border-color: #15803d !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-badge.partial {
+  color: #7c3aed !important;
+  -webkit-text-fill-color: #7c3aed !important;
+  border-color: #7c3aed !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-badge.due {
+  color: #be185d !important;
+  -webkit-text-fill-color: #be185d !important;
+  border-color: #be185d !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay button.spay-btn:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item),
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay a.spay-btn:not(.hdr-icon-btn):not(.ghost):not(.btn-outline) {
+  background: #ffffff !important;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  border: 1.5px solid #003f8f !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay button.spay-btn.primary:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item),
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay button.spay-btn.primary:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item) *,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay a.spay-btn.primary:not(.hdr-icon-btn):not(.ghost):not(.btn-outline),
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay a.spay-btn.primary:not(.hdr-icon-btn):not(.ghost):not(.btn-outline) *,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay a.spay-pay-go,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay a.spay-pay-go * {
+  background: #ffffff !important;
+  color: #15803d !important;
+  -webkit-text-fill-color: #15803d !important;
+  border: 1.5px solid #15803d !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay button.spay-btn.warn:not(.hdr-icon-btn):not(.lgn-eye):not(.ame-calc-btn):not(.cus-suggest-item) {
+  background: #ffffff !important;
+  color: #b91c1c !important;
+  -webkit-text-fill-color: #b91c1c !important;
+  border: 1.5px solid #b91c1c !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-hit,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-hit.is-on,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-hit:hover,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-modes label {
+  background: #ffffff !important;
+  color: #0e7490 !important;
+  -webkit-text-fill-color: #0e7490 !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .spay-hit.is-on {
+  border-left: 3px solid #15803d !important;
+}
+
+/* 10.98.581 — memo ledger + remaining due + advance */
+.spay-ledger-box {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px;
+  border: 2px solid #003F8F;
+  border-radius: 12px;
+  background: #fff;
+}
+.spay-ledger-box div {
+  text-align: center;
+  padding: 6px 4px;
+}
+.spay-ledger-box span {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  color: #0e7490;
+}
+.spay-ledger-box b {
+  display: block;
+  margin-top: 4px;
+  font-size: 18px;
+  color: #003F8F;
+}
+.spay-ledger-box div:nth-child(2) b { color: #15803d; }
+.spay-ledger-box div:nth-child(3) b { color: #be185d; }
+.spay-ledger-box div:nth-child(4) b { color: #15803d; }
+.nx-pay-bar {
+  margin: 12px 0 16px;
+  padding: 12px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  background: #fff;
+}
+.nx-pay-hint {
+  margin: 0 0 10px;
+  font-weight: 800;
+  font-size: 13px;
+  color: #166534;
+}
+.nx-pay-acts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.nx-pay-act {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 72px;
+  border-radius: 14px;
+  border: 1.5px solid #003F8F;
+  background: #fff;
+  color: #003F8F;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+}
+.nx-pay-act .nx-ico {
+  font-size: 22px;
+  line-height: 1;
+}
+.nx-pay-act.nx-share { border-color: #15803d; color: #15803d; }
+.nx-pay-act.nx-dl { border-color: #003F8F; color: #003F8F; }
+.nx-pay-act.nx-view { border-color: #7c3aed; color: #7c3aed; }
+.nx-pay-act.is-pulse {
+  box-shadow: 0 0 0 3px #bbf7d0;
+}
+.nx-pay-more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+@media (max-width: 640px) {
+  .spay-ledger-box { grid-template-columns: 1fr; }
+  .nx-pay-acts { grid-template-columns: 1fr; }
+}
+#ame-memo-capture-clone .spay-ledger-box {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+.ame-pay-sec {
+  margin: 12px 0;
+  padding: 14px;
+  border: 2px solid #c2410c;
+  border-radius: 12px;
+  background: #fff7ed;
+  background-color: #fff7ed;
+  color: #111827;
+}
+.ame-pay-sec-kicker {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #c2410c;
+  -webkit-text-fill-color: #c2410c;
+}
+.ame-pay-sec-code {
+  margin: 0 0 8px;
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: #003f8f;
+  -webkit-text-fill-color: #003f8f;
+}
+.ame-pay-sec-hint, .ame-pay-sec-lbl {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+  -webkit-text-fill-color: #111827;
+}
+.ame-pay-sec-input {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 46px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 2px solid #003f8f;
+  background: #ffffff;
+  color: #111827;
+  -webkit-text-fill-color: #111827;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.ame-pay-sec-err { color: #b91c1c; font-weight: 800; }
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .ame-pay-sec {
+  background: #fff7ed !important;
+  background-color: #fff7ed !important;
+  border: 2px solid #c2410c !important;
+  color: #111827 !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .ame-pay-sec p,
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .ame-pay-sec label {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  background: transparent !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .ame-pay-sec .ame-pay-sec-kicker {
+  color: #c2410c !important;
+  -webkit-text-fill-color: #c2410c !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .ame-pay-sec .ame-pay-sec-code {
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  font-size: 32px !important;
+}
+html body.ame-spay-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .spay .ame-pay-sec .ame-pay-sec-input {
+  background: #ffffff !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  border: 2px solid #003f8f !important;
+}
+
+/* 10.98.658 — পেমেন্ট রসিদের লেখা গাঢ় ও বড়। টাকার অঙ্ক বদলায় না। */
+html body.ame-spay-page #main-content #spayMemo,
+html body.ame-spay-page #main-content #spayMemo .spay-receipt-head,
+html body #ame-memo-capture-clone.spay-memo,
+html body #ame-memo-capture-clone.spay-memo .spay-receipt-head {
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+}
+html body.ame-spay-page #main-content #spayMemo .spay-receipt-head h1,
+html body #ame-memo-capture-clone.spay-memo .spay-receipt-head h1 {
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  font-weight: 900 !important;
+  font-size: 30px !important;
+  line-height: 1.25 !important;
+}
+html body.ame-spay-page #main-content #spayMemo .spay-receipt-head h2,
+html body #ame-memo-capture-clone.spay-memo .spay-receipt-head h2 {
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+  font-weight: 900 !important;
+  font-size: 24px !important;
+  line-height: 1.3 !important;
+}
+html body.ame-spay-page #main-content #spayMemo .spay-receipt-head div,
+html body #ame-memo-capture-clone.spay-memo .spay-receipt-head div {
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+  font-weight: 800 !important;
+  font-size: 16px !important;
+}
+html body.ame-spay-page #main-content #spayMemo .spay-grid label,
+html body #ame-memo-capture-clone.spay-memo .spay-grid label {
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+  font-weight: 800 !important;
+  font-size: 15px !important;
+  line-height: 1.35 !important;
+}
+html body.ame-spay-page #main-content #spayMemo .spay-grid > div > div,
+html body #ame-memo-capture-clone.spay-memo .spay-grid > div > div {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  font-weight: 900 !important;
+  font-size: 18px !important;
+  line-height: 1.35 !important;
+}
+html body.ame-spay-page #main-content #spayMemo table thead th,
+html body.ame-spay-page #main-content #spayMemo table thead th *,
+html body #ame-memo-capture-clone.spay-memo table thead th,
+html body #ame-memo-capture-clone.spay-memo table thead th * {
+  background: #F1F5F9 !important;
+  background-color: #F1F5F9 !important;
+  background-image: none !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-weight: 800 !important;
+  font-size: 14px !important;
+}
+html body.ame-spay-page #main-content #spayMemo table tbody td,
+html body #ame-memo-capture-clone.spay-memo table tbody td {
+  background: #ffffff !important;
+  color: #1E293B !important;
+  -webkit-text-fill-color: #1E293B !important;
+  font-weight: 800 !important;
+  font-size: 15px !important;
+}
+html body.ame-spay-page #main-content #spayMemo .spay-ledger-box span,
+html body #ame-memo-capture-clone.spay-memo .spay-ledger-box span {
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+html body.ame-spay-page #main-content #spayMemo .spay-ledger-box b,
+html body #ame-memo-capture-clone.spay-memo .spay-ledger-box b {
+  font-size: 26px !important;
+  font-weight: 900 !important;
+  line-height: 1.2 !important;
+}
+html body.ame-spay-page #main-content #spayMemo .spay-ledger-box div:nth-child(1) b,
+html body #ame-memo-capture-clone.spay-memo .spay-ledger-box div:nth-child(1) b {
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+}
+html body.ame-spay-page #main-content #spayMemo .spay-ledger-box div:nth-child(2) b,
+html body #ame-memo-capture-clone.spay-memo .spay-ledger-box div:nth-child(2) b,
+html body.ame-spay-page #main-content #spayMemo .spay-ledger-box div:nth-child(4) b,
+html body #ame-memo-capture-clone.spay-memo .spay-ledger-box div:nth-child(4) b {
+  color: #0f6b32 !important;
+  -webkit-text-fill-color: #0f6b32 !important;
+}
+html body.ame-spay-page #main-content #spayMemo .spay-ledger-box div:nth-child(3) b,
+html body #ame-memo-capture-clone.spay-memo .spay-ledger-box div:nth-child(3) b {
+  color: #9f1239 !important;
+  -webkit-text-fill-color: #9f1239 !important;
+}
+html body.ame-spay-page #main-content #spayMemo .spay-ledger-proof,
+html body #ame-memo-capture-clone.spay-memo .spay-ledger-proof {
+  margin: 10px 0 0 !important;
+  text-align: center !important;
+  color: #0B1E4D !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow: visible !important;
+}
+html body.ame-spay-page #spReceipt .ame-op-stamp,
+html body.ame-spay-page #spReceipt .ame-op-stamp p {
+  color: #111111 !important;
+  -webkit-text-fill-color: #111111 !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+
+/* 10.98.659 — লোগোর উপরের প্রথম লাইন স্পষ্ট। সোনালি ছায়া বাদ, কালো বড় অক্ষর। টাকার অঙ্ক বদলায় না। */
+html body.ame-spay-page #main-content #spayMemo .ame-logo-eid,
+html body #ame-memo-capture-clone.spay-memo .ame-logo-eid {
+  display: block !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 0 10px !important;
+  padding: 2px 8px 8px !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #9B1C1C !important;
+  -webkit-text-fill-color: #9B1C1C !important;
+  -webkit-text-stroke: 0 !important;
+  paint-order: normal !important;
+  text-shadow: none !important;
+  font-weight: 900 !important;
+  font-size: 18px !important;
+  line-height: 1.45 !important;
+  letter-spacing: 0 !important;
+  text-align: center !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  word-break: break-word !important;
+}
+
+/* বিক্রয় মেমোর কার্ড, ব্যাজ, মেটা ও রঙিন হিসাব। টাকার অঙ্ক বদলায় না। */
+html body.ame-spay-page #main-content #spayMemo.memo-wrapper {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto 12px;
+  padding: 24px 20px;
+  background: #ffffff !important;
+  border: 1px solid #E5E7EB !important;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+html body #ame-memo-capture-clone.spay-memo {
+  margin: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  background: #ffffff !important;
+  overflow: visible !important;
+}
+html body.ame-spay-page #spayMemo .memo-head,
+html body #ame-memo-capture-clone.spay-memo .memo-head {
+  text-align: center !important;
+  border-bottom: 2px dashed #003F8F !important;
+  padding-bottom: 14px !important;
+  margin-bottom: 14px !important;
+}
+html body.ame-spay-page #spayMemo .memo-shop-name,
+html body #ame-memo-capture-clone.spay-memo .memo-shop-name {
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+  margin: 0 0 4px !important;
+}
+html body.ame-spay-page #spayMemo .memo-badge,
+html body #ame-memo-capture-clone.spay-memo .memo-badge {
+  display: inline-block !important;
+  margin-top: 8px !important;
+  padding: 4px 14px !important;
+  background: #003F8F !important;
+  background-color: #003F8F !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  border-radius: 20px !important;
+  border: 0 !important;
+}
+html body.ame-spay-page #spayMemo .memo-meta-grid,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 4px !important;
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 10px !important;
+  padding: 8px 10px !important;
+  margin: 0 0 12px !important;
+}
+html body.ame-spay-page #spayMemo .memo-meta-item,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: baseline !important;
+  gap: 10px !important;
+  min-width: 0 !important;
+  width: 100% !important;
+}
+html body.ame-spay-page #spayMemo .memo-meta-item .lbl,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item .lbl {
+  color: #64748B !important;
+  -webkit-text-fill-color: #64748B !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  flex: 0 0 auto !important;
+  text-align: left !important;
+}
+html body.ame-spay-page #spayMemo .memo-meta-item .val,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item .val {
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  text-align: right !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  word-break: break-word !important;
+}
+html body.ame-spay-page #spayMemo .spay-c-navy .val,
+html body #ame-memo-capture-clone.spay-memo .spay-c-navy .val {
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+}
+html body.ame-spay-page #spayMemo .spay-c-blue .val,
+html body #ame-memo-capture-clone.spay-memo .spay-c-blue .val {
+  color: #0B3A82 !important;
+  -webkit-text-fill-color: #0B3A82 !important;
+}
+html body.ame-spay-page #spayMemo .spay-c-green .val,
+html body #ame-memo-capture-clone.spay-memo .spay-c-green .val {
+  color: #166534 !important;
+  -webkit-text-fill-color: #166534 !important;
+}
+html body.ame-spay-page #spayMemo .spay-c-red .val,
+html body #ame-memo-capture-clone.spay-memo .spay-c-red .val {
+  color: #991B1B !important;
+  -webkit-text-fill-color: #991B1B !important;
+}
+html body.ame-spay-page #spayMemo .spay-c-ink .val,
+html body #ame-memo-capture-clone.spay-memo .spay-c-ink .val {
+  color: #0F172A !important;
+  -webkit-text-fill-color: #0F172A !important;
+}
+html body.ame-spay-page #spayMemo.memo-wrapper,
+html body #ame-memo-capture-clone.spay-memo {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+html body.ame-spay-page #spayMemo .sabek-box,
+html body #ame-memo-capture-clone.spay-memo .sabek-box {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+  background: #FFFBEB !important;
+  border: 1px solid #FDE68A !important;
+  border-radius: 8px !important;
+  padding: 8px 10px !important;
+  margin-top: 6px !important;
+}
+html body.ame-spay-page #spayMemo .spay-ledger,
+html body #ame-memo-capture-clone.spay-memo .spay-ledger {
+  width: 100% !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: collapse !important;
+  background: transparent !important;
+}
+html body.ame-spay-page #spayMemo .spay-ledger td,
+html body #ame-memo-capture-clone.spay-memo .spay-ledger td {
+  width: 50% !important;
+  box-sizing: border-box !important;
+  padding: 6px 8px !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow: visible !important;
+  vertical-align: middle !important;
+  text-align: left !important;
+}
+html body.ame-spay-page #spayMemo .spay-ledger td.num,
+html body #ame-memo-capture-clone.spay-memo .spay-ledger td.num {
+  text-align: right !important;
+}
+html body.ame-spay-page #spayMemo .spay-row-due td,
+html body #ame-memo-capture-clone.spay-memo .spay-row-due td {
+  background: #FFFBEB !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+}
+html body.ame-spay-page #spayMemo .spay-row-paid td,
+html body #ame-memo-capture-clone.spay-memo .spay-row-paid td {
+  background: #F0FDF4 !important;
+  color: #166534 !important;
+  -webkit-text-fill-color: #166534 !important;
+}
+html body.ame-spay-page #spayMemo .spay-row-left td,
+html body #ame-memo-capture-clone.spay-memo .spay-row-left td {
+  background: #FEF2F2 !important;
+  color: #991B1B !important;
+  -webkit-text-fill-color: #991B1B !important;
+}
+html body.ame-spay-page #spayMemo .spay-row-adv td,
+html body #ame-memo-capture-clone.spay-memo .spay-row-adv td {
+  background: #ECFDF5 !important;
+  color: #166534 !important;
+  -webkit-text-fill-color: #166534 !important;
+}
+html body.ame-spay-page #spayMemo .spay-total-line,
+html body #ame-memo-capture-clone.spay-memo .spay-total-line {
+  border-top: 1px solid #F59E0B !important;
+  margin-top: 6px !important;
+  padding-top: 6px !important;
+}
+html body.ame-spay-page #spayMemo .spay-money-due,
+html body #ame-memo-capture-clone.spay-memo .spay-money-due {
+  color: #003F8F !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+}
+html body.ame-spay-page #spayMemo .spay-money-paid,
+html body.ame-spay-page #spayMemo .spay-money-adv,
+html body #ame-memo-capture-clone.spay-memo .spay-money-paid,
+html body #ame-memo-capture-clone.spay-memo .spay-money-adv {
+  color: #166534 !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+}
+html body.ame-spay-page #spayMemo .spay-money-left,
+html body #ame-memo-capture-clone.spay-memo .spay-money-left {
+  color: #991B1B !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+}
+html body.ame-spay-page #spayMemo .spay-ledger-proof,
+html body #ame-memo-capture-clone.spay-memo .spay-ledger-proof {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  margin-top: 6px !important;
+  text-align: center !important;
+  color: #0B1E4D !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  line-height: 1.45 !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow: visible !important;
+}
+html body.ame-spay-page #spReceipt .inv-action-bar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 520px;
+  margin: 0 auto 14px;
+}
+html body.ame-spay-page #spReceipt #nxPayHint {
+  flex: 1 1 100%;
+  text-align: center;
+  margin: 0 0 4px;
+}
+html body.ame-spay-page #spReceipt .inv-btn {
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid #D1D5DB;
+  background: #ffffff;
+  color: #003F8F;
+  font-weight: 800;
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+}
+html body.ame-spay-page #spReceipt .inv-btn-print { background: #003F8F; color: #fff; border-color: #003F8F; }
+html body.ame-spay-page #spReceipt .inv-btn-pdf { background: #04933A; color: #fff; border-color: #04933A; }
+html body.ame-spay-page #spReceipt .inv-btn-img { background: #4F46E5; color: #fff; border-color: #4F46E5; }
+html body.ame-spay-page #spReceipt .inv-btn-share { background: #0284C7; color: #fff; border-color: #0284C7; }
+html body.ame-spay-page #spReceipt .inv-btn-wa { background: #25D366; color: #fff; border-color: #25D366; }
+html body.ame-spay-page #spReceipt .inv-btn-tg { background: #229ED9; color: #fff; border-color: #229ED9; }
+html body.ame-spay-page #spReceipt .spay-more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  max-width: 520px;
+  margin: 8px auto 12px;
+}
+html body.ame-spay-page #spayMemo .memo-shop-desc,
+html body #ame-memo-capture-clone.spay-memo .memo-shop-desc {
+  color: #0B3A82 !important;
+  -webkit-text-fill-color: #0B3A82 !important;
+}
+html body.ame-spay-page #spayMemo .memo-shop-phone,
+html body #ame-memo-capture-clone.spay-memo .memo-shop-phone {
+  color: #166534 !important;
+  -webkit-text-fill-color: #166534 !important;
+}
+html body.ame-spay-page #spayMemo .memo-table tbody td,
+html body #ame-memo-capture-clone.spay-memo .memo-table tbody td {
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+}
+html body.ame-spay-page #spayMemo .memo-table .tr,
+html body #ame-memo-capture-clone.spay-memo .memo-table .tr {
+  text-align: right !important;
+  color: #166534 !important;
+  -webkit-text-fill-color: #166534 !important;
+}
+
+html body.ame-spay-page #spayMemo .memo-shop-name,
+html body #ame-memo-capture-clone.spay-memo .memo-shop-name {
+  color: #0B3D91 !important;
+  -webkit-text-fill-color: #0B3D91 !important;
+}
+html body.ame-spay-page #spayMemo .memo-shop-desc,
+html body #ame-memo-capture-clone.spay-memo .memo-shop-desc {
+  color: #0F766E !important;
+  -webkit-text-fill-color: #0F766E !important;
+}
+html body.ame-spay-page #spayMemo .memo-shop-phone,
+html body #ame-memo-capture-clone.spay-memo .memo-shop-phone {
+  color: #7C3AED !important;
+  -webkit-text-fill-color: #7C3AED !important;
+}
+html body.ame-spay-page #spayMemo .memo-badge,
+html body #ame-memo-capture-clone.spay-memo .memo-badge {
+  background: #9F1239 !important;
+  background-color: #9F1239 !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+html body.ame-spay-page #spayMemo .spay-c-red .val.memo-customer-name,
+html body #ame-memo-capture-clone.spay-memo .spay-c-red .val.memo-customer-name {
+  color: #9F1239 !important;
+  -webkit-text-fill-color: #9F1239 !important;
+  font-weight: 900 !important;
+  font-size: 16px !important;
+}
+html body.ame-spay-page #spayMemo .memo-meta-item:nth-child(1) .lbl,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item:nth-child(1) .lbl { color: #1D4ED8 !important; -webkit-text-fill-color: #1D4ED8 !important; }
+html body.ame-spay-page #spayMemo .memo-meta-item:nth-child(2) .lbl,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item:nth-child(2) .lbl { color: #0F766E !important; -webkit-text-fill-color: #0F766E !important; }
+html body.ame-spay-page #spayMemo .memo-meta-item:nth-child(3) .lbl,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item:nth-child(3) .lbl { color: #C2410C !important; -webkit-text-fill-color: #C2410C !important; }
+html body.ame-spay-page #spayMemo .memo-meta-item:nth-child(4) .lbl,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item:nth-child(4) .lbl { color: #6D28D9 !important; -webkit-text-fill-color: #6D28D9 !important; }
+html body.ame-spay-page #spayMemo .memo-meta-item:nth-child(5) .lbl,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item:nth-child(5) .lbl { color: #0369A1 !important; -webkit-text-fill-color: #0369A1 !important; }
+html body.ame-spay-page #spayMemo .memo-meta-item:nth-child(6) .lbl,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item:nth-child(6) .lbl { color: #BE123C !important; -webkit-text-fill-color: #BE123C !important; }
+html body.ame-spay-page #spayMemo .memo-meta-item:nth-child(7) .lbl,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item:nth-child(7) .lbl { color: #047857 !important; -webkit-text-fill-color: #047857 !important; }
+html body.ame-spay-page #spayMemo .memo-meta-item:nth-child(8) .lbl,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item:nth-child(8) .lbl { color: #B45309 !important; -webkit-text-fill-color: #B45309 !important; }
+html body.ame-spay-page #spayMemo .memo-meta-item:nth-child(9) .lbl,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item:nth-child(9) .lbl { color: #1E40AF !important; -webkit-text-fill-color: #1E40AF !important; }
+html body.ame-spay-page #spayMemo .memo-meta-item:nth-child(10) .lbl,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item:nth-child(10) .lbl { color: #7C3AED !important; -webkit-text-fill-color: #7C3AED !important; }
+html body.ame-spay-page #spayMemo .memo-meta-item:nth-child(11) .lbl,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item:nth-child(11) .lbl { color: #0F766E !important; -webkit-text-fill-color: #0F766E !important; }
+html body.ame-spay-page #spayMemo .memo-meta-item:nth-child(12) .lbl,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item:nth-child(12) .lbl { color: #9A3412 !important; -webkit-text-fill-color: #9A3412 !important; }
+html body.ame-spay-page #spayMemo .memo-meta-item:nth-child(13) .lbl,
+html body #ame-memo-capture-clone.spay-memo .memo-meta-item:nth-child(13) .lbl { color: #1D4ED8 !important; -webkit-text-fill-color: #1D4ED8 !important; }
+html body.ame-spay-page #main-content #spayMemo .memo-table th:nth-child(1),
+html body.ame-spay-page #main-content #spayMemo .memo-table th:nth-child(1) *,
+html body #ame-memo-capture-clone.spay-memo .memo-table th:nth-child(1),
+html body #ame-memo-capture-clone.spay-memo .memo-table th:nth-child(1) * { color: #1E40AF !important; -webkit-text-fill-color: #1E40AF !important; }
+html body.ame-spay-page #main-content #spayMemo .memo-table th:nth-child(2),
+html body.ame-spay-page #main-content #spayMemo .memo-table th:nth-child(2) *,
+html body #ame-memo-capture-clone.spay-memo .memo-table th:nth-child(2),
+html body #ame-memo-capture-clone.spay-memo .memo-table th:nth-child(2) * { color: #047857 !important; -webkit-text-fill-color: #047857 !important; }
+html body.ame-spay-page #main-content #spayMemo .memo-table td:nth-child(1),
+html body #ame-memo-capture-clone.spay-memo .memo-table td:nth-child(1) { color: #1E3A8A !important; -webkit-text-fill-color: #1E3A8A !important; }
+html body.ame-spay-page #spayMemo .spay-ledger-proof,
+html body #ame-memo-capture-clone.spay-memo .spay-ledger-proof {
+  color: #0F766E !important;
+  -webkit-text-fill-color: #0F766E !important;
+}
+html body.ame-spay-page #spayMemo .memo-foot,
+html body.ame-spay-page #spayMemo .ame-op-stamp,
+html body.ame-spay-page #spayMemo .ame-op-stamp p,
+html body #ame-memo-capture-clone.spay-memo .memo-foot,
+html body #ame-memo-capture-clone.spay-memo .ame-op-stamp,
+html body #ame-memo-capture-clone.spay-memo .ame-op-stamp p {
+  color: #0F766E !important;
+  -webkit-text-fill-color: #0F766E !important;
+}

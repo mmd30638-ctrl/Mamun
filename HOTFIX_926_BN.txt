@@ -1,0 +1,14 @@
+জরুরি হটফিক্স v10.98.926
+==========================
+
+১) pos.php — Maximum call stack (pos-draft-drawer.js)
+   • recover ↔ memo sync লুপ বন্ধ
+   • ড্রাফট মোডে একবারই layout release
+
+২) কাস্টমার পেমেন্ট — party shield
+   • সেশন চাবি বাড়ানো; customers POST-এ allow_write
+   • customer_payment_shield_boot.php
+
+৩) PARTY DRIFT লগ — ব্যালেন্স নয়; সেটিংসে «party_seal_baseline» একবার (৯১৯+)
+
+Easy Update: Aponshop_10.98.926_POS_STACK_UPDATE.zip — DB restore বন্ধ।

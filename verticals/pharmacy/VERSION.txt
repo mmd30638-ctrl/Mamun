@@ -1,0 +1,9 @@
+1.0.0
+2026-09-25
+Pharmacy Management System
+
+Uses the shared vertical core (authentication, permissions, ledger, stock, files, bilingual UI).
+Tables are prefixed pharm_ so they do not collide with Aponshop or the other two businesses.
+Batch and expiry drive stock. Near-expiry stock is sold first.
+Deploy this folder on its own domain or subdomain. Do not extract it over aponshop public_html.
+Do not point .env at the live aponshop database.

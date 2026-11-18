@@ -1,0 +1,26 @@
+/* 10.98.933 — যত পণ্য: টেবিল ভিতর স্ক্রল, মোট অ্যামাউন্ট সবসময় দৃশ্যমান */
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart > .ame-pos-cart-total-bar {
+  flex: 0 0 auto !important;
+  flex-shrink: 0 !important;
+  order: 10 !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap {
+  flex: 1 1 auto !important;
+  min-height: 140px !important;
+  max-height: clamp(180px, 44vh, 540px) !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-cart-total-bar:not([hidden]) {
+  display: flex !important;
+  position: sticky !important;
+  bottom: max(6px, env(safe-area-inset-bottom, 0px)) !important;
+  z-index: 35 !important;
+  box-shadow: 0 -10px 22px rgba(11, 61, 145, 0.14) !important;
+}
+
+body.ame-pos-tier-wide.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos tfoot#cart-lines-foot,
+body.ame-pos-tier-tablet.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos tfoot#cart-lines-foot {
+  display: none !important;
+}

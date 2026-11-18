@@ -1,0 +1,253 @@
+/* Inventory First skin — restyles the live home dashboard. Does not hide features. */
+body.ame-if-live,
+html body.ame-if-live {
+    color: #163226 !important;
+    background:
+        radial-gradient(900px 420px at -8% 110%, rgba(34,197,94,.16), transparent 55%),
+        radial-gradient(700px 380px at 108% -8%, rgba(74,222,128,.18), transparent 50%),
+        linear-gradient(180deg, #f4fbf6 0%, #eaf7ef 48%, #f7fdf9 100%) !important;
+    font-family: "Plus Jakarta Sans", "Noto Sans Bengali", "Segoe UI", sans-serif;
+}
+body.ame-if-live #main-content,
+body.ame-if-live .ame-if-canvas {
+    background: transparent !important;
+    min-height: 100vh;
+    width: min(100% - 16px, 1480px);
+    margin: 0 auto 28px !important;
+    padding: 12px 0 40px !important;
+}
+
+body.ame-if-live .sidebar,
+body.ame-if-live #sidebar,
+body.ame-if-live .sidebar-menu-body {
+    background: rgba(255,255,255,.88) !important;
+    border-color: #d1fae5 !important;
+}
+body.ame-if-live .sidebar a,
+body.ame-if-live #sidebar a,
+body.ame-if-live .sidebar-menu-body a {
+    border-radius: 12px !important;
+    color: #163226 !important;
+}
+body.ame-if-live .sidebar-menu-body a.sb-atlas-open,
+body.ame-if-live .sidebar-menu-body a.sb-atlas-open strong,
+body.ame-if-live .sidebar-menu-body a.sb-atlas-open small {
+    color: #fff !important;
+}
+body.ame-if-live .sidebar a.active,
+body.ame-if-live .sidebar a.on,
+body.ame-if-live .sidebar-menu-body a.active {
+    background: #22c55e !important;
+    color: #fff !important;
+}
+
+body.ame-if-live .ame-if-hero,
+body.ame-if-live .if-dash-welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin: 8px 0 16px;
+    padding: 18px 20px;
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at 88% 20%, rgba(83, 192, 98, .18), transparent 12rem),
+        rgba(255,255,255,.72);
+    border: 1px solid rgba(255,255,255,.95);
+    box-shadow: 0 10px 30px rgba(22,101,52,.06);
+}
+body.ame-if-live .ame-if-hello,
+body.ame-if-live .ame-if-hero h1,
+body.ame-if-live .ame-if-hero h2 {
+    margin: 0 !important;
+    color: #163226 !important;
+    font-size: clamp(24px, 3vw, 32px) !important;
+    font-weight: 800 !important;
+    letter-spacing: -.03em;
+}
+body.ame-if-live .ame-if-sub,
+body.ame-if-live .ame-if-hero p {
+    margin: 6px 0 0 !important;
+    color: #6b7f74 !important;
+    font-size: 14px !important;
+}
+body.ame-if-live .ame-if-hero::after {
+    content: none !important;
+    display: none !important;
+}
+
+body.ame-if-live .ame-if-tabs,
+body.ame-if-live nav.ame-if-tabs {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 16px !important;
+    padding: 0 !important;
+    background: none !important;
+    border: 0 !important;
+}
+body.ame-if-live a.ame-if-tab {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 8px 14px !important;
+    border-radius: 999px !important;
+    background: #fff !important;
+    border: 1px solid #d1fae5 !important;
+    color: #166534 !important;
+    text-decoration: none !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 6px 16px rgba(22,101,52,.05);
+}
+body.ame-if-live a.ame-if-tab::after,
+body.ame-if-live a.ame-if-tab.active::after,
+body.ame-if-live a.ame-if-tab.on::after {
+    content: none !important;
+    display: none !important;
+}
+body.ame-if-live a.ame-if-tab.active,
+body.ame-if-live a.ame-if-tab.on {
+    background: #22c55e !important;
+    border-color: #22c55e !important;
+    color: #fff !important;
+}
+body.ame-if-live .ame-if-kpis,
+body.ame-if-live .pd-kpi-grid,
+body.ame-if-live .rd-kpi-grid,
+body.ame-if-live .fd-kpi-grid,
+body.ame-if-live .pf-kpi-grid,
+body.ame-if-live .hd-grid,
+body.ame-if-live .pd-summary-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    margin: 0 0 14px !important;
+}
+body.ame-if-live .ame-if-kpi,
+body.ame-if-live .pd-kpi-box,
+body.ame-if-live .rd-kpi-box,
+body.ame-if-live .fd-kpi-box,
+body.ame-if-live .pf-kpi-box,
+body.ame-if-live .hd-card,
+body.ame-if-live .pd-summary-box {
+    padding: 16px !important;
+    border-radius: 22px !important;
+    background: rgba(255,255,255,.94) !important;
+    border: 1px solid rgba(255,255,255,.9) !important;
+    box-shadow: 0 10px 30px rgba(22,101,52,.06) !important;
+    color: #163226 !important;
+}
+body.ame-if-live .ame-if-kpi .val,
+body.ame-if-live .pd-kpi-box .val,
+body.ame-if-live .rd-kpi-box .val,
+body.ame-if-live .ame-if-kpi b,
+body.ame-if-live .ame-if-kpi strong {
+    display: block;
+    margin-top: 6px;
+    font-size: 26px !important;
+    font-weight: 800 !important;
+    letter-spacing: -.03em;
+    color: #163226 !important;
+}
+body.ame-if-live .ame-if-kpi .lbl,
+body.ame-if-live .pd-kpi-box .lbl,
+body.ame-if-live .ame-if-kpi span,
+body.ame-if-live .ame-if-kpi small {
+    display: block;
+    color: #6b7f74 !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+}
+body.ame-if-live .ame-if-kpi .lbl[data-en]::after,
+body.ame-if-live .pd-kpi-box .lbl[data-en]::after {
+    content: none !important;
+    display: none !important;
+}
+
+body.ame-if-live .ame-if-section-title,
+body.ame-if-live h3.ame-if-section-title {
+    margin: 18px 0 10px !important;
+    color: #163226 !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+}
+body.ame-if-live .ame-if-section-title[data-en]::after {
+    content: none !important;
+    display: none !important;
+}
+
+body.ame-if-live .ame-if-card,
+body.ame-if-live #main-content .card,
+body.ame-if-live .table-responsive {
+    padding: 16px;
+    border-radius: 22px !important;
+    background: rgba(255,255,255,.94) !important;
+    border: 1px solid rgba(255,255,255,.9) !important;
+    box-shadow: 0 10px 30px rgba(22,101,52,.06) !important;
+    overflow: auto;
+}
+body.ame-if-live table,
+body.ame-if-live table.ame-if-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: transparent !important;
+}
+body.ame-if-live table th {
+    text-align: left;
+    color: #6b7f74 !important;
+    font-weight: 600 !important;
+    padding: 8px !important;
+    background: transparent !important;
+    border: 0 !important;
+}
+body.ame-if-live table td {
+    padding: 12px 8px !important;
+    border-top: 1px solid #ecfdf3 !important;
+    color: #163226 !important;
+    background: transparent !important;
+}
+body.ame-if-live .ame-if-action,
+body.ame-if-live a.ame-if-action,
+body.ame-if-live button.ame-if-action {
+    display: inline-flex !important;
+    align-items: center;
+    padding: 8px 14px !important;
+    border-radius: 999px !important;
+    background: #ecfdf3 !important;
+    border: 1px solid #bbf7d0 !important;
+    color: #166534 !important;
+    font-weight: 800 !important;
+    text-decoration: none !important;
+}
+
+body.ame-if-live marquee,
+body.ame-if-live [class*="ticker"],
+body.ame-if-live .hm-banner-wrap {
+    display: block;
+    margin: 0 0 12px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: #ecfdf3;
+    border: 1px solid #d1fae5;
+    color: #166534;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+@media (max-width: 900px) {
+    body.ame-if-live .ame-if-kpis,
+    body.ame-if-live .pd-kpi-grid,
+    body.ame-if-live .rd-kpi-grid,
+    body.ame-if-live .fd-kpi-grid,
+    body.ame-if-live .pf-kpi-grid,
+    body.ame-if-live .hd-grid,
+    body.ame-if-live .pd-summary-grid {
+        grid-template-columns: 1fr 1fr !important;
+    }
+    body.ame-if-live .ame-if-hero::after { display: none; }
+    body.ame-if-live .ame-if-kpi .val,
+    body.ame-if-live .pd-kpi-box .val,
+    body.ame-if-live .ame-if-kpi b { font-size: 20px !important; }
+}

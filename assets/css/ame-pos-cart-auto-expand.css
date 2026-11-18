@@ -1,0 +1,45 @@
+/* 10.98.1001 — বিক্রয় কার্ট: ভিতরের স্ক্রল বাতিল, পেজ স্বাভাবিকভাবে বাড়ে, মোট টেবিলের একেবারে নিচে */
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart {
+  overflow: visible !important;
+  min-height: 0 !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk #amePosCartTableWrap,
+html body.ame-sales-pro.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap {
+  flex: 0 1 auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  height: auto !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  overscroll-behavior: auto !important;
+  -webkit-overflow-scrolling: auto !important;
+}
+
+@media (max-width: 760px) {
+  html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap {
+    max-height: none !important;
+    min-height: 0 !important;
+    overflow-y: visible !important;
+  }
+}
+
+html body.ame-fit-on.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-table-wrap {
+  max-height: none !important;
+  overflow-y: visible !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos tfoot#cart-lines-foot,
+body.ame-pos-tier-wide.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos tfoot#cart-lines-foot,
+body.ame-pos-tier-tablet.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos tfoot#cart-lines-foot,
+body.ame-pos-tier-phone.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .table-pos tfoot#cart-lines-foot {
+  display: table-footer-group !important;
+}
+
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-cart-total-bar,
+html body.ame-pos-terminal-page #main-content .ame-sale-desk .ame-pos-term-cart .ame-pos-cart-scroll-hint {
+  display: none !important;
+}

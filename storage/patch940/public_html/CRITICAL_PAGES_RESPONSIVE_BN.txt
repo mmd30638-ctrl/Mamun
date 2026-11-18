@@ -1,0 +1,19 @@
+ক্রিটিক্যাল পেজ — ১০০% রেসপন্সিভ লক (10.98.940)
+
+১) বিক্রয় পেজ — modules/sales/pos.php
+২) ক্রেতার পেমেন্ট গ্রহণ — modules/customers/payment-receive.php
+
+সব মোড:
+  • অ্যান্ড্রয়েড Chrome সাধারণ মোবাইল
+  • Chrome → ডেস্কটপ সাইট (html.ame-phone-desktop)
+  • কম্পিউটার / ট্যাবলেট
+
+ফাইল (সরান যাবে না):
+  assets/css/ame-pages-critical-responsive.css
+  assets/css/ame-global-responsive-master.css
+  assets/js/ame-viewport-tier.js
+  assets/js/ame-desktop-site.js
+
+PATCH ডাউনলোড:
+  https://mavo12.online/get/Aponshop_10.98.940_PATCH.zip
+  (সার্ভারে downloads/ এ ফাইল থাকতে হবে)

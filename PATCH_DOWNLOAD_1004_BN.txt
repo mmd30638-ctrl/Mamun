@@ -1,0 +1,11 @@
+ইনভয়েস শেয়ার রেজুলেশন — 10.98.1004
+========================================
+
+সরাসরি ডাউনলোড (GitHub — এখনই কাজ করে):
+https://raw.githubusercontent.com/mmd30638-ctrl/Mamun/cursor/global-responsive-architecture-ab1e/downloads/Aponshop_10.98.1004_PATCH.zip
+
+SHA256: 91cb5f21678a4d01b15e81771a86cc86c06b0202d760179f8bf1cf1c995dabc2
+
+mavo12.online/get/ লিংক:
+https://mavo12.online/get/Aponshop_10.98.1004_PATCH.zip
+(সার্ভারে get.php + patch_get_fallback অথবা downloads/ ফোল্ডারে জিপ আপলোড করলে চলবে; নাহলে GitHub লিংক ব্যবহার করুন।)

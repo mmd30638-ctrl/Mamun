@@ -1,0 +1,5 @@
+APONSHOP v10.98.862 — Module Structure Note
+12 modules documented.
+Clean config. No security_hardening require.
+No financial / sales / stock changes.
+Safe for testing.

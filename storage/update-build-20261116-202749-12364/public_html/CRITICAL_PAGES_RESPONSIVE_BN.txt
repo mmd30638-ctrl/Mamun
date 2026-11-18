@@ -1,0 +1,25 @@
+ক্রিটিক্যাল পেজ — ১০০% রেসপন্সিভ লক (10.98.941)
+
+১) বিক্রয় পেজ — modules/sales/pos.php
+২) ক্রেতার পেমেন্ট গ্রহণ — modules/customers/payment-receive.php
+৩) পেমেন্ট রসিদ মেমো — modules/customers/receipt.php
+৪) জমা উত্তোলন রসিদ — modules/customers/withdraw_receipt.php (পেমেন্ট রসিদের সমান ডিজাইন ও রঙ)
+
+সব মোড:
+  • অ্যান্ড্রয়েড Chrome সাধারণ মোবাইল
+  • Chrome → ডেস্কটপ সাইট (html.ame-phone-desktop)
+  • কম্পিউটার / ট্যাবলেট
+
+ফাইল (সরান যাবে না):
+  assets/css/customer-pay-receipt-memo.css
+  assets/css/ame-pages-critical-responsive.css
+  assets/css/ame-global-responsive-master.css
+  assets/css/memo-clear.css
+  assets/js/ame-viewport-tier.js
+  assets/js/ame-desktop-site.js
+
+PATCH ডাউনলোড:
+  https://mavo12.online/get/Aponshop_10.98.941_PATCH.zip
+  (সার্ভারে downloads/ এ ফাইল থাকতে হবে; না থাকলে get.php GitHub raw এ রিডাইরেক্ট)
+
+ল্যাব চেক (tools/pos_payment_responsive_lab.html): 390 / 768 / 1280 px — POS + পেমেন্ট গ্রহণ, অনুভূমিক ওভারফ্লো নেই (২০২৬-১১-১৬)।

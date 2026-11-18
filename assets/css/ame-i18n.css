@@ -1,0 +1,20 @@
+.hdr-icon-btn.hdr-i-lang {
+    position: relative;
+    min-width: 42px;
+}
+.hdr-lang-label {
+    position: absolute;
+    right: -2px;
+    bottom: -3px;
+    background: #F5A623;
+    color: #0B1E4D;
+    font-size: 8px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    padding: 2px 4px;
+    border-radius: 6px;
+    pointer-events: none;
+}
+html.lang-en .ame-bn-only { display: none !important; }
+html.lang-bn .ame-en-only { display: none !important; }

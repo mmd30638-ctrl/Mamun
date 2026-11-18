@@ -1,0 +1,171 @@
+/**
+ * Customer hire desk — sales-desk tokens.
+ */
+.hire-wrap {
+  --paper: #F4F7FB;
+  --navy: #003F8F;
+  --ink: #111827;
+  --mute: #667085;
+  --line: #D7DEE8;
+  --money: #04933A;
+  --danger: #DC2626;
+  --card: #ffffff;
+  width: min(calc(100% - 24px), 1180px);
+  margin: 10px auto 40px;
+  color: var(--ink);
+  font-family: "Noto Sans Bengali", "SolaimanLipi", system-ui, sans-serif;
+}
+.hire-wrap .ame-pair { display: inline; line-height: 1.35; }
+.hire-wrap .ame-pair em { display: none; }
+.hire-cards-simple { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.hire-actions-top { margin: 0 0 16px; }
+.hire-auto-note {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #ECFDF3;
+  color: #065F46;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.hire-auto-note.is-fail { background: #FEF2F2; color: #B91C1C; }
+.hire-live-list { display: grid; gap: 12px; }
+.hire-live-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 16px 12px;
+}
+.hire-live-top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.hire-live-no { margin: 0; font-size: 11px; font-weight: 800; color: var(--navy); letter-spacing: .04em; }
+.hire-live-card h3 { margin: 2px 0 2px; font-size: 18px; }
+.hire-live-card h3 a { color: var(--ink); text-decoration: none; }
+.hire-live-nums {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0;
+}
+.hire-live-nums div {
+  background: #F4F7FB;
+  border-radius: 12px;
+  padding: 8px 10px;
+}
+.hire-live-nums span { display: block; font-size: 11px; font-weight: 700; color: var(--mute); }
+.hire-live-nums b { display: block; margin-top: 2px; font-size: 16px; color: var(--navy); font-variant-numeric: tabular-nums; }
+.hire-live-nums .is-due b { color: var(--danger); }
+.hire-live-pay {
+  display: grid;
+  grid-template-columns: minmax(110px, 1fr) minmax(110px, 1fr) minmax(140px, 1.2fr) auto;
+  gap: 8px;
+  align-items: end;
+  margin: 0 0 8px;
+}
+.hire-live-links { display: flex; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 800px) {
+  .hire-live-nums { grid-template-columns: 1fr 1fr 1fr; }
+  .hire-live-pay { grid-template-columns: 1fr; }
+}
+.hire-more {
+  margin: 10px 0 14px;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  padding: 8px 12px;
+  background: #fbfcfe;
+}
+.hire-more summary {
+  cursor: pointer;
+  font-weight: 800;
+  color: var(--navy);
+  padding: 6px 0;
+}
+.hire-more .hire-grid { margin-top: 8px; }
+.hire-mast {
+  padding: clamp(16px, 4vw, 24px);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: linear-gradient(165deg, #fff 0%, #F4F7FB 100%);
+  margin-bottom: 14px;
+}
+.hire-mast h1 { margin: 4px 0 6px; font-size: clamp(22px, 4vw, 30px); color: var(--navy); }
+.hire-kicker { margin: 0; font-size: 11px; font-weight: 800; letter-spacing: .14em; color: var(--navy); text-transform: uppercase; }
+.hire-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+.hire-nav a, .hire-btn, .hire-wrap button.hire-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 40px; padding: 8px 14px; border-radius: 12px;
+  border: 1px solid var(--line); background: #fff; color: var(--navy);
+  font-weight: 700; text-decoration: none; cursor: pointer;
+}
+.hire-nav a.is-on, .hire-btn-primary { background: var(--navy); color: #fff; border-color: var(--navy); }
+.hire-btn-danger { background: var(--danger); color: #fff; border-color: var(--danger); }
+.hire-btn-money { background: var(--money); color: #fff; border-color: var(--money); }
+.hire-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.hire-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px;
+}
+.hire-card span { display: block; font-size: 12px; font-weight: 700; color: var(--mute); }
+.hire-card b { display: block; margin-top: 4px; font-size: clamp(18px, 3vw, 26px); color: var(--navy); font-variant-numeric: tabular-nums; }
+.hire-card.is-danger b { color: var(--danger); }
+.hire-card.is-money b { color: var(--money); }
+.hire-panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.hire-panel h2 { margin: 0 0 12px; font-size: 16px; color: var(--navy); }
+.hire-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+.hire-wrap label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 700; color: var(--mute); }
+.hire-wrap input, .hire-wrap select, .hire-wrap textarea {
+  min-height: 40px; border: 1px solid var(--line); border-radius: 10px;
+  padding: 8px 10px; font: inherit; color: var(--ink); background: #fff;
+}
+.hire-wrap textarea { min-height: 72px; }
+.hire-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.hire-table th, .hire-table td { padding: 8px 6px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.hire-table th { font-size: 11px; color: var(--mute); }
+.hire-badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 800; }
+.st-ACTIVE { background: #E8F7EE; color: var(--money); }
+.st-OVERDUE { background: #FEE2E2; color: var(--danger); }
+.st-PAUSED { background: #EEF2FF; color: var(--navy); }
+.st-DRAFT { background: #F3F4F6; color: var(--mute); }
+.st-RETURNED, .st-COMPLETED { background: #ECFDF3; color: #065F46; }
+.st-CANCELLED { background: #F3F4F6; color: #6B7280; }
+.hire-flash { padding: 10px 12px; border-radius: 12px; margin-bottom: 12px; background: #ECFDF3; color: #065F46; font-weight: 700; }
+.hire-flash-err { background: #FEF2F2; color: var(--danger); }
+.hire-split { display: grid; grid-template-columns: 1.2fr .8fr; gap: 12px; }
+.hire-bal { font-variant-numeric: tabular-nums; }
+.hire-money { color: var(--money); font-weight: 800; }
+.hire-due { color: var(--danger); font-weight: 800; }
+.hire-search-list { position: relative; }
+.hire-suggest {
+  position: absolute; left: 0; right: 0; top: 100%; z-index: 20;
+  background: #fff; border: 1px solid var(--line); border-radius: 10px;
+  max-height: 240px; overflow: auto; box-shadow: 0 8px 24px rgba(17,24,39,.08);
+}
+.hire-suggest button { display: block; width: 100%; text-align: left; background: #fff; border: 0; border-bottom: 1px solid var(--line); padding: 8px 10px; cursor: pointer; }
+.hire-alert { padding: 8px 10px; border-radius: 10px; background: #FFF7ED; color: #9A3412; margin: 0 0 6px; font-size: 13px; }
+.hire-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.hire-muted { color: var(--mute); font-size: 12px; }
+.hire-empty { padding: 20px; text-align: center; color: var(--mute); }
+@media (max-width: 800px) {
+  .hire-split { grid-template-columns: 1fr; }
+  .hire-table { font-size: 13px; }
+  .hire-mast h1 { font-size: 22px; }
+  .hire-nav a, .hire-btn { min-height: 44px; }
+  .hire-due-table, .hire-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+@media print {
+  .hire-nav, .hire-actions, .no-print { display: none !important; }
+  .hire-wrap { width: 100%; margin: 0; }
+}

@@ -1,0 +1,11 @@
+পণ্য চার্জ — PC ফিক্স (v10.98.935)
+
+সমস্যা: মোবাইলে চার্জ বক্স দেখা যায়, PC তে নয়।
+কারণ: ame-pos-desk-100pct.css পুরো .ame-pos-term-search কে ৪২px উচ্চতায় কেটে দিত + overflow:hidden ক্লিপ করত।
+
+ফিক্স:
+- শুধু #p-search ইনপুটে উচ্চতা ক্যাপ
+- PC তে চার্জ খোলা থাকলে term-search/search overflow: visible
+- sale-charge-popups.css — PC তে fixed পপআপ জোর করে
+
+ZIP: deliverables/Aponshop_10.98.935_PRODUCT_CHARGE_PC.zip

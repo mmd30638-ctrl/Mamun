@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Global Responsive Preview · 10.98.939</title>
+  <script src="/assets/js/ame-desktop-site.js?v=10.98.939"></script>
+  <script src="/assets/js/ame-viewport-tier.js?v=10.98.939"></script>
+  <link rel="stylesheet" href="/assets/css/ame-global-responsive-master.css?v=10.98.939">
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; background: #f1f5f9; }
+    #main-content { padding: 1rem; }
+    .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: 12px; }
+    .demo-card { background: #fff; border-radius: 12px; padding: 12px; border: 1px solid #cbd5e1; }
+    .demo-wide { width: 1200px; max-width: 100%; background: #e0f2fe; padding: 8px; border-radius: 8px; }
+    #tier-readout { font-size: clamp(0.9rem, 3vw, 1.1rem); line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <div id="main-content">
+    <h1>Responsive master preview</h1>
+    <p id="tier-readout">Loading tier…</p>
+    <div class="demo-grid">
+      <div class="demo-card">Mobile &lt;576px</div>
+      <div class="demo-card">Tablet 576–991px</div>
+      <div class="demo-card">Desktop ≥992px</div>
+    </div>
+    <p>Wide block (scroll inside wrapper on phone desktop mode):</p>
+    <div class="ame-auto-scroll-wrap">
+      <div class="demo-wide">This simulates a wide desktop block · should not break the page shell.</div>
+    </div>
+  </div>
+  <script>
+    function readout() {
+      var el = document.getElementById('tier-readout');
+      var root = document.documentElement;
+      el.textContent = [
+        'data-ame-tier: ' + (root.getAttribute('data-ame-tier') || '—'),
+        'data-ame-device: ' + (root.getAttribute('data-ame-device') || '—'),
+        'ame-phone-desktop: ' + root.classList.contains('ame-phone-desktop'),
+        'innerWidth: ' + window.innerWidth
+      ].join(' · ');
+    }
+    readout();
+    window.addEventListener('resize', readout);
+    document.addEventListener('DOMContentLoaded', readout);
+  </script>
+</body>
+</html>

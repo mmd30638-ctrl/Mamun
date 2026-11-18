@@ -1,0 +1,260 @@
+/* Family desk — white page and white cards. Color stays on text, buttons, and icons. */
+
+html body.ame-family-desk:not(.ame-sales-pro):not(.ame-pos-terminal-page),
+html body.ame-family-desk:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content,
+html body.ame-family-desk #main-content .fam-app,
+html body.ame-family-desk #main-content .fam-app[data-theme="dark"],
+html body.ame-family-desk #main-content .fam-main,
+html body.ame-family-desk #main-content .krx,
+html body.ame-family-desk #main-content .krx.is-night {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #111827 !important;
+}
+
+html body.ame-family-desk #main-content {
+  display: block !important;
+}
+
+html body.ame-family-desk #main-content .fam-app {
+  width: min(1120px, 100%) !important;
+  max-width: 1120px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box !important;
+}
+
+html body.ame-family-desk #main-content .fam-app .fam-rail,
+html.ame-phone-desktop body.ame-family-desk #main-content .fam-app .fam-rail,
+html.ame-device-phone body.ame-family-desk #main-content .fam-app .fam-rail {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #003f8f !important;
+}
+
+html body.ame-family-desk #main-content .fam-app .fam-top,
+html body.ame-family-desk #main-content .fam-app .fam-desk-hero,
+html body.ame-family-desk #main-content .fam-app .fam-kpi,
+html body.ame-family-desk #main-content .fam-app .fam-panel,
+html body.ame-family-desk #main-content .fam-app .fam-card,
+html body.ame-family-desk #main-content .fam-app .ifd-card,
+html body.ame-family-desk #main-content .fam-app .fam-profile,
+html body.ame-family-desk #main-content .fam-app .kh-hero,
+html body.ame-family-desk #main-content .fam-app .kh-plank,
+html body.ame-family-desk #main-content .fam-app .kh-book,
+html body.ame-family-desk #main-content .fam-app .krx-side,
+html body.ame-family-desk #main-content .fam-app .krx-sheet,
+html body.ame-family-desk #main-content .fam-app .ifd-today a,
+html body.ame-family-desk #main-content .fam-app .fam-day,
+html body.ame-family-desk #main-content .fam-app .fam-day.today {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #111827 !important;
+  box-shadow: none !important;
+}
+
+html body.ame-family-desk #main-content .fam-app .fam-top :is(h1, h2, p, .fam-kicker, .fam-lead),
+html body.ame-family-desk #main-content .fam-app .fam-profile :is(h2, p, .fam-kicker),
+html body.ame-family-desk #main-content .fam-app .fam-desk-hero :is(h2, p, .fam-desk-kicker) {
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+}
+
+html body.ame-family-desk #main-content .fam-app .fam-lead,
+html body.ame-family-desk #main-content .fam-app .fam-desk-hero p,
+html body.ame-family-desk #main-content .fam-app .fam-profile p {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+html body.ame-family-desk #main-content .fam-app .fam-kpi b,
+html body.ame-family-desk #main-content .fam-app .ifd-today b,
+html body.ame-family-desk #main-content .fam-app .fam-row b {
+  color: #04933a !important;
+  -webkit-text-fill-color: #04933a !important;
+}
+
+html body.ame-family-desk #main-content .fam-app .fam-kpi.hot em,
+html body.ame-family-desk #main-content .fam-app .ifd-move.hot .ifd-dot {
+  color: #dc2626 !important;
+  -webkit-text-fill-color: #dc2626 !important;
+}
+
+html body.ame-family-desk #main-content .fam-app .fam-table th,
+html body.ame-family-desk #main-content .fam-app .ifd-table th,
+html body.ame-family-desk #main-content .fam-app .ifd-table tr:nth-child(even) td,
+html body.ame-family-desk #main-content .fam-app .fam-table td {
+  background: #ffffff !important;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+}
+
+html body.ame-family-desk:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .fam-app button.fam-btn:not(.soft):not(.hdr-icon-btn),
+html body.ame-family-desk:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .fam-app a.fam-btn:not(.soft) {
+  background: #04933a !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-color: #04933a !important;
+}
+
+html body.ame-family-desk:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .fam-app button.fam-btn.soft,
+html body.ame-family-desk:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .fam-app a.fam-btn.soft,
+html body.ame-family-desk #main-content .fam-app .fam-mini,
+html body.ame-family-desk #main-content .fam-app .fam-ghost,
+html body.ame-family-desk #main-content .fam-app .fam-role {
+  background: #ffffff !important;
+  color: #003f8f !important;
+  -webkit-text-fill-color: #003f8f !important;
+  border: 2px solid #003f8f !important;
+}
+
+html body.ame-family-desk #main-content .fam-app .fam-nav-a.on,
+html body.ame-family-desk #main-content .fam-app .fam-chip.on {
+  background: #003f8f !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html body.ame-family-desk #main-content .fam-app .fam-nav-ico,
+html body.ame-family-desk #main-content .fam-app .ifd-ico,
+html body.ame-family-desk #main-content .fam-app .ifd-dot {
+  background: #ffffff !important;
+  color: #003f8f !important;
+  border: 1px solid #003f8f !important;
+}
+
+html body.ame-family-desk #main-content .fam-app .fam-panel,
+html body.ame-family-desk #main-content .fam-app .ifd-card,
+html body.ame-family-desk #main-content .fam-app .krx-sheet,
+html body.ame-family-desk #main-content .fam-app .krx-side {
+  max-height: min(72vh, 720px);
+  overflow: auto;
+  min-height: 0;
+}
+
+html body.ame-family-desk #main-content .fam-app .fam-row {
+  flex-wrap: wrap !important;
+  align-items: center !important;
+}
+
+html body.ame-family-desk #main-content .fam-app .fam-row strong,
+html body.ame-family-desk #main-content .fam-app .fam-row small,
+html body.ame-family-desk #main-content .fam-app .fam-nav-lab {
+  overflow-wrap: anywhere;
+  white-space: normal !important;
+  -webkit-line-clamp: unset !important;
+  line-clamp: unset !important;
+}
+
+html body.ame-family-desk .ame-slip-sheet:not([hidden]),
+html body.ame-family-desk #main-content .ame-slip-sheet:not([hidden]) {
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 16px !important;
+}
+
+html body.ame-family-desk .ame-slip-sheet .ame-slip-card,
+html body.ame-family-desk #main-content .ame-slip-sheet .ame-slip-card {
+  width: min(420px, calc(100vw - 32px)) !important;
+  max-height: min(78vh, 640px) !important;
+  overflow: auto !important;
+  background: #ffffff !important;
+  margin: 0 auto !important;
+}
+
+html body.ame-family-desk .ame-slip-sheet .ame-slip-opt,
+html body.ame-family-desk #main-content .ame-slip-sheet .ame-slip-opt {
+  background: #ffffff !important;
+  color: #003f8f !important;
+  border: 1px solid #003f8f !important;
+  text-align: center !important;
+}
+
+@media (max-width: 1024px) {
+  html body.ame-family-desk #main-content .fam-app {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+html.ame-phone-desktop body.ame-family-desk #main-content .fam-app,
+html.ame-device-phone body.ame-family-desk #main-content .fam-app,
+html.ame-force-phone body.ame-family-desk #main-content .fam-app,
+html.ame-is-phone body.ame-family-desk #main-content .fam-app {
+  grid-template-columns: 1fr !important;
+  width: min(1120px, 100%) !important;
+}
+
+@media (max-width: 1024px) {
+  html body.ame-family-desk #main-content .fam-app .fam-rail {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    position: relative !important;
+    height: auto !important;
+    background: #ffffff !important;
+  }
+}
+
+@media (max-width: 860px) {
+  html body.ame-family-desk #main-content .krx-side.is-open {
+    display: block !important;
+    position: fixed !important;
+    z-index: 5000000 !important;
+    left: 50% !important;
+    top: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+    width: min(420px, calc(100vw - 32px)) !important;
+    max-height: min(78vh, 640px) !important;
+    overflow: auto !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.32) !important;
+  }
+  html body.ame-family-desk #main-content .krx-side.is-open::before {
+    content: '' !important;
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(17, 24, 39, 0.55) !important;
+    z-index: -1 !important;
+  }
+}
+
+html.ame-device-phone body.ame-family-desk #main-content .krx-side.is-open,
+html.ame-force-phone body.ame-family-desk #main-content .krx-side.is-open,
+html.ame-is-phone body.ame-family-desk #main-content .krx-side.is-open {
+  display: block !important;
+  position: fixed !important;
+  z-index: 5000000 !important;
+  left: 50% !important;
+  top: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%) !important;
+  width: min(420px, calc(100vw - 32px)) !important;
+  max-height: min(78vh, 640px) !important;
+  overflow: auto !important;
+  margin: 0 !important;
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.32) !important;
+}
+
+html.ame-device-phone body.ame-family-desk #main-content .krx-side.is-open::before,
+html.ame-force-phone body.ame-family-desk #main-content .krx-side.is-open::before,
+html.ame-is-phone body.ame-family-desk #main-content .krx-side.is-open::before {
+  content: '' !important;
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(17, 24, 39, 0.55) !important;
+  z-index: -1 !important;
+}
+
+html body.ame-family-desk #main-content .krx.is-night .krx-sheet {
+  background: #ffffff !important;
+  color: #0b1e4d !important;
+  box-shadow: inset 0 0 0 3px #003f8f !important;
+}

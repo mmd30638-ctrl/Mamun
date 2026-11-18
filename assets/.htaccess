@@ -1,0 +1,37 @@
+# এই ফোল্ডারের সব CSS/JS/ছবি লিংকের শেষে সবসময় ?v=<AME_ASSET_VERSION> লাগানো
+# থাকে (দেখুন includes/config.php + partials/header.php/footer.php), তাই এখানে
+# দীর্ঘমেয়াদী ব্রাউজার-ক্যাশ পুরোপুরি নিরাপদ — ভার্সন বদলালেই URL বদলে যায়,
+# ব্রাউজার নিজে থেকেই নতুন ফাইল আনতে বাধ্য হয় (কোনো পুরনো/স্ট্যাল ফাইল দেখাবে না)।
+# uploads/-এর গ্রাহক/পণ্যের ছবি ইচ্ছাকৃতভাবে এখানে ছোঁয়া হয়নি, কারণ সেগুলো
+# ভার্সনযুক্ত নয় — একই নামে নতুন ছবি বসলে পুরনোটা ক্যাশ থেকে দেখানোর ঝুঁকি থাকবে।
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js|png|jpe?g|webp|gif|svg|ico|woff2?|ttf)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    <FilesMatch "\.php$">
+        Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>

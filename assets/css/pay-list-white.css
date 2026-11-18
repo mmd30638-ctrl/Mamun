@@ -1,0 +1,229 @@
+/* 10.98.538 — ক্রেতার পেমেন্ট তালিকা: বক্সের ভিতর সাদা, লেখা জোরালো রঙ */
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page),
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-head,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content form.cpl-filters,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.bill,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.paid,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.due,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-sheet,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-row,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-h,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-money,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-empty,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-field input {
+  background: #ffffff !important;
+  background-image: none !important;
+}
+
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-head h1 {
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-head p {
+  color: #1E293B !important;
+  -webkit-text-fill-color: #1E293B !important;
+}
+
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content a.cpl-new {
+  background: #04933A !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-color: #04933A !important;
+}
+
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content form.cpl-filters {
+  border: 2px solid #003F8F !important;
+  box-shadow: none !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-ranges a {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  border: 2px solid #003F8F !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-ranges a.is-on {
+  background: #003F8F !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-color: #003F8F !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-field span {
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-field input {
+  color: #1E293B !important;
+  -webkit-text-fill-color: #1E293B !important;
+  border: 2px solid #003F8F !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content form.cpl-filters button.cpl-go:not(.hdr-icon-btn):not(.lgn-eye) {
+  background: #003F8F !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-color: #003F8F !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content a.cpl-clear {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #B91C1C !important;
+  -webkit-text-fill-color: #B91C1C !important;
+  border: 2px solid #B91C1C !important;
+}
+
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.bill {
+  border: 2px solid #047857 !important;
+  border-top: 4px solid #047857 !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.bill span,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.bill b,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.bill small {
+  color: #047857 !important;
+  -webkit-text-fill-color: #047857 !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.paid {
+  border: 2px solid #0F766E !important;
+  border-top: 4px solid #0F766E !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.paid span,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.paid b,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.paid small {
+  color: #0F766E !important;
+  -webkit-text-fill-color: #0F766E !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.due {
+  border: 2px solid #B91C1C !important;
+  border-top: 4px solid #B91C1C !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.due span,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.due b {
+  color: #B91C1C !important;
+  -webkit-text-fill-color: #B91C1C !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.due.is-credit {
+  border-color: #047857 !important;
+  border-top-color: #047857 !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.due.is-credit span,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-kpi.due.is-credit b {
+  color: #047857 !important;
+  -webkit-text-fill-color: #047857 !important;
+}
+
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-sheet {
+  border: 2px solid #003F8F !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-h {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #003F8F !important;
+  border-bottom: 2px solid #003F8F !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-h span {
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-h span:nth-child(1) {
+  color: #1E293B !important;
+  -webkit-text-fill-color: #1E293B !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-h span:nth-child(3) {
+  color: #047857 !important;
+  -webkit-text-fill-color: #047857 !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-h span:nth-child(4) {
+  color: #0F766E !important;
+  -webkit-text-fill-color: #0F766E !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-h span:nth-child(5) {
+  color: #1E3A8A !important;
+  -webkit-text-fill-color: #1E3A8A !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-h span:nth-child(6) {
+  color: #9A3412 !important;
+  -webkit-text-fill-color: #9A3412 !important;
+}
+
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content article.cpl-row {
+  background: #ffffff !important;
+  background-image: none !important;
+  border-bottom: 1px solid #003F8F !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content article.cpl-row > div:nth-child(1) {
+  color: #1E293B !important;
+  -webkit-text-fill-color: #1E293B !important;
+  background: #ffffff !important;
+  background-image: none !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-who strong {
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-who small {
+  color: #0F766E !important;
+  -webkit-text-fill-color: #0F766E !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content a.cpl-by {
+  color: #1D4ED8 !important;
+  -webkit-text-fill-color: #1D4ED8 !important;
+  background: transparent !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-money {
+  color: #047857 !important;
+  -webkit-text-fill-color: #047857 !important;
+  background: #ffffff !important;
+  background-image: none !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content article.cpl-row > div:nth-child(4) {
+  color: #1E3A8A !important;
+  -webkit-text-fill-color: #1E3A8A !important;
+  background: #ffffff !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-meta {
+  color: #1E293B !important;
+  -webkit-text-fill-color: #1E293B !important;
+  background: #ffffff !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-note,
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-empty {
+  color: #1E293B !important;
+  -webkit-text-fill-color: #1E293B !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content article.cpl-row > div[data-label]::before {
+  color: #1E3A8A !important;
+  -webkit-text-fill-color: #1E3A8A !important;
+}
+
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-ops a {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 0 !important;
+  background-image: none !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-ops a.view {
+  background: #003F8F !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-ops a:nth-child(2) {
+  background: #0F766E !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-ops a:nth-child(3) {
+  background: #04933A !important;
+}
+html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-ops a.share {
+  background: #1D4ED8 !important;
+}
+
+@media (max-width: 900px) {
+  html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-sheet,
+  html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content article.cpl-row,
+  html body.ame-pay-list-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cpl-h {
+    background: #ffffff !important;
+    background-image: none !important;
+  }
+}

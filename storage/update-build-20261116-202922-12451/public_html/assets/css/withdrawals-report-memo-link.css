@@ -1,0 +1,51 @@
+/* জমা উত্তোলন রিপোর্ট — সারি ক্লিক করলে উত্তোলন রসিদ মেমো */
+body.ame-withdrawals-report-page table.cdesk-table tbody tr.wdr-memo-row {
+  cursor: pointer;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+body.ame-withdrawals-report-page table.cdesk-table tbody tr.wdr-memo-row:hover {
+  background: #f0f9ff !important;
+  box-shadow: inset 3px 0 0 #0f766e;
+}
+
+body.ame-withdrawals-report-page .wdr-memo-link {
+  color: #0b3d91 !important;
+  -webkit-text-fill-color: #0b3d91 !important;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+body.ame-withdrawals-report-page .wdr-memo-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+body.ame-withdrawals-report-page .wdr-memo-amt {
+  color: #be123c !important;
+  -webkit-text-fill-color: #be123c !important;
+}
+
+body.ame-withdrawals-report-page .wdr-memo-badge {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: #ffedd5;
+  color: #c2410c !important;
+  -webkit-text-fill-color: #c2410c !important;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  vertical-align: middle;
+}
+
+body.ame-withdrawals-report-page .wdr-ref-cell {
+  min-width: 0;
+}
+
+@media (max-width: 575.98px) {
+  html:not(.ame-phone-desktop) body.ame-withdrawals-report-page table.cdesk-table tbody tr.wdr-memo-row td {
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,627 @@
+/* 10.98.415 — ক্রয় পেজ = বিক্রয় ডেস্কের একই লেআউট।
+   বামে সার্চ + পণ্য তালিকা, ডানে তারিখ/হিসাব/পরিশোধ/সাবমিট।
+   বিক্রয়ের নৌসেনা বার (#003F8F), সাদা কাগজ, সবুজ সাবমিট।
+   কার্ট অটো নিচে বাড়ে। সাবেক বকেয়া যোগ/বিয়োগে সর্বমোট ব্যালেন্স। */
+
+html body.ame-purchase-desk,
+html body.ame-purchase-desk #main-content,
+html body.ame-purchase-desk .ame-sale-desk,
+html body.ame-purchase-desk .ame-pos-page,
+html body.ame-purchase-desk .ame-pos-shell {
+  background: #F4F7FB !important;
+  background-image: none !important;
+  color: #111827 !important;
+}
+
+html body.ame-purchase-desk .ame-purchase-desk,
+html body.ame-purchase-desk.ame-sale-desk {
+  --desk-navy: #003F8F;
+  --desk-blue: #0057B8;
+  --desk-green: #04933A;
+  --desk-canvas: #F4F7FB;
+  --desk-line: #D7DEE8;
+  --desk-text: #111827;
+  --desk-muted: #667085;
+  padding: 8px 16px 16px !important;
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+html body.ame-purchase-desk .ame-pos-title-line,
+html body.ame-purchase-desk .ame-pos-term-title,
+html body.ame-purchase-desk .ame-pos-term-icon,
+html body.ame-purchase-desk .ame-pos-store-chip,
+html body.ame-purchase-desk .ame-pc-top-meta {
+  display: none !important;
+}
+
+html body.ame-purchase-desk .ame-pos-shell {
+  display: block !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+html body.ame-purchase-desk .ame-pos-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+@media (min-width: 1000px) {
+  html body.ame-purchase-desk .ame-pos-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 228px !important;
+    align-items: start !important;
+    gap: 12px !important;
+  }
+  html body.ame-purchase-desk .ame-desk-stack {
+    display: contents !important;
+  }
+  html body.ame-purchase-desk .ame-desk-bar {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+  }
+  html body.ame-purchase-desk .ame-desk-main {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    min-width: 0 !important;
+  }
+  html body.ame-purchase-desk .ame-pos-summary {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    position: sticky !important;
+    top: calc(var(--ame-chrome-h, 64px) + 10px);
+    align-self: start !important;
+    max-height: calc((var(--ame-vh, 1vh) * 100) - var(--ame-chrome-h, 64px) - 20px);
+    overflow-y: auto !important;
+  }
+  html body.ame-purchase-desk .ame-pos-pay-jump,
+  html body.ame-purchase-desk .ame-pc-memo-balance {
+    display: none !important;
+  }
+}
+
+html body.ame-purchase-desk .ame-desk-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  margin: 0;
+  padding: 8px 12px;
+  background: #003F8F !important;
+  color: #ffffff !important;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+html body.ame-purchase-desk .ame-desk-marquee {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+html body.ame-purchase-desk .ame-desk-marquee-viewport {
+  flex: 1 1 auto;
+  overflow: hidden;
+  min-width: 0;
+}
+
+html body.ame-purchase-desk .ame-desk-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 48px;
+  animation: ameDeskMarquee 22s linear infinite;
+}
+
+html body.ame-purchase-desk .ame-desk-marquee-text {
+  display: inline-block;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  white-space: nowrap;
+  font-weight: 800;
+}
+
+html body.ame-purchase-desk .ame-desk-home,
+html body.ame-purchase-desk .ame-desk-quick-btn,
+html body.ame-purchase-desk .ame-pos-term-hist,
+html body.ame-purchase-desk .ame-pos-recent-select {
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 0 !important;
+  border-radius: 10px;
+  background: #ffffff !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+html body.ame-purchase-desk .ame-desk-clock,
+html body.ame-purchase-desk .ame-desk-datepill {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  font-weight: 800;
+}
+
+html body.ame-purchase-desk .ame-pos-term-top,
+html body.ame-purchase-desk .ame-pos-term-cart,
+html body.ame-purchase-desk .ame-pos-summary {
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+html body.ame-purchase-desk .ame-pos-term-bar {
+  display: grid !important;
+  grid-template-columns: minmax(220px, 0.36fr) minmax(0, 0.64fr);
+  gap: 12px;
+  align-items: stretch;
+}
+
+html body.ame-purchase-desk .ame-pos-term-top,
+html body.ame-purchase-desk .ame-pos-term-bar,
+html body.ame-purchase-desk .ame-pos-term-search,
+html body.ame-purchase-desk .pc-search-rel {
+  overflow: visible !important;
+}
+
+html body.ame-purchase-desk .ame-pos-term-controls,
+html body.ame-purchase-desk .ame-pos-term-search {
+  min-height: 91px;
+  background: #ffffff !important;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+  padding: 0 12px 10px !important;
+  box-sizing: border-box;
+}
+
+html body.ame-purchase-desk .ame-desk-card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 -12px 8px;
+  padding: 8px 12px;
+  background: #003F8F !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 800;
+  border-radius: 12px 12px 0 0;
+}
+
+html body.ame-purchase-desk .ame-desk-card-head svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+
+html body.ame-purchase-desk .ame-pos-input,
+html body.ame-purchase-desk #productSearch,
+html body.ame-purchase-desk #supplierSearch,
+html body.ame-purchase-desk #memoInput,
+html body.ame-purchase-desk #purchaseDateInput {
+  width: 100%;
+  min-height: 36px;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 8px;
+  background: #ffffff !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  box-sizing: border-box;
+}
+
+html body.ame-purchase-desk .pc-supplier-info {
+  background: #F4F7FB !important;
+  border: 1px solid #D7DEE8 !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+html body.ame-purchase-desk .ame-pos-term-actions {
+  display: none !important;
+}
+
+html body.ame-purchase-desk .ame-desk-bar-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+html body.ame-purchase-desk .ame-desk-tool,
+html body.ame-purchase-desk .ame-desk-tool-add {
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: #EFE6D4;
+  color: #3D2A12;
+  -webkit-text-fill-color: #3D2A12;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+html body.ame-purchase-desk .ame-desk-table-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 43px;
+  margin: 0;
+  padding: 8px 12px;
+  background: #003F8F !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border-radius: 12px 12px 0 0;
+  font-weight: 800;
+}
+
+html body.ame-purchase-desk .ame-pos-term-cart {
+  background: #ffffff !important;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+  overflow: visible !important;
+}
+
+html body.ame-purchase-desk .ame-pos-table-wrap {
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  border: 0 !important;
+  background: #ffffff !important;
+  border-radius: 0 !important;
+}
+
+html body.ame-purchase-desk .table-pos {
+  table-layout: fixed !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+html body.ame-purchase-desk .table-pos th {
+  background: #003F8F !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  padding: 8px 6px !important;
+  text-align: center !important;
+  border-bottom: 0 !important;
+}
+
+html body.ame-purchase-desk .table-pos td,
+html body.ame-purchase-desk #cartFoot td {
+  background: #ffffff !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  border-bottom: 1px solid #D7DEE8 !important;
+  padding: 4px 6px !important;
+  text-align: center !important;
+  font-weight: 600 !important;
+}
+
+html body.ame-purchase-desk .table-pos td.ame-pos-col-line,
+html body.ame-purchase-desk .table-pos th.ame-pos-col-line {
+  text-align: right !important;
+}
+
+html body.ame-purchase-desk .pc-empty-cart {
+  padding: 48px 12px !important;
+  color: #667085 !important;
+}
+
+html body.ame-purchase-desk .ame-pc-cart-sum {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 8px 12px;
+  background: #F4F7FB !important;
+  border: 0 !important;
+  border-top: 1px solid #D7DEE8 !important;
+  border-radius: 0 0 12px 12px !important;
+  color: #111827 !important;
+}
+
+html body.ame-purchase-desk .ame-pos-summary {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* বিক্রয় ame-sale-desk.css ডান কলামের পুরনো ক্যালক সারি ক্লিপ করে —
+   ক্রয়ে সেই সারিগুলোই ডেস্ক-বক্সের ভিতরে, তাই আবার দেখাতে হবে। */
+html body.ame-purchase-desk .ame-pos-summary .ame-pos-calc-row,
+html body.ame-purchase-desk .ame-pos-summary .ame-pos-total,
+html body.ame-purchase-desk .ame-pos-summary .ame-pos-due,
+html body.ame-purchase-desk .ame-pos-summary .ame-pos-home,
+html body.ame-purchase-desk .ame-pos-summary .ame-pos-card-title,
+html body.ame-purchase-desk .ame-pos-summary .ame-pos-service-add {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  clip: auto !important;
+  clip-path: none !important;
+}
+
+html body.ame-purchase-desk .ame-desk-pay {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+html body.ame-purchase-desk .ame-desk-box,
+html body.ame-purchase-desk .ame-desk-actions {
+  background: #ffffff !important;
+  background-image: none !important;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+  padding: 0 10px 10px;
+  box-sizing: border-box;
+  color: #111827 !important;
+}
+
+html body.ame-purchase-desk .ame-desk-box h3,
+html body.ame-purchase-desk .ame-pos-card-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 -10px 8px !important;
+  padding: 8px 10px !important;
+  background: #003F8F !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 0 !important;
+  border-radius: 12px 12px 0 0 !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+}
+
+html body.ame-purchase-desk .ame-desk-box h3 svg {
+  width: 18px;
+  height: 18px;
+}
+
+html body.ame-purchase-desk .ame-desk-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+html body.ame-purchase-desk .ame-desk-fields-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+html body.ame-purchase-desk .ame-desk-payline {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 4px !important;
+  margin: 6px 0 !important;
+}
+
+html body.ame-purchase-desk .ame-desk-box label,
+html body.ame-purchase-desk .ame-pos-calc-row label,
+html body.ame-purchase-desk .ame-desk-payline label,
+html body.ame-purchase-desk .ame-pc-ledger-formula {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: 6px 0;
+  color: #667085 !important;
+  -webkit-text-fill-color: #667085 !important;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center !important;
+}
+
+html body.ame-purchase-desk .ame-pos-calc-row {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 4px !important;
+  margin: 6px 0 !important;
+}
+
+html body.ame-purchase-desk .ame-desk-box input,
+html body.ame-purchase-desk .ame-desk-box select,
+html body.ame-purchase-desk .ame-desk-box textarea,
+html body.ame-purchase-desk .ame-pos-select,
+html body.ame-purchase-desk #subtotalDisplay,
+html body.ame-purchase-desk #expenseDisplay,
+html body.ame-purchase-desk #invoiceTotalDisplay,
+html body.ame-purchase-desk #prevDueDisplay,
+html body.ame-purchase-desk #billDueDisplay,
+html body.ame-purchase-desk #newBalDisplay,
+html body.ame-purchase-desk #paidAmount,
+html body.ame-purchase-desk #notesInput {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 34px;
+  padding: 4px 8px;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 8px;
+  background: #F4F7FB !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  text-align: center;
+  font-weight: 800;
+  box-sizing: border-box;
+}
+
+html body.ame-purchase-desk .ame-desk-grand {
+  background: #003F8F !important;
+  color: #ffffff !important;
+  text-align: center;
+  border-color: #003F8F !important;
+}
+
+html body.ame-purchase-desk .ame-desk-grand h3,
+html body.ame-purchase-desk .ame-desk-grand small,
+html body.ame-purchase-desk .ame-desk-grand strong,
+html body.ame-purchase-desk #amePcGrandCaption,
+html body.ame-purchase-desk #grandTotalDisplay {
+  background: transparent !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-align: center !important;
+}
+
+html body.ame-purchase-desk #grandTotalDisplay {
+  display: block;
+  font-size: 28px !important;
+  font-weight: 900 !important;
+  line-height: 1.15;
+}
+
+html body.ame-purchase-desk .ame-desk-actions {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+html body.ame-purchase-desk #amePcCompleteBtn,
+html body.ame-purchase-desk .ame-pos-complete {
+  width: 100% !important;
+  min-height: 56px !important;
+  margin: 0 0 10px !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: #04933A !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+}
+
+html body.ame-purchase-desk #amePcCompleteBtn.is-draft,
+html body.ame-purchase-desk .ame-pos-complete.is-draft {
+  background: #ffffff !important;
+  color: #0057B8 !important;
+  -webkit-text-fill-color: #0057B8 !important;
+  border: 1px solid #D7DEE8 !important;
+}
+
+html body.ame-purchase-desk .ame-pos-home,
+html body.ame-purchase-desk .ame-pos-service-add {
+  width: 100%;
+  min-height: 40px;
+  margin: 0 0 8px;
+  border: 1px solid #D7DEE8 !important;
+  border-radius: 10px;
+  background: #ffffff !important;
+  color: #0057B8 !important;
+  -webkit-text-fill-color: #0057B8 !important;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+html body.ame-purchase-desk .pos-customer-add {
+  background: #0057B8 !important;
+  color: #ffffff !important;
+}
+
+html body.ame-purchase-desk .pc-qty-btn {
+  background: #F4F7FB !important;
+  color: #003F8F !important;
+  -webkit-text-fill-color: #003F8F !important;
+  border: 1px solid #D7DEE8 !important;
+}
+
+html body.ame-purchase-desk .pc-draft-banner {
+  background: #FFF8E1 !important;
+  color: #111827 !important;
+  border: 1px solid #F6C445 !important;
+}
+
+html body.ame-purchase-desk .ame-pc-mb-row.is-due strong,
+html body.ame-purchase-desk #newBalDisplay.is-due {
+  color: #991B1B !important;
+}
+
+html body.ame-purchase-desk .ame-pc-mb-row.is-ok strong {
+  color: #166534 !important;
+}
+
+html body.ame-purchase-desk .ame-pos-recent-wrap {
+  position: relative;
+  z-index: 400010;
+}
+
+html body.ame-purchase-desk .ame-pos-recent-flyout {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 40;
+  min-width: 160px;
+  padding: 6px;
+  background: #ffffff;
+  border: 1px solid #D7DEE8;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+@media (max-width: 999.98px) {
+  html body.ame-purchase-desk .ame-pos-grid,
+  html body.ame-purchase-desk .ame-pos-term-bar,
+  html body.ame-purchase-desk .ame-desk-bar {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  html body.ame-purchase-desk .ame-pos-summary {
+    position: static !important;
+    max-height: none !important;
+  }
+  html body.ame-purchase-desk .ame-pc-memo-balance {
+    display: grid !important;
+    gap: 6px;
+    margin: 0 0 10px;
+    padding: 12px 14px;
+    background: #ffffff !important;
+    border: 1px solid #D7DEE8 !important;
+    border-radius: 12px;
+  }
+  html body.ame-purchase-desk .ame-pos-pay-jump {
+    display: flex !important;
+  }
+  html body.ame-purchase-desk .ame-desk-fields-2 {
+    grid-template-columns: 1fr;
+  }
+}

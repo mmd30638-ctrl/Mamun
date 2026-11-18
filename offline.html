@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>অফলাইন দোকান</title>
+  <style id="ame-offline-css">
+body{font-family:sans-serif;background:#eef3fb;margin:0;padding:16px;color:#0b1e4d}
+.wrap{max-width:640px;margin:0 auto}
+.card{background:#fff;border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 8px 20px rgba(15,35,80,.07)}
+h1{margin:0 0 8px;font-size:20px}
+p{color:#64748b;line-height:1.5}
+input,select,textarea{width:100%;padding:11px 12px;border:1.5px solid #dbe4f0;border-radius:10px;box-sizing:border-box;margin-top:6px}
+label{font-size:12px;font-weight:800;display:block;margin-top:10px}
+.hit{padding:10px 0;border-bottom:1px solid #f1f5f9;cursor:pointer}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 4px;border-bottom:1px solid #eef2f7;text-align:left}
+.btn{width:100%;margin-top:12px;padding:14px;border:0;border-radius:12px;background:linear-gradient(90deg,#2563eb,#22c55e);color:#fff;font-weight:800;cursor:pointer;display:block;text-align:center;text-decoration:none}
+.ghost{background:#f8fbff;color:#0b1e4d;border:1px solid #dbe4f0}
+.ok{display:none;background:#e7f7ef;color:#0e8f52;padding:10px;border-radius:10px;margin-bottom:10px;font-weight:700}
+.warn{background:#fff8eb;color:#8a6100;padding:10px;border-radius:10px;font-size:13px;margin-bottom:10px}
+a{color:#2563eb;font-weight:800;text-decoration:none}
+.tot{font-size:18px;font-weight:800;text-align:right;margin-top:8px}
+.grid{display:grid;gap:10px;margin:16px 0}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kpi div{border:1px solid #e8eef6;border-radius:12px;padding:10px}
+.kpi b{display:block;font-size:20px}
+.kpi span{font-size:12px;color:#64748b}
+.qty{display:inline-flex;gap:6px;align-items:center}
+.qty button{width:28px;height:28px;border:0;border-radius:8px;background:#e8eef6;font-weight:800;cursor:pointer}
+.off-bar{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.off-bar a{font-size:12px;padding:8px 10px;border-radius:999px;background:#fff;border:1px solid #dbe4f0;color:#0b1e4d;font-weight:800}
+.sec{font-size:11px;font-weight:800;letter-spacing:.06em;color:#64748b;margin:16px 0 6px;text-transform:uppercase}
+.grid.two{grid-template-columns:1fr 1fr}
+  </style>
+  <link rel="stylesheet" href="/assets/css/offline-app.css?v=10.82.0">
+  <link rel="stylesheet" href="/assets/css/submit-spinner.css?v=10.98.31">
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>নেট নেই — পুরো দোকান ফোনে চলছে</h1>
+      <p>বিক্রয়, পেমেন্ট, কাস্টমার, পণ্য, ক্রয়, সাপ্লায়ার পেমেন্ট, খরচ, ওয়ার্কশপ ও ট্রান্সফার এখান থেকেই চালান। নেট ফিরলে সব সেভ নিজে সার্ভারে যাবে।</p>
+      <p class="warn">স্টাইল/বোতাম না দেখলে ইন্টারনেট চালু করে <a href="/offline-fix.html">এখানে চাপুন</a> (v10.84)।</p>
+      <div class="kpi">
+        <div><span>অপেক্ষমাণ বিক্রয়</span><b id="sales">0</b></div>
+        <div><span>অপেক্ষমাণ পেমেন্ট</span><b id="pays">0</b></div>
+        <div><span>অপেক্ষমাণ অন্য কাজ</span><b id="writes">0</b></div>
+        <div><span>ফোনে পণ্য</span><b id="prods">0</b></div>
+      </div>
+      <p class="ok" id="syncNote" style="display:none">নেট আছে — অপেক্ষমাণ কাজ সার্ভারে যাচ্ছে।</p>
+      <p class="warn" id="catNote">পণ্য তালিকা নেই। আগে একবার অনলাইনে যেকোনো পেজ খুলুন — তালিকা নিজে সেভ হবে।</p>
+      <div id="pendingBox"></div>
+      <button class="btn" type="button" id="syncNow">এখন সার্ভারে পাঠান</button>
+      <div class="sec">বিক্রয় ও কাস্টমার</div>
+      <div class="grid two">
+        <a class="btn" href="/offline-sale.html">বিক্রয় (POS)</a>
+        <a class="btn ghost" href="/offline-payment.html">কাস্টমার পেমেন্ট</a>
+        <a class="btn ghost" href="/offline-customers.html">কাস্টমার ও বকেয়া</a>
+        <a class="btn ghost" href="/modules/sales/pos.php">পার্টস কাউন্টার</a>
+      </div>
+      <div class="sec">স্টক ও ক্রয়</div>
+      <div class="grid two">
+        <a class="btn ghost" href="/offline-products.html">পণ্য / স্টক / দাম</a>
+        <a class="btn ghost" href="/offline-product-add.html">নতুন পণ্য</a>
+        <a class="btn ghost" href="/offline-purchase.html">মাল ক্রয়</a>
+        <a class="btn ghost" href="/offline-supplier-pay.html">সাপ্লায়ার পেমেন্ট</a>
+      </div>
+      <div class="sec">খরচ, ওয়ার্কশপ, হিসাব</div>
+      <div class="grid two">
+        <a class="btn ghost" href="/offline-expense.html">খরচ</a>
+        <a class="btn ghost" href="/offline-workshop.html">ওয়ার্কশপ জব</a>
+        <a class="btn ghost" href="/offline-transfer.html">অ্যাকাউন্ট ট্রান্সফার</a>
+        <a class="btn ghost" href="/offline-pulse.html">আজকের অবস্থা</a>
+      </div>
+      <a class="btn ghost" href="/index.php">হোম / ড্যাশবোর্ড</a>
+    </div>
+  </div>
+    <script src="/assets/js/double-submit-guard.js?v=10.98.31"></script>
+  <script src="/assets/js/offline-queue.js?v=10.82.0"></script>
+  <script src="/assets/js/offline-payment-queue.js?v=10.77.2"></script>
+  <script src="/assets/js/offline-boot.js?v=10.82.0"></script>
+  <script>
+    var KINDS = {
+      customer: 'নতুন কাস্টমার', purchase: 'মাল ক্রয়', expense: 'খরচ',
+      product: 'নতুন পণ্য', workshop: 'ওয়ার্কশপ জব', supplier_pay: 'সাপ্লায়ার পেমেন্ট',
+      supplier: 'নতুন সাপ্লায়ার', transfer: 'ট্রান্সফার', transaction: 'নগদ জমা/খরচ'
+    };
+    function n(api, fn){ try { return (window[api] && window[api][fn]) ? window[api][fn]() : 0; } catch(e){ return 0; } }
+    function reads(key){ try { return JSON.parse(localStorage.getItem(key)||'[]'); } catch(e){ return []; } }
+    function paint(){
+      document.getElementById('sales').textContent = n('AmeOfflineQueue','pendingCount');
+      document.getElementById('pays').textContent = n('AmeOfflinePay','pendingCount');
+      document.getElementById('writes').textContent = n('AmeOfflineWrite','pendingCount');
+      var prods = reads('ame_offline_products');
+      document.getElementById('prods').textContent = prods.length;
+      document.getElementById('catNote').style.display = prods.length ? 'none' : 'block';
+      document.getElementById('syncNote').style.display = navigator.onLine ? 'block' : 'none';
+      var writes = reads('ame_offline_write_queue');
+      var counts = {};
+      writes.forEach(function(w){ counts[w.kind] = (counts[w.kind]||0)+1; });
+      var lines = Object.keys(counts).map(function(k){ return (KINDS[k]||k)+': '+counts[k]; });
+      document.getElementById('pendingBox').innerHTML = lines.length
+        ? '<p class="warn">ফোনে অপেক্ষা: '+lines.join(' · ')+'</p>' : '';
+    }
+    document.getElementById('syncNow').addEventListener('click', function(){
+      if (!navigator.onLine) { alert('আগে ইন্টারনেট চালু করুন'); return; }
+      if (window.AmeOfflineSync) AmeOfflineSync.all();
+      document.getElementById('syncNote').style.display = 'block';
+      setTimeout(paint, 800);
+    });
+    window.addEventListener('ame-offline-sale-change', paint);
+    window.addEventListener('ame-offline-pay-change', paint);
+    window.addEventListener('ame-offline-write-change', paint);
+    window.addEventListener('online', paint);
+    paint();
+  </script>
+</body>
+</html>

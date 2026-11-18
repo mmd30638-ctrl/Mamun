@@ -1,0 +1,21 @@
+# নিরাপত্তা: এই ফোল্ডার ও এর সব সাব-ফোল্ডারে কোনো স্ক্রিপ্ট এক্সিকিউট হবে না।
+# শুধু ছবি/PDF/ডকুমেন্ট সার্ভ হবে — malicious upload হলেও তা চলবে না।
+
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+
+<FilesMatch "\.(php|php3|php4|php5|php7|php8|phtml|pht|phar|cgi|pl|py|sh|asp|aspx|exe|dll|jsp)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+Options -Indexes -ExecCGI

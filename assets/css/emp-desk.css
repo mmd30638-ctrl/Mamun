@@ -1,0 +1,258 @@
+/* Staff desk — full-bleed add/edit, Bengali over English */
+html body .earn-shell {
+    max-width: none !important;
+    width: 100% !important;
+    box-sizing: border-box;
+    padding: 12px 10px 28px !important;
+}
+html body .earn-hero-copy {
+    max-width: none !important;
+    margin: 0 !important;
+    text-align: left;
+    padding: 22px 16px 20px !important;
+}
+html body .earn-sub {
+    max-width: none !important;
+    margin: 8px 0 0 !important;
+}
+html body .earn-body {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+.emp-desk-wrap {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    color: #111;
+}
+.emp-desk-wrap > h3 {
+    margin: 0 0 4px;
+    font-size: 20px;
+    font-weight: 800;
+    color: #111;
+}
+.emp-desk-lead { margin: 0 0 14px; }
+.emp-desk-wrap .ame-pair,
+.emp-desk .ame-pair {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    line-height: 1.25;
+}
+.emp-desk-wrap .ame-pair strong,
+.emp-desk .ame-pair strong {
+    font-weight: 800;
+    font-size: 14px;
+    color: #111;
+    font-style: normal;
+}
+.emp-desk-wrap .ame-pair em,
+.emp-desk .ame-pair em {
+    font-style: normal;
+    font-size: 11px;
+    font-weight: 600;
+    color: #525252;
+}
+.emp-desk.card {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 18px;
+    padding: 16px !important;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #e5e5e5 !important;
+    background: #fff !important;
+}
+.emp-idcard {
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 16px 14px;
+    background: #fafafa;
+    text-align: center;
+}
+.emp-photo-preview {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #111;
+    display: block;
+    margin: 0 auto 12px;
+    background: #fff;
+}
+.emp-idcard .code {
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    color: #111;
+    margin: 0 0 10px;
+}
+.emp-idcard input[type="file"] {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 12px;
+}
+.emp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
+    align-items: start;
+    min-width: 0;
+}
+.emp-span { grid-column: 1 / -1; }
+.emp-sec {
+    grid-column: 1 / -1;
+    margin: 2px 0 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e5e5e5;
+    font-weight: 800;
+    font-size: 12px;
+    color: #111;
+}
+.emp-field { min-width: 0; }
+.emp-field > .ame-pair { margin-bottom: 6px; }
+.emp-field input,
+.emp-field select {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 46px;
+    padding: 10px 12px;
+    border: 1px solid #d4d4d4;
+    border-radius: 8px;
+    background: #fff;
+    color: #111;
+    font-size: 15px;
+}
+.emp-field input:focus,
+.emp-field select:focus {
+    outline: 2px solid #111;
+    outline-offset: 1px;
+    border-color: #111;
+}
+.emp-field input[readonly] { background: #f5f5f5; color: #525252; }
+.emp-field small.ame-pair { margin-top: 6px; }
+.emp-salary-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.emp-radio {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 8px 10px;
+    border: 1px solid #d4d4d4;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+}
+.emp-radio:has(input:checked) {
+    border-color: #D4C4A8;
+    background: #EFE6D4;
+    color: #3D2A12;
+}
+.emp-radio:has(input:checked) .ame-pair strong,
+.emp-radio:has(input:checked) .ame-pair em { color: #3D2A12; }
+.emp-radio input { width: auto; margin: 0; accent-color: #111; }
+.emp-actions {
+    grid-column: 1 / -1;
+    display: flex !important;
+    visibility: visible !important;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    position: sticky;
+    bottom: 8px;
+    z-index: 40;
+    background: #F3E8FF;
+    border: 1px solid #C5D9CC;
+    border-radius: 12px;
+    padding: 10px;
+}
+html body .emp-desk button.emp-save,
+html body.ame-premium-ui form.card.emp-desk button.emp-save[type="submit"]:not([class*="hdr-"]):not(.ame-calc-btn):not(.btn-danger):not(.btn-no):not(.danger) {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    border: 0 !important;
+    border-radius: 8px;
+    background: #EFE6D4 !important;
+    color: #3D2A12 !important;
+    -webkit-text-fill-color: #3D2A12 !important;
+    border: 1px solid #D4C4A8 !important;
+    font-weight: 800;
+    font-size: 16px;
+    min-height: 52px !important;
+    padding: 12px 22px;
+    cursor: pointer;
+    flex: 1 1 220px;
+    position: relative;
+    z-index: 2;
+}
+html body .emp-desk button.emp-save .ame-pair,
+html body .emp-desk button.emp-save .ame-wait-label { align-items: center; color: #3D2A12 !important; }
+html body .emp-desk button.emp-save .ame-pair strong,
+html body .emp-desk button.emp-save .ame-pair em,
+html body .emp-desk button.emp-save .ame-wait-label strong,
+html body .emp-desk button.emp-save .ame-wait-label em { color: #3D2A12 !important; opacity: 1 !important; }
+.emp-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 12px 16px;
+    color: #111;
+    font-weight: 800;
+    text-decoration: underline;
+}
+@media (max-width: 900px) {
+    .emp-desk.card { grid-template-columns: 1fr; }
+}
+.emp-pay-icons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.emp-pay-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 16px 10px;
+    border: 2px solid #d4d4d4;
+    border-radius: 16px;
+    background: #fff;
+    cursor: pointer;
+    text-align: center;
+}
+.emp-pay-icon input { position: absolute; opacity: 0; pointer-events: none; }
+.emp-pay-glyph {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 800;
+    background: #f1f5f9;
+    color: #0b1e4d;
+}
+.emp-pay-icon strong { font-size: 16px; color: #0f172a; }
+.emp-pay-icon em { font-style: normal; font-size: 12px; color: #64748b; }
+.emp-pay-icon:has(input:checked) {
+    border-color: #D4C4A8;
+    background: #EFE6D4;
+    box-shadow: none;
+}
+.emp-pay-icon:has(input:checked) .emp-pay-glyph { background: #fff; color: #3D2A12; }
+.emp-pay-icon:has(input:checked) strong,
+.emp-pay-icon:has(input:checked) em { color: #3D2A12; }
+
+@media (max-width: 720px) {
+    .emp-grid,
+    .emp-salary-toggle,
+    .emp-pay-icons { grid-template-columns: 1fr; }
+    .emp-span,
+    .emp-sec,
+    .emp-actions { grid-column: 1; }
+    .emp-save,
+    .emp-back { width: 100%; flex: 1 1 100%; }
+    html body .earn-4p { display: none !important; }
+}

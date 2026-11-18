@@ -1,0 +1,331 @@
+/* 10.98.404 — অন্য ক্রয় পেজ (হিস্টরি ইত্যাদি)। add.php (ame-purchase-desk)
+   বিক্রয় ডেস্কের নেভি লুক ব্যবহার করে — সেখানে এই ফাইল লোড হয় না। */
+html body.ame-purchase-terminal-page,
+html body.ame-purchase-cream,
+html body.ame-purchase-add-page {
+  --pur-cream: #EFE6D4;
+  --pur-ink: #3D2A12;
+  --pur-line: #D4C4A8;
+  --pur-paper: #FFFDF8;
+  --pur-mute: #6B5340;
+  --pur-ok: #166534;
+  --pur-bad: #991B1B;
+}
+
+html body.ame-purchase-terminal-page:not(.ame-purchase-desk) #main-content,
+html body.ame-purchase-cream:not(.ame-purchase-desk) #main-content {
+  background: #F7F1E4 !important;
+  color: #3D2A12 !important;
+}
+
+html body.ame-purchase-terminal-page .ame-pos-page,
+html body.ame-purchase-terminal-page .ame-pos-shell {
+  background: transparent !important;
+  color: #3D2A12 !important;
+}
+
+/* কার্ড — হালকা ক্রিম, কালো/নেভি গ্রেডিয়েন্ট নেই */
+html body.ame-purchase-terminal-page:not(.ame-purchase-desk) .ame-pos-card,
+html body.ame-purchase-terminal-page:not(.ame-purchase-desk) .ame-pos-summary,
+html body.ame-purchase-terminal-page .ame-pc-top-meta,
+html body.ame-purchase-terminal-page:not(.ame-purchase-desk) .ame-pc-cart-sum,
+html body.ame-purchase-terminal-page:not(.ame-purchase-desk) .ame-pc-ledger,
+html body.ame-purchase-terminal-page:not(.ame-purchase-desk) .pc-supplier-info,
+html body.ame-purchase-terminal-page .pc-draft-banner,
+html body.ame-purchase-terminal-page .ame-pc-memo-balance {
+  background: #EFE6D4 !important;
+  background-image: none !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  border: 1px solid #D4C4A8 !important;
+  box-shadow: none !important;
+}
+
+html body.ame-purchase-terminal-page .ame-pos-card-title,
+html body.ame-purchase-terminal-page .ame-pos-calc-row label,
+html body.ame-purchase-terminal-page .ame-pc-top-meta label,
+html body.ame-purchase-terminal-page .ame-pc-ledger-formula,
+html body.ame-purchase-terminal-page .ame-pc-memo-hint,
+html body.ame-purchase-terminal-page .pc-supplier-info,
+html body.ame-purchase-terminal-page .ame-pc-cart-sum {
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  text-align: left !important;
+}
+
+html body.ame-purchase-terminal-page:not(.ame-purchase-desk) .ame-pos-card-title {
+  background: #EFE6D4 !important;
+  border: 1px solid #D4C4A8 !important;
+  border-radius: 8px !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+}
+
+/* ইনপুট — সাদা কাগজ, কালো বক্স নয় */
+html body.ame-purchase-terminal-page input,
+html body.ame-purchase-terminal-page select,
+html body.ame-purchase-terminal-page textarea,
+html body.ame-purchase-terminal-page .ame-pos-input,
+html body.ame-purchase-terminal-page .ame-pos-select,
+html body.ame-purchase-terminal-page .ame-pos-line-input {
+  background: #FFFDF8 !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  border: 1px solid #D4C4A8 !important;
+}
+
+html body.ame-purchase-terminal-page #prevDueDisplay,
+html body.ame-purchase-terminal-page #billDueDisplay,
+html body.ame-purchase-terminal-page #newBalDisplay,
+html body.ame-purchase-terminal-page #subtotalDisplay,
+html body.ame-purchase-terminal-page #expenseDisplay,
+html body.ame-purchase-terminal-page #invoiceTotalDisplay {
+  background: #FFFDF8 !important;
+  color: #3D2A12 !important;
+  border: 1px solid #D4C4A8 !important;
+}
+
+/* টেবিল হেডার — ক্রিম, নেভি/কালো গ্রেডিয়েন্ট বাতিল */
+html body.ame-purchase-terminal-page:not(.ame-purchase-desk) .table-pos thead,
+html body.ame-purchase-terminal-page:not(.ame-purchase-desk) .table-pos thead tr,
+html body.ame-purchase-terminal-page:not(.ame-purchase-desk) .table-pos th,
+html body.ame-purchase-terminal-page .pos-recent-table thead,
+html body.ame-purchase-terminal-page .pos-recent-table th {
+  background: #EFE6D4 !important;
+  background-color: #EFE6D4 !important;
+  background-image: none !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  border-bottom: 1px solid #D4C4A8 !important;
+}
+
+html body.ame-purchase-terminal-page .table-pos td,
+html body.ame-purchase-terminal-page .pos-recent-table td,
+html body.ame-purchase-terminal-page #cartFoot td {
+  background: #FFFDF8 !important;
+  color: #3D2A12 !important;
+  font-weight: 600 !important;
+}
+
+html body.ame-purchase-terminal-page .table-pos td.ame-pos-col-line {
+  background: #FFFDF8 !important;
+  color: #3D2A12 !important;
+}
+
+/* পণ্য যোগে মেমো অটো নিচে বাড়ে — ভিতরে স্ক্রল/ফিক্সড উচ্চতা নয় */
+html body.ame-purchase-terminal-page .ame-pos-table-wrap,
+html body.ame-purchase-terminal-page.ame-pos-terminal-page .ame-pos-table-wrap,
+html body.ame-purchase-terminal-page .ame-pos-term-cart .ame-pos-table-wrap {
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  flex: 0 0 auto !important;
+  background: #FFFDF8 !important;
+  border: 1px solid #D4C4A8 !important;
+  border-radius: 10px 10px 0 0 !important;
+}
+
+html body.ame-purchase-terminal-page .pc-empty-cart {
+  padding: 28px 12px !important;
+  color: #6B5340 !important;
+  text-align: center !important;
+}
+
+html body.ame-purchase-terminal-page .ame-pos-term-cart {
+  overflow: visible !important;
+}
+
+/* পরিমাণ +/− — ক্রিম, কালো নয় */
+html body.ame-purchase-terminal-page .pc-qty-btn {
+  background: #EFE6D4 !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  border: 1px solid #D4C4A8 !important;
+}
+
+/* সর্বমোট ব্যালেন্স — ক্রিম পেপার, কালো নেভি বক্স নয় */
+html body.ame-purchase-terminal-page .ame-pos-total,
+html body.ame-purchase-terminal-page #amePcGrandTotal {
+  background: #EFE6D4 !important;
+  background-image: none !important;
+  color: #3D2A12 !important;
+  border: 1px solid #D4C4A8 !important;
+  border-radius: 12px !important;
+  text-align: left !important;
+  align-items: flex-start !important;
+}
+
+html body.ame-purchase-terminal-page .ame-pos-total small,
+html body.ame-purchase-terminal-page .ame-pos-total strong,
+html body.ame-purchase-terminal-page #amePcGrandCaption,
+html body.ame-purchase-terminal-page #grandTotalDisplay {
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  text-align: left !important;
+}
+
+html body.ame-purchase-terminal-page #grandTotalDisplay {
+  font-size: 28px !important;
+  font-weight: 900 !important;
+}
+
+/* সম্পন্ন বাটন সবুজ থাকে; ড্রাফট ক্রিম */
+html body.ame-purchase-terminal-page .ame-pos-complete {
+  background: #04933A !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border: 0 !important;
+}
+
+html body.ame-purchase-terminal-page .ame-pos-complete.is-draft {
+  background: #EFE6D4 !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  border: 1px solid #D4C4A8 !important;
+}
+
+/* সাবমিট — ডান হিসাবের সর্বমোট ব্যালেন্সের নিচে */
+html body.ame-purchase-terminal-page .ame-pc-submit-block {
+  margin: 10px 0 8px !important;
+}
+html body.ame-purchase-terminal-page #amePcCompleteBtn {
+  width: 100% !important;
+  margin: 0 0 14px !important;
+  min-height: 56px !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
+}
+html body.ame-purchase-terminal-page #amePurchaseOptionBox,
+html body.ame-purchase-terminal-page #amePurchaseTopSubmit {
+  display: none !important;
+}
+
+html body.ame-purchase-terminal-page .ame-pos-home,
+html body.ame-purchase-terminal-page .ame-pos-service-add,
+html body.ame-purchase-terminal-page .ame-pos-term-hist,
+html body.ame-purchase-terminal-page .ame-pos-recent-select,
+html body.ame-purchase-terminal-page .ame-pos-recent-option,
+html body.ame-purchase-terminal-page .ame-pos-pay-jump {
+  background: #EFE6D4 !important;
+  color: #3D2A12 !important;
+  -webkit-text-fill-color: #3D2A12 !important;
+  border: 1px solid #D4C4A8 !important;
+}
+
+html body.ame-purchase-terminal-page .pc-remove-btn,
+html body.ame-purchase-terminal-page .ame-pos-col-remove {
+  color: #B91C1C !important;
+}
+
+html body.ame-purchase-terminal-page .pos-customer-add {
+  background: #166534 !important;
+  color: #fff !important;
+}
+
+/* মেমোর নিচে সাবেক + ইনভয়েস − পরিশোধ = সর্বমোট */
+html body.ame-purchase-terminal-page .ame-pc-memo-balance {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 10px;
+  padding: 12px 14px;
+  border-radius: 0 0 10px 10px;
+  border-top: 0 !important;
+}
+
+html body.ame-purchase-terminal-page .ame-pc-mb-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #3D2A12;
+}
+
+html body.ame-purchase-terminal-page .ame-pc-mb-row.ame-pc-mb-total {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid #D4C4A8;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+html body.ame-purchase-terminal-page .ame-pc-mb-row.is-due strong { color: #991B1B !important; }
+html body.ame-purchase-terminal-page .ame-pc-mb-row.is-ok strong { color: #166534 !important; }
+
+html body.ame-purchase-terminal-page .ame-pc-cart-sum {
+  border-radius: 0 !important;
+  border-bottom: 0 !important;
+}
+
+/* লেআউট — বিক্রয়ের মতো, লেখা বাম */
+html body.ame-purchase-terminal-page label,
+html body.ame-purchase-terminal-page p,
+html body.ame-purchase-terminal-page h1,
+html body.ame-purchase-terminal-page h2,
+html body.ame-purchase-terminal-page h3,
+html body.ame-purchase-terminal-page th,
+html body.ame-purchase-terminal-page td,
+html body.ame-purchase-terminal-page .ame-pos-calc-row {
+  text-align: left !important;
+}
+
+html body.ame-purchase-terminal-page .ame-pos-col-sl,
+html body.ame-purchase-terminal-page .ame-pos-col-check,
+html body.ame-purchase-terminal-page .ame-pos-col-remove,
+html body.ame-purchase-terminal-page th.c,
+html body.ame-purchase-terminal-page td.c {
+  text-align: center !important;
+}
+
+html body.ame-purchase-terminal-page .ame-pos-col-line,
+html body.ame-purchase-terminal-page th.r,
+html body.ame-purchase-terminal-page td.r {
+  text-align: right !important;
+}
+
+html body.ame-purchase-terminal-page .pc-results {
+  background: #FFFDF8 !important;
+  border: 1px solid #D4C4A8 !important;
+  color: #3D2A12 !important;
+  max-height: min(60vh, 520px) !important;
+  overflow-y: auto !important;
+}
+html body.ame-purchase-terminal-page .pc-result-count {
+  color: #3D2A12 !important;
+}
+
+html body.ame-purchase-terminal-page .pc-result-item:hover {
+  background: #EFE6D4 !important;
+}
+
+html body.ame-purchase-terminal-page .pos-draft-drawer .pos-draft-panel,
+html body.ame-purchase-terminal-page .pos-recent-modal,
+html body.ame-purchase-terminal-page .pos-recent-modal-header,
+html body.ame-purchase-terminal-page .pos-recent-modal-footer {
+  background: #EFE6D4 !important;
+  color: #3D2A12 !important;
+  border-color: #D4C4A8 !important;
+}
+
+@media (min-width: 1000px) {
+  html body.ame-purchase-terminal-page:not(.ame-purchase-desk) .ame-pos-grid {
+    grid-template-columns: minmax(0, 1fr) 360px !important;
+    align-items: start !important;
+  }
+}
+
+@media (max-width: 999px) {
+  html body.ame-purchase-terminal-page .ame-pos-table-wrap {
+    max-height: none !important;
+  }
+  html body.ame-purchase-terminal-page .ame-pos-summary {
+    position: static !important;
+    max-height: none !important;
+    box-shadow: none !important;
+  }
+}

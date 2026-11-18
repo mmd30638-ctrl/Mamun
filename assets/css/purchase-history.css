@@ -1,0 +1,241 @@
+/* 10.98.364 — ক্রয় ইতিহাস: সাদা কার্ড, উজ্জ্বল রং, কালো বক্স নেই */
+html body.ame-purchase-history-page,
+html body.ame-purchase-history-page #main-content {
+  background: #e7f6f2 !important;
+  color: #0b1e4d !important;
+}
+html body.ame-purchase-history-page #main-content .phx {
+  width: min(980px, 100%);
+  margin: 0 auto;
+  padding: 12px 12px 28px;
+  box-sizing: border-box;
+}
+html body.ame-purchase-history-page #main-content .phx-hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  background: #fff !important;
+  border: 3px solid #0f766e !important;
+  border-radius: 22px;
+  padding: 16px;
+}
+html body.ame-purchase-history-page #main-content .phx-kicker {
+  margin: 0 0 4px;
+  color: #0f766e !important;
+  -webkit-text-fill-color: #0f766e !important;
+  font-size: 14px;
+  font-weight: 900;
+}
+html body.ame-purchase-history-page #main-content .phx-title {
+  margin: 0;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  font-size: clamp(26px, 5vw, 36px) !important;
+  font-weight: 900 !important;
+  line-height: 1.15;
+}
+html body.ame-purchase-history-page #main-content .phx-lead {
+  margin: 6px 0 0;
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  font-size: 15px;
+  font-weight: 700;
+}
+html body.ame-purchase-history-page #main-content a.phx-new {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  padding: 0 18px;
+  border-radius: 14px;
+  background: #0a8f3c !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 900;
+}
+html body.ame-purchase-history-page #main-content .phx-kpis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+html body.ame-purchase-history-page #main-content .phx-kpi {
+  border-radius: 18px;
+  padding: 12px 14px;
+  min-height: 86px;
+  color: #fff !important;
+}
+html body.ame-purchase-history-page #main-content .phx-kpi span,
+html body.ame-purchase-history-page #main-content .phx-kpi b {
+  display: block;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+html body.ame-purchase-history-page #main-content .phx-kpi span {
+  font-size: 14px;
+  font-weight: 800;
+}
+html body.ame-purchase-history-page #main-content .phx-kpi b {
+  margin-top: 4px;
+  font-size: clamp(22px, 4vw, 30px);
+  font-weight: 900;
+  line-height: 1.1;
+}
+html body.ame-purchase-history-page #main-content .phx-kpi-n { background: #0b57d0 !important; }
+html body.ame-purchase-history-page #main-content .phx-kpi-t { background: #0a8f3c !important; }
+html body.ame-purchase-history-page #main-content .phx-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+html body.ame-purchase-history-page #main-content .phx-memo {
+  background: #fff !important;
+  border: 3px solid #0f766e !important;
+  border-radius: 20px;
+  padding: 12px;
+}
+html body.ame-purchase-history-page #main-content .phx-top {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: start;
+}
+html body.ame-purchase-history-page #main-content .phx-date {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  min-height: 64px;
+  padding: 6px 8px;
+  border-radius: 14px;
+  background: #fff7d6 !important;
+  border: 3px solid #e65100;
+  color: #9a3412 !important;
+  -webkit-text-fill-color: #9a3412 !important;
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 1.2;
+  text-align: center;
+}
+html body.ame-purchase-history-page #main-content .phx-name {
+  display: block;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1.25;
+}
+html body.ame-purchase-history-page #main-content .phx-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  margin-top: 4px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: #6d28d9 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  font-size: 12px;
+  font-weight: 900;
+}
+html body.ame-purchase-history-page #main-content .phx-meta {
+  margin: 4px 0 0;
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155 !important;
+  font-size: 14px;
+  font-weight: 700;
+}
+html body.ame-purchase-history-page #main-content .phx-money {
+  text-align: right;
+}
+html body.ame-purchase-history-page #main-content .phx-money span {
+  display: block;
+  color: #0f766e !important;
+  -webkit-text-fill-color: #0f766e !important;
+  font-size: 13px;
+  font-weight: 800;
+}
+html body.ame-purchase-history-page #main-content .phx-money b {
+  display: block;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  font-size: 18px;
+}
+html body.ame-purchase-history-page #main-content .phx-money em {
+  display: block;
+  margin-top: 2px;
+  font-style: normal;
+  color: #0a8f3c !important;
+  -webkit-text-fill-color: #0a8f3c !important;
+  font-size: 22px;
+  font-weight: 900;
+}
+html body.ame-purchase-history-page #main-content .phx-acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+html body.ame-purchase-history-page #main-content a.phx-act {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 12px;
+  border-radius: 12px;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 900;
+}
+html body.ame-purchase-history-page #main-content a.phx-edit { background: #0b57d0 !important; }
+html body.ame-purchase-history-page #main-content a.phx-view { background: #0f766e !important; }
+html body.ame-purchase-history-page #main-content a.phx-print { background: #e65100 !important; }
+html body.ame-purchase-history-page #main-content a.phx-share { background: #6d28d9 !important; }
+html body.ame-purchase-history-page #main-content a.phx-wa { background: #0a8f3c !important; }
+html body.ame-purchase-history-page #main-content .phx-empty {
+  background: #fff !important;
+  border: 3px dashed #0f766e;
+  border-radius: 20px;
+  padding: 28px 16px;
+  text-align: center;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  font-size: 18px;
+  font-weight: 900;
+}
+@media (max-width: 640px) {
+  html body.ame-purchase-history-page #main-content .phx-top {
+    grid-template-columns: auto 1fr;
+  }
+  html body.ame-purchase-history-page #main-content .phx-money {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+    text-align: left;
+    background: #ecfdf3;
+    border-radius: 12px;
+    padding: 8px 10px;
+  }
+  html body.ame-purchase-history-page #main-content .phx-money span,
+  html body.ame-purchase-history-page #main-content .phx-money b,
+  html body.ame-purchase-history-page #main-content .phx-money em {
+    display: inline;
+  }
+  html body.ame-purchase-history-page #main-content a.phx-new {
+    width: 100%;
+  }
+}
+@media (min-width: 900px) {
+  html body.ame-purchase-history-page #main-content .phx-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}

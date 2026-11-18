@@ -1,0 +1,636 @@
+/* POS box type — centered, larger, high-contrast titles + cart serials */
+
+body.ame-pos-terminal-page .ame-pos-card,
+body.ame-pos-terminal-page .ame-pos-summary,
+body.ame-pos-terminal-page .pos-payment-panel,
+body.ame-pos-terminal-page .sidebar-calc {
+    text-align: center;
+}
+
+body.ame-pos-terminal-page .ame-pos-card-title,
+body.ame-pos-terminal-page .pos-customer-title,
+body.ame-pos-terminal-page .sidebar-calc > h3,
+body.ame-pos-terminal-page .sidebar-calc h3,
+body.ame-pos-terminal-page .pos-section h3,
+body.ame-pos-terminal-page .pos-section h4,
+body.ame-pos-terminal-page .ame-pos-field-label {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 0 12px !important;
+    padding: 11px 14px !important;
+    text-align: center !important;
+    font-size: 17px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.02em !important;
+    line-height: 1.35 !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-fold-stack {
+    width: 100%;
+}
+
+body.ame-pos-terminal-page .pos-payment-heading small {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    font-size: 14.5px !important;
+    font-weight: 650 !important;
+    line-height: 1.55 !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-custom-item-toggle {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-height: 48px !important;
+    text-align: left !important;
+    font-size: 14.5px !important;
+    font-weight: 800 !important;
+    line-height: 1.35 !important;
+    color: var(--pos-c-000000) !important;
+    background: var(--brand-bg) !important;
+    border: 1.5px dashed var(--pos-c-d8e1ec) !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-custom-item-toggle small {
+    color: var(--pos-c-9ca3af) !important;
+    font-weight: 700 !important;
+}
+
+body.ame-pos-terminal-page .pos-payment-heading {
+    text-align: center !important;
+    padding: 14px 12px !important;
+}
+
+body.ame-pos-terminal-page .pos-payment-heading h4,
+body.ame-pos-skin-workshop .pos-payment-heading h4 {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 0 6px !important;
+    padding: 8px 10px !important;
+    text-align: center !important;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.02em !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-calc-row,
+body.ame-pos-terminal-page .calc-row {
+    align-items: center !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-calc-row label,
+body.ame-pos-terminal-page .calc-row label {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 38px;
+    padding: 6px 10px !important;
+    text-align: center !important;
+    font-size: 14.5px !important;
+    font-weight: 800 !important;
+    line-height: 1.3 !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-calc-row input,
+body.ame-pos-terminal-page .calc-row input,
+body.ame-pos-terminal-page .calc-row select,
+body.ame-pos-terminal-page #p-search,
+body.ame-pos-terminal-page .ame-pos-input,
+body.ame-pos-terminal-page .ame-pos-select,
+body.ame-pos-terminal-page .input-style {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-service-add,
+body.ame-pos-terminal-page button.ame-pos-service-add,
+body.ame-pos-terminal-page .ame-pos-exchange-addbtn,
+body.ame-pos-terminal-page .ame-pos-complete,
+body.ame-pos-terminal-page button[onclick*="submitFinalSale"],
+body.ame-pos-terminal-page .btn-success {
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.01em;
+}
+
+body.ame-pos-terminal-page .table-pos th {
+    text-align: center !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    padding: 10px 8px !important;
+    letter-spacing: 0.02em;
+}
+
+body.ame-pos-terminal-page .table-pos td {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    padding: 10px 8px !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    color: var(--pos-c-000000) !important;
+    background: var(--brand-bg) !important;
+}
+
+body.ame-pos-terminal-page .table-pos td:nth-child(1),
+body.ame-pos-terminal-page .table-pos td:nth-child(2),
+body.ame-pos-terminal-page .table-pos td:nth-child(3),
+body.ame-pos-terminal-page .table-pos td:nth-child(4),
+body.ame-pos-terminal-page .table-pos td:nth-child(5),
+body.ame-pos-terminal-page .table-pos td:nth-child(6),
+body.ame-pos-terminal-page .table-pos td:nth-child(7),
+body.ame-pos-terminal-page .table-pos td:nth-child(8) {
+    text-align: center !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-col-sl,
+body.ame-pos-terminal-page .table-pos th.ame-pos-col-sl,
+body.ame-pos-terminal-page .table-pos td.ame-pos-col-sl {
+    width: 48px;
+    min-width: 44px;
+    text-align: center !important;
+    font-variant-numeric: tabular-nums;
+    font-weight: 800 !important;
+    font-size: 16px !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-line-input {
+    font-size: 15px !important;
+    height: 36px !important;
+}
+
+body.ame-purchase-terminal-page .pc-cart-table {
+    min-width: 820px;
+}
+body.ame-pos-terminal-page .table-pos {
+    min-width: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    table-layout: fixed !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-total,
+body.ame-pos-terminal-page .net-box,
+body.ame-pos-terminal-page #net-payable {
+    text-align: center !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-service-foot {
+    justify-content: center;
+}
+
+body.ame-pos-terminal-page .ame-pos-table-wrap {
+    text-align: center;
+}
+
+body.ame-pos-terminal-page .ame-pos-search,
+body.ame-pos-terminal-page .ame-pos-exchange-search,
+body.ame-pos-terminal-page .ame-pos-exchange-composer,
+body.ame-pos-terminal-page .ame-pos-service-rows,
+body.ame-pos-terminal-page .pos-payment-body,
+body.ame-pos-terminal-page .ame-pos-custom-item,
+body.ame-pos-terminal-page .ame-pos-custom-item-box {
+    text-align: left;
+}
+
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest),
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) #main-content,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .ame-pos-page,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .ame-pos-shell,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .pc-wrap {
+    background: var(--brand-bg) !important;
+    background-image: none !important;
+    background-color: var(--brand-bg) !important;
+}
+
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .ame-pos-card,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .pc-card,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .sidebar-calc,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .ame-pos-summary,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .ame-pos-table-wrap,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .pos-payment-panel {
+    background: var(--brand-bg) !important;
+}
+
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .table-pos td,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .table-pos tbody tr:nth-child(even) td {
+    background: var(--brand-bg) !important;
+    color: var(--pos-c-000000) !important;
+}
+
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .ame-pos-calc-row label,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .calc-row label,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .ame-pos-input,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .ame-pos-select,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .input-style,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .ame-pos-line-input,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .ame-pos-calc-row input,
+body.ame-pos-terminal-page:not(.ame-pos-skin-forest) .calc-row input {
+    color: var(--pos-c-000000) !important;
+}
+
+body.ame-pos-terminal-page :is(input, textarea)::placeholder {
+    color: var(--pos-c-9ca3af) !important;
+    opacity: 1 !important;
+    font-weight: 500 !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-finder-link,
+body.ame-pos-terminal-page .ame-pos-finder-link a,
+body.ame-pos-terminal-page .ame-pos-heading p {
+    color: var(--pos-c-9ca3af) !important;
+}
+
+body.ame-pos-terminal-page,
+body.ame-pos-terminal-page #main-content {
+    background: var(--brand-bg) !important;
+    color: var(--pos-c-000000) !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-calc-row label,
+body.ame-pos-terminal-page .calc-row label,
+body.ame-pos-terminal-page .ame-pos-exchange-row label,
+body.ame-pos-terminal-page .ame-pos-due-check {
+    color: var(--pos-c-000000) !important;
+    font-weight: 800 !important;
+}
+
+body.ame-pos-terminal-page .pos-payment-colors span,
+body.ame-pos-terminal-page .ame-pos-colorbar span,
+body.ame-pos-terminal-page .pos-draft-panel-colors span {
+    background: var(--pos-c-e8edf2) !important;
+}
+
+body.ame-pos-terminal-page .pos-payment-heading,
+body.ame-pos-terminal-page .pos-payment-heading h4,
+body.ame-pos-terminal-page .pos-payment-heading *,
+body.ame-pos-skin-workshop .pos-payment-heading h4,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] .pos-payment-heading,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] .pos-payment-heading h4,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] .pos-payment-heading * {
+    background: var(--brand-bg) !important;
+    color: var(--pos-c-000000) !important;
+    -webkit-text-fill-color: var(--pos-c-000000) !important;
+    text-shadow: none !important;
+}
+
+body.ame-pos-terminal-page .pos-payment-heading small,
+body.ame-pos-skin-workshop .pos-payment-heading small,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] .pos-payment-heading small {
+    color: var(--pos-c-9ca3af) !important;
+    -webkit-text-fill-color: var(--pos-c-9ca3af) !important;
+    text-shadow: none !important;
+    font-weight: 500 !important;
+}
+
+body.ame-pos-terminal-page .pos-payment-add,
+body.ame-pos-terminal-page .ame-pos-pay-jump,
+body.ame-pos-terminal-page .ame-pos-complete,
+body.ame-pos-terminal-page .ame-pos-complete.is-draft,
+body.ame-pos-terminal-page button[onclick*="submitFinalSale"],
+body.ame-pos-terminal-page .btn-success,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] .ame-pos-complete,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] .ame-pos-complete.is-draft,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] button[onclick*="submitFinalSale"],
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] .btn-success,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] .pos-payment-add,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] .ame-pos-pay-jump {
+    background: var(--brand-bg) !important;
+    border: 1.5px solid var(--pos-c-d8e1ec) !important;
+    color: var(--pos-c-000000) !important;
+    -webkit-text-fill-color: var(--pos-c-000000) !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-home {
+    background: var(--brand-bg) !important;
+    border-color: var(--pos-c-d8e1ec) !important;
+    color: var(--pos-c-000000) !important;
+}
+
+body.ame-pos-terminal-page .pos-payment-row {
+    border-left-color: var(--pos-c-d8e1ec) !important;
+    background: var(--brand-bg) !important;
+}
+
+body.ame-pos-terminal-page .pos-payment-summary-item,
+body.ame-pos-terminal-page .pos-payment-summary-item.total,
+body.ame-pos-terminal-page .pos-payment-summary-item.remaining,
+body.ame-pos-terminal-page .pos-payment-summary-item.change,
+body.ame-pos-skin-workshop .pos-payment-summary-item,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] .pos-payment-summary-item {
+    background: var(--brand-bg) !important;
+    border-color: var(--pos-c-d8e1ec) !important;
+    color: var(--pos-c-000000) !important;
+    -webkit-text-fill-color: var(--pos-c-000000) !important;
+    text-shadow: none !important;
+}
+
+body.ame-pos-terminal-page .pos-payment-summary-item span,
+body.ame-pos-terminal-page .pos-payment-summary-item strong,
+body.ame-pos-terminal-page .pos-payment-summary-item *,
+body.ame-pos-terminal-page .pos-payment-summary-item.remaining strong,
+body.ame-pos-terminal-page .pos-payment-summary-item.change strong,
+body.ame-pos-skin-workshop .pos-payment-summary-item span,
+body.ame-pos-skin-workshop .pos-payment-summary-item strong,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] .pos-payment-summary-item span,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] .pos-payment-summary-item strong,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] .pos-payment-summary-item * {
+    color: var(--pos-c-000000) !important;
+    -webkit-text-fill-color: var(--pos-c-000000) !important;
+    text-shadow: none !important;
+}
+
+/* .ame-pos-total / #net-payable বক্সের ব্যাকগ্রাউন্ড গাঢ় নেভি/কালো (pos_style.php),
+   তাই এখানে কালো লেখা বসালে লেখা অদৃশ্য হয়ে যেত (কালো বাটনের ভিতরে লেখা দেখা
+   যাচ্ছিল না) — এখন উজ্জ্বল রঙে বাধ্যতামূলকভাবে দৃশ্যমান রাখা হলো। */
+body.ame-pos-terminal-page .ame-pos-total small,
+body.ame-pos-skin-workshop .ame-pos-total small,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] .ame-pos-total small {
+    color: var(--pos-c-dbeafe) !important;
+    -webkit-text-fill-color: var(--pos-c-dbeafe) !important;
+    text-shadow: none !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-total strong,
+body.ame-pos-terminal-page #net-payable,
+body.ame-pos-skin-workshop .ame-pos-total strong,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] .ame-pos-total strong,
+body.ame-pos-terminal-page[class*="ame-pos-skin-"] #net-payable {
+    color: var(--pos-c-69f0ae) !important;
+    -webkit-text-fill-color: var(--pos-c-69f0ae) !important;
+    text-shadow: none !important;
+}
+
+body.ame-pos-terminal-page .pos-draft-note,
+body.ame-pos-terminal-page .ame-pos-due,
+body.ame-pos-terminal-page .pos-draft-controls {
+    background: var(--brand-bg) !important;
+    border-color: var(--pos-c-bbf7d0) !important;
+    color: var(--pos-c-000000) !important;
+}
+
+body.ame-pos-terminal-page .pos-draft-note::placeholder {
+    color: var(--pos-c-9ca3af) !important;
+}
+
+@media (max-width: 640px) {
+    body.ame-pos-terminal-page .ame-pos-card-title,
+    body.ame-pos-terminal-page .pos-customer-title,
+    body.ame-pos-terminal-page .sidebar-calc h3,
+    body.ame-pos-terminal-page .pos-payment-heading h4 {
+        font-size: 16px !important;
+        padding: 10px 10px !important;
+    }
+    body.ame-pos-terminal-page .table-pos td,
+    body.ame-pos-terminal-page .table-pos th {
+        font-size: 14px !important;
+    }
+}
+
+/* Bottom boxes: type size matches the box, copy sits in the middle */
+body.ame-pos-terminal-page .ame-pos-custom-item-toggle {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 52px !important;
+    padding: 12px 40px !important;
+    text-align: center !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    line-height: 1.3 !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-custom-item-toggle span {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    line-height: 1.3 !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-custom-item-toggle small {
+    position: absolute !important;
+    right: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin: 0 !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-calc-row {
+    min-height: 48px;
+}
+
+body.ame-pos-terminal-page .ame-pos-calc-row label,
+body.ame-pos-terminal-page .calc-row label,
+body.ame-pos-terminal-page .ame-pos-exchange-row label {
+    min-height: 48px !important;
+    font-size: 16px !important;
+    line-height: 1.3 !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-calc-row input,
+body.ame-pos-terminal-page .calc-row input,
+body.ame-pos-terminal-page .calc-row select,
+body.ame-pos-terminal-page .ame-pos-custom-item-box .ame-pos-input,
+body.ame-pos-terminal-page .ame-pos-exchange-fields input,
+body.ame-pos-terminal-page .ame-pos-service-grid .ame-pos-input {
+    height: 48px !important;
+    min-height: 48px !important;
+    padding: 0 12px !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    line-height: 48px !important;
+    text-align: center !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-calc-row input[type="number"],
+body.ame-pos-terminal-page .pos-payment-field input[type="number"],
+body.ame-pos-terminal-page .ame-pos-custom-item-box input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+body.ame-pos-terminal-page .ame-pos-calc-row input[type="number"]::-webkit-outer-spin-button,
+body.ame-pos-terminal-page .ame-pos-calc-row input[type="number"]::-webkit-inner-spin-button,
+body.ame-pos-terminal-page .pos-payment-field input[type="number"]::-webkit-outer-spin-button,
+body.ame-pos-terminal-page .pos-payment-field input[type="number"]::-webkit-inner-spin-button {
+    margin: 0;
+    height: 48px;
+}
+
+body.ame-pos-terminal-page .ame-pos-exchange-row {
+    min-height: 48px;
+    align-items: center !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-exchange-row strong {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 48px !important;
+    min-width: 96px;
+    padding: 0 12px !important;
+    font-size: 16px !important;
+    line-height: 1 !important;
+    text-align: center !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-total {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 88px;
+    padding: 16px 12px !important;
+    text-align: center !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-total small {
+    display: block !important;
+    width: 100% !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-total strong,
+body.ame-pos-terminal-page #net-payable {
+    display: block !important;
+    width: 100% !important;
+    margin-top: 4px !important;
+    font-size: 22px !important;
+    font-weight: 900 !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+}
+
+body.ame-pos-terminal-page .pos-payment-field label {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 28px;
+    margin-bottom: 6px !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+}
+
+body.ame-pos-terminal-page .pos-payment-field select,
+body.ame-pos-terminal-page .pos-payment-field input {
+    height: 48px !important;
+    min-height: 48px !important;
+    padding: 0 12px !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    line-height: 48px !important;
+    text-align: center !important;
+    text-align-last: center;
+}
+
+body.ame-pos-terminal-page .pos-payment-field select {
+    display: flex;
+    align-items: center;
+}
+
+body.ame-pos-terminal-page .pos-payment-add,
+body.ame-pos-terminal-page .ame-pos-custom-item-btn,
+body.ame-pos-terminal-page .ame-pos-exchange-addbtn,
+body.ame-pos-terminal-page .ame-pos-service-add,
+body.ame-pos-terminal-page button.ame-pos-service-add,
+body.ame-pos-terminal-page .pos-payment-remove {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 48px !important;
+    padding: 0 14px !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+}
+
+body.ame-pos-terminal-page .pos-payment-summary-item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+    min-height: 64px !important;
+    padding: 12px 10px !important;
+    text-align: center !important;
+    font-size: 16px !important;
+    gap: 4px !important;
+}
+
+body.ame-pos-terminal-page .pos-payment-summary-item span,
+body.ame-pos-terminal-page .pos-payment-summary-item strong {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    font-size: 16px !important;
+    line-height: 1.3 !important;
+}
+
+body.ame-pos-terminal-page .pos-payment-summary-item strong {
+    font-size: 18px !important;
+    font-weight: 900 !important;
+}
+
+body.ame-pos-terminal-page .pos-draft-note {
+    min-height: 48px !important;
+    height: 48px !important;
+    padding: 0 12px !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    line-height: 48px !important;
+    text-align: center !important;
+    resize: none;
+}
+
+body.ame-pos-terminal-page .btn-success,
+body.ame-pos-terminal-page .ame-pos-home {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 52px !important;
+    padding: 0 14px !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+}
+
+/* ⭐ পেমেন্ট/বিক্রয় সম্পন্ন বাটন — উপরে-নিচে আরো ছোট (আলাদা রুল, যাতে
+   .btn-success ও .ame-pos-home এর সাইজে প্রভাব না পড়ে) */
+body.ame-pos-terminal-page .ame-pos-complete,
+body.ame-pos-terminal-page button[onclick*="submitFinalSale"] {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 38px !important;
+    padding: 0 14px !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+}
+
+body.ame-pos-terminal-page .ame-pos-due-check {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px;
+    min-height: 44px;
+    font-size: 15px !important;
+    text-align: center !important;
+}

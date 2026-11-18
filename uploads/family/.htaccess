@@ -1,0 +1,8 @@
+Options -Indexes
+<FilesMatch "\.(php|phtml|phar)$">
+Deny from all
+</FilesMatch>
+
+<FilesMatch "^kitab_">
+Require all denied
+</FilesMatch>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>POS + Payment responsive lab</title>
+  <script src="/assets/js/ame-desktop-site.js?v=10.98.940"></script>
+  <script src="/assets/js/ame-viewport-tier.js?v=10.98.940"></script>
+  <link rel="stylesheet" href="/assets/css/ame-global-responsive-master.css?v=10.98.940">
+  <link rel="stylesheet" href="/assets/css/ame-pages-critical-responsive.css?v=10.98.940">
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; background: #f1f5f9; }
+    #main-content { padding: 12px; }
+    .lab-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .lab-tabs button { padding: 8px 12px; border-radius: 8px; border: 1px solid #94a3b8; background: #fff; font-weight: 700; }
+    .lab-pane { display: none; }
+    .lab-pane.is-on { display: block; }
+    #tier-readout { font-size: 13px; margin-bottom: 12px; padding: 8px; background: #0f172a; color: #e2e8f0; border-radius: 8px; }
+  </style>
+</head>
+<body class="ame-customer-payment-page ame-pos-terminal-page ame-sales-pro">
+  <div id="main-content">
+    <div id="tier-readout"></div>
+    <div class="lab-tabs">
+      <button type="button" data-pane="pay">পেমেন্ট গ্রহণ</button>
+      <button type="button" data-pane="pos">বিক্রয় POS</button>
+    </div>
+    <section class="lab-pane is-on" data-pane="pay">
+      <form class="cpd-form cpd-panel">
+        <h1>ক্রেতার পেমেন্ট গ্রহণ</h1>
+        <div class="cpd-top">
+          <div class="cpd-search"><input placeholder="খুঁজুন"><button type="button">খুঁজুন</button></div>
+          <div class="cpd-who"><div class="cpay-avatar">M</div><p class="cpd-name"><span>ডেমো কাস্টমার</span></p></div>
+          <div class="cpd-balbox"><div class="cpd-balance">৳ ১,২৩৪</div></div>
+        </div>
+        <div class="cpd-fields">
+          <div class="cpd-field"><label>জমা</label><input class="cpd-input" value="500"></div>
+          <div class="cpd-field"><label>ডিসকাউন্ট</label><input class="cpd-input" value="0"></div>
+        </div>
+        <div class="cpd-table-wrap">
+          <table class="cpd-table cpd-pay-table"><thead><tr><th>তারিখ</th><th>টাকা</th></tr></thead>
+          <tbody><tr><td data-label="তারিখ">১৬/১১</td><td data-label="টাকা">৳৫০০</td></tr></tbody></table>
+        </div>
+      </form>
+    </section>
+    <section class="lab-pane" data-pane="pos">
+      <div class="ame-sale-desk ame-sale-pro">
+        <div class="ame-pos-shell">
+          <div class="ame-pos-term-bar ame-pos-grid">
+            <input class="ame-pos-input" placeholder="পণ্য খুঁজুন">
+          </div>
+          <div class="ame-pos-table-wrap">
+            <table class="table-pos"><tr><th>পণ্য</th><th>মোট</th></tr><tr><td>ডেমো</td><td>৳১০০</td></tr></table>
+          </div>
+          <div class="ame-pos-calc-row pos-payment-summary"><label>মোট</label><strong id="net-payable">৳১০০</strong></div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+    document.querySelectorAll('.lab-tabs button').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var p = btn.getAttribute('data-pane');
+        document.querySelectorAll('.lab-pane').forEach(function (el) {
+          el.classList.toggle('is-on', el.getAttribute('data-pane') === p);
+        });
+        document.body.classList.toggle('ame-customer-payment-page', p === 'pay');
+        document.body.classList.toggle('ame-pos-terminal-page', p === 'pos');
+        document.body.classList.toggle('ame-sales-pro', p === 'pos');
+        readout();
+      });
+    });
+    function readout() {
+      var r = document.documentElement;
+      document.getElementById('tier-readout').textContent = [
+        'tier=' + (r.getAttribute('data-ame-tier') || '—'),
+        'desktop-site=' + r.classList.contains('ame-phone-desktop'),
+        'innerWidth=' + window.innerWidth
+      ].join(' · ');
+    }
+    readout();
+    window.addEventListener('resize', readout);
+  </script>
+</body>
+</html>

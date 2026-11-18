@@ -1,0 +1,89 @@
+/**
+ * APONSHOP shell 8.25 — PC left menu stays inside until hamburger.
+ * Phone: once opened (swipe or ☰) it stays out; do not shove it back on viewport jitter.
+ */
+@media (min-width: 1100px) {
+  html body.ame-premium-ui:not(.ame-pos-terminal-page) .custom-sidebar,
+  html body.ame-saas-os:not(.ame-pos-terminal-page) .custom-sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: min(280px, 86vw) !important;
+    height: 100% !important;
+    max-height: 100vh !important;
+    z-index: 400000 !important;
+    transform: translateX(-105%) !important;
+    transition: transform 0.22s ease !important;
+    pointer-events: none !important;
+    box-shadow: none !important;
+  }
+  html body.ame-premium-ui.ame-sb-open:not(.ame-pos-terminal-page) .custom-sidebar,
+  html body.ame-saas-os.ame-sb-open:not(.ame-pos-terminal-page) .custom-sidebar,
+  html body.ame-premium-ui:not(.ame-pos-terminal-page) .custom-sidebar.open,
+  html body.ame-premium-ui:not(.ame-pos-terminal-page) .custom-sidebar.active,
+  html body.ame-premium-ui:not(.ame-pos-terminal-page) .custom-sidebar.show,
+  html body.ame-saas-os:not(.ame-pos-terminal-page) .custom-sidebar.open,
+  html body.ame-saas-os:not(.ame-pos-terminal-page) .custom-sidebar.active {
+    transform: translateX(0) !important;
+    pointer-events: auto !important;
+    box-shadow: 12px 0 40px rgba(18, 53, 38, 0.18) !important;
+  }
+
+  html body.ame-premium-ui:not(.ame-pos-terminal-page) .master-header-fixed,
+  html body.ame-saas-os:not(.ame-pos-terminal-page) .master-header-fixed {
+    left: 0 !important;
+    width: 100% !important;
+  }
+  html body.ame-premium-ui:not(.ame-pos-terminal-page) #main-content,
+  html body.ame-saas-os:not(.ame-pos-terminal-page) #main-content {
+    width: min(100% - 16px, 1480px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  html body.ame-premium-ui:not(.ame-pos-terminal-page) .hdr-i-menu,
+  html body.ame-saas-os:not(.ame-pos-terminal-page) .hdr-i-menu {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 44px !important;
+    height: 44px !important;
+    pointer-events: auto !important;
+  }
+
+  html body.ame-premium-ui:not(.ame-pos-terminal-page) .sidebar-close-btn,
+  html body.ame-saas-os:not(.ame-pos-terminal-page) .sidebar-close-btn {
+    display: inline-flex !important;
+  }
+
+  html body.ame-premium-ui:not(.ame-pos-terminal-page) .sidebar-backdrop,
+  html body.ame-saas-os:not(.ame-pos-terminal-page) .sidebar-backdrop {
+    display: none !important;
+  }
+  html body.ame-premium-ui.ame-sb-open:not(.ame-pos-terminal-page) .sidebar-backdrop,
+  html body.ame-saas-os.ame-sb-open:not(.ame-pos-terminal-page) .sidebar-backdrop {
+    display: block !important;
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(12, 36, 28, 0.38) !important;
+    z-index: 399000 !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+}
+
+@media (max-width: 1099.98px) {
+  html body.ame-premium-ui.ame-sb-open:not(.ame-pos-terminal-page) .custom-sidebar,
+  html body.ame-saas-os.ame-sb-open:not(.ame-pos-terminal-page) .custom-sidebar,
+  html body.ame-premium-ui:not(.ame-pos-terminal-page) .custom-sidebar.open,
+  html body.ame-premium-ui:not(.ame-pos-terminal-page) .custom-sidebar.active,
+  html body.ame-premium-ui:not(.ame-pos-terminal-page) .custom-sidebar.show,
+  html body.ame-saas-os:not(.ame-pos-terminal-page) .custom-sidebar.open,
+  html body.ame-saas-os:not(.ame-pos-terminal-page) .custom-sidebar.active,
+  html body.ame-saas-os:not(.ame-pos-terminal-page) .custom-sidebar.show {
+    transform: translateX(0) !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}

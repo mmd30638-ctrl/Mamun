@@ -1,0 +1,180 @@
+/*
+ * GLOBAL RESPONSIVE MASTER — PERMANENT (DO NOT REMOVE OR OVERRIDE)
+ * Version: 10.98.939
+ *
+ * Canonical breakpoints (Bootstrap-aligned, locked):
+ *   Mobile:  width < 576px
+ *   Tablet:  576px – 991.98px
+ *   Desktop: width >= 992px
+ *
+ * Loads last on every page (footer.php + responsive_boot.php).
+ * New modules must NOT replace this file or duplicate global overflow/box rules.
+ * See GLOBAL_RESPONSIVE_ARCHITECTURE.md
+ */
+
+:root {
+  --ame-gr-mobile-max: 575.98px;
+  --ame-gr-tablet-min: 576px;
+  --ame-gr-tablet-max: 991.98px;
+  --ame-gr-desktop-min: 992px;
+  --ame-gr-gutter-mobile: clamp(0.5rem, 3vw, 0.75rem);
+  --ame-gr-gutter-tablet: clamp(0.75rem, 2.5vw, 1.25rem);
+  --ame-gr-gutter-desktop: clamp(1rem, 1.5vw, 1.5rem);
+  --ame-gr-touch-min: 2.75rem;
+  --ame-gr-max-readable: min(100%, 96rem);
+  --ame-gr-safe-inline: max(0px, env(safe-area-inset-left, 0px));
+  --ame-gr-safe-block: max(0px, env(safe-area-inset-top, 0px));
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html:not(.ame-phone-desktop),
+html:not(.ame-phone-desktop) body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+img,
+video,
+canvas,
+svg,
+iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+table {
+  max-width: 100%;
+}
+
+/* Fluid shell — all authenticated / master-layout pages */
+#main-content,
+.ame-app-shell,
+.app-main,
+.page-shell {
+  width: 100%;
+  max-width: var(--ame-gr-max-readable);
+  margin-inline: auto;
+  min-width: 0;
+}
+
+#main-content > *,
+#main-content .container,
+#main-content .container-fluid {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Grid / flex children must shrink (prevents desktop-mode overflow) */
+#main-content [class*="col-"],
+#main-content .grid > *,
+#main-content .row > *,
+.flex-wrap-fluid > * {
+  min-width: 0;
+}
+
+/* ----- Mobile < 576px ----- */
+@media (max-width: 575.98px) {
+  #main-content {
+    padding-left: calc(var(--ame-gr-gutter-mobile) + var(--ame-gr-safe-inline));
+    padding-right: calc(var(--ame-gr-gutter-mobile) + var(--ame-gr-safe-inline));
+  }
+
+  #main-content input:not([type="checkbox"]):not([type="radio"]):not(.ame-keep-input-width),
+  #main-content select:not(.ame-keep-input-width),
+  #main-content textarea:not(.ame-keep-input-width) {
+    width: 100%;
+    max-width: 100%;
+    font-size: max(16px, 1rem);
+    min-height: var(--ame-gr-touch-min);
+  }
+
+  #main-content .btn:not(.ame-keep-btn-inline),
+  #main-content button.btn:not(.ame-keep-btn-inline) {
+    min-height: var(--ame-gr-touch-min);
+  }
+
+  #main-content .table-responsive,
+  #main-content .ame-auto-scroll-wrap,
+  #main-content .ame-pos-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
+}
+
+/* ----- Tablet 576px – 991.98px ----- */
+@media (min-width: 576px) and (max-width: 991.98px) {
+  #main-content {
+    padding-left: calc(var(--ame-gr-gutter-tablet) + var(--ame-gr-safe-inline));
+    padding-right: calc(var(--ame-gr-gutter-tablet) + var(--ame-gr-safe-inline));
+  }
+
+  #main-content .row,
+  #main-content .form-row,
+  #main-content .er-meta-grid,
+  #main-content .er-entry-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.5rem, 2vw, 1rem);
+  }
+
+  #main-content .row > [class*="col-"] {
+    flex: 1 1 min(100%, 18rem);
+    max-width: 100%;
+  }
+}
+
+/* ----- Desktop >= 992px ----- */
+@media (min-width: 992px) {
+  #main-content {
+    padding-left: calc(var(--ame-gr-gutter-desktop) + var(--ame-gr-safe-inline));
+    padding-right: calc(var(--ame-gr-gutter-desktop) + var(--ame-gr-safe-inline));
+  }
+}
+
+/* Chrome “Desktop site” on phone — scaled layout, no stray overflow */
+html.ame-phone-desktop body {
+  overflow-x: auto;
+}
+
+html.ame-phone-desktop #main-content,
+html.ame-phone-desktop .master-header-fixed,
+html.ame-phone-desktop .custom-sidebar {
+  min-width: 0;
+  max-width: none;
+}
+
+html.ame-phone-desktop #main-content .ame-auto-scroll-wrap,
+html.ame-phone-desktop #main-content .table-responsive,
+html.ame-phone-desktop #main-content .ame-pos-table-wrap {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+html.ame-phone-desktop [style*="width:"][style*="px"]:not(.ame-keep-inline-width) {
+  max-width: 100% !important;
+}
+
+/* Utility hooks for modules (prefer data attributes over one-off px widths) */
+[data-ame-fluid="1"],
+.ame-fluid-block {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+[data-ame-grid="auto"] {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: clamp(0.5rem, 2vw, 1.25rem);
+}

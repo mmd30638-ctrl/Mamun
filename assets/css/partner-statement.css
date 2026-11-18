@@ -1,0 +1,330 @@
+/* 10.98.718 — পাতা মাঝখানে; 10.98.717 — বড় লেখা, শেষে মোট লাইন, উত্তোলন সারি, পার্টনার-রঙ, সই বোর্ড। শুধু দেখানোর স্টাইল; কোনো হিসাব এখানে নেই। */
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-page { background:#fff !important; color:#0f172a !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-doc { width:285px !important; background:#fff !important; border:1.5px solid #bfd3f2 !important; border-left:5px solid #1d4ed8 !important; box-shadow:none !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-doc-kicker { color:#c2410c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-doc-title { color:#0b3a82 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-doc-grid span { color:#475569 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-doc-grid b { color:#0f172a !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-doc-grid b:nth-of-type(1) { color:#7c3aed !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-doc-grid b:nth-of-type(2) { color:#0e7490 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-doc-grid b:nth-of-type(3) { color:#15803d !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-shop { color:#0b3a82 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-addr { color:#7c3aed !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-pcell { background:#fff !important; border:1.5px solid #bfd3f2 !important; border-left:5px solid #1d4ed8 !important; box-shadow:none !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-pcell.c2 { border-color:#99d8d0 !important; border-left-color:#0d9488 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-pcell.c3 { border-color:#d4c2f7 !important; border-left-color:#7c3aed !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-pcell.c4 { border-color:#f8cfae !important; border-left-color:#ea580c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-pcell.c1 .psp-partner-name { color:#1d4ed8 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-pcell.c2 .psp-partner-name { color:#0f766e !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-pcell.c3 .psp-partner-name { color:#6d28d9 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-pcell.c4 .psp-partner-name { color:#c2410c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-partner-share { background:#fff !important; border:1.5px solid #bfd3f2 !important; color:#b45309 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec-name { color:#0b3a82 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec-sub { color:#0e7490 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec-count { background:#fff !important; border:1.5px solid #bfd3f2 !important; color:#1d4ed8 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec.exp .psp-sec-count { background:#fff !important; border-color:#f3b6c4 !important; color:#be123c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec.purchase .psp-sec-count { background:#fff !important; border-color:#f8cfae !important; color:#c2410c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec.purchase .psp-sec-dot { background:#ea580c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec.exp .psp-sec-dot { background:#be123c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec.set .psp-sec-dot { background:#0d9488 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-foot { color:#475569 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-foot span:last-child { color:#7c3aed !important; }
+
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-page { padding:22px 22px 54px !important; font-size:14px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-shop { font-size:21px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-addr { font-size:13px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-doc { width:300px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-doc-kicker { font-size:10.5px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-doc-title { font-size:18px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-doc-grid { font-size:13px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-doc-grid b { font-size:13px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-pcell { height:56px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-partner-name { font-size:17px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-partner-share { font-size:13.5px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec-name { font-size:17.5px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec-sub { font-size:14px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec-count { font-size:13.5px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec-title { height:34px !important; margin-bottom:6px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-foot { font-size:13px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table { min-width:0 !important; width:100% !important; border-collapse:collapse !important; table-layout:fixed !important; background:#fff !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table th { position:static !important; white-space:nowrap !important; overflow:hidden !important; height:46px !important; background:#fff !important; color:#0b3a82 !important; font-size:14px !important; font-weight:900 !important; text-align:left !important; padding:0 4px !important; line-height:1.2 !important; border-top:2px solid #1d4ed8 !important; border-bottom:2px solid #1d4ed8 !important; vertical-align:middle !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table th small { background:transparent !important; border:0 !important; padding:0 !important; display:block !important; font-size:11.5px !important; font-weight:700 !important; color:#64748b !important; line-height:1.2 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec.exp .pst-table th { border-top-color:#be123c !important; border-bottom-color:#be123c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec.purchase .pst-table th { border-top-color:#ea580c !important; border-bottom-color:#ea580c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table th.num,
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table td.num { text-align:right !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table th.psh1 { color:#1d4ed8 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table th.psh2 { color:#0f766e !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table th.psh3 { color:#6d28d9 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table th.psh4 { color:#c2410c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody td { height:36px !important; max-height:36px !important; padding:0 4px !important; border-bottom:1px solid #dbe5f3 !important; font-size:14px !important; line-height:36px !important; white-space:nowrap !important; overflow:hidden !important; background:#fff !important; color:#0f172a !important; font-weight:700 !important; vertical-align:middle !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody td.sl { font-weight:900 !important; color:#7c3aed !important; font-size:13.5px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody td.c-cat { color:#6d28d9 !important; font-weight:800 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody td.c-prod { color:#1e3a8a !important; font-weight:700 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody td.c-amt { color:#1d4ed8 !important; font-weight:800 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody td.c-qty { color:#0e7490 !important; font-weight:800 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody td.c-pur { color:#c2410c !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody td.pos { color:#15803d !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody td.neg { color:#be123c !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody td.psh1 { color:#1d4ed8 !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody td.psh2 { color:#0f766e !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody td.psh3 { color:#6d28d9 !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody td.psh4 { color:#c2410c !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table .cut { display:block !important; overflow:hidden !important; text-overflow:ellipsis !important; white-space:nowrap !important; line-height:36px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table .pcl { display:block !important; white-space:normal !important; overflow:hidden !important; max-height:34px !important; line-height:17px !important; font-size:13.5px !important; word-break:break-word !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table td.c-two { padding-top:0 !important; padding-bottom:0 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table td.c-two .cut.d1 { line-height:19px !important; margin-top:2px !important; font-size:14px !important; font-weight:800 !important; color:#0e7490 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table td.c-two .cut.d2 { line-height:14px !important; font-size:11.5px !important; font-weight:800 !important; color:#b45309 !important; letter-spacing:0 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table td.c-cus .cut.nm { line-height:19px !important; margin-top:2px !important; font-size:14px !important; font-weight:800 !important; color:#0f172a !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table td.c-cus .cut.cid { line-height:14px !important; font-size:11.5px !important; font-weight:800 !important; color:#be185d !important; letter-spacing:.1px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-cat-hdr td { background:linear-gradient(90deg,#eff6ff 0%,#fff 55%) !important; color:#0b3a82 !important; border-top:2px solid #3b82f6 !important; border-bottom:1px solid #bfdbfe !important; border-left:5px solid #1d4ed8 !important; height:auto !important; min-height:40px !important; padding:8px 10px !important; vertical-align:middle !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-cat-wrap { display:flex !important; flex-wrap:wrap !important; align-items:center !important; gap:6px 8px !important; line-height:1.35 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-cat-tag { display:inline-block !important; background:#1d4ed8 !important; color:#fff !important; font-size:11px !important; font-weight:900 !important; padding:2px 7px !important; border-radius:4px !important; letter-spacing:.3px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-cat-title { font-size:15.5px !important; font-weight:900 !important; color:#0b3a82 !important; flex:1 1 auto !important; min-width:40% !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-cat-cont { font-size:11px !important; font-weight:800 !important; color:#b45309 !important; background:#fffbeb !important; border:1px solid #fcd34d !important; padding:1px 6px !important; border-radius:99px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-cat-n { font-size:12.5px !important; font-weight:800 !important; color:#0f766e !important; margin-left:auto !important; white-space:nowrap !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-cat-end td { background:#ecfdf5 !important; border-top:1.5px solid #6ee7b7 !important; border-bottom:2px solid #34d399 !important; padding:6px 4px 8px !important; height:auto !important; line-height:1.25 !important; vertical-align:bottom !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-cat-end td.pst-sum-lbl { padding-left:8px !important; vertical-align:middle !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-cat-end td.pst-sum-lbl b { display:block !important; font-size:13.5px !important; color:#0f766e !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-cat-end td.pst-sum-lbl small { display:block !important; font-size:11px !important; font-weight:700 !important; color:#64748b !important; margin-top:2px !important; line-height:1.2 !important; word-break:break-word !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-cat-end td.num { text-align:right !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-cat-end td.num .pst-sum-k { display:block !important; font-size:9.5px !important; font-weight:800 !important; color:#64748b !important; text-transform:uppercase !important; letter-spacing:.2px !important; margin-bottom:2px !important; line-height:1.1 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-cat-end td.num b { display:block !important; font-size:13.5px !important; font-weight:900 !important; color:#0f766e !important; white-space:nowrap !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-cat-end td.num.neg b { color:#be123c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec.purchase .pst-table tbody tr.pst-cat-hdr td { border-left-color:#ea580c !important; border-top-color:#fb923c !important; background:linear-gradient(90deg,#fff7ed 0%,#fff 55%) !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec.purchase .pst-cat-tag { background:#ea580c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec.purchase .pst-table tbody tr.pst-cat-end td { background:#fff7ed !important; border-top-color:#fdba74 !important; border-bottom-color:#fb923c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-trow td { height:auto !important; min-height:48px !important; max-height:none !important; line-height:1.3 !important; padding:8px 4px !important; vertical-align:middle !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-trow td.num .pst-sum-k { display:block !important; font-size:9.5px !important; font-weight:800 !important; color:#64748b !important; margin-bottom:2px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-trow td.pst-trow-lbl .pst-trow-meta { display:block !important; font-size:12px !important; font-weight:700 !important; color:#64748b !important; line-height:1.2 !important; margin-top:2px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec.purchase .pst-table tbody tr.pst-cat td { border-left-color:#ea580c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-empty td { height:90px !important; max-height:none !important; line-height:90px !important; text-align:center !important; color:#64748b !important; font-weight:700 !important; font-size:16px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-trow td { height:44px !important; max-height:44px !important; line-height:44px !important; border-top:2.5px solid #1d4ed8 !important; border-bottom:2.5px solid #1d4ed8 !important; font-size:15px !important; font-weight:900 !important; background:#fff !important; color:#0b3a82 !important; padding:0 4px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec.exp .pst-table tbody tr.pst-trow td { border-top-color:#be123c !important; border-bottom-color:#be123c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sec.purchase .pst-table tbody tr.pst-trow td { border-top-color:#ea580c !important; border-bottom-color:#ea580c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-trow td b { font-size:16.5px !important; font-weight:900 !important; color:#0b3a82 !important; margin-left:4px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-trow td span { font-size:13px !important; font-weight:800 !important; color:#0e7490 !important; margin-left:10px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-trow td.hi { color:#15803d !important; font-size:15.5px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-ptrow td { border-top:1.5px dashed #94a3b8 !important; background:#f8fafc !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-trow td.num b,
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-ptrow td.num b { font-size:15.5px !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-table tbody tr.pst-cat td span { white-space:normal !important; line-height:1.35 !important; max-height:none !important; float:none !important; display:inline !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set { min-width:0 !important; width:100% !important; border-collapse:collapse !important; table-layout:fixed !important; background:#fff !important; border:2px solid #0d9488 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th { position:static !important; overflow:visible !important; height:auto !important; min-height:48px !important; background:#fff !important; color:#0b3a82 !important; font-size:13.5px !important; font-weight:900 !important; text-align:left !important; padding:8px 6px !important; line-height:1.3 !important; border-bottom:2px solid #0d9488 !important; vertical-align:bottom !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th.num { text-align:center !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set td.num { text-align:right !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th .nm { background:transparent !important; font-size:12.5px !important; color:inherit !important; display:block !important; overflow:visible !important; max-height:none !important; line-height:1.35 !important; white-space:normal !important; word-break:break-word !important; overflow-wrap:anywhere !important; text-align:center !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th.psh1 { color:#1d4ed8 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody td.psh1 { color:#1d4ed8 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th.psh2 { color:#0f766e !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody td.psh2 { color:#0f766e !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th.psh3 { color:#6d28d9 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody td.psh3 { color:#6d28d9 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set th.psh4 { color:#c2410c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody td.psh4 { color:#c2410c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody td { height:44px !important; max-height:44px !important; padding:0 10px !important; border-bottom:1px solid #dbe5f3 !important; font-size:17px !important; line-height:44px !important; white-space:nowrap !important; overflow:hidden !important; background:#fff !important; color:#0f172a !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody td.lbl { color:#0b3a82 !important; font-size:16px !important; line-height:1.2 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody td.lbl small { font-size:12px !important; font-weight:700 !important; color:#7c3aed !important; margin-left:4px !important; display:block !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody td.tot { background:#fff !important; border-left:2px solid #bfd3f2 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody td.pos { color:#15803d !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody td.neg { color:#be123c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody tr.net td { border-top:2px solid #0d9488 !important; border-bottom:2px solid #0d9488 !important; font-size:18px !important; height:50px !important; max-height:50px !important; line-height:50px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody tr.net td.lbl { color:#0f766e !important; line-height:1.2 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody tr.grand td { height:62px !important; max-height:62px !important; line-height:62px !important; background:#fff !important; font-size:20px !important; font-weight:900 !important; border-bottom:0 !important; border-top:3px solid #0b3a82 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody tr.grand td.lbl { color:#0b3a82 !important; font-size:18px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody tr.grand td.tot { color:#b45309 !important; font-size:21px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc { margin-top:14px !important; border:1.5px solid #bfd3f2 !important; border-radius:12px !important; padding:10px 14px !important; background:#fff !important; box-sizing:border-box !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-formula { font-size:14.5px !important; font-weight:800 !important; color:#0e7490 !important; margin-bottom:6px !important; white-space:normal !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-row { display:flex !important; justify-content:space-between !important; align-items:baseline !important; gap:10px !important; font-size:15px !important; font-weight:800 !important; color:#0f172a !important; padding:3px 0 !important; border-top:1px dashed #dbe5f3 !important; background:#fff !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-row .k { font-weight:900 !important; white-space:nowrap !important; overflow:hidden !important; text-overflow:ellipsis !important; max-width:200px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-row .v { white-space:nowrap !important; text-align:right !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-row .v b { font-size:16.5px !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-row.psh1 { color:#1d4ed8 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-row.psh2 { color:#0f766e !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-row.psh3 { color:#6d28d9 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-row.psh4 { color:#c2410c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net { display:flex !important; justify-content:space-between !important; align-items:center !important; gap:10px !important; margin-top:8px !important; padding:9px 12px !important; border:2.5px solid #0d9488 !important; border-radius:10px !important; background:#fff !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net .k { font-size:17.5px !important; font-weight:900 !important; color:#0f766e !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net .k small { font-size:13px !important; font-weight:700 !important; color:#7c3aed !important; margin-left:4px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net .v { font-size:16.5px !important; font-weight:800 !important; color:#0f172a !important; white-space:nowrap !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net .v b { font-size:23px !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net .v b.pos { color:#15803d !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net .v b.neg { color:#be123c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net.cl-carry { border-color:#1d4ed8 !important; background:#f8fbff !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net.cl-carry .k { color:#1d4ed8 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net.cl-grand-bal { border-color:#b45309 !important; background:#fffbeb !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net.cl-grand-bal .k { color:#b45309 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net.cl-grand-bal .v b { color:#b45309 !important; font-size:26px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net.cl-net-period { border-color:#0d9488 !important; border-width:2px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-wrap { margin:0 0 14px !important; padding:12px 14px !important; border:2px solid #1d4ed8 !important; border-radius:12px !important; background:#f8fbff !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-title { margin:0 0 10px !important; font-size:17px !important; font-weight:900 !important; color:#0b3a82 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-title small { display:block !important; font-size:13px !important; font-weight:700 !important; color:#475569 !important; margin-top:3px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-grid { display:grid !important; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)) !important; gap:10px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face { border:1.5px solid #bfd3f2 !important; border-radius:10px !important; padding:10px 12px !important; background:#fff !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-name { font-size:15px !important; font-weight:900 !important; margin-bottom:8px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-line { display:flex !important; justify-content:space-between !important; font-size:14px !important; font-weight:800 !important; padding:2px 0 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-line.plus .amt { color:#15803d !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-eq { display:flex !important; justify-content:space-between !important; margin-top:6px !important; padding-top:8px !important; border-top:2px dashed #94a3b8 !important; font-size:15px !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-eq .amt b { font-size:20px !important; color:#1d4ed8 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-total { margin-top:10px !important; padding-top:10px !important; border-top:2px solid #1d4ed8 !important; display:flex !important; flex-wrap:wrap !important; justify-content:space-between !important; gap:8px !important; font-weight:900 !important; font-size:15px !important; color:#0b3a82 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-face-total b { font-size:18px !important; color:#1d4ed8 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-set tbody tr.r-carry td { background:#f8fbff !important; border-top:2px solid #1d4ed8 !important; border-bottom:2px solid #1d4ed8 !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-formula { margin-top:8px !important; font-size:13.5px !important; height:auto !important; min-height:18px !important; color:#0e7490 !important; font-weight:700 !important; white-space:normal !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-formula.note { color:#be123c !important; margin-top:6px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-minis { display:block !important; margin-top:0 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-minis .psp-sec { margin-top:20px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-minis .psp-sec:first-child { margin-top:0 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini { min-width:0 !important; width:100% !important; border-collapse:collapse !important; table-layout:fixed !important; background:#fff !important; border:1.5px solid #bfd3f2 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini th { position:static !important; height:36px !important; background:#fff !important; color:#0b3a82 !important; font-size:14px !important; font-weight:900 !important; text-align:left !important; padding:0 8px !important; line-height:36px !important; border-bottom:2px solid #1d4ed8 !important; white-space:nowrap !important; overflow:hidden !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini th.num,
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini td.num { text-align:right !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini th.psh1 { color:#1d4ed8 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini td.psh1 { color:#1d4ed8 !important !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini th.psh2 { color:#0f766e !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini td.psh2 { color:#0f766e !important !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini th.psh3 { color:#6d28d9 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini td.psh3 { color:#6d28d9 !important !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini th.psh4 { color:#c2410c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini td.psh4 { color:#c2410c !important !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini tbody td { height:33px !important; padding:0 8px !important; border-bottom:1px solid #dbe5f3 !important; font-size:14px !important; line-height:33px !important; white-space:nowrap !important; overflow:hidden !important; text-overflow:ellipsis !important; background:#fff !important; color:#1e3a8a !important; font-weight:800 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini tbody td.num { color:#0e7490 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini tbody td.c-amt { color:#1d4ed8 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini tbody td.pos { color:#15803d !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini tbody td.neg { color:#be123c !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini tbody td.c-pur { color:#c2410c !important; font-weight:900 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini tbody td.c-date { color:#0e7490 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini tbody td.nm { color:#0f172a !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini tbody td.more { color:#7c3aed !important; text-align:center !important; font-size:13px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-mini tfoot td { white-space:nowrap !important; overflow:hidden !important; height:38px !important; padding:0 8px !important; background:#fff !important; color:#0b3a82 !important; font-size:14.5px !important; font-weight:900 !important; line-height:38px !important; border-top:2px solid #0b3a82 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-wd { margin-top:12px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sign { display:flex !important; gap:16px !important; margin-top:16px !important; height:104px !important; align-items:flex-end !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sign .psp-sig { flex:1 1 0 !important; min-width:0 !important; display:flex !important; flex-direction:column !important; justify-content:flex-end !important; position:relative !important; cursor:pointer !important; background:#fff !important; border:1.5px dashed #9db8e6 !important; border-radius:10px !important; padding:0 6px 6px !important; box-sizing:border-box !important; height:104px !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sign .psp-sig.signed { border-style:solid !important; border-color:#bfd3f2 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sign .psp-sig i { display:block !important; position:relative !important; height:60px !important; border-bottom:1.5px solid #475569 !important; font-style:normal !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sign .psp-sig .psp-sig-img { position:absolute !important; left:50% !important; bottom:2px !important; transform:translateX(-50%) !important; max-height:58px !important; max-width:100% !important; width:auto !important; height:auto !important; object-fit:contain !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sign .psp-sig .psp-sig-img[hidden] { display:none !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sign .psp-sig .psp-sig-name { font-size:14px !important; font-weight:900 !important; color:#0b3a82 !important; text-align:center !important; padding-top:3px !important; white-space:nowrap !important; overflow:hidden !important; text-overflow:ellipsis !important; display:block !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sign .psp-sig:nth-child(1) .psp-sig-name { color:#1d4ed8 !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sign .psp-sig:nth-child(2) .psp-sig-name { color:#0f766e !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sign .psp-sig:last-child .psp-sig-name { color:#c2410c !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sign .psp-sig .psp-sig-hint { position:absolute !important; left:0 !important; right:0 !important; top:10px !important; text-align:center !important; font-style:normal !important; font-size:13px !important; font-weight:800 !important; color:#7c3aed !important; }
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-sign .psp-sig.signed .psp-sig-hint { display:none !important; }
+
+.psp-docs { grid-template-columns: repeat(4, 1fr) !important; }
+.psp-doc-tab { font-size: 13.5px !important; padding: 10px 4px !important; }
+@media (max-width: 560px) { .psp-docs { grid-template-columns: repeat(2, 1fr) !important; } }
+.psp-sigmodal { position: fixed; inset: 0; z-index: 100001; background: rgba(15, 23, 42, .55); display: flex; align-items: center; justify-content: center; padding: 12px; }
+.psp-sigmodal[hidden] { display: none; }
+.psp-sigbox { width: min(680px, 100%); background: #fff; border-radius: 16px; padding: 14px; box-shadow: 0 20px 60px rgba(0, 0, 0, .35); }
+.psp-sigtitle { font-size: 17px; font-weight: 900; color: #0b3a82; margin-bottom: 8px; }
+#pspSigCanvas { display: block; width: 100%; height: auto; aspect-ratio: 640 / 260; background: #fff; border: 2px dashed #1d4ed8; border-radius: 12px; touch-action: none; cursor: crosshair; }
+.psp-sigtip { margin: 6px 0 10px; font-size: 12.5px; color: #475569; font-weight: 700; }
+.psp-sigbtns { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.psp-sigbtns > button { grid-column: span 2; }
+.psp-sigbtns > button.wide { grid-column: span 3; }
+.psp-sigtip { font-size: 13.5px; }
+.psp-prep { display: inline-flex; align-items: center; gap: 6px; margin: 6px 0 0; padding: 5px 12px; border-radius: 999px; border: 1.5px solid #bfd3f2; background: #fff; color: #0e7490; font-size: 13px; font-weight: 800; }
+.psp-prep[hidden] { display: none; }
+.psp-prep.ok { color: #15803d; border-color: #86d3a3; }
+.psp-ready { position: fixed; left: 0; right: 0; bottom: 0; z-index: 100002; display: flex; justify-content: center; padding: 12px; background: rgba(15, 23, 42, .5); }
+.psp-ready[hidden] { display: none; }
+.psp-ready-box { width: min(420px, 100%); background: #fff; border-radius: 16px; padding: 16px; text-align: center; box-shadow: 0 20px 60px rgba(0, 0, 0, .35); }
+.psp-ready-box p { margin: 0 0 12px; font-size: 15px; font-weight: 800; color: #0b3a82; }
+.psp-ready-box .psp-btn { width: 100%; font-size: 16px; padding: 12px; }
+.psp-ready-box .psp-btn.soft { margin-top: 8px; }
+@media (max-width: 560px) { .psp-sigbtns > button.wide { grid-column: span 3; } .psp-sigbtns > button { grid-column: span 3; } }
+@media print { .psp-sig-hint { display: none !important; } .psp-sign .psp-sig { border-color: transparent !important; } .psp-prep, .psp-ready { display: none !important; } }
+
+@media screen { #pspStage.psp-stage { align-items: center !important; margin-left: auto; margin-right: auto; } .psp-wrap { overflow-x: hidden; } }
+
+/* সারসংক্ষেপ পাতা — কন্টেন্ট বেশি হলে কেটে যাবে না, ফুটার ওপরে এলোমেলো হবে না */
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-page.psp-page-cats {
+  height: auto !important;
+  min-height: 1123px !important;
+  overflow: visible !important;
+  padding-bottom: 24px !important;
+}
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-page.psp-page-cats .psp-foot {
+  position: static !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin-top: 18px !important;
+}
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-page.psp-page-summary {
+  height: auto !important;
+  min-height: 1123px !important;
+  overflow: visible !important;
+  padding-bottom: 24px !important;
+}
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-page.psp-page-summary .psp-foot {
+  position: static !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin-top: 18px !important;
+}
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-page.psp-page-summary .psp-body {
+  overflow: visible !important;
+}
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-page-summary .pst-set tbody td.lbl {
+  white-space: normal !important;
+  height: auto !important;
+  max-height: none !important;
+  line-height: 1.35 !important;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  vertical-align: top !important;
+}
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-page-summary .pst-set tbody tr.r-open td,
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-page-summary .pst-set tbody tr.net td,
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-page-summary .pst-set tbody tr.grand td {
+  height: auto !important;
+  max-height: none !important;
+  line-height: 1.35 !important;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+}
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-period td,
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-period th {
+  white-space: normal !important;
+  line-height: 1.3 !important;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+}
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-row {
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 5px !important;
+  padding: 10px 0 !important;
+}
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-row .k {
+  max-width: none !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  line-height: 1.35 !important;
+}
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-row .v {
+  white-space: normal !important;
+  text-align: left !important;
+  line-height: 1.5 !important;
+  word-break: break-word !important;
+  overflow: visible !important;
+}
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net {
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 6px !important;
+}
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .pst-calc .cl-net .v {
+  white-space: normal !important;
+  text-align: left !important;
+  line-height: 1.5 !important;
+}
+html body :is(#pspStage#pspStage, #pspCap#pspCap) .psp-period-hint {
+  margin: 0 0 12px !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  white-space: normal !important;
+}

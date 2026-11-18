@@ -1,0 +1,22 @@
+/* সাইডবার লেবেল — প্রতিটি মেনু আইটেম আইকনের রঙে (sidebar-label-colors.js) */
+html body .custom-sidebar .direct-link.sb-label-colored,
+html body .custom-sidebar .menu-head.sb-label-colored,
+html body .custom-sidebar .menu-list a.sb-label-colored {
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+html body .custom-sidebar .direct-link.sb-label-colored.active,
+html body .custom-sidebar .menu-list a.sb-label-colored.active {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+html body .custom-sidebar .sb-quick-label {
+  color: #64748b !important;
+  -webkit-text-fill-color: #64748b !important;
+  font-weight: 800;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}

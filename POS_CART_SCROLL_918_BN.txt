@@ -1,0 +1,10 @@
+বিক্রয় কার্ট স্ক্রল (v10.98.918)
+=============================
+সমস্যা: ৯ নম্বর সিরিয়ালের পর বাকি পণ্য কাটা যাচ্ছিল (কার্ট বক্স overflow:hidden, টেবিলে স্ক্রল ছিল না)।
+
+সমাধান:
+• ame-pos-cart-scroll.css — কার্ট ফ্লেক্স + টেবিল wrap-এ vertical scroll
+• pos_workspace.php — স্ক্রল হিন্ট বার
+• pos-cart.js / responsive-fix.js — ১০+ সারি হলে হিন্ট
+
+ইনস্টল: Easy Update ZIP, DB restore চেক করবেন না।

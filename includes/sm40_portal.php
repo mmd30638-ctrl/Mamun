@@ -1,0 +1,77 @@
+<?php
+/**
+ * SM40 — হোমপেজ হেডার থেকে বাইরের লগইন (কোনো ক্রেডেনশিয়াল Aponshop-এ পাঠানো হয় না)।
+ */
+
+function ame_sm40_listen_file(): ?string
+{
+    $root = dirname(__DIR__);
+    $candidates = [
+        $root . '/sm40_listen.php',
+        $root . '/modules/sm40/listen.php',
+    ];
+    foreach ($candidates as $path) {
+        if (is_file($path)) {
+            return $path;
+        }
+    }
+
+    return null;
+}
+
+/** SM40 শোনার হাব আছে → সেখানে; না থাকলে sm40.com (404 এড়াতে) */
+function ame_sm40_entry_url(): string
+{
+    $file = ame_sm40_listen_file();
+    if ($file === null) {
+        return 'https://sm40.com/welcome?lang=bengali';
+    }
+    $root = dirname(__DIR__);
+    if (str_starts_with($file, $root . '/modules/sm40/listen.php')) {
+        return '/modules/sm40/listen.php';
+    }
+
+    return '/sm40_listen.php';
+}
+
+function ame_sm40_show_home_chip(): bool
+{
+    if (empty($_SESSION['user_id'])) {
+        return false;
+    }
+    return function_exists('ame_if_is_home_page') && ame_if_is_home_page();
+}
+
+function ame_sm40_show_global_dock(): bool
+{
+    return !empty($_SESSION['user_id']);
+}
+
+/** লগইন থাকলে সব পেজে SM40 ভাসমান শর্টকাট (মোবাইল + ডেস্কটপ) */
+function ame_sm40_global_dock_assets(): void
+{
+    if (!ame_sm40_show_global_dock()) {
+        return;
+    }
+    static $done = false;
+    if ($done) {
+        return;
+    }
+    $done = true;
+    $ver = defined('AME_ASSET_VERSION') ? AME_ASSET_VERSION : '10.98.949';
+    echo '<link rel="stylesheet" href="/assets/css/sm40-home-link.css?v='
+        . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '" id="sm40-home-link-css">' . "\n";
+    echo '<script src="/assets/js/sm40-home-player.js?v='
+        . htmlspecialchars($ver, ENT_QUOTES, 'UTF-8') . '" defer id="sm40-home-player-js"></script>' . "\n";
+}
+
+function ame_sm40_home_chip_assets(): void
+{
+    ame_sm40_global_dock_assets();
+}
+
+/** @deprecated alias */
+function ame_sm40_home_chip_css(): void
+{
+    ame_sm40_home_chip_assets();
+}

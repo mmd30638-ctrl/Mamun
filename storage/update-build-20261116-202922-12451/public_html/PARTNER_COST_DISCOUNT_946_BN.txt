@@ -1,0 +1,34 @@
+Aponshop 10.98.946 — পার্টনার খরচ ডিসকাউন্ট (পেমেন্ট + বিক্রয়)
+================================================================
+
+কী যোগ হয়েছে
+-------------
+1) কাস্টমার বকেয়া রিসিভ (payment-receive.php)
+   • বকেয়ার সাধারণ «ডিসকাউন্ট» আগের মতোই কাস্টমার ব্যালেন্সে লাগে।
+   • নতুন বক্স «পার্টনার খরচ রিপোর্ট»: ডিসকাউন্ট (৳) + নোট।
+   • সংরক্ষণে partner_acct_expenses-এ খরচ এন্ট্রি (অ্যাকাউন্টস → পার্টনার খরচ রিপোর্ট)।
+
+2) বিক্রয় মডিউল / POS (pos_summary.php)
+   • একই ধরনের PEX বক্স (ডেস্ক + মোবাইল ক্যালকুলেটর ভিউ)।
+   • বিক্রয় সম্পন্ন হলে একইভাবে পার্টনার খরচ রিপোর্টে এন্ট্রি।
+
+নিয়ম
+------
+• শুধু «পার্টনার খরচ · ডিসকাউন্ট» > 0 হলে খরচ লেখা হয়।
+• নোট ঐচ্ছিক; থাকলে খরচ এন্ট্রির note ফিল্ডে যায়।
+• ডুপ্লিকেট এড়াতে idempotency: pcx_pay:{payment_id}, pcx_sale:{sale_id}
+• মাস লক থাকলে পেমেন্ট/বিক্রয় বাতিল হয় না — খরচ এন্ট্রি বাদ দেওয়া হয় (লগ)।
+
+ওয়ান-ক্লিক PATCH
+------------------
+https://mavo12.online/get/Aponshop_10.98.946_PATCH.zip
+
+ফাইল (শুধু এই ফিচার)
+---------------------
+includes/partner_accounting.php — pa_record_linked_module_expense()
+assets/css/partner-cost-discount-box.css
+modules/customers/payment-receive.php
+modules/customers/actions/process_payment.php
+modules/sales/pos.php, pos_summary.php, process_sale.php
+assets/js/pos-payment.js, pos-cart.js
+includes/config.php, VERSION.txt, data/patch_get_fallback.json

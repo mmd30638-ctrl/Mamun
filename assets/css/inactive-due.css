@@ -1,0 +1,235 @@
+/* 10.98.369 — নিষ্ক্রিয় বকেয়া: হালকা বক্স, গাঢ় বড় লেখা, কালো ব্যাকগ্রাউন্ড নেই */
+body.idue-body {
+  margin: 0;
+  padding: 14px 12px 28px;
+  background: #f3f6fb;
+  color: #1c3354;
+  font-family: "Noto Sans Bengali", "Segoe UI", sans-serif;
+}
+.idue { width: min(980px, 100%); margin: 0 auto; }
+.idue-hero {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  background: #fff;
+  border: 3px solid #8eb4e8;
+  border-radius: 24px;
+  padding: 16px;
+}
+.idue-ico {
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  background: #fff5f5;
+  border: 3px solid #e7b2ae;
+  color: #9f1239;
+  font-size: 32px;
+  font-weight: 900;
+}
+.idue-kicker { margin: 0 0 4px; color: #2a6fdb; font-size: 15px; font-weight: 800; }
+.idue-hero h1 {
+  margin: 0;
+  color: #1c3354;
+  font-size: clamp(26px, 5vw, 36px);
+  font-weight: 900;
+  line-height: 1.2;
+}
+.idue-lead { margin: 6px 0 0; color: #4b6280; font-size: 16px; font-weight: 800; }
+.idue-kpis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+.idue-kpi {
+  min-height: 104px;
+  padding: 14px;
+  border-radius: 18px;
+  background: #fff;
+  border: 3px solid #8eb4e8;
+}
+.idue-kpi span { display: block; color: #4b6280; font-size: 16px; font-weight: 800; }
+.idue-kpi b { display: block; margin-top: 4px; font-size: clamp(26px, 5vw, 34px); font-weight: 900; line-height: 1.1; }
+.idue-kpi-n { background: #e7f1ff; border-color: #2a6fdb; }
+.idue-kpi-n b { color: #1d4f91; }
+.idue-kpi-d { background: #fff5f5; border-color: #e7b2ae; }
+.idue-kpi-d b { color: #9f1239; }
+.idue-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 12px;
+  background: #fff;
+  border: 3px solid #8eb4e8;
+  border-radius: 20px;
+}
+.idue-chip, .idue-custom button, .idue-print, .idue-call, .idue-wa, .idue-bulk button, .idue-save {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 14px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+}
+.idue-chip {
+  background: #fff;
+  color: #1d4f91;
+  border: 3px solid #8eb4e8;
+}
+.idue-chip.is-on { background: #2a6fdb; color: #fff; border-color: #2a6fdb; }
+.idue-custom { display: flex; gap: 8px; align-items: center; }
+.idue-custom input, .idue-modal input {
+  min-height: 48px;
+  width: 110px;
+  box-sizing: border-box;
+  padding: 0 10px;
+  border: 3px solid #8eb4e8;
+  border-radius: 14px;
+  background: #fff;
+  color: #1c3354;
+  font-size: 18px;
+  font-weight: 800;
+}
+.idue-custom button { border: 0; background: #2a6fdb; color: #fff; }
+.idue-print { border: 3px solid #e2b15a; background: #fff8e8; color: #8a5a10; }
+.idue-all {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  color: #1c3354;
+  font-size: 16px;
+  font-weight: 900;
+}
+.idue-all input, .idue-pick input { width: 22px; height: 22px; accent-color: #2a6fdb; }
+.idue-list { display: grid; gap: 12px; margin-top: 12px; }
+.idue-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: start;
+  background: #fff;
+  border: 3px solid #8eb4e8;
+  border-radius: 20px;
+  padding: 12px;
+}
+.idue-who strong {
+  display: block;
+  color: #1c3354;
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1.25;
+}
+.idue-code {
+  display: inline-flex;
+  margin-top: 4px;
+  min-height: 28px;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: #e7f1ff;
+  color: #1d4f91;
+  font-size: 14px;
+  font-weight: 900;
+}
+.idue-who p, .idue-idle { margin: 4px 0 0; color: #4b6280; font-size: 15px; font-weight: 800; }
+.idue-money { text-align: right; }
+.idue-money span { display: block; color: #4b6280; font-size: 14px; font-weight: 800; }
+.idue-money b { display: block; color: #9f1239; font-size: 24px; font-weight: 900; }
+.idue-badge {
+  grid-column: 2;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 900;
+}
+.idue-hot { background: #fff5f5; color: #9f1239; border: 2px solid #e7b2ae; }
+.idue-mid { background: #fff8e8; color: #9a3412; border: 2px solid #e2b15a; }
+.idue-ok { background: #f0faf4; color: #146c3a; border: 2px solid #7dcaa0; }
+.idue-acts { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.idue-call { background: #e7f1ff; color: #1d4f91; border: 3px solid #8eb4e8; }
+.idue-wa { background: #f0faf4; color: #146c3a; border: 3px solid #7dcaa0; }
+.idue-empty {
+  margin-top: 12px;
+  padding: 28px 16px;
+  text-align: center;
+  background: #fff;
+  border: 3px dashed #8eb4e8;
+  border-radius: 20px;
+  color: #1c3354;
+  font-size: 18px;
+  font-weight: 900;
+}
+.idue-bulk {
+  position: sticky;
+  bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 12px;
+  background: #fff;
+  border: 3px solid #8eb4e8;
+  border-radius: 18px;
+}
+.idue-bulk span { color: #1c3354; font-size: 16px; font-weight: 900; }
+.idue-bulk button { border: 0; background: #2a6fdb; color: #fff; }
+.idue-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(28, 51, 84, 0.35);
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.idue-overlay.open { display: flex; }
+.idue-modal {
+  width: min(420px, 100%);
+  background: #fff;
+  border: 3px solid #8eb4e8;
+  border-radius: 22px;
+  padding: 16px;
+}
+.idue-modal h2 { margin: 0 0 8px; color: #1c3354; font-size: 24px; font-weight: 900; }
+.idue-modal label { display: block; margin: 10px 0 6px; color: #1c3354; font-size: 16px; font-weight: 900; }
+.idue-modal input { width: 100%; }
+#bulkSelInfo, #bulkMsg { color: #4b6280; font-size: 16px; font-weight: 800; }
+.idue-save { width: 100%; margin-top: 12px; border: 0; background: #1e8e4f; color: #fff; }
+@media (max-width: 640px) {
+  .idue-card { grid-template-columns: auto 1fr; }
+  .idue-money {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    text-align: left;
+    background: #fff5f5;
+    border-radius: 12px;
+    padding: 8px 10px;
+  }
+  .idue-money span, .idue-money b { display: inline; }
+  .idue-badge { grid-column: 1 / -1; }
+}
+@media (min-width: 900px) {
+  .idue-list { grid-template-columns: 1fr 1fr; }
+}
+@media print {
+  .no-print { display: none !important; }
+  body.idue-body { background: #fff; }
+}

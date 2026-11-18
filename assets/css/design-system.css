@@ -1,0 +1,537 @@
+/*
+ * Aponshop design system — one color, one type, one control language.
+ * Loaded after page CSS. Uses theme.css brand tokens only.
+ * The visual-design sheet still loads after this file, so an admin
+ * color edit keeps priority.
+ */
+
+:root {
+    --ds-primary: #003F8F;
+    --ds-primary-deep: #002C66;
+    --ds-secondary: #0057B8;
+    --ds-accent: #E8EEF8;
+    --ds-bg: #F4F7FB;
+    --ds-surface: #FFFFFF;
+    --ds-surface-2: #F4F7FB;
+    --ds-text: #111827;
+    --ds-text-2: #667085;
+    --ds-border: #D7DEE8;
+    --ds-success: #04933A;
+    --ds-success-soft: #ECFDF5;
+    --ds-warning: #C2410C;
+    --ds-warning-soft: #FFF7ED;
+    --ds-danger: #DC2626;
+    --ds-danger-soft: #FEF2F2;
+    --ds-info: #0057B8;
+    --ds-info-soft: #E8EEF8;
+    --ds-radius: 12px;
+    --ds-shadow: 0 8px 24px rgba(11, 30, 77, 0.06);
+    --ds-font: "Noto Sans Bengali", "Noto Sans", "Segoe UI", system-ui, sans-serif;
+    --ds-font-bn: "Noto Sans Bengali", "Noto Sans", sans-serif;
+    --ds-font-en: "Segoe UI", "Noto Sans", system-ui, sans-serif;
+    --ds-h1: clamp(1.35rem, 1.1rem + 1.1vw, 1.85rem);
+    --ds-h2: clamp(1.15rem, 1rem + 0.6vw, 1.45rem);
+    --ds-h3: clamp(1.02rem, 0.95rem + 0.35vw, 1.2rem);
+    --ds-body: clamp(15px, 14px + 0.2vw, 17px);
+    --ds-small: 0.86rem;
+    --ds-label: 0.92rem;
+}
+
+html.lang-bn body.ame-premium-ui,
+html.lang-bn body.ame-if-dash {
+    font-family: var(--ds-font-bn) !important;
+}
+html.lang-en body.ame-premium-ui,
+html.lang-en body.ame-if-dash {
+    font-family: var(--ds-font-en) !important;
+}
+html body.ame-premium-ui,
+html body.ame-if-dash {
+    color: var(--ds-text) !important;
+    background: var(--ds-bg) !important;
+    font-family: var(--ds-font) !important;
+    font-size: var(--ds-body);
+    line-height: 1.5;
+}
+
+body.ame-premium-ui #main-content {
+    color: var(--ds-text) !important;
+    background: var(--ds-surface-2) !important;
+}
+
+body.ame-premium-ui h1 { font-size: var(--ds-h1); line-height: 1.25; }
+body.ame-premium-ui h2 { font-size: var(--ds-h2); line-height: 1.3; }
+body.ame-premium-ui h3,
+body.ame-premium-ui h4 { font-size: var(--ds-h3); line-height: 1.35; }
+
+body.ame-premium-ui h1,
+body.ame-premium-ui h2,
+body.ame-premium-ui h3,
+body.ame-premium-ui h4 {
+    color: var(--ds-text) !important;
+    font-weight: 800;
+}
+
+body.ame-premium-ui p,
+body.ame-premium-ui li,
+body.ame-premium-ui label,
+body.ame-premium-ui td {
+    color: var(--ds-text);
+}
+
+body.ame-premium-ui small,
+body.ame-premium-ui .muted,
+body.ame-premium-ui .text-muted,
+body.ame-premium-ui .hint,
+body.ame-premium-ui .help,
+body.ame-premium-ui .kh-hint,
+body.ame-premium-ui .if-dash-welcome p {
+    color: var(--ds-text-2) !important;
+    font-size: var(--ds-small);
+}
+
+.ds-crumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: min(100% - 20px, 1900px);
+    margin: 10px auto 0;
+    color: var(--ds-text-2);
+    font-size: var(--ds-small);
+    font-weight: 700;
+}
+.ds-crumb a {
+    color: var(--ds-primary);
+    text-decoration: none;
+}
+.ds-crumb a:hover { text-decoration: underline; }
+.ds-crumb-here:empty { display: none; }
+.ds-crumb-here::before {
+    content: "/";
+    margin-right: 8px;
+    color: var(--ds-text-2);
+    font-weight: 600;
+}
+body.ame-pos-terminal-page .ds-crumb,
+body.ame-purchase-terminal-page .ds-crumb { display: none; }
+
+body.ame-premium-ui .master-header-fixed {
+    background: var(--ds-surface) !important;
+    border-bottom: 1px solid var(--ds-border) !important;
+    color: var(--ds-text) !important;
+}
+body.ame-premium-ui .hdr-brand-box,
+body.ame-premium-ui .hdr-clock {
+    color: var(--ds-text) !important;
+    background: var(--ds-surface-2) !important;
+    border-color: var(--ds-border) !important;
+}
+body.ame-premium-ui .hdr-brand-box h1,
+body.ame-premium-ui .hdr-clock,
+body.ame-premium-ui .hdr-clock small {
+    color: var(--ds-text) !important;
+}
+body.ame-premium-ui .custom-sidebar {
+    --sb-bg: var(--ds-surface);
+    --sb-bg-2: var(--ds-surface-2);
+    --sb-text: var(--ds-text);
+    --sb-text-muted: var(--ds-text-2);
+    --sb-accent: var(--ds-primary);
+    --sb-active-bg: var(--ds-surface-2);
+    --sb-icon-bg: var(--ds-surface-2);
+    --sb-icon-color: var(--ds-primary);
+}
+
+body.ame-premium-ui .card,
+body.ame-premium-ui [class$="-card"],
+body.ame-premium-ui .fam-kpi,
+body.ame-premium-ui .ws-stat,
+body.ame-if-dash .pd-summary-box,
+body.ame-if-dash .pd-kpi-box,
+body.ame-if-dash .card {
+    color: var(--ds-text) !important;
+    background: var(--ds-surface) !important;
+    border: 1px solid var(--ds-border) !important;
+    border-radius: var(--ds-radius) !important;
+    box-shadow: var(--ds-shadow) !important;
+}
+
+body.ame-premium-ui input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="range"]),
+body.ame-premium-ui textarea,
+body.ame-premium-ui select {
+    color: var(--ds-text) !important;
+    background: var(--ds-surface) !important;
+    border: 1px solid #b7c0cc !important;
+    border-radius: 10px !important;
+    min-height: 44px;
+    padding: 8px 12px;
+    font: inherit;
+    box-shadow: none !important;
+}
+body.ame-premium-ui textarea { min-height: 96px; }
+body.ame-premium-ui label {
+    font-size: var(--ds-label);
+    font-weight: 700;
+}
+body.ame-premium-ui input:focus,
+body.ame-premium-ui textarea:focus,
+body.ame-premium-ui select:focus {
+    border-color: var(--ds-primary) !important;
+    outline: 3px solid rgba(0, 145, 234, 0.28);
+    outline-offset: 1px;
+    box-shadow: none !important;
+}
+body.ame-premium-ui input:disabled,
+body.ame-premium-ui textarea:disabled,
+body.ame-premium-ui select:disabled,
+body.ame-premium-ui button:disabled {
+    color: #3a4658 !important;
+    background: #e8edf2 !important;
+    opacity: 1 !important;
+}
+
+body.ame-premium-ui .btn,
+body.ame-premium-ui .btn-primary,
+body.ame-premium-ui .btn-success,
+body.ame-premium-ui .fam-btn,
+body.ame-premium-ui button[type="submit"]:not([class*="hdr-"]):not(.ame-calc-btn):not(.btn-danger):not(.btn-no):not(.danger),
+body.ame-premium-ui a[class$="-btn"]:not(.btn-danger):not(.ghost):not(.hdr-icon-btn) {
+    color: #fff !important;
+    background: var(--ds-primary) !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    min-height: 44px;
+    padding: 8px 14px;
+    font-weight: 800;
+    box-shadow: none !important;
+    text-decoration: none;
+}
+body.ame-premium-ui .btn-secondary,
+body.ame-premium-ui .btn-outline,
+body.ame-premium-ui a.ghost,
+body.ame-premium-ui button.ghost {
+    color: var(--ds-primary) !important;
+    background: var(--ds-surface) !important;
+    border: 1px solid var(--ds-primary) !important;
+}
+body.ame-premium-ui .btn-danger,
+body.ame-premium-ui .btn-no,
+body.ame-premium-ui button.danger,
+body.ame-premium-ui a.danger {
+    color: #fff !important;
+    background: var(--ds-danger) !important;
+    border: 0 !important;
+}
+body.ame-premium-ui .btn-ok,
+body.ame-premium-ui .btn-success {
+    background: var(--ds-success) !important;
+}
+
+body.ame-premium-ui a:not(.hdr-icon-btn):not(.btn) {
+    text-underline-offset: 2px;
+}
+
+.ds-table-scroll {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 0 12px;
+}
+body.ame-premium-ui table {
+    width: 100%;
+    border-collapse: collapse !important;
+    background: var(--ds-surface);
+    color: var(--ds-text);
+}
+body.ame-premium-ui table th {
+    background: var(--ds-primary) !important;
+    color: #fff !important;
+    font-weight: 800;
+    text-align: left;
+    padding: 10px 12px !important;
+    border-bottom: 0 !important;
+}
+body.ame-premium-ui table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--ds-border) !important;
+    color: var(--ds-text) !important;
+    vertical-align: middle;
+}
+body.ame-premium-ui table tbody tr:nth-child(even) {
+    background: var(--ds-surface-2) !important;
+}
+body.ame-premium-ui table tbody tr:hover {
+    background: #eef3f8 !important;
+}
+body.ame-if-dash .if-dash-welcome {
+    background: var(--ds-surface) !important;
+    border-color: var(--ds-border) !important;
+}
+body.ame-pos-terminal-page table th,
+body.ame-purchase-terminal-page table th,
+body.ame-pos-terminal-page table td,
+body.ame-purchase-terminal-page table td {
+    background: unset !important;
+    color: inherit !important;
+    padding: unset !important;
+}
+body.ame-pos-terminal-page #main-content .btn,
+body.ame-pos-terminal-page #main-content button,
+body.ame-purchase-terminal-page #main-content .btn,
+body.ame-purchase-terminal-page #main-content button {
+    background: unset !important;
+    color: inherit !important;
+    min-height: 0 !important;
+    box-shadow: none !important;
+}
+
+.alert,
+.ame-alert,
+.fam-ok,
+.fam-err,
+.notice,
+.flash {
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-weight: 700;
+    line-height: 1.45;
+}
+.alert-success, .fam-ok, .notice.ok {
+    color: #085c34;
+    background: var(--ds-success-soft);
+    border: 1px solid #b7e4c7;
+}
+.alert-danger, .fam-err, .notice.err, .error {
+    color: #8f1d1d;
+    background: var(--ds-danger-soft);
+    border: 1px solid #f5c2c0;
+}
+.alert-warning, .notice.warn {
+    color: var(--ds-warning);
+    background: var(--ds-warning-soft);
+    border: 1px solid #f3dd9a;
+}
+.alert-info, .notice.info {
+    color: #084e78;
+    background: var(--ds-info-soft);
+    border: 1px solid #b9ddf3;
+}
+
+.empty,
+.kh-empty,
+.no-data,
+.is-empty {
+    color: var(--ds-text);
+    background: var(--ds-surface);
+    border: 1px dashed var(--ds-border);
+    border-radius: var(--ds-radius);
+    padding: 22px 16px;
+    text-align: center;
+}
+
+.modal,
+.ame-modal,
+[role="dialog"] {
+    max-width: min(720px, calc(100vw - 16px));
+    max-height: min(92dvh, 900px);
+    overflow: auto;
+}
+.ame-cf-card {
+    width: min(440px, 100%);
+    color: var(--ds-text);
+    background: var(--ds-surface);
+}
+
+:focus-visible {
+    outline: 3px solid var(--ds-secondary);
+    outline-offset: 2px;
+}
+
+/* দূর থেকে পড়া — ছোট ইনলাইন ফন্টকেও বড় করে। বিক্রি/ক্রয়ের ঘন স্ক্রিন বাদ। */
+body.ame-premium-ui:not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page) #main-content :where(p, li, label, td, th, a, button, input, select, textarea, small, b, strong) {
+    font-size: 18px !important;
+    line-height: 1.6 !important;
+}
+body.ame-premium-ui:not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page) #main-content h1 {
+    font-size: clamp(26px, 5vw, 34px) !important;
+    line-height: 1.25 !important;
+}
+body.ame-premium-ui:not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page) #main-content h2 {
+    font-size: clamp(22px, 4vw, 28px) !important;
+}
+body.ame-premium-ui:not(.ame-pos-terminal-page):not(.ame-purchase-terminal-page) #main-content h3 {
+    font-size: 20px !important;
+}
+.ds-crumb {
+    font-size: 16px !important;
+}
+.hdr-icon-btn {
+    flex: 0 0 42px !important;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+}
+.hdr-icon-btn svg {
+    width: 22px !important;
+    height: 22px !important;
+}
+.hdr-brand-box h1 {
+    font-size: 17px !important;
+    color: var(--ds-text) !important;
+}
+.hdr-clock {
+    font-size: 15px !important;
+    color: #fff !important;
+    background: var(--ds-primary) !important;
+}
+.hdr-clock small {
+    font-size: 12px !important;
+    color: #fff !important;
+}
+.ame-tbar-ticker {
+    height: 44px !important;
+    background: var(--ds-primary) !important;
+    color: #fff !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+}
+.ame-tbar-ticker .ame-tbar-item,
+.ame-tbar-ticker .ame-tbar-sep {
+    color: #fff !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+}
+
+.ds-sheet {
+    width: min(720px, calc(100% - 16px));
+    margin: 12px auto 28px;
+    padding: 22px 18px 26px;
+    background: var(--ds-surface);
+    color: var(--ds-text);
+    border: 1px solid var(--ds-border);
+    border-radius: 16px;
+    box-shadow: var(--ds-shadow);
+    line-height: 1.65;
+}
+.ds-sheet h1 { margin: 0 0 10px; }
+.ds-lead { margin: 0 0 14px; color: var(--ds-text); }
+.ds-warn,
+.ds-bad,
+.ds-info {
+    padding: 16px;
+    border-radius: 12px;
+    line-height: 1.65;
+}
+.ds-warn {
+    background: var(--ds-warning-soft);
+    border: 2px solid #c2410c;
+    color: #7c2d12;
+}
+.ds-bad {
+    background: var(--ds-danger-soft);
+    border: 2px solid var(--ds-danger);
+    color: #7f1d1d;
+}
+.ds-info {
+    background: var(--ds-info-soft);
+    border: 2px solid #075985;
+    color: #0c4a6e;
+}
+.ds-stats {
+    margin: 16px 0;
+    padding: 0;
+    list-style: none;
+}
+.ds-stats li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--ds-border);
+    font-weight: 700;
+}
+.ds-stats b {
+    font-size: 22px !important;
+    color: var(--ds-primary);
+}
+.ds-sheet input[type="text"],
+.ds-sheet input:not([type="hidden"]) {
+    width: 100%;
+    min-height: 56px;
+    font-size: 18px !important;
+}
+.ds-go {
+    width: 100%;
+    margin-top: 14px;
+    min-height: 56px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--ds-danger) !important;
+    color: #fff !important;
+    font-weight: 800;
+    font-size: 18px !important;
+}
+.ds-go:disabled { opacity: 0.55; }
+.ds-back { display: inline-block; margin-top: 16px; font-weight: 800; }
+
+@media (max-width: 767px) {
+    body.ame-premium-ui button:not(.hdr-icon-btn):not(.ame-calc-btn):not(.cus-photo-thumb),
+    body.ame-premium-ui .btn,
+    body.ame-premium-ui .fam-btn,
+    body.ame-premium-ui a[class$="-btn"]:not(.hdr-icon-btn) {
+        min-height: 48px;
+    }
+    .ds-crumb { width: calc(100% - 16px); }
+    body.ame-premium-ui #main-content {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+}
+
+@media (min-width: 1280px) {
+    body.ame-premium-ui #main-content {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+body.ame-premium-ui button.ds-go {
+    background: var(--ds-danger) !important;
+    color: #fff !important;
+    min-height: 56px !important;
+}
+
+body.ame-premium-ui .ame-phase,
+body.ame-premium-ui .ame-box-head,
+body.ame-premium-ui .card-header,
+body.ame-premium-ui .panel-heading,
+body.ame-premium-ui .box-header,
+body.ame-premium-ui .ds-sheet > h1 {
+    background: var(--ds-primary, #0B3A82) !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    border-radius: 10px;
+    padding: 10px 14px;
+}
+
+body.ame-premium-ui .ame-phase *,
+body.ame-premium-ui .ame-box-head *,
+body.ame-premium-ui .card-header *,
+body.ame-premium-ui .panel-heading *,
+body.ame-premium-ui .box-header * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+@media print {
+    .ds-crumb, .master-header-fixed, .custom-sidebar { display: none !important; }
+    body.ame-premium-ui #main-content { background: #fff !important; padding: 0 !important; }
+}

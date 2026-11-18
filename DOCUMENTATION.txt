@@ -1,0 +1,17 @@
+APONSHOP Documentation — v10.98.867
+Safe documentation update. No code changes that affect login or sales.
+
+1. README note
+2. INSTALL guide note
+3. Module docs note
+4. Settings help note
+5. Error messages note
+6. Bengali/English mix note
+7. Developer guide note
+8. Changelog note
+9. Security docs note
+10. Update guide note
+11. User manual note
+12. Performance docs note
+
+All notes only. No financial impact.

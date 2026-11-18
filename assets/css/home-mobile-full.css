@@ -1,0 +1,79 @@
+/* 10.98.924 — হোমপেজ মোবাইলে পুরো প্রস্থ / পুরো ডিসপ্লে */
+
+@media (max-width: 1099px) {
+  html body.ame-home-gallery,
+  html body[data-vd-page="home"] {
+    overflow-x: hidden !important;
+  }
+
+  html body.ame-home-gallery #main-content,
+  html body[data-vd-page="home"] #main-content {
+    width: 100% !important;
+    max-width: 100vw !important;
+    margin: 0 auto !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  html body.ame-home-gallery #main-content .ds-crumb,
+  html body[data-vd-page="home"] #main-content .ds-crumb {
+    width: calc(100% - 12px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  html body.ame-home-gallery .hm-gallery,
+  html body[data-vd-page="home"] .hm-gallery {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: max(6px, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(6px, env(safe-area-inset-right, 0px)) !important;
+    box-sizing: border-box !important;
+    transform: none !important;
+    left: auto !important;
+    right: auto !important;
+    position: relative !important;
+  }
+
+  html body.ame-home-gallery .hm-gallery-frame,
+  html body.ame-home-gallery .hm-gallery-mat,
+  html body.ame-home-gallery .hm-banner-wrap,
+  html body.ame-home-gallery .hm-banner-viewport,
+  html body.ame-home-gallery .hm-banner-track,
+  html body.ame-home-gallery .hm-banner-slide,
+  html body[data-vd-page="home"] .hm-gallery-frame,
+  html body[data-vd-page="home"] .hm-gallery-mat,
+  html body[data-vd-page="home"] .hm-banner-wrap,
+  html body[data-vd-page="home"] .hm-banner-viewport,
+  html body[data-vd-page="home"] .hm-banner-track,
+  html body[data-vd-page="home"] .hm-banner-slide {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  html body.ame-home-gallery .hm-banner-slide img,
+  html body[data-vd-page="home"] .hm-banner-slide img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: min(72dvh, 720px) !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+
+  html body.ame-home-gallery .hd-draw,
+  html body.ame-home-gallery .hd-panel,
+  html body.ame-home-gallery .ame-home-dashboard,
+  html body[data-vd-page="home"] .hd-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}

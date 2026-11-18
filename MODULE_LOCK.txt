@@ -1,0 +1,901 @@
+MODULE LOCK — মালিকের নিয়ম, ১৪ অক্টোবর ২০২৬
+
+10.98.586 — বিক্রয় ফেরত পেজ খোলে; কাজের নাস্তা বেতনে ৫০০+১০০=৬০০।
+কেন: view.php অ্যাকাউন্টের a.name ও payment_method কলাম খুঁজে prepare ফেল করত — লাইভে bind_param on false. এখন account_name। কাজের নাস্তা কাজ বেতন হয়ে গেলেও সিঙ্ক হয়, বেতন স্ক্রিনে যোগ হয়। হিসাব/লেজার লেখা অপরিবর্তিত।
+হিসাব সুরক্ষা: customer_ledger_functions.php, customer_schema.php, helpers.php ZIP-এ নেই।
+ফাইল:
+- modules/returns/v2/view.php
+- modules/returns/v2/register.php
+- includes/employee_hub.php
+- includes/worker_desk.php
+- modules/hrm/process_salary.php
+- modules/hrm/process_worker_pay.php
+- modules/hrm/worker_pay.php
+- assets/js/employee-hub.js
+- includes/config.php
+- VERSION.txt
+- APONSHOP_STACK_UPDATE.txt
+
+10.98.585 — ফ্রেশ হোম তাৎক্ষণিক; পেজ হপ অফলাইন সফটওয়্যারের মতো দ্রুত।
+কেন: ফ্রেশ হোম সব Cache Storage মুছে ৯০০মি.সে. অপেক্ষা করে ?ame_fresh=টাইমস্ট্যাম্পে পুরো পেজ নামাত — PWA স্ট্যাটিক ক্যাশও উধাও। এখন ক্যাশ থাকে, কার্টেন নেই, /index.php সাথে সাথে। পেজ হপ pointerdown প্রিফেচ + SW navigation preload। বিক্রয়/স্টক/লেজার/বাকি HTML ক্যাশ নয়। হিসাব/লেজার লেখা অপরিবর্তিত।
+হিসাব সুরক্ষা: customer_ledger_functions.php, customer_schema.php, helpers.php ZIP-এ নেই।
+ফাইল:
+- assets/js/fresh-home.810.js
+- assets/css/fresh-home.810.css
+- assets/js/module-navigation.js
+- includes/overlay_assets.php
+- sw.js
+- SPEED.txt
+- includes/config.php
+- VERSION.txt
+- APONSHOP_STACK_UPDATE.txt
+
+10.98.584 — কাজের এন্ট্রির অতিরিক্ত নাস্তা বেতন পেমেন্টে যোগ। ৫০০+১০০=৬০০।
+কেন: নাস্তা employee_works.snack-এ জমা হত, বেতন শুধু employee_snacks দেখত। এখন কাজের নাস্তা বেতনের খাতায় তোলে, পেমেন্ট স্ক্রিনে নাস্তা ও মোট দিতে হবে দেখায়। কাস্টমার/সাপ্লায়ার এমাউন্ট অপরিবর্তিত। account_debit ফর্মুলা অপরিবর্তিত।
+হিসাব সুরক্ষা: customer_ledger_functions.php, customer_schema.php, helpers.php ZIP-এ নেই।
+ফাইল:
+- includes/employee_hub.php
+- includes/worker_desk.php
+- modules/hrm/process_salary.php
+- modules/hrm/employee_list.php
+- modules/hrm/worker_pay.php
+- assets/js/employee-hub.js
+- includes/config.php
+- VERSION.txt
+- APONSHOP_STACK_UPDATE.txt
+
+10.98.583 — বকেয়া নোটিফিকেশন ও কাস্টমার লিস্টে পৃষ্ঠা নেই; যতজন আছে সবাই উপর-নিচ স্ক্রল। হোমে বকেয়া কার্ড নেই।
+কেন: responsive-fix.js ২০ সারির পর বাকি লুকিয়ে আগে/পরে পৃষ্ঠা বসাত — তাই ৪৬১ জনের তালিকা ২৪ পাতায় ভেঙে যেত। এখন শুধু এই দুই পেজ বাদ, অন্য মডিউলের পেজার অপরিবর্তিত। হিসাব/লেজার/বকেয়া এমাউন্ট অপরিবর্তিত।
+হিসাব সুরক্ষা: customer_ledger_functions.php, customer_schema.php, helpers.php ZIP-এ নেই।
+ফাইল:
+- index.php
+- assets/js/responsive-fix.js
+- modules/customers/due-reminder.php
+- modules/customers/due-reminder-view.php
+- assets/css/due-reminder.css
+- modules/customers/index.php
+- assets/css/directory.811.css
+- includes/config.php
+- VERSION.txt
+- APONSHOP_STACK_UPDATE.txt
+
+10.98.582 — হোমে কাস্টমার নাম নেই, সব বকেয়া তালিকা থাকে, উত্তোলন সাদা ঘর রঙিন ফ্রন্ট।
+কেন: হোমের ৬-নাম প্রিভিউ ফাঁস; ছোট তালিকা/স্কেল স্ক্রিপ্ট মুহূর্তে সব-দেখা পেজ লুকোত; ঘণ্টা বন্ধ করলে তালিকা খালি হত। এখন হোমে শুধু সংখ্যা+লিংক, due-reminder সব সারি রাখে, উত্তোলনের সব বক্স সাদা ও ফ্রন্ট রঙিন। হিসাব/লেজার লেখা অপরিবর্তিত।
+হিসাব সুরক্ষা: customer_ledger_functions.php, customer_schema.php, helpers.php ZIP-এ নেই।
+ফাইল:
+- index.php
+- assets/css/home-banner.css
+- modules/customers/due-reminder.php
+- modules/customers/due-reminder-view.php
+- assets/css/due-reminder.css
+- modules/customers/withdraw.php
+- assets/css/withdraw-desk.css
+- modules/customers/index.php
+- assets/css/directory.811.css
+- assets/js/enter-submit.js
+- assets/js/ame-sale-desk.js
+- assets/css/ame-sale-desk-lock.css
+- assets/css/invoice-print-fix.css
+- includes/config.php
+- VERSION.txt
+- APONSHOP_STACK_UPDATE.txt
+
+10.98.581 — সব কাজ এক জিপে: লিস্ট চিপ, হোম বকেয়া, এন্টার কমপ্লিট, তিন ইঞ্চি প্রিন্ট।
+কেন: আলাদা আপডেট না — কাস্টমার তালিকা/হোম নোটিফ, কীবোর্ড Enter-এ কমপ্লিট, POS ৮০মিমি রোলে কালো লেখা একবারে। হিসাব/লেজার লেখা অপরিবর্তিত।
+হিসাব সুরক্ষা: customer_ledger_functions.php, customer_schema.php, helpers.php ZIP-এ নেই।
+ফাইল:
+- modules/customers/index.php
+- index.php
+- assets/css/directory.811.css
+- assets/css/home-banner.css
+- assets/js/enter-submit.js
+- assets/js/ame-sale-desk.js
+- assets/css/ame-sale-desk-lock.css
+- assets/css/invoice-print-fix.css
+- includes/config.php
+- VERSION.txt
+- APONSHOP_STACK_UPDATE.txt
+
+10.98.580 — এন্টারে কমপ্লিট সাবমিট, তিন ইঞ্চি POS প্রিন্টারে কালো লেখা।
+কেন: POS ফর্মহীন ইনপুটে Enter কমপ্লিট বাটন চাপত না। ডেস্ক প্রিন্ট ৪০০ মি.সিতে ame-printing সরিয়ে মেমো আবার পর্দার বাইরে চলে যেত, রোলে লেখা আসত না। থার্মাল CSS overflow কেটে ফাঁকা পাতা দিত, সোনালি লেখা পুড়ত না। হিসাব/লেজার লেখা অপরিবর্তিত।
+হিসাব সুরক্ষা: customer_ledger_functions.php, customer_schema.php, helpers.php ZIP-এ নেই।
+ফাইল:
+- assets/js/enter-submit.js
+- assets/js/ame-sale-desk.js
+- assets/css/ame-sale-desk-lock.css
+- assets/css/invoice-print-fix.css
+- includes/config.php
+- VERSION.txt
+- APONSHOP_STACK_UPDATE.txt
+
+10.98.579 — কাস্টমার লিস্টে সব তালিকা চিপে, হোমে বকেয়া নোটিফিকেশন।
+কেন: ডিরেক্টরিতে ৫০-পাতা ও বড় সারি পাতা ভর্তি করত; রোল শুধু ড্রপডাউন ছিল। এখন সবাই/বকেয়া/জমা/সাপ্লায়ার/কিস্তি/ভাড়া চিপ, কমপ্যাক্ট স্ক্রল লিস্ট। হোমে হেডার ঘণ্টার একই ৭ দিনের বকেয়া কার্ড। হিসাব/লেজার লেখা অপরিবর্তিত।
+হিসাব সুরক্ষা: customer_ledger_functions.php, customer_schema.php ZIP-এ নেই। due rule helpers.php-এর ame_due8_* reuse।
+ফাইল:
+- modules/customers/index.php
+- index.php
+- assets/css/directory.811.css
+- assets/css/home-banner.css
+- includes/config.php
+- VERSION.txt
+- APONSHOP_STACK_UPDATE.txt
+
+10.98.578 — কর্মী নাস্তা পেমেন্টের পাওনায় যোগ।
+কেন: নাস্তা employee_snacks-এ বসত কিন্তু worker_desk/পেমেন্ট ক্লোজিং ও বেতন সাবমিটে যোগ হত না। এখন লেজারে নাস্তা ক্রেডিট, অপরিশোধিত নাস্তা বেতনে যোগ, পেমেন্টের পর paid মার্ক। কাস্টমার/সাপ্লায়ার এমাউন্ট অপরিবর্তিত।
+ফাইল:
+- includes/worker_desk.php
+- includes/employee_hub.php
+- modules/hrm/process_salary.php
+- assets/js/employee-hub.js
+- modules/hrm/worker_pay.php
+- modules/hrm/worker_ledger.php
+- includes/config.php
+- VERSION.txt
+- APONSHOP_STACK_UPDATE.txt
+
+10.98.577 — লাইভ জমা উত্তোলন: নিশ্চিত-মডালের পর ফর্ম আটকে যাওয়া খোলা, ইউনিক রসিদ-মেসেজ।
+কেন: data-confirm ও double-submit-guard দুটোই capture-phase — নিশ্চিত OK-এর requestSubmit আগের submitted ফ্ল্যাগে ব্লক হতো, তাই জমা তোলা হতো না। এখন কনফার্ম শেষ না হওয়া পর্যন্ত submitted মার্ক হয় না। মেসেজ কাগজের রসিদ ডিজাইন (ক্যাশ কম / হয়নি / আগেই হয়েছে)। add_ledger_entry debit/credit ও account_debit ফর্মুলা অপরিবর্তিত।
+হিসাব সুরক্ষা: কাস্টমার/সাপ্লায়ার এমাউন্ট ফাইল (customer_ledger_functions.php, customer_schema.php) ZIP-এ নেই।
+ফাইল:
+- assets/js/double-submit-guard.js
+- assets/js/ame-confirm.js
+- assets/css/ame-confirm.css
+- assets/css/withdraw-desk.css
+- modules/customers/withdraw.php
+- modules/customers/actions/process_withdraw.php
+- partials/header.php
+- includes/config.php
+- VERSION.txt
+- APONSHOP_STACK_UPDATE.txt
+
+10.98.576 — Live DB connect, www→mavo12.online HTTPS, আগের category/due ফিক্স এক ZIP।
+কেন: db.php parent-only .env পড়ত বলে কিছু রিকোয়েস্টে কানেকশন হারাত; এখন config-এর একই .env/.env.staging, DB_PORT ও localhost/127.0.0.1 retry। Easy Update live db.php skip করলেও ame_db_connect.php কানেক্ট করে। www আলাদা সেশন খুলত—এখন HTTPS apex। পুরোনো live host retired list-এ থেকে mavo12-এ যায়। sale-cream.css ডিস্কে আছে। process_category ও ৭ দিনের due list এই প্যাকেজেই।
+হিসাব সুরক্ষা: কাস্টমার ও সাপ্লায়ারের কোনো অ্যামাউন্ট, ব্যালেন্স, লেজার, পেমেন্ট, সেল বা পারচেজ এই আপডেটে ধরা হয়নি—শুধু কানেকশন/ডোমেন/অ্যাসেট। Easy Update প্রয়োগের আগে ফাইল+DB ব্যাকআপ নেয়; .env ও uploads অক্ষত।
+ফাইল:
+- includes/ame_db_connect.php
+- includes/db.php
+- includes/live_domain.php
+- includes/config.php
+- includes/env_bootstrap.php
+- router.php
+- warm.php
+- .htaccess
+- assets/css/sale-cream.css
+- includes/account_functions.php
+- modules/accounts/actions/process_category.php
+- includes/helpers.php
+- modules/customers/due-reminder.php
+- modules/customers/due-reminder-view.php
+
+10.98.575 — খরচ/আয় ক্যাটেগরি সেভে undefined ensure_accounts_schema() ফিক্স।
+কেন: process_category.php শুধু config.php লোড করত, তাই লাইভে ERR-20261017-233352-1A40E7 হচ্ছিল। এখন account_functions.php লোড হয়; হিসাবের write path অপরিবর্তিত।
+ফাইল:
+- modules/accounts/actions/process_category.php
+- includes/account_functions.php
+- includes/config.php
+
+10.98.574 — সাত দিন payment না-পাওয়া সব positive-due customer notification-এ।
+কেন: শুধু আজকের নির্ধারিত তারিখ নয়—শেষ payment (অথবা নতুন customer হলে তৈরির তারিখ) থেকে টানা ৭ দিন payment না এলে তাকে Customer Due Notification-এ আনতে হবে। Header badge ও list একই rule ব্যবহার করে; future due date থাকলেও ৭ দিনের payment gap হলে বাদ যায় না। কোনো row LIMIT/pagination নেই।
+হিসাব সুরক্ষা: query read-only; customer balance, ledger, payment, sale বা transaction write path বদলানো হয়নি।
+ফাইল:
+- includes/helpers.php
+- modules/customers/due-reminder.php
+- modules/customers/due-reminder-view.php
+- includes/config.php
+
+10.98.573 — Payment UX/security, safe keyboard, navigation speed এবং আজকের unlimited due list।
+কেন: security code click করলে input-এ বসে; server verification/idempotency অপরিবর্তিত। shared Enter safe submit চালায়, dangerous action বাদ দেয়, Tab আটকায় না এবং repeated submit client/server দুই স্তরে রোধ হয়। Customer Payment/Receipt সাদা responsive UI। Non-home page থেকে home-only ৩টি static request বাদ এবং module loading bar। Due page/header badge একই indexed `next_due_date = today AND receivable_balance > 0.004` business rule; LIMIT/pagination নেই; ১,২০০ unique row render test পাস।
+হিসাব সুরক্ষা: customer/supplier balance, ledger, sales, purchase, payment calculation বা transaction write path বদলানো হয়নি।
+ফাইল:
+- includes/pay_security.php
+- assets/js/pay-security-autofill.js
+- assets/js/enter-submit.js
+- assets/js/double-submit-guard.js
+- assets/js/module-navigation.js
+- assets/css/customer-payment.css
+- modules/customers/payment-receive.php
+- modules/customers/receipt.php
+- modules/customers/due-reminder.php
+- modules/customers/due-reminder-view.php
+- includes/helpers.php
+- partials/footer.php
+- includes/config.php
+
+10.98.572 — নির্ধারিত বকেয়া তারিখ থাকা সব customer এক পাতায়।
+কেন: cached receivable balance-এর কারণে তারিখ দেওয়া customer-ও বাদ পড়ে তালিকায় ১৯ জন থাকছিল। এখন next_due_date থাকলেই নাম আসে; তারিখ না থাকলে আগের ৮ দিনের positive-due নিয়ম চলে। pagination নেই।
+ফাইল:
+- modules/customers/due-reminder.php
+- includes/config.php
+
+10.98.571 — Customer Due Notification-এ বকেয়া আছে এমন সব customer।
+কেন: ৫০০ row limit সরানোর পরও fired-notification condition-এ শুধু ১৯ জন আসছিল। এখন positive due থাকা সব customer একই পেজে আসে; pagination নেই।
+ফাইল:
+- modules/customers/due-reminder.php
+- includes/config.php
+
+10.98.570 — Customer Due Notification-এর সম্পূর্ণ তালিকা এক পেজে।
+কেন: SQL-এর ৫০০ row limit সরানো হয়েছে। বর্তমান filter, order, design ও হিসাব অপরিবর্তিত; pagination/Next/Previous নেই।
+ফাইল:
+- modules/customers/due-reminder.php
+- includes/config.php
+
+10.98.569 — সব Share-এ পূর্ণ মেমোর পরিষ্কার ছবি; Download-এ PDF।
+কেন: মালিকের নমুনার মতো supplier payment, customer payment ও সব memo/report শেয়ারে একরকম পরিষ্কার ছবি যাবে। PDF শুধু Download অপশনে থাকবে।
+ফাইল:
+- assets/js/ame-memo-file.js
+- partials/customer_slip_share.php
+- includes/config.php
+
+10.98.568 — সব Share/Download একই PDF memo-image engine; live ও staging-এ একই নিরাপদ ZIP।
+কেন: পুরনো কিছু পেজ PNG বা শুধু লেখা শেয়ার করত। staging update-এ environment হারানোর ঝুঁকি ছিল। এখন memo/payment/report PDF ডকুমেন্ট যায় এবং `.env`, `.env.staging`, uploads, SPEED.txt অক্ষত থাকে।
+ফাইল:
+- assets/js/ame-memo-file.js
+- assets/js/customer-slip-share.js
+- assets/js/accounts-print-share.js
+- assets/js/employee-hub.js
+- assets/js/pulse-slip.js
+- assets/js/hire-agreement.js
+- partials/customer_slip_share.php
+- partials/confirm_actions.php
+- modules/accounts/voucher.php
+- modules/accounts/partnership.php
+- modules/purchase/returns/view.php
+- modules/hrm/worker_success.php
+- modules/inventory/restock_invoice.php
+- modules/sales/invoice_a4.php
+- modules/customers/withdraw_receipt.php
+- modules/customers/hire/print.php
+- includes/env_bootstrap.php
+- includes/easy_update_functions.php
+- includes/config.php
+- tools/build_release.sh
+- warm.php
+
+10.98.566 — পিডিএফ ক্লিকের পরই সেই পিডিএফ শেয়ার; টেলিগ্রামে ডকুমেন্ট; সোনালি লেখা কাটে না।
+কেন: শেয়ার ছবি হিসেবে গেলে ফোনে ঝাপসা হয়। পিডিএফ নামত না। উপরের সোনালি অক্ষর কাটত।
+ফাইল:
+- assets/js/ame-memo-file.js
+- includes/helpers.php
+- includes/config.php
+
+10.98.565 — লোগোর উপর সাদা ঘরে সোনালি বোল্ড বড় লেখা; মেমো ফুটার সরানো; পিডিএফ শেয়ার ও ডাউনলোড।
+কেন: লাল ব্যাকগ্রাউন্ডে লেখা মিশে যাচ্ছিল। সাদা ঘর, গোল্ডেন ফ্রন্ট, একটু বড় ও বোল্ড। হোয়াটসঅ্যাপ ছবি চেপে লেখা ফাটিয়ে দিচ্ছিল, পিডিএফ নামত না।
+ফাইল:
+- includes/helpers.php
+- assets/js/ame-memo-file.js
+- modules/family/bazaar_memo.php
+- includes/config.php
+
+10.98.564 — মেমো শেয়ার স্পষ্ট (A4 ছবি); পিডিএফ ডাউনলোড; ছবি প্রিন্ট।
+কেন: শেয়ার ফোনের ছোট পর্দা থেকে ধরত, লেখা ঝাপসা। পিডিএফ লিংক DOM-এ ছিল না, প্রিন্ট পপআপ ব্লক হত।
+ফাইল:
+- assets/js/ame-memo-file.js
+- modules/family/bazaar_memo.php
+- includes/config.php
+
+10.98.563 — খাতা লকের skip সিস্টেম সমস্যা নয়; ক্যাশ-ব্যাংক বক্স সাদা, ফ্রন্ট রঙিন। হিসাব ছোঁয় না।
+কেন: LEDGER LOCK skip আবার সমস্যা পাতায় উঠেছিল। ক্যাশ পাতার বক্স নেভি/সবুজ ভরাট ছিল, মালিক সাদা ঘর ও আলাদা রঙের ফ্রন্ট চান।
+ফাইল:
+- includes/error_monitor.php
+- includes/schema_sync.php
+- includes/config.php
+- assets/css/treasury.808.css
+- modules/settings/error_diagnostics.php
+- modules/accounts/list.php
+
+10.98.562 — ঘরের ২৩টি পণ্য মেমোতে এন্ট্রি; বামে সিরিয়াল; মোট পণ্য; ক্যাটাগরি ঐচ্ছিক।
+কেন: মালিক যে তালিকা দিয়েছেন সেটা মেমোতে এন্ট্রি করা হয়েছিল বলে থাকবে। প্রিন্টে বাম পাশে ১। ২। আর নিচে কতগুলো পণ্য।
+ফাইল:
+- modules/family/
+- includes/family_bazaar.php
+- includes/config.php
+
+10.98.561 — এক মাসের বাজার মেমোতে একাধিক পণ্য একসাথে যোগ।
+কেন: একবারে একটা করে নাম লিখতে হচ্ছিল। এখন ছয় সারি, আর «আরেকটি পণ্য» চাপলে আরও সারি। এক মেমোতেই প্রিন্ট।
+ফাইল:
+- modules/family/bazaar.php
+- modules/family/process.php
+- includes/config.php
+
+10.98.560 — খাতা লকের skip PHP এরর লগে সিস্টেম সমস্যা নয়। হিসাব আগের মতো লক।
+কেন: আপডেটের পর keep_later_payments লক থাকায় skip লিখত, সেটিংসের সমস্যা পাতায় লাল হয়ে উঠত। এখন সেই নোট লুকানো, আর লক থাকলে সেই কাজ আর ডাকা হয় না।
+ফাইল:
+- includes/error_monitor.php
+- includes/schema_sync.php
+- includes/config.php
+
+10.98.559 — লোগোর উপরের ঈদের লেখা ফ্রন্ট চিকন লম্বা ব্যানার; বাজার চাহিদা মেমো ও সব প্রিন্ট/শেয়ার।
+কেন: ছোট গোল বক্সে ছিল। মালিক লোগোর উপরে পুরো চওড়ায় লম্বা চিকন ফিতা চান, যে বানান দিয়েছেন সেটাই।
+ফাইল:
+- includes/helpers.php
+- includes/config.php
+- modules/family/
+- modules/suppliers/receipt.php
+- modules/inventory/restock_invoice.php
+
+10.98.558 — প্রিন্ট/শেয়ার মেমোর লোগোর উপরে ঈদের লেখা যিকিরের মতো কালারিং-এ; সাথে মাসিক বাজার চাহিদা।
+কেন: মালিক যে বানান দিয়েছেন সেটাই লোগোর উপরে ছোট থাকবে, সব মেমোতে। আগের বাজার চাহিদাও এই জিপে।
+ফাইল:
+- includes/helpers.php
+- includes/config.php
+- modules/suppliers/receipt.php
+- modules/inventory/restock_invoice.php
+- includes/family_schema.php
+- includes/family_functions.php
+- includes/family_bazaar.php
+- includes/lang/bn_ui.php
+- includes/lang/en_ui.php
+- modules/family/
+
+10.98.557 — পারিবারিক মাসিক বাজার চাহিদা: মাছ বাজার, আনাজ, মসলা; বিক্রয়-ধরনের মেমো; মাসিক স্টেটমেন্ট।
+কেন: মালিক বাসার বাজার চাহিদা ক্যাটাগরি সহ চান। প্রতি মাসে কত আইটেম লাগল ও কত টাকা খরচ, সেই হিসাব থাকবে। চাহিদা নেওয়ার পর বিক্রয় মেমোর ডিজাইনে প্রিন্ট করে বাজারে নিয়ে যাবেন।
+ফাইল:
+- includes/family_schema.php
+- includes/family_functions.php
+- includes/family_bazaar.php
+- includes/lang/bn_ui.php
+- includes/lang/en_ui.php
+- includes/config.php
+- modules/family/
+
+10.98.556 — কাস্টমার ও সাপ্লায়ার খাতা/স্টেটমেন্ট লক; সহজ আপডেট ও রিবিল্ড হিসাব ছুঁবে না।
+কেন: মালিক বললেন অনুমতি ছাড়া এমাউন্ট আর নড়বে না, ডাটাবেসসহ।
+ফাইল:
+- LEDGER_LOCK.txt
+- includes/ledger_lock.php
+- includes/running_ledger.php
+- includes/easy_update_functions.php
+- includes/pre_domain_amount_restore.php
+- includes/config.php
+- includes/super_admin.php
+- modules/customers/ledger.php
+- modules/customers/customer_ledger_functions.php
+- modules/customers/customer_schema.php
+- modules/suppliers/statement.php
+- modules/suppliers/ledger.php
+- modules/suppliers/list.php
+- modules/suppliers/dashboard.php
+
+10.98.555 — নিরাপত্তা কোড বক্স ক্রিম, কোড নীল; কালো-ওপর-কালো নয়।
+কেন: সাপ্লায়ার পেমেন্টের কালো বক্সে গ্লোবাল ফ্রন্ট কালার কালো লেখা চাপিয়ে কোড দেখা যেত না।
+ফাইল:
+- includes/pay_security.php
+- includes/config.php
+- assets/css/ame-front-colors.css
+- assets/css/supplier-settlement.css
+- assets/css/customer-payment.css
+- assets/css/supplier-statement.css
+
+10.98.554 — স্টেটমেন্টে একই দিনের একাধিক একই পরিমাণ পরিশোধ একসাথে বাতিল।
+কেন: তানিয়া এন্টারপ্রাইজে ১৬ তারিখে ৳৫০,০০০ পাঁচবার কেটেছে, সারিতে বাতিল বাটন ছিল না। এখন ব্যানার থেকে নিরাপত্তা কোডে সবগুলো উল্টো হয়।
+ফাইল:
+- includes/purchase_functions.php
+- includes/supplier_settlement.php
+- includes/config.php
+- modules/suppliers/statement.php
+- modules/suppliers/settlement_action.php
+- assets/css/supplier-statement.css
+
+10.98.553 — স্টেটমেন্ট ব্যাজ পড়া যায়; সাপ্লায়ার পেমেন্ট বাতিল; ডুপ্লিকেট রসিদ আটকানো।
+কেন: ক্রয়/পরিশোধ লেখা সাদা ঘরে মিলত। আটকে থাকা পেমেন্ট পরে একাধিকবার কেটেছে। এখন নিরাপত্তা কোড, ২ মিনিটের একই পরিমাণ আটক, আর পরিশোধিত রসিদ বাতিল।
+ফাইল:
+- assets/css/supplier-statement.css
+- assets/css/customer-slip-share.css
+- assets/css/supplier-settlement.css
+- assets/css/customer-payment.css
+- includes/pay_security.php
+- includes/supplier_settlement.php
+- includes/config.php
+- modules/suppliers/process_pay.php
+- modules/suppliers/pay.php
+- modules/suppliers/receipt.php
+- modules/suppliers/settlement_action.php
+- modules/suppliers/payments-list.php
+- modules/suppliers/statement.php
+- modules/customers/actions/process_payment.php
+- modules/customers/actions/process_payment_reverse.php
+- modules/customers/customer_ledger_functions.php
+- modules/customers/payment-receive.php
+- modules/customers/receipt.php
+- modules/customers/customer_schema.php
+- modules/customers/actions/payments-list.php
+
+10.98.552 — স্টেটমেন্টে সর্বশেষ উপরে, মেমোতে চলতি সর্বশেষ এমাউন্ট।
+কেন: কাস্টমার ও সাপ্লায়ার স্টেটমেন্ট পুরোনো সারি উপরে রাখত। মেমো সেই সারির পুরোনো মোট ছাপাত। এখন নতুন সারি উপরে, আর যেকোনো প্রিন্টে লাইভ মোট।
+ফাইল:
+- includes/purchase_functions.php
+- includes/memo_functions.php
+- includes/sales/sale_invoice.php
+- includes/config.php
+- modules/suppliers/statement.php
+- modules/customers/customer_ledger_functions.php
+- modules/customers/ledger.php
+
+10.98.551 — ক্রয় মেমোর হিসাব সাপ্লায়ার স্টেটমেন্টের সাথে মিল।
+কেন: কাস্টমার-আইডি থাকলে মেমো কাস্টমার পাওনা দেখাত, স্টেটমেন্ট সাপ্লায়ার দেনা। এখন সাবেক + ক্রয় − পরিশোধ। দেখলে লেজার কাটে না।
+ফাইল:
+- includes/purchase_functions.php
+- includes/purchase_memo_sheet.php
+- includes/memo_functions.php
+- includes/config.php
+
+10.98.550 — বিক্রয় পোস্ট-প্রিন্টার মেমো: পণ্যের কোড নেই, কাস্টমার ডিটেইলস বামে-ডানে ছোট।
+কেন: থার্মাল কাগজে SKU ও CUS কোড জায়গা নিচ্ছিল। মেটা গ্রিড স্তুপ হয়ে যেত। এখন লেবেল বামে, মান ডানে, দুই কলাম।
+ফাইল:
+- modules/sales/invoice.php
+- assets/css/invoice-print-fix.css
+- includes/config.php
+
+10.98.549 — ক্রয় মেমো বিক্রয় ইনভয়েসের ধরনে।
+কেন: শেয়ার/ডাউনলোডে সাদা পাতায় শুধু নাম-টেবিল থাকত। এখন লোগো, মেটা, পণ্য টেবিল, সাবেক হিসাব ও অ্যাকশন বার বিক্রয়ের মতো।
+ফাইল:
+- modules/purchase/memo_digital.php
+- modules/purchase/success.php
+- includes/purchase_memo_sheet.php
+- assets/css/ame-memo-sheet.css
+- includes/config.php
+
+10.98.548 — প্রতিদিন অটো সার্ভার ব্যাকআপ।
+কেন: মালিক ম্যানুয়াল বাটন চান না। মধ্যরাতের ক্রন SQL রাখে, সাত দিন। ক্রন দেরি হলে প্রথম লগইনেও নেয়।
+ফাইল:
+- includes/daily_backup.php
+- includes/config.php
+- cron/duty_midnight.php
+- cron/daily_backup.php
+- modules/settings/backup.php
+- modules/settings/process_run_backup.php
+- modules/settings/tools.php
+- .htaccess
+
+10.98.547 — বাকি কাজ এক জিপে: প্রোফাইল, ক্ষতিগ্রস্ত, ক্রয় অ্যাকাউন্ট, হেডার সংখ্যা, হোস্টিংগার ফাইল।
+কেন: লাইভ ৫৪৩-এ ছিল। ৫৪৪–৫৪৬ আলাদা আলাদা না বসিয়ে একবারে। হেডার overflow সংখ্যা কেটে দিচ্ছিল।
+ফাইল:
+- partials/header.php
+- assets/css/hdr-top-lock.css
+- assets/css/box-icon-white.css
+- includes/config.php
+
+10.98.546 — পণ্য ক্রয় পেমেন্টে খোলা সব অ্যাকাউন্ট।
+কেন: সিলেক্টে শুধু কিছু হিসাব আসত। এখন ক্যাশ, ব্যাংক, মোবাইল, বিকাশ — খোলা সারি সব। বন্ধ বাদ।
+ফাইল:
+- modules/purchase/add.php
+- modules/purchase/process_purchase.php
+- modules/purchase/process_purchase_edit.php
+- includes/config.php
+
+10.98.545 — ক্ষতিগ্রস্ত পণ্য ডেস্ক: সাদা বক্স, রঙিন আইকন, চার্জ বক্স, বাতিল, রিপোর্ট।
+কেন: মডিউল আলাদা সাজানো, পণ্য খোঁজা বিক্রয়ের মতো, এন্ট্রি ও বাতিল সব জায়গায়।
+ফাইল:
+- includes/damage_functions.php
+- includes/config.php
+- modules/inventory/damage.php
+- modules/inventory/damage_search.php
+- modules/inventory/damage_report.php
+- modules/inventory/process_damage.php
+- modules/inventory/damage-edit.php
+- assets/css/damage-control.css
+- assets/js/damage-desk.js
+
+10.98.544 — ইউজার ও কর্মী প্রোফাইল এডিট; ভুল সুপার অ্যাডমিন প্রোফাইল থেকে সরানো।
+কেন: প্রোফাইল আলাদা আলাদা ছিল। সুপার অ্যাডমিন ভুল দিলে এডিট/মুছা খুঁজে পাওয়া যেত না।
+ফাইল:
+- includes/user_profile.php
+- includes/user_functions.php
+- includes/super_admin.php
+- includes/config.php
+- modules/settings/user_profile.php
+- modules/settings/process_user_profile.php
+- modules/settings/users.php
+- modules/settings/user_view.php
+- modules/settings/super_admin.php
+- modules/hrm/employee_list.php
+- assets/css/user-profile.css
+
+10.98.543 — sale-cream.css ডিস্কে লেখে; হোস্টিংগার প্রজেক্ট ফোল্ডারে পায়, ডাটাবেজে খোঁজে না।
+কেন: ফাইল হোস্টিং অ্যাকাউন্টের assets/css/ এ থাকার কথা। আগের ছোট জিপে না গেলে রাউটার ৪০৪ HTML দিত।
+ফাইল:
+- includes/public_host_files.php
+- includes/config.php
+- includes/schema_sync.php
+- assets/css/sale-cream.css
+- router.php
+
+10.98.542 — লাইভ ডোমেন mavo12.online নোটে বাঁধা; sale-cream.css, favicon.png, robots.txt আবার জিপে।
+কেন: হোস্টিংগার ৫৩৫-এর ৪০৪ দেখিয়েছিল। আগের ছোট জিপে ফাইল না গেলে লাইভে ৪০৪ থাকে। ডোমেন পুরোনো নামে ফেরেনি।
+ফাইল:
+- LIVE_DOMAIN.txt
+- PERMANENT_NOTE.txt
+- includes/live_domain.php
+- includes/store_functions.php
+- includes/config.php
+- assets/css/sale-cream.css
+- favicon.png
+- robots.txt
+
+10.98.541 — সাপ্লায়ার পেমেন্ট কমপ্লিট হলে বকেয়া ও ক্যাশ কাটে, ক্যাশ কম থাকলেও।
+কেন: ৫৪০ পেন্ডিংগুলো «অপর্যাপ্ত ব্যালেন্স» বলে আটকে লগে পড়েছিল, টাকা কাটেনি।
+ফাইল:
+- includes/supplier_settlement.php
+- includes/account_functions.php
+- includes/error_monitor.php
+- includes/config.php
+
+10.98.540 — সাপ্লায়ার পেমেন্ট খাতায় বসে; কাস্টমার/সাপ্লায়ার চিরতরে মুছা শুধু সুপার অ্যাডমিন, পাসওয়ার্ড ও কোড দিয়ে।
+কেন: বড় পেমেন্ট পেন্ডিং থেকে যেত, রসিদে কাটা দেখাত। সাধারণ অ্যাডমিন এক কনফার্মে মুছতে পারত।
+ফাইল:
+- includes/supplier_settlement.php
+- includes/party_purge.php
+- includes/pre_domain_amount_restore.php
+- includes/schema_sync.php
+- includes/super_admin.php
+- includes/config.php
+- modules/suppliers/process_purge.php
+- modules/suppliers/list.php
+- modules/suppliers/profile.php
+- modules/suppliers/receipt.php
+- modules/customers/actions/process_purge.php
+- modules/customers/index.php
+- modules/customers/profile.php
+- modules/customers/profile_view.php
+- modules/customers/customer_schema.php
+- modules/sales/pos_party_search.php
+
+10.98.539 — ডোমেন বদলানোর আগের ব্যাকআপ থেকে সাপ্লায়ার ও কাস্টমার অ্যামাউন্ট মিল।
+কেন: লাইভে সাপ্লায়ার পাওনা গরমিল। পুরো ডাম্প ফেরানো হয়নি, শুধু অ্যামাউন্ট।
+ফাইল:
+- includes/pre_domain_amount_restore.php
+- includes/pre_domain_party_amounts.json
+- includes/schema_sync.php
+- includes/config.php
+
+10.98.538 — বিক্রয়ে ক্রেতা ও সাপ্লায়ার খোঁজা আবার খোলা। Apache ৪০৩ PHP লগে আসে না।
+কেন: pos_party_search.php কে ফ্র্যাগমেন্ট ধরে ৪০৩ দেওয়া হয়েছিল। সেটিংসের এরর লগ শুধু PHP লেখে।
+ফাইল:
+- .htaccess
+- modules/sales/pos_party_search.php
+- modules/settings/error_diagnostics.php
+- includes/config.php
+
+10.98.537 — পুরোনো ডোমেনের লগইন লিঙ্ক আর চলবে না, ট্যাবে favicon.png বসবে।
+কেন: হোস্টিংগারের চেক একসাথে। .env এ পুরোনো ঠিকানা থাকলেও ম্যাভো ডোমেন নিজেই লগইন লিঙ্ক দেয়।
+ফাইল:
+- includes/store_functions.php
+- partials/header.php
+- login.php
+- includes/config.php
+
+10.98.536 — হিসাব নিকাশে ব্যাংক স্টেটমেন্ট, হেডারের সংখ্যা স্পষ্ট, আর হারিয়ে যাওয়া sale-cream.css।
+কেন: সাবেক ব্যালেন্স, জমা, অগ্রিম, মাসিক ও বাৎসরিক এক খতিয়ানে। আইকনের সংখ্যা আগে মিশে যাচ্ছিল। বিক্রয় পাতা এমন CSS চাইছিল যে ফাইল সার্ভারে ছিল না।
+ফাইল:
+- modules/partners/
+- partials/sidebar-menu.php
+- assets/css/box-icon-white.css
+- assets/css/sale-cream.css
+- includes/config.php
+- favicon.png
+- robots.txt
+
+10.98.535 — লাইভ ডোমেন এখন https://mavo12.online। পরের সব জিপ এই ডোমেনের সহজ আপডেটে।
+কেন: সাইটের ডোমেন বদলেছে। পুরোনো ঠিকানা aponshop.site আর চলতি ডোমেন নয়।
+ফাইল:
+- PERMANENT_NOTE.txt
+- docs/PHONE_ONE_CLICK_ZIP.md
+- includes/config.php
+- includes/env_bootstrap.php
+- .htaccess
+- cron/duty_midnight.php
+- modules/sales/invoice.php
+
+10.98.534 — প্রোডাকশন ক্লিন। ওয়েবে খোলা ইনস্টলার ও ডাটা-মোছার স্ক্রিপ্ট সরানো, অব্যবহৃত পুরোনো CSS/JS সরানো।
+কেন: লাইভ সার্ভারে ইনস্টলার, ওয়াইপ ও পুরোনো অ্যাসেট থাকলে ঝুঁকি। চলতি ফাইল ও সহজ আপডেট আগের জায়গায়।
+ফাইল:
+- includes/config.php
+- includes/schema_sync.php
+- .htaccess
+- server.php
+
+10.98.533 — যিকিরের লেখা ও পেছনের রং আবার প্রতি ২০ সেকেন্ডে বদলায়।
+কেন: ৫৩২-এ রং এক জায়গায় আটকে গিয়েছিল। শুধু এই বাক্যের বক্স।
+ফাইল:
+- assets/css/pos-charge-line.css
+- includes/config.php
+
+
+
+10.98.532 — হোম থেকে দোকান ভাড়ার লেখা সরানো, যিকিরের পেছনের রং, রিটেল ফেরত, এন্ট্রি সিরিয়াল।
+কেন: ভাড়ার সতর্কতা হোম ব্যানারের উপরে উঠে গিয়েছিল। বিক্রয়ের যিকির দূর থেকে দেখা যাচ্ছিল না। কাস্টমার ছাড়া ফেরত, আর শেষ এন্ট্রি নিচে — তারিখ শুধু দেখায়।
+ফাইল:
+- index.php
+- modules/shop_rent/shop-rent.css
+- assets/css/pos-charge-line.css
+- assets/js/pos-cart.js
+- modules/returns/v2/actions/save_invoice_return.php
+- modules/returns/v2/actions/save_manual_return.php
+- modules/returns/v2/create_invoice_return.php
+- modules/returns/v2/create_manual_return.php
+- modules/reports/invoice_edit.php
+- modules/customers/customer_ledger_functions.php
+- modules/customers/profile.php
+- modules/suppliers/statement.php
+- includes/purchase_functions.php
+- includes/config.php
+
+
+
+একটা মডিউলের আপডেট ও ফিক্স শেষ হলে সেই মডিউল লক।
+পরে প্রজেক্টের অন্য আপডেটে এই তালিকার ফাইল বদলাবেন না,
+যদি না মালিক সেই মডিউলের নাম ধরে স্পষ্ট অনুমতি দেন।
+স্থায়ী নোট: PERMANENT_NOTE.txt
+
+10.98.531 — দোকান ভাড়া ও চুক্তি।
+কেন: মালিক নিজে ভাড়াটিয়া। অন্য মালিকের দোকানের অগ্রিম, মেয়াদ, মাসিক ভাড়া, বিল এবং কাগজ এক ডেস্কে। কাস্টমার ভাড়া (m-rental) আলাদা।
+ফাইল:
+- modules/shop_rent/
+- includes/shop_rent.php
+
+LOCKED employee-payment 10.98.513
+কেন: আজকের বেতন আলাদা, অ্যাকাউন্ট বাছাই, অতিরিক্ত নাস্তার ভাতা।
+ফাইল:
+- assets/js/employee-hub.js
+- assets/css/employee-hub.css
+- includes/employee_hub.php
+- modules/hrm/process_salary.php
+- modules/hrm/hub_api.php
+- modules/hrm/employee_list.php
+
+LOCKED sales-memo-pay 10.98.513
+কেন: বিক্রয় ইতিহাস থেকে পুরো ইনভয়েস এডিট, আর জমা সাবেক বকেয়া থেকে নিজে কাটে।
+ফাইল:
+- modules/sales/history.php
+- modules/sales/process_sale.php
+- modules/sales/draft_api.php
+- includes/sales/sale_finance.php
+- includes/sales/sale_admin_edit.php
+- includes/memo_paper.php
+- modules/customers/customer_ledger_functions.php
+- modules/reports/invoice_edit.php
+- modules/reports/process_invoice_edit.php
+
+10.98.514 — মালিক স্পষ্ট চেয়েছেন, কাস্টমার স্টেটমেন্টে মেমোর ইঞ্জিনিয়ার ও কাজের বিল দেখাতে।
+এই কাজ শেষ। স্টেটমেন্টের কাজের বিবরণ আবার লক।
+
+LOCKED customer-statement 10.98.514
+কেন: প্রতিটি বিক্রয় মেমোতে কোন কর্মী কী কাজ করেছেন এবং কাজের বিল কত।
+ফাইল:
+- modules/customers/ledger.php
+- modules/customers/customer_ledger_functions.php
+- assets/css/cust-desk.css
+
+10.98.515 — মালিক স্পষ্ট চেয়েছেন, ক্রয় পেমেন্টের হিসাব ও সাকসেস স্ক্রিন।
+পুরোনো ক্রয় ও সাপ্লায়ার ব্যালেন্স মুছা হয়নি। এই কাজ শেষ, আবার লক।
+
+LOCKED purchase-payment 10.98.515
+কেন: বাকি, আংশিক, অ্যাডভান্স, পুরো পরিশোধ, সব বাকি, আর ক্রয়ের পর সাকসেস স্ক্রিন।
+ফাইল:
+- modules/purchase/add.php
+- modules/purchase/process_purchase.php
+- modules/purchase/process_purchase_edit.php
+- modules/purchase/success.php
+- includes/purchase_functions.php
+
+10.98.516 — মালিক স্পষ্ট চেয়েছেন, কর্মী-ইউজার-ক্রয় এক প্রোফাইলে চূড়ান্ত করতে।
+পুরোনো কর্মী, ইনভয়েস, কাস্টমার স্টেটমেন্ট ও অ্যাকাউন্টের টাকা মুছা হয়নি। এই কাজ শেষ, আবার লক।
+
+LOCKED unified-worker-ledger-purchase 10.98.516
+কেন: এক প্রোফাইল, শুধু নিজের লেজার, ডিউটি এন্ট্রি, রাত ১২টায় ছুটি, কাজের হিস্ট্রি এক্সপোর্ট, সব অ্যাকাউন্ট থেকে পেমেন্ট, সাকসেস স্ক্রিন।
+ফাইল:
+- includes/worker_desk.php
+- includes/staff_duty.php
+- cron/duty_midnight.php
+- modules/hrm/worker_ledger.php
+- modules/hrm/worker_history.php
+- modules/hrm/worker_pay.php
+- modules/hrm/process_worker_pay.php
+- modules/hrm/worker_success.php
+- modules/hrm/worker_voucher.php
+- modules/hrm/process_staff_wake.php
+- modules/hrm/employee_list.php
+- modules/hrm/process_salary.php
+- includes/employee_hub.php
+- assets/css/worker-desk.css
+- assets/js/employee-hub.js
+- assets/css/employee-hub.css
+- modules/hrm/hub_api.php
+- partials/header.php
+- modules/purchase/add.php
+- modules/purchase/process_purchase.php
+- modules/purchase/process_purchase_edit.php
+- modules/purchase/success.php
+- includes/purchase_functions.php
+
+10.98.517 — মালিক দেখেছেন ক্রয়ের পেমেন্ট সেকশন ও কর্মী পেজে নতুন ডেস্ক চোখে পড়ছিল না। এই দুই জায়গা খুলে আবার লক।
+কেন: ক্রয়ে অ্যাকাউন্ট সিলেক্ট, পেমেন্ট অ্যামাউন্ট, বাকি, পুরো পরিশোধ ও সব বাকি। কর্মী পেজে আজকের ডিউটি, লেজার, কাজের হিস্ট্রি ও পেমেন্ট।
+ফাইল:
+- modules/purchase/add.php
+- assets/css/purchase-desk-lock.css
+- modules/hrm/employee_list.php
+- assets/css/worker-desk.css
+
+10.98.518 — মালিক পেমেন্টের অতিরিক্ত বাটন সরিয়েছেন, বেতনে ডান পাশে সমাধান চান, আর কিছু কর্মীর নাম ভুল দেখাচ্ছিল।
+কেন: পেমেন্ট ঘরে সবসময় ০। টাকা দিলে মাইনাস, না দিলে প্লাস। বেতন দিলে ডান পাশে ব্যালেন্স ০ হলে সমাধান। নাম চাপলে সেই কর্মীর নামই খোলে।
+ফাইল:
+- modules/purchase/add.php
+- modules/hrm/employee_list.php
+- modules/hrm/worker_pay.php
+- assets/css/worker-desk.css
+- assets/js/employee-hub.js
+- includes/employee_hub.php
+- includes/hrm_functions.php
+- includes/staff_duty.php
+
+10.98.519 — কর্মী পেমেন্টে সব অ্যাকাউন্ট, এন্ট্রি মোছা, সাদা বক্স।
+কেন: টাকা দেওয়ার অ্যাকাউন্ট তালিকা থেকে ক্যাশ ছাড়া অন্যগুলো হারিয়ে যাচ্ছিল। অগ্রিম বা বেতন মুছলে কর্মী আর্কাইভের বার্তা আসছিল। বক্সের ভিতর সাদা, লেখা আলাদা রঙ।
+ফাইল:
+- assets/js/employee-hub.js
+- assets/js/staff-archive.js
+- assets/css/employee-hub.css
+- assets/css/worker-desk.css
+- assets/css/emp-pay-white.css
+- modules/hrm/employee_list.php
+- modules/hrm/worker_pay.php
+- partials/footer.php
+
+10.98.520 — টাকার বক্স সমন্বয়, ডিউটি তালিকা, কপি-পোস্ট, বিক্রি ফেরত, কনফার্ম বার, সাদা আইকন।
+কেন: কর্মীর টাকার বক্সে চাপলে সেই টাকা এডিট ও সমন্বয়। হোমের ডিউটিতে কর্মী দেখায়। কপি-পোস্টে ড্রাফট ও লগ। যেকোনো লগইন থেকে বিক্রি ফেরত। প্রিন্ট আছে এমন পাতায় শেয়ার, ডাউনলোড, দেখুন, হোম। বক্স আইকনের ঘর সাদা, সামনের রং আলাদা।
+ফাইল:
+- includes/staff_duty.php
+- includes/employee_hub.php
+- includes/worker_desk.php
+- includes/clipboard.php
+- includes/permission_functions.php
+- modules/hrm/hub_api.php
+- modules/hrm/employee_list.php
+- modules/hrm/worker_history.php
+- modules/clipboard/index.php
+- modules/clipboard/api.php
+- assets/js/employee-hub.js
+- assets/css/hdr-top-lock.css
+- assets/css/hand-return.css
+- assets/css/box-icon-white.css
+- partials/header.php
+- partials/footer.php
+- partials/confirm_actions.php
+- partials/sidebar-icons.php
+- partials/sidebar-menu.php
+- modules/sales/invoice.php
+- modules/sales/invoice_a4.php
+- modules/sales/invoice_custom.php
+- modules/customers/receipt.php
+- modules/customers/withdraw_receipt.php
+- modules/customers/actions/payment-status.php
+- modules/borrow/receipt.php
+
+10.98.521 — বিক্রয় ফেরতে গ্রাহক ও পণ্য সার্চ, স্টেটমেন্ট ক্রেডিট, রিটার্ন ইনভয়েস।
+কেন: গ্রাহকের নাম লিখলে পুরো মিলের তালিকা আসে। পণ্যের নাম বা আইডিতে কোড, স্টক ও দাম আসে। গ্রাহক ব্যালেন্স সমন্বয়ে ফেরতের টাকা স্টেটমেন্টে ক্রেডিট হয়। সেভের সাথে রিটার্ন ইনভয়েস তৈরি হয়। এই পাতার আইকন সাদা ঘরে কালো।
+ফাইল:
+- modules/returns/v2/create_invoice_return.php
+- modules/returns/v2/actions/search_lookup.php
+- modules/returns/v2/actions/save_invoice_return.php
+- modules/returns/v2/view.php
+- includes/return_v2_functions.php
+- assets/css/return-desk.css
+- partials/header.php
+- partials/footer.php
+- partials/confirm_actions.php
+- partials/sidebar-icons.php
+
+10.98.522 — বকেয়া নোটিফিকেশনের উপরের ঘর খাটো, ফেরতের দাম, ক্রয় ফেরত স্টেটমেন্ট। সমস্ত মডিউল লক।
+কেন: কাস্টমার বকেয়া পাতার শিরোনাম, চারটি সারাংশ, তারিখ ও সার্চ খাটো, কাস্টমার লিস্ট উপরে। বিক্রয় ফেরত ও ক্রয় ফেরতে পাইকারি, খুচরা, ডিলার, প্রাইস। ক্রয় ফেরতে সাপ্লায়ারের নাম, ফোন ও বকেয়া আসে। সেভ হলেই ফেরত সম্পন্ন হয়, শেয়ার ডাউনলোড দেখুন ও হোম আইকন থাকে, সাপ্লায়ার স্টেটমেন্টে পণ্যসহ ফেরত রিপোর্ট বসে এবং টাকা +/−/=/% অনুযায়ী দেখায়। আইকন সাদা ঘরে আলাদা রং।
+এর পরের আপডেট এই তালিকার কোনো মডিউল বা সেই মডিউলের শেয়ারড ফাইল বদলাতে পারবে না, যতক্ষণ না মালিক সেই মডিউলের নাম বলে অনুমতি দেন:
+- modules/accounts/
+- modules/agents/
+- modules/bloan/
+- modules/borrow/
+- modules/clipboard/
+- modules/contacts/
+- modules/customers/
+- modules/dashboard/
+- modules/expenses/
+- modules/family/
+- modules/finance/
+- modules/hrm/
+- modules/inventory/
+- modules/loans/
+- modules/partners/
+- modules/personal/
+- modules/provenance/
+- modules/pulse/
+- modules/purchase/
+- modules/rental/
+- modules/reports/
+- modules/returns/
+- modules/sales/
+- modules/settings/
+- modules/smart/
+- modules/suppliers/
+- modules/utilities/
+- modules/workshop/
+- partials/
+- includes/
+- assets/css/
+- assets/js/
+ফাইল:
+- assets/css/due-reminder.css
+- assets/css/return-desk.css
+- assets/css/purchase-return-desk.css
+- assets/css/supplier-statement.css
+- modules/returns/v2/create_invoice_return.php
+- modules/returns/v2/actions/search_lookup.php
+- modules/purchase/returns/create.php
+- modules/purchase/returns/view.php
+- modules/purchase/returns/actions/search_lookup.php
+- modules/purchase/returns/actions/search_purchase.php
+- modules/purchase/returns/actions/save_purchase_return.php
+- modules/suppliers/statement.php
+- includes/purchase_functions.php
+- partials/footer.php
+
+10.98.523 — বিক্রয় ফেরতের শেয়ার মেমোতে স্টেটমেন্টের অবশিষ্ট।
+কেন: মালিক বিক্রয় ফেরতের প্রিন্ট/শেয়ার মেমো নাম বলেছেন। সেই মেমোতে কাস্টমারের সাবেক থেকে ফেরত কেটে অবশিষ্ট যায়। চিহ্ন শুধু + − = %। স্টেটমেন্ট ফাইল বদলানো হয়নি। বাকি মডিউল আগের লক অনুযায়ী বন্ধ।
+ফাইল:
+- modules/returns/v2/view.php
+
+10.98.530 — বিক্রয় পেজের গতি।
+কেন: মালিক বলেছেন বিক্রয় পেজ একদম স্লো। প্রতিবার কর্মী স্কিমা, পুরো ক্রেতা তালিকা, আর বাকির ভারী হিসাব চলছিল। এখন স্কিমা একবার, ক্রেতা টাইপ করলে খোঁজে, বাকির ঘণ্টা হালকা।
+ফাইল:
+- includes/hrm_functions.php
+- includes/staff_duty.php
+- includes/helpers.php
+- includes/sales/sale_common.php
+- includes/perf_indexes.php
+- includes/config.php
+- modules/sales/pos.php
+- modules/sales/pos_customer_script.php
+- modules/sales/pos_party_search.php
+- modules/sales/search_product.php
+- modules/sales/offline_catalog.php
+- assets/js/offline-queue.js
+
+10.98.529 — বিক্রয় কমপ্লিট পেজে নতুন বিক্রয় শুরু করুন।
+কেন: মালিক বিক্রয় শেষের পাতায় একটা আইকন চান, চাপলে আবার নতুন বিক্রয়ের ডেস্ক খুলবে।
+ফাইল:
+- partials/confirm_actions.php
+- includes/config.php
+
+10.98.528 — পিওএসে বিক্রয়ের পর জমা/বাকি, আর শেয়ারে মেমোর ছবি।
+কেন: মালিক পণ্য যোগ আর রাউন্ডিং বদলালে কাস্টমারের জমা বা বাকি সাথে সাথে এক বক্সে দেখতে চান। নতুন চার আইকনের শেয়ার হোয়াটসঅ্যাপে লেখা পাঠাত। এখন আগের মতো মেমোর ছবি যায়, ডাউনলোডে পিডিএফ।
+ফাইল:
+- modules/sales/pos_summary.php
+- assets/js/ame-sale-desk.js
+- partials/confirm_actions.php
+- includes/config.php
+
+10.98.527 — সকালের অগ্রিম ড্রাফট, বিকালে বেতনে সমন্বয় অথবা অ্যাকাউন্টে।
+কেন: মালিক সকালে এক কর্মীকে একাধিকবার অগ্রিম দিতে চান। সেটা ড্রাফটে থাকবে। বিকালে বেতনের সময় বেতনে সমন্বয় হবে, অথবা সেই অ্যাকাউন্টে যুক্ত হবে।
+ফাইল:
+- includes/hrm_functions.php
+- includes/employee_hub.php
+- includes/worker_desk.php
+- modules/hrm/hub_api.php
+- modules/hrm/process_salary.php
+- assets/js/employee-hub.js
+- includes/config.php
+
+10.98.526 — বিক্রয় ফেরত মেমো বিক্রয় মেমোর মতো, সাবেক পুরো সারিতে।
+কেন: মালিক ফেরত মেমোতে সাবেক টাকা পুরো দেখতে চান, স্টেটমেন্টের হিসাব (সাবেক − ফেরত = এখন) মেমোর ভিতরে, আর ডিজাইন বিক্রয় মেমোর মতো।
+ফাইল:
+- modules/returns/v2/view.php
+- includes/config.php
+
+10.98.525 — নতুন কাস্টমারের অগ্রিম জমায় খোলা সব অ্যাকাউন্ট।
+কেন: মালিক নতুন কাস্টমার যোগে অগ্রিম টাকা কোন অ্যাকাউন্টে জমা হবে, সেই তালিকায় সব অ্যাকাউন্ট চান। আগে শুধু status=active আসত। এখন ক্যাশ, ব্যাংক, মোবাইল — খোলা অ্যাকাউন্ট সব। ব্যক্তিগত ও বন্ধ অ্যাকাউন্ট বাদ।
+ফাইল:
+- modules/customers/add_customer.php
+- modules/customers/actions/process_customer.php
+- includes/config.php
+
+10.98.524 — স্থায়ী নোট, এবং বন্ধ মডিউল বাকি পাতা ভাঙে না।
+কেন: মালিক নিয়মগুলো স্থায়ী নোট করতে বলেছেন। বন্ধ মডিউল যাতে অন্য মডিউল না ভাঙে, সেই বাকি কাজও শেষ।
+নিয়ম: PERMANENT_NOTE.txt। লক যাচাই php tools/module_lock_check.php। সেটিংস থেকে এক মডিউল বন্ধ থাকলে লগইন ব্যবহারকারী সেই মডিউলে রক্ষণাবেক্ষণ পাতা পান। অন্য মডিউল চলে। অ্যাডমিন দেখতে পারেন।
+ফাইল:
+- includes/config.php

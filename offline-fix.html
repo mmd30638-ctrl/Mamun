@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>অফলাইন ক্যাশে পরিষ্কার</title>
+  <style>
+    body{font-family:sans-serif;background:#eef3fb;margin:0;padding:24px;color:#0b1e4d;text-align:center}
+    .card{max-width:420px;margin:40px auto;background:#fff;border-radius:16px;padding:24px;box-shadow:0 8px 20px rgba(15,35,80,.07)}
+    h1{font-size:22px;margin:0 0 12px}
+    p{color:#64748b;line-height:1.5}
+    .ok{color:#0e8f52;font-weight:800}
+  </style>
+  <link rel="stylesheet" href="/assets/css/submit-spinner.css?v=10.98.31">
+</head>
+<body>
+  <div class="card">
+    <h1>নতুন অফলাইন মেনু সেভ হচ্ছে</h1>
+    <p id="msg">ইন্টারনেট চালু রাখুন। শেষ হলে দোকানের মেনু খুলবে — তারপর নেট বন্ধ করে রিলোড দিলেও মেনু থাকবে।</p>
+  </div>
+  <script>
+    (function () {
+      var dest = '/offline.html?fresh=11.00';
+      var done = false;
+      function go() {
+        if (done) return;
+        done = true;
+        location.replace(dest);
+      }
+      function say(t, ok) {
+        var el = document.getElementById('msg');
+        el.textContent = t;
+        if (ok) el.className = 'ok';
+      }
+      if (!navigator.onLine) {
+        say('আগে ইন্টারনেট চালু করুন, তারপর এই পেজ আবার খুলুন।');
+        return;
+      }
+      var keep = 'ame-pwa-v1098261';
+      var pages = [
+        '/offline.html','/offline-sale.html','/offline-payment.html','/offline-customers.html',
+        '/offline-products.html','/offline-product-add.html','/offline-purchase.html',
+        '/offline-expense.html','/offline-workshop.html','/offline-supplier-pay.html',
+        '/offline-transfer.html','/offline-pulse.html','/sw.js?v=10.98.296',
+        '/assets/js/offline-queue.js','/assets/js/offline-boot.js','/assets/js/offline-payment-queue.js',
+        '/assets/js/double-submit-guard.js','/assets/css/submit-spinner.css'
+      ];
+      function waitReady(reg) {
+        if (navigator.serviceWorker.ready) return navigator.serviceWorker.ready;
+        return Promise.resolve(reg);
+      }
+      Promise.resolve().then(function () {
+        if (!window.caches || !caches.keys) return;
+        return caches.keys().then(function (keys) {
+          return Promise.all(keys.map(function (k) { return k === keep ? null : caches.delete(k); }));
+        });
+      }).then(function () {
+        if (!navigator.serviceWorker) return;
+        return navigator.serviceWorker.register('/sw.js?v=10.98.296').then(waitReady);
+      }).then(function () {
+        return Promise.all(pages.map(function (u) {
+          return fetch(u, { credentials: 'same-origin', cache: 'reload' }).catch(function () {});
+        }));
+      }).then(function () {
+        say('সেভ হয়েছে। মেনু খুলছে…', true);
+        setTimeout(go, 500);
+      }).catch(go);
+      setTimeout(go, 12000);
+    })();
+  </script>
+</body>
+</html>

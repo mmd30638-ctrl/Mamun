@@ -1,0 +1,51 @@
+/* 10.98.391 — বেতন সাবমিট বাটন সবসময় দেখা যাবে */
+html body.ame-salary-pay-page #main-content,
+html body.ame-salary-pay-page .content-area,
+html body.ame-salary-pay-page .sp {
+  overflow: visible !important;
+  padding-bottom: 96px !important;
+}
+
+html body.ame-salary-pay-page .sp-submit,
+html body.ame-salary-pay-page button.sp-submit {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  min-height: 52px !important;
+  margin: 10px 0 0 !important;
+  padding: 14px 16px !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: #15803d !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+}
+
+html body.ame-salary-pay-page .sp-submit-bar {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 2147483000 !important;
+  display: flex !important;
+  gap: 8px !important;
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+  background: #ffffff !important;
+  border-top: 1px solid #dbe4f0 !important;
+  box-shadow: 0 -8px 20px rgba(15, 23, 42, 0.08) !important;
+}
+
+html body.ame-salary-pay-page .sp-submit-bar .sp-submit {
+  margin: 0 !important;
+}
+
+html body.ame-salary-pay-page .sp-submit[disabled] {
+  background: #94a3b8 !important;
+  cursor: not-allowed !important;
+}

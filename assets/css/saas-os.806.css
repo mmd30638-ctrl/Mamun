@@ -1,0 +1,481 @@
+/**
+ * APONSHOP SaaS OS 8.06 — killer premium design system, every page.
+ * Unique filename so Hostinger CDN cannot keep 8.04 / 8.05 mix.
+ */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --os-ink: #0C241C;
+  --os-copy: #3d5c48;
+  --os-mute: #6b7f74;
+  --os-pine: #0B3D2E;
+  --os-leaf: #16a34a;
+  --os-leaf-2: #15803d;
+  --os-mint: #ecfdf3;
+  --os-mint-2: #eaf7ef;
+  --os-brass: #B45309;
+  --os-rose: #BE123C;
+  --os-line: rgba(18, 53, 38, 0.10);
+  --os-paper: rgba(255, 255, 255, 0.96);
+  --os-radius: 16px;
+  --os-radius-lg: 22px;
+  --os-radius-xl: 24px;
+  --os-shadow: 0 12px 32px rgba(18, 53, 38, 0.08);
+  --os-shadow-lg: 0 18px 40px rgba(18, 53, 38, 0.12);
+  --os-focus: 0 0 0 4px rgba(34, 197, 94, 0.18);
+}
+
+html body.ame-saas-os {
+  color: var(--os-ink) !important;
+  background:
+    radial-gradient(900px 420px at -8% 110%, rgba(34, 197, 94, 0.16), transparent 55%),
+    radial-gradient(700px 380px at 108% -8%, rgba(74, 222, 128, 0.18), transparent 50%),
+    linear-gradient(180deg, #f4fbf6 0%, #eaf7ef 48%, #f7fdf9 100%) !important;
+  font-family: "Outfit", "Noto Sans Bengali", "Segoe UI", sans-serif !important;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+body.ame-saas-os #main-content {
+  background: transparent !important;
+  color: var(--os-ink) !important;
+  width: min(100% - 16px, 1480px);
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+body.ame-saas-os .master-header-fixed {
+  background: rgba(251, 254, 251, 0.92) !important;
+  border-bottom: 1px solid var(--os-line) !important;
+  box-shadow: 0 6px 22px rgba(18, 53, 38, 0.06) !important;
+  backdrop-filter: blur(18px) saturate(150%) !important;
+}
+body.ame-saas-os .hdr-icon-btn {
+  border-radius: 9px !important;
+}
+body.ame-saas-os .hdr-brand-box,
+body.ame-saas-os .hdr-clock {
+  background: rgba(232, 247, 234, 0.85) !important;
+  border-color: rgba(22, 163, 74, 0.16) !important;
+  color: var(--os-ink) !important;
+  border-radius: 14px !important;
+}
+
+body.ame-saas-os .custom-sidebar {
+  --sb-bg: rgba(252, 255, 252, 0.97);
+  --sb-bg-2: #f1faf2;
+  --sb-text: var(--os-ink);
+  --sb-text-muted: var(--os-copy);
+  --sb-accent: var(--os-leaf);
+  --sb-active-bg: var(--os-mint);
+  --sb-icon-bg: #edf8ef;
+  --sb-icon-color: var(--os-leaf-2);
+  border-right: 1px solid var(--os-line) !important;
+}
+body.ame-saas-os .direct-link,
+body.ame-saas-os .menu-head,
+body.ame-saas-os .menu-list a {
+  border-radius: 12px !important;
+  color: var(--os-ink) !important;
+}
+body.ame-saas-os .direct-link.active,
+body.ame-saas-os .menu-list a.active,
+body.ame-saas-os .direct-link.on {
+  background: #22c55e !important;
+  color: #fff !important;
+  box-shadow: 0 8px 18px rgba(22, 163, 74, 0.22) !important;
+}
+
+body.ame-saas-os .card,
+body.ame-saas-os [class$="-card"],
+body.ame-saas-os [class$="-panel"],
+body.ame-saas-os [class$="-box"],
+body.ame-saas-os .fam-kpi,
+body.ame-saas-os .fam-panel,
+body.ame-saas-os .ifd-card,
+body.ame-saas-os .tls-card,
+body.ame-saas-os .tls-backup-box,
+body.ame-saas-os .pulse-kpi,
+body.ame-saas-os .smt-kpi,
+body.ame-saas-os .rd-kpi-box,
+body.ame-saas-os .login-card {
+  background: var(--os-paper) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  border-radius: var(--os-radius) !important;
+  box-shadow: var(--os-shadow) !important;
+}
+body.ame-saas-os a.card:hover,
+body.ame-saas-os a.fam-kpi:hover,
+body.ame-saas-os a[class$="-card"]:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--os-shadow-lg) !important;
+}
+
+body.ame-saas-os h1, body.ame-saas-os h2, body.ame-saas-os h3 {
+  color: var(--os-ink) !important;
+  letter-spacing: -0.02em;
+  font-weight: 800 !important;
+}
+
+body.ame-saas-os .btn-primary,
+body.ame-saas-os .btn-success,
+body.ame-saas-os .btn-login,
+body.ame-saas-os .tls-backup-btn,
+body.ame-saas-os .fam-btn,
+body.ame-saas-os .fam-q-btn,
+body.ame-saas-os button[type="submit"]:not([class*="hdr-"]):not(.ghost) {
+  background: linear-gradient(135deg, #22c55e, #15803d) !important;
+  color: #fff !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  font-weight: 800 !important;
+  box-shadow: 0 8px 18px rgba(22, 163, 74, 0.2) !important;
+  min-height: 44px;
+}
+
+body.ame-saas-os input:not([type="checkbox"]):not([type="radio"]),
+body.ame-saas-os textarea,
+body.ame-saas-os select {
+  border: 1px solid #bbf7d0 !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  color: var(--os-ink) !important;
+}
+body.ame-saas-os input:focus,
+body.ame-saas-os textarea:focus,
+body.ame-saas-os select:focus {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.14) !important;
+  outline: 0;
+}
+
+body.ame-saas-os table {
+  width: 100%;
+  border-collapse: collapse;
+}
+body.ame-saas-os table th {
+  background: #f3fbf3 !important;
+  color: var(--os-mute) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.04em;
+  font-weight: 800 !important;
+  padding: 10px 8px !important;
+  border: 0 !important;
+}
+body.ame-saas-os table td {
+  padding: 12px 8px !important;
+  border-top: 1px solid #ecfdf3 !important;
+  color: var(--os-ink) !important;
+  background: transparent !important;
+}
+body.ame-saas-os table tbody tr:nth-child(even) td {
+  background: #f7fcf6 !important;
+}
+
+body.ame-saas-os .if-dash-welcome,
+body.ame-saas-os .ame-if-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 8px 0 16px;
+  padding: 18px 20px;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 88% 20%, rgba(83, 192, 98, 0.18), transparent 12rem),
+    rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: var(--os-shadow);
+}
+body.ame-saas-os .if-dash-welcome h2,
+body.ame-saas-os .ame-if-hello {
+  margin: 0;
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 800;
+}
+body.ame-saas-os .if-dash-welcome p,
+body.ame-saas-os .ame-if-sub {
+  margin: 6px 0 0;
+  color: var(--os-copy);
+  font-weight: 600;
+}
+body.ame-saas-os .if-dash-welcome em {
+  font-style: italic;
+  color: var(--os-leaf-2);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+body.ame-saas-os .pd-kpi-grid,
+body.ame-saas-os .rd-kpi-grid,
+body.ame-saas-os .fd-kpi-grid,
+body.ame-saas-os .hd-grid,
+body.ame-saas-os .fam-kpis,
+body.ame-saas-os .pulse-kpis,
+body.ame-saas-os .smt-kpis {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (min-width: 900px) {
+  body.ame-saas-os .pd-kpi-grid,
+  body.ame-saas-os .rd-kpi-grid,
+  body.ame-saas-os .fd-kpi-grid,
+  body.ame-saas-os .hd-grid,
+  body.ame-saas-os .fam-kpis,
+  body.ame-saas-os .pulse-kpis,
+  body.ame-saas-os .smt-kpis {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+body.ame-saas-os .pd-kpi-box .val,
+body.ame-saas-os .rd-kpi-box .val,
+body.ame-saas-os .fam-kpi b,
+body.ame-saas-os .pulse-kpi b,
+body.ame-saas-os .smt-kpi b {
+  display: block;
+  font-size: clamp(26px, 3.4vw, 34px) !important;
+  font-weight: 800 !important;
+  color: var(--os-ink) !important;
+  letter-spacing: -0.03em;
+}
+body.ame-saas-os .pd-kpi-box .lbl,
+body.ame-saas-os .fam-kpi .ifd-lbl,
+body.ame-saas-os .pulse-kpi span {
+  color: var(--os-mute) !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em;
+}
+
+/* Kill mixed Bangla+English captions from 7.10 / 8.00 */
+[data-en]::after,
+.ame-if-tab::after,
+.ame-if-hero::after,
+.ame-if-section-title[data-en]::after,
+.ame-if-kpi .lbl[data-en]::after,
+.pd-kpi-box .lbl[data-en]::after,
+body.ame-saas-os [data-en]::after,
+body.ame-if-live [data-en]::after,
+body.ame-if-live a.ame-if-tab::after,
+body.ame-if-live a.ame-if-tab.active::after,
+body.ame-if-live a.ame-if-tab.on::after,
+body.ame-if-live .ame-if-kpi .lbl[data-en]::after,
+body.ame-if-live .pd-kpi-box .lbl[data-en]::after,
+body.ame-if-live .ame-if-section-title[data-en]::after,
+body.ame-saas-os .ame-if-hero::after,
+body.ame-if-live .ame-if-hero::after {
+  content: none !important;
+  display: none !important;
+  font-size: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+}
+.ifd-en {
+  display: none !important;
+}
+
+body.ame-saas-os.ame-pos-terminal-page #main-content {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+body.ame-saas-os img, body.ame-saas-os video, body.ame-saas-os iframe, body.ame-saas-os table {
+  max-width: 100%;
+}
+
+.ame-page-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 10px 0 12px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--os-line);
+}
+.ame-page-nav__back,
+.ame-page-nav__home {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid #bbf7d0;
+  background: var(--os-mint);
+  color: var(--os-leaf-2) !important;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+@media (max-width: 767px) {
+  body.ame-saas-os #main-content {
+    width: calc(100% - 12px);
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+}
+
+body.ame-saas-os.ame-screen-landscape .if-dash-welcome {
+  padding: 12px 14px;
+}
+
+body.ame-saas-os:not(.ame-if-home) .if-dash-welcome {
+  display: none !important;
+}
+
+/* —— Design system 8.06: chrome, forms, tables, alerts, empty, focus —— */
+body.ame-saas-os ::selection {
+  background: rgba(34, 197, 94, 0.22);
+  color: #0C241C;
+}
+body.ame-saas-os :focus-visible {
+  outline: 2px solid #16a34a;
+  outline-offset: 2px;
+}
+body.ame-saas-os .sidebar-brand-header {
+  border-bottom: 1px solid var(--os-line) !important;
+  padding: 14px 12px !important;
+}
+body.ame-saas-os .badge,
+body.ame-saas-os .label,
+body.ame-saas-os span.status,
+body.ame-saas-os .chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.01em;
+  background: var(--os-mint);
+  color: var(--os-leaf-2) !important;
+}
+body.ame-saas-os .badge-danger,
+body.ame-saas-os .text-danger.badge,
+body.ame-saas-os .status-overdue {
+  background: #ffe4e6;
+  color: var(--os-rose) !important;
+}
+body.ame-saas-os .alert,
+body.ame-saas-os .alert-success,
+body.ame-saas-os .alert-info,
+body.ame-saas-os .alert-warning,
+body.ame-saas-os .alert-danger,
+body.ame-saas-os .flash,
+body.ame-saas-os .notice {
+  border-radius: var(--os-radius) !important;
+  border: 1px solid var(--os-line) !important;
+  padding: 12px 14px !important;
+  font-weight: 600;
+  box-shadow: var(--os-shadow);
+}
+body.ame-saas-os .alert-success { background: #ecfdf3 !important; color: #15803d !important; }
+body.ame-saas-os .alert-warning { background: #fffbeb !important; color: #92400e !important; }
+body.ame-saas-os .alert-danger { background: #fff1f2 !important; color: #9f1239 !important; }
+body.ame-saas-os .alert-info { background: #f0fdf4 !important; color: #0f766e !important; }
+
+body.ame-saas-os .modal-content,
+body.ame-saas-os .modal-dialog .modal-content,
+body.ame-saas-os .swal2-popup,
+body.ame-saas-os .dropdown-menu {
+  border-radius: var(--os-radius-lg) !important;
+  border: 1px solid var(--os-line) !important;
+  box-shadow: var(--os-shadow-lg) !important;
+  background: #fff !important;
+}
+body.ame-saas-os .pagination a,
+body.ame-saas-os .pagination span,
+body.ame-saas-os .page-link {
+  border-radius: 10px !important;
+  border: 1px solid #bbf7d0 !important;
+  color: var(--os-ink) !important;
+  min-width: 36px;
+  min-height: 36px;
+}
+body.ame-saas-os .pagination .active a,
+body.ame-saas-os .page-item.active .page-link {
+  background: #22c55e !important;
+  color: #fff !important;
+  border-color: #22c55e !important;
+}
+body.ame-saas-os .progress {
+  height: 8px;
+  border-radius: 999px;
+  background: #dcfce7;
+  overflow: hidden;
+}
+body.ame-saas-os .progress-bar {
+  background: linear-gradient(90deg, #22c55e, #15803d);
+}
+body.ame-saas-os .empty,
+body.ame-saas-os .empty-state,
+body.ame-saas-os .no-data,
+body.ame-saas-os .text-muted.empty {
+  text-align: center;
+  padding: 28px 16px;
+  color: var(--os-mute) !important;
+  font-weight: 600;
+}
+body.ame-saas-os thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+body.ame-saas-os .nav-tabs {
+  border: 0 !important;
+  gap: 6px;
+  display: flex;
+  flex-wrap: wrap;
+}
+body.ame-saas-os .nav-tabs .nav-link {
+  border-radius: 999px !important;
+  border: 1px solid #d1fae5 !important;
+  color: var(--os-ink) !important;
+  font-weight: 800 !important;
+  padding: 8px 14px !important;
+}
+body.ame-saas-os .nav-tabs .nav-link.active {
+  background: #22c55e !important;
+  color: #fff !important;
+  border-color: #22c55e !important;
+}
+body.ame-saas-os .breadcrumb {
+  background: transparent !important;
+  padding: 0 !important;
+  font-weight: 700;
+  font-size: 12px;
+}
+body.ame-saas-os .form-check-input:checked,
+body.ame-saas-os input[type="checkbox"]:checked,
+body.ame-saas-os input[type="radio"]:checked {
+  accent-color: #16a34a;
+}
+body.ame-saas-os .login-card {
+  padding: 28px !important;
+  max-width: 420px;
+}
+body.ame-saas-os hr {
+  border: 0;
+  border-top: 1px solid var(--os-line);
+}
+body.ame-saas-os .table-responsive,
+body.ame-saas-os .overflow-auto {
+  border-radius: var(--os-radius);
+}
+@media (prefers-reduced-motion: reduce) {
+  body.ame-saas-os *,
+  body.ame-saas-os *::before,
+  body.ame-saas-os *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

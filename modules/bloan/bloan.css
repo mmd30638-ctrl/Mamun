@@ -1,0 +1,45 @@
+.bl { width: 100%; max-width: 1100px; margin: 0 auto; padding: 12px 12px 96px; box-sizing: border-box; }
+.bl h1 { margin: 0 0 4px; color: #0b1e4d; font-size: 22px; line-height: 1.25; }
+.bl h2 { margin: 18px 0 8px; color: #0b1e4d; font-size: 16px; }
+.bl .en { color: #64748b; font-size: 13px; margin: 0 0 10px; line-height: 1.45; }
+.bl-nav { display: flex; gap: 6px; overflow-x: auto; padding: 4px 0 12px; -webkit-overflow-scrolling: touch; }
+.bl-nav a { white-space: nowrap; background: #fff; border: 1px solid #e2e8f0; border-radius: 999px; padding: 8px 12px; text-decoration: none; color: #0b1e4d; font-size: 13px; font-weight: 700; min-height: 36px; }
+.bl-nav a.on { background: #0b1e4d; color: #fff; border-color: #0b1e4d; }
+.bl-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 12px 0; }
+.bl-cards a, .bl-cards div { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 12px; text-decoration: none; color: inherit; min-width: 0; }
+.bl-cards small { display: block; color: #64748b; font-size: 12px; }
+.bl-cards b { display: block; font-size: 18px; overflow-wrap: anywhere; }
+.bl table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 14px; overflow: hidden; }
+.bl th, .bl td { text-align: left; padding: 8px; border-bottom: 1px solid #e2e8f0; font-size: 13px; vertical-align: top; }
+.bl form.grid, .bl form:not(.bl-inline) { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 14px; margin: 10px 0; }
+.bl form.bl-inline { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; background: transparent; border: 0; padding: 0; }
+.bl label { display: block; font-size: 12px; font-weight: 700; color: #475569; }
+.bl input, .bl select, .bl textarea { width: 100%; box-sizing: border-box; margin-top: 4px; padding: 10px; min-height: 44px; border: 1px solid #dbe4f0; border-radius: 10px; font-size: 16px; background: #fff; }
+.bl textarea { min-height: 72px; }
+.bl .wide { grid-column: 1 / -1; }
+.bl button, .bl .btn { background: #0b1e4d; color: #fff; border: 0; border-radius: 10px; padding: 12px 14px; font-weight: 800; text-decoration: none; display: inline-block; min-height: 44px; cursor: pointer; }
+.bl .err { background: #fee2e2; color: #991b1b; padding: 10px; border-radius: 10px; }
+.bl .ok { background: #dcfce7; color: #166534; padding: 10px; border-radius: 10px; }
+.bl .empty { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 14px; color: #475569; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 800; background: #e2e8f0; }
+.st-overdue, .st-rejected { background: #fee2e2; color: #991b1b; }
+.st-paid, .st-approved, .st-active, .st-closed, .st-disbursed { background: #dcfce7; color: #166534; }
+.st-partial, .st-due, .st-review, .st-applied { background: #ffedd5; color: #9a3412; }
+@media (max-width: 900px) {
+  .bl-cards { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 800px) {
+  .bl form.grid, .bl form:not(.bl-inline) { grid-template-columns: 1fr; }
+  .bl .wide { grid-column: auto; }
+  .bl table { display: block; overflow-x: auto; }
+  .bl button, .bl .btn { width: 100%; text-align: center; box-sizing: border-box; }
+}
+@media (max-width: 420px) {
+  .bl { padding-left: 8px; padding-right: 8px; }
+  .bl-cards { grid-template-columns: 1fr; }
+  .bl h1 { font-size: 20px; }
+}
+@media print {
+  .bl-nav, .bl form, .bl button, .bl .btn, .no-print { display: none !important; }
+  .bl { max-width: none; padding: 0; }
+}

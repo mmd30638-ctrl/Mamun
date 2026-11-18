@@ -1,0 +1,463 @@
+/* Hire due — sales desk colors: navy #003F8F, canvas #F4F7FB, green #04933A, red #DC2626 */
+
+.hire-due-page,
+.hire-due-home,
+.hire-due-panel,
+.hire-edit-desk {
+  --desk-navy: #003F8F;
+  --desk-green: #04933A;
+  --desk-canvas: #F4F7FB;
+  --desk-text: #111827;
+  --desk-muted: #667085;
+  --desk-line: #D7DEE8;
+  --desk-danger: #DC2626;
+  --desk-surface: #ffffff;
+}
+
+.hire-due-home {
+  background: linear-gradient(90deg, #eef5ff, #F4F7FB);
+  border: 1.5px solid var(--desk-navy);
+  border-radius: 14px;
+  padding: 0;
+  margin: 10px 0 16px;
+  box-shadow: 0 8px 24px rgba(0, 63, 143, 0.1);
+}
+.hire-due-bell {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: transparent;
+  border: 0;
+  padding: 12px 14px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 14px;
+}
+.hire-due-bell h2 {
+  margin: 0;
+  font-size: 16px;
+  color: #003F8F;
+  font-weight: 800;
+}
+.hire-due-bell p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #4b5b73;
+}
+.hire-due-count {
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: #DC2626;
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.hire-due-panel-overlay,
+.hire-due-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 63, 143, 0.38);
+  z-index: 10040;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.hire-due-overlay { z-index: 10050; }
+.hire-due-panel-overlay.open,
+.hire-due-overlay.open { display: flex; }
+
+.hire-due-panel {
+  background: #F4F7FB;
+  border: 1px solid #D7DEE8;
+  border-radius: 14px;
+  width: min(860px, 100%);
+  max-height: 96vh;
+  overflow: auto;
+  padding: 0 0 12px;
+  box-shadow: 0 16px 40px rgba(0, 63, 143, 0.22);
+}
+.hire-due-panel h3 {
+  margin: 0;
+  padding: 12px 44px 12px 16px;
+  font-size: 16px;
+  color: #fff;
+  background: #003F8F;
+  border-radius: 14px 14px 0 0;
+}
+.hire-due-panel-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  border: 0;
+  background: transparent;
+  font-size: 22px;
+  color: #fff;
+  cursor: pointer;
+}
+.hire-due-panel-wrap { position: relative; }
+.hire-due-panel-wrap .hire-due-edit-row { margin: 8px 12px 0; width: auto; }
+
+.hire-due-edit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #D7DEE8;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+.hire-due-edit-row:hover { border-color: #003F8F; background: #eef5ff; }
+.hire-due-edit-row b { color: #003F8F; }
+.hire-due-edit-row small { display: block; color: #667085; font-size: 11px; }
+.hire-due-edit-chip {
+  background: #003F8F;
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-weight: 700;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+/* One-page sales-desk editor */
+.hire-edit-desk {
+  background: #F4F7FB;
+  border: 1px solid #D7DEE8;
+  border-radius: 14px;
+  width: min(880px, 100%);
+  max-height: 96vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 63, 143, 0.28);
+  color: #111827;
+}
+.hire-edit-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #003F8F;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 13px 13px 0 0;
+  flex-shrink: 0;
+}
+.hire-edit-bar strong { display: block; font-size: 15px; }
+.hire-edit-bar small { display: block; font-size: 12px; opacity: .9; font-weight: 600; }
+.hire-edit-x {
+  border: 0;
+  background: rgba(255,255,255,.18);
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.hire-edit-sub {
+  margin: 8px 14px 0;
+  font-size: 12px;
+  color: #667085;
+}
+.hire-edit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  padding: 10px 14px 8px;
+}
+.hire-edit-desk label {
+  display: grid;
+  gap: 4px;
+  font-weight: 700;
+  font-size: 12px;
+  color: #003F8F;
+  margin: 0;
+}
+.hire-edit-full { grid-column: 1 / -1; }
+.hire-edit-desk input,
+.hire-edit-desk select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #D7DEE8;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 13px;
+  background: #fff;
+  color: #111827;
+}
+.hire-edit-desk input[readonly] {
+  background: #eef5ff;
+  color: #003F8F;
+  font-weight: 700;
+}
+.hire-pay-box {
+  grid-column: 1 / -1;
+  background: #fff;
+  border: 1px solid #D7DEE8;
+  border-left: 4px solid #04933A;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.hire-pay-box > strong {
+  display: block;
+  color: #04933A;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+.hire-pay-grid { padding: 0; }
+.hire-edit-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 10px 14px 12px;
+  background: #fff;
+  border-top: 1px solid #D7DEE8;
+  flex-shrink: 0;
+}
+.hire-save-btn,
+.hire-pay-btn {
+  border: 0;
+  border-radius: 8px;
+  padding: 11px 12px;
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 14px;
+  color: #fff;
+}
+.hire-save-btn { background: #003F8F; }
+.hire-pay-btn { background: #04933A; }
+.hire-edit-msg {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  text-align: center;
+  min-height: 16px;
+  font-weight: 700;
+}
+
+.cmd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+  margin-right: 3px;
+}
+.cmd-call { background: #04933A; color: #fff; }
+.cmd-pay { background: #003F8F; color: #fff; }
+.cmd-edit { background: #003F8F; color: #fff; }
+.due-date-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #fff;
+}
+.badge-overdue { background: #DC2626; }
+.badge-today { background: #003F8F; }
+.badge-upcoming { background: #04933A; }
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.summary-box { border-radius: 10px; padding: 12px; text-align: center; color: #fff; }
+.summary-box .num { font-size: 22px; font-weight: 800; }
+.summary-box .lbl { font-size: 11px; }
+.bg-overdue { background: #DC2626; }
+.bg-today { background: #003F8F; }
+.bg-upcoming { background: #04933A; }
+.bg-watch { background: #003F8F; }
+.filter-card {
+  background: #fff;
+  border: 1px solid #D7DEE8;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.filter-form { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.filter-form input {
+  padding: 8px;
+  border: 1px solid #D7DEE8;
+  border-radius: 6px;
+  font-size: 12px;
+  background: #F4F7FB;
+}
+.filter-form button {
+  background: #003F8F;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+}
+.hire-due-card {
+  background: #fff;
+  border: 1px solid #D7DEE8;
+  border-radius: 10px;
+  padding: 12px;
+}
+.hire-due-card h2 { color: #003F8F; }
+.table-scroll { overflow-x: auto; }
+.hire-due-table { border-collapse: collapse; width: 100%; min-width: 980px; font-size: 12px; }
+.hire-due-table th { background: #003F8F; color: #fff; padding: 8px 6px; text-align: left; white-space: nowrap; }
+.hire-due-table td { padding: 8px 6px; border-bottom: 1px solid #D7DEE8; vertical-align: top; white-space: nowrap; color: #111827; }
+
+/* Due page: white boxes, colored type — fills stay off the cards. */
+.hire-due-page .hire-mast {
+  background: #fff;
+}
+.hire-due-page .hire-kicker { color: #7C3AED; }
+.hire-due-page .hire-mast h1 { color: #003F8F; }
+.hire-due-page .hire-mast > p { color: #DC2626; font-weight: 700; margin: 0; }
+.hire-due-page .summary-box {
+  background: #fff !important;
+  color: inherit;
+  border: 1px solid #E5EAF1;
+  border-radius: 16px;
+  padding: 14px 10px 12px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+}
+.hire-due-page .summary-box .num {
+  font-size: clamp(22px, 5vw, 30px);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.hire-due-page .summary-box .lbl {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.hire-due-page .bg-overdue { border-top: 3px solid #DC2626; }
+.hire-due-page .bg-overdue .num,
+.hire-due-page .bg-overdue .lbl { color: #DC2626; }
+.hire-due-page .bg-today { border-top: 3px solid #2563EB; }
+.hire-due-page .bg-today .num,
+.hire-due-page .bg-today .lbl { color: #2563EB; }
+.hire-due-page .bg-upcoming { border-top: 3px solid #04933A; }
+.hire-due-page .bg-upcoming .num,
+.hire-due-page .bg-upcoming .lbl { color: #04933A; }
+.hire-due-page .bg-watch { border-top: 3px solid #7C3AED; }
+.hire-due-page .bg-watch .num,
+.hire-due-page .bg-watch .lbl { color: #7C3AED; }
+.hire-due-page .filter-card,
+.hire-due-page .hire-due-card {
+  background: #fff;
+  border: 1px solid #E5EAF1;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+}
+.hire-due-page .filter-form input {
+  background: #fff;
+  min-height: 40px;
+  flex: 1 1 140px;
+}
+.hire-due-page .filter-form button {
+  background: #fff;
+  color: #003F8F;
+  border: 1px solid #BFDBFE;
+  min-height: 40px;
+}
+.hire-due-page .filter-form a { color: #EA580C; font-weight: 800; }
+.hire-due-page .hire-due-card h2 { color: #C2410C; }
+.hire-due-page .hire-due-table thead th {
+  background: #fff;
+  border-bottom: 2px solid #E5EAF1;
+  font-weight: 800;
+}
+.hire-due-page .hire-due-table thead th:nth-child(1) { color: #003F8F; }
+.hire-due-page .hire-due-table thead th:nth-child(2) { color: #0F766E; }
+.hire-due-page .hire-due-table thead th:nth-child(3) { color: #04933A; }
+.hire-due-page .hire-due-table thead th:nth-child(4) { color: #D97706; }
+.hire-due-page .hire-due-table thead th:nth-child(5) { color: #2563EB; }
+.hire-due-page .hire-due-table thead th:nth-child(6) { color: #7C3AED; }
+.hire-due-page .hire-due-table thead th:nth-child(7) { color: #0891B2; }
+.hire-due-page .hire-due-table thead th:nth-child(8) { color: #CA8A04; }
+.hire-due-page .hire-due-table thead th:nth-child(9) { color: #DC2626; }
+.hire-due-page .hire-due-table thead th:nth-child(10) { color: #4338CA; }
+.hire-due-page .hire-due-table td:nth-child(2) { color: #0F766E; font-weight: 700; }
+.hire-due-page .hire-due-table td:nth-child(3) { color: #04933A; }
+.hire-due-page .hire-due-table td:nth-child(4) { color: #B45309; }
+.hire-due-page .hire-due-table td:nth-child(7) { color: #0891B2; font-weight: 700; }
+.hire-due-page .hire-due-table td:nth-child(9) { color: #DC2626; font-weight: 800; }
+.hire-due-page .due-date-badge {
+  background: #fff;
+  border: 1px solid currentColor;
+}
+.hire-due-page .badge-overdue { color: #DC2626; }
+.hire-due-page .badge-today { color: #2563EB; }
+.hire-due-page .badge-upcoming { color: #04933A; }
+.hire-due-page .cmd-btn {
+  background: #fff;
+  border: 1px solid #E5EAF1;
+}
+.hire-due-page .cmd-call { color: #04933A; border-color: #86EFAC; }
+.hire-due-page .cmd-pay { color: #003F8F; border-color: #93C5FD; }
+.hire-due-page .cmd-edit { color: #7C3AED; border-color: #DDD6FE; }
+.cus-id-link { color: #003F8F; font-weight: 800; }
+.hdr-hire-due {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #eef5ff;
+  color: #003F8F;
+  text-decoration: none;
+  font-size: 18px;
+  margin-left: 4px;
+}
+.hdr-hire-due .hdr-badge,
+.hdr-hire-due-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 99px;
+  background: #DC2626;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 720px) {
+  .summary-grid { grid-template-columns: repeat(2, 1fr); }
+  .hire-due-home-row { grid-template-columns: 1fr; }
+  .hire-edit-grid,
+  .hire-edit-actions { grid-template-columns: 1fr; }
+  .hire-edit-desk { max-height: 98vh; overflow: auto; }
+}

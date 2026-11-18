@@ -1,0 +1,27 @@
+body{font-family:sans-serif;background:#eef3fb;margin:0;padding:16px;color:#0b1e4d}
+.wrap{max-width:640px;margin:0 auto}
+.card{background:#fff;border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 8px 20px rgba(15,35,80,.07)}
+h1{margin:0 0 8px;font-size:20px}
+p{color:#64748b;line-height:1.5}
+input,select,textarea{width:100%;padding:11px 12px;border:1.5px solid #dbe4f0;border-radius:10px;box-sizing:border-box;margin-top:6px}
+label{font-size:12px;font-weight:800;display:block;margin-top:10px}
+.hit{padding:10px 0;border-bottom:1px solid #f1f5f9;cursor:pointer}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 4px;border-bottom:1px solid #eef2f7;text-align:left}
+.btn{width:100%;margin-top:12px;padding:14px;border:0;border-radius:12px;background:linear-gradient(90deg,#2563eb,#22c55e);color:#fff;font-weight:800;cursor:pointer;display:block;text-align:center;text-decoration:none}
+.ghost{background:#f8fbff;color:#0b1e4d;border:1px solid #dbe4f0}
+.ok{display:none;background:#e7f7ef;color:#0e8f52;padding:10px;border-radius:10px;margin-bottom:10px;font-weight:700}
+.warn{background:#fff8eb;color:#8a6100;padding:10px;border-radius:10px;font-size:13px;margin-bottom:10px}
+a{color:#2563eb;font-weight:800;text-decoration:none}
+.tot{font-size:18px;font-weight:800;text-align:right;margin-top:8px}
+.grid{display:grid;gap:10px;margin:16px 0}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kpi div{border:1px solid #e8eef6;border-radius:12px;padding:10px}
+.kpi b{display:block;font-size:20px}
+.kpi span{font-size:12px;color:#64748b}
+.qty{display:inline-flex;gap:6px;align-items:center}
+.qty button{width:28px;height:28px;border:0;border-radius:8px;background:#e8eef6;font-weight:800;cursor:pointer}
+.off-bar{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.off-bar a{font-size:12px;padding:8px 10px;border-radius:999px;background:#fff;border:1px solid #dbe4f0;color:#0b1e4d;font-weight:800}
+.sec{font-size:11px;font-weight:800;letter-spacing:.06em;color:#64748b;margin:16px 0 6px;text-transform:uppercase}
+.grid.two{grid-template-columns:1fr 1fr}

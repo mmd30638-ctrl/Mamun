@@ -1,0 +1,28 @@
+আপডেট 10.98.939 — গ্লোবাল রেসপন্সিভ (ছোট PATCH, ~৫৫ KB)
+
+Hostinger ফোনে ৯ MB ZIP পোস্ট করবেন না। নিচের যেকোনো একটি করুন:
+
+=== সরাসরি /get/ — চাপলেই ডাউনলোড (এক ক্লিকে) ===
+
+https://mavo12.online/get/Aponshop_10.98.939_PATCH.zip
+(সার্ভারে ZIP না থাকলে get.php GitHub থেকে রিডাইরেক্ট — data/patch_get_fallback.json লাগে)
+
+তাৎক্ষণিক বিকল্প (সার্ভার ছাড়াই এক ক্লিকে ডাউনলোড):
+https://raw.githubusercontent.com/mmd30638-ctrl/Mamun/cursor/global-responsive-architecture-ab1e/downloads/Aponshop_10.98.939_PATCH.zip
+
+(স্টেজিং/হোস্টিংগার টেম্প ডোমেনে একই পাথ: /get/Aponshop_10.98.939_PATCH.zip)
+
+লাইভে কাজ করতে FTP/cPanel দিয়ে এই ফাইল রাখুন:
+  public_html/downloads/Aponshop_10.98.939_PATCH.zip
+অথবা:
+  public_html/deliverables/Aponshop_10.98.939_PATCH.zip
+
+=== সহজ আপডেট (অ্যাডমিন) ===
+
+১) উপরের লিংকে চাপলে PATCH নেমে — ডাউনলোড ফোল্ডারে সেভ।
+২) সেটিংস → সহজ আপডেট → «ছোট PATCH ZIP খণ্ডে আপলোড» (৫৫ KB, পেজ মরবে না)।
+   অথবা ফাইলবিন আর্কাইভ URL: https://filebin.net/archive/<bin>/zip → «লিংক থেকে সার্ভার নামান».
+
+ফাইলবিন: সরাসরি ফাইল লিংক HTML নামায় — শুধু /archive/.../zip ব্যবহার করুন।
+
+.env, uploads/, SPEED.txt — PATCH স্পর্শ করে না।

@@ -1,0 +1,37 @@
+/* মাউস যে লাইনে, পুরো লাইন আলাদা রঙ। যে ঘরে মাউস, সেটা একটু বড়। হিসাব বদলায় না। */
+html body #main-content tr.ame-line-hot > td,
+html body #main-content tr.ame-line-hot > th,
+html body #main-content li.ame-line-hot,
+html body #main-content p.ame-line-hot,
+html body #main-content label.ame-line-hot,
+html body #main-content .cdesk-row.ame-line-hot,
+html body #main-content .cus-row.ame-line-hot,
+html body #main-content h1.ame-line-hot,
+html body #main-content h2.ame-line-hot,
+html body #main-content h3.ame-line-hot {
+  background: #fff3bf !important;
+  color: #9a3412 !important;
+  -webkit-text-fill-color: #9a3412 !important;
+}
+html body.ame-pos-terminal-page #main-content#main-content .ame-sale-desk .table-pos tbody tr.ame-line-hot > td {
+  background: #fff3bf !important;
+  color: #9a3412 !important;
+  -webkit-text-fill-color: #9a3412 !important;
+}
+html body #main-content .ame-spot-zoom {
+  position: relative;
+  z-index: 4;
+  transform: scale(1.12);
+  transform-origin: center center;
+}
+@media print {
+  html body #main-content .ame-line-hot,
+  html body #main-content .ame-line-hot > td,
+  html body #main-content .ame-line-hot > th,
+  html body #main-content .ame-spot-zoom {
+    background: transparent !important;
+    color: inherit !important;
+    -webkit-text-fill-color: inherit !important;
+    transform: none !important;
+  }
+}

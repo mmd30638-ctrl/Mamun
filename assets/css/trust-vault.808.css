@@ -1,0 +1,180 @@
+/**
+ * APONSHOP Trust Vault 8.07 — unique open-ledger security desk.
+ * Steel dossier + gold inspection stamp. Not the cream studio, not the loan desk.
+ */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600;700&family=Noto+Sans+Bengali:wght@500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap");
+
+.tv-wrap {
+  --tv-ink: #12141a;
+  --tv-mute: #64748b;
+  --tv-gold: #c9a227;
+  --tv-pass: #047857;
+  --tv-warn: #b45309;
+  --tv-steel: #1e293b;
+  width: min(100% - 12px, 920px);
+  margin: 8px auto 32px;
+  padding: max(8px, env(safe-area-inset-top, 0px))
+    max(6px, env(safe-area-inset-right, 0px))
+    max(22px, env(safe-area-inset-bottom, 0px))
+    max(6px, env(safe-area-inset-left, 0px));
+  box-sizing: border-box;
+  font-family: "Outfit", "Noto Sans Bengali", "IBM Plex Sans", sans-serif;
+  color: var(--tv-ink);
+}
+.tv-wrap .ame-pair {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 1px;
+  line-height: 1.2;
+}
+.tv-wrap .ame-pair strong { font-weight: 800; }
+.tv-wrap .ame-pair em {
+  font-style: normal;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--tv-mute);
+}
+
+.tv-vault {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  padding: clamp(18px, 4vw, 28px);
+  background:
+    radial-gradient(280px 160px at 92% 12%, rgba(201, 162, 39, 0.22), transparent 62%),
+    linear-gradient(145deg, #fffdf8 0%, #f7f1e1 55%, #efe6c9 100%);
+  color: var(--tv-ink);
+  border: 1px solid rgba(201, 162, 39, 0.42);
+  box-shadow: 0 20px 44px rgba(15, 23, 42, 0.08);
+  margin-bottom: 14px;
+}
+.tv-vault::after {
+  content: "OPEN";
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  width: 64px;
+  height: 64px;
+  border: 2px solid rgba(201, 162, 39, 0.7);
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--tv-gold);
+  transform: rotate(18deg);
+}
+.tv-kicker {
+  margin: 0 0 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--tv-gold);
+}
+.tv-vault h1 {
+  margin: 0 72px 10px 0;
+  font-size: clamp(22px, 4.4vw, 32px);
+  letter-spacing: -0.03em;
+}
+.tv-vault h1 em { font-style: italic; color: #a16207; }
+.tv-vault > p {
+  margin: 0;
+  max-width: 40rem;
+  color: #334155;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.tv-matrix {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.tv-seal {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(18, 20, 26, 0.08);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+.tv-no {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 11px;
+  font-weight: 800;
+}
+.tv-seal .nm { font-weight: 800; }
+.tv-seal .meta { color: var(--tv-mute); font-size: 12px; font-weight: 600; }
+.tv-lamp {
+  min-width: 52px;
+  text-align: center;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.tv-lamp.ok { background: #d1fae5; color: var(--tv-pass); }
+.tv-lamp.late { background: #ffedd5; color: var(--tv-warn); }
+
+.tv-dossier {
+  border-radius: 20px;
+  padding: 16px 18px;
+  background: #fffdf8;
+  border: 1px solid rgba(201, 162, 39, 0.28);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+}
+.tv-dossier h2 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+.tv-formula {
+  display: grid;
+  gap: 10px;
+}
+.tv-formula article {
+  padding: 10px 0;
+  border-top: 1px dashed rgba(18, 20, 26, 0.12);
+}
+.tv-formula article:first-of-type { border-top: 0; padding-top: 0; }
+.tv-formula b { display: block; margin-bottom: 4px; }
+.tv-formula p { margin: 0; color: #334155; font-weight: 600; font-size: 13px; line-height: 1.5; }
+
+.tv-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.tv-links a {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #fffdf8;
+  color: #12141a !important;
+  border: 1px solid rgba(201, 162, 39, 0.55);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 13px;
+}
+.tv-sec {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #334155;
+}
+
+body.ame-saas-os #main-content .tv-vault .tv-kicker { color: #a16207 !important; }
+body.ame-saas-os #main-content .tv-vault h1 em { color: #a16207 !important; }

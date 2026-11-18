@@ -1,0 +1,5 @@
+APONSHOP v10.98.871
+Started clean from 10.98.859 base.
+security_hardening.php require removed.
+Documentation note added.
+No financial / sales / stock changes.

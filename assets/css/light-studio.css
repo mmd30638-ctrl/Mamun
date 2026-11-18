@@ -1,0 +1,205 @@
+/* Paper studio — white canvas, dark black ink. Beats mint SaaS skins. */
+:root {
+    --dark-blue: #111111 !important;
+    --brand-navy: #111111 !important;
+    --brand-navy-deep: #111111 !important;
+    --brand-navy-dark: #111111 !important;
+    --brand-accent: #111111 !important;
+    --brand-accent-2: #333333 !important;
+    --brand-gold: #111111 !important;
+    --brand-gold-soft: #f5f5f5 !important;
+    --brand-bg: #ffffff !important;
+    --brand-bg-soft: #ffffff !important;
+    --brand-white: #ffffff !important;
+    --brand-black: #111111 !important;
+    --brand-muted: #525252 !important;
+    --brand-border: #e5e5e5 !important;
+    --brand-sidebar: #ffffff !important;
+    --brand-gradient: #111111 !important;
+    --brand-gradient-rich: #111111 !important;
+    --ame-ink: #111111 !important;
+    --ame-copy: #222222 !important;
+    --ame-muted: #525252 !important;
+    --ame-mint-25: #ffffff !important;
+    --ame-mint-50: #ffffff !important;
+    --ame-mint-100: #f5f5f5 !important;
+    --ame-mint-200: #eeeeee !important;
+    --ame-green-500: #111111 !important;
+    --ame-green-600: #111111 !important;
+    --ame-green-700: #111111 !important;
+    --ame-line: #e5e5e5 !important;
+    --ame-surface: #ffffff !important;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+html,
+body,
+html body,
+html body.ame-premium-ui,
+html body.ame-if-live,
+html body.ame-saas-os,
+html body.ame-if-dash,
+html body.ame-home-gallery {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
+    color: #111111 !important;
+}
+
+html body #main-content,
+html body.ame-premium-ui #main-content,
+html body.ame-if-live #main-content,
+html body.ame-saas-os #main-content,
+html body.ame-if-dash #main-content {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #111111 !important;
+}
+
+body,
+p, li, td, th, label,
+h1, h2, h3, h4, h5, h6,
+.card h3, a {
+    color: #111111;
+}
+
+.card,
+html body.ame-premium-ui .card {
+    background: #ffffff !important;
+    border: 1px solid #e5e5e5 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
+    color: #111111 !important;
+}
+.card::before {
+    background: #111111 !important;
+    height: 2px !important;
+}
+.card h3 {
+    color: #111111 !important;
+    border-bottom-color: #f0f0f0 !important;
+}
+
+label { color: #111111 !important; }
+
+.input-style,
+input[type="text"], input[type="number"], input[type="email"],
+input[type="password"], input[type="date"], input[type="tel"],
+input[type="search"], textarea, select,
+html body.ame-premium-ui input,
+html body.ame-premium-ui textarea,
+html body.ame-premium-ui select {
+    background: #ffffff !important;
+    color: #111111 !important;
+    border-color: #d4d4d4 !important;
+}
+
+html body.ame-premium-ui .btn-success,
+html body.ame-premium-ui .btn-primary,
+html body.ame-premium-ui button[type="submit"]:not([class*="hdr-"]),
+html body.ame-premium-ui a[class$="-btn"]:not(.btn-danger):not(.ghost):not(.tls-backup-btn):not(.mae-import-go),
+html body .btn-success,
+html body .btn-primary,
+html body button[type="submit"]:not([class*="hdr-"]),
+html body .xf-go {
+    background: #111111 !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+}
+html body a.mae-import-go {
+    background: #2e7d32 !important;
+    background-image: none !important;
+    color: #ffffff !important;
+}
+
+table thead tr,
+table tr[style*="background"],
+html body.ame-premium-ui table thead tr,
+html body.ame-premium-ui table tr[style*="background"] {
+    background: #fafafa !important;
+}
+table th,
+html body.ame-premium-ui table th { color: #111111 !important; }
+table td { color: #111111; }
+table tbody tr:nth-child(even) { background: #fcfcfc !important; }
+table tbody tr:hover { background: #f5f5f5 !important; }
+
+html body .master-header-fixed {
+    background: #ffffff !important;
+    background-image: none !important;
+    border-bottom: 1px solid #e5e5e5 !important;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04) !important;
+}
+html body .hdr-brand-box {
+    background: #ffffff !important;
+    border: 1px solid #e5e5e5 !important;
+}
+html body .hdr-brand-box img,
+html body .hdr-brand-box .hdr-brand-png {
+    width: 44px !important;
+    height: 44px !important;
+    max-width: 44px !important;
+    object-fit: contain !important;
+    background: #ffffff !important;
+}
+html body .hdr-brand-box h1 {
+    color: #111111 !important;
+    text-shadow: none !important;
+}
+html body .hdr-clock {
+    background: #f5f5f5 !important;
+    color: var(--hdr-clock, #111111) !important;
+    border: 1px solid color-mix(in srgb, var(--hdr-clock, #111111) 28%, #e5e5e5) !important;
+}
+html body .hdr-clock small,
+html body .hdr-clock span {
+    color: var(--hdr-clock, #111111) !important;
+}
+html body .hdr-store-switch select {
+    background: #ffffff !important;
+    color: #111111 !important;
+    border: 1px solid #d4d4d4 !important;
+}
+html body .hdr-store-manage {
+    background: #f5f5f5 !important;
+    color: #111111 !important;
+}
+
+.custom-sidebar,
+.custom-sidebar .sidebar-brand-header {
+    background: #ffffff !important;
+    color: #111111 !important;
+}
+.custom-sidebar a,
+.custom-sidebar .menu-head,
+.custom-sidebar .direct-link { color: #111111 !important; }
+
+.ty-wrap,
+.ty-mast,
+.ty-toolbar,
+.ty-mark-banner,
+html body .ty-wrap,
+html body .ty-mast {
+    background: #ffffff !important;
+    color: #111111 !important;
+    border-color: #e5e5e5 !important;
+    box-shadow: none !important;
+}
+.ty-wrap .ame-pair em,
+.ty-kicker { color: #525252 !important; }
+.ty-mast h1,
+.ty-mast-total b { color: #111111 !important; }
+
+.brand-badge.info { background: #f5f5f5; color: #111111; }
+.brand-topbar-strip .strip-1,
+.brand-topbar-strip .strip-2,
+.brand-topbar-strip .strip-3 { background: #111111; }
+
+::-webkit-scrollbar-track { background: #ffffff; }
+::-webkit-scrollbar-thumb { background: #d4d4d4; border-radius: 10px; }
+
+@media print {
+    html, body, #main-content { background: #fff !important; color: #000 !important; }
+}

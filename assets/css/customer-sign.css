@@ -1,0 +1,96 @@
+.ame-sign {
+    margin: 18px 0 8px;
+    padding: 16px 14px 14px;
+    border: 2px solid #0b1e4d;
+    border-radius: 18px;
+    background: #f8fbff;
+}
+.ame-sign h2 {
+    margin: 0 0 8px;
+    color: #0b1e4d;
+    font-size: 20px;
+    font-weight: 900;
+}
+.ame-sign-lead,
+.ame-sign-meta,
+.ame-sign-ask,
+.ame-sign-status {
+    margin: 0 0 8px;
+    color: #111111;
+    font-size: 15px;
+    line-height: 1.45;
+    font-weight: 700;
+}
+.ame-sign-meta {
+    color: #334155;
+    font-weight: 800;
+}
+.ame-sign-old {
+    display: block;
+    width: min(100%, 520px);
+    height: auto;
+    margin: 0 0 10px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+}
+.ame-sign-old[hidden] {
+    display: none;
+}
+.ame-sign-board {
+    display: block;
+    width: 100%;
+    height: 210px;
+    margin: 0 0 10px;
+    background: #ffffff;
+    border: 2px dashed #0b1e4d;
+    border-radius: 16px;
+    touch-action: none;
+    cursor: crosshair;
+}
+.ame-sign-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.ame-sign-actions button {
+    min-height: 48px;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 12px;
+    background: #0b1e4d;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 800;
+}
+.ame-sign-card {
+    margin: 0 0 16px;
+}
+.ame-sign-card img {
+    display: block;
+    width: min(100%, 560px);
+    height: auto;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+}
+.ame-sign-card a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 8px;
+    padding: 8px 14px;
+    border-radius: 12px;
+    background: #0b1e4d;
+    color: #ffffff;
+    font-weight: 800;
+    text-decoration: none;
+}
+@media (max-width: 760px) {
+    .ame-sign-board {
+        height: 230px;
+    }
+    .ame-sign-actions button {
+        flex: 1 1 140px;
+    }
+}

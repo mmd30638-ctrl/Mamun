@@ -1,0 +1,297 @@
+/**
+ * Customer payout receipt + statement — print / PDF / image / share.
+ */
+.ame-slip-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+.ame-slip-bar .cdesk-btn,
+.ame-slip-bar .ame-slip-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: #111;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  font-weight: 800;
+  font-size: 13px;
+  text-decoration: none !important;
+  cursor: pointer;
+  font-family: inherit;
+}
+/* box-icon-white সাদা ঘরে সাদা লেখা বসায় — এই বাটনে ঘন রং + সাদা লেখা। */
+html body #main-content#main-content #ameSlipBar.ame-slip-bar button.ame-slip-btn,
+html body #main-content#main-content #ameSlipBar.ame-slip-bar a.ame-slip-btn {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: 0 !important;
+}
+html body #main-content#main-content #ameSlipBar.ame-slip-bar button.ame-slip-btn *,
+html body #main-content#main-content #ameSlipBar.ame-slip-bar a.ame-slip-btn * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+html body #main-content#main-content #ameSlipBar.ame-slip-bar button.ame-slip-btn:nth-child(1) { background: #0b1e4d !important; }
+html body #main-content#main-content #ameSlipBar.ame-slip-bar button.ame-slip-btn:nth-child(2) { background: #b91c1c !important; }
+html body #main-content#main-content #ameSlipBar.ame-slip-bar button.ame-slip-btn:nth-child(3) { background: #1d4ed8 !important; }
+html body #main-content#main-content #ameSlipBar.ame-slip-bar button.ame-slip-btn:nth-child(4) { background: #047857 !important; }
+html body #main-content#main-content #ameSlipBar.ame-slip-bar a.ame-slip-btn.ghost {
+  background: #ffffff !important;
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+  border: 2px solid #0b1e4d !important;
+}
+html body #main-content#main-content #ameSlipBar.ame-slip-bar a.ame-slip-btn.ghost * {
+  color: #0b1e4d !important;
+  -webkit-text-fill-color: #0b1e4d !important;
+}
+.ame-slip-bar .ame-slip-btn.ghost,
+.ame-slip-bar .cdesk-btn.ghost {
+  background: #fff;
+  color: #111 !important;
+  border-color: rgba(17, 17, 17, 0.12);
+}
+.ame-slip-bar .ame-slip-btn[disabled] {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+#ame-slip.ame-slip-paper {
+  --ink: #111111;
+  --mute: #64748b;
+  --line: rgba(17, 17, 17, 0.12);
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0;
+  background: #fff;
+  color: #111;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+  font-family: "DM Sans", "Noto Sans Bengali", sans-serif;
+}
+#ame-slip.ame-slip-paper .ame-slip-rule {
+  display: flex;
+  height: 5px;
+}
+#ame-slip.ame-slip-paper .ame-slip-rule span { flex: 1; }
+#ame-slip.ame-slip-paper .ame-slip-rule .r1 { background: #111; }
+#ame-slip.ame-slip-paper .ame-slip-rule .r2 { background: #1d4ed8; }
+#ame-slip.ame-slip-paper .ame-slip-rule .r3 { background: #15803d; }
+#ame-slip.ame-slip-paper .ame-slip-rule .r4 { background: #be123c; }
+
+.ame-slip-shop {
+  text-align: center;
+  padding: 18px 18px 12px;
+}
+.ame-slip-shop h2 {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+.ame-slip-shop p {
+  margin: 4px 0 0;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 12px;
+}
+.ame-slip-ref {
+  text-align: center;
+  padding: 0 18px 14px;
+}
+.ame-slip-ref b {
+  display: block;
+  font-size: 26px;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.ame-slip-body {
+  padding: 0 18px 16px;
+}
+.ame-slip-who {
+  padding: 12px 0;
+  border-top: 1px dashed var(--line);
+}
+.ame-slip-who strong {
+  display: block;
+  font-size: 17px;
+  font-weight: 800;
+}
+.ame-slip-who small {
+  display: block;
+  margin-top: 3px;
+  color: #64748b;
+  font-weight: 600;
+}
+.ame-slip-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 4px 0 12px;
+}
+.ame-slip-grid article {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fafafa;
+}
+.ame-slip-grid article.wide { grid-column: 1 / -1; }
+.ame-slip-grid span {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  color: #64748b;
+}
+.ame-slip-grid b {
+  display: block;
+  margin-top: 4px;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+.ame-slip-grid .is-out b { color: #be123c; }
+.ame-slip-grid .is-left b { color: #1d4ed8; }
+.ame-slip-rows {
+  border-top: 1px dashed var(--line);
+  padding-top: 10px;
+}
+.ame-slip-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: 13px;
+  font-weight: 650;
+}
+.ame-slip-row span:first-child { color: #64748b; }
+.ame-slip-row span:last-child { text-align: right; font-weight: 800; }
+.ame-slip-foot {
+  text-align: center;
+  padding: 10px 16px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+#ame-slip.ame-slip-statement {
+  background: #fff;
+  color: #111;
+  border-radius: 18px;
+}
+
+.ame-slip-sheet {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 17, 17, 0.42);
+  z-index: 12000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+.ame-slip-sheet[hidden] { display: none !important; }
+.ame-slip-card {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
+}
+.ame-slip-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.ame-slip-x {
+  border: 0;
+  background: transparent;
+  font-size: 26px;
+  line-height: 1;
+  color: #64748b;
+  cursor: pointer;
+}
+.ame-slip-hint {
+  margin: 0 0 12px;
+  font-size: 12.5px;
+  color: #64748b;
+  line-height: 1.45;
+  font-weight: 600;
+}
+.ame-slip-opt {
+  width: 100%;
+  margin-bottom: 8px;
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  background: #f8fafc;
+  color: #111;
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+}
+.ame-slip-msg {
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #166534;
+  text-align: center;
+}
+.ame-slip-busy {
+  position: fixed;
+  inset: 0;
+  z-index: 12100;
+  background: rgba(255, 255, 255, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #111;
+}
+.ame-slip-busy[hidden] { display: none !important; }
+
+@media print {
+  .ame-slip-bar,
+  .ame-slip-sheet,
+  .ame-slip-busy,
+  .no-print,
+  .master-header-fixed,
+  #mySidebar,
+  .custom-sidebar,
+  .sidebar-backdrop,
+  .hdr-icon-btn,
+  #ameClockEditBox,
+  .ame-tbar {
+    display: none !important;
+  }
+  #main-content,
+  .ame-print-root,
+  .cdesk-wrap {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    box-shadow: none !important;
+  }
+  #ame-slip.ame-slip-paper {
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    border: 0;
+  }
+  html, body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+}

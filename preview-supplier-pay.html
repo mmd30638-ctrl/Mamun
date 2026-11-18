@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>সাপ্লায়ার পেমেন্ট</title>
+  <link rel="stylesheet" href="/assets/css/ame-front-colors.css?v=10.98.479">
+  <link rel="stylesheet" href="/assets/css/front-desk-lock.819.css?v=10.98.479">
+  <link rel="stylesheet" href="/assets/css/supplier-settlement.css?v=10.98.479">
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; }
+    .master-header-fixed {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999999;
+      height: 56px; background: #0b2a5a; color: #fff;
+      display: flex; align-items: center; padding: 0 12px; font-weight: 800;
+    }
+    #main-content { min-height: 100vh; padding: 68px 12px 24px; }
+  </style>
+</head>
+<body class="ame-spay-page ame-premium-ui">
+  <header class="master-header-fixed">APONSHOP · সাপ্লায়ার পেমেন্ট</header>
+  <div id="main-content">
+    <div class="spay">
+      <h1>সাপ্লায়ার পেমেন্ট ও সেটেলমেন্ট</h1>
+      <header class="spay-hero">
+        <div>
+          <h2>মেসার্স রহিম ট্রেডার্স</h2>
+          <p>মোবাইল: 01710000000</p>
+          <p>ঠিকানা: চাঁদপুর · কোড: SUP-042 · শর্ত: ৩০ দিন</p>
+        </div>
+        <div class="spay-hero-due">
+          <span>বর্তমান বকেয়া</span>
+          <strong>84,500.00</strong>
+        </div>
+      </header>
+      <div class="spay-kpis">
+        <div class="spay-kpi"><span>ক্রয়</span><strong>1,20,000.00</strong></div>
+        <div class="spay-kpi ok"><span>পরিশোধ</span><strong>35,500.00</strong></div>
+        <div class="spay-kpi danger"><span>বকেয়া</span><strong>84,500.00</strong></div>
+        <div class="spay-kpi danger"><span>ওভারডিউ</span><strong>12,000.00</strong></div>
+        <div class="spay-kpi"><span>আজকের পেমেন্ট</span><strong>0.00</strong></div>
+        <div class="spay-kpi"><span>সর্বশেষ</span><strong>8,000.00</strong></div>
+        <div class="spay-kpi"><span>রিটার্ন</span><strong>0.00</strong></div>
+      </div>
+      <p class="spay-live-row">
+        <span>আগে <b>84,500.00</b></span>
+        <span>এখন দিচ্ছেন <b>10,000.00</b></span>
+        <span>পরে থাকবে <b>74,500.00</b></span>
+      </p>
+      <a class="spay-btn primary spay-pay-go" href="#spForm">পেমেন্ট দিন</a>
+      <form class="spay-card" id="spForm" onsubmit="return false;">
+        <div class="spay-grid">
+          <div><label>তারিখ</label><input type="date" value="2026-10-07"></div>
+          <div><label>টাকা</label><input type="number" value="10000"></div>
+          <div><label>পদ্ধতি</label><select><option>নগদ</option></select></div>
+          <div><label>অ্যাকাউন্ট</label><select><option>ক্যাশ · cash</option></select></div>
+        </div>
+        <div class="spay-row spay-submit-near" style="margin: 8px 0 12px;">
+          <button class="spay-btn primary" type="button">সেভ</button>
+          <button class="spay-btn" type="button">ড্রাফট</button>
+          <a class="spay-btn" href="#">হিস্টরি</a>
+        </div>
+      </form>
+      <section class="spay-card">
+        <h2>মেমো</h2>
+        <div class="spay-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ইনভয়েস</th><th>তারিখ</th><th>মোট</th><th>পরিশোধ</th><th>বাকি</th><th>অবস্থা</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>PUR-1021</td><td>01-09-2026</td>
+                <td class="spay-amt">50,000.00</td>
+                <td class="spay-amt">20,000.00</td>
+                <td class="spay-amt">30,000.00</td>
+                <td><span class="spay-badge partial">আংশিক</span></td>
+              </tr>
+              <tr>
+                <td>PUR-1088</td><td>20-09-2026</td>
+                <td class="spay-amt">54,500.00</td>
+                <td class="spay-amt">0.00</td>
+                <td class="spay-amt">54,500.00</td>
+                <td><span class="spay-badge due">বকেয়া</span></td>
+              </tr>
+              <tr>
+                <td>PUR-0990</td><td>12-08-2026</td>
+                <td class="spay-amt">15,500.00</td>
+                <td class="spay-amt">15,500.00</td>
+                <td class="spay-amt">0.00</td>
+                <td><span class="spay-badge paid">পরিশোধ</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,578 @@
+# 10.98.1000 — মেমো সাদা স্ক্রিন + Chrome লেআউট (standalone বুট বাদ)
+includes/responsive_boot.php
+assets/js/premium-saas.710.js
+# 10.98.999 — বিক্রয়/ক্রয় মেমো: Chrome PC হোয়াটসঅ্যাপ — ডান খালি 
+modules/purchase/memo_digital.php
+assets/css/ame-memo-sheet.css
+assets/js/ame-memo-file.js
+# 10.98.998 — বিক্রয় মেমো: PC তে ডান পাশ খালি — সেন্টার + পূর্ণ ব্যাকগ্রাউন্ড
+modules/sales/invoice.php
+assets/js/ame-desktop-site.js
+assets/js/ame-page-fit.js
+assets/css/invoice-print-fix.css
+includes/config.php
+VERSION.txt
+# 10.98.996 — পরিচিত: গ্রুপ অনুযায়ী ডান পাশে তালিকা
+modules/family/contacts.php
+modules/family/process.php
+assets/css/family.css
+includes/config.php
+VERSION.txt
+# 10.98.995 — পারিবারিক: পরিচিত/সদস্য সংরক্ষণ + স্কিমা 
+modules/family/process.php
+modules/family/contacts.php
+modules/family/members.php
+includes/family_schema.php
+includes/account_functions.php
+includes/config.php
+VERSION.txt
+# 10.98.994 — বিক্রয় মেমো: হোয়াটসঅ্যাপ ডেস্কটপে ডান ফাঁকা ঠিক
+modules/sales/invoice.php
+assets/js/ame-desktop-site.js
+includes/config.php
+VERSION.txt
+# 10.98.993 — স্টেটমেন্ট: খাত হেডার + নিচে খাত মোট সারি
+modules/accounts/partner_sales_share.php
+assets/css/partner-statement.css
+includes/config.php
+VERSION.txt
+# 10.98.992 — স্টেটমেন্ট: খাত/সর্বমোট কলাম অনুযায়ী মোট টাকা
+modules/accounts/partner_sales_share.php
+assets/css/partner-statement.css
+includes/config.php
+VERSION.txt
+# 10.98.991 — স্টেটমেন্ট: মোট সারিতে লাভ ও পার্টনার অংশের যোগফল
+modules/accounts/partner_sales_share.php
+assets/css/partner-statement.css
+includes/config.php
+VERSION.txt
+# 10.98.990 — স্টেটমেন্ট: বিক্রয়/ক্রয় পণ্য পরিমাণ + খাত সারাংশ
+includes/partner_accounting.php
+modules/accounts/partner_sales_share.php
+assets/css/partner-statement.css
+includes/config.php
+VERSION.txt
+# 10.98.989 — স্টেটমেন্ট: পার্টনার নাম হেডার কাটা পড়া ফিক্স
+assets/css/partner-statement.css
+modules/accounts/partner_sales_share.php
+includes/config.php
+VERSION.txt
+# 10.98.988 — স্টেটমেন্ট সারাংশ: নিচের গণনা এলোমেলো ফিক্স (ফ্লো + মোবাইল)
+assets/css/partner-statement.css
+modules/accounts/partner_sales_share.php
+includes/config.php
+VERSION.txt
+# 10.98.987 — স্টেটমেন্ট: বিক্রয়→খরচ→৬-কলাম সাবেক/+/− (ড্যাশবোর্ড মিল)
+includes/partner_accounting.php
+modules/accounts/partner_accounting.php
+modules/accounts/partner_sales_share.php
+modules/accounts/PA_REPORT_STANDARD.md
+assets/css/partner-sales-share.css
+includes/config.php
+VERSION.txt
+# 10.98.986 — তারিখ বাছাই → এক ক্লিকে স্টেটমেন্ট (PA-INTL-100 রেঞ্জ মিল)
+includes/partner_accounting.php
+modules/accounts/partner_accounting.php
+modules/accounts/partner_sales_share.php
+modules/accounts/PA_REPORT_STANDARD.md
+assets/css/partner-accounting.css
+includes/config.php
+VERSION.txt
+# 10.98.985 — পার্টনার ড্যাশবোর্ড: শেয়ার বার বন্ধ, স্টেটমেন্ট পেজে শেয়ার
+modules/accounts/partner_accounting.php
+modules/accounts/PA_REPORT_STANDARD.md
+assets/css/partner-accounting.css
+includes/accounts_print_share.php
+includes/config.php
+VERSION.txt
+# 10.98.984 — পার্টনার প্রোফাইল: হিরো আইকন + শিট
+modules/accounts/partner_accounting.php
+assets/css/partner-accounting.css
+includes/config.php
+VERSION.txt
+# 10.98.983 — নিট লাভ: অটো ব্যালেন্স, পরিশোধ/বণ্টন UI বাতিল
+modules/accounts/partner_accounting.php
+assets/css/partner-accounting.css
+modules/accounts/PA_REPORT_STANDARD.md
+includes/config.php
+VERSION.txt
+# 10.98.982 — পার্টনার রেঞ্জ রিপোর্ট PA-INTL-100 (হিরো rf/rt)
+includes/partner_accounting.php
+modules/accounts/partner_accounting.php
+modules/accounts/PA_REPORT_STANDARD.md
+assets/css/partner-accounting.css
+includes/config.php
+VERSION.txt
+# 10.98.981 — পার্টনার: যোগদান তারিখ পিকার (CSS + মোবাইল ক্লিক)
+assets/css/pa-datepicker.css
+assets/js/pa-datepicker.js
+modules/accounts/partner_accounting.php
+partials/footer.php
+includes/config.php
+VERSION.txt
+# 10.98.980 — এক্সচেঞ্জ: মেমো ব্যালেন্স চিহ্ন + ফর্ম লেবেল
+modules/returns/v2/view.php
+modules/returns/v2/create_exchange.php
+includes/config.php
+VERSION.txt
+# 10.98.979 — ফেরত মেমো টেবিল হেডার: নেভি নীল বাতিল
+assets/css/sale-return-memo.css
+modules/returns/v2/view.php
+includes/config.php
+VERSION.txt
+# 10.98.978 — ফেরত মেমো: নীল বর্ডার → ইমেরাল্ড
+modules/returns/v2/view.php
+assets/css/sale-return-memo.css
+includes/config.php
+VERSION.txt
+# 10.98.977 — ফেরত মেমো শেয়ার ছবি: ডান পাশ কাটা ঠিক (capture box)
+assets/js/ame-memo-file.js
+includes/config.php
+VERSION.txt
+# 10.98.976 — ফেরত মেমো: মোবাইল শেয়ার/ডেস্কটপ সাইট কাটা ঠিক
+assets/css/sale-return-memo.css
+assets/js/ame-memo-file.js
+assets/js/ame-desktop-site.js
+modules/returns/v2/view.php
+partials/header.php
+includes/config.php
+VERSION.txt
+# 10.98.975 — গ্লোবাল: হোয়াটসঅ্যাপে মেমো ছবি (ame-memo-file.js)
+assets/js/ame-memo-file.js
+partials/footer.php
+modules/sales/invoice.php
+modules/hrm/worker_success.php
+includes/config.php
+VERSION.txt
+# 10.98.974 — হোয়াটসঅ্যাপ = মেমো ছবি শেয়ার + ফেরত মেমো ডেস্কটপ সাইট ফিট
+assets/js/ame-memo-file.js
+assets/css/sale-return-memo.css
+assets/js/ame-desktop-site.js
+modules/returns/v2/view.php
+partials/header.php
+includes/config.php
+VERSION.txt
+# 10.98.973 — ফেরত মেমো: মোবাইল ডেস্কটপ সাইটে কাটা ঠিক
+assets/css/sale-return-memo.css
+assets/js/ame-desktop-site.js
+modules/returns/v2/view.php
+partials/header.php
+includes/config.php
+VERSION.txt
+# 10.98.972 — বিক্রয় ফেরত ড্যাশবোর্ড: লাইভ KPI + সাম্প্রতিক মেমো লিংক
+modules/returns/v2/dashboard.php
+modules/returns/v2/register.php
+modules/returns/v2/view.php
+includes/config.php
+VERSION.txt
+# 10.98.971 — কর্মী: বেতন দেওয়ার পর কার্ড ব্যালেন্স ০
+includes/employee_hub.php
+includes/config.php
+VERSION.txt
+# 10.98.970 — ফেরত/এক্সচেঞ্জ: add_ledger_entry ফিক্স + কাস্টমার ব্যালেন্স
+includes/return_v2_functions.php
+modules/returns/v2/actions/save_exchange.php
+modules/returns/v2/create_exchange.php
+includes/config.php
+VERSION.txt
+# 10.98.969 — PARTY DRIFT: স্বয়ং মিলান + Error Monitor বন্ধ (stale সিল)
+includes/party_amount_shield.php
+includes/ledger_lock.php
+includes/config.php
+VERSION.txt
+# 10.98.968 — এক্সচেঞ্জ: সার্ভার সার্চ + খুচরা/পাইকারি/ডিলার
+modules/returns/v2/create_exchange.php
+modules/returns/v2/actions/search_lookup.php
+includes/config.php
+VERSION.txt
+# 10.98.967 — মোবাইল পেমেন্ট মেমো ফুল-প্রস্থ দেখানো+শেয়ার ক্রপ
+assets/js/ame-desktop-site.js
+assets/js/ame-memo-file.js
+assets/css/customer-pay-receipt-memo.css
+modules/customers/receipt.php
+modules/customers/withdraw_receipt.php
+includes/config.php
+VERSION.txt
+# 10.98.966 — দ্রুত ফেরত: খুচরা/পাইকারি/ডিলার/প্রাইস টগল
+modules/returns/v2/quick_return.php
+includes/config.php
+VERSION.txt
+# 10.98.965 — PARTY DRIFT অটো-সিঙ্ক+লগ; মোবাইল পেমেন্ট মেমো পূর্ণ প্রস্থ
+includes/party_amount_shield.php
+includes/ledger_lock.php
+assets/js/ame-desktop-site.js
+assets/js/ame-memo-file.js
+assets/css/customer-pay-receipt-memo.css
+modules/customers/receipt.php
+includes/config.php
+VERSION.txt
+# 10.98.964 — দ্রুত ফেরত: ক্রেতা+পণ্য → স্টক/বকেয়া/শেয়ার মেমো এক ক্লিক
+modules/returns/v2/quick_return.php
+modules/returns/v2/actions/quick_customer_return.php
+includes/return_v2_functions.php
+modules/returns/sales_return_module.php
+modules/returns/v2/dashboard.php
+includes/lang/bn_ui.php
+includes/config.php
+VERSION.txt
+# 10.98.963 — বিক্রয় ফেরত: রেজিস্টার ক্রেতার নাম → যেকোনো মেমো থেকে পণ্য সার্চ
+includes/return_v2_functions.php
+modules/returns/v2/actions/search_customer_products.php
+modules/returns/v2/create_invoice_return.php
+includes/config.php
+VERSION.txt
+# 10.98.962 — বিক্রয় ফেরত: সাইডবার এক লিংক, মডিউল হাব + ট্যাব নেভ (অন্য মডিউল অপরিবর্তিত)
+modules/returns/index.php
+modules/returns/sales_return_module.php
+modules/returns/SALES_RETURN_MODULE.md
+modules/returns/v2/partials/module_nav.php
+modules/returns/v2/dashboard.php
+modules/returns/v2/register.php
+modules/returns/v2/create_invoice_return.php
+modules/returns/v2/create_manual_return.php
+modules/returns/v2/create_exchange.php
+modules/returns/v2/view.php
+modules/returns/return_report.php
+modules/returns/history.php
+assets/css/sales-return-module.css
+partials/sidebar-menu.php
+partials/header.php
+includes/lang/bn_ui.php
+includes/feature_registry.php
+includes/config.php
+VERSION.txt
+# 10.98.961 — ড্রাফট মেমো: কমপ্লিট না হলে কমিশন/কর্মী হিস্ট্রিতে নয়; ড্রাফট সেভে পুরনো লাইন পurge
+includes/sales/sale_finance.php
+includes/engineer_bill_lock.php
+includes/engineer_statement_post.php
+includes/employee_hub.php
+modules/sales/process_sale.php
+modules/hrm/worker_history.php
+WORKER_SERVICE_LOCK.txt
+includes/config.php
+VERSION.txt
+# 10.98.960 — রিটার্ন: রেজিস্টার ক্রেতা নামে মেমো সার্চ + সাবেক ব্যালেন্স
+includes/return_v2_functions.php
+modules/returns/v2/actions/search_customer_memos.php
+modules/returns/v2/actions/search_invoice.php
+modules/returns/v2/create_invoice_return.php
+modules/returns/v2/create_exchange.php
+includes/config.php
+VERSION.txt
+# 10.98.959 — রিভার্ট: বিক্রয় রিটার্ন রেজিস্ট্রি (958) বাতিল — আগের POS/রিটার্ন
+includes/sales/sale_common.php
+modules/sales/process_sale.php
+assets/js/pos-payment.js
+modules/sales/pos_workspace.php
+modules/sales/pos_customer_script.php
+modules/sales/pos_style.php
+includes/return_v2_functions.php
+modules/returns/v2/actions/search_invoice.php
+modules/returns/v2/actions/save_invoice_return.php
+includes/config.php
+VERSION.txt
+# 10.98.957 — SM40 শোনার পেজ (404 ঠিক) + প্যাচে ফাইল অন্তর্ভুক্ত
+sm40_listen.php
+modules/sm40/listen.php
+assets/css/sm40-listen-hub.css
+includes/sm40_portal.php
+includes/islamic_audio.php
+assets/js/islamic-audio.js
+assets/js/sm40-home-player.js
+partials/header.php
+includes/config.php
+VERSION.txt
+# 10.98.954 — সাবেক পাওনা: ক্লিকে সমন্বয় প্যানেল (আজকের কাজের মতো) + লং প্রেস ০
+includes/employee_hub.php
+modules/hrm/employee_list.php
+assets/js/employee-hub.js
+assets/css/employee-hub.css
+includes/config.php
+VERSION.txt
+# 10.98.953 — কর্মী কার্ড: সাবেক পাওনায় লং প্রেস → ০ (আজকের অগ্রিম অপরিবর্তিত)
+includes/employee_hub.php
+modules/hrm/hub_api.php
+modules/hrm/employee_list.php
+assets/js/employee-hub.js
+assets/css/employee-hub.css
+includes/config.php
+VERSION.txt
+# 10.98.952 — SM40 হেডার: আলাদা আইকন + লগইনে ডিজিটাল লাইফ কালার
+assets/css/sm40-home-link.css
+assets/js/sm40-home-player.js
+partials/header.php
+includes/config.php
+VERSION.txt
+# 10.98.951 — PARTY DRIFT: সিল বেসলাইন ফাংশন + অটো-সিঙ্ক (PHP error_monitor শান্ত)
+includes/ledger_lock.php
+includes/party_amount_shield.php
+includes/config.php
+VERSION.txt
+APONSHOP_STACK_UPDATE.txt
+data/patch_get_fallback.json
+PARTY_DRIFT_FIX_951_BN.txt
+# 10.98.950 — ইসলামিক অডিও একের পর এক অটো + পেজ জুড়ে রিজিউম; SM40 গ্লোবাল ডক
+assets/js/islamic-audio.js
+assets/css/islamic-audio.css
+includes/islamic_audio.php
+ISLAMIC_AUDIO_AUTOSEQ_950_BN.txt
+# 10.98.949 — SM40 মোবাইল শর্টকাট: সব পেজে ভাসমান ডক, নামযুক্ত ট্যাব
+assets/js/sm40-home-player.js
+assets/css/sm40-home-link.css
+partials/header.php
+includes/sm40_portal.php
+includes/config.php
+VERSION.txt
+SM40_HOME_LINK_947_BN.txt
+APONSHOP_STACK_UPDATE.txt
+data/patch_get_fallback.json
+# 10.98.948 — SM40 পপআপ প্লেয়ার (হোমে কাজ করতে গিয়ে অডিও উইন্ডোতে চালু)
+assets/js/sm40-home-player.js
+# 10.98.947 — হোমপেজ হেডার: ফ্রেশ হোম + SM40 লিংক (শুধু index)
+includes/sm40_portal.php
+assets/css/sm40-home-link.css
+partials/header.php
+includes/config.php
+VERSION.txt
+SM40_HOME_LINK_947_BN.txt
+# 10.98.946 — পেমেন্ট গ্রহণ + POS: পার্টনার খরচ ডিসকাউন্ট 
+includes/partner_accounting.php
+assets/css/partner-cost-discount-box.css
+modules/customers/payment-receive.php
+modules/customers/actions/process_payment.php
+modules/sales/pos.php
+modules/sales/pos_summary.php
+modules/sales/process_sale.php
+assets/js/pos-payment.js
+assets/js/pos-cart.js
+includes/config.php
+VERSION.txt
+APONSHOP_STACK_UPDATE.txt
+data/patch_get_fallback.json
+PARTNER_COST_DISCOUNT_946_BN.txt
+# 10.98.944 — উত্তোলন/পেমেন্ট মেমোতে শোরুম ১২% অফার লাইন (সার্ভার-সাইড)
+includes/helpers.php
+assets/js/ame-memo-file.js
+assets/css/memo-clear.css
+includes/config.php
+# 10.98.943 — সাইডবার রঙিন লেবেল + উত্তোলন রিপোর্ট থেকে রসিদ মেমো লিংক
+assets/css/sidebar-menu-label-colors.css
+assets/js/sidebar-label-colors.js
+assets/css/withdrawals-report-memo-link.css
+assets/js/withdrawals-report-memo.js
+partials/sidebar-icons.php
+partials/header.php
+partials/footer.php
+modules/customers/withdrawals_report.php
+includes/config.php
+# 10.98.942 — page_layout API: ame_page_fit_items_for_path() (HTTP 500 ফিক্স)
+includes/ame_page_fit_actions.php
+modules/settings/actions/page_layout.php
+includes/config.php
+# 10.98.941 — কাস্টমার উত্তোলন রসিদ = পেমেন্ট রসিদ মেমো + রেসপন্স
+assets/css/customer-pay-receipt-memo.css
+assets/css/ame-pages-critical-responsive.css
+modules/customers/withdraw_receipt.php
+modules/customers/receipt.php
+CRITICAL_PAGES_RESPONSIVE_BN.txt
+data/patch_get_fallback.json
+get.php
+.htaccess
+# 10.98.940 — POS + পেমেন্ট গ্রহণ ক্রিটিক্যাল রেসপন্সিভ
+assets/css/ame-pages-critical-responsive.css
+modules/customers/payment-receive.php
+includes/global_responsive_standard.php
+includes/responsive_boot.php
+GLOBAL_RESPONSIVE_ARCHITECTURE.md
+CRITICAL_PAGES_RESPONSIVE_BN.txt
+tools/pos_payment_responsive_lab.html
+# 10.98.939 — গ্লোবাল রেসপন্সিভ ও ভিউপোর্ট মাস্টার (PATCH, .env/uploads/SPEED.txt স্পর্শ করে না)
+assets/css/ame-global-responsive-master.css
+assets/js/ame-viewport-tier.js
+assets/css/ame-device.css
+assets/js/ame-desktop-site.js
+assets/js/responsive-fix.js
+assets/js/ame-pos-device-setup.js
+assets/js/device-display.js
+assets/js/ame-runtime.812.js
+assets/js/saas-os.806.js
+includes/global_responsive_standard.php
+includes/responsive_boot.php
+includes/config.php
+partials/header.php
+partials/footer.php
+GLOBAL_RESPONSIVE_ARCHITECTURE.md
+UI_UX_DEVICE_STANDARD.md
+tools/responsive_architecture_check.php
+tools/responsive_viewport_preview.html
+storage/opc.ver
+# 10.98.925 — ইসলামিক অডিও দ্রুত প্লে (সরাসরি ফাইল + স্ট্রিম বাফার; MP3 কপি; loudnorm বাতিল)
+includes/islamic_audio.php
+modules/islamic_audio_stream.php
+uploads/islamic_audio/.htaccess
+# 10.98.900 — হোমপেজ ইসলামিক অডিও + URL ডাউনলোড + অটো কম্প্রেশন
+includes/islamic_audio.php
+index.php
+ISLAMIC_AUDIO_BN.txt
+assets/css/islamic-audio.css
+assets/css/islamic-audio-admin.css
+assets/js/islamic-audio.js
+assets/js/islamic-audio-admin.js
+modules/settings/islamic_audio.php
+modules/settings/islamic_audio_api.php
+modules/settings/tools.php
+tools/test_islamic_audio.php
+# 10.98.899 — ডুপ্লিকেট মেমো হার্ড ব্লক + ইঞ্জিনিয়ার/সার্ভিস কোর লক
+includes/engineer_bill_lock.php
+ENGINEER_SERVICE_PROTECTED_BN.txt
+tools/engineer_bill_lock_manifest.sha256
+tools/pin_engineer_bill_lock.php
+tools/test_sale_submit_guard.php
+includes/config.php
+# 10.98.898 — দ্রুত ডুপ্লিকেট কনফার্ম উইন্ডো ১৫ সেকেন্ড (৬→১৫)
+# 10.98.897 — POS ৬ সেক: দ্রুত ডুপ্লিকেট কনফার্ম মোডাল (সার্ভার+ফোন মেমরি)
+# 10.98.896 — আজকের বেতন বক্স = কার্ড (নাস্তা ৮০ টাকার মতো ফাঁক ফিক্স, জিরো ২৪৫→০)
+# 10.98.895 — এডমিন: আজকের কাজ/বেতন/ব্যালেন্স/পাওনা ক্লিকে জিরো (বক্স সমন্বয়)
+# 10.98.894 — কর্মী কার্ড: আজকের পাওনা / বেতন দেওয়া হয়েছে (salaries.payment_date)
+# 10.98.893 — কার্ড/পেমেন্ট = কাজের হিস্ট্রি একই যোগ; worker_pay employee_hub; pending তারিখ
+modules/hrm/worker_pay.php
+# 10.98.892 — কমিশন তারিখ লেজার+বিক্রয় (কার্ড/হিস্ট্রি খালি ফিক্স); staff_duty; হিস্ট্রি কোয়েরি ফলব্যাক
+includes/staff_duty.php
+tools/test_commission_day_logic.php
+# 10.98.891 — কর্মী কার্ড আজকের কাজ ঠিক; হিস্ট্রিতে সময়; রঙিন দ্রুত-সাবমিট মোডাল; INTERVAL 
+assets/js/ame-resubmit-guard.js
+assets/css/ame-resubmit-guard.css
+modules/hrm/worker_history.php
+# 10.98.890 — employee_list.php সিনট্যাক্স (বন্ধনী) ফিক্স
+# 10.98.889 — ৬ সেকেন্ডে ডুপ্লিকেট হলে সুন্দর কনফার্ম (পণ্য/কাজ), হার্ড ব্লক নয়
+assets/js/employee-hub.js
+assets/js/pos-payment.js
+assets/js/offline-queue.js
+modules/hrm/hub_api.php
+# 10.98.888 — কর্মী কার্ড: আজকের ব্যালেন্স; কমিশন তারিখ; সময়ভিত্তিক ডাবল বন্ধ
+modules/hrm/employee_list.php
+# 10.98.887 — বিক্রয় কমপ্লিটের পর নিচের শেয়ার শিট বন্ধ (ক্যাশ বাটন থেকে share=1 নয়)
+assets/js/pos-cash-paid.js
+modules/sales/invoice.php
+# 10.98.886 — POS কার্টে EMP-#### কাজের বিল → sale_services + কর্মী স্টেটমেন্ট
+includes/sales/sale_finance.php
+modules/sales/pos_workspace.php
+# 10.98.885 — একত্রিত PATCH (878–884 সব কিছু; শুধু এটি ইন্সটল)
+deliverables/KORMI_EKTI_PATCH.txt
+# 10.98.884 — 062240: same_job_line ডিডাপ (ওয়েল্ডিং+কাজের বিল = ২ লাইন)
+# 10.98.883 — কাজের হিস্ট্রি/লেজার: logical_key ডিডাপ (ডুপ sc.id), sale_services বাদ
+# 10.98.882 — বেতন process_salary + প্রিভিউ: ame_emp_hub_pending_job_share (ডাবল SUM বন্ধ)
+modules/hrm/process_salary.php
+# 10.98.881 — কর্মী সার্ভিস লক (পারসেন্ট/নির্ধারিত, ডাবল ভাগ বন্ধ, কমিশন একবার)
+includes/worker_work_lock.php
+WORKER_SERVICE_LOCK.txt
+modules/sales/process_sale.php
+# 10.98.880 — কর্মী লেজার/স্টেটমেন্টে কমিশন+ম্যানুয়াল কাজের টাকা দ্বিগুণ ঠিক (879 সহ)
+# 10.98.879 — কর্মী কাজের হিস্ট্রি ডাবল মেমো (062240 ইত্যাদি) ঠিক + নতুন এন্ট্রি ব্লক
+includes/worker_desk.php
+includes/employee_hub.php
+# 10.98.876 — বিক্রয় পেজ «পেজ সাজান» (সাইডবার শর্টকাট)
+assets/js/ame-page-fit.js
+assets/css/ame-page-fit.css
+assets/css/page-layout-pos-override.css
+assets/js/page-layout-global.js
+includes/page_layout.php
+partials/page_fit.php
+partials/footer.php
+includes/return_v2_functions.php
+modules/returns/v2/actions/search_invoice.php
+modules/returns/v2/create_invoice_return.php
+assets/css/pos-terminal-layout.css
+assets/css/ame-sale-desk-lock.css
+assets/js/pos-cart.js
+includes/easy_update_functions.php
+includes/config.php
+modules/sales/pos_workspace.php
+get.php
+.htaccess
+VERSION.txt
+APONSHOP_STACK_UPDATE.txt
+# 10.98.1001 — বিক্রয় কার্ট: নো স্ক্রল অটো-এক্সপ্যান্ড + স্থায়ী মোট অ্যামাউন্ট রো
+assets/css/ame-pos-cart-auto-expand.css
+# 10.98.1002 — ইনভয়েস এডিটে পণ্য বাতিল (ইতিহাস + বিক্রয় রিপোর্ট)
+includes/sales/sale_admin_edit.php
+modules/reports/invoice_edit.php
+modules/reports/process_invoice_edit.php
+modules/sales/history.php
+modules/reports/sales_report.php
+# 10.98.1003 — বিক্রয় ইনভয়েস: ১৫ পণ্য লাইনের পর পৃষ্ঠা ব্রেক
+modules/sales/invoice.php
+assets/css/invoice-print-fix.css
+# 10.98.1004 — ইনভয়েস শেয়ার/পিডিএফ: উচ্চ রেজুলেশন ক্যাপচার (html2canvas স্কেল + JPEG গুণমান)
+assets/js/ame-memo-file.js
+includes/config.php
+VERSION.txt
+# 10.98.1005 — /get/ প্যাচ: সার্ভারে জিপ না থাকলে GitHub raw রিডাইরেক্ট
+get.php
+# 10.98.1006 — মেমো ড্রাফট রি-ওপেন, কাস্টমার স্যুইচ লেজার রিভার্স, মেমো কপি
+includes/sales/sale_admin_edit.php
+includes/sales/sale_memo_copy.php
+modules/reports/process_invoice_edit.php
+modules/reports/invoice_edit.php
+modules/sales/invoice.php
+# 10.98.1007 — ড্রাফট লিস্ট ফিক্স (store_id) + পণ্য বাতিল সেভ ঠিক
+modules/sales/draft_query.php
+assets/js/pos-draft.js
+includes/sales/sale_admin_edit.php
+modules/reports/process_invoice_edit.php
+modules/reports/invoice_edit.php
+# 10.98.1008 — রি-ওপেন ড্রাফট: DRF নম্বর, সব স্টোর লিস্ট, পণ্য সরাসরি রিস্টোর
+modules/sales/draft_query.php
+includes/sales/sale_admin_edit.php
+modules/reports/process_invoice_edit.php
+assets/js/pos-draft.js
+# 10.98.1009 — ড্রাফটে আনুন → POS সাম্প্রতিক বিক্রয় ড্রাফট মডিউল + reopen সেভ ঠিক
+modules/reports/process_invoice_edit.php
+modules/reports/invoice_edit.php
+assets/js/pos-draft.js
+modules/sales/pos_draft_style.php
+includes/config.php
+VERSION.txt
+# 10.98.1010 — reopen: sale_finance লোড + POS কমপ্লিট মোড ঠিক
+includes/sales/sale_draft.php
+includes/sales/sale_admin_edit.php
+modules/reports/process_invoice_edit.php
+modules/sales/pos_recent_boot.php
+assets/js/pos-draft.js
+includes/config.php
+VERSION.txt
+# 10.98.1011 — রি-ওপেনে কাজের বিল/সার্ভিস লাইন রিস্টোর
+includes/sales/sale_admin_edit.php
+includes/sales/sale_draft.php
+modules/sales/draft_query.php
+modules/sales/pos_workspace.php
+includes/config.php
+VERSION.txt
+# 10.98.1012 — পার্টনার: নিট লাভ + ইনভয়েস লাভ এক প্যানেল
+modules/accounts/partner_accounting.php
+includes/config.php
+VERSION.txt
+# 10.98.1013 — পার্টনার খরচ: খাত যোগ/বাতিল (ডাইনামিক), পুরনো হার্ডকোড বাদ
+includes/partner_accounting.php
+includes/partner_expense_ui.php
+modules/accounts/partner_accounting.php
+modules/accounts/actions/partner_accounting.php
+modules/accounts/partner_expense_export.php
+modules/accounts/partner_expense_voucher.php
+modules/accounts/partner_sales_share.php
+includes/config.php
+VERSION.txt
+# 10.98.1014 — পার্টনার খরচ: পেমেন্ট মাধ্যম = প্রকৃত অ্যাকাউন্ট (POS স্টাইল)
+includes/partner_accounting.php
+includes/partner_expense_ui.php
+modules/accounts/partner_accounting.php
+modules/accounts/actions/partner_accounting.php
+modules/accounts/partner_expense_export.php
+modules/accounts/partner_expense_voucher.php
+includes/config.php
+VERSION.txt
+# 10.98.1015 — স্টেটমেন্ট: সাবেক + মাসের লাভ = মুখ্য যোগফল (হিরো কার্ড)
+modules/accounts/partner_sales_share.php
+assets/css/partner-statement.css
+includes/config.php
+VERSION.txt

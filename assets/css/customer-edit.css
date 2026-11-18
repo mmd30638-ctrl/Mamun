@@ -1,0 +1,634 @@
+/* 10.98.541 — ক্রেতা সম্পাদনা: সাদা বক্স, গাঢ় লেখা, পাতলা রঙিন বর্ডার */
+body.ced-body {
+  margin: 0;
+  min-height: 100vh;
+  color: #003f8f;
+  background: #ffffff;
+  font-family: "Noto Sans Bengali", "Hind Siliguri", "Segoe UI", sans-serif;
+  padding: 12px 12px 150px;
+}
+.ced {
+  width: min(880px, 100%);
+  margin: 0 auto;
+}
+.ced-hero {
+  background: #fff;
+  border: 2px solid #0b1e4d;
+  border-radius: 22px;
+  padding: 14px;
+  box-shadow: 0 16px 0 rgba(11, 30, 77, 0.18);
+}
+.ced-who {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.ced-who > div { min-width: 0; flex: 1; }
+.ced-who > .ced-face { flex: 0 0 92px; width: 92px; }
+.ced-face {
+  width: 92px;
+  height: 92px;
+  flex: 0 0 92px;
+  border-radius: 24px;
+  border: 2px solid #003f8f;
+  background: #ffffff;
+  color: #003f8f;
+  -webkit-text-fill-color: #003f8f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: 40px;
+  font-weight: 900;
+}
+.ced-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.ced-kicker {
+  margin: 0 0 2px;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: #0f766e;
+}
+.ced-who h1 {
+  margin: 0;
+  font-size: 26px;
+  line-height: 1.15;
+  font-weight: 900;
+  color: #003f8f;
+  -webkit-text-fill-color: #003f8f;
+  overflow-wrap: anywhere;
+}
+.ced-code {
+  display: inline-flex;
+  margin-top: 8px;
+  min-height: 32px;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 2px solid #003f8f;
+  color: #003f8f;
+  -webkit-text-fill-color: #003f8f;
+  font-weight: 900;
+  font-size: 15px;
+}
+.ced-money {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+.ced-tile {
+  border-radius: 16px;
+  padding: 12px 12px 10px;
+  min-height: 86px;
+  background: #ffffff;
+  border: 2px solid #003f8f;
+  color: #0b1e4d;
+}
+.ced-tile span,
+.ced-tile small {
+  display: block;
+  font-weight: 800;
+  font-size: 13px;
+  opacity: 1;
+}
+.ced-tile b {
+  display: block;
+  margin-top: 4px;
+  font-size: 24px;
+  line-height: 1.1;
+  font-weight: 900;
+}
+body.ced-body .ced-tile.due {
+  background: #ffffff;
+  border-color: #b91c1c;
+  color: #b91c1c;
+}
+body.ced-body .ced-tile.due span,
+body.ced-body .ced-tile.due b {
+  color: #b91c1c;
+  -webkit-text-fill-color: #b91c1c;
+}
+body.ced-body .ced-tile.deposit {
+  background: #ffffff;
+  border-color: #047857;
+  color: #047857;
+}
+body.ced-body .ced-tile.deposit span,
+body.ced-body .ced-tile.deposit b {
+  color: #047857;
+  -webkit-text-fill-color: #047857;
+}
+body.ced-body .ced-tile.even {
+  background: #ffffff;
+  border-color: #003f8f;
+  color: #003f8f;
+}
+body.ced-body .ced-tile.even span,
+body.ced-body .ced-tile.even b {
+  color: #003f8f;
+  -webkit-text-fill-color: #003f8f;
+}
+body.ced-body .ced-tile.limit {
+  background: #ffffff;
+  border-color: #0b1e4d;
+  color: #0b1e4d;
+}
+body.ced-body .ced-tile.limit span,
+body.ced-body .ced-tile.limit b,
+body.ced-body .ced-tile.limit small {
+  color: #0b1e4d;
+  -webkit-text-fill-color: #0b1e4d;
+}
+
+.ced-block {
+  background: #ffffff;
+  border: 2px solid #003f8f;
+  border-radius: 20px;
+  padding: 18px 14px 8px;
+  margin: 26px 0 0;
+}
+.ced-block h2 {
+  margin: -34px 0 14px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 2px solid currentColor;
+  color: #003f8f;
+  -webkit-text-fill-color: #003f8f;
+  font-size: 16px;
+  font-weight: 900;
+}
+body.ced-body .ced-id { border-color: #003f8f; }
+body.ced-body .ced-id h2 { color: #003f8f; -webkit-text-fill-color: #003f8f; }
+body.ced-body .ced-contact { border-color: #0f766e; }
+body.ced-body .ced-contact h2 { color: #0f766e; -webkit-text-fill-color: #0f766e; }
+body.ced-body .ced-place { border-color: #166534; }
+body.ced-body .ced-place h2 { color: #166534; -webkit-text-fill-color: #166534; }
+body.ced-body .ced-guard { border-color: #5b21b6; }
+body.ced-body .ced-guard h2 { color: #5b21b6; -webkit-text-fill-color: #5b21b6; }
+body.ced-body .ced-rolesec { border-color: #c2410c; }
+body.ced-body .ced-rolesec h2 { color: #c2410c; -webkit-text-fill-color: #c2410c; }
+body.ced-body .ced-watch { border-color: #9a3412; }
+body.ced-body .ced-watch h2 { color: #9a3412; -webkit-text-fill-color: #9a3412; }
+body.ced-body .ced-ledger { border-color: #9f1239; }
+body.ced-body .ced-ledger h2 { color: #9f1239; -webkit-text-fill-color: #9f1239; }
+body.ced-body .ced-photo { border-color: #155e75; }
+body.ced-body .ced-photo h2 { color: #155e75; -webkit-text-fill-color: #155e75; }
+
+.ced-field { margin: 0 0 12px; }
+.ced-field label,
+.ced-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 15px;
+  font-weight: 900;
+  color: #003f8f;
+  -webkit-text-fill-color: #003f8f;
+}
+.ced-star { color: #b91c1c; }
+.ced-field input,
+.ced-field textarea,
+.ced-field select {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 54px;
+  padding: 12px 14px;
+  border: 2px solid #003f8f;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #0b1e4d;
+  -webkit-text-fill-color: #0b1e4d;
+  font: 900 18px/1.3 "Noto Sans Bengali", "Hind Siliguri", "Segoe UI", sans-serif;
+}
+body.ced-body .ced-field input::placeholder,
+body.ced-body .ced-field textarea::placeholder {
+  color: #1e3a5f;
+  -webkit-text-fill-color: #1e3a5f;
+  opacity: 1;
+}
+.ced-field textarea { min-height: 88px; resize: vertical; }
+.ced-field input:focus,
+.ced-field textarea:focus,
+.ced-field select:focus {
+  outline: 2px solid #c2410c;
+  outline-offset: 2px;
+  background: #ffffff;
+}
+.ced-contact .ced-field input,
+.ced-contact .ced-field textarea { border-color: #0f766e; }
+.ced-place .ced-field select { border-color: #166534; }
+.ced-guard .ced-field input { border-color: #5b21b6; }
+.ced-rolesec .ced-field input { border-color: #c2410c; }
+.ced-ledger .ced-field input { border-color: #9f1239; }
+.ced-photo .ced-field textarea { border-color: #155e75; }
+body.ced-body input[name="name"],
+body.ced-body input[name="guarantor_name"],
+body.ced-body input[name="father_name"] {
+  color: #003f8f;
+  -webkit-text-fill-color: #003f8f;
+}
+body.ced-body input[name="phone"],
+body.ced-body input[name="guarantor_phone"] {
+  color: #0f766e;
+  -webkit-text-fill-color: #0f766e;
+}
+body.ced-body .ced-field:has(input[name="phone"]) label,
+body.ced-body .ced-field:has(input[name="guarantor_phone"]) label {
+  color: #0f766e;
+  -webkit-text-fill-color: #0f766e;
+}
+body.ced-body input[name="credit_limit"] {
+  color: #0b1e4d;
+  -webkit-text-fill-color: #0b1e4d;
+}
+.ced-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.ced-hint {
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 2px solid #9f1239;
+  color: #9f1239;
+  -webkit-text-fill-color: #9f1239;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.ced-mode {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #ffffff;
+  font-size: 14px;
+  font-weight: 900;
+}
+.ced-mode.is-on { color: #047857; border: 2px solid #047857; -webkit-text-fill-color: #047857; }
+.ced-mode.is-off { color: #b91c1c; border: 2px solid #b91c1c; -webkit-text-fill-color: #b91c1c; }
+.ced-state-now {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #ffffff;
+  font-size: 16px;
+  font-weight: 900;
+}
+.ced-state-now.is-on { color: #047857; border: 2px solid #047857; -webkit-text-fill-color: #047857; }
+.ced-state-now.is-off { color: #b91c1c; border: 2px solid #b91c1c; -webkit-text-fill-color: #b91c1c; }
+body.ced-body .ced-state { border-color: #0b1e4d; }
+body.ced-body .ced-state h2 { color: #0b1e4d; -webkit-text-fill-color: #0b1e4d; }
+body.ced-body .ced-state-on { border-color: #047857; color: #047857; -webkit-text-fill-color: #047857; background: #ffffff; }
+body.ced-body .ced-state-off { border-color: #b91c1c; color: #b91c1c; -webkit-text-fill-color: #b91c1c; background: #ffffff; }
+body.ced-body .ced-state-on:has(input:checked),
+body.ced-body .ced-state-on.is-picked {
+  background: #ecfdf5;
+  box-shadow: inset 0 0 0 3px #047857;
+}
+body.ced-body .ced-state-off:has(input:checked),
+body.ced-body .ced-state-off.is-picked {
+  background: #fef2f2;
+  box-shadow: inset 0 0 0 3px #b91c1c;
+}
+.ced-roles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.ced-role {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 68px;
+  padding: 8px 12px;
+  border-radius: 16px;
+  border: 2px solid #003f8f;
+  background: #ffffff;
+  color: #003f8f;
+  -webkit-text-fill-color: #003f8f;
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.ced-role input {
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  flex: 0 0 auto;
+  accent-color: #0b1e4d;
+}
+body.ced-body .ced-role-cust { border-color: #003f8f; color: #003f8f; -webkit-text-fill-color: #003f8f; background: #ffffff; }
+body.ced-body .ced-role-sup { border-color: #047857; color: #047857; -webkit-text-fill-color: #047857; background: #ffffff; }
+body.ced-body .ced-role-ins { border-color: #c2410c; color: #c2410c; -webkit-text-fill-color: #c2410c; background: #ffffff; }
+body.ced-body .ced-role-rent { border-color: #5b21b6; color: #5b21b6; -webkit-text-fill-color: #5b21b6; background: #ffffff; }
+body.ced-body .ced-role-cust:has(input:checked),
+body.ced-body .ced-role-sup:has(input:checked),
+body.ced-body .ced-role-ins:has(input:checked),
+body.ced-body .ced-role-rent:has(input:checked) {
+  background: #ffffff;
+}
+
+.ced-watchbox {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 0 0 12px;
+  padding: 14px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 2px solid #9a3412;
+  cursor: pointer;
+}
+.ced-watchbox input {
+  width: 32px;
+  height: 32px;
+  margin-top: 2px;
+  flex: 0 0 auto;
+  accent-color: #e65100;
+}
+.ced-watchbox strong {
+  display: block;
+  font-size: 16px;
+  line-height: 1.35;
+  color: #9a3412;
+  -webkit-text-fill-color: #9a3412;
+}
+.ced-watchbox em {
+  display: block;
+  margin-top: 6px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #7c2d12;
+  -webkit-text-fill-color: #7c2d12;
+}
+body.ced-body .ced-ledger .ced-pair .ced-field:first-child input {
+  background: #ffffff;
+  border-color: #b91c1c;
+  color: #b91c1c;
+  -webkit-text-fill-color: #b91c1c;
+}
+body.ced-body .ced-ledger .ced-pair .ced-field:last-child input {
+  background: #ffffff;
+  border-color: #047857;
+  color: #047857;
+  -webkit-text-fill-color: #047857;
+}
+
+.ced-shot {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 4px solid #0f766e;
+  display: block;
+  margin-bottom: 12px;
+  background: #ffffff;
+}
+.ced-file {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 58px;
+  margin-bottom: 12px;
+  border-radius: 16px;
+  border: 2px dashed #155e75;
+  background: #ffffff;
+  color: #155e75;
+  -webkit-text-fill-color: #155e75;
+  font-weight: 900;
+  font-size: 17px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.ced-file input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.ced-savebar {
+  position: fixed;
+  z-index: 40;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  width: min(880px, calc(100% - 16px));
+  box-sizing: border-box;
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 20px;
+  background: #0b1e4d;
+  box-shadow: 0 10px 30px rgba(11, 30, 77, 0.35);
+}
+.ced-savebar button {
+  min-height: 58px;
+  border: 0;
+  border-radius: 14px;
+  background: #04933a;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  font: 900 20px/1 "Noto Sans Bengali", "Hind Siliguri", "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+.ced-savebar button:active { transform: translateY(1px); }
+.ced-jumps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.ced-hide {
+  margin: 18px 0 8px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 2px solid #b91c1c;
+  background: #ffffff;
+}
+.ced-hide button {
+  width: 100%;
+  min-height: 52px;
+  border: 0;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #b91c1c;
+  -webkit-text-fill-color: #b91c1c;
+  font: 900 18px/1.2 "Noto Sans Bengali", "Hind Siliguri", "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+.ced-hide p {
+  margin: 10px 0 0;
+  color: #7f1d1d;
+  -webkit-text-fill-color: #7f1d1d;
+  font-weight: 700;
+  font-size: 14px;
+}
+.ced-jumps a {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+  font-weight: 900;
+  text-decoration: none;
+  font-size: 15px;
+}
+body.ced-body .ced-role span {
+  color: inherit;
+  -webkit-text-fill-color: inherit;
+}
+@media (max-width: 640px) {
+  .ced-pair { grid-template-columns: 1fr; }
+  .ced-who h1 { font-size: 22px; }
+  .ced-tile b { font-size: 20px; }
+  .ced-who > .ced-face { width: 76px; height: 76px; flex: 0 0 76px; font-size: 32px; border-radius: 20px; }
+}
+@media (min-width: 900px) {
+  body.ced-body { padding-top: 28px; }
+  .ced-who h1 { font-size: 34px; }
+  .ced-tile b { font-size: 30px; }
+}
+
+/* 10.98.631 — সাদা বক্স, রঙিন লেখা, ফোন থেকে বড় পর্দা */
+body.ced-body .ced-hero,
+body.ced-body .ced-block,
+body.ced-body .ced-tile,
+body.ced-body .ced-role,
+body.ced-body .ced-field input,
+body.ced-body .ced-field textarea,
+body.ced-body .ced-field select,
+body.ced-body .ced-savebar,
+body.ced-body .ced-savebar button,
+body.ced-body .ced-jumps a,
+body.ced-body .ced-hide,
+body.ced-body .ced-hide button {
+  background: #ffffff;
+}
+body.ced-body .ced-hero {
+  box-shadow: 0 8px 22px rgba(11, 30, 77, 0.08);
+}
+body.ced-body .ced-savebar {
+  border: 2px solid #003f8f;
+  box-shadow: 0 8px 22px rgba(11, 30, 77, 0.12);
+}
+body.ced-body .ced-savebar button {
+  color: #047857;
+  -webkit-text-fill-color: #047857;
+  border: 2px solid #047857;
+}
+body.ced-body .ced-jumps a {
+  color: #003f8f;
+  -webkit-text-fill-color: #003f8f;
+  border: 2px solid #003f8f;
+}
+body.ced-body .ced-jumps a:last-child {
+  color: #0f766e;
+  -webkit-text-fill-color: #0f766e;
+  border-color: #0f766e;
+}
+body.ced-body .ced-hide button {
+  color: #b91c1c;
+  -webkit-text-fill-color: #b91c1c;
+  border: 2px solid #b91c1c;
+}
+@media (max-width: 520px) {
+  body.ced-body {
+    padding: 8px 8px 196px;
+  }
+  body.ced-body .ced {
+    width: 100%;
+  }
+  body.ced-body .ced-money,
+  body.ced-body .ced-roles,
+  body.ced-body .ced-pair,
+  body.ced-body .ced-jumps {
+    grid-template-columns: 1fr;
+  }
+  body.ced-body .ced-who h1 {
+    font-size: 22px;
+  }
+  body.ced-body .ced-face,
+  body.ced-body .ced-who > .ced-face {
+    width: 64px;
+    height: 64px;
+    flex-basis: 64px;
+    font-size: 28px;
+    border-radius: 18px;
+  }
+  body.ced-body .ced-tile b {
+    font-size: 22px;
+  }
+  body.ced-body .ced-block {
+    padding: 16px 10px 6px;
+    margin-top: 22px;
+  }
+}
+@media (min-width: 980px) {
+  body.ced-body {
+    padding: 28px 18px 36px;
+  }
+  body.ced-body .ced {
+    width: min(96vw, 1360px);
+  }
+  body.ced-body #cedForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+    row-gap: 4px;
+    align-items: start;
+  }
+  body.ced-body #cedForm > .ced-state,
+  body.ced-body #cedForm > .ced-savebar {
+    grid-column: 1 / -1;
+  }
+  body.ced-body .ced-savebar {
+    position: static;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    transform: none;
+    width: 100%;
+    margin-top: 8px;
+  }
+  body.ced-body .ced-who h1 {
+    font-size: 36px;
+  }
+}
+@media (min-width: 1400px) {
+  body.ced-body .ced {
+    width: min(96vw, 1560px);
+  }
+  body.ced-body .ced-who h1 {
+    font-size: 42px;
+  }
+  body.ced-body .ced-tile b {
+    font-size: 34px;
+  }
+  body.ced-body .ced-field input,
+  body.ced-body .ced-field textarea,
+  body.ced-body .ced-field select {
+    font-size: 20px;
+    min-height: 58px;
+  }
+}

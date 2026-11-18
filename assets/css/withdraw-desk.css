@@ -1,0 +1,609 @@
+/* জমা টাকা তোলা — সাদা ঘর, আলাদা রঙের লেখা, কালো বক্স নেই */
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page),
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content {
+    background: #ffffff !important;
+    color: #0B1E4D !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-wrap {
+    color: #1c3354;
+    font-family: "Noto Sans Bengali", "Hind Siliguri", sans-serif;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-mast,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-card,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-stats article {
+    background: #fff !important;
+    color: #1c3354 !important;
+    -webkit-text-fill-color: #1c3354 !important;
+    border: 1.5px solid #d6e2f0 !important;
+    border-radius: 22px !important;
+    box-shadow: none !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-mast {
+    padding: 18px !important;
+    margin-bottom: 14px !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-mast h1,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-mast h1 .ame-pair,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-mast h1 .ame-pair strong {
+    color: #1c3354 !important;
+    -webkit-text-fill-color: #1c3354 !important;
+    font-size: clamp(30px, 6vw, 44px) !important;
+    font-weight: 900 !important;
+    line-height: 1.2 !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-kicker,
+html body.ame-withdraw-page #main-content .cdesk-kicker .ame-pair,
+html body.ame-withdraw-page #main-content .cdesk-kicker .ame-pair strong {
+    color: #9a3412 !important;
+    -webkit-text-fill-color: #9a3412 !important;
+    font-size: 16px !important;
+    letter-spacing: 0 !important;
+    font-weight: 900 !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-mast > p,
+html body.ame-withdraw-page #main-content .cdesk-mast .ame-pair em,
+html body.ame-withdraw-page #main-content .cdesk-card p,
+html body.ame-withdraw-page #main-content .cdesk-card .ame-pair,
+html body.ame-withdraw-page #main-content .cdesk-card .ame-pair strong,
+html body.ame-withdraw-page #main-content .cdesk-card .ame-pair em {
+    color: #4b6280 !important;
+    -webkit-text-fill-color: #4b6280 !important;
+    font-size: 17px !important;
+    font-weight: 800 !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-stats {
+    gap: 12px;
+}
+html body.ame-withdraw-page #main-content .cdesk-stats article {
+    min-height: 112px;
+    padding: 14px !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-stats span,
+html body.ame-withdraw-page #main-content .cdesk-stats span .ame-pair,
+html body.ame-withdraw-page #main-content .cdesk-stats span .ame-pair strong,
+html body.ame-withdraw-page #main-content .cdesk-stats span .ame-pair em {
+    color: #4b6280 !important;
+    -webkit-text-fill-color: #4b6280 !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-stats b {
+    margin-top: 6px;
+    font-size: clamp(28px, 5vw, 38px) !important;
+    font-weight: 900 !important;
+    color: #1c3354 !important;
+    -webkit-text-fill-color: #1c3354 !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-stats .is-left {
+    background: #fff !important;
+    border-color: #d6e2f0 !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-stats .is-left span,
+html body.ame-withdraw-page #main-content .cdesk-stats .is-left span .ame-pair,
+html body.ame-withdraw-page #main-content .cdesk-stats .is-left span .ame-pair strong,
+html body.ame-withdraw-page #main-content .cdesk-stats .is-left span .ame-pair em {
+    color: #9a3412 !important;
+    -webkit-text-fill-color: #9a3412 !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-stats .is-left b {
+    color: #9a3412 !important;
+    -webkit-text-fill-color: #9a3412 !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-stats .is-in {
+    background: #fff !important;
+    border-color: #d6e2f0 !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-stats .is-in span,
+html body.ame-withdraw-page #main-content .cdesk-stats .is-in span .ame-pair,
+html body.ame-withdraw-page #main-content .cdesk-stats .is-in span .ame-pair strong,
+html body.ame-withdraw-page #main-content .cdesk-stats .is-in span .ame-pair em {
+    color: #146c3a !important;
+    -webkit-text-fill-color: #146c3a !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-stats .is-in b {
+    color: #146c3a !important;
+    -webkit-text-fill-color: #146c3a !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-stats .is-pick {
+    background: #fff !important;
+    border-color: #d6e2f0 !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-stats .is-pick span,
+html body.ame-withdraw-page #main-content .cdesk-stats .is-pick span .ame-pair,
+html body.ame-withdraw-page #main-content .cdesk-stats .is-pick span .ame-pair strong,
+html body.ame-withdraw-page #main-content .cdesk-stats .is-pick span .ame-pair em {
+    color: #5b21b6 !important;
+    -webkit-text-fill-color: #5b21b6 !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-stats .is-pick b {
+    color: #5b21b6 !important;
+    -webkit-text-fill-color: #5b21b6 !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content a.cdesk-btn.ame-calc-btn,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content button.cdesk-btn.ame-calc-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    background: #fff !important;
+    background-image: none !important;
+    color: #0B1E4D !important;
+    -webkit-text-fill-color: #0B1E4D !important;
+    border: 1.5px solid #d6e2f0 !important;
+    min-height: 52px !important;
+    padding: 8px 16px !important;
+    border-radius: 16px !important;
+    font-size: 18px !important;
+    font-weight: 900 !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content button.cdesk-btn.ame-calc-btn.wdw-pay {
+    background: #fff !important;
+    color: #15803d !important;
+    -webkit-text-fill-color: #15803d !important;
+    border-color: #86efac !important;
+    width: 100%;
+    min-height: 60px !important;
+    font-size: 22px !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-flash {
+    border-radius: 16px;
+    padding: 14px 16px;
+    font-size: 18px;
+    font-weight: 800;
+}
+html body.ame-withdraw-page #main-content .cdesk-flash.ok {
+    background: #fff !important;
+    color: #146c3a !important;
+    border: 2px solid #9dccb0;
+}
+html body.ame-withdraw-page #main-content .cdesk-flash.err {
+    background: #fff !important;
+    color: #9f1239 !important;
+    border: 2px solid #f3c1cb;
+}
+html body.ame-withdraw-page #main-content .cdesk-who {
+    color: #1c3354 !important;
+    -webkit-text-fill-color: #1c3354 !important;
+    font-size: clamp(26px, 5vw, 34px) !important;
+    font-weight: 900 !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-meta,
+html body.ame-withdraw-page #main-content .cdesk-meta small {
+    color: #4b6280 !important;
+    -webkit-text-fill-color: #4b6280 !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-field {
+    color: #9a3412 !important;
+    -webkit-text-fill-color: #9a3412 !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-field small {
+    color: #9a3412 !important;
+    -webkit-text-fill-color: #9a3412 !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-field input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="file"]):not([type="color"]):not([type="range"]),
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-field select,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-field textarea,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content input.cdesk-search {
+    background: #fff !important;
+    color: #1c3354 !important;
+    -webkit-text-fill-color: #1c3354 !important;
+    border: 1.5px solid #d6e2f0 !important;
+    border-radius: 16px !important;
+    min-height: 56px !important;
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    box-shadow: none !important;
+}
+html body.ame-withdraw-page #main-content #wdList {
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+}
+html body.ame-withdraw-page #main-content a.cdesk-row {
+    background: #fff !important;
+    border: 1.5px solid #d6e2f0 !important;
+    border-radius: 16px !important;
+    padding: 14px 12px !important;
+    color: #1c3354 !important;
+    -webkit-text-fill-color: #1c3354 !important;
+    text-decoration: none !important;
+}
+html body.ame-withdraw-page #main-content a.cdesk-row b {
+    color: #1c3354 !important;
+    -webkit-text-fill-color: #1c3354 !important;
+    font-size: 20px !important;
+    font-weight: 900 !important;
+}
+html body.ame-withdraw-page #main-content a.cdesk-row small {
+    color: #4b6280 !important;
+    -webkit-text-fill-color: #4b6280 !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-held {
+    color: #146c3a !important;
+    -webkit-text-fill-color: #146c3a !important;
+    font-size: 22px !important;
+    font-weight: 900 !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-due {
+    color: #9f1239 !important;
+    -webkit-text-fill-color: #9f1239 !important;
+    font-size: 18px !important;
+    font-weight: 900 !important;
+}
+html body.ame-withdraw-page #main-content .cdesk-empty {
+    color: #4b6280 !important;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+}
+@media (max-width: 720px) {
+    html body.ame-withdraw-page #main-content .cdesk-stats {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* ইউনিক উত্তোলন-রসিদ মেসেজ — অন্য ফ্ল্যাশের মতো নয় */
+html body.ame-withdraw-page #main-content .wdw-slip {
+    position: relative;
+    margin: 0 0 16px;
+    background: #fff;
+    color: #9a3412;
+    border: 2px dashed #c47a32;
+    border-radius: 8px 8px 18px 18px;
+    box-shadow: none;
+    overflow: hidden;
+    font-family: "Noto Sans Bengali", "Hind Siliguri", "DM Sans", sans-serif;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-punches {
+    height: 14px;
+    background:
+        radial-gradient(circle at 12px 7px, #fff 7px, transparent 8px) 0 0 / 24px 14px repeat-x,
+        linear-gradient(#c47a32, #c47a32);
+}
+html body.ame-withdraw-page #main-content .wdw-slip-inner {
+    padding: 16px 18px 18px 86px;
+    min-height: 92px;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-seal {
+    position: absolute;
+    left: 16px;
+    top: 28px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 900;
+    color: #9a3412;
+    background: #fff;
+    box-shadow: inset 0 0 0 4px #c47a32;
+    transform: rotate(-8deg);
+}
+html body.ame-withdraw-page #main-content .wdw-slip-kicker {
+    margin: 0 0 4px;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    color: #9a3412;
+    text-transform: uppercase;
+}
+html body.ame-withdraw-page #main-content .wdw-slip h2 {
+    margin: 0 0 4px;
+    font-size: clamp(22px, 5vw, 30px);
+    font-weight: 900;
+    line-height: 1.25;
+    color: #9a3412;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-body {
+    margin: 8px 0 0;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.45;
+    color: #1c3354;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-en {
+    margin: 2px 0 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: #4b6280;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-ok {
+    background: #fff;
+    border-color: #2f8a4e;
+    box-shadow: none;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-ok .wdw-slip-seal {
+    background: #fff;
+    color: #146c3a;
+    box-shadow: inset 0 0 0 4px #3d9a62;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-ok .wdw-slip-kicker,
+html body.ame-withdraw-page #main-content .wdw-slip-ok h2,
+html body.ame-withdraw-page #main-content .wdw-slip-ok .wdw-slip-body {
+    color: #146c3a;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-cash {
+    background: #fff;
+    border-color: #c2410c;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-cash .wdw-slip-seal {
+    background: #fff;
+    color: #c2410c;
+    box-shadow: inset 0 0 0 4px #fdba74;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-cash .wdw-slip-kicker,
+html body.ame-withdraw-page #main-content .wdw-slip-cash h2 {
+    color: #c2410c;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-fail,
+html body.ame-withdraw-page #main-content .wdw-slip-need {
+    background: #fff;
+    border-color: #be123c;
+    box-shadow: none;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-fail .wdw-slip-seal,
+html body.ame-withdraw-page #main-content .wdw-slip-need .wdw-slip-seal {
+    background: #fff;
+    color: #9f1239;
+    box-shadow: inset 0 0 0 4px #fb7185;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-fail .wdw-slip-kicker,
+html body.ame-withdraw-page #main-content .wdw-slip-fail h2,
+html body.ame-withdraw-page #main-content .wdw-slip-need .wdw-slip-kicker,
+html body.ame-withdraw-page #main-content .wdw-slip-need h2,
+html body.ame-withdraw-page #main-content .wdw-slip-fail .wdw-slip-body,
+html body.ame-withdraw-page #main-content .wdw-slip-need .wdw-slip-body {
+    color: #9f1239;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-already {
+    background: #fff;
+    border-color: #6d28d9;
+    box-shadow: none;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-already .wdw-slip-seal {
+    background: #fff;
+    color: #5b21b6;
+    box-shadow: inset 0 0 0 4px #c4b5fd;
+}
+html body.ame-withdraw-page #main-content .wdw-slip-already .wdw-slip-kicker,
+html body.ame-withdraw-page #main-content .wdw-slip-already h2 {
+    color: #5b21b6;
+}
+
+/* ইউনিক নিশ্চিতকরণ — জমা উত্তোলন কাগজ */
+html body.ame-withdraw-page .ame-cf-backdrop.ame-cf-withdraw,
+html body.ame-withdraw-page .ame-cf-backdrop {
+    background: rgba(59, 36, 20, 0.55);
+    align-items: flex-end;
+}
+html body.ame-withdraw-page .ame-cf-card.is-withdraw,
+html body.ame-withdraw-page .ame-cf-card {
+    background: #fff;
+    border: 2px dashed #c47a32;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -10px 40px rgba(122, 62, 12, 0.28);
+    max-width: 460px;
+    font-family: "Noto Sans Bengali", "Hind Siliguri", "DM Sans", sans-serif;
+}
+html body.ame-withdraw-page .ame-cf-card .ame-cf-bar .b1 { background: #9a3412; }
+html body.ame-withdraw-page .ame-cf-card .ame-cf-bar .b2 { background: #c47a32; }
+html body.ame-withdraw-page .ame-cf-card .ame-cf-bar .b3 { background: #146c3a; }
+html body.ame-withdraw-page .ame-cf-kicker {
+    margin: 10px 18px 0;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    color: #9a3412;
+    text-transform: uppercase;
+}
+html body.ame-withdraw-page .ame-cf-card .ame-cf-icon {
+    background: #fff;
+    color: #9a3412;
+    font-weight: 900;
+    box-shadow: inset 0 0 0 3px #c47a32;
+}
+html body.ame-withdraw-page .ame-cf-card .ame-cf-bn {
+    font-size: 20px;
+    font-weight: 900;
+    color: #9a3412;
+    line-height: 1.4;
+}
+html body.ame-withdraw-page .ame-cf-card .ame-cf-en {
+    font-size: 13px;
+    font-weight: 700;
+    color: #4b6280;
+}
+html body.ame-withdraw-page .ame-cf-card .ame-cf-btn.is-cancel {
+    background: #fff;
+    color: #7a2d0d;
+    border: 1.5px solid #d6e2f0;
+    font-weight: 900;
+}
+html body.ame-withdraw-page .ame-cf-card .ame-cf-btn.is-ok {
+    background: #fff;
+    color: #146c3a;
+    border: 2px solid #146c3a;
+    font-weight: 900;
+    box-shadow: none;
+}
+@media (min-width: 620px) {
+    html body.ame-withdraw-page .ame-cf-backdrop {
+        align-items: center;
+    }
+    html body.ame-withdraw-page .ame-cf-card.is-withdraw,
+    html body.ame-withdraw-page .ame-cf-card {
+        border-radius: 18px;
+    }
+}
+@media (max-width: 520px) {
+    html body.ame-withdraw-page #main-content .wdw-slip-inner {
+        padding: 14px 14px 16px;
+    }
+    html body.ame-withdraw-page #main-content .wdw-slip-seal {
+        position: static;
+        margin: 0 0 10px;
+        transform: none;
+    }
+}
+
+/* 10.98.582 — সব বক্স সাদা; ফ্রন্ট আলাদা রঙ */
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-mast,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-card,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-stats article,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content a.cdesk-row,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .wdw-slip,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-flash,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content a.cdesk-btn,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content button.cdesk-btn,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-field input,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-field select,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content .cdesk-field textarea,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content input.cdesk-search,
+html body.ame-withdraw-page .ame-cf-card,
+html body.ame-withdraw-page .ame-cf-card .ame-cf-btn {
+    background: #fff !important;
+    background-image: none !important;
+}
+
+/* 10.98.629 — প্রতিটি ঘরের রাউন্ড আলাদা রঙ, ফ্রন্ট আলাদা রঙ, টাকা তুলুন লেখা দেখা যাবে */
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-mast {
+    border-color: #1d4ed8 !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-stats .is-left {
+    border-color: #c2410c !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-stats .is-in {
+    border-color: #15803d !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-stats .is-pick {
+    border-color: #7c3aed !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-card:not(.cdesk-form) {
+    border-color: #0f766e !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form {
+    border-color: #b45309 !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(1),
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(1) .ame-pair,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(1) .ame-pair strong,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(1) .ame-pair em {
+    color: #c2410c !important;
+    -webkit-text-fill-color: #c2410c !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(2),
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(2) .ame-pair,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(2) .ame-pair strong,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(2) .ame-pair em {
+    color: #1d4ed8 !important;
+    -webkit-text-fill-color: #1d4ed8 !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(3),
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(3) .ame-pair,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(3) .ame-pair strong,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(3) .ame-pair em {
+    color: #15803d !important;
+    -webkit-text-fill-color: #15803d !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(4),
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(4) .ame-pair,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(4) .ame-pair strong,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(4) .ame-pair em {
+    color: #7c3aed !important;
+    -webkit-text-fill-color: #7c3aed !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(5),
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(5) .ame-pair,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(5) .ame-pair strong,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(5) .ame-pair em {
+    color: #0f766e !important;
+    -webkit-text-fill-color: #0f766e !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(1) input {
+    border-color: #c2410c !important;
+    color: #9a3412 !important;
+    -webkit-text-fill-color: #9a3412 !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(2) input {
+    border-color: #1d4ed8 !important;
+    color: #1e3a8a !important;
+    -webkit-text-fill-color: #1e3a8a !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(3) select {
+    border-color: #15803d !important;
+    color: #14532d !important;
+    -webkit-text-fill-color: #14532d !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(4) select {
+    border-color: #7c3aed !important;
+    color: #5b21b6 !important;
+    -webkit-text-fill-color: #5b21b6 !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content form.cdesk-form label.cdesk-field:nth-of-type(5) textarea {
+    border-color: #0f766e !important;
+    color: #115e59 !important;
+    -webkit-text-fill-color: #115e59 !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-toolbar a.cdesk-btn:nth-child(1),
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-toolbar a.cdesk-btn:nth-child(1) .ame-pair,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-toolbar a.cdesk-btn:nth-child(1) .ame-pair strong,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-toolbar a.cdesk-btn:nth-child(1) .ame-pair em {
+    color: #1d4ed8 !important;
+    -webkit-text-fill-color: #1d4ed8 !important;
+    border-color: #1d4ed8 !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-toolbar a.cdesk-btn:nth-child(2),
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-toolbar a.cdesk-btn:nth-child(2) .ame-pair,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-toolbar a.cdesk-btn:nth-child(2) .ame-pair strong,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-toolbar a.cdesk-btn:nth-child(2) .ame-pair em {
+    color: #15803d !important;
+    -webkit-text-fill-color: #15803d !important;
+    border-color: #15803d !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-toolbar a.cdesk-btn:nth-child(3),
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-toolbar a.cdesk-btn:nth-child(3) .ame-pair,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-toolbar a.cdesk-btn:nth-child(3) .ame-pair strong,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-toolbar a.cdesk-btn:nth-child(3) .ame-pair em {
+    color: #7c3aed !important;
+    -webkit-text-fill-color: #7c3aed !important;
+    border-color: #7c3aed !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-card:not(.cdesk-form) a.cdesk-btn,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-card:not(.cdesk-form) a.cdesk-btn .ame-pair,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-card:not(.cdesk-form) a.cdesk-btn .ame-pair strong,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content .cdesk-card:not(.cdesk-form) a.cdesk-btn .ame-pair em {
+    color: #0f766e !important;
+    -webkit-text-fill-color: #0f766e !important;
+    border-color: #0f766e !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content button.cdesk-btn.ame-calc-btn.wdw-pay,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content button.cdesk-btn.ame-calc-btn.wdw-pay .ame-pair,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content button.cdesk-btn.ame-calc-btn.wdw-pay .ame-pair strong,
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content button.cdesk-btn.ame-calc-btn.wdw-pay .ame-pair em {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #15803d !important;
+    -webkit-text-fill-color: #15803d !important;
+    background: #ffffff !important;
+    border-color: #15803d !important;
+}
+html body.ame-withdraw-page:not(.ame-sales-pro):not(.ame-pos-terminal-page) #main-content#main-content button.cdesk-btn.ame-calc-btn.wdw-pay {
+    width: 100% !important;
+    min-height: 60px !important;
+    border: 2px solid #15803d !important;
+    border-radius: 16px !important;
+    font-size: 22px !important;
+    font-weight: 900 !important;
+    justify-content: center !important;
+}

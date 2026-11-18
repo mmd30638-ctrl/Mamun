@@ -1,0 +1,85 @@
+/* বিক্রয় ফেরত মডিউল — শুধু /modules/returns/ পেজে */
+.sr-mod {
+    margin: 0 0 1rem;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #fff 0%, #fff5f5 100%);
+    border: 1px solid #fecaca;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(220, 38, 38, 0.08);
+}
+
+.sr-mod-title {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #991b1b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.sr-mod-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.sr-mod-sub {
+    margin: 6px 0 12px;
+    font-size: 0.8rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.sr-mod-tabs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.sr-mod-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #b91c1c;
+    background: #fff;
+    border: 1px solid #fecaca;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.sr-mod-tab:hover {
+    background: #fef2f2;
+    border-color: #f87171;
+}
+
+.sr-mod-tab.is-active {
+    background: #dc2626;
+    color: #fff;
+    border-color: #dc2626;
+}
+
+.sr-mod-tab-ico {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+@media (max-width: 640px) {
+    .sr-mod-tab {
+        flex: 1 1 calc(50% - 8px);
+        justify-content: center;
+        font-size: 0.72rem;
+        padding: 7px 8px;
+    }
+}

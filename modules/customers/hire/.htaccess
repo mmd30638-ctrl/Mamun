@@ -1,0 +1,7 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^(contracts|all|show)\.php$ now.php [L,QSA]
+</IfModule>
+<IfModule LiteSpeed>
+CacheDisable public /modules/customers/hire/
+</IfModule>

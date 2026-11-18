@@ -1,0 +1,17 @@
+APONSHOP 10.98.773 — বিক্রির সম্পূর্ণ ক্লিন প্যাক
+
+স্ট্যাক: PHP 8.3 + MySQL/MariaDB (Hostinger)। Laravel নয় — artisan/composer লাগে না।
+
+জিপে যা আছে
+- সম্পূর্ণ দোকান সিস্টেম: বিক্রয়, স্টক, কাস্টমার, সাপ্লায়ার, হিসাব, HRM, দৈনিক ভাড়া
+- খালি ডাটা টেবিল: sql/aponshop_empty_tables.sql (CREATE TABLE IF NOT EXISTS)
+- ইনস্টলার: install.php — ডোমেন ও ডাটাবেজ দিলে টেবিল অটো বসে
+- টেমপ্লেট .env — শুধু ডোমেন + DB_NAME / DB_USER / DB_PASS বদলান
+- ডিফল্ট লগইন: admin / Apon7k#4821 (CREDENTIALS.txt)
+
+জিপে যা নেই
+- লাইভ দোকানের কাস্টমার, স্টক, বিক্রয়, ছবি
+- লাইভ ডাটাবেজ পাসওয়ার্ড
+- নেস্টেড public_html ফোল্ডার
+
+ইনস্টল: INSTALL-BN.txt পড়ুন। জিপ public_html-এর ভিতরে খুলুন।
