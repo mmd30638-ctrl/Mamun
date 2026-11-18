@@ -49,6 +49,7 @@ $flash_err = [
     'expense' => 'খরচের পরিমাণ দিন।',
     'expense_cat' => 'খাতের নাম লিখুন।',
     'expense_cat_pick' => 'খরচের খাত বেছে নিন। আগে খাত যোগ করুন।',
+    'expense_acct' => 'পেমেন্টের প্রকৃত অ্যাকাউন্ট বেছে নিন।',
     'future' => 'ভবিষ্যতের তারিখে খরচ লেখা যাবে না।',
     'receipt_size' => 'রসিদ সর্বোচ্চ ৫ MB হতে পারবে।',
     'receipt_type' => 'রসিদ জেপিজি, পিএনজি, ওয়েবপি বা পিডিএফ দিন।',
@@ -529,7 +530,7 @@ include '../../partials/header.php';
         <?php /* 10.98.714 */ if (!$locked): ?>
         <details class="pa-exp-add no-print" id="paExpAddBox">
             <summary class="pa-btn red">+ নতুন খরচ যোগ করুন</summary>
-            <?php echo pa_expense_form_html($ym, $exp_cat_active, 'paExpAdd', 'capital'); ?>
+            <?php echo pa_expense_form_html($db, $ym, $exp_cat_active, 'paExpAdd', 'capital'); ?>
         </details>
         <?php else: ?>
         <div class="pa-empty no-print">এই মাস বন্ধ আছে, তাই নতুন খরচ যোগ করা যাবে না। মাস আবার খুলে যোগ করুন।</div>
@@ -1144,13 +1145,13 @@ include '../../partials/header.php';
         <?php if (!$exp_rows): ?>
             <div class="pa-empty">এই মাসে কোনো পার্টনারশিপ খরচ নেই।</div>
         <?php else: ?>
-            <?php echo pa_expense_table_html($exp_rows, $cats, $ym, $locked); ?>
+            <?php echo pa_expense_table_html($db, $exp_rows, $cats, $ym, $locked); ?>
         <?php endif; ?>
         <?php echo pa_voided_expense_html($exp_void_rows, $cats); ?>
 
         <?php if (!$locked): ?>
             <h3 class="pa-exp-h">নতুন খরচ যোগ</h3>
-            <?php echo pa_expense_form_html($ym, $exp_cat_active, 'paExpAdd2'); ?>
+            <?php echo pa_expense_form_html($db, $ym, $exp_cat_active, 'paExpAdd2'); ?>
         <?php endif; ?>
 
         <h2 style="margin-top:16px;">উত্তোলন</h2>
@@ -1419,6 +1420,7 @@ include '../../partials/header.php';
         var btn = box.querySelector('.pa-acct-btn');
         var list = box.querySelector('.pa-acct-list');
         var hidden = box.querySelector('input[name="payment_method"]');
+        var hiddenAcct = box.querySelector('input[name="account_id"]');
         var label = box.querySelector('.pa-acct-txt');
         if (!btn || !list || !hidden || !label) return;
         btn.addEventListener('click', function () {
@@ -1430,6 +1432,9 @@ include '../../partials/header.php';
             var item = ev.target.closest('[data-kind]');
             if (!item) return;
             hidden.value = item.getAttribute('data-kind') || 'cash';
+            if (hiddenAcct) {
+                hiddenAcct.value = item.getAttribute('data-account-id') || '0';
+            }
             label.textContent = item.textContent || '';
             list.setAttribute('hidden', '');
         });

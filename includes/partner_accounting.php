@@ -130,6 +130,7 @@ function ensure_partner_accounting_schema($db)
             'voided_by' => "ALTER TABLE partner_acct_expenses ADD COLUMN voided_by INT NULL",
             'voided_at' => "ALTER TABLE partner_acct_expenses ADD COLUMN voided_at DATETIME NULL",
             'idempotency_token' => "ALTER TABLE partner_acct_expenses ADD COLUMN idempotency_token VARCHAR(80) NULL",
+            'account_id' => "ALTER TABLE partner_acct_expenses ADD COLUMN account_id INT NULL DEFAULT NULL",
         ] as $col => $ddl) {
             static $expCols = null;
             if ($expCols === null) {
@@ -431,14 +432,53 @@ function pa_account_choices($db)
         if (!isset(pa_payment_methods()[$kind])) {
             $kind = 'other';
         }
+        $label = function_exists('ame_account_option_label')
+            ? ame_account_option_label($account)
+            : (pa_kind_label($kind) . ' · ' . $name);
         $choices[] = [
             'id' => (int)($account['id'] ?? 0),
             'name' => $name,
             'kind' => $kind,
-            'label' => pa_kind_label($kind) . ' · ' . $name,
+            'label' => $label,
         ];
     }
     return $choices;
+}
+
+/** টেবিল/ভাউচার: সেভ করা অ্যাকাউন্ট বা পুরনো মাধ্যম লেবেল */
+function pa_expense_payment_label($db, array $row, bool $full_label = false): string
+{
+    if (!function_exists('ame_active_accounts')) {
+        $lib = __DIR__ . '/account_functions.php';
+        if (is_file($lib)) {
+            require_once $lib;
+        }
+    }
+    $aid = (int)($row['account_id'] ?? 0);
+    if ($aid > 0 && $db instanceof mysqli) {
+        $stmt = $db->prepare(
+            'SELECT id, account_name, account_type, balance FROM accounts WHERE id = ? LIMIT 1'
+        );
+        if ($stmt) {
+            $stmt->bind_param('i', $aid);
+            $stmt->execute();
+            $acc = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            if ($acc) {
+                if ($full_label && function_exists('ame_account_option_label')) {
+                    return ame_account_option_label($acc);
+                }
+                $name = trim((string)($acc['account_name'] ?? ''));
+                $type = trim((string)($acc['account_type'] ?? ''));
+                if ($name !== '') {
+                    return $type !== '' ? ($name . ' · ' . $type) : $name;
+                }
+            }
+        }
+    }
+    $methods = pa_payment_methods();
+    $pm = (string)($row['payment_method'] ?? 'cash');
+    return $methods[$pm] ?? $pm;
 }
 
 function pa_account_box($db, $name = 'payment_method')
@@ -456,9 +496,11 @@ function pa_account_box($db, $name = 'payment_method')
     $html .= '<span class="pa-acct-caret" aria-hidden="true">▾</span>';
     $html .= '</button>';
     $html .= '<input type="hidden" name="' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '" value="' . htmlspecialchars($first['kind'], ENT_QUOTES, 'UTF-8') . '">';
-    $html .= '<div class="pa-acct-list" hidden>';
+    $html .= '<input type="hidden" name="account_id" value="' . (int)($first['id'] ?? 0) . '">';
+    $html .= '<div class="pa-acct-list" hidden role="listbox">';
     foreach ($choices as $choice) {
-        $html .= '<button type="button" data-kind="' . htmlspecialchars($choice['kind'], ENT_QUOTES, 'UTF-8') . '">'
+        $html .= '<button type="button" role="option" data-kind="' . htmlspecialchars($choice['kind'], ENT_QUOTES, 'UTF-8')
+            . '" data-account-id="' . (int)($choice['id'] ?? 0) . '">'
             . htmlspecialchars($choice['label'], ENT_QUOTES, 'UTF-8') . '</button>';
     }
     $html .= '</div></div>';

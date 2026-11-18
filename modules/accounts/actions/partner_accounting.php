@@ -238,9 +238,37 @@ try {
             pa_go($expBack, '', 'expense_cat_pick');
         }
         $methods = pa_payment_methods();
-        $method = (string)($_POST['payment_method'] ?? 'cash');
-        if (!isset($methods[$method])) {
-            $method = 'cash';
+        $accountId = (int)($_POST['account_id'] ?? 0);
+        $hasBizAccounts = false;
+        foreach (pa_account_choices($db) as $acctChoice) {
+            if ((int)($acctChoice['id'] ?? 0) > 0) {
+                $hasBizAccounts = true;
+                break;
+            }
+        }
+        if ($hasBizAccounts) {
+            if ($accountId < 1) {
+                pa_go($expBack, '', 'expense_acct');
+            }
+            $accLib = dirname(__DIR__, 3) . '/includes/account_functions.php';
+            if (is_file($accLib)) {
+                require_once $accLib;
+            }
+            try {
+                $accRow = ame_require_active_account($db, $accountId);
+                $method = ame_account_payment_method($accRow);
+            } catch (Throwable $e) {
+                pa_go($expBack, '', 'expense_acct');
+            }
+            if (!isset($methods[$method])) {
+                $method = 'other';
+            }
+        } else {
+            $accountId = 0;
+            $method = (string)($_POST['payment_method'] ?? 'cash');
+            if (!isset($methods[$method])) {
+                $method = 'cash';
+            }
         }
         $cut = static function ($v, $n) {
             $v = trim((string)$v);
@@ -299,12 +327,31 @@ try {
         }
         $uid = (int)($_SESSION['user_id'] ?? 0);
         $voucher = pa_next_expense_voucher($db, $period);
-        $stmt = $db->prepare("INSERT INTO partner_acct_expenses (expense_date, category, description, amount, period_ym, reference, note, created_by, voucher_no, payee, payment_method, receipt_path, status, idempotency_token) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,'active',?)");
+        $stmt = $db->prepare(
+            "INSERT INTO partner_acct_expenses (expense_date, category, description, amount, period_ym, reference, note, created_by, voucher_no, payee, payment_method, account_id, receipt_path, status, idempotency_token) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,'active',?)"
+        );
         if (!$stmt) {
             pa_go($expBack, '', 'save');
         }
         $tokenOrNull = $token !== '' ? $token : null;
-        $stmt->bind_param('sssdsssisssss', $date, $cat, $desc, $amount, $period, $reference, $note, $uid, $voucher, $payee, $method, $receiptPath, $tokenOrNull);
+        $accountBind = $accountId > 0 ? $accountId : null;
+        $stmt->bind_param(
+            'sssdsssisssiss',
+            $date,
+            $cat,
+            $desc,
+            $amount,
+            $period,
+            $reference,
+            $note,
+            $uid,
+            $voucher,
+            $payee,
+            $method,
+            $accountBind,
+            $receiptPath,
+            $tokenOrNull
+        );
         $stmt->execute();
         $eid = (int)$db->insert_id;
         $stmt->close();

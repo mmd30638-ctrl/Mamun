@@ -562,3 +562,12 @@ modules/accounts/partner_expense_voucher.php
 modules/accounts/partner_sales_share.php
 includes/config.php
 VERSION.txt
+# 10.98.1014 — পার্টনার খরচ: পেমেন্ট মাধ্যম = প্রকৃত অ্যাকাউন্ট (POS স্টাইল)
+includes/partner_accounting.php
+includes/partner_expense_ui.php
+modules/accounts/partner_accounting.php
+modules/accounts/actions/partner_accounting.php
+modules/accounts/partner_expense_export.php
+modules/accounts/partner_expense_voucher.php
+includes/config.php
+VERSION.txt

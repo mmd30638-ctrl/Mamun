@@ -10,7 +10,6 @@ $month = pa_month((string)($_GET['month'] ?? date('Y-m')));
 $ym = $month['ym'];
 $cat = (string)($_GET['ecat'] ?? '');
 $cats = pa_expense_category_labels($db);
-$methods = pa_payment_methods();
 $rows = pa_month_expenses($db, $ym, $cat);
 $voided = pa_month_voided_expenses($db, $ym);
 
@@ -31,7 +30,7 @@ foreach ($rows as $r) {
     $total += pa_money($r['amount']);
     fputcsv($out, [
         $safe(pa_expense_voucher_label($r)), $r['expense_date'], $safe($cats[$r['category']] ?? $r['category']),
-        $safe($r['payee'] ?? ''), $safe($methods[$r['payment_method'] ?? 'cash'] ?? ($r['payment_method'] ?? '')),
+        $safe($r['payee'] ?? ''), $safe(pa_expense_payment_label($db, $r)),
         $safe($r['description']), $safe($r['reference'] ?? ''), $safe($r['note'] ?? ''),
         number_format(pa_money($r['amount']), 2, '.', ''), 'active', '',
     ]);

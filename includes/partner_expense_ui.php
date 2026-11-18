@@ -58,7 +58,7 @@ function pa_expense_category_manager_html(mysqli $db, string $ym, array $activeC
     return (string)ob_get_clean();
 }
 
-function pa_expense_form_html($ym, array $cats, $formId = 'paExpAdd', $returnTab = 'draw')
+function pa_expense_form_html($db, $ym, array $cats, $formId = 'paExpAdd', $returnTab = 'draw')
 {
     $h = static function ($v) {
         return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
@@ -84,12 +84,8 @@ function pa_expense_form_html($ym, array $cats, $formId = 'paExpAdd', $returnTab
             </select>
         </label>
         <label>টাকা<input type="number" step="0.01" min="0.01" name="amount" placeholder="0.00" inputmode="decimal" required></label>
-        <label>পেমেন্ট মাধ্যম
-            <select name="payment_method">
-                <?php foreach (pa_payment_methods() as $k => $lab): ?>
-                    <option value="<?php echo $h($k); ?>"><?php echo $h($lab); ?></option>
-                <?php endforeach; ?>
-            </select>
+        <label class="wide">পেমেন্ট মাধ্যম (প্রকৃত অ্যাকাউন্ট)
+            <?php echo pa_account_box($db); ?>
         </label>
         <label>প্রাপক / দোকান<input type="text" name="payee" maxlength="120" placeholder="কাকে দেওয়া হলো"></label>
         <label>রেফারেন্স / মেমো নং<input type="text" name="reference" maxlength="80" placeholder="ঐচ্ছিক"></label>
@@ -120,12 +116,11 @@ function pa_expense_category_totals(array $rows, array $cats)
     return $res;
 }
 
-function pa_expense_table_html(array $rows, array $cats, $ym, $locked)
+function pa_expense_table_html($db, array $rows, array $cats, $ym, $locked)
 {
     $h = static function ($v) {
         return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
     };
-    $methods = pa_payment_methods();
     $sum = 0.0;
     ob_start();
     ?>
@@ -141,7 +136,7 @@ function pa_expense_table_html(array $rows, array $cats, $ym, $locked)
                         <td data-label="তারিখ"><?php echo $h(date('d-m-Y', strtotime((string)$ex['expense_date']))); ?></td>
                         <td data-label="খাত"><?php echo $h($cats[$ex['category']] ?? $ex['category']); ?></td>
                         <td data-label="প্রাপক"><?php echo $h((string)($ex['payee'] ?? '')) ?: '—'; ?></td>
-                        <td data-label="মাধ্যম"><?php echo $h($methods[$ex['payment_method'] ?? 'cash'] ?? ($ex['payment_method'] ?? '')); ?></td>
+                        <td data-label="মাধ্যম"><?php echo $h(pa_expense_payment_label($db, $ex)); ?></td>
                         <td data-label="বিবরণ"><?php echo $h($ex['description']); ?><?php if (trim((string)($ex['reference'] ?? '')) !== ''): ?> <small>· রেফ <?php echo $h($ex['reference']); ?></small><?php endif; ?></td>
                         <td class="num" data-label="টাকা"><?php echo pa_taka($ex['amount']); ?></td>
                         <td class="no-print pa-exp-act" data-label="">

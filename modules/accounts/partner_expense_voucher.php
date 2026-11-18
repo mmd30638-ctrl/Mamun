@@ -15,7 +15,6 @@ $h = static function ($v) {
     return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
 };
 $cats = pa_expense_category_labels($db);
-$methods = pa_payment_methods();
 $shop = function_exists('shop_name') ? shop_name() : 'APONSHOP';
 $logo = function_exists('shop_logo_url') ? shop_logo_url('/assets/img/header-logo.png') : '/assets/img/header-logo.png';
 $void = ($row['status'] ?? 'active') === 'void';
@@ -77,7 +76,7 @@ $amount = pa_money($row['amount']);
         <tr><td>খাত</td><td><?php echo $h($cats[$row['category']] ?? $row['category']); ?></td></tr>
         <tr><td>প্রাপক</td><td><?php echo $h((string)($row['payee'] ?? '')) ?: '—'; ?></td></tr>
         <tr><td>বিবরণ</td><td><?php echo $h($row['description']); ?></td></tr>
-        <tr><td>পেমেন্ট মাধ্যম</td><td><?php echo $h($methods[$row['payment_method'] ?? 'cash'] ?? ($row['payment_method'] ?? '')); ?></td></tr>
+        <tr><td>পেমেন্ট মাধ্যম</td><td><?php echo $h(pa_expense_payment_label($db, $row, true)); ?></td></tr>
         <?php if (trim((string)($row['reference'] ?? '')) !== ''): ?><tr><td>রেফারেন্স</td><td><?php echo $h($row['reference']); ?></td></tr><?php endif; ?>
         <?php if (trim((string)($row['note'] ?? '')) !== ''): ?><tr><td>নোট</td><td><?php echo $h($row['note']); ?></td></tr><?php endif; ?>
         <tr><td>টাকা</td><td class="amt">৳<?php echo $h(number_format($amount, 2)); ?></td></tr>
