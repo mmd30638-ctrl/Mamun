@@ -548,3 +548,7 @@ modules/sales/draft_query.php
 modules/sales/pos_workspace.php
 includes/config.php
 VERSION.txt
+# 10.98.1012 — পার্টনার: নিট লাভ + ইনভয়েস লাভ এক প্যানেল
+modules/accounts/partner_accounting.php
+includes/config.php
+VERSION.txt

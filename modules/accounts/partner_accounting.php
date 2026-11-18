@@ -553,28 +553,71 @@ include '../../partials/header.php';
         <?php endif; ?>
     </section>
 
-    <section class="pa-panel" id="paNestle">
+    <?php
+    $pview = (int)($_GET['pview'] ?? 0);
+    $src_invoices = $pcat !== ''
+        ? pa_month_invoices($db, $bounds['from'], $bounds['to'], $pcat)
+        : $m['invoices'];
+    $src_rows = [];
+    $src_profit = 0.0;
+    $src_partner_tot = [];
+    foreach ($dash['active'] as $a) {
+        $src_partner_tot[(int)$a['partner']['id']] = 0.0;
+    }
+    foreach ($src_invoices as $inv) {
+        $shares = pa_invoice_shares($inv, $dash['active']);
+        $line_total = 0.0;
+        foreach ($shares as $sh) {
+            $line_total += pa_money($sh['amount']);
+        }
+        $src_profit += pa_money($inv['profit_amount'] ?? 0);
+        foreach ($dash['active'] as $i => $a) {
+            $src_partner_tot[(int)$a['partner']['id']] += pa_money($shares[$i]['amount'] ?? 0);
+        }
+        $src_rows[] = ['inv' => $inv, 'shares' => $shares, 'line' => $line_total];
+    }
+    $src_show = $dash['active'];
+    if ($pview > 0) {
+        $src_show = array_values(array_filter($dash['active'], static function ($a) use ($pview) {
+            return (int)$a['partner']['id'] === $pview;
+        }));
+    }
+    $src_grand = 0.0;
+    foreach ($src_show as $a) {
+        $src_grand += $src_partner_tot[(int)$a['partner']['id']] ?? 0;
+    }
+    ?>
+    <section class="pa-panel" id="paCategoryProfit">
         <div class="pa-head">
             <div>
-                <h2>ক্যাটাগরি ও নিট লাভ</h2>
-                <div class="sub"><?php echo htmlspecialchars($nestle['label']); ?> · নিট লাভের অংশ <strong>স্বয়ংক্রিয়ভাবে</strong> পার্টনার ব্যালেন্সে (লেজার বই) যোগ হয়। টাকা তুলতে উপরের <strong>উত্তোলন</strong> ট্যাব — আলাদা প্রোগ্রাম। এখানে পরিশোধ বাটন লাগে না।</div>
+                <h2>ক্যাটাগরি · নিট লাভ ও ইনভয়েস</h2>
+                <div class="sub"><?php echo htmlspecialchars($nestle['label']); ?> · উপরে নিট লাভ ও পার্টনার ভাগ; নিচে খাত অনুযায়ী ইনভয়েস লাভের বিস্তার। নিট লাভের অংশ <strong>স্বয়ংক্রিয়ভাবে</strong> লেজার বইতে যোগ হয়।</div>
             </div>
-            <form method="GET" class="pa-month-form no-print">
+            <form method="GET" class="pa-month-form no-print pa-head-filters">
                 <input type="hidden" name="month" value="<?php echo htmlspecialchars($ym); ?>">
                 <input type="hidden" name="tab" value="<?php echo htmlspecialchars($tab); ?>">
-                <select name="pcat" onchange="this.form.submit()">
+                <select name="pcat" aria-label="ক্যাটাগরি">
                     <option value="">সব অ্যাক্টিভ খাত</option>
                     <?php foreach ($shared_cats as $cname): ?>
                         <option value="<?php echo htmlspecialchars($cname); ?>"<?php echo $pcat === $cname ? ' selected' : ''; ?>><?php echo htmlspecialchars($cname); ?></option>
                     <?php endforeach; ?>
                 </select>
+                <select name="pview" aria-label="পার্টনার ফিল্টার">
+                    <option value="0">সব পার্টনার</option>
+                    <?php foreach ($dash['active'] as $a): ?>
+                        <option value="<?php echo (int)$a['partner']['id']; ?>"<?php echo $pview === (int)$a['partner']['id'] ? ' selected' : ''; ?>><?php echo htmlspecialchars($a['partner']['name']); ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <button type="submit" class="pa-btn ghost">দেখুন</button>
             </form>
         </div>
-        <div class="pa-mini">
+        <div class="pa-mini pa-mini-combined">
             <div class="row"><span>মোট বিক্রি</span><span><?php echo pa_taka($nestle['sales']); ?></span></div>
             <div class="row"><span>পণ্য খরচ</span><span><?php echo pa_taka($nestle['cost']); ?></span></div>
             <div class="row"><span>পার্টনারশিপ খরচ (−)</span><span><?php echo pa_taka($nestle['expense']); ?></span></div>
             <div class="net">নিট লাভ <?php echo pa_taka($nestle['net']); ?></div>
+            <div class="row"><span>ইনভয়েস লাভ (নির্বাচিত খাত)</span><span><?php echo pa_taka($src_profit); ?></span></div>
+            <div class="row"><span>পার্টনারদের মোট</span><span><?php echo pa_taka($src_grand); ?></span></div>
         </div>
         <?php if (!$dash['active']): ?>
             <div class="pa-empty">সক্রিয় পার্টনার লাগবে। তারপর শেয়ার অনুযায়ী নিট লাভ ভাগ হবে।</div>
@@ -626,63 +669,9 @@ include '../../partials/header.php';
             </div>
             <p class="pa-auto-profit-note no-print">নিট লাভের অংশ লেজার বইতে স্বয়ংক্রিয় যোগ হয় — «লাভ বণ্টন» বা «পরিশোধ» বাটন আর নেই। টাকা তুললে উপরের <strong>উত্তোলন</strong> ট্যাবে লিখুন, ব্যালেন্স কমবে।</p>
         <?php endif; ?>
-    </section>
 
-    <?php
-    $pview = (int)($_GET['pview'] ?? 0);
-    $src_invoices = $pcat !== ''
-        ? pa_month_invoices($db, $bounds['from'], $bounds['to'], $pcat)
-        : $m['invoices'];
-    $src_rows = [];
-    $src_profit = 0.0;
-    $src_partner_tot = [];
-    foreach ($dash['active'] as $a) {
-        $src_partner_tot[(int)$a['partner']['id']] = 0.0;
-    }
-    foreach ($src_invoices as $inv) {
-        $shares = pa_invoice_shares($inv, $dash['active']);
-        $line_total = 0.0;
-        foreach ($shares as $sh) {
-            $line_total += pa_money($sh['amount']);
-        }
-        $src_profit += pa_money($inv['profit_amount'] ?? 0);
-        foreach ($dash['active'] as $i => $a) {
-            $src_partner_tot[(int)$a['partner']['id']] += pa_money($shares[$i]['amount'] ?? 0);
-        }
-        $src_rows[] = ['inv' => $inv, 'shares' => $shares, 'line' => $line_total];
-    }
-    $src_show = $dash['active'];
-    if ($pview > 0) {
-        $src_show = array_values(array_filter($dash['active'], static function ($a) use ($pview) {
-            return (int)$a['partner']['id'] === $pview;
-        }));
-    }
-    $src_grand = 0.0;
-    foreach ($src_show as $a) {
-        $src_grand += $src_partner_tot[(int)$a['partner']['id']] ?? 0;
-    }
-    ?>
-    <section class="pa-panel" id="paSrc">
-        <div class="pa-head">
-            <div>
-                <h2>ক্যাটাগরি · ইনভয়েস লাভ</h2>
-                <div class="sub">কোন খাতের কোন ইনভয়েস থেকে কোন পার্টনারের কত লাভ। শেয়ার % আগের হিসাব। নিচে মোট।</div>
-            </div>
-            <form method="GET" class="pa-month-form no-print">
-                <input type="hidden" name="month" value="<?php echo htmlspecialchars($ym); ?>">
-                <input type="hidden" name="pcat" value="<?php echo htmlspecialchars($pcat); ?>">
-                <select name="pview" onchange="this.form.submit()">
-                    <option value="0">সব পার্টনার</option>
-                    <?php foreach ($dash['active'] as $a): ?>
-                        <option value="<?php echo (int)$a['partner']['id']; ?>"<?php echo $pview === (int)$a['partner']['id'] ? ' selected' : ''; ?>><?php echo htmlspecialchars($a['partner']['name']); ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </form>
-        </div>
-        <div class="pa-src-total">
-            <div><span>ইনভয়েস লাভ</span><b><?php echo pa_taka($src_profit); ?></b></div>
-            <div><span>পার্টনারদের মোট</span><b><?php echo pa_taka($src_grand); ?></b></div>
-        </div>
+        <h3 class="pa-subhead">ইনভয়েস অনুযায়ী লাভ</h3>
+        <p class="sub pa-subhead-note">কোন খাতের কোন ইনভয়েস থেকে কোন পার্টনারের কত লাভ — শেয়ার % আগের হিসাব।</p>
         <?php if (!$src_rows): ?>
             <div class="pa-empty">এই মাসে এই খাতের কোনো ইনভয়েস নেই। ক্যাটাগরি বদলালে সেই খাতের ইনভয়েস ও মোট এখানে আসবে।</div>
         <?php else: ?>
@@ -1490,6 +1479,21 @@ html body #main-content .pa-page .pa-mini .row > span:first-child {
     white-space: nowrap !important;
     word-break: keep-all !important;
     overflow-wrap: normal !important;
+}
+html body #main-content .pa-page .pa-head-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+html body #main-content .pa-page .pa-subhead {
+    margin: 1.25rem 0 0.35rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f4c81;
+}
+html body #main-content .pa-page .pa-subhead-note {
+    margin: 0 0 0.75rem;
 }
 html body:not(.ame-sales-pro) #main-content#main-content .pa-page button.pa-acct-btn,
 html body:not(.ame-sales-pro) #main-content#main-content .pa-page .pa-acct-list button {
