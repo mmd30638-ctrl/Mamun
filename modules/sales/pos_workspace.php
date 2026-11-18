@@ -1698,19 +1698,37 @@ function ameAddCustomItem() {
             var engItem = findEngineer(data.engineer_id);
             var hidden = node.querySelector('.ame-svc-eng');
             var query = node.querySelector('.ame-svc-eng-q');
+            if (!engItem && data.engineer_name) {
+                var byName = String(data.engineer_name || '').trim();
+                engineerList.forEach(function (row) {
+                    if (engItem) {
+                        return;
+                    }
+                    if (row && String(row.name || '').trim() === byName) {
+                        engItem = row;
+                    }
+                });
+                if (engItem && !data.engineer_id) {
+                    data.engineer_id = Number(engItem.id);
+                }
+            }
             if (hidden) {
                 hidden.value = String(data.engineer_id || '');
             }
             if (query && engItem) {
                 query.value = engineerLabel(engItem);
+            } else if (query && data.engineer_name) {
+                query.value = String(data.engineer_name);
             }
             node.querySelector('.ame-svc-type').value = data.service_type || '';
             node.querySelector('.ame-svc-amount').value = data.amount
                 ? Number(data.amount).toFixed(2)
                 : '';
-            var restored = Number(data.engineer_id || 0) > 0
-                && String(data.service_type || '').trim() !== ''
-                && number(data.amount) > 0;
+            var restored = number(data.amount) > 0
+                && (
+                    Number(data.engineer_id || 0) > 0
+                    || String(data.service_type || '').trim() !== ''
+                );
             if (restored) {
                 node.dataset.addedToCart = '1';
                 var code = engItem ? engineerLabel(engItem) : String(data.engineer_code || data.engineer_id || '');

@@ -230,15 +230,22 @@ try {
         /*
          * Draft-এর Service — একটি ইনভয়েসে একাধিক ইঞ্জিনিয়ার বিল
          */
-        $service_stmt = $db->prepare(
+        $service_stmt = @$db->prepare(
             'SELECT
-                engineer_id,
-                service_type,
-                amount
-             FROM sale_services
-             WHERE sale_id = ?
-             ORDER BY id ASC'
+                ss.engineer_id,
+                ss.service_type,
+                ss.amount,
+                COALESCE(NULLIF(TRIM(e.name), ""), NULLIF(TRIM(ss.engineer_name), ""), "") AS engineer_name
+             FROM sale_services ss
+             LEFT JOIN engineers e ON e.id = ss.engineer_id
+             WHERE ss.sale_id = ?
+             ORDER BY ss.id ASC'
         );
+        if (!$service_stmt) {
+            $service_stmt = $db->prepare(
+                'SELECT engineer_id, service_type, amount FROM sale_services WHERE sale_id = ? ORDER BY id ASC'
+            );
+        }
 
         $service_stmt->bind_param(
             'i',
@@ -257,11 +264,25 @@ try {
                 'service_type' =>
                     (string)$service_row['service_type'],
                 'amount' =>
-                    (float)$service_row['amount']
+                    (float)$service_row['amount'],
+                'engineer_name' =>
+                    (string)($service_row['engineer_name'] ?? ''),
             ];
         }
 
         $service_stmt->close();
+
+        if ($services === []) {
+            $fallback = round((float)($draft['service_amount'] ?? 0), 2);
+            if ($fallback > 0.009) {
+                $services[] = [
+                    'engineer_id' => 0,
+                    'service_type' => 'কাজের বিল',
+                    'amount' => $fallback,
+                    'engineer_name' => '',
+                ];
+            }
+        }
 
         $service = $services[0] ?? null;
 

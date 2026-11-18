@@ -252,7 +252,7 @@ function ame_sale_admin_reopen_to_draft(mysqli $db, array $sale, int $user_id, b
     }
 
     $item_snapshot = ame_sale_admin_snapshot_sale_items($db, $sale_id);
-    $services = ame_sale_admin_services_payload_from_sale($db, $sale_id);
+    $services = ame_sale_admin_services_payload_from_sale($db, $sale_id, $sale);
     $payments = ame_sale_admin_payments_payload_from_sale($db, $sale);
     $exchange = [];
     if (!function_exists('ame_sale_load_exchange_items') && is_file(__DIR__ . '/sale_exchange.php')) {
@@ -318,9 +318,7 @@ function ame_sale_admin_reopen_to_draft(mysqli $db, array $sale, int $user_id, b
     if ($item_snapshot !== []) {
         ame_sale_admin_restore_draft_item_rows($db, $sale_id, $item_snapshot);
     }
-    if ($services !== []) {
-        ame_draft_store_services($db, $sale_id, $services);
-    }
+    ame_draft_restore_service_lines($db, $sale_id, $services);
     if (!empty($payments['payments'])) {
         ame_draft_store_payments($db, $sale_id, $payments['payments'], $user_id);
     }
@@ -491,14 +489,87 @@ function ame_sale_admin_cart_from_post_items(mysqli $db, int $sale_id, array $po
 }
 
 /**
+ * @param array<string, mixed> $sale
  * @return list<array<string, mixed>>
  */
-function ame_sale_admin_services_payload_from_sale(mysqli $db, int $sale_id): array
+function ame_sale_admin_services_payload_from_sale(mysqli $db, int $sale_id, array $sale = []): array
 {
     $sale_id = (int)$sale_id;
     $out = [];
     $st = @$db->prepare(
-        'SELECT engineer_id, service_type, amount FROM sale_services WHERE sale_id = ? ORDER BY id ASC'
+        'SELECT ss.engineer_id, ss.service_type, ss.amount,
+                COALESCE(NULLIF(TRIM(e.name), ""), NULLIF(TRIM(ss.engineer_name), ""), "") AS engineer_name
+         FROM sale_services ss
+         LEFT JOIN engineers e ON e.id = ss.engineer_id
+         WHERE ss.sale_id = ?
+         ORDER BY ss.id ASC'
+    );
+    if (!$st) {
+        $st = @$db->prepare(
+            'SELECT engineer_id, service_type, amount FROM sale_services WHERE sale_id = ? ORDER BY id ASC'
+        );
+    }
+    if ($st) {
+        $st->bind_param('i', $sale_id);
+        $st->execute();
+        $rows = $st->get_result()->fetch_all(MYSQLI_ASSOC) ?: [];
+        $st->close();
+        foreach ($rows as $row) {
+            $amount = round((float)($row['amount'] ?? 0), 2);
+            if ($amount <= 0) {
+                continue;
+            }
+            $eng = trim((string)($row['engineer_name'] ?? ''));
+            $out[] = [
+                'engineer_id' => (int)($row['engineer_id'] ?? 0),
+                'service_type' => (string)($row['service_type'] ?? ''),
+                'amount' => $amount,
+                'engineer_name' => $eng,
+                'engineer_query' => $eng,
+            ];
+        }
+    }
+
+    if ($out === []) {
+        $out = ame_sale_admin_services_from_commissions($db, $sale_id);
+    }
+
+    if ($out === [] && $sale !== []) {
+        $fallback = round((float)($sale['service_amount'] ?? 0), 2);
+        if ($fallback > 0.009) {
+            $out[] = [
+                'engineer_id' => 0,
+                'service_type' => 'কাজের বিল',
+                'amount' => $fallback,
+                'engineer_name' => '',
+                'engineer_query' => '',
+            ];
+        }
+    }
+
+    return $out;
+}
+
+/**
+ * @return list<array<string, mixed>>
+ */
+function ame_sale_admin_services_from_commissions(mysqli $db, int $sale_id): array
+{
+    $sale_id = (int)$sale_id;
+    $out = [];
+    $chk = @$db->query("SHOW TABLES LIKE 'service_commissions'");
+    if (!$chk || $chk->num_rows === 0) {
+        if ($chk) {
+            $chk->close();
+        }
+        return $out;
+    }
+    $chk->close();
+    $st = @$db->prepare(
+        'SELECT engineer_id, service_type, service_amount AS amount
+         FROM service_commissions
+         WHERE sale_id = ?
+         ORDER BY id ASC'
     );
     if (!$st) {
         return $out;
@@ -508,10 +579,20 @@ function ame_sale_admin_services_payload_from_sale(mysqli $db, int $sale_id): ar
     $rows = $st->get_result()->fetch_all(MYSQLI_ASSOC) ?: [];
     $st->close();
     foreach ($rows as $row) {
+        $amount = round((float)($row['amount'] ?? 0), 2);
+        if ($amount <= 0) {
+            continue;
+        }
+        $type = trim((string)($row['service_type'] ?? ''));
+        if ($type === '') {
+            $type = 'কাজের বিল';
+        }
         $out[] = [
             'engineer_id' => (int)($row['engineer_id'] ?? 0),
-            'service_type' => (string)($row['service_type'] ?? ''),
-            'amount' => round((float)($row['amount'] ?? 0), 2),
+            'service_type' => $type,
+            'amount' => $amount,
+            'engineer_name' => '',
+            'engineer_query' => '',
         ];
     }
     return $out;

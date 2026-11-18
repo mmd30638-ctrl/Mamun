@@ -160,6 +160,70 @@ function ame_draft_store_services($db, $draft_id, $lines)
     ame_sale_replace_services($db, $draft_id, $lines);
 }
 
+/**
+ * রি-ওপেন: কাজের বিল সারি সরাসরি sale_services + service_amount রাখে (resolve ব্যতিকা না)।
+ *
+ * @param list<array<string, mixed>> $lines
+ */
+function ame_draft_restore_service_lines(mysqli $db, int $draft_id, array $lines): void
+{
+    ame_sale_draft_require_finance();
+    $draft_id = (int)$draft_id;
+  if (!function_exists('ame_engineer_statement_resolve_id')) {
+        $engPost = dirname(__DIR__) . '/engineer_statement_post.php';
+        if (is_file($engPost)) {
+            require_once $engPost;
+        }
+    }
+    $del = $db->prepare('DELETE FROM sale_services WHERE sale_id = ?');
+    if ($del) {
+        $del->bind_param('i', $draft_id);
+        $del->execute();
+        $del->close();
+    }
+    $total = 0.0;
+    foreach ($lines as $line) {
+        if (!is_array($line)) {
+            continue;
+        }
+        $amount = round((float)($line['amount'] ?? 0), 2);
+        if ($amount <= 0.009) {
+            continue;
+        }
+        $type = trim((string)($line['service_type'] ?? ''));
+        if ($type === '') {
+            $type = 'কাজের বিল';
+        }
+        $engineer_id = (int)($line['engineer_id'] ?? 0);
+        $query = trim((string)($line['engineer_query'] ?? $line['engineer_name'] ?? ''));
+        if ($engineer_id <= 0 && $query !== '' && function_exists('ame_engineer_statement_resolve_id')) {
+            $engineer_id = ame_engineer_statement_resolve_id($db, 0, $query);
+        }
+        if (
+            $engineer_id <= 0
+            && function_exists('ame_engineer_statement_open_engineers')
+        ) {
+            $open = ame_engineer_statement_open_engineers($db);
+            if (count($open) === 1) {
+                $engineer_id = (int)$open[0]['id'];
+            }
+        }
+        if (function_exists('ame_sale_store_service')) {
+            ame_sale_store_service($db, $draft_id, $engineer_id, $type, $amount);
+        }
+        $total += $amount;
+    }
+    if (abs($total) < 0.01) {
+        return;
+    }
+    $up = @$db->prepare('UPDATE sales SET service_amount = ? WHERE id = ?');
+    if ($up) {
+        $up->bind_param('di', $total, $draft_id);
+        $up->execute();
+        $up->close();
+    }
+}
+
 function ame_draft_store_payments(
     $db,
     $draft_id,

@@ -541,3 +541,10 @@ modules/sales/pos_recent_boot.php
 assets/js/pos-draft.js
 includes/config.php
 VERSION.txt
+# 10.98.1011 — রি-ওপেনে কাজের বিল/সার্ভিস লাইন রিস্টোর
+includes/sales/sale_admin_edit.php
+includes/sales/sale_draft.php
+modules/sales/draft_query.php
+modules/sales/pos_workspace.php
+includes/config.php
+VERSION.txt
