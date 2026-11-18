@@ -380,7 +380,7 @@ html body table.shist-table tbody tr:hover { background: #fff !important; }
                         <a href="invoice.php?id=<?php echo $sid; ?>&amp;tg=1" target="_blank" rel="noopener" title="Telegram-এ ছবি সহ শেয়ার করুন">Telegram</a>
                         <a href="invoice.php?id=<?php echo $sid; ?>&amp;download=1" title="<?php echo ame_l('পিডিএফ ডাউনলোড', 'Download PDF'); ?>"><?php echo ame_l('পিডিএফ', 'PDF'); ?></a>
                         <?php if (isset($_SESSION['role']) && strtolower((string) $_SESSION['role']) === 'admin'): ?>
-                        <a class="shist-edit" href="/modules/reports/invoice_edit.php?id=<?php echo $sid; ?>" title="<?php echo ame_l('কাস্টমার বদলান — টাকা অপরিবর্তিত', 'Change customer — amounts stay the same'); ?>"><?php echo ame_l('এডিট', 'Edit'); ?></a>
+                        <a class="shist-edit" href="/modules/reports/invoice_edit.php?id=<?php echo $sid; ?>" title="<?php echo ame_l('এডিট — কাস্টমার বা পণ্য বাতিল', 'Edit — customer or cancel product lines'); ?>"><?php echo ame_l('এডিট', 'Edit'); ?></a>
                         <?php endif; ?>
                     </td>
                 </tr>

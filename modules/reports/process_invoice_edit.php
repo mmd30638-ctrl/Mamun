@@ -21,6 +21,7 @@ ensure_sales_schema($db);
 $is_english = function_exists('current_lang') && current_lang() === 'en';
 $sale_id = (int)($_POST['sale_id'] ?? 0);
 $back = '/modules/reports/invoice_edit.php?id=' . $sale_id;
+$save_action = (string)($_POST['save_action'] ?? 'customer');
 
 $fail = static function (string $msg) use ($back): void {
     $_SESSION['user_flash'] = $msg;
@@ -49,7 +50,7 @@ if ($status !== '' && $status !== 'completed') {
     $fail($is_english ? 'Only a completed invoice can be edited.' : 'শুধু সম্পন্ন ইনভয়েস বদলানো যায়।');
 }
 
-$data = [
+$customerData = [
     'customer_id' => (int)($_POST['customer_id'] ?? 0),
     'customer_type' => (string)($_POST['customer_type'] ?? ''),
     'sale_date' => (string)($_POST['sale_date'] ?? ''),
@@ -58,13 +59,52 @@ $data = [
     'guest_customer_phone' => (string)($_POST['guest_customer_phone'] ?? ''),
     'guest_customer_note' => (string)($_POST['guest_customer_note'] ?? ''),
     'vehicle_no' => (string)($_POST['vehicle_no'] ?? ''),
+    'adjust_due' => !empty($_POST['adjust_due']),
 ];
 
 $started = false;
 try {
     $db->begin_transaction();
     $started = true;
-    $out = ame_sale_admin_reassign($db, $sale, $data, $is_english);
+    if ($save_action === 'void_lines') {
+        if (!is_file(__DIR__ . '/../../includes/sales/sale_exchange.php')) {
+            throw new RuntimeException('Exchange module missing.');
+        }
+        require_once __DIR__ . '/../../includes/sales/sale_exchange.php';
+        $payload = ame_sale_admin_rewrite_payload_line_void(
+            $db,
+            $sale,
+            $customerData,
+            is_array($_POST['items'] ?? null) ? $_POST['items'] : [],
+            $is_english
+        );
+        $user_id = (int)$_SESSION['user_id'];
+        $out = ame_sale_admin_rewrite($db, $sale, $payload, $user_id, $is_english);
+        $db->commit();
+        $started = false;
+        $_SESSION['user_flash'] = $is_english
+            ? (
+                'Invoice ' . $out['invoice_number']
+                . ' updated. Cancelled lines removed; new bill ৳'
+                . number_format((float)$out['net_payable'], 2)
+                . ', due ৳'
+                . number_format((float)$out['due_amount'], 2)
+                . '.'
+            )
+            : (
+                'ইনভয়েস ' . $out['invoice_number']
+                . ' আপডেট হয়েছে। বাতিল পণ্য বাদ দেওয়া হয়েছে; নতুন বিল ৳'
+                . number_format((float)$out['net_payable'], 2)
+                . ', বাকি ৳'
+                . number_format((float)$out['due_amount'], 2)
+                . '।'
+            );
+        $_SESSION['user_flash_ok'] = 1;
+        header('Location: /modules/reports/sales_report.php?q=' . rawurlencode((string)$out['invoice_number']));
+        exit;
+    }
+
+    $out = ame_sale_admin_reassign($db, $sale, $customerData, $is_english);
     $db->commit();
     $started = false;
     $_SESSION['user_flash'] = $is_english

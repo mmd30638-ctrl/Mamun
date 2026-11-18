@@ -494,3 +494,9 @@ VERSION.txt
 APONSHOP_STACK_UPDATE.txt
 # 10.98.1001 — বিক্রয় কার্ট: নো স্ক্রল অটো-এক্সপ্যান্ড + স্থায়ী মোট অ্যামাউন্ট রো
 assets/css/ame-pos-cart-auto-expand.css
+# 10.98.1002 — ইনভয়েস এডিটে পণ্য বাতিল (ইতিহাস + বিক্রয় রিপোর্ট)
+includes/sales/sale_admin_edit.php
+modules/reports/invoice_edit.php
+modules/reports/process_invoice_edit.php
+modules/sales/history.php
+modules/reports/sales_report.php

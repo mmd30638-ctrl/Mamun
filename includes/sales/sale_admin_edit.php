@@ -85,6 +85,189 @@ function ame_sale_admin_returned_qty_map(mysqli $db, int $sale_id): array
     return $map;
 }
 
+/**
+ * @return array{cart: list<array<string, mixed>>, voided: int, kept: int}
+ */
+function ame_sale_admin_cart_from_post_items(mysqli $db, int $sale_id, array $postItems, bool $is_english): array
+{
+    $sale_id = (int)$sale_id;
+    $cart = [];
+    $voided = 0;
+    $kept = 0;
+    if (!is_array($postItems)) {
+        return ['cart' => [], 'voided' => 0, 'kept' => 0];
+    }
+  if (function_exists('get_already_returned_qty') === false && is_file(__DIR__ . '/../return_v2_functions.php')) {
+        require_once __DIR__ . '/../return_v2_functions.php';
+    }
+    foreach ($postItems as $row) {
+        if (!is_array($row)) {
+            continue;
+        }
+        if (!empty($row['void'])) {
+            $voided++;
+            continue;
+        }
+        $qty = (float)($row['qty'] ?? 0);
+        $price = (float)($row['price'] ?? 0);
+        $pid = (int)($row['product_id'] ?? 0);
+        $custom = !empty($row['is_custom']) || $pid <= 0;
+        $name = trim((string)($row['name'] ?? ''));
+        if ($qty <= 0 || $price < 0) {
+            continue;
+        }
+        if (!$custom && $pid > 0) {
+            $sold = $qty;
+            $returned = function_exists('get_already_returned_qty')
+                ? (float)get_already_returned_qty($db, $sale_id, $pid)
+                : 0.0;
+            if ($returned > $sold + 0.0001) {
+                throw new InvalidArgumentException(
+                    $is_english
+                        ? 'Returned quantity exceeds the sold line. Fix returns first.'
+                        : 'ফেরত পরিমাণ বিক্রয় সারির চেয়ে বেশি। আগে ফেরত ঠিক করুন।'
+                );
+            }
+        }
+        $kept++;
+        $cart[] = [
+            'id' => $pid,
+            'product_id' => $pid,
+            'qty' => $qty,
+            'current_price' => $price,
+            'name' => $name,
+            'is_custom' => $custom,
+        ];
+    }
+    return ['cart' => $cart, 'voided' => $voided, 'kept' => $kept];
+}
+
+/**
+ * @return list<array<string, mixed>>
+ */
+function ame_sale_admin_services_payload_from_sale(mysqli $db, int $sale_id): array
+{
+    $sale_id = (int)$sale_id;
+    $out = [];
+    $st = @$db->prepare(
+        'SELECT engineer_id, service_type, amount FROM sale_services WHERE sale_id = ? ORDER BY id ASC'
+    );
+    if (!$st) {
+        return $out;
+    }
+    $st->bind_param('i', $sale_id);
+    $st->execute();
+    $rows = $st->get_result()->fetch_all(MYSQLI_ASSOC) ?: [];
+    $st->close();
+    foreach ($rows as $row) {
+        $out[] = [
+            'engineer_id' => (int)($row['engineer_id'] ?? 0),
+            'service_type' => (string)($row['service_type'] ?? ''),
+            'amount' => round((float)($row['amount'] ?? 0), 2),
+        ];
+    }
+    return $out;
+}
+
+/**
+ * @return array{paid: float, account_id: int, payments: list<array<string, mixed>>}
+ */
+function ame_sale_admin_payments_payload_from_sale(mysqli $db, array $sale): array
+{
+    $sale_id = (int)($sale['id'] ?? 0);
+    $payload = [
+        'paid' => round((float)($sale['paid_amount'] ?? 0), 2),
+        'account_id' => (int)($sale['account_id'] ?? 0),
+        'payments' => [],
+    ];
+    $chk = @$db->query("SHOW TABLES LIKE 'sale_payments'");
+    $has = $chk && $chk->num_rows > 0;
+    if ($chk) {
+        $chk->close();
+    }
+    if (!$has || $sale_id <= 0) {
+        return $payload;
+    }
+    $st = @$db->prepare(
+        "SELECT account_id, amount, COALESCE(reference_number, '') AS reference_number
+         FROM sale_payments
+         WHERE sale_id = ?
+           AND (payment_status IS NULL OR payment_status = '' OR payment_status = 'posted')
+         ORDER BY id ASC"
+    );
+    if (!$st) {
+        return $payload;
+    }
+    $st->bind_param('i', $sale_id);
+    $st->execute();
+    $rows = $st->get_result()->fetch_all(MYSQLI_ASSOC) ?: [];
+    $st->close();
+    foreach ($rows as $row) {
+        $amount = round((float)($row['amount'] ?? 0), 2);
+        $account_id = (int)($row['account_id'] ?? 0);
+        if ($amount <= 0 || $account_id <= 0) {
+            continue;
+        }
+        $payload['payments'][] = [
+            'account_id' => $account_id,
+            'amount' => $amount,
+            'reference_number' => (string)($row['reference_number'] ?? ''),
+        ];
+    }
+    return $payload;
+}
+
+/**
+ * @param array<string, mixed> $customerData
+ * @return array<string, mixed>
+ */
+function ame_sale_admin_rewrite_payload_line_void(
+    mysqli $db,
+    array $sale,
+    array $customerData,
+    array $postItems,
+    bool $is_english
+): array {
+    $sale_id = (int)($sale['id'] ?? 0);
+    $cartPack = ame_sale_admin_cart_from_post_items($db, $sale_id, $postItems, $is_english);
+    if ($cartPack['voided'] < 1) {
+        throw new InvalidArgumentException(
+            $is_english
+                ? 'Mark at least one product line as cancelled before saving.'
+                : 'সেভ করার আগে কমপক্ষে একটি পণ্য বাতিল চিহ্নিত করুন।'
+        );
+    }
+    $services = ame_sale_admin_services_payload_from_sale($db, $sale_id);
+    if ($cartPack['cart'] === [] && $services === []) {
+        throw new InvalidArgumentException(
+            $is_english
+                ? 'Every product cannot be cancelled without a service line.'
+                : 'সব পণ্য বাতিল করা যাবে না — অন্তত একটি পণ্য বা সার্ভিস লাইন থাকতে হবে।'
+        );
+    }
+    $payments = ame_sale_admin_payments_payload_from_sale($db, $sale);
+    $exchange = [];
+    if (!function_exists('ame_sale_load_exchange_items') && is_file(__DIR__ . '/sale_exchange.php')) {
+        require_once __DIR__ . '/sale_exchange.php';
+    }
+    if (function_exists('ame_sale_load_exchange_items')) {
+        $exchange = ame_sale_load_exchange_items($db, $sale_id);
+    }
+    return array_merge(
+        $customerData,
+        $payments,
+        [
+            'cart' => $cartPack['cart'],
+            'services' => $services,
+            'discount' => round((float)($sale['discount'] ?? 0), 2),
+            'vat_percent' => round((float)($sale['vat_percent'] ?? 0), 2),
+            'rounding' => round((float)($sale['rounding_amount'] ?? 0), 2),
+            'exchange_items' => $exchange,
+            'adjust_due' => !empty($customerData['adjust_due']),
+        ]
+    );
+}
+
 function ame_sale_admin_restore_item_stock(mysqli $db, array $item, float $restore_qty, bool $is_english): void
 {
     $product_id = (int)($item['product_id'] ?? 0);

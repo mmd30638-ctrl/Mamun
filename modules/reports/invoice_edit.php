@@ -120,6 +120,8 @@ $shop_title = function_exists('shop_name') ? shop_name() : 'APONSHOP';
 $shop_addr = function_exists('shop_address') ? trim((string)shop_address()) : '';
 $shop_tel = function_exists('shop_phone') ? trim((string)shop_phone()) : '';
 $memo_when = date('d-m-Y', strtotime($sale_day)) . ' ' . $sale_time;
+$returned_map = ame_sale_admin_returned_qty_map($db, $id);
+
 $flash = (string)($_SESSION['user_flash'] ?? '');
 $flash_ok = (int)($_SESSION['user_flash_ok'] ?? 0);
 unset($_SESSION['user_flash'], $_SESSION['user_flash_ok']);
@@ -147,6 +149,8 @@ $t = static function (string $bn, string $eng) use ($en): string {
 .iedit table { width: 100%; border-collapse: collapse; }
 .iedit th { background: #003F8F; color: #fff; font-size: 14px; padding: 8px; text-align: left; }
 .iedit td { padding: 6px; border-bottom: 1px solid #E7EDF4; vertical-align: middle; }
+.iedit tr.iedit-voided td { opacity: .55; text-decoration: line-through; background: #FFF5F5; }
+.iedit tr.iedit-voided .iedit-void { text-decoration: none; opacity: 1; }
 .iedit .btn { display: inline-block; border: 0; border-radius: 10px; padding: 12px 18px; font-size: 16px; font-weight: 800; cursor: pointer; text-decoration: none; color: #fff; background: linear-gradient(135deg, #003F8F, #1565C0); }
 .iedit .btn.green { background: linear-gradient(135deg, #0E8F52, #087F3D); }
 .iedit .btn.ghost { background: #fff; color: #003F8F; border: 2px solid #003F8F; }
@@ -212,7 +216,7 @@ html body #main-content#main-content .iedit .iedit-memo-meta span { font-size: 1
         </div>
     </div>
     <h1><?php echo $h($t('ইনভয়েস সম্পাদনা', 'Edit invoice')); ?></h1>
-    <p class="sub"><?php echo $h($invoice); ?> · <?php echo $h($t('কাস্টমার সম্পূর্ণ বদলানো যায়। পণ্য, দাম, পরিশোধ, স্টক ও অ্যাকাউন্টের টাকা অপরিবর্তিত থাকে।', 'The customer can be changed fully. Items, prices, paid amount, stock and account money stay the same.')); ?></p>
+    <p class="sub"><?php echo $h($invoice); ?> · <?php echo $h($t('কাস্টমার বদলানো যায়। পণ্য বাতিল করলে মেমো থেকে সরবে — বিল, বাকি, স্টক ও হিসাব আপডেট হবে।', 'You can change the customer. Cancelling a product removes it from the memo — bill, due, stock and ledger update.')); ?></p>
     <?php if ($flash !== ''): ?>
         <div class="iedit-flash <?php echo $flash_ok ? 'ok' : 'bad'; ?>"><?php echo $h($flash); ?></div>
     <?php endif; ?>
@@ -262,7 +266,7 @@ html body #main-content#main-content .iedit .iedit-memo-meta span { font-size: 1
         </div>
 
         <div class="iedit-card">
-            <label><?php echo $h($t('পণ্য (শুধু দেখা — টাকা বদলায় না)', 'Items (view only — money does not change)')); ?></label>
+            <label><?php echo $h($t('পণ্য — যেকোনো লাইন বাতিল করা যায়', 'Items — any line can be cancelled')); ?></label>
             <div style="overflow-x:auto;">
                 <table>
                     <thead>
@@ -271,19 +275,32 @@ html body #main-content#main-content .iedit .iedit-memo-meta span { font-size: 1
                             <th><?php echo $h($t('পরিমাণ', 'Qty')); ?></th>
                             <th><?php echo $h($t('দাম', 'Price')); ?></th>
                             <th><?php echo $h($t('মোট', 'Total')); ?></th>
+                            <th><?php echo $h($t('বাতিল', 'Cancel')); ?></th>
                         </tr>
                     </thead>
                     <tbody id="ieditItems">
                     <?php foreach ($items as $i => $it): ?>
-                        <tr>
+                        <?php
+                        $pid = (int)($it['product_id'] ?? 0);
+                        $ret_q = $pid > 0 ? (float)($returned_map[$pid] ?? 0) : 0.0;
+                        ?>
+                        <tr data-returned="<?php echo $h((string)$ret_q); ?>">
                             <td>
+                                <input type="hidden" name="items[<?php echo (int)$i; ?>][sale_item_id]" value="<?php echo (int)($it['id'] ?? 0); ?>">
+                                <input type="hidden" name="items[<?php echo (int)$i; ?>][void]" value="0" class="iedit-void-flag">
                                 <input type="hidden" name="items[<?php echo (int)$i; ?>][product_id]" value="<?php echo (int)($it['product_id'] ?? 0); ?>">
                                 <input type="hidden" name="items[<?php echo (int)$i; ?>][is_custom]" value="<?php echo ((int)($it['product_id'] ?? 0) <= 0) ? '1' : '0'; ?>">
                                 <input type="text" name="items[<?php echo (int)$i; ?>][name]" value="<?php echo $h($it['item_name'] ?? ''); ?>" readonly>
+                                <?php if ($ret_q > 0.0001): ?>
+                                    <small style="display:block;color:#9a3412;font-weight:800;"><?php echo $h($t('ইতিমধ্যে ফেরত: ', 'Already returned: ') . $ret_q); ?></small>
+                                <?php endif; ?>
                             </td>
                             <td><input type="number" step="0.001" min="0" name="items[<?php echo (int)$i; ?>][qty]" value="<?php echo $h($it['qty'] ?? 0); ?>" class="iedit-qty" readonly></td>
                             <td><input type="number" step="0.01" min="0" name="items[<?php echo (int)$i; ?>][price]" value="<?php echo $h($it['sale_price'] ?? 0); ?>" class="iedit-price" readonly></td>
                             <td class="iedit-line">৳0.00</td>
+                            <td>
+                                <button type="button" class="btn danger iedit-void" title="<?php echo $h($t('এই পণ্য মেমো থেকে বাতিল', 'Cancel this product on the memo')); ?>"><?php echo $h($t('বাতিল', 'Cancel')); ?></button>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
@@ -372,7 +389,8 @@ html body #main-content#main-content .iedit .iedit-memo-meta span { font-size: 1
         </div>
 
         <div class="row-actions">
-            <button type="submit" class="btn green"><?php echo $h($t('কাস্টমার সেভ করুন', 'Save customer')); ?></button>
+            <button type="submit" name="save_action" value="void_lines" class="btn danger" id="ieditVoidSave" disabled><?php echo $h($t('পণ্য বাতিল সেভ', 'Save cancelled lines')); ?></button>
+            <button type="submit" name="save_action" value="customer" class="btn green"><?php echo $h($t('কাস্টমার সেভ করুন', 'Save customer')); ?></button>
             <a class="btn ghost" href="/modules/reports/sales_report.php?q=<?php echo $h(rawurlencode($invoice)); ?>"><?php echo $h($t('রিপোর্টে ফিরুন', 'Back to report')); ?></a>
             <a class="btn ghost" href="/modules/sales/invoice.php?id=<?php echo (int)$sale['id']; ?>"><?php echo $h($t('প্রিন্ট মেমো', 'Print memo')); ?></a>
         </div>
@@ -389,7 +407,26 @@ html body #main-content#main-content .iedit .iedit-memo-meta span { font-size: 1
         return ['id' => (int)$eg['id'], 'name' => (string)$eg['name']];
     }, $engineers), JSON_UNESCAPED_UNICODE); ?>;
 
+    var voidConfirmTxt = <?php echo json_encode($t('এই পণ্য মেমো থেকে বাতিল করবেন? স্টক ও বিল আপডেট হবে।', 'Cancel this product on the memo? Stock and bill will update.'), JSON_UNESCAPED_UNICODE); ?>;
+    function isVoided(tr) {
+        var flag = tr.querySelector('.iedit-void-flag');
+        return !!(flag && String(flag.value) === '1');
+    }
+    function syncVoidSave() {
+        var btn = document.getElementById('ieditVoidSave');
+        if (!btn || !itemBox) { return; }
+        var any = false;
+        itemBox.querySelectorAll('tr').forEach(function (tr) {
+            if (isVoided(tr)) { any = true; }
+        });
+        btn.disabled = !any;
+    }
     function lineTotal(tr) {
+        if (isVoided(tr)) {
+            var cell0 = tr.querySelector('.iedit-line');
+            if (cell0) { cell0.textContent = money(0); }
+            return 0;
+        }
         var q = parseFloat((tr.querySelector('.iedit-qty') || {}).value || 0);
         var p = parseFloat((tr.querySelector('.iedit-price') || {}).value || 0);
         var cell = tr.querySelector('.iedit-line');
@@ -479,7 +516,43 @@ html body #main-content#main-content .iedit .iedit-memo-meta span { font-size: 1
         tr.querySelectorAll('input').forEach(function (el) { el.addEventListener('input', recalc); });
         var del = tr.querySelector('.iedit-del');
         if (del) {
-            del.addEventListener('click', function () { tr.remove(); recalc(); });
+            del.addEventListener('click', function () { tr.remove(); recalc(); syncVoidSave(); });
+        }
+        var vbtn = tr.querySelector('.iedit-void');
+        if (vbtn) {
+            vbtn.addEventListener('click', function () {
+                if (isVoided(tr)) {
+                    var flag = tr.querySelector('.iedit-void-flag');
+                    if (flag) { flag.value = '0'; }
+                    tr.classList.remove('iedit-voided');
+                    vbtn.textContent = <?php echo json_encode($t('বাতিল', 'Cancel'), JSON_UNESCAPED_UNICODE); ?>;
+                    recalc();
+                    syncVoidSave();
+                    return;
+                }
+                if (!window.confirm(voidConfirmTxt)) { return; }
+                var active = 0;
+                itemBox.querySelectorAll('tr').forEach(function (row) {
+                    if (!isVoided(row)) { active += 1; }
+                });
+                if (active <= 1) {
+                    var hasSvc = svcBox && svcBox.querySelectorAll('.iedit-svc-amt').length > 0;
+                    var svcAmt = 0;
+                    if (hasSvc) {
+                        svcBox.querySelectorAll('.iedit-svc-amt').forEach(function (el) { svcAmt += parseFloat(el.value || 0); });
+                    }
+                    if (!hasSvc || svcAmt < 0.01) {
+                        alert(<?php echo json_encode($t('সব পণ্য বাতিল করা যাবে না। অন্তত একটি পণ্য বা সার্ভিস থাকতে হবে।', 'You cannot cancel every product. At least one product or service must remain.'), JSON_UNESCAPED_UNICODE); ?>);
+                        return;
+                    }
+                }
+                var voidFlag = tr.querySelector('.iedit-void-flag');
+                if (voidFlag) { voidFlag.value = '1'; }
+                tr.classList.add('iedit-voided');
+                vbtn.textContent = <?php echo json_encode($t('ফিরিয়ে আনুন', 'Undo'), JSON_UNESCAPED_UNICODE); ?>;
+                recalc();
+                syncVoidSave();
+            });
         }
     }
     itemBox.querySelectorAll('tr').forEach(bindRow);
@@ -633,11 +706,18 @@ html body #main-content#main-content .iedit .iedit-memo-meta span { font-size: 1
             recalc();
         }
     });
-    document.getElementById('ieditForm').addEventListener('submit', function () {
-        var b = this.querySelector('button[type="submit"]');
-        if (b) { b.disabled = true; }
+    document.getElementById('ieditForm').addEventListener('submit', function (ev) {
+        var sub = ev.submitter;
+        if (sub && sub.name === 'save_action' && sub.value === 'void_lines') {
+            if (!window.confirm(<?php echo json_encode($t('বাতিল পণ্য সেভ করলে বিল, বাকি, স্টক ও হিসাব নতুন করে ঠিক হবে। চালিয়ে যাবেন?', 'Saving cancelled lines will recalculate bill, due, stock and ledger. Continue?'), JSON_UNESCAPED_UNICODE); ?>)) {
+                ev.preventDefault();
+                return;
+            }
+        }
+        this.querySelectorAll('button[type="submit"]').forEach(function (b) { b.disabled = true; });
     });
     recalc();
+    syncVoidSave();
 })();
 </script>
 <?php include __DIR__ . '/../../partials/footer.php'; ?>

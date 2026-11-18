@@ -954,7 +954,7 @@ html body .srep2-page .srep2-scope input:checked + span { background: #f3eeff; c
             <button type="button" class="btn" onclick="srepPrint(<?php echo (int)$memo_card['id']; ?>)">🖨 <?php echo $h($t('প্রিন্ট', 'Print')); ?></button>
             <button type="button" class="btn" onclick="srepShare(<?php echo (int)$memo_card['id']; ?>)">📤 <?php echo $h($t('শেয়ার', 'Share')); ?></button>
             <?php if ($is_admin): ?>
-            <a class="btn" href="/modules/reports/invoice_edit.php?id=<?php echo (int)$memo_card['id']; ?>">✏️ <?php echo $h($t('এডিট / কাস্টমার বদলান', 'Edit / change customer')); ?></a>
+            <a class="btn" href="/modules/reports/invoice_edit.php?id=<?php echo (int)$memo_card['id']; ?>">✏️ <?php echo $h($t('এডিট / পণ্য বাতিল', 'Edit / cancel lines')); ?></a>
             <?php endif; ?>
         </div>
     </div>
@@ -1065,7 +1065,7 @@ html body .srep2-page .srep2-scope input:checked + span { background: #f3eeff; c
                                 <button type="button" title="<?php echo $h($t('প্রিন্ট', 'Print')); ?>" onclick="srepPrint(<?php echo (int)$row['id']; ?>)">🖨</button>
                                 <button type="button" title="<?php echo $h($t('শেয়ার', 'Share')); ?>" onclick="srepShare(<?php echo (int)$row['id']; ?>)">📤</button>
                                 <?php if ($is_admin): ?>
-                                <a href="/modules/reports/invoice_edit.php?id=<?php echo (int)$row['id']; ?>" title="<?php echo $h($t('এডিট / কাস্টমার বদলান', 'Edit / change customer')); ?>">✏️</a>
+                                <a href="/modules/reports/invoice_edit.php?id=<?php echo (int)$row['id']; ?>" title="<?php echo $h($t('এডিট / পণ্য বাতিল', 'Edit / cancel lines')); ?>">✏️</a>
                                 <?php endif; ?>
                             </div>
                         </td>
