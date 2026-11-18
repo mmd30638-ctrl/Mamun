@@ -52,6 +52,12 @@
         if (document.getElementById('memo-container') && document.querySelector('.cpay-sheet')) {
             return true;
         }
+        if (/\/modules\/sales\/invoice\.php$/i.test(String(location.pathname || ''))) {
+            return true;
+        }
+        if (document.getElementById('memo-container') && document.querySelector('.inv-action-bar')) {
+            return true;
+        }
         return false;
     }
 

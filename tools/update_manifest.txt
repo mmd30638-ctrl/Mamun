@@ -1,3 +1,8 @@
+# 10.98.994 — বিক্রয় মেমো: হোয়াটসঅ্যাপ ডেস্কটপে ডান ফাঁকা ঠিক
+modules/sales/invoice.php
+assets/js/ame-desktop-site.js
+includes/config.php
+VERSION.txt
 # 10.98.993 — স্টেটমেন্ট: খাত হেডার + নিচে খাত মোট সারি
 modules/accounts/partner_sales_share.php
 assets/css/partner-statement.css

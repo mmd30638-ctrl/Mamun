@@ -197,10 +197,21 @@ $wa_url = 'https://wa.me/' . ($wa_phone !== '' ? $wa_phone : '') . '?text=' . ra
 $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&text=' . rawurlencode($wa_text);
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo ame_ui_bn() ? 'bn' : 'en'; ?>">
+<html lang="<?php echo ame_ui_bn() ? 'bn' : 'en'; ?>" data-ame-memo-standalone="1" class="ame-memo-standalone-fit">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover">
+    <script>
+    (function () {
+        var root = document.documentElement;
+        root.setAttribute('data-ame-memo-standalone', '1');
+        root.classList.add('ame-memo-standalone-fit');
+        var meta = document.querySelector('meta[name="viewport"]');
+        if (meta) {
+            meta.setAttribute('content', 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover');
+        }
+    })();
+    </script>
     <title><?php echo ame_ui('ইনভয়েস', 'Invoice'); ?> #<?php echo htmlspecialchars($inv_no, ENT_QUOTES, 'UTF-8'); ?> - <?php echo htmlspecialchars($shop['shop_name'] ?? 'Aponshop', ENT_QUOTES, 'UTF-8'); ?></title>
     <link rel="stylesheet" href="/assets/css/ame-front-colors.css">
     <link rel="stylesheet" href="/assets/css/memo-clear.css?v=10.98.847">
@@ -486,9 +497,26 @@ $tg_url = 'https://t.me/share/url?url=' . rawurlencode($ame_public_memo) . '&tex
                 margin: 0 !important;
             }
         }
+
+        /* হোয়াটসঅ্যাপ/ডেস্কটপ ইন-অ্যাপ ব্রাউজার: ১৩৬৬ স্কেল বন্ধ, মেমো মাঝখানে */
+        html.ame-memo-standalone-fit body.ame-sales-invoice-page {
+            width: 100% !important;
+            max-width: 100% !important;
+            overflow-x: hidden !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+        }
+        html.ame-memo-standalone-fit body.ame-sales-invoice-page .inv-action-bar,
+        html.ame-memo-standalone-fit body.ame-sales-invoice-page #memo-container.memo-wrapper {
+            width: 100% !important;
+            max-width: <?php echo $max_width; ?> !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
     </style>
 </head>
-<body class="<?php echo htmlspecialchars($paper_class, ENT_QUOTES, 'UTF-8'); ?>" data-paper="<?php echo htmlspecialchars((string)$paper_width, ENT_QUOTES, 'UTF-8'); ?>">
+<body class="ame-sales-invoice-page <?php echo htmlspecialchars($paper_class, ENT_QUOTES, 'UTF-8'); ?>" data-paper="<?php echo htmlspecialchars((string)$paper_width, ENT_QUOTES, 'UTF-8'); ?>" data-ame-memo-standalone="1">
 
     <!-- শীর্ষ একশন বার (প্রিন্ট, শেয়ার, ডাউনলোড) -->
     <nav class="inv-action-bar no-print" aria-label="<?php echo ame_ui('ইনভয়েস অপশন', 'Invoice options'); ?>">
