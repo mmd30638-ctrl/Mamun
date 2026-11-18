@@ -503,3 +503,7 @@ modules/reports/sales_report.php
 # 10.98.1003 — বিক্রয় ইনভয়েস: ১৫ পণ্য লাইনের পর পৃষ্ঠা ব্রেক
 modules/sales/invoice.php
 assets/css/invoice-print-fix.css
+# 10.98.1004 — ইনভয়েস শেয়ার/পিডিএফ: উচ্চ রেজুলেশন ক্যাপচার (html2canvas স্কেল + JPEG গুণমান)
+assets/js/ame-memo-file.js
+includes/config.php
+VERSION.txt

@@ -5,6 +5,10 @@
 (function () {
     var libsPromise = null;
     var A4_CSS_PX = 794;
+    var INVOICE_CAPTURE_MIN_PX = 480;
+    var MEMO_JPEG_SHARE_Q = 0.97;
+    var MEMO_JPEG_DL_Q = 0.95;
+    var MEMO_JPEG_PDF_Q = 0.97;
     function ameMemoLang() {
         var match = document.cookie.match(/(?:^|; )app_lang=([^;]*)/);
         if (match && decodeURIComponent(match[1]).toLowerCase() === 'en') {
@@ -380,13 +384,13 @@
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, canvas.width, sh);
             ctx.drawImage(canvas, 0, sy, canvas.width, sh, 0, 0, canvas.width, sh);
-            var slice = canvasPage.toDataURL('image/jpeg', 0.92);
+            var slice = canvasPage.toDataURL('image/jpeg', MEMO_JPEG_PDF_Q);
             var sliceHmm = imgW * sh / canvas.width;
             if (!first) {
                 pdf.addPage('a4', 'portrait');
             }
             first = false;
-            pdf.addImage(slice, 'JPEG', margin, margin, imgW, sliceHmm, undefined, 'FAST');
+            pdf.addImage(slice, 'JPEG', margin, margin, imgW, sliceHmm, undefined, 'MEDIUM');
             sy += sh;
         }
         return pdf.output('blob');
@@ -426,7 +430,7 @@
 
     function canvasJpegBytes(canvas, quality) {
         return new Promise(function (resolve, reject) {
-            var q = quality == null ? 0.95 : quality;
+            var q = quality == null ? MEMO_JPEG_PDF_Q : quality;
             var finish = function (blob) {
                 if (!blob) {
                     reject(new Error('jpeg'));
@@ -535,7 +539,7 @@
             ctx.fillRect(0, 0, slice.width, h);
             ctx.drawImage(canvas, 0, y, canvas.width, h, 0, 0, canvas.width, h);
             jobs.push((function (w, hh, c) {
-                return canvasJpegBytes(c, 0.95).then(function (data) {
+                return canvasJpegBytes(c, MEMO_JPEG_PDF_Q).then(function (data) {
                     return { w: w, h: hh, data: data };
                 });
             }(slice.width, h, slice)));
@@ -552,7 +556,7 @@
     }
 
     function printA4Image(canvas) {
-        var img = canvas.toDataURL('image/jpeg', 0.95);
+        var img = canvas.toDataURL('image/jpeg', MEMO_JPEG_PDF_Q);
         var html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>মেমো</title>'
             + '<style>@page{size:A4;margin:8mm}html,body{margin:0;background:#fff}'
             + 'img{display:block;width:100%;height:auto;max-width:100%}</style></head>'
@@ -621,6 +625,39 @@
 
     function memoNarrowCaptureWidth(node) {
         return cpayMemoCaptureWidth(node);
+    }
+
+    function invoiceMemoCaptureWidth(node) {
+        var body = document.body;
+        if (body) {
+            var paper = String(body.getAttribute('data-paper') || '').toLowerCase();
+            if (paper === 'a4' || body.classList.contains('ame-paper-a4')) {
+                return A4_CSS_PX;
+            }
+        }
+        var w = INVOICE_CAPTURE_MIN_PX;
+        if (node && node.getBoundingClientRect) {
+            var rect = node.getBoundingClientRect();
+            w = Math.max(w, Math.ceil(rect.width));
+        }
+        var vw = Math.round((document.documentElement.clientWidth || window.innerWidth || 390));
+        return Math.max(INVOICE_CAPTURE_MIN_PX, Math.min(520, Math.max(w, vw)));
+    }
+
+    function ameMemoCaptureScale(boxH, salesShot) {
+        var dpr = window.devicePixelRatio || 1;
+        var scale = Math.max(2, Math.ceil(dpr * 1.75));
+        if (salesShot) {
+            scale = Math.max(scale, 3);
+        }
+        var h = boxH || 0;
+        if (h > 2200) {
+            scale = Math.max(scale, 3);
+        }
+        if (h > 4500) {
+            scale = Math.min(4, scale + 1);
+        }
+        return Math.min(4, scale);
     }
 
     function cpayMemoCaptureWidth(node) {
@@ -707,7 +744,13 @@
             || !!(node && node.classList && node.classList.contains('memo-wrapper') && document.querySelector('.cpay-sheet'));
         var returnShot = isSaleReturnMemoPage();
         var salesShot = isSalesInvoiceMemoPage() || isPurchaseMemoSheetPage();
-        var narrowPx = (cpayShot || returnShot || salesShot) ? memoNarrowCaptureWidth(node) : 420;
+        var salesInvShot = isSalesInvoiceMemoPage();
+        var narrowPx = 420;
+        if (salesInvShot) {
+            narrowPx = invoiceMemoCaptureWidth(node);
+        } else if (cpayShot || returnShot || salesShot) {
+            narrowPx = memoNarrowCaptureWidth(node);
+        }
         var useNarrow = spayShot || cpayShot || returnShot || salesShot;
         clone.style.cssText = [
             'position:absolute',
@@ -873,26 +916,33 @@
 
     function capture(node) {
         var clone = prepClone(node);
-        var scale = 2;
         var spayShot = clone.classList && clone.classList.contains('spay-memo');
         var cpayClone = isCpayReceiptPage();
         var returnShot = isSaleReturnMemoPage();
         var salesShot = isSalesInvoiceMemoPage() || isPurchaseMemoSheetPage();
+        var salesInvShot = isSalesInvoiceMemoPage();
         var narrowCapture = spayShot || cpayClone || returnShot || salesShot;
-        var narrowW = (cpayClone || returnShot || salesShot) ? memoNarrowCaptureWidth(node) : 420;
+        var narrowW = 420;
+        if (salesInvShot) {
+            narrowW = invoiceMemoCaptureWidth(node);
+        } else if (cpayClone || returnShot || salesShot) {
+            narrowW = memoNarrowCaptureWidth(node);
+        }
         if (returnShot) {
             narrowW = Math.max(narrowW, 400);
         }
-        if (salesShot) {
-            narrowW = Math.max(narrowW, 300);
+        if (salesShot && !salesInvShot) {
+            narrowW = Math.max(narrowW, INVOICE_CAPTURE_MIN_PX);
         }
         var box = measureCloneCanvasBox(clone, narrowCapture ? narrowW : A4_CSS_PX);
         var boxW = narrowCapture ? box.w : A4_CSS_PX;
         var boxH = box.h;
+        var scale = ameMemoCaptureScale(boxH, salesInvShot);
         return waitImages(clone).then(function () {
             box = measureCloneCanvasBox(clone, narrowCapture ? narrowW : A4_CSS_PX);
             boxW = narrowCapture ? box.w : A4_CSS_PX;
             boxH = box.h;
+            scale = ameMemoCaptureScale(boxH, salesInvShot);
             return window.html2canvas(clone, {
                 scale: scale,
                 backgroundColor: '#ffffff',
@@ -907,6 +957,7 @@
                 y: 0,
                 scrollX: 0,
                 scrollY: 0,
+                imageSmoothingEnabled: true,
                 ignoreElements: function (element) {
                     if (!element.classList) {
                         return false;
@@ -973,13 +1024,16 @@
     }
 
     function captureVisible(node) {
+        var salesInv = isSalesInvoiceMemoPage();
+        var nodeH = node && (node.scrollHeight || node.offsetHeight) ? Math.max(node.scrollHeight, node.offsetHeight) : 1200;
         return window.html2canvas(node, {
-            scale: 2,
+            scale: ameMemoCaptureScale(nodeH, salesInv),
             backgroundColor: '#ffffff',
             useCORS: true,
             logging: false,
             scrollX: 0,
             scrollY: -window.scrollY,
+            imageSmoothingEnabled: true,
             ignoreElements: function (element) {
                 if (!element.classList) {
                     return false;
@@ -1005,19 +1059,20 @@
         }
         var preferClone = !!(node && node.getAttribute && node.getAttribute('data-ame-capture') === 'clone')
             || (node && node.classList && node.classList.contains('memo-wrapper'));
+        var captureMs = isSalesInvoiceMemoPage() ? 32000 : 20000;
         if (preferClone) {
-            return withTime(capture(node), 20000).catch(function () {
-                return withTime(capture(node), 12000);
+            return withTime(capture(node), captureMs).catch(function () {
+                return withTime(capture(node), isSalesInvoiceMemoPage() ? 22000 : 12000);
             });
         }
-        return withTime(capture(node), 15000).catch(function () {
+        return withTime(capture(node), isSalesInvoiceMemoPage() ? 28000 : 15000).catch(function () {
             return withTime(captureVisible(node), 8000);
         });
     }
 
     function blobFromCanvas(canvas, type, quality) {
         type = type || 'image/jpeg';
-        quality = quality == null ? 0.92 : quality;
+        quality = quality == null ? MEMO_JPEG_DL_Q : quality;
         return new Promise(function (resolve, reject) {
             if (!canvas || typeof canvas.toBlob !== 'function') {
                 reject(new Error('no-canvas'));
@@ -1192,7 +1247,7 @@
         var wantPdf = action === 'download' || action === 'download-pdf' || action === 'pdf';
         if (wantShareImage) {
             setShareBusy(true, 'মেমোর ছবি তৈরি হচ্ছে…');
-            return blobFromCanvas(canvas, 'image/jpeg', 0.94).then(function (blob) {
+            return blobFromCanvas(canvas, 'image/jpeg', MEMO_JPEG_SHARE_Q).then(function (blob) {
                 setShareBusy(false);
                 openShareSheet(document.title || 'মেমো', '', '', blob, (fileBase || 'memo') + '.jpg');
             }).catch(function () {
@@ -1201,7 +1256,7 @@
             });
         }
         if (!wantPdf) {
-            return blobFromCanvas(canvas, 'image/jpeg', 0.92).then(function (blob) {
+            return blobFromCanvas(canvas, 'image/jpeg', MEMO_JPEG_DL_Q).then(function (blob) {
                 downloadBlob(blob, (fileBase || 'memo') + '.jpg');
             });
         }
@@ -1271,7 +1326,7 @@
             return html2canvasReady().then(function () {
                 return captureMemoNode(node);
             }).then(function (canvas) {
-                return blobFromCanvas(canvas, 'image/jpeg', 0.94);
+                return blobFromCanvas(canvas, 'image/jpeg', MEMO_JPEG_SHARE_Q);
             }).then(function (imgBlob) {
                 setShareBusy(false);
                 var file = fileFromBlob(imgBlob, imageName, 'image/jpeg');
@@ -1322,7 +1377,7 @@
                 return;
             }
             setShareBusy(false);
-            return blobFromCanvas(canvas, 'image/jpeg', 0.92).then(function (imgBlob) {
+            return blobFromCanvas(canvas, 'image/jpeg', MEMO_JPEG_DL_Q).then(function (imgBlob) {
                 downloadBlob(imgBlob, (fileBase || 'invoice') + '.jpg');
             });
         }).catch(function () {
